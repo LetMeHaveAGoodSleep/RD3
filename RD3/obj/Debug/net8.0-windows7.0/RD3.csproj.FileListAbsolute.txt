@@ -1,8 +1,6 @@
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\RD3.csproj.AssemblyReference.cache
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MainWindow.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AboutView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\LoginView.g.cs
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MainWindow.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\App.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\GeneratedInternalTypeHelper.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\RD3_MarkupCompile.cache
@@ -51,3 +49,13 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\SQLite.In
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\SQLite.Interop.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\RD3.sourcelink.json
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MainView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ProgressView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MainView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ProgressView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MsgView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MsgView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\RD3_Content.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\IndexView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\IndexView.baml

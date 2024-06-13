@@ -1,29 +1,24 @@
-﻿using Prism.Commands;
+﻿using RD3.Common;
+using RD3.Common.Models;
+using RD3.Extensions;
+using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
-using Prism.Services.Dialogs;
 using RD3.Common;
 using RD3.Common.Models;
-using RD3.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Controls.Primitives;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace RD3.ViewModels
 {
-    public class MainWindowViewModel : BindableBase, IConfigureService
+    public class MainViewModel : BindableBase, IConfigureService
     {
-        private string _title = "Prism Application";
-
-        public event Action<IDialogResult> RequestClose;
-
-        public string Title
-        {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
-        }
-
         private string userName;
 
         public string UserName
@@ -34,9 +29,9 @@ namespace RD3.ViewModels
 
         public DelegateCommand LoginOutCommand { get; private set; }
 
-        public MainWindowViewModel(IContainerProvider containerProvider,
+        public MainViewModel(IContainerProvider containerProvider,
             IRegionManager regionManager)
-        {
+        { 
             MenuBars = new ObservableCollection<MenuBar>();
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             GoBackCommand = new DelegateCommand(() =>
@@ -50,10 +45,10 @@ namespace RD3.ViewModels
                     journal.GoForward();
             });
             LoginOutCommand = new DelegateCommand(() =>
-            {
-                //注销当前用户
-                App.LoginOut(containerProvider);
-            });
+              {
+                  //注销当前用户
+                  App.LoginOut(containerProvider);
+              });
             this.containerProvider = containerProvider;
             this.regionManager = regionManager;
         }
@@ -64,9 +59,9 @@ namespace RD3.ViewModels
                 return;
 
             regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(obj.NameSpace, back =>
-            {
-                journal = back.Context.NavigationService.Journal;
-            });
+             {
+                 journal = back.Context.NavigationService.Journal;
+             });
         }
 
         public DelegateCommand<MenuBar> NavigateCommand { get; private set; }

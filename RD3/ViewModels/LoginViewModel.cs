@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RD3.Common;
 
 namespace RD3.ViewModels
 {
@@ -38,6 +39,7 @@ namespace RD3.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
+
         }
 
         #region Login
@@ -99,7 +101,7 @@ namespace RD3.ViewModels
                 return;
             }
 
-
+            AppSession.UserName = UserName;
 
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
 

@@ -1,4 +1,5 @@
 ﻿using DryIoc;
+using MaterialDesignThemes.Wpf;
 using Prism.DryIoc;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
@@ -17,7 +18,7 @@ namespace RD3
     {
         protected override Window CreateShell()
         {
-            return Container.Resolve<MainWindow>();
+            return Container.Resolve<MainView>();
         }
 
         public static void LoginOut(IContainerProvider containerProvider)
@@ -58,12 +59,11 @@ namespace RD3
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
             containerRegistry.Register<IDialogHostService, DialogHostService>();
-
             containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
-
-
+            containerRegistry.RegisterForNavigation<AboutView>();
+            containerRegistry.RegisterForNavigation<MsgView, MsgViewModel>();
+            containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
         }
     }
 }

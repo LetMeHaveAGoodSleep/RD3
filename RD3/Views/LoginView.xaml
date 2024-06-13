@@ -66,10 +66,13 @@
                     </PasswordBox>
 
                     <Button
+                        hc:BorderElement.CornerRadius="15"
                         Command="{Binding ExecuteCommand}"
                         CommandParameter="Login"
                         Content="登录系统"
-                        DockPanel.Dock="Top" />
+                        DockPanel.Dock="Top"
+                        IsDefault="True"
+                        Style="{StaticResource ButtonPrimary}" />
 
                     <DockPanel
                         Margin="0,5"
