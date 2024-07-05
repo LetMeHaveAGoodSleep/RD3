@@ -11,11 +11,13 @@
             <ResourceDictionary.MergedDictionaries>
                 <materialDesign:BundledTheme
                     BaseTheme="Light"
-                    PrimaryColor="Orange"
+                    PrimaryColor="Teal"
                     SecondaryColor="Amber" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LayUI.Wpf;component/Themes/Default.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="MyListBoxItemStyle" TargetType="ListBoxItem">
                 <Setter Property="MinHeight" Value="40" />
@@ -45,6 +47,8 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <SolidColorBrush x:Key="PrimaryMenuBrush" Color="Teal" />
+            <SolidColorBrush x:Key="PrimarySeparatorBrush" Color="LightGray" />
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

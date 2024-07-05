@@ -2,6 +2,9 @@
 using MaterialDesignThemes.Wpf;
 using Prism.DryIoc;
 using Prism.Ioc;
+using Prism.Modularity;
+using Prism.Mvvm;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using RD3.Common;
 using RD3.ViewModels;
@@ -64,6 +67,11 @@ namespace RD3
             containerRegistry.RegisterForNavigation<AboutView>();
             containerRegistry.RegisterForNavigation<MsgView, MsgViewModel>();
             containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
+        }
+
+        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
+        {
+            
         }
     }
 }

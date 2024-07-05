@@ -12,3 +12,4 @@ D:\Project\RD3\RD3.Shared\obj\Debug\net8.0\ref\RD3.Shared.dll
 D:\Project\RD3\RD3.Shared\bin\Debug\net8.0\RD3.Shared.runtimeconfig.json
 D:\Project\RD3\RD3.Shared\obj\Debug\net8.0\RD3.Shared.csproj.AssemblyReference.cache
 D:\Project\RD3\RD3.Shared\obj\Debug\net8.0\RD3.Shared.genruntimeconfig.cache
+D:\Project\RD3\RD3.Shared\obj\Debug\net8.0\RD3.Shared.sourcelink.json
