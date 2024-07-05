@@ -17,7 +17,7 @@
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/LayUI.Wpf;component/Themes/Default.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LayUI.Wpf;component/Style/Default/ExpanderStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="MyListBoxItemStyle" TargetType="ListBoxItem">
                 <Setter Property="MinHeight" Value="40" />

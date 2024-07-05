@@ -5,8 +5,6 @@ using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
-using RD3.Common;
-using RD3.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +15,7 @@ using System.Windows;
 using RD3.Views;
 using DryIoc;
 using LayUI.Wpf.Enum;
+using System.Windows.Controls;
 
 namespace RD3.ViewModels
 {
@@ -68,7 +67,7 @@ namespace RD3.ViewModels
         public DelegateCommand GoBackCommand { get; private set; }
         public DelegateCommand GoForwardCommand { get; private set; }
         public DelegateCommand LoginOutCommand { get; private set; }
-
+        public DelegateCommand<MenuItemModel> GoPageCommand { get; private set; }
         private ObservableCollection<MenuBar> menuBars;
         private readonly IContainerProvider containerProvider;
         private readonly IRegionManager regionManager;
@@ -100,6 +99,12 @@ namespace RD3.ViewModels
                   //注销当前用户
                   App.LoginOut(containerProvider);
               });
+
+           GoPageCommand = new DelegateCommand<MenuItemModel>((MenuItemModel item) => 
+           {
+               if (item == null) return;
+               MenuItemModel = item;
+           });
             this.containerProvider = containerProvider;
             this.regionManager = regionManager;
         }
