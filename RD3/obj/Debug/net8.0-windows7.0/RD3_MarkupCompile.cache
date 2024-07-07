@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\
+F:\PrismTest\RD3\RD3\obj\Debug\net8.0-windows7.0\
 RD3
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-D:\Project\RD3\RD3\App.xaml
-743893825
+F:\PrismTest\RD3\RD3\App.xaml
+7-407365144
 1-1806851638
-33516682980
-2151766188339
-Menu\Expander\ExpanderStyle.xaml;Views\AboutView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MsgView.xaml;Views\ProgressView.xaml;
+30680357503
+215-1184593659
+Menu\ExpanderStyle.xaml;Views\AboutView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MsgView.xaml;Views\ProgressView.xaml;
 
 False
 
