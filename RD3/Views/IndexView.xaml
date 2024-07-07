@@ -6,7 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -17,7 +16,137 @@
     <UserControl.Resources>
         <cv:IntToBoolConveter x:Key="intToBool" />
     </UserControl.Resources>
-    <Grid>
-        
-    </Grid>
+    <TabControl Margin="10" Style="{StaticResource TabControlInLine}">
+        <TabItem Header="Details" IsSelected="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="20*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20*" />
+                    <RowDefinition Height="20*" />
+                    <RowDefinition Height="20*" />
+                    <RowDefinition Height="20*" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+                <Border Margin="5" Style="{StaticResource BorderRegion}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="10*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20*" />
+                            <RowDefinition Height="20*" />
+                            <RowDefinition Height="20*" />
+                            <RowDefinition Height="20*" />
+                            <RowDefinition Height="20*" />
+                            <RowDefinition Height="40" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Grid.RowSpan="3"
+                            Grid.ColumnSpan="2"
+                            FontSize="14"
+                            Text="pH" />
+                        <materialDesign:PopupBox
+                            Grid.RowSpan="2"
+                            Grid.Column="6"
+                            Grid.ColumnSpan="2"
+                            PlacementMode="BottomAndAlignCentres"
+                            PopupMode="Click">
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:PackIcon
+                                    Width="20"
+                                    Height="20"
+                                    Foreground="Gray"
+                                    Kind="GoogleCirclesCommunities" />
+                            </materialDesign:PopupBox.ToggleContent>
+                            <StackPanel>
+                                <Button Command="{Binding}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Width="24"
+                                            Height="24"
+                                            Margin="0,0,10,0"
+                                            Foreground="Gray"
+                                            Kind="Alarm" />
+                                        <TextBlock Text="Alarm value" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Command="{Binding}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Width="24"
+                                            Height="24"
+                                            Margin="0,0,10,0"
+                                            Foreground="Gray"
+                                            Kind="ArchiveClockOutline" />
+                                        <TextBlock Text="Sequential control" />
+                                    </StackPanel>
+                                </Button>
+                                <Button Command="{Binding}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon
+                                            Width="24"
+                                            Height="24"
+                                            Margin="0,0,10,0"
+                                            Foreground="Gray"
+                                            Kind="Settings" />
+                                        <TextBlock Text="PID settings" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                        <materialDesign:PopupBox
+                            Grid.RowSpan="2"
+                            Grid.Column="8"
+                            Grid.ColumnSpan="2"
+                            PlacementMode="BottomAndAlignCentres"
+                            PopupMode="Click">
+                            <materialDesign:PopupBox.ToggleContent>
+                                <materialDesign:PackIcon
+                                    Width="20"
+                                    Height="20"
+                                    Foreground="LightYellow"
+                                    Kind="TransitSkip" />
+                            </materialDesign:PopupBox.ToggleContent>
+                            <StackPanel>
+                                <Button
+                                    BorderThickness="0"
+                                    Command="{Binding}"
+                                    Content="Auto By value" />
+                                <Button
+                                    BorderThickness="0"
+                                    Command="{Binding}"
+                                    Content="Auto By range" />
+                                <Button
+                                    BorderThickness="0"
+                                    Command="{Binding}"
+                                    Content="PID settings" />
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+                    </Grid>
+                </Border>
+                <Border
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="10"
+                    Style="{StaticResource BorderRegion}" />
+            </Grid>
+        </TabItem>
+        <TabItem Header="Trend" />
+        <TabItem Header="OverView" />
+    </TabControl>
 </UserControl>
