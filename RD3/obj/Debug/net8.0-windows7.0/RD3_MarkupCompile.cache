@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\PrismTest\RD3\RD3\obj\Debug\net8.0-windows7.0\
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\
 RD3
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-F:\PrismTest\RD3\RD3\App.xaml
-7-407365144
-1-1806851638
-30680357503
-215-1184593659
-Menu\ExpanderStyle.xaml;Views\AboutView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MsgView.xaml;Views\ProgressView.xaml;
+D:\Project\RD3\RD3\App.xaml
+6-670411498
+11294743660
+28199774220
+2151766188339
+Views\AboutView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MsgView.xaml;Views\ProgressView.xaml;
 
 False
 

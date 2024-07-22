@@ -2372,24 +2372,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\zzzc\\.nuget\\packages\\": {},
-    "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages": {}
+    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\PrismTest\\RD3\\RD3\\RD3.csproj",
+      "projectUniqueName": "D:\\Project\\RD3\\RD3\\RD3.csproj",
       "projectName": "RD3",
-      "projectPath": "F:\\PrismTest\\RD3\\RD3\\RD3.csproj",
-      "packagesPath": "C:\\Users\\zzzc\\.nuget\\packages\\",
-      "outputPath": "F:\\PrismTest\\RD3\\RD3\\obj\\",
+      "projectPath": "D:\\Project\\RD3\\RD3\\RD3.csproj",
+      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "outputPath": "D:\\Project\\RD3\\RD3\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\DevExpress 22.2\\Components\\Offline Packages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\zzzc\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 22.2.config",
+        "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2397,15 +2397,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\DevExpress 22.2\\Components\\System\\Components\\Packages": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows7.0",
           "projectReferences": {
-            "F:\\PrismTest\\RD3\\RD3.Shared\\RD3.Shared.csproj": {
-              "projectPath": "F:\\PrismTest\\RD3\\RD3.Shared\\RD3.Shared.csproj"
+            "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj": {
+              "projectPath": "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj"
             }
           }
         }
@@ -2414,6 +2414,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -2460,7 +2465,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

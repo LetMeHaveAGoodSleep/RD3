@@ -61,7 +61,6 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\IndexView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\IndexView.baml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\LayUI.Wpf.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\System.Drawing.Common.dll
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Menu\Expander\ExpanderStyle.baml
 F:\PrismTest\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.exe
 F:\PrismTest\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.deps.json
 F:\PrismTest\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.runtimeconfig.json

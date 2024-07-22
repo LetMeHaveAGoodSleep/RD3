@@ -10,141 +10,1482 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignHeight="700"
+    d:DesignWidth="1350"
     mc:Ignorable="d">
     <UserControl.Resources>
         <cv:IntToBoolConveter x:Key="intToBool" />
+        <Style x:Key="TitleFontSizeStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="34" />
+        </Style>
     </UserControl.Resources>
     <TabControl Margin="10" Style="{StaticResource TabControlInLine}">
         <TabItem Header="Details" IsSelected="True">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20*" />
-                    <ColumnDefinition Width="20*" />
-                    <ColumnDefinition Width="20*" />
-                    <ColumnDefinition Width="20*" />
-                    <ColumnDefinition Width="20*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="20*" />
-                    <RowDefinition Height="20*" />
-                    <RowDefinition Height="20*" />
-                    <RowDefinition Height="20*" />
-                    <RowDefinition Height="40" />
-                </Grid.RowDefinitions>
-                <Border Margin="5" Style="{StaticResource BorderRegion}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="10*" />
-                            <ColumnDefinition Width="10*" />
-                            <ColumnDefinition Width="10*" />
-                            <ColumnDefinition Width="10*" />
-                            <ColumnDefinition Width="10*" />
-                            <ColumnDefinition Width="10*" />
-                            <ColumnDefinition Width="10*" />
-                            <ColumnDefinition Width="10*" />
-                            <ColumnDefinition Width="10*" />
-                            <ColumnDefinition Width="10*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="20*" />
-                            <RowDefinition Height="20*" />
-                            <RowDefinition Height="20*" />
-                            <RowDefinition Height="20*" />
-                            <RowDefinition Height="20*" />
-                            <RowDefinition Height="40" />
-                        </Grid.RowDefinitions>
-                        <TextBlock
-                            Grid.RowSpan="3"
-                            Grid.ColumnSpan="2"
-                            FontSize="14"
-                            Text="pH" />
-                        <materialDesign:PopupBox
-                            Grid.RowSpan="2"
-                            Grid.Column="6"
-                            Grid.ColumnSpan="2"
-                            PlacementMode="BottomAndAlignCentres"
-                            PopupMode="Click">
-                            <materialDesign:PopupBox.ToggleContent>
-                                <materialDesign:PackIcon
-                                    Width="20"
-                                    Height="20"
+            <ScrollViewer Style="{StaticResource ScrollViewerUpDown}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="260" />
+                        <ColumnDefinition Width="260" />
+                        <ColumnDefinition Width="260" />
+                        <ColumnDefinition Width="260" />
+                        <ColumnDefinition Width="260" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="155" />
+                        <RowDefinition Height="85" />
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="150" />
+                        <RowDefinition Height="150" />
+                    </Grid.RowDefinitions>
+                    <StackPanel
+                        Grid.ColumnSpan="5"
+                        Margin="5"
+                        FlowDirection="RightToLeft"
+                        Orientation="Horizontal">
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            Background="#F56C6C"
+                            BorderThickness="1"
+                            Command="{Binding StopCommand}"
+                            ToolTip="Sample">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Stop" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Stop.png" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            BorderThickness="1"
+                            Command="{Binding InoculateCommand}"
+                            ToolTip="Sample">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Inoculate" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Inoculate.png" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            BorderThickness="1"
+                            Command="{Binding LogCommand}"
+                            ToolTip="Sample">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Log" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Log.png" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            BorderThickness="1"
+                            Command="{Binding SampleCommand}"
+                            ToolTip="Sample">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Sample" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Sample.png" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            BorderThickness="1"
+                            Command="{Binding PauseCommand}"
+                            ToolTip="Pause">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Pause" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Pause.png" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <Border
+                        Grid.Row="1"
+                        Grid.RowSpan="5"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="5"
+                        Style="{StaticResource BorderRegion}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <DockPanel>
+                                <TextBlock
+                                    Margin="5,5,0,0"
+                                    DockPanel.Dock="Left"
+                                    FontSize="30"
+                                    Text="Z01" />
+                                <TextBlock
+                                    DockPanel.Dock="Right"
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Foreground="#67C23A"
+                                    Text="Running"
+                                    TextAlignment="Right" />
+                            </DockPanel>
+                            <Grid Grid.Row="1" Margin="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="60" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="50" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="30" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Text="Reactor name"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Text="Z01"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Text="Reactor ID"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Text="1001"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Row="3"
+                                    Text="Serial number"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Text="1"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Row="4"
+                                    Text="Type"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    Text="Unit"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Row="5"
+                                    Text="Status"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Row="5"
+                                    Grid.Column="1"
+                                    Text="Running"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Row="6"
+                                    Text="Batch ID"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Row="6"
+                                    Grid.Column="1"
+                                    Text="24071101"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Row="7"
+                                    Text="Batch name"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Row="7"
+                                    Grid.Column="1"
+                                    Text="G03"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Row="8"
+                                    Text="Affiliated project"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Row="8"
+                                    Grid.Column="1"
+                                    Text="kla"
+                                    TextAlignment="Right" />
+                                <TextBlock
+                                    Grid.Row="9"
+                                    Text="Running time"
+                                    TextAlignment="Left" />
+                                <TextBlock
+                                    Grid.Row="9"
+                                    Grid.Column="1"
+                                    Text="01:02:03"
+                                    TextAlignment="Right" />
+                                <Image
+                                    Grid.Row="3"
+                                    Grid.RowSpan="9"
+                                    Grid.Column="2"
+                                    Margin="10,0,0,0"
+                                    Source="/Images/FermentationTank.png" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.RowSpan="2"
+                        Grid.Column="2"
+                        Margin="5"
+                        Style="{StaticResource BorderRegion}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    FontSize="24"
+                                    Text="Temp" />
+                                <TextBlock
+                                    Margin="3,7,5,5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
                                     Foreground="Gray"
-                                    Kind="GoogleCirclesCommunities" />
-                            </materialDesign:PopupBox.ToggleContent>
-                            <StackPanel>
-                                <Button Command="{Binding}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon
-                                            Width="24"
-                                            Height="24"
-                                            Margin="0,0,10,0"
-                                            Foreground="Gray"
-                                            Kind="Alarm" />
-                                        <TextBlock Text="Alarm value" />
+                                    Text="℃" />
+                                <Label Width="50" BorderThickness="0" />
+                                <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                    <StackPanel>
+                                        <Button Content="Alarm value" />
+                                        <Button Content="Sequential control" />
+                                        <Button Content="PlD settings" />
                                     </StackPanel>
-                                </Button>
-                                <Button Command="{Binding}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon
-                                            Width="24"
-                                            Height="24"
-                                            Margin="0,0,10,0"
-                                            Foreground="Gray"
-                                            Kind="ArchiveClockOutline" />
-                                        <TextBlock Text="Sequential control" />
-                                    </StackPanel>
-                                </Button>
-                                <Button Command="{Binding}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <materialDesign:PackIcon
-                                            Width="24"
-                                            Height="24"
-                                            Margin="0,0,10,0"
-                                            Foreground="Gray"
-                                            Kind="Settings" />
-                                        <TextBlock Text="PID settings" />
-                                    </StackPanel>
-                                </Button>
+                                </materialDesign:PopupBox>
+                                <Label
+                                    Height="24"
+                                    HorizontalContentAlignment="Right"
+                                    Background="#F5D462"
+                                    Content="Fixed"
+                                    FontSize="10"
+                                    Foreground="WhiteSmoke" />
                             </StackPanel>
-                        </materialDesign:PopupBox>
-                        <materialDesign:PopupBox
-                            Grid.RowSpan="2"
-                            Grid.Column="8"
-                            Grid.ColumnSpan="2"
-                            PlacementMode="BottomAndAlignCentres"
-                            PopupMode="Click">
-                            <materialDesign:PopupBox.ToggleContent>
-                                <materialDesign:PackIcon
-                                    Width="20"
-                                    Height="20"
-                                    Foreground="LightYellow"
-                                    Kind="TransitSkip" />
-                            </materialDesign:PopupBox.ToggleContent>
-                            <StackPanel>
-                                <Button
-                                    BorderThickness="0"
-                                    Command="{Binding}"
-                                    Content="Auto By value" />
-                                <Button
-                                    BorderThickness="0"
-                                    Command="{Binding}"
-                                    Content="Auto By range" />
-                                <Button
-                                    BorderThickness="0"
-                                    Command="{Binding}"
-                                    Content="PID settings" />
+                            <Grid Grid.Row="1" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.ColumnSpan="3">
+                                    <CheckBox
+                                        Margin="0,10,0,0"
+                                        Content="Heating"
+                                        IsChecked="True" />
+                                    <CheckBox
+                                        Margin="0,10,0,0"
+                                        Content="Cooling"
+                                        IsChecked="True" />
+                                </StackPanel>
+                                <Label
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Left"
+                                    Background="#F5F7FA"
+                                    BorderBrush="LightGray"
+                                    BorderThickness="1"
+                                    Content="37.0" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Style="{StaticResource TitleFontSizeStyle}"
+                                    Text="36.9" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <Border
+                        Grid.Row="3"
+                        Grid.RowSpan="2"
+                        Grid.Column="2"
+                        Margin="5"
+                        Style="{StaticResource BorderRegion}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    FontSize="24"
+                                    Text="Agit" />
+                                <TextBlock
+                                    Margin="3,7,5,5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Foreground="Gray"
+                                    Text="rpm" />
+                                <Label Width="50" BorderThickness="0" />
+                                <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                    <StackPanel>
+                                        <Button Content="Alarm value" />
+                                        <Button Content="Sequential control" />
+                                        <Button Content="PlD settings" />
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                                <Label
+                                    Height="24"
+                                    HorizontalContentAlignment="Right"
+                                    Background="#F5D462"
+                                    Content="Fixed"
+                                    FontSize="10"
+                                    Foreground="WhiteSmoke" />
                             </StackPanel>
-                        </materialDesign:PopupBox>
-                    </Grid>
-                </Border>
-                <Border
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Margin="10"
-                    Style="{StaticResource BorderRegion}" />
-            </Grid>
+                            <Grid Grid.Row="1" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal">
+                                    <materialDesign:PackIcon Foreground="Gray" Kind="Link" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        FontSize="12"
+                                        Foreground="Gray"
+                                        Text="DO" />
+                                </StackPanel>
+                                <Label
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Left"
+                                    Background="#F5F7FA"
+                                    BorderBrush="LightGray"
+                                    BorderThickness="1"
+                                    Content="1200" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Style="{StaticResource TitleFontSizeStyle}"
+                                    Text="1200" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <Border
+                        Grid.Row="5"
+                        Grid.Column="2"
+                        Margin="5"
+                        Padding="5"
+                        Style="{StaticResource BorderRegion}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="35" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    FontSize="22"
+                                    Text="Inoculate" />
+                                <TextBlock
+                                    Margin="3,7,0,5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Foreground="Gray"
+                                    Text="mL/h" />
+                                <Label Width="0" BorderThickness="0" />
+                                <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                    <StackPanel>
+                                        <Button Content="Alarm value" />
+                                        <Button Content="Sequential control" />
+                                        <Button Content="PlD settings" />
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                                <Label
+                                    Height="24"
+                                    HorizontalContentAlignment="Right"
+                                    Background="LightGray"
+                                    Content="Disabled"
+                                    FontSize="10"
+                                    Foreground="WhiteSmoke" />
+                            </StackPanel>
+                            <Grid Grid.Row="1" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+                                <Label
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Left"
+                                    Background="#F5F7FA"
+                                    BorderBrush="LightGray"
+                                    BorderThickness="1"
+                                    Content="50.0" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Style="{StaticResource TitleFontSizeStyle}"
+                                    Text="0" />
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Vertical">
+                                    <Label
+                                        BorderThickness="0"
+                                        Content="Consumed:"
+                                        FontSize="10" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label
+                                            Margin="5"
+                                            HorizontalAlignment="Left"
+                                            BorderThickness="0"
+                                            Content="0"
+                                            FontSize="10" />
+                                        <Label
+                                            Margin="5"
+                                            HorizontalAlignment="Left"
+                                            BorderThickness="0"
+                                            Content="mL"
+                                            FontSize="10" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.RowSpan="2"
+                        Grid.Column="3"
+                        Margin="5"
+                        Style="{StaticResource BorderRegion}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    FontSize="24"
+                                    Text="pH" />
+                                <TextBlock
+                                    Margin="3,7,5,5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Foreground="Gray"
+                                    Text="" />
+                                <Label Width="90" BorderThickness="0" />
+                                <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                    <StackPanel>
+                                        <Button Content="Alarm value" />
+                                        <Button Content="Sequential control" />
+                                        <Button Content="PlD settings" />
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                                <Label
+                                    Height="24"
+                                    HorizontalContentAlignment="Right"
+                                    Background="#F5D462"
+                                    Content="Fixed"
+                                    FontSize="10"
+                                    Foreground="WhiteSmoke" />
+                            </StackPanel>
+                            <Grid Grid.Row="1" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal">
+                                    <materialDesign:PackIcon Foreground="Gray" Kind="Link" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        FontSize="12"
+                                        Foreground="Gray"
+                                        Text="Base,Agit" />
+                                </StackPanel>
+                                <Label
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Left"
+                                    Background="#F5F7FA"
+                                    BorderBrush="LightGray"
+                                    BorderThickness="1"
+                                    Content="7.10" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Style="{StaticResource TitleFontSizeStyle}"
+                                    Text="7.53" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <Border
+                        Grid.Row="3"
+                        Grid.RowSpan="2"
+                        Grid.Column="3"
+                        Margin="5"
+                        Style="{StaticResource BorderRegion}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    FontSize="24"
+                                    Text="DO" />
+                                <TextBlock
+                                    Margin="3,7,5,5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Foreground="Gray"
+                                    Text="%" />
+                                <Label Width="55" BorderThickness="0" />
+                                <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                    <StackPanel>
+                                        <Button Content="Alarm value" />
+                                        <Button Content="Sequential control" />
+                                        <Button Content="PlD settings" />
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                                <Label
+                                    Height="24"
+                                    HorizontalContentAlignment="Right"
+                                    Background="#99CBFF"
+                                    Content="Associated"
+                                    FontSize="10"
+                                    Foreground="WhiteSmoke" />
+                            </StackPanel>
+                            <Grid Grid.Row="1" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="20" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="65" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.ColumnSpan="3" Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Foreground="Gray" Kind="Link" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            FontSize="12"
+                                            Foreground="Gray"
+                                            Text="Agit,Air,Feed" />
+                                    </StackPanel>
+                                    <RadioButton
+                                        Margin="0,5,5,0"
+                                        HorizontalAlignment="Left"
+                                        Content="Direct" />
+                                    <RadioButton
+                                        Margin="0,5,0,0"
+                                        HorizontalAlignment="Left"
+                                        Content="Reverse" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="2" Orientation="Vertical">
+                                    <Label
+                                        Grid.Row="2"
+                                        HorizontalAlignment="Left"
+                                        Background="#F5F7FA"
+                                        BorderBrush="LightGray"
+                                        BorderThickness="1"
+                                        Content="80.0" />
+                                    <Label
+                                        Margin="0,5,0,0"
+                                        HorizontalAlignment="Left"
+                                        Background="#F5F7FA"
+                                        BorderBrush="LightGray"
+                                        BorderThickness="1"
+                                        Content="30.0" />
+                                </StackPanel>
+
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Style="{StaticResource TitleFontSizeStyle}"
+                                    Text="53.8" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <Border
+                        Grid.Row="7"
+                        Grid.Column="3"
+                        Margin="5"
+                        Padding="5"
+                        Style="{StaticResource BorderRegion}">
+                        <TabControl TabStripPlacement="Left">
+                            <hc:TabItem Header="Air" IsSelected="True">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            FontSize="22"
+                                            Text="Air" />
+                                        <TextBlock
+                                            Margin="3,7,0,5"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            FontSize="12"
+                                            Foreground="Gray"
+                                            Text="L/min" />
+                                        <Label Width="10" BorderThickness="0" />
+                                        <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                            <StackPanel>
+                                                <Button Content="Alarm value" />
+                                                <Button Content="Sequential control" />
+                                                <Button Content="PlD settings" />
+                                            </StackPanel>
+                                        </materialDesign:PopupBox>
+                                        <Label
+                                            Height="24"
+                                            HorizontalContentAlignment="Right"
+                                            Background="LightGray"
+                                            Content="Disabled"
+                                            FontSize="10"
+                                            Foreground="WhiteSmoke" />
+                                    </StackPanel>
+                                    <Grid Grid.Row="1" Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="75" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="30" />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Foreground="Gray" Kind="Link" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                FontSize="12"
+                                                Foreground="Gray"
+                                                Text="DO" />
+                                        </StackPanel>
+                                        <Label
+                                            Grid.Row="2"
+                                            HorizontalAlignment="Left"
+                                            Background="#F5F7FA"
+                                            BorderBrush="LightGray"
+                                            BorderThickness="1"
+                                            Content="0.0" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.RowSpan="3"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Bottom"
+                                            Style="{StaticResource TitleFontSizeStyle}"
+                                            Text="1.0" />
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="2"
+                                            VerticalAlignment="Bottom"
+                                            Orientation="Vertical">
+                                            <Label
+                                                BorderThickness="0"
+                                                Content="Consumed:"
+                                                FontSize="10" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label
+                                                    Margin="5"
+                                                    HorizontalAlignment="Left"
+                                                    BorderThickness="0"
+                                                    Content="0"
+                                                    FontSize="10" />
+                                                <Label
+                                                    Margin="5"
+                                                    HorizontalAlignment="Left"
+                                                    BorderThickness="0"
+                                                    Content="mL"
+                                                    FontSize="10" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </hc:TabItem>
+                            <hc:TabItem Header="CO2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            FontSize="22"
+                                            Text="CO2" />
+                                        <TextBlock
+                                            Margin="3,7,0,5"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            FontSize="12"
+                                            Foreground="Gray"
+                                            Text="L/min" />
+                                        <Label Width="0" BorderThickness="0" />
+                                        <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                            <StackPanel>
+                                                <Button Content="Alarm value" />
+                                                <Button Content="Sequential control" />
+                                                <Button Content="PlD settings" />
+                                            </StackPanel>
+                                        </materialDesign:PopupBox>
+                                        <Label
+                                            Height="24"
+                                            HorizontalContentAlignment="Right"
+                                            Background="LightGray"
+                                            Content="Disabled"
+                                            FontSize="10"
+                                            Foreground="WhiteSmoke" />
+                                    </StackPanel>
+                                    <Grid Grid.Row="1" Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="75" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="30" />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Foreground="Gray" Kind="Link" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                FontSize="12"
+                                                Foreground="Gray"
+                                                Text="DO" />
+                                        </StackPanel>
+                                        <Label
+                                            Grid.Row="2"
+                                            HorizontalAlignment="Left"
+                                            Background="#F5F7FA"
+                                            BorderBrush="LightGray"
+                                            BorderThickness="1"
+                                            Content="0.0" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.RowSpan="3"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Bottom"
+                                            Style="{StaticResource TitleFontSizeStyle}"
+                                            Text="1.0" />
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="2"
+                                            VerticalAlignment="Bottom"
+                                            Orientation="Vertical">
+                                            <Label
+                                                BorderThickness="0"
+                                                Content="Consumed:"
+                                                FontSize="10" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label
+                                                    Margin="5"
+                                                    HorizontalAlignment="Left"
+                                                    BorderThickness="0"
+                                                    Content="0"
+                                                    FontSize="10" />
+                                                <Label
+                                                    Margin="5"
+                                                    HorizontalAlignment="Left"
+                                                    BorderThickness="0"
+                                                    Content="mL"
+                                                    FontSize="10" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </hc:TabItem>
+                            <hc:TabItem Header="O2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            FontSize="22"
+                                            Text="O2" />
+                                        <TextBlock
+                                            Margin="3,7,0,5"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            FontSize="12"
+                                            Foreground="Gray"
+                                            Text="L/min" />
+                                        <Label Width="10" BorderThickness="0" />
+                                        <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                            <StackPanel>
+                                                <Button Content="Alarm value" />
+                                                <Button Content="Sequential control" />
+                                                <Button Content="PlD settings" />
+                                            </StackPanel>
+                                        </materialDesign:PopupBox>
+                                        <Label
+                                            Height="24"
+                                            HorizontalContentAlignment="Right"
+                                            Background="LightGray"
+                                            Content="Disabled"
+                                            FontSize="10"
+                                            Foreground="WhiteSmoke" />
+                                    </StackPanel>
+                                    <Grid Grid.Row="1" Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="75" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="30" />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Foreground="Gray" Kind="Link" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                FontSize="12"
+                                                Foreground="Gray"
+                                                Text="DO" />
+                                        </StackPanel>
+                                        <Label
+                                            Grid.Row="2"
+                                            HorizontalAlignment="Left"
+                                            Background="#F5F7FA"
+                                            BorderBrush="LightGray"
+                                            BorderThickness="1"
+                                            Content="0.0" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.RowSpan="3"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Bottom"
+                                            Style="{StaticResource TitleFontSizeStyle}"
+                                            Text="1.0" />
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="2"
+                                            VerticalAlignment="Bottom"
+                                            Orientation="Vertical">
+                                            <Label
+                                                BorderThickness="0"
+                                                Content="Consumed:"
+                                                FontSize="10" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label
+                                                    Margin="5"
+                                                    HorizontalAlignment="Left"
+                                                    BorderThickness="0"
+                                                    Content="0"
+                                                    FontSize="10" />
+                                                <Label
+                                                    Margin="5"
+                                                    HorizontalAlignment="Left"
+                                                    BorderThickness="0"
+                                                    Content="mL"
+                                                    FontSize="10" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </hc:TabItem>
+                            <hc:TabItem Header="N2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="5"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            FontSize="22"
+                                            Text="N2" />
+                                        <TextBlock
+                                            Margin="3,7,0,5"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            FontSize="12"
+                                            Foreground="Gray"
+                                            Text="L/min" />
+                                        <Label Width="10" BorderThickness="0" />
+                                        <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                            <StackPanel>
+                                                <Button Content="Alarm value" />
+                                                <Button Content="Sequential control" />
+                                                <Button Content="PlD settings" />
+                                            </StackPanel>
+                                        </materialDesign:PopupBox>
+                                        <Label
+                                            Height="24"
+                                            HorizontalContentAlignment="Right"
+                                            Background="LightGray"
+                                            Content="Disabled"
+                                            FontSize="10"
+                                            Foreground="WhiteSmoke" />
+                                    </StackPanel>
+                                    <Grid Grid.Row="1" Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="75" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="20" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="30" />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Orientation="Horizontal">
+                                            <materialDesign:PackIcon Foreground="Gray" Kind="Link" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                FontSize="12"
+                                                Foreground="Gray"
+                                                Text="DO" />
+                                        </StackPanel>
+                                        <Label
+                                            Grid.Row="2"
+                                            HorizontalAlignment="Left"
+                                            Background="#F5F7FA"
+                                            BorderBrush="LightGray"
+                                            BorderThickness="1"
+                                            Content="0.0" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.RowSpan="3"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Bottom"
+                                            Style="{StaticResource TitleFontSizeStyle}"
+                                            Text="1.0" />
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            Grid.RowSpan="2"
+                                            Grid.Column="2"
+                                            VerticalAlignment="Bottom"
+                                            Orientation="Vertical">
+                                            <Label
+                                                BorderThickness="0"
+                                                Content="Consumed:"
+                                                FontSize="10" />
+                                            <StackPanel Orientation="Horizontal">
+                                                <Label
+                                                    Margin="5"
+                                                    HorizontalAlignment="Left"
+                                                    BorderThickness="0"
+                                                    Content="0"
+                                                    FontSize="10" />
+                                                <Label
+                                                    Margin="5"
+                                                    HorizontalAlignment="Left"
+                                                    BorderThickness="0"
+                                                    Content="mL"
+                                                    FontSize="10" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </hc:TabItem>
+                        </TabControl>
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="4"
+                        Margin="5"
+                        Padding="5"
+                        Style="{StaticResource BorderRegion}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    FontSize="22"
+                                    Text="Base" />
+                                <TextBlock
+                                    Margin="3,7,0,5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Foreground="Gray"
+                                    Text="mL/h" />
+                                <Label Width="40" BorderThickness="0" />
+                                <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                    <StackPanel>
+                                        <Button Content="Alarm value" />
+                                        <Button Content="Sequential control" />
+                                        <Button Content="PlD settings" />
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                                <Label
+                                    Height="24"
+                                    HorizontalContentAlignment="Right"
+                                    Background="#99CBFF"
+                                    Content="Associated"
+                                    FontSize="10"
+                                    Foreground="WhiteSmoke" />
+                            </StackPanel>
+                            <Grid Grid.Row="1" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal">
+                                    <materialDesign:PackIcon Foreground="Gray" Kind="Link" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        FontSize="12"
+                                        Foreground="Gray"
+                                        Text="pH" />
+                                </StackPanel>
+                                <Label
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Left"
+                                    Background="#F5F7FA"
+                                    BorderBrush="LightGray"
+                                    BorderThickness="1"
+                                    Content="Auto" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Style="{StaticResource TitleFontSizeStyle}"
+                                    Text="149.6" />
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Vertical">
+                                    <Label
+                                        BorderThickness="0"
+                                        Content="Consumed:"
+                                        FontSize="10" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label
+                                            HorizontalAlignment="Left"
+                                            BorderThickness="0"
+                                            Content="55.3"
+                                            FontSize="10" />
+                                        <Label
+                                            HorizontalAlignment="Left"
+                                            BorderThickness="0"
+                                            Content="mL"
+                                            FontSize="10" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <Border
+                        Grid.Row="2"
+                        Grid.RowSpan="2"
+                        Grid.Column="4"
+                        Margin="5"
+                        Padding="5"
+                        Style="{StaticResource BorderRegion}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    FontSize="22"
+                                    Text="Acid" />
+                                <TextBlock
+                                    Margin="3,7,0,5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Foreground="Gray"
+                                    Text="mL/h" />
+                                <Label Width="60" BorderThickness="0" />
+                                <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                    <StackPanel>
+                                        <Button Content="Alarm value" />
+                                        <Button Content="Sequential control" />
+                                        <Button Content="PlD settings" />
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                                <Label
+                                    Height="24"
+                                    HorizontalContentAlignment="Right"
+                                    Background="#F5D462"
+                                    Content="Fixed"
+                                    FontSize="10"
+                                    Foreground="WhiteSmoke" />
+                            </StackPanel>
+                            <Grid Grid.Row="1" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal">
+                                    <materialDesign:PackIcon Foreground="Gray" Kind="Link" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        FontSize="12"
+                                        Foreground="Gray"
+                                        Text="pH" />
+                                </StackPanel>
+                                <Label
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Left"
+                                    Background="#F5F7FA"
+                                    BorderBrush="LightGray"
+                                    BorderThickness="1"
+                                    Content="30.0" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Style="{StaticResource TitleFontSizeStyle}"
+                                    Text="30.5" />
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Vertical">
+                                    <Label
+                                        BorderThickness="0"
+                                        Content="Consumed:"
+                                        FontSize="10" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label
+                                            HorizontalAlignment="Left"
+                                            BorderThickness="0"
+                                            Content="165.1"
+                                            FontSize="10" />
+                                        <Label
+                                            HorizontalAlignment="Left"
+                                            BorderThickness="0"
+                                            Content="mL"
+                                            FontSize="10" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <Border
+                        Grid.Row="4"
+                        Grid.Column="4"
+                        Margin="5"
+                        Padding="5"
+                        Style="{StaticResource BorderRegion}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    FontSize="22"
+                                    Text="Feed" />
+                                <TextBlock
+                                    Margin="3,7,0,5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Foreground="Gray"
+                                    Text="mL/h" />
+                                <Label Width="40" BorderThickness="0" />
+                                <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                    <StackPanel>
+                                        <Button Content="Alarm value" />
+                                        <Button Content="Sequential control" />
+                                        <Button Content="PlD settings" />
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                                <Label
+                                    Height="24"
+                                    HorizontalContentAlignment="Right"
+                                    Background="LightGray"
+                                    Content="Disabled"
+                                    FontSize="10"
+                                    Foreground="WhiteSmoke" />
+                            </StackPanel>
+                            <Grid Grid.Row="1" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.ColumnSpan="3" Orientation="Horizontal">
+                                    <materialDesign:PackIcon Foreground="Gray" Kind="Link" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        FontSize="12"
+                                        Foreground="Gray"
+                                        Text="pH" />
+                                </StackPanel>
+                                <Label
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Left"
+                                    Background="#F5F7FA"
+                                    BorderBrush="LightGray"
+                                    BorderThickness="1"
+                                    Content="50.0" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Style="{StaticResource TitleFontSizeStyle}"
+                                    Text="0" />
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Vertical">
+                                    <Label
+                                        BorderThickness="0"
+                                        Content="Consumed:"
+                                        FontSize="10" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label
+                                            HorizontalAlignment="Left"
+                                            BorderThickness="0"
+                                            Content="0"
+                                            FontSize="10" />
+                                        <Label
+                                            HorizontalAlignment="Left"
+                                            BorderThickness="0"
+                                            Content="mL"
+                                            FontSize="10" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <Border
+                        Grid.Row="5"
+                        Grid.Column="4"
+                        Margin="5"
+                        Padding="5"
+                        Style="{StaticResource BorderRegion}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    FontSize="22"
+                                    Text="AF" />
+                                <TextBlock
+                                    Margin="3,7,0,5"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontSize="12"
+                                    Foreground="Gray"
+                                    Text="mL/h" />
+                                <Label Width="60" BorderThickness="0" />
+                                <materialDesign:PopupBox PlacementMode="BottomAndAlignCentres" ToolTipService.Placement="Right">
+                                    <StackPanel>
+                                        <Button Content="Alarm value" />
+                                        <Button Content="Sequential control" />
+                                        <Button Content="PlD settings" />
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                                <Label
+                                    Height="24"
+                                    HorizontalContentAlignment="Right"
+                                    Background="#99CBFF"
+                                    Content="Associated"
+                                    FontSize="10"
+                                    Foreground="WhiteSmoke" />
+                            </StackPanel>
+                            <Grid Grid.Row="1" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+                                <Label
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Left"
+                                    Background="#F5F7FA"
+                                    BorderBrush="LightGray"
+                                    BorderThickness="1"
+                                    Content="Auto" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Bottom"
+                                    Style="{StaticResource TitleFontSizeStyle}"
+                                    Text="103.3" />
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Vertical">
+                                    <Label
+                                        BorderThickness="0"
+                                        Content="Consumed:"
+                                        FontSize="10" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label
+                                            HorizontalAlignment="Left"
+                                            BorderThickness="0"
+                                            Content="420.2"
+                                            FontSize="10" />
+                                        <Label
+                                            HorizontalAlignment="Left"
+                                            BorderThickness="0"
+                                            Content="mL"
+                                            FontSize="10" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </ScrollViewer>
         </TabItem>
         <TabItem Header="Trend" />
         <TabItem Header="OverView" />

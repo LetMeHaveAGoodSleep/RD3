@@ -13,8 +13,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     Title="MainWindow"
-    Width="1280"
-    Height="768"
+    Width="1600"
+    Height="900"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowsTransparency="True"
     Background="{DynamicResource MaterialDesignPaper}"
@@ -34,14 +34,13 @@
         Identifier="Root">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="188" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid Background="{StaticResource PrimaryMenuBrush}">
+            <Grid Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="70" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="326*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="27*" />
@@ -49,301 +48,146 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel
                     Grid.ColumnSpan="2"
-                    Margin="15,0,0,0"
+                    Background="Transparent"
                     Orientation="Horizontal">
                     <Image
-                        Width="48"
-                        Height="48"
-                        Margin="15,10,5,10"
-                        Source="/Images/logo.png" />
+                        Width="40"
+                        Height="40"
+                        Margin="10,10,5,10"
+                        Source="/Assets/logo.png" />
                     <StackPanel Margin="10" Orientation="Vertical">
                         <TextBlock
                             Width="80"
                             Margin="5"
-                            FontSize="20"
-                            Foreground="WhiteSmoke"
+                            FontSize="18"
                             Text="XinZao"
                             TextAlignment="Left"
                             TextWrapping="Wrap" />
-                        <TextBlock
-                            FontSize="12"
-                            Foreground="WhiteSmoke"
-                            Text="Biotech Co.LTD" />
+                        <TextBlock FontSize="10" Text="Biotech Co.LTD" />
                     </StackPanel>
                 </StackPanel>
-                <Rectangle
-                    Grid.Row="1"
-                    Grid.ColumnSpan="2"
-                    Height="1"
-                    Margin="0,10,0,5"
-                    Fill="{StaticResource PrimarySeparatorBrush}" />
-                <!--<ScrollViewer
+                <hc:TransitioningContentControl
                     Grid.Row="2"
                     Grid.ColumnSpan="2"
-                    Background="{StaticResource PrimaryMenuBrush}"
-                    HorizontalScrollBarVisibility="Disabled"
-                    VerticalScrollBarVisibility="Auto">
-                    <ItemsControl
-                        Padding="0"
+                    Background="Transparent">
+                    <hc:SideMenu
+                        hc:AutoSelect="False"
+                        hc:ExpandMode="Freedom"
                         Background="Transparent"
-                        BorderThickness="0"
-                        ItemTemplateSelector="{DynamicResource MenuItemSelector}"
-                        ItemsSource="{Binding MenuItemList}">
-                        <ItemsControl.Resources>
-                            <Selector:MenuItemDataTemplateSelector x:Key="MenuItemSelector" />
-                            <DataTemplate x:Key="MenuItemsDataTemplate">
-                                <Lay:LayNavExpander
-                                    Padding="10,0"
-                                    Header="{Binding ItemTitle}"
-                                    IsExpanded="{Binding IsSelected}">
-                                    <ItemsControl
-                                        Background="{StaticResource PrimaryMenuBrush}"
-                                        ItemTemplateSelector="{DynamicResource MenuItemSelector}"
-                                        ItemsSource="{Binding Data}">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                    </ItemsControl>
-                                </Lay:LayNavExpander>
-                            </DataTemplate>
-                            <DataTemplate x:Key="MenuItemDataTemplate">
-                                <RadioButton
-                                    Height="40"
-                                    Padding="20,0"
-                                    Command="{Binding GoPageCommand}"
-                                    CommandParameter="{Binding}"
-                                    Content="{Binding ItemTitle}"
-                                    FocusVisualStyle="{x:Null}"
-                                    Foreground="White"
-                                    GroupName="Item"
-                                    IsChecked="{Binding IsSelected}">
-                                    <RadioButton.Template>
-                                        <ControlTemplate TargetType="RadioButton">
-                                            <ControlTemplate.Resources>
-                                                <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
-                                            </ControlTemplate.Resources>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <Border
-                                                    x:Name="bg"
-                                                    Grid.ColumnSpan="2"
-                                                    Background="Transparent" />
-                                                <Grid
-                                                    x:Name="line"
-                                                    Width="5"
-                                                    HorizontalAlignment="Left"
-                                                    Background="Transparent"
-                                                    Opacity="0" />
-                                                <ContentPresenter
-                                                    x:Name="dataContent"
-                                                    Margin="{TemplateBinding Padding}"
-                                                    HorizontalAlignment="Left"
-                                                    VerticalAlignment="Center"
-                                                    IsHitTestVisible="True"
-                                                    Opacity="0.7" />
-                                                <Grid Grid.Column="1" Visibility="{Binding IsNew, Converter={StaticResource BooleanToVisibility}}">
-                                                    <Border
-                                                        Height="20"
-                                                        Margin="5,0"
-                                                        VerticalAlignment="Center"
-                                                        Background="Red"
-                                                        CornerRadius="10" />
-                                                    <TextBlock
-                                                        Margin="15,0"
-                                                        VerticalAlignment="Center"
-                                                        Text="new" />
-                                                </Grid>
-                                            </Grid>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter TargetName="dataContent" Property="Opacity" Value="1" />
-                                                    <Trigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation
-                                                                    Storyboard.TargetName="line"
-                                                                    Storyboard.TargetProperty="Opacity"
-                                                                    To="1"
-                                                                    Duration="0:0:0.3" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.EnterActions>
-                                                    <Trigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation
-                                                                    Storyboard.TargetName="line"
-                                                                    Storyboard.TargetProperty="Opacity"
-                                                                    To="0"
-                                                                    Duration="0:0:0.3" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.ExitActions>
-                                                </Trigger>
-                                                <Trigger Property="IsChecked" Value="true">
-                                                    <Setter TargetName="bg" Property="Background" Value="TransParent" />
-                                                    <Setter TargetName="dataContent" Property="Opacity" Value="1" />
-                                                    <Setter TargetName="dataContent" Property="Opacity" Value="1" />
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </RadioButton.Template>
-                                </RadioButton>
-                            </DataTemplate>
-                        </ItemsControl.Resources>
-                    </ItemsControl>
-                </ScrollViewer>-->
-                <hc:SideMenu
-                    Grid.Row="2"
-                    Grid.ColumnSpan="2"
-                    Margin="20,10,0,5"
-                    hc:AutoSelect="False"
-                    hc:ExpandMode="Freedom"
-                    Background="Transparent"
-                    BorderThickness="0">
-                    <hc:Interaction.Triggers>
-                        <hc:EventTrigger EventName="SelectionChanged">
-                            <hc:EventToCommand Command="{Binding SwitchItemCmd}" PassEventArgsToCommand="True" />
-                        </hc:EventTrigger>
-                    </hc:Interaction.Triggers>
-                    <hc:SideMenuItem
-                        Background="{StaticResource PrimaryMenuBrush}"
-                        FontSize="22"
-                        Foreground="WhiteSmoke"
-                        Header="Home">
-                        <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon
-                                Width="36"
-                                Height="36"
-                                Kind="Home" />
-                        </hc:SideMenuItem.Icon>
-                    </hc:SideMenuItem>
-                    <hc:SideMenuItem
-                        Background="{StaticResource PrimaryMenuBrush}"
-                        FontSize="22"
-                        Foreground="WhiteSmoke"
-                        Header="Projects">
-                        <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon
-                                Width="36"
-                                Height="36"
-                                Kind="FolderOpen" />
-                        </hc:SideMenuItem.Icon>
-                    </hc:SideMenuItem>
-                    <hc:SideMenuItem
-                        Background="{StaticResource PrimaryMenuBrush}"
-                        FontSize="22"
-                        Foreground="WhiteSmoke"
-                        Header="Data">
-                        <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon
-                                Width="36"
-                                Height="36"
-                                Kind="Database" />
-                        </hc:SideMenuItem.Icon>
-                        <hc:SideMenuItem
-                            Background="{StaticResource PrimaryMenuBrush}"
-                            Command="{Binding SelectCmd}"
-                            CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
-                            Foreground="WhiteSmoke"
-                            Header="Batches">
+                        BorderThickness="0">
+                        <hc:Interaction.Triggers>
+                            <hc:EventTrigger EventName="SelectionChanged">
+                                <hc:EventToCommand Command="{Binding SwitchItemCmd}" PassEventArgsToCommand="True" />
+                            </hc:EventTrigger>
+                        </hc:Interaction.Triggers>
+                        <hc:SideMenuItem FontSize="20" Header="Home">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon
-                                    Width="36"
-                                    Height="36"
-                                    Kind="Database" />
+                                <Image
+                                    Width="22"
+                                    Height="22"
+                                    Source="/Images/SideMenu/Home.png" />
+                            </hc:SideMenuItem.Icon>
+
+                        </hc:SideMenuItem>
+                        <hc:SideMenuItem FontSize="20" Header="Projects">
+                            <hc:SideMenuItem.Icon>
+                                <Image
+                                    Width="22"
+                                    Height="22"
+                                    Source="/Images/SideMenu/Projects.png" />
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
-                        <hc:SideMenuItem
-                            Background="{StaticResource PrimaryMenuBrush}"
-                            Command="{Binding SelectCmd}"
-                            CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
-                            Foreground="WhiteSmoke"
-                            Header="Events">
+                        <hc:SideMenuItem FontSize="20" Header="Data">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon
-                                    Width="36"
-                                    Height="36"
-                                    Kind="Database" />
+                                <Image
+                                    Width="22"
+                                    Height="22"
+                                    Source="/Images/SideMenu/Data.png" />
+                            </hc:SideMenuItem.Icon>
+                            <hc:SideMenuItem
+                                Command="{Binding SelectCmd}"
+                                CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
+                                FontSize="20"
+                                Header="Batches">
+                                <hc:SideMenuItem.Icon>
+                                    <materialDesign:PackIcon
+                                        Width="22"
+                                        Height="22"
+                                        Kind="Database" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem
+                                Command="{Binding SelectCmd}"
+                                CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
+                                FontSize="20"
+                                Header="Events">
+                                <hc:SideMenuItem.Icon>
+                                    <materialDesign:PackIcon
+                                        Width="22"
+                                        Height="22"
+                                        Kind="Database" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem
+                                Command="{Binding SelectCmd}"
+                                CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
+                                FontSize="20"
+                                Header="Samples">
+                                <hc:SideMenuItem.Icon>
+                                    <materialDesign:PackIcon
+                                        Width="36"
+                                        Height="36"
+                                        Kind="Database" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem
+                                Command="{Binding SelectCmd}"
+                                CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
+                                FontSize="20"
+                                Header="Database">
+                                <hc:SideMenuItem.Icon>
+                                    <materialDesign:PackIcon
+                                        Width="36"
+                                        Height="36"
+                                        Kind="Database" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                        </hc:SideMenuItem>
+                        <hc:SideMenuItem FontSize="20" Header="Control">
+                            <hc:SideMenuItem.Icon>
+                                <Image
+                                    Width="24"
+                                    Height="24"
+                                    Source="/Images/SideMenu/Control.png" />
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
-                        <hc:SideMenuItem
-                            Background="{StaticResource PrimaryMenuBrush}"
-                            Command="{Binding SelectCmd}"
-                            CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
-                            Foreground="WhiteSmoke"
-                            Header="Samples">
+                        <hc:SideMenuItem FontSize="20" Header="Advance">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon
-                                    Width="36"
-                                    Height="36"
-                                    Kind="Database" />
+                                <Image
+                                    Width="24"
+                                    Height="24"
+                                    Source="/Images/SideMenu/Advance.png" />
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
-                        <hc:SideMenuItem
-                            Background="{StaticResource PrimaryMenuBrush}"
-                            Command="{Binding SelectCmd}"
-                            CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
-                            Foreground="WhiteSmoke"
-                            Header="Database">
+                        <hc:SideMenuItem FontSize="20" Header="Settings">
                             <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon
+                                <Image
                                     Width="36"
                                     Height="36"
-                                    Kind="Database" />
+                                    Source="/Images/SideMenu/Settings.png" />
                             </hc:SideMenuItem.Icon>
                         </hc:SideMenuItem>
-                    </hc:SideMenuItem>
-                    <hc:SideMenuItem
-                        Background="{StaticResource PrimaryMenuBrush}"
-                        FontSize="22"
-                        Foreground="WhiteSmoke"
-                        Header="Control">
-                        <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon
-                                Width="36"
-                                Height="36"
-                                Kind="AlphaCBoxOutline" />
-                        </hc:SideMenuItem.Icon>
-                    </hc:SideMenuItem>
-                    <hc:SideMenuItem
-                        Background="{StaticResource PrimaryMenuBrush}"
-                        FontSize="22"
-                        Foreground="WhiteSmoke"
-                        Header="Advance">
-                        <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon
-                                Width="36"
-                                Height="36"
-                                Kind="ViewGridOutline" />
-                        </hc:SideMenuItem.Icon>
-                    </hc:SideMenuItem>
-                    <hc:SideMenuItem
-                        Background="{StaticResource PrimaryMenuBrush}"
-                        FontSize="22"
-                        Foreground="WhiteSmoke"
-                        Header="Settings">
-                        <hc:SideMenuItem.Icon>
-                            <materialDesign:PackIcon
-                                Width="36"
-                                Height="36"
-                                Kind="CogOutline" />
-                        </hc:SideMenuItem.Icon>
-                    </hc:SideMenuItem>
-                </hc:SideMenu>
+                    </hc:SideMenu>
+                </hc:TransitioningContentControl>
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50" />
+                    <RowDefinition Height="70" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackPanel
                     Name="WindowHeader"
+                    Background="White"
                     FlowDirection="RightToLeft"
                     Orientation="Horizontal">
                     <Button
@@ -384,6 +228,19 @@
                             Height="24"
                             Foreground="Gray"
                             Kind="Minus" />
+                    </Button>
+                    <Button
+                        Name="btnChooseLanguage"
+                        Width="60"
+                        Height="50"
+                        HorizontalAlignment="Stretch"
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <TextBlock
+                            FontSize="16"
+                            Foreground="Gray"
+                            Text="{Binding LanguageName}"
+                            TextDecorations="Underline" />
                     </Button>
                     <TextBlock
                         Margin="100,0,0,0"

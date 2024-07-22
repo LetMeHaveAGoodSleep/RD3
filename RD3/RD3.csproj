@@ -3,16 +3,28 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows7.0</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Images\icon_48.ico</ApplicationIcon>
+    <ApplicationIcon>Assets\icon_48.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Images\Advance.png" />
+    <None Remove="Images\Button\Inoculate.png" />
+    <None Remove="Images\Button\Log.png" />
+    <None Remove="Images\Button\Pause.png" />
+    <None Remove="Images\Button\Sample.png" />
+    <None Remove="Images\Button\Stop.png" />
+    <None Remove="Images\Calibrate.png" />
+    <None Remove="Images\Control.png" />
+    <None Remove="Images\Data.png" />
+    <None Remove="Images\FermentationTank.png" />
+    <None Remove="Images\Home.png" />
     <None Remove="Images\login.png" />
-    <None Remove="Images\login1.png" />
     <None Remove="Images\logo.png" />
-    <None Remove="Images\user.jpg" />
+    <None Remove="Images\Projects.png" />
+    <None Remove="Images\Settings.png" />
+    <None Remove="Images\SideMenu\Projects.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\icon_48.ico" />
+    <Content Include="Assets\icon_48.ico" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HandyControl" Version="3.5.1" />
@@ -25,10 +37,21 @@
     <ProjectReference Include="..\RD3.Shared\RD3.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Button\Inoculate.png" />
+    <Resource Include="Images\Button\Log.png" />
+    <Resource Include="Images\Button\Pause.png" />
+    <Resource Include="Images\Button\Sample.png" />
+    <Resource Include="Images\Button\Stop.png" />
+    <Resource Include="Images\SideMenu\Advance.png" />
+    <Resource Include="Images\SideMenu\Calibrate.png" />
+    <Resource Include="Images\SideMenu\Control.png" />
+    <Resource Include="Images\SideMenu\Data.png" />
+    <Resource Include="Images\SideMenu\Home.png" />
     <Resource Include="Images\login.png" />
-    <Resource Include="Images\login1.png" />
-    <Resource Include="Images\logo.png" />
-    <Resource Include="Images\user.jpg" />
+    <Resource Include="Assets\logo.png" />
+    <Resource Include="Images\SideMenu\Projects.png" />
+    <Resource Include="Images\SideMenu\Settings.png" />
+    <Resource Include="Images\FermentationTank.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Config\" />
