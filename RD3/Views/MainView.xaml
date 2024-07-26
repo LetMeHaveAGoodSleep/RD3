@@ -55,16 +55,17 @@
                         Height="40"
                         Margin="10,10,5,10"
                         Source="/Assets/logo.png" />
-                    <StackPanel Margin="10" Orientation="Vertical">
-                        <TextBlock
-                            Width="80"
-                            Margin="5"
-                            FontSize="18"
-                            Text="XinZao"
-                            TextAlignment="Left"
-                            TextWrapping="Wrap" />
-                        <TextBlock FontSize="10" Text="Biotech Co.LTD" />
-                    </StackPanel>
+                    <!--<StackPanel Margin="10" Orientation="Vertical">-->
+                    <TextBlock
+                        Margin="5"
+                        VerticalAlignment="Center"
+                        FontSize="26"
+                        Foreground="#FF6A00"
+                        Text="芯造科技"
+                        TextAlignment="Left"
+                        TextWrapping="Wrap" />
+                    <!--<TextBlock FontSize="10" Text="Biotech Co.LTD" />-->
+                    <!--</StackPanel>-->
                 </StackPanel>
                 <hc:TransitioningContentControl
                     Grid.Row="2"
@@ -248,12 +249,14 @@
                         FontSize="16"
                         Text="{Binding UserName}" />
                     <Button
+                        Name="btnUser"
                         Width="50"
                         Height="50"
                         HorizontalAlignment="Stretch"
                         Background="Transparent"
                         BorderThickness="0"
-                        Command="{Binding UserCenterCommand}"
+                        Click="BtnUser_Click"
+                        LostFocus="BtnUser_LostFocus"
                         ToolTip="User Setting">
                         <materialDesign:PackIcon
                             Width="36"
@@ -261,6 +264,32 @@
                             Foreground="Gray"
                             Kind="AccountCircle" />
                     </Button>
+                    <Popup
+                        x:Name="Pop"
+                        Width="100"
+                        Height="150"
+                        AllowsTransparency="True"
+                        HorizontalOffset="-65"
+                        Placement=" Bottom"
+                        PlacementTarget="{Binding ElementName=btnUser}"
+                        PopupAnimation="Slide"
+                        StaysOpen="False"
+                        VerticalOffset="0">
+                        <Border BorderBrush="LightGray" BorderThickness="1">
+                            <StackPanel Background="White">
+                                <Button
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Content="Switch User" />
+                                <Button
+                                    Margin="0,5,0,0"
+                                    HorizontalContentAlignment="Left"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Content="User Center" />
+                            </StackPanel>
+                        </Border>
+                    </Popup>
                 </StackPanel>
                 <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static ext:PrismManager.MainViewRegionName}" />
             </Grid>

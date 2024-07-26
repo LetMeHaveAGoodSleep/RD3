@@ -141,6 +141,10 @@
               "target": "Package",
               "version": "[13.0.3, )"
             },
+            "OxyPlot.Wpf": {
+              "target": "Package",
+              "version": "[2.1.2, )"
+            },
             "Prism.DryIoc": {
               "target": "Package",
               "version": "[8.1.97, )"

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\Project\RD3\RD3\App.xaml
-6-670411498
+71616504193
 11294743660
-28199774220
-2151766188339
-Views\AboutView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MsgView.xaml;Views\ProgressView.xaml;
+30-1206090251
+21880793242
+Views\AboutView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MsgView.xaml;Views\ProgressView.xaml;Views\UserManageView.xaml;
 
 False
 

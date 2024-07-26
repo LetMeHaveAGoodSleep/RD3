@@ -127,3 +127,8 @@ F:\PrismTest\RD3\RD3\obj\Debug\net8.0-windows7.0\RD3.pdb
 F:\PrismTest\RD3\RD3\obj\Debug\net8.0-windows7.0\RD3.genruntimeconfig.cache
 F:\PrismTest\RD3\RD3\obj\Debug\net8.0-windows7.0\ref\RD3.dll
 F:\PrismTest\RD3\RD3\obj\Debug\net8.0-windows7.0\Menu\ExpanderStyle.baml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\OxyPlot.dll
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\OxyPlot.Wpf.dll
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\OxyPlot.Wpf.Shared.dll
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\UserManageView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\UserManageView.baml

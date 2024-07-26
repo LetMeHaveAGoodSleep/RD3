@@ -9,7 +9,9 @@
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:oxy="http://oxyplot.org/wpf"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:vm="clr-namespace:RD3.ViewModels"
     d:DesignHeight="700"
     d:DesignWidth="1350"
     mc:Ignorable="d">
@@ -24,12 +26,13 @@
             <ScrollViewer Style="{StaticResource ScrollViewerUpDown}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="260*" />
-                        <ColumnDefinition Width="260*" />
-                        <ColumnDefinition Width="260*" />
-                        <ColumnDefinition Width="260*" />
-                        <ColumnDefinition Width="260*" />
-                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="265*" />
+                        <ColumnDefinition Width="265*" />
+                        <ColumnDefinition Width="265*" />
+                        <ColumnDefinition Width="265*" />
+                        <ColumnDefinition Width="28*" />
+                        <ColumnDefinition Width="237*" />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40" />
@@ -39,94 +42,130 @@
                         <RowDefinition Height="150*" />
                         <RowDefinition Height="150*" />
                     </Grid.RowDefinitions>
-                    <StackPanel
-                        Grid.ColumnSpan="5"
-                        Margin="5"
-                        FlowDirection="RightToLeft"
-                        Orientation="Horizontal">
-                        <Button
-                            Margin="0,0,5,0"
-                            hc:BorderElement.CornerRadius="10"
-                            Background="#F56C6C"
-                            BorderThickness="1"
-                            Command="{Binding StopCommand}"
-                            ToolTip="Sample">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Stop" />
-                                <Image
-                                    Width="16"
-                                    Height="16"
-                                    Margin="5,0,0,0"
-                                    Source="\Images\Button\Stop.png" />
-                            </StackPanel>
-                        </Button>
-                        <Button
-                            Margin="0,0,5,0"
-                            hc:BorderElement.CornerRadius="10"
-                            BorderThickness="1"
-                            Command="{Binding InoculateCommand}"
-                            ToolTip="Sample">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Inoculate" />
-                                <Image
-                                    Width="16"
-                                    Height="16"
-                                    Margin="5,0,0,0"
-                                    Source="\Images\Button\Inoculate.png" />
-                            </StackPanel>
-                        </Button>
-                        <Button
-                            Margin="0,0,5,0"
-                            hc:BorderElement.CornerRadius="10"
-                            BorderThickness="1"
-                            Command="{Binding LogCommand}"
-                            ToolTip="Sample">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Log" />
-                                <Image
-                                    Width="16"
-                                    Height="16"
-                                    Margin="5,0,0,0"
-                                    Source="\Images\Button\Log.png" />
-                            </StackPanel>
-                        </Button>
-                        <Button
-                            Margin="0,0,5,0"
-                            hc:BorderElement.CornerRadius="10"
-                            BorderThickness="1"
-                            Command="{Binding SampleCommand}"
-                            ToolTip="Sample">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Sample" />
-                                <Image
-                                    Width="16"
-                                    Height="16"
-                                    Margin="5,0,0,0"
-                                    Source="\Images\Button\Sample.png" />
-                            </StackPanel>
-                        </Button>
-                        <Button
-                            Margin="0,0,5,0"
-                            hc:BorderElement.CornerRadius="10"
-                            BorderThickness="1"
-                            Command="{Binding PauseCommand}"
-                            ToolTip="Pause">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Pause" />
-                                <Image
-                                    Width="16"
-                                    Height="16"
-                                    Margin="5,0,0,0"
-                                    Source="\Images\Button\Pause.png" />
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
+                    <hc:SimplePanel Grid.ColumnSpan="7" Margin="0,0,1,0">
+                        <StackPanel
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
+                            <CheckBox
+                                Margin="5,0,0,0"
+                                Content="Z01"
+                                IsChecked="True" />
+                            <CheckBox
+                                Margin="5,0,0,0"
+                                Content="Z02"
+                                IsChecked="True" />
+                            <CheckBox
+                                Margin="5,0,0,0"
+                                Content="Z03"
+                                IsChecked="True" />
+                            <CheckBox
+                                Margin="5,0,0,0"
+                                Content="Z04"
+                                IsChecked="True" />
+                            <CheckBox
+                                Margin="5,0,0,0"
+                                Content="Z05"
+                                IsChecked="True" />
+                            <CheckBox
+                                Margin="5,0,0,0"
+                                Content="Z06"
+                                IsChecked="True" />
+                        </StackPanel>
+                        <!--<hc:CheckComboBox hc:InfoElement.ShowClearButton="True"
+                                          MinWidth="800"
+                                          ItemsSource="{Binding DataList}"
+                                          Style="{StaticResource CheckComboBoxExtend}"
+                                          ShowSelectAllButton="True"
+                                          HorizontalAlignment="Left" />-->
+                        <StackPanel
+                            Margin="5"
+                            FlowDirection="RightToLeft"
+                            Orientation="Horizontal">
+                            <Button
+                                Margin="0,0,5,0"
+                                hc:BorderElement.CornerRadius="10"
+                                BorderThickness="1"
+                                Command="{Binding InoculateCommand}"
+                                ToolTip="Sample">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Inoculate" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Margin="5,0,0,0"
+                                        Source="\Images\Button\Inoculate.png" />
+                                </StackPanel>
+                            </Button>
+                            <Button
+                                Margin="0,0,5,0"
+                                hc:BorderElement.CornerRadius="10"
+                                BorderThickness="1"
+                                Command="{Binding LogCommand}"
+                                ToolTip="Sample">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Log" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Margin="5,0,0,0"
+                                        Source="\Images\Button\Log.png" />
+                                </StackPanel>
+                            </Button>
+                            <Button
+                                Margin="0,0,5,0"
+                                hc:BorderElement.CornerRadius="10"
+                                BorderThickness="1"
+                                Command="{Binding SampleCommand}"
+                                ToolTip="Sample">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Sample" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Margin="5,0,0,0"
+                                        Source="\Images\Button\Sample.png" />
+                                </StackPanel>
+                            </Button>
+                            <Button
+                                Margin="0,0,5,0"
+                                hc:BorderElement.CornerRadius="10"
+                                BorderThickness="1"
+                                Command="{Binding PauseCommand}"
+                                ToolTip="Pause">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Pause" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Margin="5,0,0,0"
+                                        Source="\Images\Button\Pause.png" />
+                                </StackPanel>
+                            </Button>
+                            <Button
+                                Margin="0,0,5,0"
+                                hc:BorderElement.CornerRadius="10"
+                                Background="#F56C6C"
+                                BorderThickness="1"
+                                Command="{Binding StopCommand}"
+                                ToolTip="Sample">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Foreground="WhiteSmoke" Text="Stop" />
+                                    <Image
+                                        Width="16"
+                                        Height="16"
+                                        Margin="5,0,0,0"
+                                        Source="\Images\Button\Stop.png" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </hc:SimplePanel>
                     <Border
                         Grid.Row="1"
                         Grid.RowSpan="5"
                         Grid.Column="0"
                         Grid.ColumnSpan="2"
-                        Margin="5"
+                        Margin="5,5,5,5"
                         Style="{StaticResource BorderRegion}">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -261,7 +300,7 @@
                         Grid.Row="1"
                         Grid.RowSpan="2"
                         Grid.Column="2"
-                        Margin="5"
+                        Margin="5,5,5,5"
                         Style="{StaticResource BorderRegion}">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -354,7 +393,7 @@
                         Grid.Row="3"
                         Grid.RowSpan="2"
                         Grid.Column="2"
-                        Margin="5"
+                        Margin="5,5,5,5"
                         Style="{StaticResource BorderRegion}">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -444,7 +483,7 @@
                     <Border
                         Grid.Row="5"
                         Grid.Column="2"
-                        Margin="5"
+                        Margin="5,5,5,5"
                         Padding="5"
                         Style="{StaticResource BorderRegion}">
                         <Grid>
@@ -553,7 +592,7 @@
                         Grid.Row="1"
                         Grid.RowSpan="2"
                         Grid.Column="3"
-                        Margin="5"
+                        Margin="5,5,5,5"
                         Style="{StaticResource BorderRegion}">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -644,7 +683,7 @@
                         Grid.Row="3"
                         Grid.RowSpan="2"
                         Grid.Column="3"
-                        Margin="5"
+                        Margin="5,5,5,5"
                         Style="{StaticResource BorderRegion}">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -752,9 +791,9 @@
                         </Grid>
                     </Border>
                     <Border
-                        Grid.Row="7"
+                        Grid.Row="5"
                         Grid.Column="3"
-                        Margin="5"
+                        Margin="5,5,5,5"
                         Padding="5"
                         Style="{StaticResource BorderRegion}">
                         <TabControl TabStripPlacement="Left">
@@ -1207,7 +1246,8 @@
                     <Border
                         Grid.Row="1"
                         Grid.Column="4"
-                        Margin="5"
+                        Grid.ColumnSpan="2"
+                        Margin="5,5,5,5"
                         Padding="5"
                         Style="{StaticResource BorderRegion}">
                         <Grid>
@@ -1322,7 +1362,8 @@
                         Grid.Row="2"
                         Grid.RowSpan="2"
                         Grid.Column="4"
-                        Margin="5"
+                        Grid.ColumnSpan="2"
+                        Margin="5,5,5,5"
                         Padding="5"
                         Style="{StaticResource BorderRegion}">
                         <Grid>
@@ -1436,7 +1477,8 @@
                     <Border
                         Grid.Row="4"
                         Grid.Column="4"
-                        Margin="5"
+                        Grid.ColumnSpan="2"
+                        Margin="5,5,5,5"
                         Padding="5"
                         Style="{StaticResource BorderRegion}">
                         <Grid>
@@ -1549,7 +1591,8 @@
                     <Border
                         Grid.Row="5"
                         Grid.Column="4"
-                        Margin="5"
+                        Grid.ColumnSpan="2"
+                        Margin="5,5,5,5"
                         Padding="5"
                         Style="{StaticResource BorderRegion}">
                         <Grid>
@@ -1572,13 +1615,13 @@
                                     FontSize="22"
                                     Text="AF" />
                                 <TextBlock
+                                    Grid.Column="1"
                                     Margin="0,7,0,5"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="12"
                                     Foreground="Gray"
-                                           Text="mL/h"
-                                           Grid.Column="1" />
+                                    Text="mL/h" />
                                 <Label Grid.Column="2" BorderThickness="0" />
                                 <materialDesign:PopupBox
                                     Grid.Column="3"
@@ -1655,7 +1698,316 @@
                 </Grid>
             </ScrollViewer>
         </TabItem>
-        <TabItem Header="Trend" />
-        <TabItem Header="OverView" />
+        <TabItem Header="Trend">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <hc:SimplePanel Grid.ColumnSpan="2">
+                    <StackPanel
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <CheckBox
+                            Margin="5,0,0,0"
+                            Content="Z01"
+                            IsChecked="True" />
+                        <CheckBox
+                            Margin="5,0,0,0"
+                            Content="Z02"
+                            IsChecked="True" />
+                        <CheckBox
+                            Margin="5,0,0,0"
+                            Content="Z03"
+                            IsChecked="True" />
+                        <CheckBox
+                            Margin="5,0,0,0"
+                            Content="Z04"
+                            IsChecked="True" />
+                        <CheckBox
+                            Margin="5,0,0,0"
+                            Content="Z05"
+                            IsChecked="True" />
+                        <CheckBox
+                            Margin="5,0,0,0"
+                            Content="Z06"
+                            IsChecked="True" />
+                    </StackPanel>
+                    <StackPanel
+                        Margin="5"
+                        FlowDirection="RightToLeft"
+                        Orientation="Horizontal">
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            BorderThickness="1"
+                            Command="{Binding InoculateCommand}"
+                            ToolTip="Sample">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Inoculate" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Inoculate.png" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            BorderThickness="1"
+                            Command="{Binding LogCommand}"
+                            ToolTip="Sample">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Log" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Log.png" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            BorderThickness="1"
+                            Command="{Binding SampleCommand}"
+                            ToolTip="Sample">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Sample" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Sample.png" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            BorderThickness="1"
+                            Command="{Binding PauseCommand}"
+                            ToolTip="Pause">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Pause" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Pause.png" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            Background="#F56C6C"
+                            BorderThickness="1"
+                            Command="{Binding StopCommand}"
+                            ToolTip="Sample">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Foreground="WhiteSmoke" Text="Stop" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Stop.png" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </hc:SimplePanel>
+                <oxy:PlotView Grid.Row="1" Model="{Binding PlotModel}" />
+            </Grid>
+        </TabItem>
+        <TabItem Header="OverView">
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <hc:SimplePanel Grid.ColumnSpan="2">
+                    <StackPanel
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <CheckBox
+                            Margin="5,0,0,0"
+                            Content="Z01"
+                            IsChecked="True" />
+                        <CheckBox
+                            Margin="5,0,0,0"
+                            Content="Z02"
+                            IsChecked="True" />
+                        <CheckBox
+                            Margin="5,0,0,0"
+                            Content="Z03"
+                            IsChecked="True" />
+                        <CheckBox
+                            Margin="5,0,0,0"
+                            Content="Z04"
+                            IsChecked="True" />
+                        <CheckBox
+                            Margin="5,0,0,0"
+                            Content="Z05"
+                            IsChecked="True" />
+                        <CheckBox
+                            Margin="5,0,0,0"
+                            Content="Z06"
+                            IsChecked="True" />
+                    </StackPanel>
+                    <StackPanel
+                        Margin="5"
+                        FlowDirection="RightToLeft"
+                        Orientation="Horizontal">
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            BorderThickness="1"
+                            Command="{Binding InoculateCommand}"
+                            ToolTip="Sample">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Inoculate" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Inoculate.png" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            BorderThickness="1"
+                            Command="{Binding LogCommand}"
+                            ToolTip="Sample">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Log" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Log.png" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            BorderThickness="1"
+                            Command="{Binding SampleCommand}"
+                            ToolTip="Sample">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Sample" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Sample.png" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            BorderThickness="1"
+                            Command="{Binding PauseCommand}"
+                            ToolTip="Pause">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Pause" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Pause.png" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,0,5,0"
+                            hc:BorderElement.CornerRadius="10"
+                            Background="#F56C6C"
+                            BorderThickness="1"
+                            Command="{Binding StopCommand}"
+                            ToolTip="Sample">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Foreground="WhiteSmoke" Text="Stop" />
+                                <Image
+                                    Width="16"
+                                    Height="16"
+                                    Margin="5,0,0,0"
+                                    Source="\Images\Button\Stop.png" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </hc:SimplePanel>
+                <hc:ScrollViewer
+                    Grid.Row="1"
+                    HorizontalScrollBarVisibility="Auto"
+                    IsInertiaEnabled="True"
+                    VerticalScrollBarVisibility="Auto">
+                    <hc:UniformSpacingPanel Spacing="10">
+                        <StackPanel Orientation="Vertical" />
+                        <DataGrid
+                            AllowDrop="False"
+                            AutoGenerateColumns="False"
+                            Background="White"
+                            BorderThickness="1.5"
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False"
+                            HeadersVisibility="All"
+                            IsReadOnly="True"
+                            ItemsSource="{Binding DataList}"
+                            SelectionMode="Single">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Name}" />
+                                <DataGridTextColumn Binding="{Binding SV}" />
+                                <DataGridTextColumn Binding="{Binding DV}" />
+                                <DataGridTextColumn Binding="{Binding Status}" Foreground="LightYellow" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid
+                            AutoGenerateColumns="False"
+                            HeadersVisibility="All"
+                            ItemsSource="{Binding DataList}"
+                            RowHeaderWidth="40">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Width="80"
+                                    Binding="{Binding Name}"
+                                    CanUserResize="False"
+                                    IsReadOnly="True" />
+                                <DataGridTemplateColumn Width="60" CanUserResize="False">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image
+                                                Width="32"
+                                                Height="32"
+                                                Source="{Binding ImgPath}"
+                                                Stretch="Uniform" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn
+                                    Width="1"
+                                    Binding="{Binding Name}"
+                                    Header="Name" />
+                                <DataGridCheckBoxColumn
+                                    Width="100"
+                                    Binding="{Binding IsSelected}"
+                                    CanUserResize="False"
+                                    Header="Selected" />
+                                <DataGridComboBoxColumn
+                                    Width="100"
+                                    CanUserResize="False"
+                                    Header="Type"
+                                    ItemsSource="{Binding DemoTypes}"
+                                    SelectedValueBinding="{Binding Type}" />
+                                <DataGridTextColumn
+                                    Width="1"
+                                    Binding="{Binding Remark}"
+                                    Header="Remark" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </hc:UniformSpacingPanel>
+                </hc:ScrollViewer>
+            </Grid>
+        </TabItem>
     </TabControl>
 </UserControl>

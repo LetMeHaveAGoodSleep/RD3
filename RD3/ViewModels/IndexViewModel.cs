@@ -14,11 +14,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Navigation;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
 
 namespace RD3.ViewModels
 {
     public class IndexViewModel : NavigationViewModel
     {
+        public PlotModel PlotModel { get; set; }
+
         private readonly IDialogHostService dialog;
         private readonly IRegionManager regionManager;
 
@@ -39,6 +44,28 @@ namespace RD3.ViewModels
             //EditToDoCommand = new DelegateCommand<ToDoDto>(AddToDo);
             //ToDoCompltedCommand = new DelegateCommand<ToDoDto>(Complted);
             NavigateCommand = new DelegateCommand<TaskBar>(Navigate);
+
+            PlotModel = new PlotModel { Title = "Multiple Y-Axes Example" };
+
+            // 添加第一个Y轴  
+            var yAxis1 = new LinearAxis { Position = AxisPosition.Left, Title = "Y Axis 1" };
+            PlotModel.Axes.Add(yAxis1);
+
+            // 添加第二个Y轴  
+            var yAxis2 = new LinearAxis { Position = AxisPosition.Right, Title = "Y Axis 2" };
+            PlotModel.Axes.Add(yAxis2);
+
+            var yAxis3 = new LinearAxis { Position = AxisPosition.Left, Title = "Y Axis 3" };
+            PlotModel.Axes.Add(yAxis3);
+            var series1 = new FunctionSeries(Math.Cos, 0, 10, 0.1, "cos(x)");
+            series1.YAxisKey = yAxis1.Key;
+            var series2 = new FunctionSeries(Math.Sin, -10, 10, 0.1, "sin(x)");
+            series2.YAxisKey = yAxis2.Key;
+            var series3 = new FunctionSeries(Math.Sin, -10, 10, 0.1, "sin(x)");
+            series3.YAxisKey = yAxis3.Key;
+            PlotModel.Series.Add(series1);
+            PlotModel.Series.Add(series2);
+            PlotModel.Series.Add(series3);
         }
 
         private void Navigate(TaskBar obj)

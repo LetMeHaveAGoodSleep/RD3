@@ -67,6 +67,7 @@ namespace RD3
             containerRegistry.RegisterForNavigation<AboutView>();
             containerRegistry.RegisterForNavigation<MsgView, MsgViewModel>();
             containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
+            containerRegistry.RegisterDialog<UserManageView, UserManageViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
