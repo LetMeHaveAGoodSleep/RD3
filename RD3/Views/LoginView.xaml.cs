@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using RD3.Common;
 
 namespace RD3.Views
 {
@@ -31,6 +32,12 @@ namespace RD3.Views
             {
                 LoginSnakeBar.MessageQueue.Enqueue(arg.Message);
             }, "Login");
+
+            btnClose.Click += (s, e) =>
+            {
+                Application.Current.Shutdown();
+                Environment.Exit(0);
+            };
         }
     }
 }

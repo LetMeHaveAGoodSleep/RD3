@@ -15,6 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MaterialDesignThemes.Wpf;
+using Prism.Ioc;
+using Prism.Services.Dialogs;
+using System.Windows.Threading;
 
 namespace RD3.Views
 {
@@ -28,12 +31,6 @@ namespace RD3.Views
         public MainView(IEventAggregator aggregator, IDialogHostService dialogHostService)
         {
             InitializeComponent();
-
-            //注册提示消息
-            aggregator.ResgiterMessage(arg =>
-            {
-                Snackbar.MessageQueue.Enqueue(arg);
-            });
 
             //注册等待消息窗口
             aggregator.Resgiter(arg =>
@@ -73,7 +70,7 @@ namespace RD3.Views
 
         private void BtnUser_LostFocus(object sender, RoutedEventArgs e)
         {
-            Pop.IsOpen = false;
+            //Pop.IsOpen = false;
         }
     }
 }

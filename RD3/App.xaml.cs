@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
 using RD3.Common;
+using RD3.Shared;
 using RD3.ViewModels;
 using RD3.Views;
 using System;
@@ -38,7 +39,20 @@ namespace RD3
                     return;
                 }
 
-                Current.MainWindow.Show();
+                var service = App.Current.MainWindow.DataContext as IConfigureService;
+                if (service != null)
+                    service.Configure();
+
+                dialog.ShowDialog("SelfCheckView", callback =>
+                {
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        Environment.Exit(0);
+                        return;
+                    }
+
+                    Current.MainWindow.Show();
+                });
             });
         }
 
@@ -56,6 +70,16 @@ namespace RD3
                 var service = App.Current.MainWindow.DataContext as IConfigureService;
                 if (service != null)
                     service.Configure();
+
+                dialog.ShowDialog("SelfCheckView", callback =>
+                {
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        Environment.Exit(0);
+                        return;
+                    }
+                });
+
                 base.OnInitialized();
             });
         }
@@ -67,7 +91,14 @@ namespace RD3
             containerRegistry.RegisterForNavigation<AboutView>();
             containerRegistry.RegisterForNavigation<MsgView, MsgViewModel>();
             containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
-            containerRegistry.RegisterDialog<UserManageView, UserManageViewModel>();
+            containerRegistry.RegisterDialog<UserView, UserViewModel>();
+            containerRegistry.RegisterForNavigation<SampleView, SampleViewModel>();
+            containerRegistry.RegisterDialog<AddSampleLogView, SampleViewModel>();
+            containerRegistry.RegisterForNavigation<ProjectView, ProjectViewModel>();
+            containerRegistry.RegisterForNavigation<CalibrateView, CalibrateViewModel>();
+            containerRegistry.RegisterDialog<SelfCheckView, SelfCheckViewModel>();
+            containerRegistry.RegisterForNavigation<BatchView, BatchViewModel>();
+            containerRegistry.RegisterForNavigation<ErrorView, ErrorViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

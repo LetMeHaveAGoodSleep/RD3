@@ -10,6 +10,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RD3.Common;
+using RD3.Shared;
+using System.Windows;
+using System.IO;
+using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace RD3.ViewModels
 {
@@ -19,11 +24,11 @@ namespace RD3.ViewModels
         {
             UserDto = new ResgiterUserDto();
             ExecuteCommand = new DelegateCommand<string>(Execute);
-            //this.loginService = loginService;
             this.aggregator = aggregator;
+            Init();
         }
 
-        public string Title { get; set; } = "杭州芯造科技有限公司";
+        public string Title { get; set; } = AppSession.CompanyName;
 
         public event Action<IDialogResult> RequestClose;
 
@@ -93,7 +98,7 @@ namespace RD3.ViewModels
             set { userDto = value; RaisePropertyChanged(); }
         }
 
-        async void Login()
+        private void Login()
         {
             if (string.IsNullOrWhiteSpace(UserName) ||
                 string.IsNullOrWhiteSpace(PassWord))
@@ -101,28 +106,17 @@ namespace RD3.ViewModels
                 return;
             }
 
-            AppSession.UserName = UserName;
+            if ((bool)AppSession.Users?.ToList().Exists(x => x.UserName == userName && x.Password == passWord))
+            {
+                AppSession.CurrentUser = AppSession.Users?.ToList().Find(x => x.UserName == userName);
+                RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+                return;
+            }
 
-            RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
-
-            //var loginResult = await loginService.Login(new Shared.Dtos.UserDto()
-            //{
-            //    Account = UserName,
-            //    PassWord = PassWord
-            //});
-
-            //if (loginResult != null && loginResult.Status)
-            //{
-            //    RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
-            //}
-            //else
-            //{
-            //    //登录失败提示...
-            //    aggregator.SendMessage(loginResult.Message, "Login");
-            //}
+            aggregator.SendMessage("用户名或密码错误", "Login");
         }
 
-        private async void Resgiter()
+        private  void Resgiter()
         {
             if (string.IsNullOrWhiteSpace(UserDto.Account) ||
                 string.IsNullOrWhiteSpace(UserDto.UserName) ||
@@ -159,6 +153,43 @@ namespace RD3.ViewModels
         void LoginOut()
         {
             RequestClose?.Invoke(new DialogResult(ButtonResult.No));
+        }
+
+        public void Init()
+        {
+            if (!Directory.Exists(FileConst.ConfigDirectory))
+            {
+                Directory.CreateDirectory(FileConst.ConfigDirectory);
+            }
+            if (!File.Exists(FileConst.UserPath))
+            {
+                CreateJsonFile(FileConst.UserPath);
+            }
+            ReadJsonFile(FileConst.UserPath);
+
+            var a = VarConfig.GetValue("LastUser");
+        }
+
+        private void CreateJsonFile(string filePath)
+        {
+            User user = new User
+            {
+                UserName = "Admin",
+                Password = "123456",
+                Role = int.MaxValue
+            };
+            List<User> Users = new List<User>() { user };
+            string json = JsonConvert.SerializeObject(Users);
+            json = AESEncryption.Encrypt(json);
+            File.WriteAllText(filePath, json);
+        }
+
+        private void ReadJsonFile(string filePath)
+        {
+            string jsonContent = AESEncryption.DecryptFile(filePath);
+            List<User> users = JsonConvert.DeserializeObject<List<User>>(jsonContent);
+            AppSession.Users.Clear();
+            AppSession.Users.AddRange(users);
         }
 
         #endregion

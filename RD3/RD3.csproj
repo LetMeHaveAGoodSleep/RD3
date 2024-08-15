@@ -20,6 +20,7 @@
     <None Remove="Images\Home.png" />
     <None Remove="Images\login.png" />
     <None Remove="Images\logo.png" />
+    <None Remove="Images\Project.png" />
     <None Remove="Images\Projects.png" />
     <None Remove="Images\Settings.png" />
     <None Remove="Images\SideMenu\Projects.png" />
@@ -29,11 +30,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HandyControl" Version="3.5.1" />
-    <PackageReference Include="LayUI.Wpf" Version="1.0.2.240622" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.1.2" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
+    <PackageReference Include="SQLite" Version="3.13.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RD3.Shared\RD3.Shared.csproj" />
@@ -45,6 +46,12 @@
     <Resource Include="Images\Button\Sample.png" />
     <Resource Include="Images\Button\Start.png" />
     <Resource Include="Images\Button\Stop.png" />
+    <Resource Include="Images\Calibrate.png" />
+    <Resource Include="Images\Control.png" />
+    <Resource Include="Images\Data.png" />
+    <Resource Include="Images\Home.png" />
+    <Resource Include="Images\Project.png" />
+    <Resource Include="Images\Settings.png" />
     <Resource Include="Images\SideMenu\Advance.png" />
     <Resource Include="Images\SideMenu\Calibrate.png" />
     <Resource Include="Images\SideMenu\Control.png" />
@@ -57,6 +64,28 @@
     <Resource Include="Images\FermentationTank.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Config\" />
+    <Compile Update="Views\ProjectView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\NotoSans-Regular.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Const.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\User.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Var.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Themes\WaveAnimation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

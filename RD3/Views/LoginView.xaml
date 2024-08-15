@@ -6,6 +6,7 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:pass="clr-namespace:RD3.Extensions"
@@ -22,28 +23,36 @@
             <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Setter Property="ShowInTaskbar" Value="False" />
+            <Setter Property="ShowInTaskbar" Value="True" />
             <Setter Property="AllowsTransparency" Value="True" />
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Background" Value="Transparent" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Grid Background="White">
+    <Grid Background="{StaticResource BackGroundBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.5*" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <md:Snackbar
             x:Name="LoginSnakeBar"
+            Grid.Row="1"
             Grid.ColumnSpan="2"
             Panel.ZIndex="1"
             MessageQueue="{md:MessageQueue}" />
-
-        <Image Margin="50" Source="/Images/login.png" />
-
-        <md:Transitioner Grid.Column="1" SelectedIndex="{Binding SelectIndex, FallbackValue=0}">
+        <Image
+            Grid.Row="1"
+            Margin="50"
+            Source="/Images/login.png" />
+        <md:Transitioner
+            Grid.Row="1"
+            Grid.Column="1"
+            SelectedIndex="{Binding SelectIndex, FallbackValue=0}">
             <md:TransitionerSlide>
                 <DockPanel Margin="15" VerticalAlignment="Center">
                     <TextBlock
@@ -96,62 +105,21 @@
                     </DockPanel>
                 </DockPanel>
             </md:TransitionerSlide>
-
-            <md:TransitionerSlide>
-                <DockPanel Margin="15" VerticalAlignment="Center">
-                    <TextBlock
-                        Margin="0,10"
-                        DockPanel.Dock="Top"
-                        FontSize="22"
-                        FontWeight="Bold"
-                        Text="注册账号" />
-
-                    <TextBox
-                        Margin="0,5"
-                        md:HintAssist.Hint="请输入用户名"
-                        DockPanel.Dock="Top"
-                        Text="{Binding UserDto.Account}" />
-                    <TextBox
-                        Margin="0,5"
-                        md:HintAssist.Hint="请输入账号"
-                        DockPanel.Dock="Top"
-                        Text="{Binding UserDto.UserName}" />
-
-                    <PasswordBox
-                        Margin="0,5"
-                        md:HintAssist.Hint="请输入密码"
-                        pass:PassWordExtensions.PassWord="{Binding UserDto.PassWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        DockPanel.Dock="Top">
-                        <i:Interaction.Behaviors>
-                            <pass:PasswordBehavior />
-                        </i:Interaction.Behaviors>
-                    </PasswordBox>
-
-                    <PasswordBox
-                        Margin="0,5"
-                        md:HintAssist.Hint="请再次输入密码"
-                        pass:PassWordExtensions.PassWord="{Binding UserDto.NewPassWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        DockPanel.Dock="Top">
-                        <i:Interaction.Behaviors>
-                            <pass:PasswordBehavior />
-                        </i:Interaction.Behaviors>
-                    </PasswordBox>
-
-                    <Button
-                        Command="{Binding ExecuteCommand}"
-                        CommandParameter="Resgiter"
-                        Content="注册账号"
-                        DockPanel.Dock="Top" />
-
-                    <Button
-                        Margin="0,10"
-                        Command="{Binding ExecuteCommand}"
-                        CommandParameter="Return"
-                        Content="返回登录"
-                        DockPanel.Dock="Top"
-                        Style="{StaticResource ButtonPrimary}" />
-                </DockPanel>
-            </md:TransitionerSlide>
         </md:Transitioner>
+        <StackPanel Grid.ColumnSpan="2">
+            <Button
+                Name="btnClose"
+                Width="30"
+                Height="30"
+                HorizontalAlignment="Right"
+                Background="Transparent"
+                BorderThickness="0">
+                <materialDesign:PackIcon
+                    Width="24"
+                    Height="24"
+                    Foreground="Gray"
+                    Kind="Close" />
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

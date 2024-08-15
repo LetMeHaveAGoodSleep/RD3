@@ -14,8 +14,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using RD3.Views;
 using DryIoc;
-using LayUI.Wpf.Enum;
 using System.Windows.Controls;
+using HandyControl.Data;
+using HandyControl.Controls;
+using ImTools;
+using Prism.Services.Dialogs;
+using System.Windows.Threading;
+using Prism.Events;
+using RD3.Shared;
 
 namespace RD3.ViewModels
 {
@@ -37,23 +43,23 @@ namespace RD3.ViewModels
             set { languageName = value; RaisePropertyChanged(); }
         }
 
-        private AnimationType _AnimationType = AnimationType.RotateOut;
-        public AnimationType AnimationType
-        {
-            get { return _AnimationType; }
-            set { SetProperty(ref _AnimationType, value); }
-        }
-
         private IRegionNavigationService navigationService;
 
         public DelegateCommand<MenuBar> NavigateCommand { get; private set; }
         public DelegateCommand GoBackCommand { get; private set; }
         public DelegateCommand GoForwardCommand { get; private set; }
         public DelegateCommand LoginOutCommand { get; private set; }
+        public DelegateCommand ManageUserCommand { get; private set; }
+        public DelegateCommand ChangeLanguageCommand { get; private set; }
+
+        public DelegateCommand<string> SelectCmd => new(SwitchMenuItem);
+
         private ObservableCollection<MenuBar> menuBars;
         private readonly IContainerProvider containerProvider;
         private readonly IRegionManager regionManager;
         private IRegionNavigationJournal journal;
+        private readonly IEventAggregator aggregator;
+        private readonly IDialogService dialogService;
 
         public ObservableCollection<MenuBar> MenuBars
         {
@@ -62,8 +68,12 @@ namespace RD3.ViewModels
         }
 
         public MainViewModel(IContainerProvider containerProvider,
-            IRegionManager regionManager)
-        { 
+            IRegionManager regionManager, IEventAggregator aggregator)
+        {
+            this.aggregator = aggregator;
+            this.containerProvider = containerProvider;
+            this.regionManager = regionManager;
+            this.dialogService = containerProvider.Resolve<IDialogService>();
             MenuBars = new ObservableCollection<MenuBar>();
             NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
             GoBackCommand = new DelegateCommand(() =>
@@ -81,27 +91,55 @@ namespace RD3.ViewModels
                   //注销当前用户
                   App.LoginOut(containerProvider);
               });
-            this.containerProvider = containerProvider;
-            this.regionManager = regionManager;
+            ManageUserCommand = new DelegateCommand(() =>
+            {
+                dialogService.ShowDialog("UserView", callback =>
+                {
+                });
+            });
+            ChangeLanguageCommand = new DelegateCommand(() =>
+            {
+                
+            });
+
         }
+
+        private void SwitchMenuItem(string header)
+        {
+            if (string.IsNullOrWhiteSpace(header)) return;
+
+            MenuBar menuBar = MenuBars.FindFirst(t => t.Title.Trim().Equals(header));
+            Navigate(menuBar);
+        } 
 
         private void Navigate(MenuBar obj)
         {
             if (obj == null || string.IsNullOrWhiteSpace(obj.NameSpace))
+            {
+                regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("ErrorView");
                 return;
+            }
+                
 
             regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(obj.NameSpace, back =>
              {
+                 if (!(bool)back.Result)
+                 {
+                     regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate("ErrorView");
+                     return;
+                 }
                  journal = back.Context.NavigationService.Journal;
              });
         }
 
         void CreateMenuBar()
         {
-            MenuBars.Add(new MenuBar() { Icon = "Home", Title = "首页", NameSpace = "IndexView" });
-            MenuBars.Add(new MenuBar() { Icon = "NotebookOutline", Title = "待办事项", NameSpace = "ToDoView" });
-            MenuBars.Add(new MenuBar() { Icon = "NotebookPlus", Title = "备忘录", NameSpace = "MemoView" });
-            MenuBars.Add(new MenuBar() { Icon = "Cog", Title = "设置", NameSpace = "SettingsView" });
+            MenuBars.Add(new MenuBar() { Icon = "Home", Title = "Home", NameSpace = "IndexView" });
+            MenuBars.Add(new MenuBar() { Icon = "Project", Title = "Projects", NameSpace = "ProjectView" });
+            MenuBars.Add(new MenuBar() { Icon = "Data", Title = "Data", NameSpace = "BatchView" });
+            MenuBars.Add(new MenuBar() { Icon = "Calibrate", Title = "Calibrate", NameSpace = "CalibrateView" });
+            MenuBars.Add(new MenuBar() { Icon = "Control", Title = "Control", NameSpace = "ControlView" });
+            MenuBars.Add(new MenuBar() { Icon = "Setting", Title = "Setting", NameSpace = "SettingView" });
         }
 
         /// <summary>
@@ -109,7 +147,7 @@ namespace RD3.ViewModels
         /// </summary>
         public void Configure()
         {
-            UserName = AppSession.UserName;
+            UserName = AppSession.CurrentUser.UserName;
             LanguageName = "中文";
             CreateMenuBar();
             var navigationParameters = new NavigationParameters();

@@ -7,18 +7,65 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\UserManageView.xaml.cs">
+    <Compile Update="Views\AddSampleLogView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AddUser.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\BatchView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\CalibrateView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SampleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SelfCheckView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\UserView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Themes\WaveAnimation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ErrorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\AboutView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\AddSampleLogView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AddUser.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CalibrateView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ProjectView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\BatchView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\ProgressView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\UserManageView.xaml">
+    <Page Update="Views\SampleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SelfCheckView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
