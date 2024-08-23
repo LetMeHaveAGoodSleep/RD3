@@ -44,6 +44,17 @@
           }
         }
       },
+      "log4net/2.0.17": {
+        "dependencies": {
+          "System.Configuration.ConfigurationManager": "4.7.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/log4net.dll": {
+            "assemblyVersion": "2.0.17.0",
+            "fileVersion": "2.0.17.0"
+          }
+        }
+      },
       "MaterialDesignColors/3.0.0": {
         "runtime": {
           "lib/net7.0/MaterialDesignColors.dll": {
@@ -566,6 +577,13 @@
       "sha512": "sha512-i2i0xrLev7F1MFnhf0DP1CNCdGw8hVJ0HJrI0kxRv02ZJgaAzLzDTgAXDPY8GAoD3aYnBLSgM74lBHZ844KQnQ==",
       "path": "handycontrol/3.5.1",
       "hashPath": "handycontrol.3.5.1.nupkg.sha512"
+    },
+    "log4net/2.0.17": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qnnDf/ubJzwm2i1xH7nRMjEDoD+ctse7nZDqb+p7L1PvZc6ykpMoEesWr1/9hFqlsbII2v9e8yyQHJhoDQh7ZA==",
+      "path": "log4net/2.0.17",
+      "hashPath": "log4net.2.0.17.nupkg.sha512"
     },
     "MaterialDesignColors/3.0.0": {
       "type": "package",

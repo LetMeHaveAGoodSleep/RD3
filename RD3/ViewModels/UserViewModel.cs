@@ -3,6 +3,7 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RD3.Common;
+using RD3.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

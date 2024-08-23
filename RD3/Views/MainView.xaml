@@ -18,8 +18,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowsTransparency="True"
-    Background="#FDFDFD"
-    Style="{StaticResource MaterialDesignWindow}"
+    Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{StaticResource ENGFontFamily}"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -201,7 +200,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="Transparent"
                                 BorderThickness="0"
-                                Command="{Binding ChangeLanguageCmd}">
+                                Command="{Binding ChangeLanguageCommand}">
                                 <TextBlock
                                     FontSize="16"
                                     Foreground="Gray"
@@ -277,7 +276,6 @@
                                         hc:IconElement.Geometry="{StaticResource GeometryLogOutRed}"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Command="{Binding LoginOutCommand}"
                                         Content="Log out"
                                         Foreground="#FF7969">
                                         <i:Interaction.Triggers>
@@ -347,5 +345,4 @@
             </Grid>
         </materialDesign:DialogHost>
     </Border>
-
 </Window>

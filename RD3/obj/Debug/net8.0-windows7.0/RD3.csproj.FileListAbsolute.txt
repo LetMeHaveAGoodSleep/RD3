@@ -154,3 +154,15 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Assets\NotoSans-Regular.otf
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\WaveAnimation.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ErrorView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ErrorView.baml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.dll.config
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\log4net.dll
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\App.config
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AlarmView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AlarmView.baml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Alarm.json
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Communication.json
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Command.json
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CommunicationView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CommunicationView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditClientView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditClientView.baml

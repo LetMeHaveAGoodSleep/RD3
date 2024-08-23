@@ -13,10 +13,19 @@
     <Compile Update="Views\AddUser.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AlarmView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\BatchView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\CalibrateView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\CommunicationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\EditClientView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SampleView.xaml.cs">
@@ -31,6 +40,15 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Themes\WaveAnimation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AlarmView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CommunicationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\EditClientView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ErrorView.xaml">

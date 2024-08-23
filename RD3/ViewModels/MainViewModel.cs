@@ -25,7 +25,6 @@ using RD3.Shared;
 
 namespace RD3.ViewModels
 {
-    [RegionMemberLifetime(KeepAlive = true)]
     public class MainViewModel : BindableBase, IConfigureService
     {
         private string userName;
@@ -45,16 +44,34 @@ namespace RD3.ViewModels
 
         private IRegionNavigationService navigationService;
 
-        public DelegateCommand<MenuBar> NavigateCommand { get; private set; }
-        public DelegateCommand GoBackCommand { get; private set; }
-        public DelegateCommand GoForwardCommand { get; private set; }
-        public DelegateCommand LoginOutCommand { get; private set; }
-        public DelegateCommand ManageUserCommand { get; private set; }
-        public DelegateCommand ChangeLanguageCommand { get; private set; }
+        public DelegateCommand<MenuBar> NavigateCommand => new(Navigate);
+        public DelegateCommand GoBackCommand => new(() =>
+        {
+            if (journal != null && journal.CanGoBack)
+                journal.GoBack();
+        });
+        public DelegateCommand GoForwardCommand => new(() =>
+        {
+            if (journal != null && journal.CanGoForward)
+                journal.GoForward();
+        });
+        public DelegateCommand LoginOutCommand => new(() => { App.LoginOut(containerProvider); });
+        public DelegateCommand ManageUserCommand => new(() =>
+        {
+            dialogService.ShowDialog("UserView", callback =>
+            {
+            });
+        });
+        public DelegateCommand ChangeLanguageCommand => new(() => 
+        {
+            dialogService.ShowDialog("CommunicationView", callback =>
+            {
+            }); 
+        });
 
         public DelegateCommand<string> SelectCmd => new(SwitchMenuItem);
 
-        private ObservableCollection<MenuBar> menuBars;
+        private ObservableCollection<MenuBar> menuBars = new ObservableCollection<MenuBar>();
         private readonly IContainerProvider containerProvider;
         private readonly IRegionManager regionManager;
         private IRegionNavigationJournal journal;
@@ -74,34 +91,6 @@ namespace RD3.ViewModels
             this.containerProvider = containerProvider;
             this.regionManager = regionManager;
             this.dialogService = containerProvider.Resolve<IDialogService>();
-            MenuBars = new ObservableCollection<MenuBar>();
-            NavigateCommand = new DelegateCommand<MenuBar>(Navigate);
-            GoBackCommand = new DelegateCommand(() =>
-            {
-                if (journal != null && journal.CanGoBack)
-                    journal.GoBack();
-            });
-            GoForwardCommand = new DelegateCommand(() =>
-            {
-                if (journal != null && journal.CanGoForward)
-                    journal.GoForward();
-            });
-            LoginOutCommand = new DelegateCommand(() =>
-              {
-                  //注销当前用户
-                  App.LoginOut(containerProvider);
-              });
-            ManageUserCommand = new DelegateCommand(() =>
-            {
-                dialogService.ShowDialog("UserView", callback =>
-                {
-                });
-            });
-            ChangeLanguageCommand = new DelegateCommand(() =>
-            {
-                
-            });
-
         }
 
         private void SwitchMenuItem(string header)
@@ -138,8 +127,8 @@ namespace RD3.ViewModels
             MenuBars.Add(new MenuBar() { Icon = "Project", Title = "Projects", NameSpace = "ProjectView" });
             MenuBars.Add(new MenuBar() { Icon = "Data", Title = "Data", NameSpace = "BatchView" });
             MenuBars.Add(new MenuBar() { Icon = "Calibrate", Title = "Calibrate", NameSpace = "CalibrateView" });
-            MenuBars.Add(new MenuBar() { Icon = "Control", Title = "Control", NameSpace = "ControlView" });
-            MenuBars.Add(new MenuBar() { Icon = "Setting", Title = "Setting", NameSpace = "SettingView" });
+            MenuBars.Add(new MenuBar() { Icon = "Control", Title = "Control", NameSpace = "CommunicationView" });
+            MenuBars.Add(new MenuBar() { Icon = "Settings", Title = "Settings", NameSpace = "AlarmView" });
         }
 
         /// <summary>

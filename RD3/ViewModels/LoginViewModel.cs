@@ -15,6 +15,7 @@ using System.Windows;
 using System.IO;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
+using Prism.Regions;
 
 namespace RD3.ViewModels
 {
@@ -166,8 +167,6 @@ namespace RD3.ViewModels
                 CreateJsonFile(FileConst.UserPath);
             }
             ReadJsonFile(FileConst.UserPath);
-
-            var a = VarConfig.GetValue("LastUser");
         }
 
         private void CreateJsonFile(string filePath)

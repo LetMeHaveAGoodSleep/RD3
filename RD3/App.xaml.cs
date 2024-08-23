@@ -1,4 +1,5 @@
 ﻿using DryIoc;
+using log4net;
 using MaterialDesignThemes.Wpf;
 using Prism.DryIoc;
 using Prism.Ioc;
@@ -11,6 +12,7 @@ using RD3.Shared;
 using RD3.ViewModels;
 using RD3.Views;
 using System;
+using System.Reflection;
 using System.Windows;
 
 namespace RD3
@@ -38,56 +40,69 @@ namespace RD3
                     Environment.Exit(0);
                     return;
                 }
-
-                var service = App.Current.MainWindow.DataContext as IConfigureService;
-                if (service != null)
-                    service.Configure();
-
-                dialog.ShowDialog("SelfCheckView", callback =>
-                {
-                    if (callback.Result != ButtonResult.OK)
-                    {
-                        Environment.Exit(0);
-                        return;
-                    }
-
-                    Current.MainWindow.Show();
-                });
             });
-        }
 
-        protected override void OnInitialized()
-        {
-            var dialog = Container.Resolve<IDialogService>();
-            dialog.ShowDialog("LoginView", callback =>
+            dialog.ShowDialog("SelfCheckView", callback =>
             {
                 if (callback.Result != ButtonResult.OK)
                 {
                     Environment.Exit(0);
                     return;
                 }
-
-                var service = App.Current.MainWindow.DataContext as IConfigureService;
-                if (service != null)
-                    service.Configure();
-
-                dialog.ShowDialog("SelfCheckView", callback =>
-                {
-                    if (callback.Result != ButtonResult.OK)
-                    {
-                        Environment.Exit(0);
-                        return;
-                    }
-                });
-
-                base.OnInitialized();
             });
+
+            Current.MainWindow.Show();
+        }
+
+        protected override void OnInitialized()
+        {
+            var dialog = Container.Resolve<IDialogService>();
+            dialog.ShowDialog("LoginView", async callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    Environment.Exit(0);
+                    return;
+                }
+            });
+            var service = App.Current.MainWindow.DataContext as IConfigureService;
+            if (service != null)
+                service.Configure();
+
+            dialog.ShowDialog("SelfCheckView", callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    Environment.Exit(0);
+                    return;
+                }
+            });
+            //初始化加载
+            CommandManager.GetInstance();
+            AlarmManager.GetInstance();
+            AlarmLogger.GetInstance();
+            //for (global::System.Int32 i = 0; i < 100; i++)
+            //{
+            //    AlarmRecord alarm = new AlarmRecord()
+            //    {
+            //        Time = DateTime.Now,
+            //        Batch = "G0" + i.ToString(),
+            //        Reactor = i.ToString(),
+            //        Grade = AlarmGrade.Error,
+            //        Description = " It's for Test" + i.ToString(),
+            //        Value = i.ToString()
+            //    };
+            //    AlarmLogger.GetInstance().AddAlarm(alarm);
+            //}
+
+            CommunicationManager.GetInstance();
+            base.OnInitialized();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.Register<IDialogHostService, DialogHostService>();
-            containerRegistry.RegisterDialog<LoginView, LoginViewModel>();
+            containerRegistry.RegisterForNavigation<LoginView, LoginViewModel>();
             containerRegistry.RegisterForNavigation<AboutView>();
             containerRegistry.RegisterForNavigation<MsgView, MsgViewModel>();
             containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
@@ -99,6 +114,9 @@ namespace RD3
             containerRegistry.RegisterDialog<SelfCheckView, SelfCheckViewModel>();
             containerRegistry.RegisterForNavigation<BatchView, BatchViewModel>();
             containerRegistry.RegisterForNavigation<ErrorView, ErrorViewModel>();
+            containerRegistry.RegisterForNavigation<AlarmView, AlarmViewModel>();
+            containerRegistry.RegisterDialog<CommunicationView, CommunicationViewModel>();
+            containerRegistry.RegisterDialog<EditClientView, EditClientViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

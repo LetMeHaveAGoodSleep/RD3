@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\Project\RD3\RD3\App.xaml
-161402443361
+19986031915
 11294743660
-46-793154904
-21679631482
-Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AddSampleLogView.xaml;Views\AddUser.xaml;Views\BatchView.xaml;Views\CalibrateView.xaml;Views\ErrorView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MsgView.xaml;Views\ProgressView.xaml;Views\ProjectView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\UserView.xaml;
+511003677365
+217724068248
+Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AddSampleLogView.xaml;Views\AddUser.xaml;Views\AlarmView.xaml;Views\BatchView.xaml;Views\CalibrateView.xaml;Views\CommunicationView.xaml;Views\EditClientView.xaml;Views\ErrorView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MsgView.xaml;Views\ProgressView.xaml;Views\ProjectView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\UserView.xaml;
 
 False
 

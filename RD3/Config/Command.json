@@ -1,0 +1,29 @@
+[
+  {
+    "ID": "1",
+    "Name": "RWTemp",
+    "CommandParams": [
+      {
+        "Name": "Temp",
+        "Type": "System.Single",
+        "Length": 4
+      },
+      {
+        "Name": "TempUpperLimit",
+        "Type": "System.Single",
+        "Length": 4
+      },
+      {
+        "Name": "TempLowerLimit",
+        "Type": "System.Single",
+        "Length": 4
+      },
+      {
+        "Name": "TempMode",
+        "Type": "System.Byte",
+        "Length": 1
+      }
+    ]
+  }
+]
+

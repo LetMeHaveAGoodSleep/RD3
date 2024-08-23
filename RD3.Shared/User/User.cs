@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RD3.Common
+namespace RD3.Shared
 {
     public class User : BindableBase
     {
@@ -23,10 +23,8 @@ namespace RD3.Common
             set { SetProperty(ref _password, value); }
         }
 
-        /// <summary>
-        /// 权限等级
-        /// 数值越大，权限越大
-        /// </summary>
+
+
         private int _role;
         public int Role
         {
