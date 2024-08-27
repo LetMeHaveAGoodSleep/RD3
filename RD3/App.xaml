@@ -20,6 +20,8 @@
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
                 <ResourceDictionary Source="Themes/WaveAnimation.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary x:Key="zh_CN" Source="pack://application:,,,/Lang/Lang.zh-CN.xaml" />
+            <ResourceDictionary x:Key="en_US" Source="pack://application:,,,/Lang/Lang.en-US.xaml" />
             <SolidColorBrush x:Key="BackGroundBrush" Color="#FDFDFD" />
             <SolidColorBrush x:Key="PrimaryBorderBrush" Color="LightGray" />
             <SolidColorBrush x:Key="ButtonBoderBrush" Color="#326CF3" />

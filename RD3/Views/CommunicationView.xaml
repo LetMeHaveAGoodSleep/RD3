@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
@@ -56,7 +57,7 @@
                     HorizontalAlignment="Right"
                     Background="Transparent"
                     BorderThickness="0"
-                    Command="{Binding CloseCommand}">
+                    Click="BtnClose_Click">
                     <materialDesign:PackIcon
                         Width="24"
                         Height="24"
@@ -88,24 +89,24 @@
                         Width="100"
                         Binding="{Binding Name}"
                         CellStyle="{StaticResource DataGridTextLeftCellStyle}"
-                        Header="Name"
+                        Header="{ex:Language Key='Name'}"
                         HeaderStyle="{StaticResource DataGridLeftColumnHeaderStyle}" />
                     <DataGridTextColumn
                         Width="100"
                         Binding="{Binding TypeName}"
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                        Header="TypeName"
+                        Header="{ex:Language Key='TypeName'}"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                     <DataGridTextColumn
                         Width="150"
                         Binding="{Binding Host}"
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                        Header="Host"
+                        Header="{ex:Language Key='Host'}"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                     <DataGridTemplateColumn
                         Width="200"
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                        Header="Operation"
+                        Header="{ex:Language Key='Operation'}"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -117,8 +118,7 @@
                                         hc:IconElement.Geometry="{StaticResource GeometryEdit}"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Command="{Binding EditCommand}"
-                                        CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}" />
+                                        Click="ButtonEdit_Click" />
                                     <Button
                                         Margin="5"
                                         HorizontalContentAlignment="Center"
@@ -126,8 +126,7 @@
                                         hc:IconElement.Geometry="{StaticResource GeometryDelete}"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Command="{Binding DeleteCommand}"
-                                        CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}" />
+                                        Click="ButtonDelete_Click" />
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

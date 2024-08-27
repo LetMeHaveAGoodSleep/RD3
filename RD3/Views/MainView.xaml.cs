@@ -18,6 +18,7 @@ using MaterialDesignThemes.Wpf;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
 using System.Windows.Threading;
+using HandyControl.Tools;
 
 namespace RD3.Views
 {

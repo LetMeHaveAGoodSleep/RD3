@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -37,12 +38,12 @@
             Orientation="Horizontal">
             <Button
                 Command="{Binding SaveCommand}"
-                Content="确定"
+                Content="{ex:Language Key='OK'}"
                 Style="{StaticResource MaterialDesignOutlinedButton}" />
             <Button
                 Margin="5,0,0,0"
                 Command="{Binding CancelCommand}"
-                Content="取消"
+                Content="{ex:Language Key='Cancel'}"
                 Style="{StaticResource MaterialDesignOutlinedButton}" />
         </StackPanel>
     </Grid>

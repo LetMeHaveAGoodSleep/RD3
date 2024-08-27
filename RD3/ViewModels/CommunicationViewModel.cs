@@ -1,6 +1,7 @@
 ﻿using HandyControl.Controls;
 using HandyControl.Data;
 using Prism.Commands;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RD3.Shared;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    public class CommunicationViewModel : BindableBase,IDialogAware
+    public class CommunicationViewModel : NavigationViewModel, IDialogAware
     {
         private IDialogService dialog;
         public ObservableCollection<ClientConfig> ClientCol
@@ -63,7 +64,7 @@ namespace RD3.ViewModels
             
         }
 
-        public CommunicationViewModel(IDialogService dialogService)
+        public CommunicationViewModel(IContainerProvider containerProvider, IDialogService dialogService) : base(containerProvider)
         {
             dialog = dialogService;
         }

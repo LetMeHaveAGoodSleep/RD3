@@ -24,14 +24,14 @@ namespace RD3.Shared
         private CancellationTokenSource _cancellationTokenSource; // 取消标记
         private Thread _receiveThread; // 接收线程
         private readonly int _reconnectCount = 10;//总共重连10次
-        private  int _retryTimes = 0;
+        private uint _retryTimes = 0;
 
-        public CustomTcpClient(string serverIp, int serverPort,int reconnectCount,int reconnectIntervalMilliseconds)
+        public CustomTcpClient(string serverIp, int serverPort, int reconnectCount, int reconnectIntervalMilliseconds)
         {
             _serverIp = serverIp;
             _serverPort = serverPort;
-            _reconnectCount= reconnectCount;
-            _reconnectIntervalMilliseconds= reconnectIntervalMilliseconds;
+            _reconnectCount = reconnectCount;
+            _reconnectIntervalMilliseconds = reconnectIntervalMilliseconds;
         }
 
         public void Connect()
@@ -46,6 +46,7 @@ namespace RD3.Shared
                         _client.Connect(_serverIp, _serverPort);
                         _stream = _client.GetStream();
                         _isConnected = true;
+                        _retryTimes = 0;
 
                         // 设置TCP保活选项
                         Socket socket = _client.Client;
@@ -65,6 +66,7 @@ namespace RD3.Shared
                     }
                     catch (Exception ex)
                     {
+                        _retryTimes++;
                         LogHelper.Debug(ex.Message);
                         _isConnected = false;
                         Reconnect();
@@ -124,7 +126,6 @@ namespace RD3.Shared
                             if (!_isConnected)
                             {
                                 Connect();
-                                _retryTimes++;
                                 shouldReconnect = !_isConnected;
                             }
                             else
@@ -189,7 +190,7 @@ namespace RD3.Shared
             }
         }
 
-        public void SendData(byte[] command,byte[] data)
+        public void SendData(byte[] command, byte[] data)
         {
             lock (_lockObject)
             {

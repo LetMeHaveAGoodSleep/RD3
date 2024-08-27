@@ -16,17 +16,17 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using Prism.Regions;
+using Prism.Ioc;
 
 namespace RD3.ViewModels
 {
-    public class LoginViewModel : BindableBase, IDialogAware
+    public class LoginViewModel : NavigationViewModel, IDialogAware
     {
-        public LoginViewModel(IEventAggregator aggregator)
+        public LoginViewModel(IContainerProvider containerProvider, IEventAggregator aggregator) : base(containerProvider)
         {
             UserDto = new ResgiterUserDto();
             ExecuteCommand = new DelegateCommand<string>(Execute);
             this.aggregator = aggregator;
-            Init();
         }
 
         public string Title { get; set; } = AppSession.CompanyName;
@@ -155,42 +155,6 @@ namespace RD3.ViewModels
         {
             RequestClose?.Invoke(new DialogResult(ButtonResult.No));
         }
-
-        public void Init()
-        {
-            if (!Directory.Exists(FileConst.ConfigDirectory))
-            {
-                Directory.CreateDirectory(FileConst.ConfigDirectory);
-            }
-            if (!File.Exists(FileConst.UserPath))
-            {
-                CreateJsonFile(FileConst.UserPath);
-            }
-            ReadJsonFile(FileConst.UserPath);
-        }
-
-        private void CreateJsonFile(string filePath)
-        {
-            User user = new User
-            {
-                UserName = "Admin",
-                Password = "123456",
-                Role = int.MaxValue
-            };
-            List<User> Users = new List<User>() { user };
-            string json = JsonConvert.SerializeObject(Users);
-            json = AESEncryption.Encrypt(json);
-            File.WriteAllText(filePath, json);
-        }
-
-        private void ReadJsonFile(string filePath)
-        {
-            string jsonContent = AESEncryption.DecryptFile(filePath);
-            List<User> users = JsonConvert.DeserializeObject<List<User>>(jsonContent);
-            AppSession.Users.Clear();
-            AppSession.Users.AddRange(users);
-        }
-
         #endregion
     }
 }

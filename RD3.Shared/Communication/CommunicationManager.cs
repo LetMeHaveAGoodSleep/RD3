@@ -23,14 +23,6 @@ namespace RD3.Shared
         private CommunicationManager()
         {
             LoadCommunication();
-            //foreach (var tcpListener in tcpListeners)
-            //{
-            //    Task.Run(() => 
-            //    {
-            //        tcpListener.Start();
-            //        var tcpClient = tcpListener.AcceptTcpClient();
-            //    });
-            //}
 
             // 创建客户端
             foreach (var client in Clients)

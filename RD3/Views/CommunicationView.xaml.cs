@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RD3.Shared;
+using RD3.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,22 @@ namespace RD3.Views
         public CommunicationView()
         {
             InitializeComponent();
+        }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            ((CommunicationViewModel)this.DataContext)?.CloseCommand.Execute();
+        }
+
+        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            ClientConfig client = dataGrid.SelectedItem as ClientConfig;
+            ((CommunicationViewModel)this.DataContext)?.EditCommand.Execute(client);
+        }
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            ClientConfig client = dataGrid.SelectedItem as ClientConfig;
+            ((CommunicationViewModel)this.DataContext)?.DeleteCommand.Execute(client);
         }
     }
 }

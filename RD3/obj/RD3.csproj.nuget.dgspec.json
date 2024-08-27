@@ -141,9 +141,17 @@
               "target": "Package",
               "version": "[3.5.1, )"
             },
+            "LayUI.Wpf.Extensions": {
+              "target": "Package",
+              "version": "[1.0.2.240505, )"
+            },
             "MaterialDesignThemes": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "MessageBox": {
+              "target": "Package",
+              "version": "[2.1.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

@@ -22,10 +22,13 @@ using Prism.Services.Dialogs;
 using System.Windows.Threading;
 using Prism.Events;
 using RD3.Shared;
+using HandyControl.Tools;
+using System.Resources;
+using static MaterialDesignThemes.Wpf.Theme;
 
 namespace RD3.ViewModels
 {
-    public class MainViewModel : BindableBase, IConfigureService
+    public class MainViewModel : NavigationViewModel, IConfigureService
     {
         private string userName;
 
@@ -35,11 +38,26 @@ namespace RD3.ViewModels
             set { userName = value; RaisePropertyChanged(); }
         }
 
-        private string languageName;
+        private string _languageName;
         public string LanguageName
         {
-            get { return languageName; }
-            set { languageName = value; RaisePropertyChanged(); }
+            get { return _languageName; }
+            set
+            {
+                
+                if (value != _languageName)
+                {
+                    if (value == Const.CHNLanguage)
+                    {
+                        Language.LoadResourceKey("zh_CN");
+                    }
+                    else
+                    {
+                        Language.LoadResourceKey("en_US");
+                    }
+                }
+                SetProperty(ref _languageName, value);
+            }
         }
 
         private IRegionNavigationService navigationService;
@@ -64,9 +82,14 @@ namespace RD3.ViewModels
         });
         public DelegateCommand ChangeLanguageCommand => new(() => 
         {
-            dialogService.ShowDialog("CommunicationView", callback =>
+            if (LanguageName == Const.CHNLanguage)
             {
-            }); 
+                LanguageName = Const.ENGLanguage;
+            }
+            else
+            {
+                LanguageName = Const.CHNLanguage;
+            }
         });
 
         public DelegateCommand<string> SelectCmd => new(SwitchMenuItem);
@@ -85,7 +108,7 @@ namespace RD3.ViewModels
         }
 
         public MainViewModel(IContainerProvider containerProvider,
-            IRegionManager regionManager, IEventAggregator aggregator)
+            IRegionManager regionManager, IEventAggregator aggregator) : base(containerProvider)
         {
             this.aggregator = aggregator;
             this.containerProvider = containerProvider;
@@ -123,12 +146,12 @@ namespace RD3.ViewModels
 
         void CreateMenuBar()
         {
-            MenuBars.Add(new MenuBar() { Icon = "Home", Title = "Home", NameSpace = "IndexView" });
-            MenuBars.Add(new MenuBar() { Icon = "Project", Title = "Projects", NameSpace = "ProjectView" });
-            MenuBars.Add(new MenuBar() { Icon = "Data", Title = "Data", NameSpace = "BatchView" });
-            MenuBars.Add(new MenuBar() { Icon = "Calibrate", Title = "Calibrate", NameSpace = "CalibrateView" });
-            MenuBars.Add(new MenuBar() { Icon = "Control", Title = "Control", NameSpace = "CommunicationView" });
-            MenuBars.Add(new MenuBar() { Icon = "Settings", Title = "Settings", NameSpace = "AlarmView" });
+            MenuBars.Add(new MenuBar() { Icon = "Home", Title = Language.GetValue("Home").ToString(), NameSpace = "IndexView" });
+            MenuBars.Add(new MenuBar() { Icon = "Project", Title = Language.GetValue("Project").ToString(), NameSpace = "ProjectView" });
+            MenuBars.Add(new MenuBar() { Icon = "Data", Title = Language.GetValue("Data").ToString(), NameSpace = "BatchView" });
+            MenuBars.Add(new MenuBar() { Icon = "Calibrate", Title = Language.GetValue("Calibrate").ToString(), NameSpace = "CalibrateView" });
+            MenuBars.Add(new MenuBar() { Icon = "Control", Title = Language.GetValue("Control").ToString(), NameSpace = "CommunicationView" });
+            MenuBars.Add(new MenuBar() { Icon = "Settings", Title = Language.GetValue("Settings").ToString(), NameSpace = "AlarmView" });
         }
 
         /// <summary>
@@ -137,7 +160,7 @@ namespace RD3.ViewModels
         public void Configure()
         {
             UserName = AppSession.CurrentUser.UserName;
-            LanguageName = "中文";
+            LanguageName = Const.CHNLanguage;
             CreateMenuBar();
             var navigationParameters = new NavigationParameters();
             regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(

@@ -14,7 +14,7 @@ using System.Windows.Threading;
 
 namespace RD3.ViewModels
 {
-    public class SelfCheckViewModel : BindableBase, IDialogAware
+    public class SelfCheckViewModel : NavigationViewModel, IDialogAware
     {
         private string content;
         public String Content
@@ -24,6 +24,11 @@ namespace RD3.ViewModels
         }
 
         private DispatcherTimer countdownTimer;
+
+        public SelfCheckViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        {
+        }
+
         public string Title => "仪器自检";
 
         public event Action<IDialogResult> RequestClose;

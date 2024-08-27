@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
@@ -60,17 +61,17 @@
                         DockPanel.Dock="Top"
                         FontSize="22"
                         FontWeight="Bold"
-                        Text="欢迎使用" />
+                        Text="{ex:Language Key='欢迎使用'}" />
                     <TextBox
                         Margin="0,10"
                         VerticalAlignment="Center"
-                        hc:InfoElement.Placeholder="请输入账号"
+                        hc:InfoElement.Placeholder="{ex:Language Key='请输入账号'}"
                         DockPanel.Dock="Top"
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding UserName}" />
                     <PasswordBox
                         Margin="0,10"
-                        hc:InfoElement.Placeholder="请输入密码"
+                        hc:InfoElement.Placeholder="{ex:Language Key='请输入密码'}"
                         hc:PasswordBoxAttach.PasswordLength="0"
                         pass:PassWordExtensions.PassWord="{Binding PassWord, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         DockPanel.Dock="Top"
@@ -85,7 +86,7 @@
                         hc:BorderElement.CornerRadius="15"
                         Command="{Binding ExecuteCommand}"
                         CommandParameter="Login"
-                        Content="登录系统"
+                        Content="{ex:Language Key='登录系统'}"
                         DockPanel.Dock="Top"
                         IsDefault="True"
                         Style="{StaticResource ButtonPrimary}" />

@@ -144,9 +144,7 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ProjectView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ProjectView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\UserView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\UserView.baml
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AddUser.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CalibrateView.g.cs
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AddUser.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CalibrateView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\SelfCheckView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\SelfCheckView.baml
@@ -166,3 +164,9 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CommunicationView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CommunicationView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditClientView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditClientView.baml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Lang\Lang.en-US.xaml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Lang\Lang.zh-CN.xaml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\LayUI.Wpf.Extensions.dll
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditUserView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditUserView.baml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Gat.Controls.MessageBox.dll

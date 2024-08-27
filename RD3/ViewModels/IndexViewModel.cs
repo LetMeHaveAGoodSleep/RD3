@@ -36,13 +36,8 @@ namespace RD3.ViewModels
             Title = $"你好，{AppSession.CurrentUser.UserName} {DateTime.Now.GetDateTimeFormats('D')[1].ToString()}";
             CreateTaskBars();
             ExecuteCommand = new DelegateCommand<string>(Execute);
-            //this.toDoService = provider.Resolve<IToDoService>();
-            //this.memoService = provider.Resolve<IMemoService>();
             this.regionManager = provider.Resolve<IRegionManager>();
             this.dialog = dialog;
-            //EditMemoCommand = new DelegateCommand<MemoDto>(AddMemo);
-            //EditToDoCommand = new DelegateCommand<ToDoDto>(AddToDo);
-            //ToDoCompltedCommand = new DelegateCommand<ToDoDto>(Complted);
             NavigateCommand = new DelegateCommand<TaskBar>(Navigate);
 
             PlotModel = new PlotModel { Title = "Multiple Y-Axes Example" };

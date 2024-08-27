@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cv="clr-namespace:RD3.Common.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
@@ -12,13 +13,14 @@
     xmlns:oxy="http://oxyplot.org/wpf"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:vm="clr-namespace:RD3.ViewModels"
+    d:DataContext="{d:DesignInstance Type=vm:IndexViewModel}"
     d:DesignHeight="795"
     d:DesignWidth="1330"
     Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
     <UserControl.Resources />
     <TabControl Style="{StaticResource TabControlBaseStyle}">
-        <TabItem Header="Details" IsSelected="True">
+        <TabItem Header="{ex:Language Key='Details'}" IsSelected="True">
             <ScrollViewer
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -105,7 +107,7 @@
                                 Background="Transparent"
                                 BorderThickness="1"
                                 Command="{Binding PauseCommand}"
-                                Content="Pause"
+                                Content="{ex:Language Key='Pause'}"
                                 ToolTip="Pause" />
                             <Button
                                 Height="30"
@@ -115,7 +117,7 @@
                                 Background="Transparent"
                                 BorderThickness="1"
                                 Command="{Binding SampleCommand}"
-                                Content="Sample"
+                                Content="{ex:Language Key='Sample'}"
                                 ToolTip="Sample" />
                             <Button
                                 Height="30"
@@ -125,7 +127,7 @@
                                 Background="Transparent"
                                 BorderThickness="1"
                                 Command="{Binding LogCommand}"
-                                Content="Log"
+                                Content="{ex:Language Key='Log'}"
                                 ToolTip="AddLog" />
                             <Button
                                 Height="30"
@@ -135,7 +137,7 @@
                                 Background="Transparent"
                                 BorderThickness="1"
                                 Command="{Binding InoculateCommand}"
-                                Content="Inoculate"
+                                Content="{ex:Language Key='Inoculate'}"
                                 ToolTip="Inoculate" />
                             <Button
                                 Width="80"
@@ -146,7 +148,7 @@
                                 BorderBrush="#F56C6C"
                                 BorderThickness="1"
                                 Command="{Binding StopCommand}"
-                                Content="Stop"
+                                Content="{ex:Language Key='Stop'}"
                                 Foreground="White"
                                 ToolTip="Stop" />
                         </hc:UniformSpacingPanel>
@@ -191,7 +193,7 @@
                                         FontSize="16"
                                         FontWeight="Bold"
                                         Foreground="#67C23A"
-                                        Text="Running"
+                                        Text="{ex:Language Key='Running'}"
                                         TextAlignment="Right" />
                                 </DockPanel>
                                 <Grid Grid.Row="1" Margin="10">
@@ -217,7 +219,7 @@
                                     <TextBlock
                                         Grid.Row="1"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="Reactor name"
+                                        Text="{ex:Language Key='Reactor name'}"
                                         TextAlignment="Left" />
                                     <TextBlock
                                         Grid.Row="1"
@@ -228,7 +230,7 @@
                                     <TextBlock
                                         Grid.Row="2"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="Reactor ID"
+                                        Text="{ex:Language Key='Reactor ID'}"
                                         TextAlignment="Left" />
                                     <TextBlock
                                         Grid.Row="2"
@@ -239,7 +241,7 @@
                                     <TextBlock
                                         Grid.Row="3"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="Serial number"
+                                        Text="{ex:Language Key='Serial number'}"
                                         TextAlignment="Left" />
                                     <TextBlock
                                         Grid.Row="3"
@@ -250,7 +252,7 @@
                                     <TextBlock
                                         Grid.Row="4"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="Type"
+                                        Text="{ex:Language Key='Type'}"
                                         TextAlignment="Left" />
                                     <TextBlock
                                         Grid.Row="4"
@@ -261,7 +263,7 @@
                                     <TextBlock
                                         Grid.Row="5"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="Status"
+                                        Text="{ex:Language Key='Status'}"
                                         TextAlignment="Left" />
                                     <TextBlock
                                         Grid.Row="5"
@@ -272,7 +274,7 @@
                                     <TextBlock
                                         Grid.Row="6"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="Batch ID"
+                                        Text="{ex:Language Key='Batch ID'}"
                                         TextAlignment="Left" />
                                     <TextBlock
                                         Grid.Row="6"
@@ -283,7 +285,7 @@
                                     <TextBlock
                                         Grid.Row="7"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="Batch name"
+                                        Text="{ex:Language Key='Batch name'}"
                                         TextAlignment="Left" />
                                     <TextBlock
                                         Grid.Row="7"
@@ -294,7 +296,7 @@
                                     <TextBlock
                                         Grid.Row="8"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="Affiliated project"
+                                        Text="{ex:Language Key='Affiliated project'}"
                                         TextAlignment="Left" />
                                     <TextBlock
                                         Grid.Row="8"
@@ -305,7 +307,7 @@
                                     <TextBlock
                                         Grid.Row="9"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="Running time"
+                                        Text="{ex:Language Key='Running time'}"
                                         TextAlignment="Left" />
                                     <TextBlock
                                         Grid.Row="9"
@@ -345,7 +347,7 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource SubTitleFontSizeStyle}"
-                                        Text="Temp" />
+                                        Text="{ex:Language Key='Temp'}" />
                                     <TextBlock
                                         Grid.Column="1"
                                         Margin="0,7,5,5"
@@ -390,11 +392,11 @@
                                     <StackPanel Grid.ColumnSpan="3">
                                         <CheckBox
                                             Margin="0,10,0,0"
-                                            Content="Heating"
+                                            Content="{ex:Language Key='Heating'}"
                                             IsChecked="True" />
                                         <CheckBox
                                             Margin="0,10,0,0"
-                                            Content="Cooling"
+                                            Content="{ex:Language Key='Cooling'}"
                                             IsChecked="True" />
                                     </StackPanel>
                                     <Label
@@ -439,7 +441,7 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource SubTitleFontSizeStyle}"
-                                        Text="Agit" />
+                                        Text="{ex:Language Key='Agit'}" />
                                     <TextBlock
                                         Grid.Column="1"
                                         Margin="0,7,5,5"
@@ -487,7 +489,7 @@
                                             Margin="5,0,0,0"
                                             FontSize="12"
                                             Foreground="Gray"
-                                            Text="DO" />
+                                            Text="{ex:Language Key='DO'}" />
                                     </StackPanel>
                                     <Label
                                         Grid.Row="2"
@@ -532,7 +534,7 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource SubTitleFontSizeStyle}"
-                                        Text="Inoculate" />
+                                        Text="{ex:Language Key='Inoculate'}" />
                                     <TextBlock
                                         Grid.Column="1"
                                         Margin="0,10,0,5"
@@ -540,7 +542,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="12"
                                         Foreground="Gray"
-                                        Text="mL/h" />
+                                        Text="{ex:Language Key='mL/h'}" />
                                     <Label Grid.Column="2" BorderThickness="0" />
                                     <materialDesign:PopupBox
                                         Grid.Column="3"
@@ -598,7 +600,7 @@
                                         Orientation="Vertical">
                                         <Label
                                             BorderThickness="0"
-                                            Content="Consumed:"
+                                            Content="{ex:Language Key='Consumed:'}"
                                             FontSize="12" />
                                         <StackPanel Orientation="Horizontal">
                                             <Label
@@ -611,7 +613,7 @@
                                                 Margin="5"
                                                 HorizontalAlignment="Left"
                                                 BorderThickness="0"
-                                                Content="mL"
+                                                Content="{ex:Language Key='mL'}"
                                                 FontSize="12" />
                                         </StackPanel>
                                     </StackPanel>
@@ -641,7 +643,7 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource SubTitleFontSizeStyle}"
-                                        Text="pH" />
+                                        Text="{ex:Language Key='pH'}" />
                                     <TextBlock
                                         Grid.Column="1"
                                         Margin="0,7,5,5"
@@ -733,7 +735,7 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource SubTitleFontSizeStyle}"
-                                        Text="DO" />
+                                        Text="{ex:Language Key='DO'}" />
                                     <TextBlock
                                         Grid.Column="1"
                                         Margin="0,7,5,5"
@@ -782,7 +784,7 @@
                                                 Margin="5,0,0,0"
                                                 FontSize="12"
                                                 Foreground="Gray"
-                                                Text="Agit,Air,Feed" />
+                                                       Text="{ex:Language Key='Agit,Air,Feed'}" />
                                         </StackPanel>
                                         <RadioButton
                                             Margin="0,5,5,0"
@@ -829,7 +831,7 @@
                             Padding="5"
                             Style="{StaticResource BorderCard}">
                             <TabControl TabStripPlacement="Left">
-                                <hc:TabItem Header="Air" IsSelected="True">
+                                <hc:TabItem Header="{ex:Language Key='Air'}" IsSelected="True">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="40" />
@@ -848,7 +850,7 @@
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Top"
                                                 Style="{StaticResource SubTitleFontSizeStyle}"
-                                                Text="Air" />
+                                                Text="{ex:Language Key='Air'}" />
                                             <TextBlock
                                                 Grid.Column="1"
                                                 Margin="0,7,0,5"
@@ -856,7 +858,7 @@
                                                 VerticalAlignment="Center"
                                                 FontSize="12"
                                                 Foreground="Gray"
-                                                Text="L/min" />
+                                                Text="{ex:Language Key='L/min'}" />
                                             <Label Grid.Column="2" BorderThickness="0" />
                                             <materialDesign:PopupBox
                                                 Grid.Column="3"
@@ -896,7 +898,7 @@
                                                     Margin="5,0,0,0"
                                                     FontSize="12"
                                                     Foreground="Gray"
-                                                    Text="DO" />
+                                                    Text="{ex:Language Key='DO'}" />
                                             </StackPanel>
                                             <Label
                                                 Grid.Row="2"
@@ -922,7 +924,7 @@
                                                 Orientation="Vertical">
                                                 <Label
                                                     BorderThickness="0"
-                                                    Content="Consumed:"
+                                                    Content="{ex:Language Key='Consumed:'}"
                                                     FontSize="12" />
                                                 <StackPanel Orientation="Horizontal">
                                                     <Label
@@ -935,14 +937,14 @@
                                                         Margin="5"
                                                         HorizontalAlignment="Left"
                                                         BorderThickness="0"
-                                                        Content="mL"
+                                                        Content="{ex:Language Key='mL'}"
                                                         FontSize="12" />
                                                 </StackPanel>
                                             </StackPanel>
                                         </Grid>
                                     </Grid>
                                 </hc:TabItem>
-                                <hc:TabItem Header="CO2">
+                                <hc:TabItem Header="{ex:Language Key='CO2'}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="40" />
@@ -961,7 +963,7 @@
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Top"
                                                 Style="{StaticResource SubTitleFontSizeStyle}"
-                                                Text="CO2" />
+                                                Text="{ex:Language Key='CO2'}" />
                                             <TextBlock
                                                 Grid.Column="1"
                                                 Margin="0,7,0,5"
@@ -969,7 +971,7 @@
                                                 VerticalAlignment="Center"
                                                 FontSize="12"
                                                 Foreground="Gray"
-                                                Text="L/min" />
+                                                Text="{ex:Language Key='L/min'}" />
                                             <Label Grid.Column="2" BorderThickness="0" />
                                             <materialDesign:PopupBox
                                                 Grid.Column="3"
@@ -1008,7 +1010,7 @@
                                                     Margin="5,0,0,0"
                                                     FontSize="12"
                                                     Foreground="Gray"
-                                                    Text="DO" />
+                                                    Text="{ex:Language Key='DO'}" />
                                             </StackPanel>
                                             <Label
                                                 Grid.Row="2"
@@ -1034,7 +1036,7 @@
                                                 Orientation="Vertical">
                                                 <Label
                                                     BorderThickness="0"
-                                                    Content="Consumed:"
+                                                    Content="{ex:Language Key='Consumed:'}"
                                                     FontSize="12" />
                                                 <StackPanel Orientation="Horizontal">
                                                     <Label
@@ -1047,14 +1049,14 @@
                                                         Margin="5"
                                                         HorizontalAlignment="Left"
                                                         BorderThickness="0"
-                                                        Content="mL"
+                                                        Content="{ex:Language Key='mL'}"
                                                         FontSize="12" />
                                                 </StackPanel>
                                             </StackPanel>
                                         </Grid>
                                     </Grid>
                                 </hc:TabItem>
-                                <hc:TabItem Header="O2">
+                                <hc:TabItem Header="{ex:Language Key='O2'}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="40" />
@@ -1073,7 +1075,7 @@
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Top"
                                                 Style="{StaticResource SubTitleFontSizeStyle}"
-                                                Text="O2" />
+                                                Text="{ex:Language Key='O2'}" />
                                             <TextBlock
                                                 Grid.Column="1"
                                                 Margin="0,7,0,5"
@@ -1081,7 +1083,7 @@
                                                 VerticalAlignment="Center"
                                                 FontSize="12"
                                                 Foreground="Gray"
-                                                Text="L/min" />
+                                                Text="{ex:Language Key='L/min'}" />
                                             <Label Grid.Column="2" BorderThickness="0" />
                                             <materialDesign:PopupBox
                                                 Grid.Column="3"
@@ -1120,7 +1122,7 @@
                                                     Margin="5,0,0,0"
                                                     FontSize="12"
                                                     Foreground="Gray"
-                                                    Text="DO" />
+                                                    Text="{ex:Language Key='DO'}" />
                                             </StackPanel>
                                             <Label
                                                 Grid.Row="2"
@@ -1146,7 +1148,7 @@
                                                 Orientation="Vertical">
                                                 <Label
                                                     BorderThickness="0"
-                                                    Content="Consumed:"
+                                                    Content="{ex:Language Key='Consumed:'}"
                                                     FontSize="12" />
                                                 <StackPanel Orientation="Horizontal">
                                                     <Label
@@ -1159,14 +1161,14 @@
                                                         Margin="5"
                                                         HorizontalAlignment="Left"
                                                         BorderThickness="0"
-                                                        Content="mL"
+                                                        Content="{ex:Language Key='mL'}"
                                                         FontSize="12" />
                                                 </StackPanel>
                                             </StackPanel>
                                         </Grid>
                                     </Grid>
                                 </hc:TabItem>
-                                <hc:TabItem Header="N2">
+                                <hc:TabItem Header="{ex:Language Key='N2'}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="40" />
@@ -1185,7 +1187,7 @@
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Top"
                                                 Style="{StaticResource SubTitleFontSizeStyle}"
-                                                Text="N2" />
+                                                Text="{ex:Language Key='N2'}" />
                                             <TextBlock
                                                 Grid.Column="1"
                                                 Margin="0,7,0,5"
@@ -1193,7 +1195,7 @@
                                                 VerticalAlignment="Center"
                                                 FontSize="12"
                                                 Foreground="Gray"
-                                                Text="L/min" />
+                                                Text="{ex:Language Key='L/min'}" />
                                             <Label Grid.Column="2" BorderThickness="0" />
                                             <materialDesign:PopupBox
                                                 Grid.Column="3"
@@ -1232,7 +1234,7 @@
                                                     Margin="5,0,0,0"
                                                     FontSize="12"
                                                     Foreground="Gray"
-                                                    Text="DO" />
+                                                    Text="{ex:Language Key='DO'}" />
                                             </StackPanel>
                                             <Label
                                                 Grid.Row="2"
@@ -1258,7 +1260,7 @@
                                                 Orientation="Vertical">
                                                 <Label
                                                     BorderThickness="0"
-                                                    Content="Consumed:"
+                                                    Content="{ex:Language Key='Consumed:'}"
                                                     FontSize="12" />
                                                 <StackPanel Orientation="Horizontal">
                                                     <Label
@@ -1271,7 +1273,7 @@
                                                         Margin="5"
                                                         HorizontalAlignment="Left"
                                                         BorderThickness="0"
-                                                        Content="mL"
+                                                        Content="{ex:Language Key='mL'}"
                                                         FontSize="12" />
                                                 </StackPanel>
                                             </StackPanel>
@@ -1304,7 +1306,7 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource SubTitleFontSizeStyle}"
-                                        Text="Base" />
+                                        Text="{ex:Language Key='Base'}" />
                                     <TextBlock
                                         Grid.Column="1"
                                         Margin="0,7,0,5"
@@ -1312,7 +1314,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="12"
                                         Foreground="Gray"
-                                        Text="mL/h" />
+                                        Text="{ex:Language Key='mL/h'}" />
                                     <Label Grid.Column="2" BorderThickness="0" />
                                     <materialDesign:PopupBox
                                         Grid.Column="3"
@@ -1377,7 +1379,7 @@
                                         Orientation="Vertical">
                                         <Label
                                             BorderThickness="0"
-                                            Content="Consumed:"
+                                            Content="{ex:Language Key='Consumed:'}"
                                             FontSize="12" />
                                         <StackPanel Orientation="Horizontal">
                                             <Label
@@ -1388,7 +1390,7 @@
                                             <Label
                                                 HorizontalAlignment="Left"
                                                 BorderThickness="0"
-                                                Content="mL"
+                                                Content="{ex:Language Key='mL'}"
                                                 FontSize="12" />
                                         </StackPanel>
                                     </StackPanel>
@@ -1419,7 +1421,7 @@
                                         Margin="5,0,14,0"
                                         VerticalAlignment="Center"
                                         Style="{StaticResource SubTitleFontSizeStyle}"
-                                        Text="Acid" />
+                                        Text="{ex:Language Key='Acid'}" />
                                     <TextBlock
                                         Grid.Column="1"
                                         Margin="0,7,0,5"
@@ -1427,7 +1429,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="12"
                                         Foreground="Gray"
-                                        Text="mL/h" />
+                                        Text="{ex:Language Key='mL/h'}" />
                                     <Label Grid.Column="2" BorderThickness="0" />
                                     <materialDesign:PopupBox
                                         Grid.Column="3"
@@ -1492,7 +1494,7 @@
                                         Orientation="Vertical">
                                         <Label
                                             BorderThickness="0"
-                                            Content="Consumed:"
+                                            Content="{ex:Language Key='Consumed:'}"
                                             FontSize="12" />
                                         <StackPanel Orientation="Horizontal">
                                             <Label
@@ -1503,7 +1505,7 @@
                                             <Label
                                                 HorizontalAlignment="Left"
                                                 BorderThickness="0"
-                                                Content="mL"
+                                                Content="{ex:Language Key='mL'}"
                                                 FontSize="12" />
                                         </StackPanel>
                                     </StackPanel>
@@ -1535,7 +1537,7 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource SubTitleFontSizeStyle}"
-                                        Text="Feed" />
+                                        Text="{ex:Language Key='Feed'}" />
                                     <TextBlock
                                         Grid.Column="1"
                                         Margin="0,7,0,5"
@@ -1543,7 +1545,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="12"
                                         Foreground="Gray"
-                                        Text="mL/h" />
+                                        Text="{ex:Language Key='mL/h'}" />
                                     <Label Grid.Column="2" BorderThickness="0" />
                                     <materialDesign:PopupBox
                                         Grid.Column="3"
@@ -1607,7 +1609,7 @@
                                         Orientation="Vertical">
                                         <Label
                                             BorderThickness="0"
-                                            Content="Consumed:"
+                                            Content="{ex:Language Key='Consumed:'}"
                                             FontSize="12" />
                                         <StackPanel Orientation="Horizontal">
                                             <Label
@@ -1618,7 +1620,7 @@
                                             <Label
                                                 HorizontalAlignment="Left"
                                                 BorderThickness="0"
-                                                Content="mL"
+                                                Content="{ex:Language Key='mL'}"
                                                 FontSize="12" />
                                         </StackPanel>
                                     </StackPanel>
@@ -1650,7 +1652,7 @@
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Style="{StaticResource SubTitleFontSizeStyle}"
-                                        Text="AF" />
+                                        Text="{ex:Language Key='AF'}" />
                                     <TextBlock
                                         Grid.Column="1"
                                         Margin="0,7,0,5"
@@ -1658,7 +1660,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="12"
                                         Foreground="Gray"
-                                        Text="mL/h" />
+                                        Text="{ex:Language Key='mL/h'}" />
                                     <Label Grid.Column="2" BorderThickness="0" />
                                     <materialDesign:PopupBox
                                         Grid.Column="3"
@@ -1715,7 +1717,7 @@
                                         Orientation="Vertical">
                                         <Label
                                             BorderThickness="0"
-                                            Content="Consumed:"
+                                            Content="{ex:Language Key='Consumed:'}"
                                             FontSize="12" />
                                         <StackPanel Orientation="Horizontal">
                                             <Label
@@ -1726,7 +1728,7 @@
                                             <Label
                                                 HorizontalAlignment="Left"
                                                 BorderThickness="0"
-                                                Content="mL"
+                                                Content="{ex:Language Key='mL'}"
                                                 FontSize="12" />
                                         </StackPanel>
                                     </StackPanel>
@@ -1737,7 +1739,7 @@
                 </Grid>
             </ScrollViewer>
         </TabItem>
-        <TabItem Header="Trend">
+        <TabItem Header="{ex:Language Key='Trend'}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60" />
@@ -1866,7 +1868,7 @@
 
             </Grid>
         </TabItem>
-        <TabItem Header="OverView">
+        <TabItem Header="{ex:Language Key='OverView'}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60" />

@@ -6,6 +6,9 @@
     <ApplicationIcon>Assets\icon_48.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Language\LanguageExtension.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Images\Advance.png" />
     <None Remove="Images\Button\Inoculate.png" />
     <None Remove="Images\Button\Log.png" />
@@ -28,12 +31,26 @@
     <None Remove="Images\SideMenu\Projects.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Remove="Lang\Lang.en-US.xaml" />
+    <Page Remove="Lang\Lang.zh-CN.xaml" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Assets\icon_48.ico" />
+    <Content Include="Lang\Lang.en-US.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Content>
+    <Content Include="Lang\Lang.zh-CN.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="HandyControl" Version="3.5.1" />
+    <PackageReference Include="LayUI.Wpf.Extensions" Version="1.0.2.240505" />
     <PackageReference Include="log4net" Version="2.0.17" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
+    <PackageReference Include="MessageBox" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.1.2" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />

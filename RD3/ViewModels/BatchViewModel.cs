@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Prism.Ioc;
+using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    public class BatchViewModel : BindableBase
+    public class BatchViewModel : NavigationViewModel
     {
-
+        public BatchViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        {
+        }
     }
 }

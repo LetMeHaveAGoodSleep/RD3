@@ -27,6 +27,17 @@ namespace RD3
             return Container.Resolve<MainView>();
         }
 
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            DispatcherUnhandledException += App_DispatcherUnhandledException;
+        }
+        private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            LogHelper.Error(e.Exception);
+            e.Handled = true;
+        }
+
         public static void LoginOut(IContainerProvider containerProvider)
         {
             Current.MainWindow.Hide();
@@ -56,6 +67,7 @@ namespace RD3
 
         protected override void OnInitialized()
         {
+            UserManage.GetInstance();
             var dialog = Container.Resolve<IDialogService>();
             dialog.ShowDialog("LoginView", async callback =>
             {
@@ -107,6 +119,7 @@ namespace RD3
             containerRegistry.RegisterForNavigation<MsgView, MsgViewModel>();
             containerRegistry.RegisterForNavigation<IndexView, IndexViewModel>();
             containerRegistry.RegisterDialog<UserView, UserViewModel>();
+            containerRegistry.RegisterDialog<EditUserView, EditUserViewModel>();
             containerRegistry.RegisterForNavigation<SampleView, SampleViewModel>();
             containerRegistry.RegisterDialog<AddSampleLogView, SampleViewModel>();
             containerRegistry.RegisterForNavigation<ProjectView, ProjectViewModel>();
@@ -117,6 +130,7 @@ namespace RD3
             containerRegistry.RegisterForNavigation<AlarmView, AlarmViewModel>();
             containerRegistry.RegisterDialog<CommunicationView, CommunicationViewModel>();
             containerRegistry.RegisterDialog<EditClientView, EditClientViewModel>();
+            containerRegistry.RegisterInstance<ILanguage>(new XZLanguage());
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

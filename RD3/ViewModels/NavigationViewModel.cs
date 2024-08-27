@@ -15,11 +15,14 @@ namespace RD3.ViewModels
     {
         private readonly IContainerProvider containerProvider;
         public readonly IEventAggregator aggregator;
+        public readonly ILanguage Language;
 
         public NavigationViewModel(IContainerProvider containerProvider)
         {
             this.containerProvider = containerProvider;
             aggregator = containerProvider.Resolve<IEventAggregator>();
+            Language = containerProvider.Resolve<ILanguage>();
+            Language.LoadResourceKey("zh_CN");//默认显示中文
         }
 
         public virtual bool IsNavigationTarget(NavigationContext navigationContext)

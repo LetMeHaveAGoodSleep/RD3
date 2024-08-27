@@ -10,9 +10,6 @@
     <Compile Update="Views\AddSampleLogView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\AddUser.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\AlarmView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -28,6 +25,9 @@
     <Compile Update="Views\EditClientView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\EditUserView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\SampleView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -39,6 +39,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Update="Lang\Lang.en-US.xaml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Update="Lang\Lang.zh-CN.xaml">
+      <SubType>Designer</SubType>
+    </Content>
     <Page Update="Themes\WaveAnimation.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -51,6 +57,9 @@
     <Page Update="Views\EditClientView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\EditUserView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\ErrorView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -60,9 +69,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AddSampleLogView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AddUser.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CalibrateView.xaml">

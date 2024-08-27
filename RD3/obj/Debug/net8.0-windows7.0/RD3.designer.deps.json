@@ -44,6 +44,14 @@
           }
         }
       },
+      "LayUI.Wpf.Extensions/1.0.2.240505": {
+        "runtime": {
+          "lib/net7.0-windows7.0/LayUI.Wpf.Extensions.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "log4net/2.0.17": {
         "dependencies": {
           "System.Configuration.ConfigurationManager": "4.7.0"
@@ -72,6 +80,14 @@
           "lib/net7.0/MaterialDesignThemes.Wpf.dll": {
             "assemblyVersion": "5.0.0.0",
             "fileVersion": "5.0.0.0"
+          }
+        }
+      },
+      "MessageBox/2.1.0": {
+        "runtime": {
+          "lib/net461/Gat.Controls.MessageBox.dll": {
+            "assemblyVersion": "2.1.0.0",
+            "fileVersion": "2.1.0.0"
           }
         }
       },
@@ -578,6 +594,13 @@
       "path": "handycontrol/3.5.1",
       "hashPath": "handycontrol.3.5.1.nupkg.sha512"
     },
+    "LayUI.Wpf.Extensions/1.0.2.240505": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2p6xf3ELr8E3eVgfzlr3LCfQDM6AnZ31YJttM8zhv1+McwZLWWcakrFMAtqFwhrIeAxCEavzRFJZz4hbtO09lQ==",
+      "path": "layui.wpf.extensions/1.0.2.240505",
+      "hashPath": "layui.wpf.extensions.1.0.2.240505.nupkg.sha512"
+    },
     "log4net/2.0.17": {
       "type": "package",
       "serviceable": true,
@@ -598,6 +621,13 @@
       "sha512": "sha512-Az/2+YP+AdtyNceaU42cFo7Fl7KBrFkMa56uvesR363kZyOrASb0OnMvi0Ou4j1x0zwGa19AaK/vspDUBNDlBQ==",
       "path": "materialdesignthemes/5.0.0",
       "hashPath": "materialdesignthemes.5.0.0.nupkg.sha512"
+    },
+    "MessageBox/2.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-nhzMuxq7TPMs4q5XkEawAPiKmxnhVOtWd65/bjqnLvFyuApdB1+OObtF6cecAFn5eFuJV9gljXQzFABFDKGEeQ==",
+      "path": "messagebox/2.1.0",
+      "hashPath": "messagebox.2.1.0.nupkg.sha512"
     },
     "Microsoft.CSharp/4.7.0": {
       "type": "package",

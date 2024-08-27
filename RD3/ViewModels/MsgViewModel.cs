@@ -8,12 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Prism.Ioc;
 
 namespace RD3.ViewModels
 {
-    public class MsgViewModel : BindableBase, IDialogHostAware
+    public class MsgViewModel : NavigationViewModel, IDialogHostAware
     {
-        public MsgViewModel()
+        public MsgViewModel(IContainerProvider containerProvider):base(containerProvider)
         {
             SaveCommand = new DelegateCommand(Save);
             CancelCommand = new DelegateCommand(Cancel);

@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
@@ -25,7 +26,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
-        <TextBlock FontSize="40" Text="Project Manage" />
+        <TextBlock FontSize="40" Text="{ex:Language Key='Project Manage'}" />
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
@@ -51,7 +52,7 @@
                 HorizontalContentAlignment="Center"
                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                 hc:IconElement.Geometry="{StaticResource GeometryFilter}"
-                Content="Filters"
+                Content="{ex:Language Key='Filters'}"
                 FontSize="14" />
             <Button
                 Grid.Column="3"
@@ -62,7 +63,7 @@
                 hc:IconElement.Geometry="{StaticResource GeometryAdd}"
                 Background="{StaticResource ButtonBoderBrush}"
                 BorderBrush="{StaticResource ButtonBoderBrush}"
-                Content="Create"
+                Content="{ex:Language Key='Create'}"
                 FontSize="14"
                 Foreground="White" />
             <Button
@@ -94,33 +95,33 @@
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Width="100" Header="Name" />
-                <DataGridTextColumn Width="150" Header="Account" />
-                <DataGridTextColumn Width="150" Header="Client" />
-                <DataGridTemplateColumn Width="150" Header="Start date">
+                <DataGridCheckBoxColumn Width="100" Header="{ex:Language Key='Name'}" />
+                <DataGridTextColumn Width="150" Header="{ex:Language Key='Account'}" />
+                <DataGridTextColumn Width="150" Header="{ex:Language Key='Client'}" />
+                <DataGridTemplateColumn Width="150" Header="{ex:Language Key='Start date'}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Date, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="150" Header="Close date">
+                <DataGridTemplateColumn Width="150" Header="{ex:Language Key='Close date'}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Date, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="150" Header="Create date">
+                <DataGridTemplateColumn Width="150" Header="{ex:Language Key='Create date'}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Date, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Width="120" Header="Creator" />
-                <DataGridTextColumn Width="120" Header="Description" />
-                <DataGridTemplateColumn Width="200" Header="Operation">
+                <DataGridTextColumn Width="120" Header="{ex:Language Key='Creator'}" />
+                <DataGridTextColumn Width="120" Header="{ex:Language Key='Description'}" />
+                <DataGridTemplateColumn Width="200" Header="{ex:Language Key='Operation'}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>

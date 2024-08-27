@@ -14,8 +14,10 @@ using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    class CalibrateViewModel : BindableBase
+    class CalibrateViewModel : NavigationViewModel
     {
-
+        public CalibrateViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        {
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Prism.Ioc;
+using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,13 @@ using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    public class ProjectViewModel : BindableBase, IDialogAware
+    public class ProjectViewModel : NavigationViewModel, IDialogAware
     {
-        public string Title => throw new NotImplementedException();
+        public ProjectViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        {
+        }
+
+        public string Title => Language.GetValue("Company").ToString();
 
         public event Action<IDialogResult> RequestClose;
 

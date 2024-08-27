@@ -1,5 +1,6 @@
 ﻿using HandyControl.Data;
 using Prism.Commands;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RD3.Shared;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    public class AlarmViewModel : BindableBase
+    public class AlarmViewModel : NavigationViewModel
     {
        private ObservableCollection<AlarmRecord> _alarmRecordCol = new ObservableCollection<AlarmRecord>();
         public ObservableCollection<AlarmRecord> AlarmRecordCol { get { return _alarmRecordCol; }set { SetProperty(ref _alarmRecordCol, value); } }
@@ -30,7 +31,7 @@ namespace RD3.ViewModels
             get { return _pageCount; }
             set { SetProperty(ref _pageCount, value); }
         }
-        private int _pageIndex = 1;
+        private int _pageIndex = -1;
         public int PageIndex
         {
             get { return _pageIndex; }
@@ -45,12 +46,13 @@ namespace RD3.ViewModels
         }
         
 
-        public AlarmViewModel() 
+        public AlarmViewModel(IContainerProvider containerProvider):base(containerProvider) 
         {
             QueryAlarmRecord();
+            PageCount = DataList.Count / DataCountPerPage + (DataList.Count % DataCountPerPage != 0 ? 1 : 0);
             var data = DataList.Take(DataCountPerPage);
             AlarmRecordCol = new ObservableCollection<AlarmRecord>(data);
-            PageCount = DataList.Count / DataCountPerPage;
+            _pageIndex = 1;
         }
 
         void QueryAlarmRecord()

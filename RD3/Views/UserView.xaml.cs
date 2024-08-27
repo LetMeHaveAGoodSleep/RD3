@@ -1,4 +1,6 @@
 ﻿using RD3.Common;
+using RD3.Shared;
+using RD3.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,17 @@ namespace RD3.Views
         public UserView()
         {
             InitializeComponent();
+        }
+
+        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            User user = dataGrid.SelectedItem as User;
+            ((UserViewModel)this.DataContext)?.EditCommand.Execute(user);
+        }
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            User user = dataGrid.SelectedItem as User;
+            ((UserViewModel)this.DataContext)?.DeleteCommand.Execute(user);
         }
     }
 }

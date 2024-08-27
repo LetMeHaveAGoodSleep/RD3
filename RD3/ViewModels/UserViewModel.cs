@@ -1,5 +1,9 @@
-﻿using Prism.Commands;
+﻿using HandyControl.Controls;
+using HandyControl.Data;
+using Newtonsoft.Json;
+using Prism.Commands;
 using Prism.Events;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RD3.Common;
@@ -7,13 +11,14 @@ using RD3.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    internal class UserViewModel : BindableBase, IDialogAware
+    internal class UserViewModel : NavigationViewModel, IDialogAware
     {
         private readonly IDialogService dialogService;
 
@@ -21,41 +26,110 @@ namespace RD3.ViewModels
 
         public event Action<IDialogResult> RequestClose;
 
-        public ObservableCollection<User> Users { 
-            get { return AppSession.Users; } 
+        private ObservableCollection<User> _users = new ObservableCollection<User>();
+        public ObservableCollection<User> Users { get { return _users; } set { SetProperty(ref _users, value); } }
+
+        private ObservableCollection<User> _userCol = new ObservableCollection<User>();
+        public ObservableCollection<User> UserCol { get { return _userCol; } set { SetProperty(ref _userCol, value); } }
+
+        private int _pageCount;
+        public int PageCount
+        {
+            get { return _pageCount; }
+            set { SetProperty(ref _pageCount, value); }
+        }
+        private int _pageIndex;
+        public int PageIndex
+        {
+            get { return _pageIndex; }
+            set { SetProperty(ref _pageIndex, value); }
         }
 
-        public DelegateCommand CloseCommand { get; private set; }
-
-        public DelegateCommand<string> ExcuteCommand { get; private set; }
-
-        public UserViewModel(IDialogService dialog) 
+        private int _dataCountPerPage = 10;
+        public int DataCountPerPage
         {
-            dialogService = dialog;
-            CloseCommand = new DelegateCommand(() => 
+            get { return _dataCountPerPage; }
+            set { SetProperty(ref _dataCountPerPage, value); }
+        }
+
+        public DelegateCommand CloseCommand => new(() => RequestClose?.Invoke(new DialogResult(ButtonResult.OK)));
+
+        public DelegateCommand AddUserCommand => new(() =>
+        {
+            User user = new User();
+            DialogParameters pairs = new DialogParameters
             {
-                RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+                { "User", user }
+            };
+            dialogService?.ShowDialog("EditUserView", pairs, callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+                Users.Add(user);
+                UserManage.GetInstance().Save(Users);
+                PageUpdated(new FunctionEventArgs<int>(PageIndex));
             });
+        });
 
-            ExcuteCommand = new DelegateCommand<string>(Execute);
-        }
-
-        private void Execute(string obj)
+        public DelegateCommand<User> EditCommand => new((User user) =>
         {
-            switch (obj)
+            DialogParameters pairs = new DialogParameters
             {
-                case "Add":
-                    dialogService.ShowDialog("AddUser", callback =>
-                    {
-                    });
-                    break;
-                case "Edit":
-                    dialogService.ShowDialog("AddUser", new DialogParameters($"UserName={AppSession.CurrentUser.UserName}"), callback =>
-                    {
-                    });
-                    break;
+                { "User", user }
+            };
+            dialogService?.ShowDialog("EditUserView", pairs, callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+                UserManage.GetInstance().Save(Users);
+            });
+        });
+
+        public DelegateCommand<User> DeleteCommand => new((User user) =>
+        {
+            UserCol.Remove(user);
+            Users.Remove(user);
+            UserManage.GetInstance().Save(Users);
+        });
+
+        public DelegateCommand<FunctionEventArgs<string>> SearchCommand => new((FunctionEventArgs<string> e) =>
+        {
+            string key = e.Info;
+            if (string.IsNullOrEmpty(key))
+            {
+                Users = new ObservableCollection<User>(UserManage.GetInstance().Users);
 
             }
+            else
+            {
+                var collection = Users.Where(t => t.UserName.Contains(key) || t.Creator.Contains(key) || t.Type.ToString().Contains(key));
+                Users = new ObservableCollection<User>(collection);
+            }
+            if (PageIndex != 1)
+            {
+                PageIndex = 1;
+            }
+            else
+            {
+                var data = Users.Take(DataCountPerPage);
+                UserCol = new ObservableCollection<User>(data);
+            }
+        });
+
+        public DelegateCommand<FunctionEventArgs<int>> PageUpdatedCommand => new(PageUpdated);
+
+        public UserViewModel(IContainerProvider containerProvider, IDialogService dialog) : base(containerProvider)
+        {
+            PageIndex = 1;
+            dialogService = dialog;
+            Users = new ObservableCollection<User>(UserManage.GetInstance().Users);
+            PageCount = Users.Count / DataCountPerPage + (Users.Count % DataCountPerPage != 0 ? 1 : 0);
+            var data = Users.Take(DataCountPerPage);
+            UserCol = new ObservableCollection<User>(data);
         }
 
         public bool CanCloseDialog()
@@ -65,12 +139,18 @@ namespace RD3.ViewModels
 
         public void OnDialogClosed()
         {
-            
+
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            
+
+        }
+
+        private void PageUpdated(FunctionEventArgs<int> info)
+        {
+            var data = Users.Skip((info.Info - 1) * DataCountPerPage).Take(DataCountPerPage);
+            UserCol = new ObservableCollection<User>(data);
         }
     }
 }

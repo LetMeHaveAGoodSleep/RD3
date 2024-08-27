@@ -1,4 +1,5 @@
 ﻿using Prism.Commands;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RD3.Shared;
@@ -10,9 +11,14 @@ using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    public class EditClientViewModel : BindableBase,IDialogAware
+    public class EditClientViewModel : NavigationViewModel,IDialogAware
     {
         private ClientConfig _clientConfig;
+
+        public EditClientViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        {
+        }
+
         public ClientConfig Client
         {
             get { return _clientConfig; }

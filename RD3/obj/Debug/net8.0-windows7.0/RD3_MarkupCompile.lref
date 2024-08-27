@@ -1,13 +1,14 @@
-﻿
+﻿D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\GeneratedInternalTypeHelper.g.cs
 FD:\Project\RD3\RD3\App.xaml;;
 FD:\Project\RD3\RD3\Themes\WaveAnimation.xaml;;
 FD:\Project\RD3\RD3\Views\AboutView.xaml;;
 FD:\Project\RD3\RD3\Views\AddSampleLogView.xaml;;
-FD:\Project\RD3\RD3\Views\AddUser.xaml;;
 FD:\Project\RD3\RD3\Views\AlarmView.xaml;;
 FD:\Project\RD3\RD3\Views\BatchView.xaml;;
 FD:\Project\RD3\RD3\Views\CalibrateView.xaml;;
 FD:\Project\RD3\RD3\Views\CommunicationView.xaml;;
+FD:\Project\RD3\RD3\Views\EditClientView.xaml;;
+FD:\Project\RD3\RD3\Views\EditUserView.xaml;;
 FD:\Project\RD3\RD3\Views\ErrorView.xaml;;
 FD:\Project\RD3\RD3\Views\IndexView.xaml;;
 FD:\Project\RD3\RD3\Views\LoginView.xaml;;
@@ -18,5 +19,4 @@ FD:\Project\RD3\RD3\Views\ProjectView.xaml;;
 FD:\Project\RD3\RD3\Views\SampleView.xaml;;
 FD:\Project\RD3\RD3\Views\SelfCheckView.xaml;;
 FD:\Project\RD3\RD3\Views\UserView.xaml;;
-FD:\Project\RD3\RD3\Views\EditClientView.xaml;;
 
