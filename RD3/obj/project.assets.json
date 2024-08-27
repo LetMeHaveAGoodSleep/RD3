@@ -122,15 +122,6 @@
           "build/MaterialDesignThemes.targets": {}
         }
       },
-      "MessageBox/2.1.0": {
-        "type": "package",
-        "compile": {
-          "lib/net461/Gat.Controls.MessageBox.dll": {}
-        },
-        "runtime": {
-          "lib/net461/Gat.Controls.MessageBox.dll": {}
-        }
-      },
       "Microsoft.CSharp/4.7.0": {
         "type": "package",
         "compile": {
@@ -1039,25 +1030,6 @@
         "materialdesignthemes.5.0.0.nupkg.sha512",
         "materialdesignthemes.nuspec",
         "tools/VisualStudioToolsManifest.xml"
-      ]
-    },
-    "MessageBox/2.1.0": {
-      "sha512": "nhzMuxq7TPMs4q5XkEawAPiKmxnhVOtWd65/bjqnLvFyuApdB1+OObtF6cecAFn5eFuJV9gljXQzFABFDKGEeQ==",
-      "type": "package",
-      "path": "messagebox/2.1.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "License.txt",
-        "lib/net35/Gat.Controls.MessageBox.dll",
-        "lib/net40/Gat.Controls.MessageBox.dll",
-        "lib/net45/Gat.Controls.MessageBox.dll",
-        "lib/net451/Gat.Controls.MessageBox.dll",
-        "lib/net452/Gat.Controls.MessageBox.dll",
-        "lib/net46/Gat.Controls.MessageBox.dll",
-        "lib/net461/Gat.Controls.MessageBox.dll",
-        "messagebox.2.1.0.nupkg.sha512",
-        "messagebox.nuspec"
       ]
     },
     "Microsoft.CSharp/4.7.0": {
@@ -2593,7 +2565,6 @@
       "HandyControl >= 3.5.1",
       "LayUI.Wpf.Extensions >= 1.0.2.240505",
       "MaterialDesignThemes >= 5.0.0",
-      "MessageBox >= 2.1.0",
       "Newtonsoft.Json >= 13.0.3",
       "OxyPlot.Wpf >= 2.1.2",
       "Prism.DryIoc >= 8.1.97",
@@ -2668,10 +2639,6 @@
             "target": "Package",
             "version": "[5.0.0, )"
           },
-          "MessageBox": {
-            "target": "Package",
-            "version": "[2.1.0, )"
-          },
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"
@@ -2715,17 +2682,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "已使用“.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1”而不是项目目标框架“net8.0-windows7.0”还原包“MessageBox 2.1.0”。此包可能与项目不完全兼容。",
-      "libraryId": "MessageBox",
-      "targetGraphs": [
-        "net8.0-windows7.0"
-      ]
-    }
-  ]
+  }
 }

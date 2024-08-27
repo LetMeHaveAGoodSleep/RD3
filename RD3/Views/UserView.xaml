@@ -207,23 +207,15 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
-                    <!--<DataGrid.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Command="{Binding EditCommand}" Header="{ex:Language Key='Edit Type'}" />
-                            <MenuItem Command="{Binding DeleteCommand}" Header="{ex:Language Key='Delete'}" />
-                        </ContextMenu>
-                    </DataGrid.ContextMenu>-->
                 </DataGrid>
                 <hc:Pagination
-                    Grid.Row="3"
-                    Background="Transparent"
-                    DataCountPerPage="10"
+                    Grid.Row="2"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
                     IsJumpEnabled="True"
                     MaxPageCount="{Binding PageCount}"
-                    MaxPageInterval="4"
                     PageIndex="1" />
             </Grid>
-
         </Grid>
     </Border>
 </UserControl>

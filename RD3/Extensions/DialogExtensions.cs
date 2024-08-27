@@ -72,12 +72,13 @@ namespace RD3.Extensions
         /// </summary>
         /// <param name="aggregator"></param>
         /// <param name="message"></param>
-        public static void SendMessage(this IEventAggregator aggregator, string message, string filterName = "Main")
+        public static void SendMessage(this IEventAggregator aggregator, string message, string filterName = "Main", object model = null)
         {
             aggregator.GetEvent<MessageEvent>().Publish(new MessageModel()
             {
                 Filter = filterName,
                 Message = message,
+                Model = model
             });
         }
     }

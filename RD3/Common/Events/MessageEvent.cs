@@ -11,6 +11,7 @@ namespace RD3.Common.Events
     {
         public string Filter { get; set; }
         public string Message { get; set; }
+        public object Model { get; set; }
     }
 
     public class MessageEvent : PubSubEvent<MessageModel>

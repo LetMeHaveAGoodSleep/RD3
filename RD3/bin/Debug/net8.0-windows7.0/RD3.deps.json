@@ -11,7 +11,6 @@
           "HandyControl": "3.5.1",
           "LayUI.Wpf.Extensions": "1.0.2.240505",
           "MaterialDesignThemes": "5.0.0",
-          "MessageBox": "2.1.0",
           "Newtonsoft.Json": "13.0.3",
           "OxyPlot.Wpf": "2.1.2",
           "Prism.DryIoc": "8.1.97",
@@ -97,14 +96,6 @@
           "lib/net7.0/MaterialDesignThemes.Wpf.dll": {
             "assemblyVersion": "5.0.0.0",
             "fileVersion": "5.0.0.0"
-          }
-        }
-      },
-      "MessageBox/2.1.0": {
-        "runtime": {
-          "lib/net461/Gat.Controls.MessageBox.dll": {
-            "assemblyVersion": "2.1.0.0",
-            "fileVersion": "2.1.0.0"
           }
         }
       },
@@ -498,13 +489,6 @@
       "sha512": "sha512-Az/2+YP+AdtyNceaU42cFo7Fl7KBrFkMa56uvesR363kZyOrASb0OnMvi0Ou4j1x0zwGa19AaK/vspDUBNDlBQ==",
       "path": "materialdesignthemes/5.0.0",
       "hashPath": "materialdesignthemes.5.0.0.nupkg.sha512"
-    },
-    "MessageBox/2.1.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-nhzMuxq7TPMs4q5XkEawAPiKmxnhVOtWd65/bjqnLvFyuApdB1+OObtF6cecAFn5eFuJV9gljXQzFABFDKGEeQ==",
-      "path": "messagebox/2.1.0",
-      "hashPath": "messagebox.2.1.0.nupkg.sha512"
     },
     "Microsoft.CSharp/4.7.0": {
       "type": "package",

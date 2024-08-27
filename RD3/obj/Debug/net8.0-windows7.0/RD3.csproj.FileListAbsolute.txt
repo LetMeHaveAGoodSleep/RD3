@@ -169,4 +169,5 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Lang\Lang.zh-CN.xaml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\LayUI.Wpf.Extensions.dll
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditUserView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditUserView.baml
-D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Gat.Controls.MessageBox.dll
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MCUDebugView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MCUDebugView.baml

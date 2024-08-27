@@ -131,6 +131,7 @@ namespace RD3
             containerRegistry.RegisterDialog<CommunicationView, CommunicationViewModel>();
             containerRegistry.RegisterDialog<EditClientView, EditClientViewModel>();
             containerRegistry.RegisterInstance<ILanguage>(new XZLanguage());
+            containerRegistry.RegisterForNavigation<MCUDebugView, MCUDebugViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

@@ -95,10 +95,8 @@ namespace RD3.ViewModels
         public DelegateCommand<string> SelectCmd => new(SwitchMenuItem);
 
         private ObservableCollection<MenuBar> menuBars = new ObservableCollection<MenuBar>();
-        private readonly IContainerProvider containerProvider;
         private readonly IRegionManager regionManager;
         private IRegionNavigationJournal journal;
-        private readonly IEventAggregator aggregator;
         private readonly IDialogService dialogService;
 
         public ObservableCollection<MenuBar> MenuBars
@@ -108,10 +106,9 @@ namespace RD3.ViewModels
         }
 
         public MainViewModel(IContainerProvider containerProvider,
-            IRegionManager regionManager, IEventAggregator aggregator) : base(containerProvider)
+            IRegionManager regionManager) : base(containerProvider)
         {
-            this.aggregator = aggregator;
-            this.containerProvider = containerProvider;
+
             this.regionManager = regionManager;
             this.dialogService = containerProvider.Resolve<IDialogService>();
         }

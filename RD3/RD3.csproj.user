@@ -28,6 +28,9 @@
     <Compile Update="Views\EditUserView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\MCUDebugView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\SampleView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -72,6 +75,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CalibrateView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MCUDebugView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProjectView.xaml">

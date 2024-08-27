@@ -13,15 +13,15 @@ namespace RD3.ViewModels
 {
     public class NavigationViewModel : BindableBase, INavigationAware
     {
-        private readonly IContainerProvider containerProvider;
+        public readonly IContainerProvider containerProvider;
         public readonly IEventAggregator aggregator;
         public readonly ILanguage Language;
 
         public NavigationViewModel(IContainerProvider containerProvider)
         {
             this.containerProvider = containerProvider;
-            aggregator = containerProvider.Resolve<IEventAggregator>();
-            Language = containerProvider.Resolve<ILanguage>();
+            this.aggregator = containerProvider.Resolve<IEventAggregator>();
+            this.Language = containerProvider.Resolve<ILanguage>();
             Language.LoadResourceKey("zh_CN");//默认显示中文
         }
 

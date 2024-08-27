@@ -32,7 +32,7 @@ namespace RD3.ViewModels
         private ObservableCollection<User> _userCol = new ObservableCollection<User>();
         public ObservableCollection<User> UserCol { get { return _userCol; } set { SetProperty(ref _userCol, value); } }
 
-        private int _pageCount;
+        private int _pageCount = 10;
         public int PageCount
         {
             get { return _pageCount; }

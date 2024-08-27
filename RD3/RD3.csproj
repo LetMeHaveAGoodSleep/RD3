@@ -50,7 +50,6 @@
     <PackageReference Include="LayUI.Wpf.Extensions" Version="1.0.2.240505" />
     <PackageReference Include="log4net" Version="2.0.17" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
-    <PackageReference Include="MessageBox" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OxyPlot.Wpf" Version="2.1.2" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
