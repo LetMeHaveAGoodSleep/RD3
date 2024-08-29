@@ -7,6 +7,8 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RD3.Common;
+using RD3.Common.Events;
+using RD3.Extensions;
 using RD3.Shared;
 using System;
 using System.Collections.Generic;
@@ -25,6 +27,8 @@ namespace RD3.ViewModels
         public string Title => AppSession.CompanyName;
 
         public event Action<IDialogResult> RequestClose;
+
+        private User CurrentUser;
 
         private ObservableCollection<User> _users = new ObservableCollection<User>();
         public ObservableCollection<User> Users { get { return _users; } set { SetProperty(ref _users, value); } }
@@ -59,7 +63,8 @@ namespace RD3.ViewModels
             User user = new User();
             DialogParameters pairs = new DialogParameters
             {
-                { "User", user }
+                { "User", user },
+                {"Mode", "Add"  }
             };
             dialogService?.ShowDialog("EditUserView", pairs, callback =>
             {
@@ -68,7 +73,7 @@ namespace RD3.ViewModels
                     return;
                 }
                 Users.Add(user);
-                UserManage.GetInstance().Save(Users);
+                UserManager.GetInstance().Save(Users);
                 PageUpdated(new FunctionEventArgs<int>(PageIndex));
             });
         });
@@ -77,7 +82,8 @@ namespace RD3.ViewModels
         {
             DialogParameters pairs = new DialogParameters
             {
-                { "User", user }
+                { "User", user },
+                {"Mode", "Add"  }
             };
             dialogService?.ShowDialog("EditUserView", pairs, callback =>
             {
@@ -85,7 +91,7 @@ namespace RD3.ViewModels
                 {
                     return;
                 }
-                UserManage.GetInstance().Save(Users);
+                UserManager.GetInstance().Save(Users);
             });
         });
 
@@ -93,7 +99,7 @@ namespace RD3.ViewModels
         {
             UserCol.Remove(user);
             Users.Remove(user);
-            UserManage.GetInstance().Save(Users);
+            UserManager.GetInstance().Save(Users);
         });
 
         public DelegateCommand<FunctionEventArgs<string>> SearchCommand => new((FunctionEventArgs<string> e) =>
@@ -101,8 +107,7 @@ namespace RD3.ViewModels
             string key = e.Info;
             if (string.IsNullOrEmpty(key))
             {
-                Users = new ObservableCollection<User>(UserManage.GetInstance().Users);
-
+                Users = new ObservableCollection<User>(UserManager.GetInstance().Users);
             }
             else
             {
@@ -126,7 +131,7 @@ namespace RD3.ViewModels
         {
             PageIndex = 1;
             dialogService = dialog;
-            Users = new ObservableCollection<User>(UserManage.GetInstance().Users);
+            Users = new ObservableCollection<User>(UserManager.GetInstance().Users);
             PageCount = Users.Count / DataCountPerPage + (Users.Count % DataCountPerPage != 0 ? 1 : 0);
             var data = Users.Take(DataCountPerPage);
             UserCol = new ObservableCollection<User>(data);

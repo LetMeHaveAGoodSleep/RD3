@@ -10,13 +10,31 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:pass="clr-namespace:RD3.Extensions"
+    xmlns:prism="http://prismlibrary.com/"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="220"
     Height="250"
     d:DataContext="{d:DesignInstance Type=viewmodels:EditUserViewModel}"
-    Background="#FDFDFD"
+    Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="False" />
+            <Setter Property="AllowsTransparency" Value="True" />
+            <Setter Property="WindowStyle" Value="None" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </prism:Dialog.WindowStyle>
     <UserControl.Resources>
         <ObjectDataProvider
             x:Key="DataFromEnum"
@@ -27,7 +45,6 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>
-
     <Border
         BorderBrush="{StaticResource PrimaryBorderBrush}"
         CornerRadius="8"
@@ -72,7 +89,7 @@
                 hc:BorderElement.CornerRadius="8"
                 hc:InfoElement.Title="{ex:Language Key='User Type'}"
                 ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
-                SelectedItem="{Binding User.Type}" />
+                SelectedItem="{Binding UserType}" />
             <StackPanel
                 Grid.Row="5"
                 Grid.ColumnSpan="2"

@@ -1,6 +1,8 @@
 ﻿using HandyControl.Controls;
 using Prism.Events;
+using RD3.Common.Events;
 using RD3.Extensions;
+using RD3.Shared;
 using RD3.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -29,6 +31,12 @@ namespace RD3.Views
         {
             InitializeComponent();
             eventAggregator = aggregator;
+            aggregator.ResgiterMessage((MessageModel model) => 
+            {
+                User user = model.Model as User;
+                passWord.Password = user?.Password;
+                confirmPwd.Password = user?.Password;
+            }, nameof(EditUserViewModel));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

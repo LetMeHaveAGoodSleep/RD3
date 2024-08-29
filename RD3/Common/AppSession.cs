@@ -12,14 +12,6 @@ namespace RD3.Common
     {
         public static User CurrentUser { get; set; }
 
-        public static ObservableCollection<User> Users
-        {
-            get
-            {
-                return UserManage.GetInstance().Users;
-            }
-        }
-
         public static string CompanyName { get{ return VarConfig.GetValue("Company")?.ToString(); }}
     }
 }

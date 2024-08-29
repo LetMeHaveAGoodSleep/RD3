@@ -17,11 +17,19 @@ namespace RD3.ViewModels
 {
     public class EditUserViewModel : NavigationViewModel,IDialogAware
     {
+        private string _mode;
         private User _user;
         public User User
         {
             get { return _user; }
             set { SetProperty(ref _user, value); }
+        }
+
+        private UserType _userType;
+        public UserType UserType
+        {
+            get { return _userType; }
+            set { SetProperty(ref _userType, value); }
         }
 
         private string _confirmPwd;
@@ -30,8 +38,6 @@ namespace RD3.ViewModels
             get { return _confirmPwd; }
             set { SetProperty(ref _confirmPwd, value); }
         }
-
-        public List<string> TypeList = new List<string>() { UserType.Admin.ToString(), UserType.Factory.ToString(), UserType.Service.ToString(), UserType.User.ToString() };
 
         public string Title => "";
 
@@ -44,11 +50,18 @@ namespace RD3.ViewModels
                 MessageBox.Show(Language.GetValue("密码不一致").ToString());
                 return;
             }
-            User.Createtime= DateTime.Now;
+            var collection = UserManager.GetInstance().Users.Where(t => t.UserName == User.UserName);
+            int count = _mode == "Add" ? 1 : 2;
+            if (collection.Count() > count)
+            {
+                MessageBox.Show(Language.GetValue(string.Format("已存在用户名‘{0}’", User.UserName)).ToString());
+                return;
+            }
+            User.Createtime = DateTime.Now;
             User.Creator = AppSession.CurrentUser.UserName;
+            User.Type = _userType;
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
-        }
-        );
+        });
 
         public DelegateCommand CancelCommand => new(() => RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel)));
 
@@ -64,12 +77,15 @@ namespace RD3.ViewModels
 
         public void OnDialogClosed()
         {
-            
+
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
             User = parameters.GetValue<User>("User");
+            UserType = (UserType)User?.Type;
+            _mode = parameters.GetValue<string>("Mode");
+            aggregator.SendMessage("", nameof(EditUserViewModel), User);
         }
     }
 }

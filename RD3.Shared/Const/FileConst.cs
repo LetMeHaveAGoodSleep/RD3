@@ -15,6 +15,8 @@ namespace RD3.Shared
         public static readonly string AlarmPath = ConfigDirectory + "\\Alarm.json";
         public static readonly string CommunicationPath = ConfigDirectory + "\\Communication.json";
         public static readonly string CommandPath = ConfigDirectory + "\\Command.json";
+        public static readonly string DevicePath = ConfigDirectory + "\\Device.json";
+        public static readonly string FunctionPath = ConfigDirectory + "\\Function.json";
         public static readonly string AlarmHistoryPath = AppDomain.CurrentDomain.BaseDirectory + "Alarm" + "\\AlarmHistory.log";
     }
 }

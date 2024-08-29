@@ -26,7 +26,6 @@ namespace RD3.ViewModels
         {
             UserDto = new ResgiterUserDto();
             ExecuteCommand = new DelegateCommand<string>(Execute);
-            this.aggregator = aggregator;
         }
 
         public string Title { get; set; } = AppSession.CompanyName;
@@ -71,8 +70,6 @@ namespace RD3.ViewModels
         }
 
         private string passWord;
-        private readonly IEventAggregator aggregator;
-
         public string PassWord
         {
             get { return passWord; }
@@ -106,15 +103,14 @@ namespace RD3.ViewModels
             {
                 return;
             }
-
-            if ((bool)AppSession.Users?.ToList().Exists(x => x.UserName == userName && x.Password == passWord))
+            User user = UserManager.GetInstance().Users?.ToList().Find(t => t.UserName == userName && t.Password == passWord);
+            if (user != null)
             {
-                AppSession.CurrentUser = AppSession.Users?.ToList().Find(x => x.UserName == userName);
+                AppSession.CurrentUser = user;
                 RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
                 return;
             }
-
-            aggregator.SendMessage("用户名或密码错误", "Login");
+            aggregator.SendMessage(Language.GetValue("用户名或密码错误").ToString(), nameof(LoginViewModel));
         }
 
         private  void Resgiter()

@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
-    public class UserManage
+    public class UserManager
     {
         public ObservableCollection<User> Users = new ObservableCollection<User>();
-        private static volatile UserManage _instance; // 使用volatile确保多线程环境下的可见性
+        private static volatile UserManager _instance; // 使用volatile确保多线程环境下的可见性
         private static readonly object _lock = new object(); // 锁对象
-        private UserManage() 
+        private UserManager() 
         {
             LoadUser();
         }
 
-        public static UserManage GetInstance()
+        public static UserManager GetInstance()
         {
             if (_instance == null) // 第一次检查
             {
@@ -27,7 +27,7 @@ namespace RD3.Shared
                 {
                     if (_instance == null) // 第二次检查
                     {
-                        _instance = new UserManage(); // 实例化
+                        _instance = new UserManager(); // 实例化
                     }
                 }
             }
@@ -55,7 +55,7 @@ namespace RD3.Shared
                 Password = "123456",
                 Createtime = DateTime.Now,
                 Creator = "SysAdmin",
-                Type =UserType.Admin,
+                Type = UserType.Admin,
                 TypeName = UserType.Admin.ToString()
             };
             Users.Add(user);
@@ -70,14 +70,13 @@ namespace RD3.Shared
 
         public void Save(ObservableCollection<User> dataList = null)
         {
-            if (dataList != null&&!dataList.Equals(Users))
+            if (dataList != null && !dataList.Equals(Users))
             {
                 Users = dataList;
             }
             string json = JsonConvert.SerializeObject(dataList ?? Users);
             json = AESEncryption.Encrypt(json);
             File.Delete(FileConst.UserPath);
-            File.WriteAllText(FileConst.UserPath, json);
             File.WriteAllText(FileConst.UserPath, json);
         }
     }

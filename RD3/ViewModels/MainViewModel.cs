@@ -25,6 +25,8 @@ using RD3.Shared;
 using HandyControl.Tools;
 using System.Resources;
 using static MaterialDesignThemes.Wpf.Theme;
+using System.Diagnostics;
+using MaterialDesignThemes.Wpf;
 
 namespace RD3.ViewModels
 {
@@ -108,7 +110,6 @@ namespace RD3.ViewModels
         public MainViewModel(IContainerProvider containerProvider,
             IRegionManager regionManager) : base(containerProvider)
         {
-
             this.regionManager = regionManager;
             this.dialogService = containerProvider.Resolve<IDialogService>();
         }
@@ -149,6 +150,7 @@ namespace RD3.ViewModels
             MenuBars.Add(new MenuBar() { Icon = "Calibrate", Title = Language.GetValue("Calibrate").ToString(), NameSpace = "CalibrateView" });
             MenuBars.Add(new MenuBar() { Icon = "Control", Title = Language.GetValue("Control").ToString(), NameSpace = "CommunicationView" });
             MenuBars.Add(new MenuBar() { Icon = "Settings", Title = Language.GetValue("Settings").ToString(), NameSpace = "AlarmView" });
+            MenuBars.Add(new MenuBar() { Icon = "Debug", Title = Language.GetValue("Debug").ToString(), NameSpace = "MCUDebugView" }); 
         }
 
         /// <summary>
@@ -159,6 +161,7 @@ namespace RD3.ViewModels
             UserName = AppSession.CurrentUser.UserName;
             LanguageName = Const.CHNLanguage;
             CreateMenuBar();
+            aggregator.SendMessage("", nameof(MainViewModel));
             var navigationParameters = new NavigationParameters();
             regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(
         new Uri(nameof(IndexView) + navigationParameters.ToString(), UriKind.Relative), navigationCallback =>

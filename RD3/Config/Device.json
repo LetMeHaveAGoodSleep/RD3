@@ -1,0 +1,58 @@
+[
+  {
+    "Name": "G01",
+    "Status": 0,
+    "IPAdress": "127.0.0.1",
+    "Port": "8081",
+    "Connected": "False"
+  },
+  {
+    "Name": "G02",
+    "Status": 0,
+    "IPAdress": "127.0.0.1",
+    "Port": "8081",
+    "Connected": "False"
+  },
+  {
+    "Name": "G03",
+    "Status": 0,
+    "IPAdress": "127.0.0.1",
+    "Port": "8081",
+    "Connected": "False"
+  },
+  {
+    "Name": "G04",
+    "Status": 0,
+    "IPAdress": "127.0.0.1",
+    "Port": "8081",
+    "Connected": "False"
+  },
+  {
+    "Name": "G05",
+    "Status": 0,
+    "IPAdress": "127.0.0.1",
+    "Port": "8081",
+    "Connected": "False"
+  },
+  {
+    "Name": "G06",
+    "Status": 0,
+    "IPAdress": "127.0.0.1",
+    "Port": "8081",
+    "Connected": "False"
+  },
+  {
+    "Name": "G07",
+    "Status": 0,
+    "IPAdress": "127.0.0.1",
+    "Port": "8081",
+    "Connected": "False"
+  },
+  {
+    "Name": "G08",
+    "Status": 0,
+    "IPAdress": "127.0.0.1",
+    "Port": "8081",
+    "Connected": "False"
+  }
+]

@@ -17,13 +17,12 @@ namespace RD3.Shared
             if (dictionary == null)
             {
                 string jsonContent = AESEncryption.DecryptFile(FileConst.VarPath);
-                //string jsonContent = File.ReadAllText(FileConst.VarPath);
                 dictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonContent);
             }
             dictionary.TryGetValue(key, out var value);
             return value;
         }
-        public void SetValue(string key, object value)
+        public static void SetValue(string key, object value)
         {
             if (!dictionary.ContainsKey(key))
             {
@@ -34,7 +33,6 @@ namespace RD3.Shared
                 dictionary[key] = value;
             }
             string json = JsonConvert.SerializeObject(dictionary);
-            json = AESEncryption.Encrypt(json);
             File.WriteAllText(FileConst.VarPath, json);
         }    
     }

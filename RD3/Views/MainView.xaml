@@ -42,7 +42,7 @@
                     BorderBrush="LightGray"
                     BorderThickness="1"
                     Effect="{StaticResource EffectShadow2}">
-                    <Grid Background="#FDFDFD">
+                    <Grid Background="{StaticResource BackGroundBrush}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="100" />
                             <RowDefinition Height="*" />
@@ -73,18 +73,17 @@
                             <TextBlock Foreground="LightGray" Text="   ____________________   " />
                         </WrapPanel>
                         <hc:SideMenu
+                            Name="sideMenu"
                             Grid.Row="2"
                             Grid.ColumnSpan="2"
                             hc:AutoSelect="False"
                             hc:ExpandMode="Freedom"
-                            Background="Transparent">
+                            Background="{StaticResource BackGroundBrush}">
                             <hc:SideMenuItem
                                 Margin="0,0,0,10"
-                                Background="#FDFDFD"
                                 Command="{Binding SelectCmd}"
                                 CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
                                 FontSize="16"
-                                FontStretch="Condensed"
                                 Header="{ex:Language Key='Home'}">
                                 <hc:SideMenuItem.Icon>
                                     <Image
@@ -96,7 +95,6 @@
                             </hc:SideMenuItem>
                             <hc:SideMenuItem
                                 Margin="0,0,0,10"
-                                Background="#FDFDFD"
                                 Command="{Binding SelectCmd}"
                                 CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
                                 FontSize="16"
@@ -111,7 +109,6 @@
                             </hc:SideMenuItem>
                             <hc:SideMenuItem
                                 Margin="0,0,0,10"
-                                Background="#FDFDFD"
                                 Command="{Binding SelectCmd}"
                                 CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
                                 FontSize="16"
@@ -126,7 +123,6 @@
                             </hc:SideMenuItem>
                             <hc:SideMenuItem
                                 Margin="0,0,0,10"
-                                Background="#FDFDFD"
                                 Command="{Binding SelectCmd}"
                                 CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
                                 FontSize="16"
@@ -141,7 +137,6 @@
                             </hc:SideMenuItem>
                             <hc:SideMenuItem
                                 Margin="0,0,0,10"
-                                Background="#FDFDFD"
                                 Command="{Binding SelectCmd}"
                                 CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
                                 FontSize="16"
@@ -156,11 +151,24 @@
                             </hc:SideMenuItem>
                             <hc:SideMenuItem
                                 Margin="0,0,0,10"
-                                Background="#FDFDFD"
                                 Command="{Binding SelectCmd}"
                                 CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
                                 FontSize="16"
                                 Header="{ex:Language Key='Settings'}">
+                                <hc:SideMenuItem.Icon>
+                                    <Image
+                                        Width="24"
+                                        Height="24"
+                                        Margin="0,0,-15,0"
+                                        Source="/Images/Settings.png" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem
+                                Margin="0,0,0,10"
+                                Command="{Binding SelectCmd}"
+                                CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
+                                FontSize="16"
+                                Header="{ex:Language Key='Debug'}">
                                 <hc:SideMenuItem.Icon>
                                     <Image
                                         Width="24"
@@ -223,7 +231,6 @@
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Click="BtnUser_Click"
-                                LostFocus="BtnUser_LostFocus"
                                 ToolTip="User Setting">
                                 <materialDesign:PackIcon
                                     Width="24"

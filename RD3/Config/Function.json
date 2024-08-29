@@ -1,0 +1,37 @@
+[
+  {
+    "Name": "Home",
+    "NameSpace": "IndexView",
+    "MinUserType": 0
+  },
+  {
+    "Name": "Project",
+    "NameSpace": "ProjectView",
+    "MinUserType": 0
+  },
+  {
+    "Name": "Data",
+    "NameSpace": "BatchView",
+    "MinUserType": 2
+  },
+  {
+    "Name": "Calibrate",
+    "NameSpace": "CalibrateView",
+    "MinUserType": 0
+  },
+  {
+    "Name": "Control",
+    "NameSpace": "ControlView",
+    "MinUserType": 0
+  },
+  {
+    "Name": "Settings",
+    "NameSpace": "AlarmView",
+    "MinUserType": 0
+  },
+  {
+    "Name": "Debug",
+    "NameSpace": "MCUDebugView",
+    "MinUserType": 0
+  }
+]

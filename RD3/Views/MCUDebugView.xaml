@@ -7,7 +7,9 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
+    xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    d:DesignHeight="1450"
     d:DesignWidth="800"
     Background="{StaticResource BackGroundBrush}"
     FontFamily="{StaticResource ENGFontFamily}"
@@ -18,29 +20,458 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <ObjectDataProvider
+            x:Key="DataFromEnum"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:ControlMode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum1"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:PHPump" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum2"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:DOPump" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum3"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:GasType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum4"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:SensorCorrectionMode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum5"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:SensorType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
     <TabControl Margin="10" Style="{StaticResource TabControlCapsuleSolid}">
         <TabItem Header="{ex:Language Key='Parameter Setting'}">
             <Border Effect="{StaticResource EffectShadow1}">
-                <hc:UniformSpacingPanel Margin="5" Spacing="10">
-                    <StackPanel>
-                        <GroupBox Header="{ex:Language Key='Temp'}" Style="{StaticResource GroupBoxTab}">
-                            <hc:UniformSpacingPanel Spacing="10">
-                                <TextBlock
-                                    Margin="5"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Text="{ex:Language Key='Set Value'}" />
-                                <TextBox Width="150" Text="{Binding }"/>
-                                <Button hc:BorderElement.CornerRadius="8" Content="{ex:Language Key='Read'}" />
-                                <Button hc:BorderElement.CornerRadius="8" Content="{ex:Language Key='Set'}" />
+                <hc:ScrollViewer
+                    hc:ScrollViewerAttach.AutoHide="True"
+                    hc:ScrollViewerAttach.Orientation="Vertical"
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Auto">
+                    <hc:UniformSpacingPanel Margin="5" Spacing="10">
+                        <hc:UniformSpacingPanel
+                            ChildWrapping="Wrap"
+                            Orientation="Vertical"
+                            Spacing="20">
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <TextBox
+                                    Width="100"
+                                    hc:InfoElement.Title="{ex:Language Key='Temp Value'}"
+                                    Style="{StaticResource TextBoxExtend}" />
+                                <TextBox
+                                    Width="100"
+                                    hc:InfoElement.Title="{ex:Language Key='Lower limit'}"
+                                    Style="{StaticResource TextBoxExtend}" />
+                                <TextBox
+                                    Width="100"
+                                    hc:InfoElement.Title="{ex:Language Key='Upper limit'}"
+                                    Style="{StaticResource TextBoxExtend}" />
+                                <hc:ComboBox hc:InfoElement.Title="{ex:Language Key='Control Mode'}" ItemsSource="{Binding Source={StaticResource DataFromEnum}}" />
+                                <Button
+                                    Margin="0,22,0,0"
+                                    hc:BorderElement.CornerRadius="8"
+                                    Content="{ex:Language Key='Read'}" />
+                                <Button
+                                    Margin="0,22,0,0"
+                                    hc:BorderElement.CornerRadius="8"
+                                    Content="{ex:Language Key='Set'}" />
                             </hc:UniformSpacingPanel>
-                        </GroupBox>
-                    </StackPanel>
-                </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='PH Value'}"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <hc:ComboBox hc:InfoElement.Title="{ex:Language Key='Control Mode'}" ItemsSource="{Binding Source={StaticResource DataFromEnum}}" />
+                                    <hc:ComboBox hc:TitleElement.Title="{ex:Language Key='Pump'}" ItemsSource="{Binding Source={StaticResource DataFromEnum1}}" />
+                                    <Button
+                                        Margin="0,22,0,0"
+                                        hc:BorderElement.CornerRadius="8"
+                                        Content="{ex:Language Key='Read'}" />
+                                    <Button
+                                        Margin="0,22,0,0"
+                                        hc:BorderElement.CornerRadius="8"
+                                        Content="{ex:Language Key='Set'}" />
+                                </hc:UniformSpacingPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBox
+                                            Width="100"
+                                            hc:InfoElement.Title="{ex:Language Key='Acid Speed'}"
+                                            Style="{StaticResource TextBoxExtend}" />
+                                        <Button
+                                            Margin="0,22,0,0"
+                                            hc:BorderElement.CornerRadius="8"
+                                            Content="{ex:Language Key='Read'}" />
+                                        <Button
+                                            Margin="0,22,0,0"
+                                            hc:BorderElement.CornerRadius="8"
+                                            Content="{ex:Language Key='Set'}" />
+                                    </hc:UniformSpacingPanel>
+                                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBox
+                                            Width="100"
+                                            hc:InfoElement.Title="{ex:Language Key='Base Speed'}"
+                                            Style="{StaticResource TextBoxExtend}" />
+                                        <Button
+                                            Margin="0,22,0,0"
+                                            hc:BorderElement.CornerRadius="8"
+                                            Content="{ex:Language Key='Read'}" />
+                                        <Button
+                                            Margin="0,22,0,0"
+                                            hc:BorderElement.CornerRadius="8"
+                                            Content="{ex:Language Key='Set'}" />
+                                    </hc:UniformSpacingPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <hc:Badge
+                                    HorizontalAlignment="Left"
+                                    Background="#326CF3"
+                                    BadgeMargin="0,-14,-20,0"
+                                    Foreground="WhiteSmoke"
+                                    Text="DO">
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='Lower limit'}"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                </hc:Badge>
+                                <TextBox
+                                    Width="100"
+                                    hc:InfoElement.Title="{ex:Language Key='Upper limit'}"
+                                    Style="{StaticResource TextBoxExtend}" />
+                                <hc:ComboBox hc:InfoElement.Title="{ex:Language Key='Control Mode'}" ItemsSource="{Binding Source={StaticResource DataFromEnum}}" />
+                                <hc:ComboBox hc:TitleElement.Title="{ex:Language Key='Pump Type'}" ItemsSource="{Binding Source={StaticResource DataFromEnum2}}" />
+                                <Button
+                                    Margin="0,22,0,0"
+                                    hc:BorderElement.CornerRadius="8"
+                                    Content="{ex:Language Key='Read'}" />
+                                <Button
+                                    Margin="0,22,0,0"
+                                    hc:BorderElement.CornerRadius="8"
+                                    Content="{ex:Language Key='Set'}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='Agit Value'}"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <Button
+                                        Margin="0,22,0,0"
+                                        hc:BorderElement.CornerRadius="8"
+                                        Content="{ex:Language Key='Read'}" />
+                                    <Button
+                                        Margin="0,22,0,0"
+                                        hc:BorderElement.CornerRadius="8"
+                                        Content="{ex:Language Key='Set'}" />
+                                </hc:UniformSpacingPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='Feed Value'}"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <Button
+                                        Margin="0,22,0,0"
+                                        hc:BorderElement.CornerRadius="8"
+                                        Content="{ex:Language Key='Read'}" />
+                                    <Button
+                                        Margin="0,22,0,0"
+                                        hc:BorderElement.CornerRadius="8"
+                                        Content="{ex:Language Key='Set'}" />
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='Inoculation'}"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <Button
+                                        Margin="0,22,0,0"
+                                        hc:BorderElement.CornerRadius="8"
+                                        Content="{ex:Language Key='Read'}" />
+                                    <Button
+                                        Margin="0,22,0,0"
+                                        hc:BorderElement.CornerRadius="8"
+                                        Content="{ex:Language Key='Set'}" />
+                                </hc:UniformSpacingPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='AF Speed'}"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <Button
+                                        Margin="0,22,0,0"
+                                        hc:BorderElement.CornerRadius="8"
+                                        Content="{ex:Language Key='Read'}" />
+                                    <Button
+                                        Margin="0,22,0,0"
+                                        hc:BorderElement.CornerRadius="8"
+                                        Content="{ex:Language Key='Set'}" />
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <TextBox
+                                    Width="100"
+                                    hc:InfoElement.Title="{ex:Language Key='Air Speed'}"
+                                    Style="{StaticResource TextBoxExtend}" />
+                                <hc:ComboBox hc:InfoElement.Title="{ex:Language Key='Gas Type'}" ItemsSource="{Binding Source={StaticResource DataFromEnum3}}" />
+                                <Button
+                                    Margin="0,22,0,0"
+                                    hc:BorderElement.CornerRadius="8"
+                                    Content="{ex:Language Key='Read'}" />
+                                <Button
+                                    Margin="0,22,0,0"
+                                    hc:BorderElement.CornerRadius="8"
+                                    Content="{ex:Language Key='Set'}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <TextBox
+                                    Width="100"
+                                    hc:InfoElement.Title="{ex:Language Key='ORD'}"
+                                    Style="{StaticResource TextBoxExtend}" />
+                                <Button
+                                    Margin="0,22,0,0"
+                                    hc:BorderElement.CornerRadius="8"
+                                    Content="{ex:Language Key='Read'}" />
+                                <Button
+                                    Margin="0,22,0,0"
+                                    hc:BorderElement.CornerRadius="8"
+                                    Content="{ex:Language Key='Set'}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <TextBox
+                                    Width="300"
+                                    hc:InfoElement.Title="{ex:Language Key='Software Version'}"
+                                    Style="{StaticResource TextBoxExtend}" />
+                                <Button
+                                    Margin="0,22,0,0"
+                                    hc:BorderElement.CornerRadius="8"
+                                    Content="{ex:Language Key='Read'}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='Temp'}"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='Agit'}"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='Inoculation'}"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='Gas'}"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='AF'}"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                </hc:UniformSpacingPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='PH'}"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='Acid'}"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='Base'}"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='Feed'}"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='Work Status'}"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                </hc:UniformSpacingPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBox
+                                        Width="540"
+                                        Height="80"
+                                        IsEnabled="False"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <Button
+                                        Width="150"
+                                        Height="50"
+                                        hc:BorderElement.CornerRadius="8"
+                                        Content="{ex:Language Key='Read'}"
+                                        FontSize="18" />
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </hc:UniformSpacingPanel>
+                </hc:ScrollViewer>
             </Border>
         </TabItem>
         <TabItem Header="{ex:Language Key='Debug Setting'}">
-            <Border Effect="{StaticResource EffectShadow1}" />
+            <Border Effect="{StaticResource EffectShadow1}">
+                <hc:ScrollViewer
+                    hc:ScrollViewerAttach.AutoHide="True"
+                    hc:ScrollViewerAttach.Orientation="Vertical"
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Auto">
+                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                            <hc:ComboBox hc:InfoElement.Title="{ex:Language Key='Correction Mode'}" ItemsSource="{Binding Source={StaticResource DataFromEnum4}}" />
+                            <hc:ComboBox hc:InfoElement.Title="{ex:Language Key='Module'}" ItemsSource="{Binding Source={StaticResource DataFromEnum5}}" />
+                            <TextBox
+                                Width="100"
+                                hc:InfoElement.Title="{ex:Language Key='Sensor No'}"
+                                Style="{StaticResource TextBoxExtend}" />
+                            <TextBox
+                                Width="100"
+                                hc:InfoElement.Title="{ex:Language Key='Sensor Value'}"
+                                Style="{StaticResource TextBoxExtend}" />
+                            <Button
+                                Margin="0,22,0,0"
+                                hc:BorderElement.CornerRadius="8"
+                                Content="{ex:Language Key='Set'}" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                            <TextBox
+                                Width="100"
+                                hc:InfoElement.Title="{ex:Language Key='Motor No'}"
+                                Style="{StaticResource TextBoxExtend}" />
+                            <TextBox
+                                Width="100"
+                                hc:InfoElement.Title="{ex:Language Key='Motor Speed'}"
+                                Style="{StaticResource TextBoxExtend}" />
+                            <TextBox
+                                Width="100"
+                                hc:InfoElement.Title="{ex:Language Key='Direction'}"
+                                Style="{StaticResource TextBoxExtend}" />
+                            <Button
+                                Margin="0,22,0,0"
+                                hc:BorderElement.CornerRadius="8"
+                                Content="{ex:Language Key='Read'}" />
+                            <Button
+                                Margin="0,22,0,0"
+                                hc:BorderElement.CornerRadius="8"
+                                Content="{ex:Language Key='Set'}" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                            <TextBox
+                                Width="100"
+                                hc:InfoElement.Title="{ex:Language Key='TEC No'}"
+                                Style="{StaticResource TextBoxExtend}" />
+                            <TextBox
+                                Width="100"
+                                hc:InfoElement.Title="{ex:Language Key='P'}"
+                                Style="{StaticResource TextBoxExtend}" />
+                            <TextBox
+                                Width="100"
+                                hc:InfoElement.Title="{ex:Language Key='I'}"
+                                Style="{StaticResource TextBoxExtend}" />
+                            <TextBox
+                                Width="100"
+                                hc:InfoElement.Title="{ex:Language Key='D'}"
+                                Style="{StaticResource TextBoxExtend}" />
+                            <Button
+                                Margin="0,22,0,0"
+                                hc:BorderElement.CornerRadius="8"
+                                Content="{ex:Language Key='Read'}" />
+                            <Button
+                                Margin="0,22,0,0"
+                                hc:BorderElement.CornerRadius="8"
+                                Content="{ex:Language Key='Set'}" />
+                        </hc:UniformSpacingPanel>
+                        <hc:Divider LineStroke="{DynamicResource DarkPrimaryBrush}" LineStrokeThickness="1" />
+                        <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <TextBox
+                                    Width="150"
+                                    hc:InfoElement.Title="{ex:Language Key='MainBoard IP'}"
+                                    Style="{StaticResource TextBoxExtend}" />
+                                <TextBox
+                                    Width="100"
+                                    hc:InfoElement.Title="{ex:Language Key='Port'}"
+                                    Style="{StaticResource TextBoxExtend}" />
+                                <TextBox
+                                    Width="150"
+                                    hc:InfoElement.Title="{ex:Language Key='Wifi Module IP'}"
+                                    Style="{StaticResource TextBoxExtend}" />
+                                <TextBox
+                                    Width="100"
+                                    hc:InfoElement.Title="{ex:Language Key='Port'}"
+                                    Style="{StaticResource TextBoxExtend}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <TextBox
+                                    Width="532"
+                                    Height="70"
+                                    hc:InfoElement.Title="{ex:Language Key='NFC Parameter'}"
+                                    Style="{StaticResource TextBoxExtend}" />
+                                <Button
+                                    Width="100"
+                                    Height="40"
+                                    Margin="0,20,0,0"
+                                    hc:BorderElement.CornerRadius="8"
+                                    Content="{ex:Language Key='Read'}"
+                                    FontSize="16" />
+                                <Button
+                                    Width="100"
+                                    Height="40"
+                                    Margin="0,20,0,0"
+                                    hc:BorderElement.CornerRadius="8"
+                                    Content="{ex:Language Key='Set'}"
+                                    FontSize="16" />
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </hc:UniformSpacingPanel>
+                </hc:ScrollViewer>
+            </Border>
         </TabItem>
     </TabControl>
 </UserControl>

@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RD3.Common;
+using RD3.ViewModels;
 
 namespace RD3.Views
 {
@@ -31,7 +32,7 @@ namespace RD3.Views
             aggregator.ResgiterMessage(arg =>
             {
                 LoginSnakeBar.MessageQueue.Enqueue(arg.Message);
-            }, "Login");
+            }, nameof(LoginViewModel));
 
             btnClose.Click += (s, e) =>
             {

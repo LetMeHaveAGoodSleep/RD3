@@ -21,6 +21,7 @@
     <None Remove="Images\Data.png" />
     <None Remove="Images\DataGrid\Delete.png" />
     <None Remove="Images\DataGrid\Edit.png" />
+    <None Remove="Images\Debug.png" />
     <None Remove="Images\FermentationTank.png" />
     <None Remove="Images\Home.png" />
     <None Remove="Images\login.png" />
@@ -74,6 +75,7 @@
     <Resource Include="Images\DataGrid\Edit.png" />
     <Resource Include="Images\Home.png" />
     <Resource Include="Images\Project.png" />
+    <Resource Include="Images\Debug.png" />
     <Resource Include="Images\Settings.png" />
     <Resource Include="Images\SideMenu\Advance.png" />
     <Resource Include="Images\SideMenu\Calibrate.png" />
@@ -102,6 +104,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Config\Communication.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Function.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Device.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Config\Const.json">

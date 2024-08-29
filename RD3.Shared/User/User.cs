@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace RD3.Shared
 {
-    public class User : BindableBase,ICloneable
+    public class User : BindableBase, ICloneable
     {
         private string _userName;
         public string UserName
@@ -25,9 +26,9 @@ namespace RD3.Shared
             set { SetProperty(ref _password, value); }
         }
 
-        public int Role
+        public uint Role
         {
-            get { return (int)_type; }
+            get { return (uint)_type; }
         }
 
         public DateTime Createtime { get; set; }
@@ -37,9 +38,11 @@ namespace RD3.Shared
         private UserType _type;
         public UserType Type
         {
-            //get { return (UserType)Enum.Parse(typeof(UserType), TypeName); }
             get { return _type; }
-            set { SetProperty(ref _type, value); }
+            set
+            {
+                SetProperty(ref _type, value);
+            }
         }
         private string _typeName;
         public string TypeName
@@ -66,13 +69,13 @@ namespace RD3.Shared
     [TypeConverter(typeof(DisplayEnumConverter))]
     public enum UserType
     {
-        [Display(Name = "Admin")]
-        Admin,
-        [Display(Name = "Factory")]
-        Factory,
+        [Display(Name = "User")]
+        User,
         [Display(Name = "Service")]
         Service,
-        [Display(Name = "User")]
-        User
+        [Display(Name = "Factory")]
+        Factory,
+        [Display(Name = "Admin")]
+        Admin
     }
 }

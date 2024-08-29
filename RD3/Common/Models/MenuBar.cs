@@ -20,18 +20,17 @@ namespace RD3.Common.Models
         public string Icon
         {
             get { return icon; }
-            set { icon = value; }
+            set { SetProperty(ref icon, value); }
         }
 
         private string title;
-
         /// <summary>
         /// 菜单名称
         /// </summary>
         public string Title
         {
             get { return title; }
-            set { title = value; }
+            set { SetProperty(ref title, value); }
         }
 
         private string nameSpace;
@@ -42,7 +41,7 @@ namespace RD3.Common.Models
         public string NameSpace
         {
             get { return nameSpace; }
-            set { nameSpace = value; }
+            set { SetProperty(ref nameSpace, value); }
         }
     }
 }

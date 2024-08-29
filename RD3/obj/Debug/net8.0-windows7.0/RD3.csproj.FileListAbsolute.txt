@@ -171,3 +171,7 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditUserView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditUserView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MCUDebugView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MCUDebugView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ControlView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ControlView.baml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Device.json
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Function.json

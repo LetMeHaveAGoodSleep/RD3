@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    public class MCUDebugViewModel : NavigationViewModel
+    public class ControlViewModel : NavigationViewModel
     {
-        public MCUDebugViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public ControlViewModel(IContainerProvider containerProvider) : base(containerProvider)
         {
         }
     }

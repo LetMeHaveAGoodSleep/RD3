@@ -67,7 +67,7 @@ namespace RD3
 
         protected override void OnInitialized()
         {
-            UserManage.GetInstance();
+            UserManager.GetInstance();
             var dialog = Container.Resolve<IDialogService>();
             dialog.ShowDialog("LoginView", async callback =>
             {
@@ -90,23 +90,11 @@ namespace RD3
                 }
             });
             //初始化加载
+            FunctionManager.GetInstance();
             CommandManager.GetInstance();
             AlarmManager.GetInstance();
             AlarmLogger.GetInstance();
-            //for (global::System.Int32 i = 0; i < 100; i++)
-            //{
-            //    AlarmRecord alarm = new AlarmRecord()
-            //    {
-            //        Time = DateTime.Now,
-            //        Batch = "G0" + i.ToString(),
-            //        Reactor = i.ToString(),
-            //        Grade = AlarmGrade.Error,
-            //        Description = " It's for Test" + i.ToString(),
-            //        Value = i.ToString()
-            //    };
-            //    AlarmLogger.GetInstance().AddAlarm(alarm);
-            //}
-
+            DeviceManager.GetInstance();
             CommunicationManager.GetInstance();
             base.OnInitialized();
         }
@@ -132,6 +120,7 @@ namespace RD3
             containerRegistry.RegisterDialog<EditClientView, EditClientViewModel>();
             containerRegistry.RegisterInstance<ILanguage>(new XZLanguage());
             containerRegistry.RegisterForNavigation<MCUDebugView, MCUDebugViewModel>();
+            containerRegistry.RegisterForNavigation<ControlView, ControlViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
