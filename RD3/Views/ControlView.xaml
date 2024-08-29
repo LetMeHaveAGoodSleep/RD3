@@ -7,8 +7,10 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
+    xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:oxy="http://oxyplot.org/wpf"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:AlarmViewModel}"
@@ -16,7 +18,7 @@
     d:DesignWidth="800"
     Background="{StaticResource BackGroundBrush}"
     FontFamily="{StaticResource ENGFontFamily}"
-    TextElement.FontSize="14"
+    TextElement.FontSize="12"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextOptions.TextFormattingMode="Ideal"
@@ -26,8 +28,8 @@
         <TabItem Header="{ex:Language Key='Time series'}">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -39,47 +41,388 @@
                     <hc:StepBarItem Content="{ex:Language Key='Time series'}" />
                     <hc:StepBarItem Content="{ex:Language Key='Step Trend'}" />
                 </hc:StepBar>
-                <DataGrid
-                    Name="dataGrid"
+                <hc:UniformSpacingPanel
                     Grid.Row="1"
                     Grid.Column="0"
-                    hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
-                    hc:DataGridAttach.ShowSelectAllButton="True"
-                    AutoGenerateColumns="False"
-                    Background="Transparent"
-                    FontSize="14"
-                    HeadersVisibility="All"
-                    IsReadOnly="True"
-                    ItemsSource="{Binding UserCol}"
-                    RowHeaderWidth="60"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <!--<i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseDoubleClick">
-                            <i:InvokeCommandAction Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>-->
-                    <DataGrid.Columns>
-                        <DataGridTextColumn
-                            Width="100"
-                            Binding="{Binding UserName}"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="{ex:Language Key='Device'}"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                        <DataGridTextColumn
-                            Width="100"
-                            Binding="{Binding UserName}"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="{ex:Language Key='Status'}"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                        <DataGridTextColumn
-                            Width="100"
-                            Binding="{Binding UserName}"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="{ex:Language Key='Batch'}"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                    Margin="10"
+                    Orientation="Vertical"
+                    Spacing="10">
+                    <hc:ComboBox
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        hc:BorderElement.CornerRadius="8"
+                        hc:InfoElement.Placeholder="{ex:Language Key='Select Batch'}"
+                        ItemsSource="{Binding}"
+                        SelectedItem="{Binding Batch}" />
+                    <DataGrid
+                        Name="dataGrid"
+                        hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+                        hc:DataGridAttach.ShowSelectAllButton="True"
+                        AutoGenerateColumns="False"
+                        Background="Transparent"
+                        FontSize="14"
+                        HeadersVisibility="All"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding UserCol}"
+                        RowHeaderWidth="60"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Width="70"
+                                Binding="{Binding UserName}"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='Device'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                            <DataGridTextColumn
+                                Width="70"
+                                Binding="{Binding UserName}"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='Status'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                            <DataGridTextColumn
+                                Width="100"
+                                Binding="{Binding UserName}"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='Batch'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </hc:UniformSpacingPanel>
+                <Border
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Effect="{StaticResource EffectShadow1}">
+                    <hc:UniformSpacingPanel
+                        Margin="10"
+                        Orientation="Vertical"
+                        Spacing="10">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:ComboBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Placeholder="{ex:Language Key='Time(s)'}"
+                                hc:InfoElement.Title="{ex:Language Key='No.'}"
+                                hc:InfoElement.TitlePlacement="Left"
+                                Foreground="Gray"
+                                ItemsSource="{Binding}"
+                                SelectedItem="{Binding Batch}" />
+                            <hc:ComboBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Placeholder="{ex:Language Key='Item1'}"
+                                ItemsSource="{Binding}"
+                                SelectedItem="{Binding Batch}" />
+                            <hc:ComboBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Placeholder="{ex:Language Key='Item2'}"
+                                ItemsSource="{Binding}"
+                                SelectedItem="{Binding Batch}" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:TextBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Title="{ex:Language Key='01 '}"
+                                hc:InfoElement.TitlePlacement="Left" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:TextBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Title="{ex:Language Key='02 '}"
+                                hc:InfoElement.TitlePlacement="Left" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:TextBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Title="{ex:Language Key='03 '}"
+                                hc:InfoElement.TitlePlacement="Left" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:TextBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Title="{ex:Language Key='04 '}"
+                                hc:InfoElement.TitlePlacement="Left" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:TextBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Title="{ex:Language Key='05 '}"
+                                hc:InfoElement.TitlePlacement="Left" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:TextBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Title="{ex:Language Key='06 '}"
+                                hc:InfoElement.TitlePlacement="Left" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:TextBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Title="{ex:Language Key='07 '}"
+                                hc:InfoElement.TitlePlacement="Left" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:TextBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Title="{ex:Language Key='08 '}"
+                                hc:InfoElement.TitlePlacement="Left" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:TextBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Title="{ex:Language Key='09 '}"
+                                hc:InfoElement.TitlePlacement="Left" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:TextBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Title="{ex:Language Key='10 '}"
+                                hc:InfoElement.TitlePlacement="Left" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:TextBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Title="{ex:Language Key='11 '}"
+                                hc:InfoElement.TitlePlacement="Left" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                            <hc:TextBox
+                                Width="110"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:InfoElement.Title="{ex:Language Key='12 '}"
+                                hc:InfoElement.TitlePlacement="Left" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                            <hc:TextBox
+                                Width="80"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                hc:BorderElement.CornerRadius="8" />
+                        </hc:UniformSpacingPanel>
+                    </hc:UniformSpacingPanel>
+                </Border>
+                <hc:UniformSpacingPanel
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Orientation="Vertical"
+                    Spacing="10">
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                        <Button
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            hc:BorderElement.CornerRadius="8"
+                            hc:IconElement.Geometry="{StaticResource GeometryStart}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding PauseCommand}"
+                            Content="{ex:Language Key='Start'}"
+                            ToolTip="Start" />
+                        <Button
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            hc:BorderElement.CornerRadius="8"
+                            hc:IconElement.Geometry="{StaticResource GeometryPause}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding PauseCommand}"
+                            Content="{ex:Language Key='Pause'}"
+                            ToolTip="Pause" />
+                        <Button
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            hc:BorderElement.CornerRadius="8"
+                            hc:IconElement.Geometry="{StaticResource GeometryLoop}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding PauseCommand}"
+                            Content="{ex:Language Key='Pause'}"
+                            ToolTip="Loop" />
+                        <Button
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            hc:BorderElement.CornerRadius="8"
+                            hc:IconElement.Geometry="{StaticResource GeometryImport}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding PauseCommand}"
+                            Content="{ex:Language Key='Import'}"
+                            ToolTip="Import" />
+                        <Button
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            hc:BorderElement.CornerRadius="8"
+                            hc:IconElement.Geometry="{StaticResource GeometrySave}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding PauseCommand}"
+                            Content="{ex:Language Key='Import'}"
+                            ToolTip="Save" />
+                    </hc:UniformSpacingPanel>
+                    <lvc:CartesianChart
+                        Name="TestChart"
+                        AxisY="{Binding YAxisCollection}"
+                        LegendLocation="Bottom"
+                        Pan="Xy"
+                        Series="{Binding Series}"
+                        Zoom="Xy"
+                        ZoomingSpeed="100" />
+                </hc:UniformSpacingPanel>
             </Grid>
         </TabItem>
         <TabItem Header="{ex:Language Key='APC'}" />

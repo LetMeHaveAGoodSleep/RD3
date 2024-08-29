@@ -73,6 +73,30 @@
           "Microsoft.WindowsDesktop.App.WPF"
         ]
       },
+      "LiveCharts.Core/0.9.8": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/LiveCharts.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/LiveCharts.dll": {}
+        }
+      },
+      "LiveCharts.Wpf.Core/0.9.8": {
+        "type": "package",
+        "dependencies": {
+          "LiveCharts.Core": "0.9.8"
+        },
+        "compile": {
+          "lib/net5.0-windows7.0/LiveCharts.Wpf.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0-windows7.0/LiveCharts.Wpf.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WPF"
+        ]
+      },
       "log4net/2.0.17": {
         "type": "package",
         "dependencies": {
@@ -944,6 +968,34 @@
         "lib/net5.0-windows7.0/LayUI.Wpf.Extensions.dll",
         "lib/net6.0-windows7.0/LayUI.Wpf.Extensions.dll",
         "lib/net7.0-windows7.0/LayUI.Wpf.Extensions.dll"
+      ]
+    },
+    "LiveCharts.Core/0.9.8": {
+      "sha512": "USb2TBOeER19X0ar5Zgki1ezjrSXBOmUoz3IqzTeksDm6hoaLFqs3iW9+wjHFuWNQGy9lLcVh2YIhhxVIg+zNQ==",
+      "type": "package",
+      "path": "livecharts.core/0.9.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/LiveCharts.dll",
+        "lib/netstandard2.0/LiveCharts.dll",
+        "livecharts.core.0.9.8.nupkg.sha512",
+        "livecharts.core.nuspec"
+      ]
+    },
+    "LiveCharts.Wpf.Core/0.9.8": {
+      "sha512": "jMBdknuG3EOMKA0NaqqwMjhsZpRAzd0UqP0SlwXIBJ+ZoJg5TF9C4rDdKqInEs+RycYmIwmrZWvmfDxsM5MMJw==",
+      "type": "package",
+      "path": "livecharts.wpf.core/0.9.8",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/LiveCharts.Wpf.dll",
+        "lib/net472/LiveCharts.Wpf.dll",
+        "lib/net5.0-windows7.0/LiveCharts.Wpf.dll",
+        "lib/netcoreapp3.1/LiveCharts.Wpf.dll",
+        "livecharts.wpf.core.0.9.8.nupkg.sha512",
+        "livecharts.wpf.core.nuspec"
       ]
     },
     "log4net/2.0.17": {
@@ -2564,6 +2616,7 @@
     "net8.0-windows7.0": [
       "HandyControl >= 3.5.1",
       "LayUI.Wpf.Extensions >= 1.0.2.240505",
+      "LiveCharts.Wpf.Core >= 0.9.8",
       "MaterialDesignThemes >= 5.0.0",
       "Newtonsoft.Json >= 13.0.3",
       "OxyPlot.Wpf >= 2.1.2",
@@ -2634,6 +2687,10 @@
           "LayUI.Wpf.Extensions": {
             "target": "Package",
             "version": "[1.0.2.240505, )"
+          },
+          "LiveCharts.Wpf.Core": {
+            "target": "Package",
+            "version": "[0.9.8, )"
           },
           "MaterialDesignThemes": {
             "target": "Package",

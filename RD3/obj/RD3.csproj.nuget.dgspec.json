@@ -145,6 +145,10 @@
               "target": "Package",
               "version": "[1.0.2.240505, )"
             },
+            "LiveCharts.Wpf.Core": {
+              "target": "Package",
+              "version": "[0.9.8, )"
+            },
             "MaterialDesignThemes": {
               "target": "Package",
               "version": "[5.0.0, )"

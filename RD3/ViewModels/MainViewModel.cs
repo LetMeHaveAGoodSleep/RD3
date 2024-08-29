@@ -34,10 +34,11 @@ namespace RD3.ViewModels
     {
         private string userName;
 
-        public string UserName
+        private User _user;
+        public User User
         {
-            get { return userName; }
-            set { userName = value; RaisePropertyChanged(); }
+            get { return _user; }
+            set { SetProperty(ref _user, value); }
         }
 
         private string _languageName;
@@ -148,7 +149,7 @@ namespace RD3.ViewModels
             MenuBars.Add(new MenuBar() { Icon = "Project", Title = Language.GetValue("Project").ToString(), NameSpace = "ProjectView" });
             MenuBars.Add(new MenuBar() { Icon = "Data", Title = Language.GetValue("Data").ToString(), NameSpace = "BatchView" });
             MenuBars.Add(new MenuBar() { Icon = "Calibrate", Title = Language.GetValue("Calibrate").ToString(), NameSpace = "CalibrateView" });
-            MenuBars.Add(new MenuBar() { Icon = "Control", Title = Language.GetValue("Control").ToString(), NameSpace = "CommunicationView" });
+            MenuBars.Add(new MenuBar() { Icon = "Control", Title = Language.GetValue("Control").ToString(), NameSpace = "ControlView" });
             MenuBars.Add(new MenuBar() { Icon = "Settings", Title = Language.GetValue("Settings").ToString(), NameSpace = "AlarmView" });
             MenuBars.Add(new MenuBar() { Icon = "Debug", Title = Language.GetValue("Debug").ToString(), NameSpace = "MCUDebugView" }); 
         }
@@ -158,9 +159,9 @@ namespace RD3.ViewModels
         /// </summary>
         public void Configure()
         {
-            UserName = AppSession.CurrentUser.UserName;
             LanguageName = Const.CHNLanguage;
             CreateMenuBar();
+            User = AppSession.CurrentUser;
             aggregator.SendMessage("", nameof(MainViewModel));
             var navigationParameters = new NavigationParameters();
             regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(

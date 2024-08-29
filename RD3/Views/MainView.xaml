@@ -215,13 +215,6 @@
                                     Text="{Binding LanguageName}"
                                     TextDecorations="Underline" />
                             </Button>
-                            <Menu Grid.Column="2" Visibility="Hidden">
-                                <MenuItem HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                                    <MenuItem Command="{Binding ManageUserCommand}" Header="Item 1" />
-                                    <MenuItem Command="{Binding ManageUserCommand}" Header="Item 2" />
-                                    <MenuItem Command="{Binding ManageUserCommand}" Header="Item 3" />
-                                </MenuItem>
-                            </Menu>
                             <Button
                                 Name="btnUser"
                                 Grid.Column="2"
@@ -299,7 +292,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="16"
-                                Text="{Binding UserName}" />
+                                Text="{Binding User.UserName}" />
                             <Button
                                 Name="btnMin"
                                 Grid.Column="4"

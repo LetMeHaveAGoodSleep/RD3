@@ -53,6 +53,10 @@ namespace RD3
                 }
             });
 
+            var service = App.Current.MainWindow.DataContext as IConfigureService;
+            if (service != null)
+                service.Configure();
+
             dialog.ShowDialog("SelfCheckView", callback =>
             {
                 if (callback.Result != ButtonResult.OK)

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "O8FOyKjcfRI=",
+  "dgSpecHash": "ioQ8oz40xWI=",
   "success": true,
   "projectFilePath": "D:\\Project\\RD3\\RD3\\RD3.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,8 @@
     "C:\\Users\\Administrator\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\handycontrol\\3.5.1\\handycontrol.3.5.1.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\layui.wpf.extensions\\1.0.2.240505\\layui.wpf.extensions.1.0.2.240505.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\livecharts.core\\0.9.8\\livecharts.core.0.9.8.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\livecharts.wpf.core\\0.9.8\\livecharts.wpf.core.0.9.8.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\log4net\\2.0.17\\log4net.2.0.17.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\materialdesigncolors\\3.0.0\\materialdesigncolors.3.0.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\materialdesignthemes\\5.0.0\\materialdesignthemes.5.0.0.nupkg.sha512",

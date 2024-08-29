@@ -8,6 +8,7 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
+    xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:oxy="http://oxyplot.org/wpf"
@@ -1863,7 +1864,14 @@
                     Grid.Row="1"
                     CornerRadius="8"
                     Effect="{StaticResource EffectShadow1}">
-                    <oxy:PlotView Model="{Binding PlotModel}" />
+                    <lvc:CartesianChart
+                        Name="TestChart"
+                        AxisY="{Binding YAxisCollection}"
+                        LegendLocation="Bottom"
+                        Pan="Xy"
+                        Series="{Binding Series}"
+                        Zoom="Xy"
+                        ZoomingSpeed="100" />
                 </Border>
 
             </Grid>
@@ -1988,6 +1996,191 @@
                             ToolTip="Stop" />
                     </hc:UniformSpacingPanel>
                 </Grid>
+                <ScrollViewer
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    HorizontalScrollBarVisibility="Visible"
+                    VerticalScrollBarVisibility="Visible">
+                    <DataGrid
+                        Name="dataGrid"
+                        hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+                        hc:DataGridAttach.ShowSelectAllButton="True"
+                        AutoGenerateColumns="False"
+                        Background="Transparent"
+                        FontSize="14"
+                        HeadersVisibility="All"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding Devices}"
+                        RowHeaderStyle="{StaticResource DataGridCenterRowHeaderStyle}"
+                        RowHeaderWidth="60"
+                        ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <DataGrid.RowHeaderTemplate>
+                            <DataTemplate>
+                                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" />
+                            </DataTemplate>
+                        </DataGrid.RowHeaderTemplate>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Width="100"
+                                Binding="{Binding Name}"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='Device'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                            <DataGridTextColumn
+                                Width="100"
+                                Binding="{Binding Status}"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='Status'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                            <DataGridTemplateColumn
+                                Width="100"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='Temp(℃)'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <TextBlock Text="{Binding Temp}" />
+                                            <TextBlock Text="/" />
+                                            <TextBlock Text="{Binding Temp_PV}" />
+                                        </hc:UniformSpacingPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Width="100"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='pH'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <TextBlock Text="{Binding PH}" />
+                                            <TextBlock Text="/" />
+                                            <TextBlock Text="{Binding PH_PV}" />
+                                        </hc:UniformSpacingPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Width="100"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='DO(%)'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <TextBlock Text="{Binding DO}" />
+                                            <TextBlock Text="/" />
+                                            <TextBlock Text="{Binding DO_PV}" />
+                                        </hc:UniformSpacingPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Width="100"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='Agit(rpm)'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <TextBlock Text="{Binding Agit}" />
+                                            <TextBlock Text="/" />
+                                            <TextBlock Text="{Binding Agit_PV}" />
+                                        </hc:UniformSpacingPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Width="100"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='Base(mL/h)'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <TextBlock Text="{Binding Base}" />
+                                            <TextBlock Text="/" />
+                                            <TextBlock Text="{Binding Base_PV}" />
+                                        </hc:UniformSpacingPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Width="100"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='Acid(mL/h)'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <TextBlock Text="{Binding Acid}" />
+                                            <TextBlock Text="/" />
+                                            <TextBlock Text="{Binding Acid_PV}" />
+                                        </hc:UniformSpacingPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Width="100"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='AF(mL/h)'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <TextBlock Text="{Binding AF}" />
+                                            <TextBlock Text="/" />
+                                            <TextBlock Text="{Binding AF_PV}" />
+                                        </hc:UniformSpacingPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Width="100"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='Feed(mL/h)'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <TextBlock Text="{Binding Feed}" />
+                                            <TextBlock Text="/" />
+                                            <TextBlock Text="{Binding Feed_PV}" />
+                                        </hc:UniformSpacingPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn
+                                Width="100"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='Operation'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button
+                                                Margin="5"
+                                                HorizontalContentAlignment="Center"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                hc:IconElement.Geometry="{StaticResource GeometryBackToHome}"
+                                                Background="Transparent"
+                                                BorderThickness="0" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+
             </Grid>
         </TabItem>
     </TabControl>
