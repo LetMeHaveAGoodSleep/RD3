@@ -9,6 +9,8 @@
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:BatchViewModel}"
     d:DesignHeight="700"
     d:DesignWidth="1350"
     Background="{StaticResource BackGroundBrush}"
@@ -42,9 +44,13 @@
                 Margin="5"
                 HorizontalAlignment="Left"
                 hc:InfoElement.ShowClearButton="True"
-                Command="{Binding SearchCmd}"
-                CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}"
-                IsRealTime="True" />
+                IsRealTime="True">
+                <hc:Interaction.Triggers>
+                    <hc:EventTrigger EventName="SearchStarted">
+                        <hc:EventToCommand Command="{Binding SearchCommand}" PassEventArgsToCommand="True" />
+                    </hc:EventTrigger>
+                </hc:Interaction.Triggers>
+            </hc:SearchBar>
             <Button
                 Grid.Column="1"
                 Height="30"
@@ -79,112 +85,138 @@
                 HorizontalContentAlignment="Center"
                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                 hc:IconElement.Geometry="{StaticResource GeometryDelete}"
+                Command="{Binding DeleteCommand}"
+                CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
                 FontSize="14"
                 Foreground="Red" />
         </Grid>
-        <DataGrid
-            Grid.Row="2"
-            AutoGenerateColumns="False"
-            Background="Transparent"
-            FontSize="14"
-            HeadersVisibility="All"
-            ItemsSource="{Binding BatchCol}"
-            RowHeaderWidth="50"
-            ScrollViewer.HorizontalScrollBarVisibility="Auto"
-            ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <DataGrid.Columns>
-                <DataGridTextColumn
-                    Width="50"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="{ex:Language Key='ID'}"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                <DataGridTextColumn
-                    Width="100"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="{ex:Language Key='Name'}"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                <DataGridTextColumn
-                    Width="200"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="{ex:Language Key='Reactor'}"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                <DataGridTextColumn
-                    Width="150"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="{ex:Language Key='Status'}"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                <DataGridTemplateColumn
-                    Width="200"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="{ex:Language Key='Start time'}"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Date, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn
-                    Width="200"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="{ex:Language Key='End time'}"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Date, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn
-                    Width="100"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="{ex:Language Key='Project'}"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                <DataGridTextColumn
-                    Width="120"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="{ex:Language Key='Description'}"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                <DataGridTemplateColumn
-                    Width="200"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="{ex:Language Key='Operation'}"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <Button
-                                    HorizontalAlignment="Left"
-                                    hc:IconElement.Geometry="{StaticResource GeometryUserInfo}"
-                                    Background="Transparent"
-                                    BorderThickness="0"
-                                    Content="Account manage" />
-                                <Button
-                                    HorizontalAlignment="Left"
-                                    hc:IconElement.Geometry="{StaticResource GeometrySwitchUser}"
-                                    Background="Transparent"
-                                    BorderThickness="0"
-                                    Content="Switch Account" />
-                                <Button
-                                    HorizontalAlignment="Left"
-                                    hc:IconElement.Geometry="{StaticResource GeometryLogOut}"
-                                    Background="Transparent"
-                                    BorderThickness="0"
-                                    Content="Log out" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Visible">
+            <DataGrid
+                Name="dataGrid"
+                hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+                hc:DataGridAttach.ShowSelectAllButton="False"
+                AutoGenerateColumns="False"
+                Background="Transparent"
+                FontSize="14"
+                HeadersVisibility="All"
+                IsReadOnly="True"
+                ItemsSource="{Binding BatchCol}"
+                RowHeaderWidth="60"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.IsDeferredScrollingEnabled="False"
+                ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding Id}"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="{ex:Language Key='ID'}"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding Name}"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="{ex:Language Key='Name'}"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                    <DataGridTextColumn
+                        Width="150"
+                        Binding="{Binding Reactor}"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="{ex:Language Key='Reactor'}"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding Status}"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="{ex:Language Key='Status'}"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                    <DataGridTemplateColumn
+                        Width="150"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="{ex:Language Key='Start time'}"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding StartTime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="150"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="{ex:Language Key='End time'}"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding EndTime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding Project}"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="{ex:Language Key='Project'}"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                    <DataGridTextColumn
+                        Width="200"
+                        Binding="{Binding Description}"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="{ex:Language Key='Description'}"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                    <DataGridTemplateColumn
+                        Width="200"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="{ex:Language Key='Operation'}"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                    <ToggleButton
+                                        HorizontalAlignment="Center"
+                                        BorderThickness="0"
+                                        IsChecked="{Binding IsFavorite}">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Button
+                                                hc:IconElement.Geometry="{StaticResource GeometryFavorite}"
+                                                Background="Transparent"
+                                                BorderThickness="0" />
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Button
+                                            hc:IconElement.Geometry="{StaticResource GeometryNoFavorite}"
+                                            Background="Transparent"
+                                            BorderThickness="0" />
+                                    </ToggleButton>
+                                    <Button
+                                        HorizontalAlignment="Left"
+                                        hc:IconElement.Geometry="{StaticResource GeometryEdit}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Click="ButtonEdit_Click" />
+                                    <Button
+                                        HorizontalAlignment="Left"
+                                        hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Click="ButtonView_Click" />
+                                </hc:UniformSpacingPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
         <hc:Pagination
             Grid.Row="3"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
-            Background="Transparent"
             IsJumpEnabled="True"
-            MaxPageCount="10"
-            MaxPageInterval="4"
+            MaxPageCount="{Binding PageCount}"
             PageIndex="1" />
     </Grid>
 </UserControl>

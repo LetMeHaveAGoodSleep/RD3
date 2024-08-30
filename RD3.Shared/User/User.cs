@@ -10,7 +10,7 @@ using System.Text.Json.Serialization;
 
 namespace RD3.Shared
 {
-    public class User : BindableBase, ICloneable
+    public class User : BindableBase
     {
         private string _userName;
         public string UserName
@@ -49,20 +49,6 @@ namespace RD3.Shared
         {
             get { return _typeName; }
             set { SetProperty(ref _typeName, value); }
-        }
-
-        public object Clone()
-        {
-            User user = new User()
-            {
-                UserName = UserName,
-                Password = Password,
-                Createtime = Createtime,
-                Creator = Creator,
-                Type = Type,
-                TypeName = TypeName
-            };
-            return user;
         }
     }
 

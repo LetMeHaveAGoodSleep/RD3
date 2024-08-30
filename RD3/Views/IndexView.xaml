@@ -2049,6 +2049,9 @@
                                             <TextBlock Text="{Binding Temp}" />
                                             <TextBlock Text="/" />
                                             <TextBlock Text="{Binding Temp_PV}" />
+                                            <Border Background="{StaticResource ControlFixedModeBrush}" CornerRadius="4">
+                                                <TextBlock Foreground="White" Text="F" />
+                                            </Border>
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2064,6 +2067,13 @@
                                             <TextBlock Text="{Binding PH}" />
                                             <TextBlock Text="/" />
                                             <TextBlock Text="{Binding PH_PV}" />
+                                            <TextBlock
+                                                Width="10"
+                                                Height="15"
+                                                hc:BorderElement.CornerRadius="4"
+                                                Background="{StaticResource ControlFixedModeBrush}"
+                                                Foreground="White"
+                                                Text="F" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2079,6 +2089,13 @@
                                             <TextBlock Text="{Binding DO}" />
                                             <TextBlock Text="/" />
                                             <TextBlock Text="{Binding DO_PV}" />
+                                            <TextBlock
+                                                Width="10"
+                                                Height="15"
+                                                hc:BorderElement.CornerRadius="4"
+                                                Background="{StaticResource ControlAssociatedModeBrush}"
+                                                Foreground="White"
+                                                Text="A" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2094,6 +2111,13 @@
                                             <TextBlock Text="{Binding Agit}" />
                                             <TextBlock Text="/" />
                                             <TextBlock Text="{Binding Agit_PV}" />
+                                            <TextBlock
+                                                Width="10"
+                                                Height="15"
+                                                hc:BorderElement.CornerRadius="4"
+                                                Background="{StaticResource ControlFixedModeBrush}"
+                                                Foreground="White"
+                                                Text="F" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2109,6 +2133,13 @@
                                             <TextBlock Text="{Binding Base}" />
                                             <TextBlock Text="/" />
                                             <TextBlock Text="{Binding Base_PV}" />
+                                            <TextBlock
+                                                Width="10"
+                                                Height="15"
+                                                hc:BorderElement.CornerRadius="4"
+                                                Background="{StaticResource ControlAssociatedModeBrush}"
+                                                Foreground="White"
+                                                Text="A" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2124,6 +2155,13 @@
                                             <TextBlock Text="{Binding Acid}" />
                                             <TextBlock Text="/" />
                                             <TextBlock Text="{Binding Acid_PV}" />
+                                            <TextBlock
+                                                Width="10"
+                                                Height="15"
+                                                hc:BorderElement.CornerRadius="4"
+                                                Background="{StaticResource ControlFixedModeBrush}"
+                                                Foreground="White"
+                                                Text="F" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2139,6 +2177,13 @@
                                             <TextBlock Text="{Binding AF}" />
                                             <TextBlock Text="/" />
                                             <TextBlock Text="{Binding AF_PV}" />
+                                            <TextBlock
+                                                Width="10"
+                                                Height="15"
+                                                hc:BorderElement.CornerRadius="4"
+                                                Background="{StaticResource ControlAssociatedModeBrush}"
+                                                Foreground="White"
+                                                Text="A" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2154,6 +2199,13 @@
                                             <TextBlock Text="{Binding Feed}" />
                                             <TextBlock Text="/" />
                                             <TextBlock Text="{Binding Feed_PV}" />
+                                            <TextBlock
+                                                Width="10"
+                                                Height="15"
+                                                hc:BorderElement.CornerRadius="4"
+                                                Background="{StaticResource ControlDisabledModeBrush}"
+                                                Foreground="White"
+                                                Text="D" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

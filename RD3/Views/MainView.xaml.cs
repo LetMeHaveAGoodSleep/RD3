@@ -67,6 +67,7 @@ namespace RD3.Views
                     sideMenuItem.CommandParameter = sideMenuItem.Header;
                     sideMenuItem.Margin = new Thickness(0, 0, 0, 10);
                     sideMenuItem.FontSize = 16;
+                    sideMenuItem.Background = Application.Current.Resources["BackGroundBrush"] as SolidColorBrush;
                     sideMenu.Items.Add(sideMenuItem);
                 }
                 //foreach (SideMenuItem item in sideMenu.Items)

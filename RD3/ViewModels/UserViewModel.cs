@@ -83,7 +83,7 @@ namespace RD3.ViewModels
             DialogParameters pairs = new DialogParameters
             {
                 { "User", user },
-                {"Mode", "Add"  }
+                {"Mode", "Edit"  }
             };
             dialogService?.ShowDialog("EditUserView", pairs, callback =>
             {

@@ -1,0 +1,35 @@
+[
+  {
+    "Id": "B001",
+    "Name": "Production Run 1",
+    "Reactor": "G01",
+    "Status": "Completed",
+    "StartTime": "2024-08-30 08:00:00",
+    "EndTime": "2024-08-30 10:00:00",
+    "Creator": "John Doe",
+    "Project": "Project Alpha",
+    "Description": "This is the first production run for the new formulation."
+  },
+  {
+    "Id": "B002",
+    "Name": "Production Run 2",
+    "Reactor": "G02",
+    "Status": "InProgress",
+    "StartTime": "2024-08-30 12:00:00",
+    "EndTime": "2024-08-30 18:00:00",
+    "Creator": "Jane Smith",
+    "Project": "Project Beta",
+    "Description": "Second production run to test stability of the process."
+  },
+  {
+    "Id": "B003",
+    "Name": "Production Run 3",
+    "Reactor": "G03",
+    "Status": "Scheduled",
+    "StartTime": "2024-08-31 08:00:00",
+    "EndTime": "2024-08-30 14:00:00",
+    "Creator": "Alice Johnson",
+    "Project": "Project Gamma",
+    "Description": "Scheduled production run for next week's testing phase."
+  }
+]

@@ -118,6 +118,7 @@ namespace RD3
             containerRegistry.RegisterForNavigation<CalibrateView, CalibrateViewModel>();
             containerRegistry.RegisterDialog<SelfCheckView, SelfCheckViewModel>();
             containerRegistry.RegisterForNavigation<BatchView, BatchViewModel>();
+            containerRegistry.RegisterDialog<EditBatchView, EditBatchViewModel>();
             containerRegistry.RegisterForNavigation<ErrorView, ErrorViewModel>();
             containerRegistry.RegisterForNavigation<AlarmView, AlarmViewModel>();
             containerRegistry.RegisterDialog<CommunicationView, CommunicationViewModel>();

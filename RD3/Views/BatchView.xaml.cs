@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RD3.Shared;
+using RD3.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,22 @@ namespace RD3.Views
         public BatchView()
         {
             InitializeComponent();
+        }
+
+        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            Batch batch = dataGrid.SelectedItem as Batch;
+            ((BatchViewModel)this.DataContext)?.EditCommand.Execute(batch);
+        }
+        private void ButtonView_Click(object sender, RoutedEventArgs e)
+        {
+            Batch batch = dataGrid.SelectedItem as Batch;
+            ((BatchViewModel)this.DataContext)?.ViewCommand.Execute(batch);
+        }
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Batch batch = dataGrid.SelectedItem as Batch;
+            ((BatchViewModel)this.DataContext)?.DeleteCommand.Execute(batch);
         }
     }
 }

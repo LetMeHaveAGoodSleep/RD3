@@ -1,0 +1,32 @@
+[
+  {
+    "Name": "Project Alpha",
+    "Account": "Admin",
+    "Client": "Inner User",
+    "StartDate": "2024-07-01 09:00:00",
+    "CloseDate": "2024-09-30 17:00:00",
+    "CreatDate": "2024-06-15 10:00:00",
+    "Creator": "Admin",
+    "Description": "Initial project for client ABC Corporation focusing on product development."
+  },
+  {
+    "Name": "Project Beta",
+    "Account": "Admin",
+    "Client": "Inner User",
+    "StartDate": "2024-08-01 08:00:00",
+    "CloseDate": "2024-10-15 16:00:00",
+    "CreatDate": "2024-07-20 09:00:00",
+    "Creator": "Admin",
+    "Description": "Second project with XYZ Inc. focusing on software integration."
+  },
+  {
+    "Name": "Project Gamma",
+    "Account": "Admin",
+    "Client": "Inner User",
+    "StartDate": "2024-09-01 10:00:00",
+    "CloseDate": "2024-11-30 14:00:00",
+    "CreatDate": "2024-08-15 11:00:00",
+    "Creator": "Admin",
+    "Description": "Project for LMN Enterprises to improve their manufacturing process."
+  }
+]
