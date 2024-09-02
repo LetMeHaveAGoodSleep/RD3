@@ -29,8 +29,8 @@ namespace RD3
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
             DispatcherUnhandledException += App_DispatcherUnhandledException;
+            base.OnStartup(e); 
         }
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
@@ -115,6 +115,7 @@ namespace RD3
             containerRegistry.RegisterForNavigation<SampleView, SampleViewModel>();
             containerRegistry.RegisterDialog<AddSampleLogView, SampleViewModel>();
             containerRegistry.RegisterForNavigation<ProjectView, ProjectViewModel>();
+            containerRegistry.RegisterDialog<EditProjectView, EditProjectViewModel>();
             containerRegistry.RegisterForNavigation<CalibrateView, CalibrateViewModel>();
             containerRegistry.RegisterDialog<SelfCheckView, SelfCheckViewModel>();
             containerRegistry.RegisterForNavigation<BatchView, BatchViewModel>();

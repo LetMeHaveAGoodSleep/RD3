@@ -61,12 +61,12 @@ namespace RD3.ViewModels
             {
                 index = Convert.ToInt32(result?.Id.Substring(8, 2)) + 1;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
 
             }
             Id += index.ToString().PadLeft(2, '0');
-            Batch batch = new Batch() { Id= Id };
+            Batch batch = new Batch() { Id = Id, EndTime = DateTime.Now, StartTime = DateTime.Now };
             DialogParameters pairs = new DialogParameters
             {
                 { "Batch", batch },
@@ -133,7 +133,7 @@ namespace RD3.ViewModels
             }
             else
             {
-                var collection = Batches.Where(t => t.Id.Contains(key) || t.Name.Contains(key) || t.Reactor.Contains(key) 
+                var collection = Batches.Where(t => t.Id.Contains(key) || t.Name.Contains(key) || t.Reactor.Contains(key)
                 || t.Status.Contains(key) || t.Project.Contains(key) || t.Description.Contains(key));
                 Batches = new ObservableCollection<Batch>(collection);
             }

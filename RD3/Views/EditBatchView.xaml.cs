@@ -36,16 +36,12 @@ namespace RD3.Views
                 cmbReactor.SelectedItems.Clear();
                 Batch batch = model.Model as Batch;
                 var array = batch?.Reactor?.Split(',');
+                if (array == null) return;
                 foreach (var item in array)
                 {
                     cmbReactor.SelectedItems.Add(item);
                 } 
             }, nameof(EditBatchViewModel));
-        }
-
-        private void CmbReactor_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

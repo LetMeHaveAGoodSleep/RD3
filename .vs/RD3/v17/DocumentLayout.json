@@ -3,44 +3,52 @@
   "WorkspaceRootPath": "D:\\Project\\RD3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\batchview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\batchview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\app.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\app.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\batchview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\batchview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\userview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\userview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\selfcheckview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\selfcheckview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\alarmview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\alarmview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\editbatchview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\editbatchview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\editbatchviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\editbatchviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\editprojectview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\editprojectview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\editbatchview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\editbatchview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|d:\\project\\rd3\\rd3.shared\\batch\\batchmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|solutionrelative:rd3.shared\\batch\\batchmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\indexview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\indexview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|d:\\project\\rd3\\rd3.shared\\batch\\batch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|solutionrelative:rd3.shared\\batch\\batch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\editbatchview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\editbatchview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\config\\batch.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\batch.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\editprojectview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\editprojectview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\projectviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\projectviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\editprojectviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\editprojectviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\editbatchviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\editbatchviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,132 +58,157 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.config",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\App.config",
+              "RelativeDocumentMoniker": "RD3\\App.config",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\App.config",
+              "RelativeToolTip": "RD3\\App.config",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2024-09-02T03:40:35.56Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "UserView.xaml",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\UserView.xaml",
-              "RelativeDocumentMoniker": "RD3\\Views\\UserView.xaml",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\UserView.xaml",
-              "RelativeToolTip": "RD3\\Views\\UserView.xaml",
+              "Title": "SelfCheckView.xaml",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\SelfCheckView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\SelfCheckView.xaml",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\SelfCheckView.xaml",
+              "RelativeToolTip": "RD3\\Views\\SelfCheckView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-08-30T08:29:43.398Z",
+              "WhenOpened": "2024-09-02T01:00:06.795Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "AlarmView.xaml",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\AlarmView.xaml",
-              "RelativeDocumentMoniker": "RD3\\Views\\AlarmView.xaml",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\AlarmView.xaml",
-              "RelativeToolTip": "RD3\\Views\\AlarmView.xaml",
+              "Title": "MainView.xaml",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\MainView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\MainView.xaml",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\MainView.xaml",
+              "RelativeToolTip": "RD3\\Views\\MainView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-08-30T08:29:38.466Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Batch.json",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Config\\Batch.json",
-              "RelativeDocumentMoniker": "RD3\\Config\\Batch.json",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Config\\Batch.json",
-              "RelativeToolTip": "RD3\\Config\\Batch.json",
-              "ViewState": "AQIAAAwAAAAAAAAAAADwvyAAAAAQAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-08-30T07:51:04.678Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "EditBatchView.xaml.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\EditBatchView.xaml.cs",
-              "RelativeDocumentMoniker": "RD3\\Views\\EditBatchView.xaml.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\EditBatchView.xaml.cs",
-              "RelativeToolTip": "RD3\\Views\\EditBatchView.xaml.cs",
-              "ViewState": "AQIAACcAAAAAAAAAAAAUwDoAAABYAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-30T07:47:11.606Z",
+              "WhenOpened": "2024-09-02T01:00:02.741Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "IndexView.xaml",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\IndexView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\IndexView.xaml",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\IndexView.xaml",
+              "RelativeToolTip": "RD3\\Views\\IndexView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-08-31T10:20:43.638Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "EditProjectView.xaml.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\EditProjectView.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\EditProjectView.xaml.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\EditProjectView.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\EditProjectView.xaml.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAtwB0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-31T10:18:30.468Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "EditBatchViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\EditBatchViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\EditBatchViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\EditBatchViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\EditBatchViewModel.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAABYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T09:54:30.181Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\App.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\App.xaml.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\App.xaml.cs",
+              "RelativeToolTip": "RD3\\App.xaml.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAADwvyAAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T09:56:05.622Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "EditProjectViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\EditProjectViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\EditProjectViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\EditProjectViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\EditProjectViewModel.cs",
+              "ViewState": "AQIAAFEAAAAAAAAAAAAawE8AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T09:55:53.199Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ProjectViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\ProjectViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\ProjectViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\ProjectViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\ProjectViewModel.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAAwBoAAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-30T09:54:45.598Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "EditBatchView.xaml",
               "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\EditBatchView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\EditBatchView.xaml",
               "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\EditBatchView.xaml",
               "RelativeToolTip": "RD3\\Views\\EditBatchView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-08-30T06:01:03.142Z",
+              "WhenOpened": "2024-08-30T09:53:54.91Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "EditBatchViewModel.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\EditBatchViewModel.cs",
-              "RelativeDocumentMoniker": "RD3\\ViewModels\\EditBatchViewModel.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\EditBatchViewModel.cs",
-              "RelativeToolTip": "RD3\\ViewModels\\EditBatchViewModel.cs",
-              "ViewState": "AQIAADgAAAAAAAAAAAAowIAAAABlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-30T07:21:35.965Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "BatchView.xaml.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\BatchView.xaml.cs",
-              "RelativeDocumentMoniker": "RD3\\Views\\BatchView.xaml.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\BatchView.xaml.cs",
-              "RelativeToolTip": "RD3\\Views\\BatchView.xaml.cs",
-              "ViewState": "AQIAABwAAAAAAAAAAAAIwCYAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-30T07:09:44.436Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "BatchView.xaml",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\BatchView.xaml",
-              "RelativeDocumentMoniker": "RD3\\Views\\BatchView.xaml",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\BatchView.xaml",
-              "RelativeToolTip": "RD3\\Views\\BatchView.xaml",
+              "DocumentIndex": 4,
+              "Title": "EditProjectView.xaml",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\EditProjectView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\EditProjectView.xaml",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\EditProjectView.xaml",
+              "RelativeToolTip": "RD3\\Views\\EditProjectView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-08-30T07:09:22.263Z",
+              "WhenOpened": "2024-08-30T09:53:34.065Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "BatchManager.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3.Shared\\Batch\\BatchManager.cs",
-              "RelativeDocumentMoniker": "RD3.Shared\\Batch\\BatchManager.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3.Shared\\Batch\\BatchManager.cs",
-              "RelativeToolTip": "RD3.Shared\\Batch\\BatchManager.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAAAIwCYAAAAMAAAA",
+              "Title": "EditBatchView.xaml.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\EditBatchView.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\EditBatchView.xaml.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\EditBatchView.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\EditBatchView.xaml.cs",
+              "ViewState": "AQIAACUAAAAAAAAAAAAIwCwAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-30T07:51:47.644Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Batch.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3.Shared\\Batch\\Batch.cs",
-              "RelativeDocumentMoniker": "RD3.Shared\\Batch\\Batch.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3.Shared\\Batch\\Batch.cs",
-              "RelativeToolTip": "RD3.Shared\\Batch\\Batch.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAADwvzkAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-30T07:51:49.498Z",
+              "WhenOpened": "2024-08-31T10:18:43.961Z",
               "EditorCaption": ""
             }
           ]

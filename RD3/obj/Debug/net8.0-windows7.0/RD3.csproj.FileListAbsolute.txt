@@ -181,3 +181,5 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Batch.json
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditBatchView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditBatchView.baml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Project.json
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditProjectView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditProjectView.baml

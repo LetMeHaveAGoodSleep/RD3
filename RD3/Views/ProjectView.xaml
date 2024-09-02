@@ -9,6 +9,8 @@
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:ProjectViewModel}"
     d:DesignHeight="700"
     d:DesignWidth="1350"
     Background="{StaticResource BackGroundBrush}"
@@ -42,9 +44,13 @@
                 Margin="5"
                 HorizontalAlignment="Left"
                 hc:InfoElement.ShowClearButton="True"
-                Command="{Binding SearchCmd}"
-                CommandParameter="{Binding Text, RelativeSource={RelativeSource Self}}"
-                IsRealTime="True" />
+                IsRealTime="True">
+                <hc:Interaction.Triggers>
+                    <hc:EventTrigger EventName="SearchStarted">
+                        <hc:EventToCommand Command="{Binding SearchCommand}" PassEventArgsToCommand="True" />
+                    </hc:EventTrigger>
+                </hc:Interaction.Triggers>
+            </hc:SearchBar>
             <Button
                 Grid.Column="1"
                 Height="30"
@@ -63,6 +69,7 @@
                 hc:IconElement.Geometry="{StaticResource GeometryAdd}"
                 Background="{StaticResource ButtonBoderBrush}"
                 BorderBrush="{StaticResource ButtonBoderBrush}"
+                Command="{Binding AddProjectCommand}"
                 Content="{ex:Language Key='Create'}"
                 FontSize="14"
                 Foreground="White" />
@@ -73,6 +80,8 @@
                 HorizontalContentAlignment="Center"
                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                 hc:IconElement.Geometry="{StaticResource GeometryEdit}"
+                Command="{Binding EditCommand}"
+                CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
                 FontSize="14" />
             <Button
                 Grid.Column="5"
@@ -81,72 +90,78 @@
                 HorizontalContentAlignment="Center"
                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                 hc:IconElement.Geometry="{StaticResource GeometryDelete}"
+                Command="{Binding DeleteCommand}"
+                CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
                 FontSize="14"
                 Foreground="Red" />
         </Grid>
         <DataGrid
+            Name="dataGrid"
             Grid.Row="2"
+            hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+            hc:DataGridAttach.ShowSelectAllButton="False"
             AutoGenerateColumns="False"
             Background="Transparent"
-            FontSize="16"
+            FontSize="14"
             HeadersVisibility="All"
-            ItemsSource="{Binding Projects}"
-            RowHeaderWidth="50"
+            ItemsSource="{Binding ProjectCol}"
+            RowHeaderWidth="60"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Width="100" Header="{ex:Language Key='Name'}" />
-                <DataGridTextColumn Width="150" Header="{ex:Language Key='Account'}" />
-                <DataGridTextColumn Width="150" Header="{ex:Language Key='Client'}" />
+                <DataGridCheckBoxColumn
+                    Width="100"
+                    Binding="{Binding Name}"
+                    Header="{ex:Language Key='Name'}" />
+                <DataGridTextColumn
+                    Width="100"
+                    Binding="{Binding Account}"
+                    Header="{ex:Language Key='Account'}" />
+                <DataGridTextColumn
+                    Width="150"
+                    Binding="{Binding Client}"
+                    Header="{ex:Language Key='Client'}" />
                 <DataGridTemplateColumn Width="150" Header="{ex:Language Key='Start date'}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Date, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
+                            <TextBlock Text="{Binding StartDate, StringFormat={}{0:yyyy-MM-dd}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="150" Header="{ex:Language Key='Close date'}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Date, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
+                            <TextBlock Text="{Binding CloseDate, StringFormat={}{0:yyyy-MM-dd}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn Width="150" Header="{ex:Language Key='Create date'}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Date, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
+                            <TextBlock Text="{Binding CreatDate, StringFormat={}{0:yyyy-MM-dd}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Width="120" Header="{ex:Language Key='Creator'}" />
-                <DataGridTextColumn Width="120" Header="{ex:Language Key='Description'}" />
-                <DataGridTemplateColumn Width="200" Header="{ex:Language Key='Operation'}">
+                <DataGridTextColumn
+                    Width="120"
+                    Binding="{Binding Creator}"
+                    Header="{ex:Language Key='Creator'}" />
+                <DataGridTextColumn
+                    Width="200"
+                    Binding="{Binding Creator}"
+                    Header="{ex:Language Key='Description'}" />
+                <!--<DataGridTemplateColumn Width="200" Header="{ex:Language Key='Operation'}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel>
-                                <Button
-                                    HorizontalAlignment="Left"
-                                    hc:IconElement.Geometry="{StaticResource GeometryUserInfo}"
-                                    Background="Transparent"
-                                    BorderThickness="0"
-                                    Content="Account manage" />
-                                <Button
-                                    HorizontalAlignment="Left"
-                                    hc:IconElement.Geometry="{StaticResource GeometrySwitchUser}"
-                                    Background="Transparent"
-                                    BorderThickness="0"
-                                    Content="Switch Account" />
-                                <Button
-                                    HorizontalAlignment="Left"
-                                    hc:IconElement.Geometry="{StaticResource GeometryLogOut}"
-                                    Background="Transparent"
-                                    BorderThickness="0"
-                                    Content="Log out" />
-                            </StackPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
             </DataGrid.Columns>
         </DataGrid>
         <hc:Pagination
@@ -154,8 +169,7 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
             IsJumpEnabled="True"
-            MaxPageCount="10"
-            MaxPageInterval="4"
+            MaxPageCount="{Binding PageCount}"
             PageIndex="1" />
 
     </Grid>

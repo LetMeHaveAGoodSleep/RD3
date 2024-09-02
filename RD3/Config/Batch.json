@@ -8,7 +8,8 @@
     "EndTime": "2024-08-30 10:00:00",
     "Creator": "John Doe",
     "Project": "Project Alpha",
-    "Description": "This is the first production run for the new formulation."
+    "Description": "This is the first production run for the new formulation.",
+    "IsFavorite": "True"
   },
   {
     "Id": "B002",
@@ -19,7 +20,8 @@
     "EndTime": "2024-08-30 18:00:00",
     "Creator": "Jane Smith",
     "Project": "Project Beta",
-    "Description": "Second production run to test stability of the process."
+    "Description": "Second production run to test stability of the process.",
+    "IsFavorite": "True"
   },
   {
     "Id": "B003",
@@ -30,6 +32,7 @@
     "EndTime": "2024-08-30 14:00:00",
     "Creator": "Alice Johnson",
     "Project": "Project Gamma",
-    "Description": "Scheduled production run for next week's testing phase."
+    "Description": "Scheduled production run for next week's testing phase.",
+    "IsFavorite": "True"
   }
 ]

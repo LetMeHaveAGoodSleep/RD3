@@ -37,6 +37,7 @@
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <hc:SearchBar
                 Width="240"
@@ -66,11 +67,24 @@
                 Margin="5"
                 HorizontalContentAlignment="Center"
                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                hc:IconElement.Geometry="{StaticResource GeometryAdd}"
+                Background="{StaticResource ButtonBoderBrush}"
+                BorderBrush="{StaticResource ButtonBoderBrush}"
+                Command="{Binding AddBatchCommand}"
+                Content="{ex:Language Key='Create'}"
+                FontSize="14"
+                Foreground="White" />
+            <Button
+                Grid.Column="4"
+                Height="30"
+                Margin="5"
+                HorizontalContentAlignment="Center"
+                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                 hc:IconElement.Geometry="{StaticResource GeometryCompare}"
                 Content="{ex:Language Key='Compare'}"
                 FontSize="14" />
             <Button
-                Grid.Column="4"
+                Grid.Column="5"
                 Height="30"
                 Margin="5"
                 HorizontalContentAlignment="Center"
@@ -79,7 +93,7 @@
                 Content="{ex:Language Key='Export'}"
                 FontSize="14" />
             <Button
-                Grid.Column="5"
+                Grid.Column="6"
                 Height="30"
                 Margin="5"
                 HorizontalContentAlignment="Center"
