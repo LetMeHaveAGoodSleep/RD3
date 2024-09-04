@@ -8,12 +8,11 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
-    xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:oxy="http://oxyplot.org/wpf"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:vm="clr-namespace:RD3.ViewModels"
+    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     d:DataContext="{d:DesignInstance Type=vm:IndexViewModel}"
     d:DesignHeight="795"
     d:DesignWidth="1330"
@@ -1862,16 +1861,66 @@
                 </Grid>
                 <Border
                     Grid.Row="1"
+                    Margin="5"
                     CornerRadius="8"
                     Effect="{StaticResource EffectShadow1}">
-                    <lvc:CartesianChart
-                        Name="TestChart"
-                        AxisY="{Binding YAxisCollection}"
-                        LegendLocation="Bottom"
-                        Pan="Xy"
-                        Series="{Binding Series}"
-                        Zoom="Xy"
-                        ZoomingSpeed="100" />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center" Text="Runnning time:05:06:33" />
+                            <hc:UniformSpacingPanel Grid.Column="2" Spacing="10">
+                                <ToggleButton
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                    hc:BorderElement.CornerRadius="4"
+                                    hc:StatusSwitchElement.HideUncheckedElement="True"
+                                    Background="Transparent"
+                                    IsChecked="True">
+                                    <hc:StatusSwitchElement.CheckedElement>
+                                        <TextBlock Text="{ex:Language Key='Air'}" />
+                                    </hc:StatusSwitchElement.CheckedElement>
+                                    <TextBlock Foreground="LightGray" Text="{ex:Language Key='Air'}" />
+                                </ToggleButton>
+                                <ToggleButton hc:StatusSwitchElement.HideUncheckedElement="True" IsChecked="True">
+                                    <hc:StatusSwitchElement.CheckedElement>
+                                        <TextBlock Text="{ex:Language Key='Agit'}" />
+                                    </hc:StatusSwitchElement.CheckedElement>
+                                    <TextBlock Foreground="LightGray" Text="{ex:Language Key='Agit'}" />
+                                </ToggleButton>
+                                <ToggleButton hc:StatusSwitchElement.HideUncheckedElement="True" IsChecked="True">
+                                    <hc:StatusSwitchElement.CheckedElement>
+                                        <TextBlock Text="{ex:Language Key='DO'}" />
+                                    </hc:StatusSwitchElement.CheckedElement>
+                                    <TextBlock Foreground="LightGray" Text="{ex:Language Key='DO'}" />
+                                </ToggleButton>
+                                <ToggleButton hc:StatusSwitchElement.HideUncheckedElement="True" IsChecked="True">
+                                    <hc:StatusSwitchElement.CheckedElement>
+                                        <TextBlock Text="{ex:Language Key='Temp'}" />
+                                    </hc:StatusSwitchElement.CheckedElement>
+                                    <TextBlock Foreground="LightGray" Text="{ex:Language Key='Temp'}" />
+                                </ToggleButton>
+                                <ToggleButton
+                                    hc:StatusSwitchElement.HideUncheckedElement="True"
+                                    IsChecked="True"
+                                    Style="{StaticResource ToggleButtonCustom}">
+                                    <hc:StatusSwitchElement.CheckedElement>
+                                        <TextBlock Text="pH" />
+                                    </hc:StatusSwitchElement.CheckedElement>
+                                    <TextBlock Foreground="LightGray" Text="{ex:Language Key='pH'}" />
+                                </ToggleButton>
+                            </hc:UniformSpacingPanel>
+                        </Grid>
+                        <wpf:WpfPlot Name="wpfPlot" Grid.Row="1" />
+                    </Grid>
                 </Border>
 
             </Grid>

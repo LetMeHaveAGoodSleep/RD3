@@ -6,7 +6,7 @@
     xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:local="clr-namespace:RD3"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
@@ -21,6 +21,10 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <local:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+    </UserControl.Resources>
     <Grid Margin="32">
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -191,21 +195,21 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                    <ToggleButton
-                                        HorizontalAlignment="Center"
+                                    <Button
+                                        x:Name="BtnFavorite"
+                                        hc:IconElement.Geometry="{StaticResource GeometryFavorite}"
+                                        Background="Transparent"
                                         BorderThickness="0"
-                                        IsChecked="{Binding IsFavorite}">
-                                        <hc:StatusSwitchElement.CheckedElement>
-                                            <Button
-                                                hc:IconElement.Geometry="{StaticResource GeometryFavorite}"
-                                                Background="Transparent"
-                                                BorderThickness="0" />
-                                        </hc:StatusSwitchElement.CheckedElement>
-                                        <Button
-                                            hc:IconElement.Geometry="{StaticResource GeometryNoFavorite}"
-                                            Background="Transparent"
-                                            BorderThickness="0" />
-                                    </ToggleButton>
+                                        Click="Button_Click"
+                                        Visibility="{Binding IsFavorite, Converter={StaticResource BoolToVisConverter}}" />
+                                    <Button
+                                        x:Name="BtnNoFavorite"
+                                        HorizontalAlignment="Left"
+                                        hc:IconElement.Geometry="{StaticResource GeometryNoFavorite}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Click="Button_Click"
+                                        Visibility="{Binding IsFavorite, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                                     <Button
                                         HorizontalAlignment="Left"
                                         hc:IconElement.Geometry="{StaticResource GeometryEdit}"

@@ -42,5 +42,21 @@ namespace RD3.Views
             Batch batch = dataGrid.SelectedItem as Batch;
             ((BatchViewModel)this.DataContext)?.DeleteCommand.Execute(batch);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            Batch batch = dataGrid.SelectedItem as Batch;
+            if (button?.Name == "BtnFavorite")
+            {
+                batch.IsFavorite = false;
+                BatchManager.GetInstance().Save();
+            }
+            else if (button?.Name == "BtnNoFavorite")
+            {
+                batch.IsFavorite = true;
+                BatchManager.GetInstance().Save();
+            }
+        }
     }
 }

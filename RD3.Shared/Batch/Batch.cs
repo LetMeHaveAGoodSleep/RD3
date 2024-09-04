@@ -61,8 +61,8 @@ namespace RD3.Shared
             set { SetProperty(ref _description, value); }
         }
 
-        private string _isFavorite;
-        public string IsFavorite
+        private bool _isFavorite;
+        public bool IsFavorite
         {
             get { return _isFavorite; }
             set { SetProperty(ref _isFavorite, value); }

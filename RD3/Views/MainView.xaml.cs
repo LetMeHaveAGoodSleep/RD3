@@ -25,6 +25,7 @@ using HandyControl.Controls;
 using RD3.Shared;
 using Window = System.Windows.Window;
 using System.Drawing;
+using Image = System.Windows.Controls.Image;
 
 namespace RD3.Views
 {

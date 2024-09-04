@@ -10,6 +10,7 @@ FD:\Project\RD3\RD3\Views\CommunicationView.xaml;;
 FD:\Project\RD3\RD3\Views\ControlView.xaml;;
 FD:\Project\RD3\RD3\Views\EditBatchView.xaml;;
 FD:\Project\RD3\RD3\Views\EditClientView.xaml;;
+FD:\Project\RD3\RD3\Views\EditProjectView.xaml;;
 FD:\Project\RD3\RD3\Views\EditUserView.xaml;;
 FD:\Project\RD3\RD3\Views\ErrorView.xaml;;
 FD:\Project\RD3\RD3\Views\IndexView.xaml;;
@@ -22,5 +23,4 @@ FD:\Project\RD3\RD3\Views\ProjectView.xaml;;
 FD:\Project\RD3\RD3\Views\SampleView.xaml;;
 FD:\Project\RD3\RD3\Views\SelfCheckView.xaml;;
 FD:\Project\RD3\RD3\Views\UserView.xaml;;
-FD:\Project\RD3\RD3\Views\EditProjectView.xaml;;
 

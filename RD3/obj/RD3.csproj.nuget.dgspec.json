@@ -145,10 +145,6 @@
               "target": "Package",
               "version": "[1.0.2.240505, )"
             },
-            "LiveCharts.Wpf.Core": {
-              "target": "Package",
-              "version": "[0.9.8, )"
-            },
             "MaterialDesignThemes": {
               "target": "Package",
               "version": "[5.0.0, )"
@@ -157,10 +153,6 @@
               "target": "Package",
               "version": "[13.0.3, )"
             },
-            "OxyPlot.Wpf": {
-              "target": "Package",
-              "version": "[2.1.2, )"
-            },
             "Prism.DryIoc": {
               "target": "Package",
               "version": "[8.1.97, )"
@@ -168,6 +160,10 @@
             "SQLite": {
               "target": "Package",
               "version": "[3.13.0, )"
+            },
+            "ScottPlot.WPF": {
+              "target": "Package",
+              "version": "[5.0.37, )"
             },
             "log4net": {
               "target": "Package",

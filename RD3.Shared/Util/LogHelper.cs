@@ -46,6 +46,10 @@ namespace RD3.Shared
             log.Error(message, exception);
         }
 
+        public static void Fatal(Exception exception)
+        {
+            log.Fatal(exception.Message);
+        }
         public static void Fatal(string message)
         {
             log.Fatal(message);

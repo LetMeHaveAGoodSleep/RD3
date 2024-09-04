@@ -12,8 +12,8 @@ TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\Project\RD3\RD3\App.xaml
 23-1113996756
 3271424504
-621477980952
-22096074468
+65-812819765
+2311134998108
 Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AddSampleLogView.xaml;Views\AlarmView.xaml;Views\BatchView.xaml;Views\CalibrateView.xaml;Views\CommunicationView.xaml;Views\ControlView.xaml;Views\EditBatchView.xaml;Views\EditClientView.xaml;Views\EditProjectView.xaml;Views\EditUserView.xaml;Views\ErrorView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MCUDebugView.xaml;Views\MsgView.xaml;Views\ProgressView.xaml;Views\ProjectView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\UserView.xaml;
 
 False

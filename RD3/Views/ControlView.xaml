@@ -7,12 +7,12 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
-    xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:oxy="http://oxyplot.org/wpf"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     d:DataContext="{d:DesignInstance Type=viewmodels:AlarmViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -414,14 +414,14 @@
                             Content="{ex:Language Key='Import'}"
                             ToolTip="Save" />
                     </hc:UniformSpacingPanel>
-                    <lvc:CartesianChart
+                    <!--<lvc:CartesianChart
                         Name="TestChart"
                         AxisY="{Binding YAxisCollection}"
                         LegendLocation="Bottom"
                         Pan="Xy"
                         Series="{Binding Series}"
                         Zoom="Xy"
-                        ZoomingSpeed="100" />
+                        ZoomingSpeed="100" />-->
                 </hc:UniformSpacingPanel>
             </Grid>
         </TabItem>
