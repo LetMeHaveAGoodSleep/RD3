@@ -1739,7 +1739,7 @@
                 </Grid>
             </ScrollViewer>
         </TabItem>
-        <TabItem Header="{ex:Language Key='Trend'}">
+        <TabItem Header="{ex:Language Key='Trends'}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60" />
@@ -1908,12 +1908,9 @@
                                     </hc:StatusSwitchElement.CheckedElement>
                                     <TextBlock Foreground="LightGray" Text="{ex:Language Key='Temp'}" />
                                 </ToggleButton>
-                                <ToggleButton
-                                    hc:StatusSwitchElement.HideUncheckedElement="True"
-                                    IsChecked="True"
-                                    Style="{StaticResource ToggleButtonCustom}">
+                                <ToggleButton hc:StatusSwitchElement.HideUncheckedElement="True" IsChecked="True">
                                     <hc:StatusSwitchElement.CheckedElement>
-                                        <TextBlock Text="pH" />
+                                        <TextBlock Text="{ex:Language Key='pH'}" />
                                     </hc:StatusSwitchElement.CheckedElement>
                                     <TextBlock Foreground="LightGray" Text="{ex:Language Key='pH'}" />
                                 </ToggleButton>
@@ -1925,7 +1922,7 @@
 
             </Grid>
         </TabItem>
-        <TabItem Header="{ex:Language Key='OverView'}">
+        <TabItem Header="{ex:Language Key='Overview'}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60" />

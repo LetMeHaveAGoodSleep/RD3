@@ -69,7 +69,7 @@ namespace RD3.Views
             var yAxis5 = plt.Axes.AddRightAxis();
             yAxis5.LabelText = "pH";
 
-            var sig1 = plt.Add.ScatterLine(dates,ScottPlot.Generate.Sin(51, mult: 0.01));
+            var sig1 = plt.Add.Scatter(dates,ScottPlot.Generate.Sin(51, mult: 0.01));
             sig1.LegendText = "2";
             sig1.Axes.XAxis = plt.Axes.Bottom; // standard X axis
             sig1.Axes.YAxis = plt.Axes.Left; // standard Y axis

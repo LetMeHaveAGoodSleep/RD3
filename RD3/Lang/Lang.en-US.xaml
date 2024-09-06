@@ -86,4 +86,8 @@
     <system:String x:Key="Actions">Actions</system:String>
     <system:String x:Key="Direct">Direct</system:String>
     <system:String x:Key="Reverse">Reverse</system:String>
+    <system:String x:Key="Alarm Record">Alarm Record</system:String>
+    <system:String x:Key="Alarm Time">Alarm Time</system:String>
+    <system:String x:Key="Value">Value</system:String>
+    <system:String x:Key="Grade">Grade</system:String>
 </ResourceDictionary>

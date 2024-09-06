@@ -1,4 +1,5 @@
-﻿using HandyControl.Data;
+﻿using HandyControl.Controls;
+using HandyControl.Data;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
@@ -23,7 +24,62 @@ namespace RD3.ViewModels
 
         private ObservableCollection<AlarmRecord> _dataList = new ObservableCollection<AlarmRecord>();
         public ObservableCollection<AlarmRecord> DataList { get { return _dataList; } set { SetProperty(ref _dataList, value); } }
+
+        private ObservableCollection<AlarmRecord> _alarmRecords = new ObservableCollection<AlarmRecord>();
+        public ObservableCollection<AlarmRecord> AlarmRecords { get { return _alarmRecords; } set { SetProperty(ref _alarmRecords, value); } }
+
         public DelegateCommand<FunctionEventArgs<int>> PageUpdatedCommand => new(PageUpdated);
+        public DelegateCommand<FunctionEventArgs<string>> SearchCommand => new((FunctionEventArgs<string> e) =>
+        {
+            string key = e.Info;
+            if (string.IsNullOrEmpty(key))
+            {
+                AlarmRecords = new ObservableCollection<AlarmRecord>(DataList);
+            }
+            else
+            {
+                var collection = AlarmRecords.Where(t => t.Batch.Contains(key) || t.Description.Contains(key) || t.Reactor.Contains(key)
+                || t.Grade.ToString().Contains(key) || t.Value.Contains(key) || t.Description.Contains(key));
+                AlarmRecords = new ObservableCollection<AlarmRecord>(collection);
+            }
+            if (PageIndex != 1)
+            {
+                PageIndex = 1;
+            }
+            else
+            {
+                var data = AlarmRecords.Take(DataCountPerPage);
+                AlarmRecordCol = new ObservableCollection<AlarmRecord>(data);
+            }
+        });
+
+        public DelegateCommand<Tuple<string, string, string>> FilterCommand => new((Tuple<string, string, string> tuple) => 
+        {
+            DateTime startTime = string.IsNullOrEmpty(tuple.Item1) ? DateTime.MinValue : Convert.ToDateTime(tuple.Item1);
+            DateTime endTime = string.IsNullOrEmpty(tuple.Item2) ? DateTime.MaxValue : Convert.ToDateTime(tuple.Item2);
+            var key = tuple.Item3;
+            AlarmRecords = new ObservableCollection<AlarmRecord>(DataList);
+            if (string.IsNullOrEmpty(key))
+            {
+                var collection = AlarmRecords.Where(t => t.Time <= endTime && t.Time >= startTime);
+                AlarmRecords = new ObservableCollection<AlarmRecord>(collection);
+            }
+            else
+            {
+                var collection = AlarmRecords.Where(t => (t.Batch.Contains(key) || t.Description.Contains(key) || t.Reactor.Contains(key)
+                || t.Grade.ToString().Contains(key) || t.Value.Contains(key) || t.Description.Contains(key)) && t.Time <= endTime && t.Time >= startTime);
+                AlarmRecords = new ObservableCollection<AlarmRecord>(collection);
+            }
+            if (PageIndex != 1)
+            {
+                PageIndex = 1;
+            }
+            else
+            {
+                var data = AlarmRecords.Take(DataCountPerPage);
+                AlarmRecordCol = new ObservableCollection<AlarmRecord>(data);
+            }
+        });
 
         private int _pageCount;
         public int PageCount
@@ -31,7 +87,7 @@ namespace RD3.ViewModels
             get { return _pageCount; }
             set { SetProperty(ref _pageCount, value); }
         }
-        private int _pageIndex = -1;
+        private int _pageIndex;
         public int PageIndex
         {
             get { return _pageIndex; }
@@ -49,10 +105,10 @@ namespace RD3.ViewModels
         public AlarmViewModel(IContainerProvider containerProvider):base(containerProvider) 
         {
             QueryAlarmRecord();
+            _pageIndex = 1;
             PageCount = DataList.Count / DataCountPerPage + (DataList.Count % DataCountPerPage != 0 ? 1 : 0);
             var data = DataList.Take(DataCountPerPage);
             AlarmRecordCol = new ObservableCollection<AlarmRecord>(data);
-            _pageIndex = 1;
         }
 
         void QueryAlarmRecord()

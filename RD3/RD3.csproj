@@ -38,11 +38,11 @@
   <ItemGroup>
     <Content Include="Assets\icon_48.ico" />
     <Content Include="Lang\Lang.en-US.xaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Content>
     <Content Include="Lang\Lang.zh-CN.xaml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Content>
   </ItemGroup>

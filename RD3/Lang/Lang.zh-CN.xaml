@@ -86,4 +86,8 @@
     <system:String x:Key="Actions">启动项</system:String>
     <system:String x:Key="Direct">正向</system:String>
     <system:String x:Key="Reverse">反向</system:String>
+    <system:String x:Key="Alarm Record">报警记录</system:String>
+    <system:String x:Key="Alarm Time">报警时间</system:String>
+    <system:String x:Key="Value">数值</system:String>
+    <system:String x:Key="Grade">等级</system:String>
 </ResourceDictionary>
