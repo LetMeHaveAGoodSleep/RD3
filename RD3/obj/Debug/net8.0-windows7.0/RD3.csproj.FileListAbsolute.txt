@@ -135,8 +135,6 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\win7-x64\native\sqlite3.
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\win7-x86\native\sqlite3.dll
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\SampleView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\SampleView.baml
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AddSampleLogView.g.cs
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AddSampleLogView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ProjectView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ProjectView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\UserView.g.cs
@@ -154,7 +152,6 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\log4net.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\App.config
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AlarmView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AlarmView.baml
-D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Alarm.json
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Communication.json
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Command.json
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CommunicationView.g.cs
@@ -170,12 +167,8 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MCUDebugView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MCUDebugView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ControlView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ControlView.baml
-D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Device.json
-D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Function.json
-D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Batch.json
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditBatchView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditBatchView.baml
-D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Project.json
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditProjectView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditProjectView.baml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\OpenTK.Compute.dll
@@ -205,3 +198,14 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\osx\native\libSkiaSharp.
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\win-arm64\native\libSkiaSharp.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\libSkiaSharp.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\libSkiaSharp.dll
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditSampleView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditSampleView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\OperationView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\OperationView.baml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Alarm.json
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Batch.json
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Device.json
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Function.json
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Project.json
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Sample.json
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Operation.json

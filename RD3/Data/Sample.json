@@ -1,0 +1,35 @@
+[
+  {
+    "Id": "SAMPLE001",
+    "Batch": "BATCH001",
+    "Reactor": "REACTOR_A",
+    "Type": "Metabolites",
+    "SampleTime": "2024-09-06 10:30:00",
+    "MainParam": "pH",
+    "Value": 7.2,
+    "Creator": "John Doe",
+    "Remark": "Initial sample for batch 001"
+  },
+  {
+    "Id": "SAMPLE002",
+    "Batch": "BATCH002",
+    "Reactor": "REACTOR_B",
+    "Type": "Metabolites",
+    "SampleTime": "2024-09-06 11:00:00",
+    "MainParam": "Density",
+    "Value": 1.45,
+    "Creator": "Jane Smith",
+    "Remark": "Sample after 1 hour"
+  },
+  {
+    "Id": "SAMPLE003",
+    "Batch": "BATCH003",
+    "Reactor": "REACTOR_C",
+    "Type": "Metabolites",
+    "SampleTime": "2024-09-06 12:00:00",
+    "MainParam": "Pressure",
+    "Value": 101.3,
+    "Creator": "Michael Johnson",
+    "Remark": "Final sample for quality check"
+  }
+]

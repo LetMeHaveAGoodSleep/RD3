@@ -80,6 +80,7 @@ namespace RD3.ViewModels
 
         public DelegateCommand<User> EditCommand => new((User user) =>
         {
+            if (user == null) return;
             DialogParameters pairs = new DialogParameters
             {
                 { "User", user },
@@ -114,6 +115,7 @@ namespace RD3.ViewModels
                 var collection = Users.Where(t => t.UserName.Contains(key) || t.Creator.Contains(key) || t.Type.ToString().Contains(key));
                 Users = new ObservableCollection<User>(collection);
             }
+            PageCount = Users.Count / DataCountPerPage + (Users.Count % DataCountPerPage != 0 ? 1 : 0);
             if (PageIndex != 1)
             {
                 PageIndex = 1;

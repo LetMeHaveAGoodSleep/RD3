@@ -233,8 +233,17 @@
             Grid.Row="3"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
+            Background="Transparent"
+            DataCountPerPage="{Binding DataCountPerPage}"
             IsJumpEnabled="True"
             MaxPageCount="{Binding PageCount}"
-            PageIndex="1" />
+            MaxPageInterval="4"
+            PageIndex="{Binding PageIndex}">
+            <hc:Interaction.Triggers>
+                <hc:EventTrigger EventName="PageUpdated">
+                    <hc:EventToCommand Command="{Binding PageUpdatedCommand}" PassEventArgsToCommand="True" />
+                </hc:EventTrigger>
+            </hc:Interaction.Triggers>
+        </hc:Pagination>
     </Grid>
 </UserControl>

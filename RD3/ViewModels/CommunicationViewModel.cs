@@ -26,6 +26,7 @@ namespace RD3.ViewModels
 
         public DelegateCommand<ClientConfig> EditCommand => new((ClientConfig client) => 
         {
+            if (client == null) return;
             DialogParameters pairs = new DialogParameters
             {
                 { "Client", client }

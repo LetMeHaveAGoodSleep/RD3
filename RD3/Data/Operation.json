@@ -1,0 +1,98 @@
+[
+  {
+    "Batch": "Batch001",
+    "Reactor": "ReactorA",
+    "Module": "ModuleX",
+    "OperationStatement": "Start Process",
+    "Description": "Initializing the operation.",
+    "OccurrenceTime": "2024-09-10 08:30:00"
+  },
+  {
+    "Batch": "Batch002",
+    "Reactor": "ReactorB",
+    "Module": "ModuleY",
+    "OperationStatement": "Stop Process",
+    "Description": "Stopping the operation.",
+    "OccurrenceTime": "2024-09-10 09:00:00"
+  },
+  {
+    "Batch": "Batch003",
+    "Reactor": "ReactorC",
+    "Module": "ModuleZ",
+    "OperationStatement": "Pause Process",
+    "Description": "Pausing the operation.",
+    "OccurrenceTime": "2024-09-10 09:30:00"
+  },
+  {
+    "Batch": "Batch004",
+    "Reactor": "ReactorA",
+    "Module": "ModuleX",
+    "OperationStatement": "Resume Process",
+    "Description": "Resuming the paused operation.",
+    "OccurrenceTime": "2024-09-10 10:00:00"
+  },
+  {
+    "Batch": "Batch005",
+    "Reactor": "ReactorB",
+    "Module": "ModuleY",
+    "OperationStatement": "Restart Process",
+    "Description": "Restarting the operation.",
+    "OccurrenceTime": "2024-09-10 10:30:00"
+  },
+  {
+    "Batch": "Batch006",
+    "Reactor": "ReactorC",
+    "Module": "ModuleZ",
+    "OperationStatement": "Shutdown Process",
+    "Description": "Shutting down the operation.",
+    "OccurrenceTime": "2024-09-10 11:00:00"
+  },
+  {
+    "Batch": "Batch007",
+    "Reactor": "ReactorA",
+    "Module": "ModuleX",
+    "OperationStatement": "Initialize System",
+    "Description": "System initialization.",
+    "OccurrenceTime": "2024-09-10 11:30:00"
+  },
+  {
+    "Batch": "Batch008",
+    "Reactor": "ReactorB",
+    "Module": "ModuleY",
+    "OperationStatement": "Calibration",
+    "Description": "Calibrating the system.",
+    "OccurrenceTime": "2024-09-10 12:00:00"
+  },
+  {
+    "Batch": "Batch009",
+    "Reactor": "ReactorC",
+    "Module": "ModuleZ",
+    "OperationStatement": "Maintenance",
+    "Description": "Performing maintenance on the system.",
+    "OccurrenceTime": "2024-09-10 12:30:00"
+  },
+  {
+    "Batch": "Batch010",
+    "Reactor": "ReactorA",
+    "Module": "ModuleX",
+    "OperationStatement": "Testing",
+    "Description": "Testing the system functionality.",
+    "OccurrenceTime": "2024-09-10 13:00:00"
+  },
+  {
+    "Batch": "Batch011",
+    "Reactor": "ReactorB",
+    "Module": "ModuleY",
+    "OperationStatement": "Error Recovery",
+    "Description": "Recovering from system error.",
+    "OccurrenceTime": "2024-09-10 13:30:00"
+  },
+  {
+    "Batch": "Batch012",
+    "Reactor": "ReactorC",
+    "Module": "ModuleZ",
+    "OperationStatement": "Upgrade",
+    "Description": "Upgrading the system to a new version.",
+    "OccurrenceTime": "2024-09-10 14:00:00"
+  }
+]

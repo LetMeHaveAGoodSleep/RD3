@@ -66,7 +66,7 @@ namespace RD3.ViewModels
 
             }
             Id += index.ToString().PadLeft(2, '0');
-            Batch batch = new Batch() { Id = Id, EndTime = DateTime.Now, StartTime = DateTime.Now };
+            Batch batch = new Batch() { Id = Id, EndTime = DateTime.Now.AddDays(1), StartTime = DateTime.Now,Status="Add" };
             DialogParameters pairs = new DialogParameters
             {
                 { "Batch", batch },
@@ -84,8 +84,21 @@ namespace RD3.ViewModels
             });
         });
 
+        public DelegateCommand<Batch> CompareCommand => new((Batch batch) =>
+        {
+            BatchCol.Remove(batch);
+            Batches.Remove(batch);
+            BatchManager.GetInstance().Save(Batches);
+        });
+
+        public DelegateCommand<Batch> ExportCommand => new((Batch batch) =>
+        {
+
+        });
+
         public DelegateCommand<Batch> EditCommand => new((Batch batch) =>
         {
+            if (batch == null) return;
             DialogParameters pairs = new DialogParameters
             {
                 { "Batch", batch },
@@ -137,6 +150,7 @@ namespace RD3.ViewModels
                 || t.Status.Contains(key) || t.Project.Contains(key) || t.Description.Contains(key));
                 Batches = new ObservableCollection<Batch>(collection);
             }
+            PageCount = Batches.Count / DataCountPerPage + (Batches.Count % DataCountPerPage != 0 ? 1 : 0);
             if (PageIndex != 1)
             {
                 PageIndex = 1;

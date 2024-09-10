@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RD3.Views
 {
     /// <summary>
-    /// AddSampleLog.xaml 的交互逻辑
+    /// EditSampleView.xaml 的交互逻辑
     /// </summary>
-    public partial class AddSampleLogView : UserControl
+    public partial class EditSampleView : UserControl
     {
-        public AddSampleLogView()
+        public EditSampleView()
         {
             InitializeComponent();
         }

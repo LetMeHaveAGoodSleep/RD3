@@ -54,7 +54,7 @@ namespace RD3.ViewModels
 
         public DelegateCommand AddProjectCommand => new(() =>
         {
-            Project Project = new Project() {  CreatDate = DateTime.Now, StartDate = DateTime.Now,CloseDate=DateTime.Now };
+            Project Project = new Project() { CreatDate = DateTime.Now, StartDate = DateTime.Now, CloseDate = DateTime.Now.AddDays(1) };
             DialogParameters pairs = new DialogParameters
             {
                 { "Project", Project },
@@ -72,11 +72,12 @@ namespace RD3.ViewModels
             });
         });
 
-        public DelegateCommand<Project> EditCommand => new((Project Project) =>
+        public DelegateCommand<Project> EditCommand => new((Project project) =>
         {
+            if (project == null) return;
             DialogParameters pairs = new DialogParameters
             {
-                { "Project", Project },
+                { "Project", project },
                 {"Mode", "Edit"  }
             };
             dialogService?.ShowDialog("EditProjectView", pairs, callback =>
@@ -125,6 +126,7 @@ namespace RD3.ViewModels
                 || t.Client.Contains(key) || t.Creator.Contains(key) || t.Description.Contains(key));
                 Projects = new ObservableCollection<Project>(collection);
             }
+            PageCount = Projects.Count / DataCountPerPage + (Projects.Count % DataCountPerPage != 0 ? 1 : 0);
             if (PageIndex != 1)
             {
                 PageIndex = 1;

@@ -38,14 +38,14 @@ namespace RD3.ViewModels
         public DelegateCommand OKCommand => new(() =>
         {
             CheckContent();
-            var collection = BatchManager.GetInstance().Batches.Where(t => t.Name == Project.Name);
+            var collection = ProjectManager.GetInstance().Projects.Where(t => t.Name == Project.Name);
             int count = _mode == "Add" ? 1 : 2;
             if (collection.Count() > count)
             {
                 MessageBox.Show(Language.GetValue(string.Format("已存在名称‘{0}’", Project.Name)).ToString());
                 return;
             }
-            Project.Creator = AppSession.CurrentUser.UserName;
+            Project.Account = Project.Creator = AppSession.CurrentUser.UserName;
             Project.CreatDate = DateTime.Now;
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
         });
@@ -64,12 +64,12 @@ namespace RD3.ViewModels
             }
             if (string.IsNullOrWhiteSpace(Project.StartDate.ToString()))
             {
-                MessageBox.Show(Language.GetValue("请选择开始时间").ToString());
+                MessageBox.Show(Language.GetValue("请选择开始日期").ToString());
                 return;
             }
             if (string.IsNullOrWhiteSpace(Project.CloseDate.ToString()))
             {
-                MessageBox.Show(Language.GetValue("请选择结束时间").ToString());
+                MessageBox.Show(Language.GetValue("请选择结束日期").ToString());
                 return;
             }
         }
@@ -92,7 +92,7 @@ namespace RD3.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            Project = parameters.GetValue<Project>("Batch");
+            Project = parameters.GetValue<Project>("Project");
             _mode = parameters.GetValue<string>("Mode");
             Enable = !(_mode == "View");
             aggregator.SendMessage("", nameof(EditProjectViewModel), Project);

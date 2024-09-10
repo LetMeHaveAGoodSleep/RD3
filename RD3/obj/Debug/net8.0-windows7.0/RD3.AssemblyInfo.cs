@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RD3")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c43fcf8031b39f0d14625ae2daf11092dd4145dd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+674a754fa705f8b9b66dd87908118e4ef461e15e")]
 [assembly: System.Reflection.AssemblyProductAttribute("RD3")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RD3")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

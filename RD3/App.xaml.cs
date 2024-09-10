@@ -113,7 +113,7 @@ namespace RD3
             containerRegistry.RegisterDialog<UserView, UserViewModel>();
             containerRegistry.RegisterDialog<EditUserView, EditUserViewModel>();
             containerRegistry.RegisterForNavigation<SampleView, SampleViewModel>();
-            containerRegistry.RegisterDialog<AddSampleLogView, SampleViewModel>();
+            containerRegistry.RegisterDialog<EditSampleView, EditSampleViewModel>();
             containerRegistry.RegisterForNavigation<ProjectView, ProjectViewModel>();
             containerRegistry.RegisterDialog<EditProjectView, EditProjectViewModel>();
             containerRegistry.RegisterForNavigation<CalibrateView, CalibrateViewModel>();
@@ -122,6 +122,7 @@ namespace RD3
             containerRegistry.RegisterDialog<EditBatchView, EditBatchViewModel>();
             containerRegistry.RegisterForNavigation<ErrorView, ErrorViewModel>();
             containerRegistry.RegisterForNavigation<AlarmView, AlarmViewModel>();
+            containerRegistry.RegisterForNavigation<OperationView, OperationViewModel>();
             containerRegistry.RegisterDialog<CommunicationView, CommunicationViewModel>();
             containerRegistry.RegisterDialog<EditClientView, EditClientViewModel>();
             containerRegistry.RegisterInstance<ILanguage>(new XZLanguage());

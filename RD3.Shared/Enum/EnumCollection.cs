@@ -57,4 +57,28 @@ namespace RD3.Shared
         Weigh,
         MFC
     }
+
+    public enum SampleType
+    {
+        Metabolites
+    }
+
+    public enum SampleParam
+    {
+        pH,
+        Density,
+        Gas
+    }
+
+    public enum AlarmGrade
+    {
+        Info = 0,
+        Warning = 1,
+        Error = 2
+    }
+
+    public enum ProjectStatus 
+    {
+
+    }
 }

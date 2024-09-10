@@ -14,7 +14,7 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="220"
-    Height="500"
+    Height="400"
     d:DataContext="{d:DesignInstance Type=viewmodels:EditBatchViewModel}"
     Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
@@ -52,42 +52,28 @@
                     hc:InfoElement.Title="{ex:Language Key='Name'}"
                     IsEnabled="{Binding Enable}"
                     Style="{StaticResource TextBoxExtend}"
-                    Text="{Binding Batch.Name}" />
+                    Text="{Binding Project.Name}" />
                 <TextBox
                     Width="200"
                     VerticalAlignment="Center"
-                    hc:InfoElement.Title="{ex:Language Key='Name'}"
+                    hc:InfoElement.Title="{ex:Language Key='Client'}"
                     IsEnabled="{Binding Enable}"
                     Style="{StaticResource TextBoxExtend}"
-                    Text="{Binding Project.Name}" />
-                <hc:DateTimePicker
+                    Text="{Binding Project.Client}" />
+                <hc:DatePicker
                     Width="200"
                     hc:InfoElement.ShowClearButton="True"
-                    hc:InfoElement.Title="{ex:Language Key='Start time'}"
+                    hc:InfoElement.Title="{ex:Language Key='Start Date'}"
                     IsEnabled="{Binding Enable}"
-                    Style="{StaticResource DateTimePickerPlus}"
-                    Text="{Binding Batch.StartTime}" />
-                <hc:DateTimePicker
+                    Style="{StaticResource DatePickerExtend}"
+                    Text="{Binding Project.StartDate}" />
+                <hc:DatePicker
                     Width="200"
                     hc:InfoElement.ShowClearButton="True"
-                    hc:InfoElement.Title="{ex:Language Key='End time'}"
+                    hc:InfoElement.Title="{ex:Language Key='End Date'}"
                     IsEnabled="{Binding Enable}"
-                    Style="{StaticResource DateTimePickerPlus}"
-                    Text="{Binding Batch.EndTime}" />
-                <hc:ComboBox
-                    Width="200"
-                    VerticalAlignment="Center"
-                    hc:BorderElement.CornerRadius="4"
-                    hc:InfoElement.Title="{ex:Language Key='Project'}"
-                    IsEnabled="{Binding Enable}"
-                    ItemsSource="{Binding ProjectList}"
-                    SelectedItem="{Binding Project}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </hc:ComboBox>
+                    Style="{StaticResource DatePickerExtend}"
+                    Text="{Binding Project.CloseDate}" />
                 <TextBox
                     Width="200"
                     Height="80"
@@ -96,7 +82,7 @@
                     AcceptsReturn="True"
                     IsEnabled="{Binding Enable}"
                     Style="{StaticResource TextBoxExtend}"
-                    Text="{Binding Batch.Description}"
+                    Text="{Binding Project.Description}"
                     TextWrapping="Wrap"
                     VerticalScrollBarVisibility="Auto" />
             </hc:UniformSpacingPanel>
@@ -126,7 +112,7 @@
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     Background="{StaticResource ButtonBoderBrush}"
                     BorderBrush="{StaticResource ButtonBoderBrush}"
-                    Click="Button_Click"
+                    Command="{Binding OKCommand}"
                     Content="{ex:Language Key='OK'}"
                     FontSize="14"
                     Foreground="White" />

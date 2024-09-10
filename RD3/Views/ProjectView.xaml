@@ -104,6 +104,7 @@
             Background="Transparent"
             FontSize="14"
             HeadersVisibility="All"
+            IsReadOnly="True"
             ItemsSource="{Binding ProjectCol}"
             RowHeaderWidth="60"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -114,33 +115,51 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn
+                <DataGridTextColumn
                     Width="100"
                     Binding="{Binding Name}"
-                    Header="{ex:Language Key='Name'}" />
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="{ex:Language Key='Name'}"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="100"
                     Binding="{Binding Account}"
-                    Header="{ex:Language Key='Account'}" />
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="{ex:Language Key='Account'}"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="150"
                     Binding="{Binding Client}"
-                    Header="{ex:Language Key='Client'}" />
-                <DataGridTemplateColumn Width="150" Header="{ex:Language Key='Start date'}">
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="{ex:Language Key='Client'}"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                <DataGridTemplateColumn
+                    Width="150"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="{ex:Language Key='Start date'}"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding StartDate, StringFormat={}{0:yyyy-MM-dd}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="150" Header="{ex:Language Key='Close date'}">
+                <DataGridTemplateColumn
+                    Width="150"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="{ex:Language Key='Close date'}"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding CloseDate, StringFormat={}{0:yyyy-MM-dd}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="150" Header="{ex:Language Key='Create date'}">
+                <DataGridTemplateColumn
+                    Width="150"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="{ex:Language Key='Create date'}"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding CreatDate, StringFormat={}{0:yyyy-MM-dd}}" />
@@ -150,18 +169,15 @@
                 <DataGridTextColumn
                     Width="120"
                     Binding="{Binding Creator}"
-                    Header="{ex:Language Key='Creator'}" />
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="{ex:Language Key='Creator'}"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="200"
                     Binding="{Binding Creator}"
-                    Header="{ex:Language Key='Description'}" />
-                <!--<DataGridTemplateColumn Width="200" Header="{ex:Language Key='Operation'}">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>-->
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="{ex:Language Key='Description'}"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
             </DataGrid.Columns>
         </DataGrid>
         <hc:Pagination
@@ -170,7 +186,13 @@
             VerticalAlignment="Center"
             IsJumpEnabled="True"
             MaxPageCount="{Binding PageCount}"
-            PageIndex="1" />
+            PageIndex="1">
+            <hc:Interaction.Triggers>
+                <hc:EventTrigger EventName="PageUpdated">
+                    <hc:EventToCommand Command="{Binding PageUpdatedCommand}" PassEventArgsToCommand="True" />
+                </hc:EventTrigger>
+            </hc:Interaction.Triggers>
+        </hc:Pagination>
 
     </Grid>
 </UserControl>

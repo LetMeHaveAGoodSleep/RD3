@@ -12,9 +12,9 @@ namespace RD3.Shared
     public class AlarmLogger
     {
         private static volatile AlarmLogger _instance; // 使用volatile确保多线程环境下的可见性
-        private static readonly object _lock = new object(); // 锁对象
-        private readonly BlockingCollection<AlarmRecord> _queue = new BlockingCollection<AlarmRecord>();
-        private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private static readonly object _lock = new(); // 锁对象
+        private readonly BlockingCollection<AlarmRecord> _queue = new();
+        private readonly CancellationTokenSource _cancellationTokenSource = new ();
 
         private AlarmLogger()
         {
@@ -64,7 +64,7 @@ namespace RD3.Shared
 
         private void SaveAlarmsToFile()
         {
-            using (StreamWriter writer = new StreamWriter(FileConst.AlarmHistoryPath, true))
+            using (StreamWriter writer = new(FileConst.AlarmHistoryPath, true))
             {
                 while (_queue.TryTake(out AlarmRecord alarm))
                 {

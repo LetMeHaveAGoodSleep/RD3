@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RD3.Shared;
+using RD3.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,18 @@ namespace RD3.Views
         public SampleView()
         {
             InitializeComponent();
+        }
+
+        private void ButtonEdit_Click(object sender, RoutedEventArgs e)
+        {
+            Sample sample = dataGrid.SelectedItem as Sample;
+            ((SampleViewModel)this.DataContext)?.EditCommand.Execute(sample);
+        }
+
+        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Sample sample = dataGrid.SelectedItem as Sample;
+            ((SampleViewModel)this.DataContext)?.DeleteCommand.Execute(sample);
         }
     }
 }

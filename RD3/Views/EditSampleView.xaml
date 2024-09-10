@@ -1,17 +1,30 @@
 ﻿<UserControl
-    x:Class="RD3.Views.AddSampleLogView"
+    x:Class="RD3.Views.EditSampleView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
-    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:local="clr-namespace:RD3.Shared;assembly=RD3.Shared"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
-    Width="250"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    Width="220"
     Height="400"
+    d:DataContext="{d:DesignInstance Type=viewmodels:EditSampleViewModel}"
     Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <ObjectDataProvider
+            x:Key="DataFromEnum"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:SampleType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
             <Setter Property="SizeToContent" Value="WidthAndHeight" />
@@ -48,29 +61,37 @@
             Width="200"
             VerticalAlignment="Center"
             hc:InfoElement.Title="{ex:Language Key='Sample ID'}"
-            Style="{StaticResource TextBoxExtend}" />
-        <TextBox
+            IsEnabled="False"
+            Style="{StaticResource TextBoxExtend}"
+            Text="{Binding Sample.Id}" />
+        <ComboBox
             Grid.Row="1"
             Grid.ColumnSpan="2"
             Width="200"
             VerticalAlignment="Center"
             hc:InfoElement.Title="{ex:Language Key='Batch'}"
-            Style="{StaticResource TextBoxExtend}" />
-        <ComboBox
+            ItemsSource="{Binding BatchList}"
+            SelectedItem="{Binding Batch}"
+            Style="{StaticResource ComboBoxExtend}" />
+        <hc:CheckComboBox
+            Name="cmbReactor"
             Grid.Row="2"
             Grid.ColumnSpan="2"
-            Width="200"
+            MaxWidth="200"
+            MaxHeight="60"
+            hc:InfoElement.ShowClearButton="True"
             hc:InfoElement.Title="{ex:Language Key='Reactor'}"
-            ItemsSource="{Binding DataList}"
-            SelectedIndex="0"
-            Style="{StaticResource ComboBoxExtend}" />
+            IsEnabled="{Binding Enable}"
+            ItemsSource="{Binding ReactorList}"
+            ShowSelectAllButton="True"
+            Style="{StaticResource CheckComboBoxPlus}" />
         <ComboBox
             Grid.Row="3"
             Grid.ColumnSpan="2"
             Width="200"
             hc:InfoElement.Title="{ex:Language Key='Type'}"
-            ItemsSource="{Binding DataList}"
-            SelectedIndex="0"
+            ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+            SelectedItem="{Binding UserType}"
             Style="{StaticResource ComboBoxExtend}" />
         <ComboBox
             Grid.Row="4"

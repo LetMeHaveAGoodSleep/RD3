@@ -39,7 +39,7 @@ namespace RD3.ViewModels
             else
             {
                 var collection = AlarmRecords.Where(t => t.Batch.Contains(key) || t.Description.Contains(key) || t.Reactor.Contains(key)
-                || t.Grade.ToString().Contains(key) || t.Value.Contains(key) || t.Description.Contains(key));
+                || t.Grade.ToString().Contains(key) || t.Value.Contains(key));
                 AlarmRecords = new ObservableCollection<AlarmRecord>(collection);
             }
             if (PageIndex != 1)
@@ -70,6 +70,7 @@ namespace RD3.ViewModels
                 || t.Grade.ToString().Contains(key) || t.Value.Contains(key) || t.Description.Contains(key)) && t.Time <= endTime && t.Time >= startTime);
                 AlarmRecords = new ObservableCollection<AlarmRecord>(collection);
             }
+            PageCount = AlarmRecords.Count / DataCountPerPage + (AlarmRecords.Count % DataCountPerPage != 0 ? 1 : 0);
             if (PageIndex != 1)
             {
                 PageIndex = 1;

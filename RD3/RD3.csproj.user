@@ -7,9 +7,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\AddSampleLogView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\AlarmView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -34,10 +31,16 @@
     <Compile Update="Views\EditProjectView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\EditSampleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\EditUserView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\MCUDebugView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\OperationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SampleView.xaml.cs">
@@ -78,6 +81,9 @@
     <Page Update="Views\EditProjectView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\EditSampleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\EditUserView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -89,13 +95,13 @@
     <Page Update="Views\AboutView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\AddSampleLogView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\CalibrateView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MCUDebugView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\OperationView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProjectView.xaml">

@@ -49,11 +49,4 @@ namespace RD3.Shared
              return $"{DateTime.Now.ToString("yyyy:MM:dd HH:mm:ss")} {Grade.ToString()} {Description}";
         }
     }
-
-    public enum AlarmGrade
-    {
-        Info = 0,
-        Warning = 1,
-        Error = 2
-    }
 }

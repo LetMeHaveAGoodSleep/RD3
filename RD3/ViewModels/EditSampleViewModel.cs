@@ -18,15 +18,15 @@ using System.Windows.Documents;
 
 namespace RD3.ViewModels
 {
-    public class EditBatchViewModel : NavigationViewModel,IDialogAware
+    public class EditSampleViewModel : NavigationViewModel,IDialogAware
     {
         private string _mode;
 
-        private Project _project;
-        public Project Project
+        private Sample _sample;
+        public Sample Sample
         {
-            get { return _project; }
-            set { SetProperty(ref _project, value); }
+            get { return _sample; }
+            set { SetProperty(ref _sample, value); }
         }
 
         private Batch _batch;
@@ -51,12 +51,12 @@ namespace RD3.ViewModels
             set => SetProperty(ref _reactorList, value); 
         }
 
-        private ObservableCollection<Project> _projectList = new ObservableCollection<Project>();
+        private ObservableCollection<Batch> _batchList = new ObservableCollection<Batch>();
 
-        public ObservableCollection<Project> ProjectList
+        public ObservableCollection<Batch> BatchList
         {
-            get => _projectList;
-            set => SetProperty(ref _projectList, value);
+            get => _batchList;
+            set => SetProperty(ref _batchList, value);
         }
 
         public string Title => "";
@@ -73,7 +73,8 @@ namespace RD3.ViewModels
                 MessageBox.Show(Language.GetValue(string.Format("已存在名称‘{0}’", Batch.Name)).ToString());
                 return;
             }
-            Batch.Project = Project.Name;
+            //Batch.Project = Project.Name;
+            Sample.Batch = Batch.Name;
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
         });
 
@@ -84,9 +85,9 @@ namespace RD3.ViewModels
                 MessageBox.Show(Language.GetValue("名字不能为空").ToString());
                 return;
             }
-            if (Project == null)
+            if (Batch == null)
             {
-                MessageBox.Show(Language.GetValue("项目不能为空").ToString());
+                MessageBox.Show(Language.GetValue("批次不能为空").ToString());
                 return;
             }
             if (string.IsNullOrWhiteSpace(Batch.Reactor))
@@ -108,10 +109,10 @@ namespace RD3.ViewModels
 
         public DelegateCommand CancelCommand => new(() => RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel)));
 
-        public EditBatchViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public EditSampleViewModel(IContainerProvider containerProvider) : base(containerProvider)
         {
             _reactorList = new List<string>(DeviceManager.GetInstance().Devices.Select(t => t.Name));
-            _projectList = new ObservableCollection<Project>(ProjectManager.GetInstance().Projects);
+            _batchList = new ObservableCollection<Batch>(BatchManager.GetInstance().Batches);
         }
 
         public bool CanCloseDialog()
@@ -126,11 +127,15 @@ namespace RD3.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            Batch = parameters.GetValue<Batch>("Batch");
-            Project = ProjectManager.GetInstance().Projects.FindFirst(t => t.Name == Batch?.Project);
+            Sample = parameters.GetValue<Sample>("Sample");
+            Batch = BatchManager.GetInstance().Batches.FindFirst(t => t.Name == Sample?.Batch);
             _mode = parameters.GetValue<string>("Mode");
             Enable = !(_mode == "View");
             aggregator.SendMessage("", nameof(EditBatchViewModel), Batch);
         }
+
+        private string id;
+
+        public string Id { get => id; set => SetProperty(ref id, value); }
     }
 }
