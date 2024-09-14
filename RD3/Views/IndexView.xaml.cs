@@ -43,9 +43,9 @@ namespace RD3.Views
             tgbOverview.Checked += ToggleButton_Checked;
 
            var plt = wpfPlot.Plot;
-            plt.Axes.Left.Label.Text = "Agit";
+            //plt.Axes.Left.Label.Text = "Agit";
             plt.Legend.IsVisible = true;
-            plt.ShowLegend(Edge.Top);
+            plt.ShowLegend(Edge.Bottom);
 
 
             DateTime[] dates = Generate.ConsecutiveDays(100);
@@ -68,16 +68,16 @@ namespace RD3.Views
 
             // create a second axis and add it to the plot
             var yAxis2 = plt.Axes.AddLeftAxis();
-            yAxis2.LabelText = "Air";
+            //yAxis2.LabelText = "Air";
 
-            var yAxis3 = plt.Axes.AddRightAxis();
-            yAxis3.LabelText = "DO";
+            var yAxis3 = plt.Axes.AddLeftAxis();
+            //yAxis3.LabelText = "DO";
 
             var yAxis4 = plt.Axes.AddRightAxis();
-            yAxis4.LabelText = "Temp";
+            //yAxis4.LabelText = "Temp";
 
             var yAxis5 = plt.Axes.AddRightAxis();
-            yAxis5.LabelText = "pH";
+            //yAxis5.LabelText = "pH";
 
             var sig1 = plt.Add.Scatter(dates, ScottPlot.Generate.Sin(51, mult: 0.01));
             sig1.LegendText = "2";

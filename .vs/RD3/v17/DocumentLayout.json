@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "D:\\Project\\RD3\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\indexview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\indexview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\indexview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\indexview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
@@ -19,20 +27,8 @@
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\indexview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\indexview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\indexview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\indexview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\usercontrol1.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\usercontrol1.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\editscaleview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -50,24 +46,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Function.json",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Data\\Function.json",
-              "RelativeDocumentMoniker": "RD3\\Data\\Function.json",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Data\\Function.json",
-              "RelativeToolTip": "RD3\\Data\\Function.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvwIAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-09-14T08:53:37.067Z",
+              "DocumentIndex": 0,
+              "Title": "IndexView.xaml.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\IndexView.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\IndexView.xaml.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\IndexView.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\IndexView.xaml.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAAAwwC8AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-14T09:56:36.792Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "MainView.xaml.cs",
               "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\MainView.xaml.cs",
               "RelativeDocumentMoniker": "RD3\\Views\\MainView.xaml.cs",
@@ -80,7 +76,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "MainViewModel.cs",
               "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\MainViewModel.cs",
               "RelativeDocumentMoniker": "RD3\\ViewModels\\MainViewModel.cs",
@@ -93,7 +89,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "MainView.xaml",
               "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\MainView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\MainView.xaml",
@@ -105,7 +101,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "App.xaml",
               "DocumentMoniker": "D:\\Project\\RD3\\RD3\\App.xaml",
               "RelativeDocumentMoniker": "RD3\\App.xaml",
@@ -117,7 +113,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "EditScaleView.xaml",
               "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\EditScaleView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\EditScaleView.xaml",
@@ -129,7 +125,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 8,
               "Title": "EditUserView.xaml",
               "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\EditUserView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\EditUserView.xaml",
@@ -141,19 +137,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "UserControl1.xaml",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\UserControl1.xaml",
-              "RelativeDocumentMoniker": "RD3\\Views\\UserControl1.xaml",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\UserControl1.xaml",
-              "RelativeToolTip": "RD3\\Views\\UserControl1.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-09-14T06:28:13.486Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "IndexView.xaml",
               "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\IndexView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\IndexView.xaml",
@@ -165,15 +149,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "IndexView.xaml.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\IndexView.xaml.cs",
-              "RelativeDocumentMoniker": "RD3\\Views\\IndexView.xaml.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\IndexView.xaml.cs",
-              "RelativeToolTip": "RD3\\Views\\IndexView.xaml.cs",
-              "ViewState": "AgIAANoAAAAAAAAAAAAawAYBAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-13T01:34:14.613Z",
+              "DocumentIndex": 4,
+              "Title": "Function.json",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Data\\Function.json",
+              "RelativeDocumentMoniker": "RD3\\Data\\Function.json",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Data\\Function.json",
+              "RelativeToolTip": "RD3\\Data\\Function.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-09-14T08:53:37.067Z",
               "EditorCaption": ""
             }
           ]
