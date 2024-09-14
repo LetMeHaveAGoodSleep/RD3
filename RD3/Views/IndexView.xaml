@@ -19,141 +19,334 @@
     Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
     <UserControl.Resources />
-    <TabControl Style="{StaticResource TabControlBaseStyle}">
-        <TabItem Header="{ex:Language Key='Details'}" IsSelected="True">
-            <ScrollViewer
-                ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                Style="{StaticResource ScrollViewerUpDown}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="60" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
-                        </Grid.ColumnDefinitions>
-                        <hc:UniformSpacingPanel Spacing="10">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Border
+                Background="#F5F7FA"
+                BorderThickness="0.5"
+                CornerRadius="8">
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                    <ToggleButton
+                        Name="tgbDetails"
+                        IsChecked="True"
+                        Style="{DynamicResource ToggleButtonCustom}">
+                        <hc:StatusSwitchElement.CheckedElement>
                             <Border
-                                Margin="10"
-                                BorderBrush="LightGray"
-                                BorderThickness="1"
-                                CornerRadius="8">
-                                <StackPanel
-                                    HorizontalAlignment="Left"
+                                Width="60"
+                                Height="30"
+                                Background="{DynamicResource DarkPrimaryBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="0.5"
+                                CornerRadius="4">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Orientation="Horizontal">
-                                    <CheckBox
-                                        Margin="5"
-                                        Content="G01"
-                                        IsChecked="True" />
-                                    <CheckBox
-                                        Margin="5"
-                                        Content="G02"
-                                        IsChecked="True" />
-                                    <CheckBox
-                                        Margin="5"
-                                        Content="G03"
-                                        IsChecked="True" />
-                                    <CheckBox
-                                        Margin="5"
-                                        Content="G04"
-                                        IsChecked="True" />
-                                    <CheckBox
-                                        Margin="5"
-                                        Content="G05"
-                                        IsChecked="True" />
-                                    <CheckBox
-                                        Margin="5"
-                                        Content="G06"
-                                        IsChecked="True" />
-                                    <CheckBox
-                                        Margin="5"
-                                        Content="G07"
-                                        IsChecked="True" />
-                                    <CheckBox
-                                        Margin="5"
-                                        Content="G08"
-                                        IsChecked="True" />
-                                    <TextBlock
-                                        Margin="10,0,5,5"
-                                        FontSize="14"
-                                        Text="..."
-                                        TextAlignment="Center" />
-                                </StackPanel>
+                                    Foreground="White"
+                                    Text="{ex:Language Key='Details'}" />
                             </Border>
-                        </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel
-                            Grid.Column="2"
-                            Margin="0,0,30,0"
-                            Spacing="10">
-                            <Button
+                        </hc:StatusSwitchElement.CheckedElement>
+                        <Border
+                            Width="60"
+                            Height="30"
+                            BorderBrush="#F5F7FA"
+                            BorderThickness="0"
+                            CornerRadius="4">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="Gray"
+                                Text="{ex:Language Key='Details'}" />
+                        </Border>
+                    </ToggleButton>
+                    <ToggleButton Name="tgbTrends" Style="{DynamicResource ToggleButtonCustom}">
+                        <hc:StatusSwitchElement.CheckedElement>
+                            <Border
+                                Width="60"
                                 Height="30"
-                                HorizontalAlignment="Left"
-                                hc:BorderElement.CornerRadius="8"
-                                hc:IconElement.Geometry="{StaticResource GeometryTimeSequence}"
-                                Background="Transparent"
-                                BorderThickness="1"
-                                Command="{Binding SetPIDCommand}"
-                                ToolTip="PID Setting" />
-                            <Button
+                                Background="{DynamicResource DarkPrimaryBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="0.5"
+                                CornerRadius="4">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="White"
+                                    Text="{ex:Language Key='Trends'}" />
+                            </Border>
+                        </hc:StatusSwitchElement.CheckedElement>
+                        <Border
+                            Width="60"
+                            Height="30"
+                            BorderBrush="#F5F7FA"
+                            BorderThickness="0"
+                            CornerRadius="4">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="Gray"
+                                Text="{ex:Language Key='Trends'}" />
+                        </Border>
+                    </ToggleButton>
+                    <ToggleButton Name="tgbOverview" Style="{DynamicResource ToggleButtonCustom}">
+                        <hc:StatusSwitchElement.CheckedElement>
+                            <Border
+                                Width="60"
                                 Height="30"
-                                HorizontalAlignment="Left"
-                                hc:BorderElement.CornerRadius="8"
-                                hc:IconElement.Geometry="{StaticResource GeometryPause}"
-                                Background="Transparent"
-                                BorderThickness="1"
-                                Command="{Binding PauseCommand}"
-                                Content="{ex:Language Key='Pause'}"
-                                ToolTip="Pause" />
-                            <Button
-                                Height="30"
-                                HorizontalAlignment="Left"
-                                hc:BorderElement.CornerRadius="8"
-                                hc:IconElement.Geometry="{StaticResource GeometrySample}"
-                                Background="Transparent"
-                                BorderThickness="1"
-                                Command="{Binding SampleCommand}"
-                                Content="{ex:Language Key='Sample'}"
-                                ToolTip="Sample" />
-                            <Button
-                                Height="30"
-                                HorizontalAlignment="Left"
-                                hc:BorderElement.CornerRadius="8"
-                                hc:IconElement.Geometry="{StaticResource GeometryAddLog}"
-                                Background="Transparent"
-                                BorderThickness="1"
-                                Command="{Binding LogCommand}"
-                                Content="{ex:Language Key='Log'}"
-                                ToolTip="AddLog" />
-                            <Button
-                                Height="30"
-                                HorizontalAlignment="Left"
-                                hc:BorderElement.CornerRadius="8"
-                                hc:IconElement.Geometry="{StaticResource GeometryInoculate}"
-                                Background="Transparent"
-                                BorderThickness="1"
-                                Command="{Binding InoculateCommand}"
-                                Content="{ex:Language Key='Inoculate'}"
-                                ToolTip="Inoculate" />
-                            <Button
-                                Width="80"
-                                Height="30"
-                                hc:BorderElement.CornerRadius="8"
-                                hc:IconElement.Geometry="{StaticResource GeometryStop}"
-                                Background="#F56C6C"
-                                BorderBrush="#F56C6C"
-                                BorderThickness="1"
-                                Command="{Binding StopCommand}"
-                                Content="{ex:Language Key='Stop'}"
-                                Foreground="White"
-                                ToolTip="Stop" />
-                        </hc:UniformSpacingPanel>
-                    </Grid>
-                    <Grid Grid.Row="1">
+                                Background="{DynamicResource DarkPrimaryBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="0.5"
+                                CornerRadius="4"
+                                Effect="{StaticResource EffectShadow1}">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="White"
+                                    Text="{ex:Language Key='Overview'}" />
+                            </Border>
+                        </hc:StatusSwitchElement.CheckedElement>
+                        <Border
+                            Width="60"
+                            Height="30"
+                            BorderBrush="#F5F7FA"
+                            BorderThickness="0"
+                            CornerRadius="4">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="Gray"
+                                Text="{ex:Language Key='Overview'}" />
+                        </Border>
+                    </ToggleButton>
+                </hc:UniformSpacingPanel>
+            </Border>
+            <hc:UniformSpacingPanel Grid.Column="2" Spacing="10">
+                <Button
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    hc:BorderElement.CornerRadius="8"
+                    hc:IconElement.Geometry="{StaticResource GeometryTimeSequence}"
+                    Background="Transparent"
+                    BorderThickness="1"
+                    Command="{Binding SetPIDCommand}"
+                    ToolTip="PID Setting" />
+                <Button
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    hc:BorderElement.CornerRadius="8"
+                    hc:IconElement.Geometry="{StaticResource GeometryPause}"
+                    Background="Transparent"
+                    BorderThickness="1"
+                    Command="{Binding PauseCommand}"
+                    Content="{ex:Language Key='Pause'}"
+                    ToolTip="Pause" />
+                <Button
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    hc:BorderElement.CornerRadius="8"
+                    hc:IconElement.Geometry="{StaticResource GeometrySample}"
+                    Background="Transparent"
+                    BorderThickness="1"
+                    Command="{Binding SampleCommand}"
+                    Content="{ex:Language Key='Sample'}"
+                    ToolTip="Sample" />
+                <Button
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    hc:BorderElement.CornerRadius="8"
+                    hc:IconElement.Geometry="{StaticResource GeometryAddliquid}"
+                    Background="Transparent"
+                    BorderThickness="1"
+                    Command="{Binding LogCommand}"
+                    Content="{ex:Language Key='Add Liquid'}"
+                    ToolTip="AddLiquid" />
+                <Button
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    hc:BorderElement.CornerRadius="8"
+                    hc:IconElement.Geometry="{StaticResource GeometryInoculate}"
+                    Background="Transparent"
+                    BorderThickness="1"
+                    Command="{Binding InoculateCommand}"
+                    Content="{ex:Language Key='Inoculate'}"
+                    ToolTip="Inoculate" />
+                <Button
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    hc:BorderElement.CornerRadius="8"
+                    hc:IconElement.Geometry="{StaticResource GeometryHarvest}"
+                    Background="Transparent"
+                    BorderThickness="1"
+                    Command="{Binding LogCommand}"
+                    Content="{ex:Language Key='Harvest'}"
+                    ToolTip="Harvest" />
+                <Button
+                    Width="80"
+                    Height="30"
+                    hc:BorderElement.CornerRadius="8"
+                    hc:IconElement.Geometry="{StaticResource GeometryStop}"
+                    Background="#F56C6C"
+                    BorderBrush="#F56C6C"
+                    BorderThickness="1"
+                    Command="{Binding StopCommand}"
+                    Content="{ex:Language Key='Stop'}"
+                    Foreground="White"
+                    ToolTip="Stop" />
+            </hc:UniformSpacingPanel>
+        </Grid>
+        <TabControl
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="0,20,0,0"
+            BorderThickness="0"
+            Loaded="TabControl_Loaded"
+            Style="{StaticResource TabControlBaseStyle}">
+            <TabItem
+                Name="tabDetails"
+                hc:BorderElement.CornerRadius="8"
+                Header="{ex:Language Key='Details'}"
+                IsSelected="True">
+                <ScrollViewer
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    Style="{StaticResource ScrollViewerUpDown}">
+                    <!--<Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <hc:UniformSpacingPanel Spacing="10">
+                                <Border
+                                    Margin="10"
+                                    BorderBrush="LightGray"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
+                                    <StackPanel
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal">
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G01"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G02"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G03"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G04"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G05"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G06"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G07"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G08"
+                                            IsChecked="True" />
+                                        <TextBlock
+                                            Margin="10,0,5,5"
+                                            FontSize="14"
+                                            Text="..."
+                                            TextAlignment="Center" />
+                                    </StackPanel>
+                                </Border>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Grid.Column="2"
+                                Margin="0,0,30,0"
+                                Spacing="10">
+                                <Button
+                                    Height="30"
+                                    HorizontalAlignment="Left"
+                                    hc:BorderElement.CornerRadius="8"
+                                    hc:IconElement.Geometry="{StaticResource GeometryTimeSequence}"
+                                    Background="Transparent"
+                                    BorderThickness="1"
+                                    Command="{Binding SetPIDCommand}"
+                                    ToolTip="PID Setting" />
+                                <Button
+                                    Height="30"
+                                    HorizontalAlignment="Left"
+                                    hc:BorderElement.CornerRadius="8"
+                                    hc:IconElement.Geometry="{StaticResource GeometryPause}"
+                                    Background="Transparent"
+                                    BorderThickness="1"
+                                    Command="{Binding PauseCommand}"
+                                    Content="{ex:Language Key='Pause'}"
+                                    ToolTip="Pause" />
+                                <Button
+                                    Height="30"
+                                    HorizontalAlignment="Left"
+                                    hc:BorderElement.CornerRadius="8"
+                                    hc:IconElement.Geometry="{StaticResource GeometrySample}"
+                                    Background="Transparent"
+                                    BorderThickness="1"
+                                    Command="{Binding SampleCommand}"
+                                    Content="{ex:Language Key='Sample'}"
+                                    ToolTip="Sample" />
+                                <Button
+                                    Height="30"
+                                    HorizontalAlignment="Left"
+                                    hc:BorderElement.CornerRadius="8"
+                                    hc:IconElement.Geometry="{StaticResource GeometryAddLog}"
+                                    Background="Transparent"
+                                    BorderThickness="1"
+                                    Command="{Binding LogCommand}"
+                                    Content="{ex:Language Key='Log'}"
+                                    ToolTip="AddLog" />
+                                <Button
+                                    Height="30"
+                                    HorizontalAlignment="Left"
+                                    hc:BorderElement.CornerRadius="8"
+                                    hc:IconElement.Geometry="{StaticResource GeometryInoculate}"
+                                    Background="Transparent"
+                                    BorderThickness="1"
+                                    Command="{Binding InoculateCommand}"
+                                    Content="{ex:Language Key='Inoculate'}"
+                                    ToolTip="Inoculate" />
+                                <Button
+                                    Width="80"
+                                    Height="30"
+                                    hc:BorderElement.CornerRadius="8"
+                                    hc:IconElement.Geometry="{StaticResource GeometryStop}"
+                                    Background="#F56C6C"
+                                    BorderBrush="#F56C6C"
+                                    BorderThickness="1"
+                                    Command="{Binding StopCommand}"
+                                    Content="{ex:Language Key='Stop'}"
+                                    Foreground="White"
+                                    ToolTip="Stop" />
+                            </hc:UniformSpacingPanel>
+                        </Grid>-->
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="80*" />
                             <RowDefinition Height="80*" />
@@ -174,7 +367,7 @@
                         <Border
                             Grid.RowSpan="8"
                             Grid.ColumnSpan="2"
-                            Margin="5,5,5,5"
+                            Margin="5"
                             Style="{StaticResource BorderCard}">
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -1736,554 +1929,768 @@
                             </Grid>
                         </Border>
                     </Grid>
-                </Grid>
-            </ScrollViewer>
-        </TabItem>
-        <TabItem Header="{ex:Language Key='Trends'}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>
-                    <hc:UniformSpacingPanel Spacing="10">
-                        <Border
-                            Margin="10"
-                            BorderBrush="LightGray"
-                            BorderThickness="1"
-                            CornerRadius="8">
-                            <StackPanel
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G01"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G02"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G03"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G04"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G05"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G06"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G07"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G08"
-                                    IsChecked="True" />
-                                <TextBlock
-                                    Margin="10,0,5,5"
-                                    FontSize="14"
-                                    Text="..."
-                                    TextAlignment="Center" />
-                            </StackPanel>
-                        </Border>
-                    </hc:UniformSpacingPanel>
-                    <hc:UniformSpacingPanel
-                        Grid.Column="2"
-                        Margin="0,0,30,0"
-                        Spacing="10">
-                        <Button
-                            Height="30"
-                            HorizontalAlignment="Left"
-                            hc:BorderElement.CornerRadius="8"
-                            hc:IconElement.Geometry="{StaticResource GeometryPause}"
-                            Background="Transparent"
-                            BorderThickness="1"
-                            Command="{Binding PauseCommand}"
-                            Content="Pause"
-                            ToolTip="Pause" />
-                        <Button
-                            Height="30"
-                            HorizontalAlignment="Left"
-                            hc:BorderElement.CornerRadius="8"
-                            hc:IconElement.Geometry="{StaticResource GeometrySample}"
-                            Background="Transparent"
-                            BorderThickness="1"
-                            Command="{Binding SampleCommand}"
-                            Content="Sample"
-                            ToolTip="Sample" />
-                        <Button
-                            Height="30"
-                            HorizontalAlignment="Left"
-                            hc:BorderElement.CornerRadius="8"
-                            hc:IconElement.Geometry="{StaticResource GeometryAddLog}"
-                            Background="Transparent"
-                            BorderThickness="1"
-                            Command="{Binding LogCommand}"
-                            Content="Log"
-                            ToolTip="AddLog" />
-                        <Button
-                            Height="30"
-                            HorizontalAlignment="Left"
-                            hc:BorderElement.CornerRadius="8"
-                            hc:IconElement.Geometry="{StaticResource GeometryInoculate}"
-                            Background="Transparent"
-                            BorderThickness="1"
-                            Command="{Binding InoculateCommand}"
-                            Content="Inoculate"
-                            ToolTip="Inoculate" />
-                        <Button
-                            Width="80"
-                            Height="30"
-                            hc:BorderElement.CornerRadius="8"
-                            hc:IconElement.Geometry="{StaticResource GeometryStop}"
-                            Background="#F56C6C"
-                            BorderBrush="#F56C6C"
-                            BorderThickness="1"
-                            Command="{Binding StopCommand}"
-                            Content="Stop"
-                            Foreground="White"
-                            ToolTip="Stop" />
-                    </hc:UniformSpacingPanel>
-                </Grid>
-                <Border
-                    Grid.Row="1"
-                    Margin="5"
-                    CornerRadius="8"
-                    Effect="{StaticResource EffectShadow1}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock VerticalAlignment="Center" Text="Runnning time:05:06:33" />
-                            <hc:UniformSpacingPanel Grid.Column="2" Spacing="10">
-                                <ToggleButton
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    HorizontalContentAlignment="Center"
-                                    hc:BorderElement.CornerRadius="4"
-                                    hc:StatusSwitchElement.HideUncheckedElement="True"
-                                    Background="Transparent"
-                                    IsChecked="True">
-                                    <hc:StatusSwitchElement.CheckedElement>
-                                        <TextBlock Text="{ex:Language Key='Air'}" />
-                                    </hc:StatusSwitchElement.CheckedElement>
-                                    <TextBlock Foreground="LightGray" Text="{ex:Language Key='Air'}" />
-                                </ToggleButton>
-                                <ToggleButton hc:StatusSwitchElement.HideUncheckedElement="True" IsChecked="True">
-                                    <hc:StatusSwitchElement.CheckedElement>
-                                        <TextBlock Text="{ex:Language Key='Agit'}" />
-                                    </hc:StatusSwitchElement.CheckedElement>
-                                    <TextBlock Foreground="LightGray" Text="{ex:Language Key='Agit'}" />
-                                </ToggleButton>
-                                <ToggleButton hc:StatusSwitchElement.HideUncheckedElement="True" IsChecked="True">
-                                    <hc:StatusSwitchElement.CheckedElement>
-                                        <TextBlock Text="{ex:Language Key='DO'}" />
-                                    </hc:StatusSwitchElement.CheckedElement>
-                                    <TextBlock Foreground="LightGray" Text="{ex:Language Key='DO'}" />
-                                </ToggleButton>
-                                <ToggleButton hc:StatusSwitchElement.HideUncheckedElement="True" IsChecked="True">
-                                    <hc:StatusSwitchElement.CheckedElement>
-                                        <TextBlock Text="{ex:Language Key='Temp'}" />
-                                    </hc:StatusSwitchElement.CheckedElement>
-                                    <TextBlock Foreground="LightGray" Text="{ex:Language Key='Temp'}" />
-                                </ToggleButton>
-                                <ToggleButton hc:StatusSwitchElement.HideUncheckedElement="True" IsChecked="True">
-                                    <hc:StatusSwitchElement.CheckedElement>
-                                        <TextBlock Text="{ex:Language Key='pH'}" />
-                                    </hc:StatusSwitchElement.CheckedElement>
-                                    <TextBlock Foreground="LightGray" Text="{ex:Language Key='pH'}" />
-                                </ToggleButton>
-                            </hc:UniformSpacingPanel>
-                        </Grid>
-                        <wpf:WpfPlot Name="wpfPlot" Grid.Row="1" />
-                    </Grid>
-                </Border>
-
-            </Grid>
-        </TabItem>
-        <TabItem Header="{ex:Language Key='Overview'}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>
-                    <hc:UniformSpacingPanel Spacing="10">
-                        <Border
-                            Margin="10"
-                            BorderBrush="LightGray"
-                            BorderThickness="1"
-                            CornerRadius="8">
-                            <StackPanel
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G01"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G02"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G03"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G04"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G05"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G06"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G07"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    Margin="5"
-                                    Content="G08"
-                                    IsChecked="True" />
-                                <TextBlock
-                                    Margin="10,0,5,5"
-                                    FontSize="14"
-                                    Text="..."
-                                    TextAlignment="Center" />
-                            </StackPanel>
-                        </Border>
-                    </hc:UniformSpacingPanel>
-                    <hc:UniformSpacingPanel
-                        Grid.Column="2"
-                        Margin="0,0,30,0"
-                        Spacing="10">
-                        <Button
-                            Height="30"
-                            HorizontalAlignment="Left"
-                            hc:BorderElement.CornerRadius="8"
-                            hc:IconElement.Geometry="{StaticResource GeometryPause}"
-                            Background="Transparent"
-                            BorderThickness="1"
-                            Command="{Binding PauseCommand}"
-                            Content="Pause"
-                            ToolTip="Pause" />
-                        <Button
-                            Height="30"
-                            HorizontalAlignment="Left"
-                            hc:BorderElement.CornerRadius="8"
-                            hc:IconElement.Geometry="{StaticResource GeometrySample}"
-                            Background="Transparent"
-                            BorderThickness="1"
-                            Command="{Binding SampleCommand}"
-                            Content="Sample"
-                            ToolTip="Sample" />
-                        <Button
-                            Height="30"
-                            HorizontalAlignment="Left"
-                            hc:BorderElement.CornerRadius="8"
-                            hc:IconElement.Geometry="{StaticResource GeometryAddLog}"
-                            Background="Transparent"
-                            BorderThickness="1"
-                            Command="{Binding LogCommand}"
-                            Content="Log"
-                            ToolTip="AddLog" />
-                        <Button
-                            Height="30"
-                            HorizontalAlignment="Left"
-                            hc:BorderElement.CornerRadius="8"
-                            hc:IconElement.Geometry="{StaticResource GeometryInoculate}"
-                            Background="Transparent"
-                            BorderThickness="1"
-                            Command="{Binding InoculateCommand}"
-                            Content="Inoculate"
-                            ToolTip="Inoculate" />
-                        <Button
-                            Width="80"
-                            Height="30"
-                            hc:BorderElement.CornerRadius="8"
-                            hc:IconElement.Geometry="{StaticResource GeometryStop}"
-                            Background="#F56C6C"
-                            BorderBrush="#F56C6C"
-                            BorderThickness="1"
-                            Command="{Binding StopCommand}"
-                            Content="Stop"
-                            Foreground="White"
-                            ToolTip="Stop" />
-                    </hc:UniformSpacingPanel>
-                </Grid>
-                <ScrollViewer
-                    Grid.Row="1"
-                    Grid.ColumnSpan="3"
-                    HorizontalScrollBarVisibility="Visible"
-                    VerticalScrollBarVisibility="Visible">
-                    <DataGrid
-                        Name="dataGrid"
-                        hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
-                        hc:DataGridAttach.ShowSelectAllButton="True"
-                        AutoGenerateColumns="False"
-                        Background="Transparent"
-                        FontSize="14"
-                        HeadersVisibility="All"
-                        IsReadOnly="True"
-                        ItemsSource="{Binding Devices}"
-                        RowHeaderStyle="{StaticResource DataGridCenterRowHeaderStyle}"
-                        RowHeaderWidth="60"
-                        ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <DataGrid.RowHeaderTemplate>
-                            <DataTemplate>
-                                <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" />
-                            </DataTemplate>
-                        </DataGrid.RowHeaderTemplate>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <i:InvokeCommandAction Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn
-                                Width="100"
-                                Binding="{Binding Name}"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='Device'}"
-                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                            <DataGridTextColumn
-                                Width="100"
-                                Binding="{Binding Status}"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='Status'}"
-                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                            <DataGridTemplateColumn
-                                Width="100"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='Temp(℃)'}"
-                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="{Binding Temp}" />
-                                            <TextBlock Text="/" />
-                                            <TextBlock Text="{Binding Temp_PV}" />
-                                            <TextBlock
-                                                Width="10"
-                                                Height="15"
-                                                hc:BorderElement.CornerRadius="4"
-                                                Background="{StaticResource ControlFixedModeBrush}"
-                                                Foreground="White"
-                                                Text="F" />
-                                        </hc:UniformSpacingPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn
-                                Width="100"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='pH'}"
-                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="{Binding PH}" />
-                                            <TextBlock Text="/" />
-                                            <TextBlock Text="{Binding PH_PV}" />
-                                            <TextBlock
-                                                Width="10"
-                                                Height="15"
-                                                hc:BorderElement.CornerRadius="4"
-                                                Background="{StaticResource ControlFixedModeBrush}"
-                                                Foreground="White"
-                                                Text="F" />
-                                        </hc:UniformSpacingPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn
-                                Width="100"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='DO(%)'}"
-                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="{Binding DO}" />
-                                            <TextBlock Text="/" />
-                                            <TextBlock Text="{Binding DO_PV}" />
-                                            <TextBlock
-                                                Width="10"
-                                                Height="15"
-                                                hc:BorderElement.CornerRadius="4"
-                                                Background="{StaticResource ControlAssociatedModeBrush}"
-                                                Foreground="White"
-                                                Text="A" />
-                                        </hc:UniformSpacingPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn
-                                Width="100"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='Agit(rpm)'}"
-                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="{Binding Agit}" />
-                                            <TextBlock Text="/" />
-                                            <TextBlock Text="{Binding Agit_PV}" />
-                                            <TextBlock
-                                                Width="10"
-                                                Height="15"
-                                                hc:BorderElement.CornerRadius="4"
-                                                Background="{StaticResource ControlFixedModeBrush}"
-                                                Foreground="White"
-                                                Text="F" />
-                                        </hc:UniformSpacingPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn
-                                Width="100"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='Base(mL/h)'}"
-                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="{Binding Base}" />
-                                            <TextBlock Text="/" />
-                                            <TextBlock Text="{Binding Base_PV}" />
-                                            <TextBlock
-                                                Width="10"
-                                                Height="15"
-                                                hc:BorderElement.CornerRadius="4"
-                                                Background="{StaticResource ControlAssociatedModeBrush}"
-                                                Foreground="White"
-                                                Text="A" />
-                                        </hc:UniformSpacingPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn
-                                Width="100"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='Acid(mL/h)'}"
-                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="{Binding Acid}" />
-                                            <TextBlock Text="/" />
-                                            <TextBlock Text="{Binding Acid_PV}" />
-                                            <TextBlock
-                                                Width="10"
-                                                Height="15"
-                                                hc:BorderElement.CornerRadius="4"
-                                                Background="{StaticResource ControlFixedModeBrush}"
-                                                Foreground="White"
-                                                Text="F" />
-                                        </hc:UniformSpacingPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn
-                                Width="100"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='AF(mL/h)'}"
-                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="{Binding AF}" />
-                                            <TextBlock Text="/" />
-                                            <TextBlock Text="{Binding AF_PV}" />
-                                            <TextBlock
-                                                Width="10"
-                                                Height="15"
-                                                hc:BorderElement.CornerRadius="4"
-                                                Background="{StaticResource ControlAssociatedModeBrush}"
-                                                Foreground="White"
-                                                Text="A" />
-                                        </hc:UniformSpacingPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn
-                                Width="100"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='Feed(mL/h)'}"
-                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <TextBlock Text="{Binding Feed}" />
-                                            <TextBlock Text="/" />
-                                            <TextBlock Text="{Binding Feed_PV}" />
-                                            <TextBlock
-                                                Width="10"
-                                                Height="15"
-                                                hc:BorderElement.CornerRadius="4"
-                                                Background="{StaticResource ControlDisabledModeBrush}"
-                                                Foreground="White"
-                                                Text="D" />
-                                        </hc:UniformSpacingPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                            <DataGridTemplateColumn
-                                Width="100"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='Operation'}"
-                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button
-                                                Margin="5"
-                                                HorizontalContentAlignment="Center"
-                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                hc:IconElement.Geometry="{StaticResource GeometryBackToHome}"
-                                                Background="Transparent"
-                                                BorderThickness="0" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
                 </ScrollViewer>
+            </TabItem>
+            <TabItem Name="tabTrends" Header="{ex:Language Key='Trends'}">
+                <Border Margin="5" Style="{StaticResource BorderCard}">
+                    <materialDesign:DrawerHost
+                        x:Name="DrawerHost"
+                        BorderThickness="0"
+                        OpenMode="Modal"
+                        OverlayBackground="{DynamicResource PrimaryBrush}"
+                        RightDrawerCornerRadius="8">
+                        <materialDesign:DrawerHost.Style>
+                            <Style BasedOn="{StaticResource {x:Type materialDesign:DrawerHost}}" TargetType="materialDesign:DrawerHost" />
+                        </materialDesign:DrawerHost.Style>
+                        <materialDesign:DrawerHost.RightDrawerContent>
+                            <Grid Width="250" Margin="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="20" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="5" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="5" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="5" />
+                                    <RowDefinition Height="auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Text="{ex:Language Key='Graph Setting'}" />
+                                <Grid Grid.Row="2" Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Center" Text="{ex:Language Key='Grid line'}" />
+                                    <ToggleButton
+                                        Grid.Column="2"
+                                        Checked="ToggleButtonGraphSetting_CheckChanged"
+                                        IsChecked="True"
+                                        Style="{StaticResource ToggleButtonSwitch}"
+                                        Unchecked="ToggleButtonGraphSetting_CheckChanged" />
+                                </Grid>
+                                <Line
+                                    Grid.Row="3"
+                                    HorizontalAlignment="Left"
+                                    Stroke="LightGray"
+                                    StrokeDashArray="2 2"
+                                    StrokeThickness="1"
+                                    X1="10"
+                                    X2="240"
+                                    Y1="0"
+                                    Y2="0" />
+                                <Grid Grid.Row="4" Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Center" Text="{ex:Language Key='Axis name'}" />
+                                    <hc:ComboBox
+                                        Grid.Column="2"
+                                        Width="80"
+                                        VerticalContentAlignment="Center"
+                                        hc:BorderElement.CornerRadius="4"
+                                        SelectedIndex="0">
+                                        <ComboBoxItem Content="Air" />
+                                        <ComboBoxItem Content="Agit" />
+                                        <ComboBoxItem Content="DO" />
+                                        <ComboBoxItem Content="pH" />
+                                        <ComboBoxItem Content="Temp" />
+                                    </hc:ComboBox>
+                                </Grid>
+                                <Line
+                                    Grid.Row="5"
+                                    HorizontalAlignment="Left"
+                                    Stroke="LightGray"
+                                    StrokeDashArray="2 2"
+                                    StrokeThickness="1"
+                                    X1="10"
+                                    X2="240"
+                                    Y1="0"
+                                    Y2="0" />
+                                <Grid Grid.Row="6" Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="5" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Center" Text="{ex:Language Key='Scale'}" />
+                                    <TextBox
+                                        Grid.Column="2"
+                                        Width="50"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                    <TextBox
+                                        Grid.Column="4"
+                                        Width="50"
+                                        VerticalAlignment="Center"
+                                        Style="{StaticResource TextBoxExtend}" />
+                                </Grid>
+                                <Line
+                                    Grid.Row="7"
+                                    HorizontalAlignment="Left"
+                                    Stroke="LightGray"
+                                    StrokeDashArray="2 2"
+                                    StrokeThickness="1"
+                                    X1="10"
+                                    X2="240"
+                                    Y1="0"
+                                    Y2="0" />
+                                <Grid Grid.Row="8" Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Center" Text="{ex:Language Key='Bottom axis scale'}" />
+                                    <hc:ComboBox
+                                        Grid.Column="2"
+                                        Width="80"
+                                        VerticalContentAlignment="Center"
+                                        hc:BorderElement.CornerRadius="4"
+                                        SelectedIndex="0">
+                                        <ComboBoxItem Content="Hour" />
+                                        <ComboBoxItem Content="Day" />
+                                        <ComboBoxItem Content="Minute" />
+                                    </hc:ComboBox>
+                                </Grid>
+                            </Grid>
+                        </materialDesign:DrawerHost.RightDrawerContent>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Margin="5"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top"
+                                    FontSize="14"
+                                    Text="Runnning time:05:06:33" />
+                                <Border
+                                    Grid.Column="2"
+                                    Height="30"
+                                    Margin="10"
+                                    BorderBrush="LightGray"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
+                                    <hc:UniformSpacingPanel Spacing="5">
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G01"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G02"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G03"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G04"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G05"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G06"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G07"
+                                            IsChecked="True" />
+                                        <CheckBox
+                                            Margin="5"
+                                            Content="G08"
+                                            IsChecked="True" />
+                                        <Button
+                                            VerticalAlignment="Top"
+                                            HorizontalContentAlignment="Left"
+                                            BorderThickness="0"
+                                            Content="..." />
+                                    </hc:UniformSpacingPanel>
+                                </Border>
+                                <Button
+                                    Grid.Column="3"
+                                    Height="30"
+                                    HorizontalAlignment="Left"
+                                    hc:BorderElement.CornerRadius="8"
+                                    hc:IconElement.Geometry="{StaticResource GeometrySetting}"
+                                    Background="Transparent"
+                                    BorderThickness="1"
+                                    Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                                    CommandParameter="{x:Static Dock.Right}"
+                                    Content="{ex:Language Key='Graph Setting'}"
+                                    ToolTip="Pause" />
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+                                <hc:UniformSpacingPanel Spacing="10">
+                                    <ToggleButton
+                                        Checked="ToggleButtonGraphParam_CheckChanged"
+                                        IsChecked="True"
+                                        Style="{DynamicResource ToggleButtonCustom}"
+                                        Tag="Air"
+                                        Unchecked="ToggleButtonGraphParam_CheckChanged">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Border
+                                                Width="60"
+                                                Height="30"
+                                                Background="{DynamicResource DarkPrimaryBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="0.5"
+                                                CornerRadius="4">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="White"
+                                                    Text="{ex:Language Key='Air'}" />
+                                            </Border>
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="60"
+                                            Height="30"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="Gray"
+                                                Text="{ex:Language Key='Air'}" />
+                                        </Border>
+                                    </ToggleButton>
+                                    <ToggleButton
+                                        Checked="ToggleButtonGraphParam_CheckChanged"
+                                        IsChecked="True"
+                                        Style="{DynamicResource ToggleButtonCustom}"
+                                        Tag="Agit"
+                                        Unchecked="ToggleButtonGraphParam_CheckChanged">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Border
+                                                Width="60"
+                                                Height="30"
+                                                Background="{DynamicResource DarkPrimaryBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="0.5"
+                                                CornerRadius="4">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="White"
+                                                    Text="{ex:Language Key='Agit'}" />
+                                            </Border>
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="60"
+                                            Height="30"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="Gray"
+                                                Text="{ex:Language Key='Agit'}" />
+                                        </Border>
+                                    </ToggleButton>
+                                </hc:UniformSpacingPanel>
+                                <hc:UniformSpacingPanel Grid.Column="2" Spacing="10">
+                                    <ToggleButton
+                                        Checked="ToggleButtonGraphParam_CheckChanged"
+                                        IsChecked="True"
+                                        Style="{DynamicResource ToggleButtonCustom}"
+                                        Tag="DO"
+                                        Unchecked="ToggleButtonGraphParam_CheckChanged">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Border
+                                                Width="60"
+                                                Height="30"
+                                                Background="{DynamicResource DarkPrimaryBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="0.5"
+                                                CornerRadius="4">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="White"
+                                                    Text="{ex:Language Key='DO'}" />
+                                            </Border>
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="60"
+                                            Height="30"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="Gray"
+                                                Text="{ex:Language Key='DO'}" />
+                                        </Border>
+                                    </ToggleButton>
+                                    <ToggleButton
+                                        Checked="ToggleButtonGraphParam_CheckChanged"
+                                        IsChecked="True"
+                                        Style="{DynamicResource ToggleButtonCustom}"
+                                        Tag="pH"
+                                        Unchecked="ToggleButtonGraphParam_CheckChanged">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Border
+                                                Width="60"
+                                                Height="30"
+                                                Background="{DynamicResource DarkPrimaryBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="0.5"
+                                                CornerRadius="4">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="White"
+                                                    Text="{ex:Language Key='pH'}" />
+                                            </Border>
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="60"
+                                            Height="30"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="Gray"
+                                                Text="{ex:Language Key='pH'}" />
+                                        </Border>
+                                    </ToggleButton>
+                                    <ToggleButton
+                                        Checked="ToggleButtonGraphParam_CheckChanged"
+                                        IsChecked="True"
+                                        Style="{DynamicResource ToggleButtonCustom}"
+                                        Tag="Temp"
+                                        Unchecked="ToggleButtonGraphParam_CheckChanged">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Border
+                                                Width="60"
+                                                Height="30"
+                                                Background="{DynamicResource DarkPrimaryBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}"
+                                                BorderThickness="0.5"
+                                                CornerRadius="4">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="White"
+                                                    Text="{ex:Language Key='Temp'}" />
+                                            </Border>
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="60"
+                                            Height="30"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="Gray"
+                                                Text="{ex:Language Key='Temp'}" />
+                                        </Border>
+                                    </ToggleButton>
+                                </hc:UniformSpacingPanel>
+                            </Grid>
+                            <wpf:WpfPlot Name="wpfPlot" Grid.Row="2" />
+                        </Grid>
+                    </materialDesign:DrawerHost>
+                </Border>
+            </TabItem>
+            <TabItem Name="tabOverview" Header="{ex:Language Key='Overview'}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <hc:UniformSpacingPanel Spacing="10">
+                            <Border
+                                Margin="10"
+                                BorderBrush="LightGray"
+                                BorderThickness="1"
+                                CornerRadius="8">
+                                <StackPanel
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
+                                    <CheckBox
+                                        Margin="5"
+                                        Content="G01"
+                                        IsChecked="True" />
+                                    <CheckBox
+                                        Margin="5"
+                                        Content="G02"
+                                        IsChecked="True" />
+                                    <CheckBox
+                                        Margin="5"
+                                        Content="G03"
+                                        IsChecked="True" />
+                                    <CheckBox
+                                        Margin="5"
+                                        Content="G04"
+                                        IsChecked="True" />
+                                    <CheckBox
+                                        Margin="5"
+                                        Content="G05"
+                                        IsChecked="True" />
+                                    <CheckBox
+                                        Margin="5"
+                                        Content="G06"
+                                        IsChecked="True" />
+                                    <CheckBox
+                                        Margin="5"
+                                        Content="G07"
+                                        IsChecked="True" />
+                                    <CheckBox
+                                        Margin="5"
+                                        Content="G08"
+                                        IsChecked="True" />
+                                    <TextBlock
+                                        Margin="10,0,5,5"
+                                        FontSize="14"
+                                        Text="..."
+                                        TextAlignment="Center" />
+                                </StackPanel>
+                            </Border>
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel
+                            Grid.Column="2"
+                            Margin="0,0,30,0"
+                            Spacing="10">
+                            <Button
+                                Height="30"
+                                HorizontalAlignment="Left"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:IconElement.Geometry="{StaticResource GeometryPause}"
+                                Background="Transparent"
+                                BorderThickness="1"
+                                Command="{Binding PauseCommand}"
+                                Content="Pause"
+                                ToolTip="Pause" />
+                            <Button
+                                Height="30"
+                                HorizontalAlignment="Left"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:IconElement.Geometry="{StaticResource GeometrySample}"
+                                Background="Transparent"
+                                BorderThickness="1"
+                                Command="{Binding SampleCommand}"
+                                Content="Sample"
+                                ToolTip="Sample" />
+                            <Button
+                                Height="30"
+                                HorizontalAlignment="Left"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:IconElement.Geometry="{StaticResource GeometryAddLog}"
+                                Background="Transparent"
+                                BorderThickness="1"
+                                Command="{Binding LogCommand}"
+                                Content="Log"
+                                ToolTip="AddLog" />
+                            <Button
+                                Height="30"
+                                HorizontalAlignment="Left"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:IconElement.Geometry="{StaticResource GeometryInoculate}"
+                                Background="Transparent"
+                                BorderThickness="1"
+                                Command="{Binding InoculateCommand}"
+                                Content="Inoculate"
+                                ToolTip="Inoculate" />
+                            <Button
+                                Width="80"
+                                Height="30"
+                                hc:BorderElement.CornerRadius="8"
+                                hc:IconElement.Geometry="{StaticResource GeometryStop}"
+                                Background="#F56C6C"
+                                BorderBrush="#F56C6C"
+                                BorderThickness="1"
+                                Command="{Binding StopCommand}"
+                                Content="Stop"
+                                Foreground="White"
+                                ToolTip="Stop" />
+                        </hc:UniformSpacingPanel>
+                    </Grid>
+                    <ScrollViewer
+                        Grid.Row="1"
+                        Grid.ColumnSpan="3"
+                        HorizontalScrollBarVisibility="Visible"
+                        VerticalScrollBarVisibility="Visible">
+                        <DataGrid
+                            Name="dataGrid"
+                            hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+                            hc:DataGridAttach.ShowSelectAllButton="True"
+                            AutoGenerateColumns="False"
+                            Background="Transparent"
+                            FontSize="14"
+                            HeadersVisibility="All"
+                            IsReadOnly="True"
+                            ItemsSource="{Binding Devices}"
+                            RowHeaderStyle="{StaticResource DataGridCenterRowHeaderStyle}"
+                            RowHeaderWidth="60"
+                            ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <DataGrid.RowHeaderTemplate>
+                                <DataTemplate>
+                                    <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" />
+                                </DataTemplate>
+                            </DataGrid.RowHeaderTemplate>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDoubleClick">
+                                    <i:InvokeCommandAction Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Width="100"
+                                    Binding="{Binding Name}"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='Device'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                <DataGridTextColumn
+                                    Width="100"
+                                    Binding="{Binding Status}"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='Status'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                <DataGridTemplateColumn
+                                    Width="100"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='Temp(℃)'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="{Binding Temp}" />
+                                                <TextBlock Text="/" />
+                                                <TextBlock Text="{Binding Temp_PV}" />
+                                                <TextBlock
+                                                    Width="10"
+                                                    Height="15"
+                                                    hc:BorderElement.CornerRadius="4"
+                                                    Background="{StaticResource ControlFixedModeBrush}"
+                                                    Foreground="White"
+                                                    Text="F" />
+                                            </hc:UniformSpacingPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn
+                                    Width="100"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='pH'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="{Binding PH}" />
+                                                <TextBlock Text="/" />
+                                                <TextBlock Text="{Binding PH_PV}" />
+                                                <TextBlock
+                                                    Width="10"
+                                                    Height="15"
+                                                    hc:BorderElement.CornerRadius="4"
+                                                    Background="{StaticResource ControlFixedModeBrush}"
+                                                    Foreground="White"
+                                                    Text="F" />
+                                            </hc:UniformSpacingPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn
+                                    Width="100"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='DO(%)'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="{Binding DO}" />
+                                                <TextBlock Text="/" />
+                                                <TextBlock Text="{Binding DO_PV}" />
+                                                <TextBlock
+                                                    Width="10"
+                                                    Height="15"
+                                                    hc:BorderElement.CornerRadius="4"
+                                                    Background="{StaticResource ControlAssociatedModeBrush}"
+                                                    Foreground="White"
+                                                    Text="A" />
+                                            </hc:UniformSpacingPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn
+                                    Width="100"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='Agit(rpm)'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="{Binding Agit}" />
+                                                <TextBlock Text="/" />
+                                                <TextBlock Text="{Binding Agit_PV}" />
+                                                <TextBlock
+                                                    Width="10"
+                                                    Height="15"
+                                                    hc:BorderElement.CornerRadius="4"
+                                                    Background="{StaticResource ControlFixedModeBrush}"
+                                                    Foreground="White"
+                                                    Text="F" />
+                                            </hc:UniformSpacingPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn
+                                    Width="100"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='Base(mL/h)'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="{Binding Base}" />
+                                                <TextBlock Text="/" />
+                                                <TextBlock Text="{Binding Base_PV}" />
+                                                <TextBlock
+                                                    Width="10"
+                                                    Height="15"
+                                                    hc:BorderElement.CornerRadius="4"
+                                                    Background="{StaticResource ControlAssociatedModeBrush}"
+                                                    Foreground="White"
+                                                    Text="A" />
+                                            </hc:UniformSpacingPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn
+                                    Width="100"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='Acid(mL/h)'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="{Binding Acid}" />
+                                                <TextBlock Text="/" />
+                                                <TextBlock Text="{Binding Acid_PV}" />
+                                                <TextBlock
+                                                    Width="10"
+                                                    Height="15"
+                                                    hc:BorderElement.CornerRadius="4"
+                                                    Background="{StaticResource ControlFixedModeBrush}"
+                                                    Foreground="White"
+                                                    Text="F" />
+                                            </hc:UniformSpacingPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn
+                                    Width="100"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='AF(mL/h)'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="{Binding AF}" />
+                                                <TextBlock Text="/" />
+                                                <TextBlock Text="{Binding AF_PV}" />
+                                                <TextBlock
+                                                    Width="10"
+                                                    Height="15"
+                                                    hc:BorderElement.CornerRadius="4"
+                                                    Background="{StaticResource ControlAssociatedModeBrush}"
+                                                    Foreground="White"
+                                                    Text="A" />
+                                            </hc:UniformSpacingPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn
+                                    Width="100"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='Feed(mL/h)'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                                <TextBlock Text="{Binding Feed}" />
+                                                <TextBlock Text="/" />
+                                                <TextBlock Text="{Binding Feed_PV}" />
+                                                <TextBlock
+                                                    Width="10"
+                                                    Height="15"
+                                                    hc:BorderElement.CornerRadius="4"
+                                                    Background="{StaticResource ControlDisabledModeBrush}"
+                                                    Foreground="White"
+                                                    Text="D" />
+                                            </hc:UniformSpacingPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn
+                                    Width="100"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='Operation'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Button
+                                                    Margin="5"
+                                                    HorizontalContentAlignment="Center"
+                                                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                    hc:IconElement.Geometry="{StaticResource GeometryBackToHome}"
+                                                    Background="Transparent"
+                                                    BorderThickness="0" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
 
-            </Grid>
-        </TabItem>
-    </TabControl>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
 </UserControl>

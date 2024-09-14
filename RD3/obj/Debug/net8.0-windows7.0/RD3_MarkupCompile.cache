@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\Project\RD3\RD3\App.xaml
-24-1106680415
+25-2051774147
 3271424504
-682089422226
-2311134998108
-Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AlarmView.xaml;Views\BatchView.xaml;Views\CalibrateView.xaml;Views\CommunicationView.xaml;Views\ControlView.xaml;Views\EditBatchView.xaml;Views\EditClientView.xaml;Views\EditProjectView.xaml;Views\EditSampleView.xaml;Views\EditUserView.xaml;Views\ErrorView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MCUDebugView.xaml;Views\MsgView.xaml;Views\OperationView.xaml;Views\ProgressView.xaml;Views\ProjectView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\UserView.xaml;
+70-1389441645
+2311320469617
+Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AlarmView.xaml;Views\BatchView.xaml;Views\CalibrateView.xaml;Views\CommunicationView.xaml;Views\ControlView.xaml;Views\EditBatchView.xaml;Views\EditClientView.xaml;Views\EditParamView.xaml;Views\EditProjectView.xaml;Views\EditSampleView.xaml;Views\EditUserView.xaml;Views\ErrorView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MCUDebugView.xaml;Views\MsgView.xaml;Views\OperationView.xaml;Views\ProgressView.xaml;Views\ProjectView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\UserView.xaml;
 
 False
 

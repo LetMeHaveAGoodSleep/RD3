@@ -116,8 +116,8 @@
                         VerticalAlignment="Center"
                         hc:BorderElement.CornerRadius="8"
                         hc:IconElement.Geometry="{StaticResource AddGeometry}"
-                        Background="{StaticResource ButtonBoderBrush}"
-                        BorderBrush="{StaticResource ButtonBoderBrush}"
+                        Background="{StaticResource PrimaryBrush}"
+                        BorderBrush="{StaticResource PrimaryBrush}"
                         Command="{Binding AddUserCommand}"
                         Content="{ex:Language Key='Add'}"
                         Foreground="WhiteSmoke" />

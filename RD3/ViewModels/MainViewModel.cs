@@ -145,7 +145,7 @@ namespace RD3.ViewModels
 
         void CreateMenuBar()
         {
-            MenuBars.Add(new MenuBar() { Icon = "Home", Title = Language.GetValue("Home").ToString(), NameSpace = "IndexView" });
+            MenuBars.Add(new MenuBar() { Icon = "Home", Title = Language.GetValue("Main").ToString(), NameSpace = "IndexView" });
             MenuBars.Add(new MenuBar() { Icon = "Project", Title = Language.GetValue("Project").ToString(), NameSpace = "ProjectView" });
             MenuBars.Add(new MenuBar() { Icon = "Data", Title = Language.GetValue("Data").ToString(), NameSpace = "BatchView" });
             MenuBars.Add(new MenuBar() { Icon = "Calibrate", Title = Language.GetValue("Calibrate").ToString(), NameSpace = "CalibrateView" });

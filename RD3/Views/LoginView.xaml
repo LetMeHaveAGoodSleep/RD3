@@ -12,8 +12,10 @@
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:pass="clr-namespace:RD3.Extensions"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="600"
     Height="350"
+    d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
     mc:Ignorable="d">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">

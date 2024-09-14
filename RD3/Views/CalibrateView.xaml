@@ -447,8 +447,8 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     hc:BorderElement.CornerRadius="15"
-                    Background="{StaticResource ButtonBoderBrush}"
-                    BorderBrush="{StaticResource ButtonBoderBrush}"
+                    Background="{StaticResource PrimaryBrush}"
+                    BorderBrush="{StaticResource PrimaryBrush}"
                     Content="开始"
                     Foreground="White" />
                 <Button
@@ -458,8 +458,8 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     hc:BorderElement.CornerRadius="15"
-                    Background="{StaticResource ButtonBoderBrush}"
-                    BorderBrush="{StaticResource ButtonBoderBrush}"
+                    Background="{StaticResource PrimaryBrush}"
+                    BorderBrush="{StaticResource PrimaryBrush}"
                     Content="开始"
                     Foreground="White" />
                 <Button
@@ -469,8 +469,8 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     hc:BorderElement.CornerRadius="15"
-                    Background="{StaticResource ButtonBoderBrush}"
-                    BorderBrush="{StaticResource ButtonBoderBrush}"
+                    Background="{StaticResource PrimaryBrush}"
+                    BorderBrush="{StaticResource PrimaryBrush}"
                     Content="开始"
                     Foreground="White" />
                 <Button
@@ -480,8 +480,8 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     hc:BorderElement.CornerRadius="15"
-                    Background="{StaticResource ButtonBoderBrush}"
-                    BorderBrush="{StaticResource ButtonBoderBrush}"
+                    Background="{StaticResource PrimaryBrush}"
+                    BorderBrush="{StaticResource PrimaryBrush}"
                     Content="开始"
                     Foreground="White" />
                 <Button
@@ -491,8 +491,8 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     hc:BorderElement.CornerRadius="15"
-                    Background="{StaticResource ButtonBoderBrush}"
-                    BorderBrush="{StaticResource ButtonBoderBrush}"
+                    Background="{StaticResource PrimaryBrush}"
+                    BorderBrush="{StaticResource PrimaryBrush}"
                     Content="开始"
                     Foreground="White" />
                 <TextBox

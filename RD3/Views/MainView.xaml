@@ -58,10 +58,10 @@
                             <Image
                                 Width="24"
                                 Height="24"
-                                Margin="15,35,5,15"
+                                Margin="10,5,5,15"
                                 Source="/Assets/logo.png" />
                             <TextBlock
-                                Margin="5,35,10,15"
+                                Margin="5,5,10,15"
                                 VerticalAlignment="Center"
                                 FontFamily="{DynamicResource CHNFontFamily}"
                                 FontSize="20"
@@ -84,7 +84,7 @@
                                 Command="{Binding SelectCmd}"
                                 CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
                                 FontSize="16"
-                                Header="{ex:Language Key='Home'}">
+                                Header="{ex:Language Key='Main'}">
                                 <hc:SideMenuItem.Icon>
                                     <Image
                                         Width="24"
@@ -186,8 +186,10 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Border
-                        BorderBrush="LightGray"
-                        BorderThickness="0.5"
+                        Background="{DynamicResource PrimaryBrush}"
+                        BorderBrush="{DynamicResource PrimaryBrush}"
+                        BorderThickness="1"
+                        CornerRadius="0,0,0,20"
                         Effect="{StaticResource EffectShadow1}">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -199,6 +201,12 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                Foreground="White"
+                                Text="{ex:Language Key='Fermentation process control system V1.0--芯造科技'}" />
                             <Button
                                 Name="btnChooseLanguage"
                                 Grid.Column="1"
@@ -228,7 +236,7 @@
                                 <materialDesign:PackIcon
                                     Width="24"
                                     Height="24"
-                                    Foreground="Gray"
+                                    Foreground="White"
                                     Kind="AccountCircle" />
                             </Button>
                             <Popup
@@ -304,7 +312,7 @@
                                 <materialDesign:PackIcon
                                     Width="16"
                                     Height="16"
-                                    Foreground="#909399"
+                                    Foreground="White"
                                     Kind="Minus" />
                             </Button>
                             <Button
@@ -318,7 +326,7 @@
                                 <materialDesign:PackIcon
                                     Width="16"
                                     Height="16"
-                                    Foreground="#909399"
+                                    Foreground="White"
                                     Kind="WindowRestore" />
                             </Button>
                             <Button
@@ -332,7 +340,7 @@
                                 <materialDesign:PackIcon
                                     Width="16"
                                     Height="16"
-                                    Foreground="#909399"
+                                    Foreground="White"
                                     Kind="Close" />
                             </Button>
                         </Grid>

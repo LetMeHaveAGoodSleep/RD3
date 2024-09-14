@@ -28,6 +28,9 @@
     <Compile Update="Views\EditClientView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\EditParamView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\EditProjectView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -76,6 +79,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\EditClientView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\EditParamView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\EditProjectView.xaml">

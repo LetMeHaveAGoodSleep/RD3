@@ -11,7 +11,6 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.runtimeconfig.json
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.pdb
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\DryIoc.dll
-D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\HandyControl.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\MaterialDesignColors.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\MaterialDesignThemes.Wpf.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Microsoft.Xaml.Behaviors.dll
@@ -209,3 +208,6 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Function.json
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Project.json
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Sample.json
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Operation.json
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditParamView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditParamView.baml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\HandyControl.dll

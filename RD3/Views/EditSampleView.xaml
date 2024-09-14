@@ -125,8 +125,8 @@
                 HorizontalAlignment="Right"
                 HorizontalContentAlignment="Center"
                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                Background="{StaticResource ButtonBoderBrush}"
-                BorderBrush="{StaticResource ButtonBoderBrush}"
+                Background="{StaticResource PrimaryBrush}"
+                BorderBrush="{StaticResource PrimaryBrush}"
                 Content="{ex:Language Key='OK'}"
                 FontSize="14"
                 Foreground="White" />
@@ -137,10 +137,10 @@
                 HorizontalAlignment="Right"
                 HorizontalContentAlignment="Center"
                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                BorderBrush="{StaticResource ButtonBoderBrush}"
+                BorderBrush="{StaticResource PrimaryBrush}"
                 Content="{ex:Language Key='Cancel'}"
                 FontSize="14"
-                Foreground="{StaticResource ButtonBoderBrush}" />
+                Foreground="{StaticResource PrimaryBrush}" />
         </StackPanel>
     </Grid>
 </UserControl>
