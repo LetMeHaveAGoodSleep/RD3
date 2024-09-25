@@ -25,6 +25,10 @@ namespace RD3.Shared
         private Thread _receiveThread; // 接收线程
         private readonly int _reconnectCount = 10;//总共重连10次
         private uint _retryTimes = 0;
+        public bool IsConnected
+        { 
+            get { return _isConnected; }
+        }
 
         public CustomTcpClient(string serverIp, int serverPort, int reconnectCount, int reconnectIntervalMilliseconds)
         {
@@ -212,8 +216,39 @@ namespace RD3.Shared
             }
         }
 
+        public void SendData(byte[] command)
+        {
+            lock (_lockObject)
+            {
+                if (_isConnected)
+                {
+                    byte[] emptyArray = new byte[0];
+                    byte[] buffer = FrameHelper.FrameData(command, emptyArray);
+                    try
+                    {
+                        _stream.Write(buffer, 0, buffer.Length);
+                        LogHelper.Info(BitConverter.ToString(buffer).Replace("-", " "));
+                    }
+                    catch (Exception ex)
+                    {
+                        LogHelper.Error(ex.Message);
+                        Disconnect();
+                        Reconnect();
+                    }
+                }
+            }
+        }
+
         protected virtual void OnDataReceived(byte[] data)
         {
+            var tuple = FrameHelper.UnframeData(data);
+            short result = BitConverter.ToInt16(tuple.Item1, 0);
+            var command = CommandManager.GetInstance().Commands.Find(t => t.ID == result);
+            byte[] bytes =
+                [tuple.Item2[0], tuple.Item2[1], tuple.Item2[2], tuple.Item2[3]];
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes); // 确保大端字节序
+            var a = BitConverter.ToSingle(bytes, 0);
             // 这里可以处理接收到的数据，例如输出到控制台
             Console.WriteLine("Received data: " + BitConverter.ToString(data));
         }

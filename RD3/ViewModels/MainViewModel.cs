@@ -95,7 +95,7 @@ namespace RD3.ViewModels
             }
         });
 
-        public DelegateCommand<string> SelectCmd => new(SwitchMenuItem);
+        public DelegateCommand<FunctionEventArgs<object>> SelectCmd => new(SwitchMenuItem);
 
         private ObservableCollection<MenuBar> menuBars = new ObservableCollection<MenuBar>();
         private readonly IRegionManager regionManager;
@@ -115,11 +115,11 @@ namespace RD3.ViewModels
             this.dialogService = containerProvider.Resolve<IDialogService>();
         }
 
-        private void SwitchMenuItem(string header)
+        private void SwitchMenuItem(FunctionEventArgs<object> info)
         {
-            if (string.IsNullOrWhiteSpace(header)) return;
+            if (string.IsNullOrWhiteSpace((info.Info as SideMenuItem)?.Header.ToString())) return;
 
-            MenuBar menuBar = MenuBars.FindFirst(t => t.Title.Trim().Equals(header));
+            MenuBar menuBar = MenuBars.FindFirst(t => t.Title.Trim().Equals((info.Info as SideMenuItem)?.Header.ToString()));
             Navigate(menuBar);
         } 
 

@@ -30,11 +30,25 @@ namespace RD3.Shared
             set { SetProperty(ref _temp, value); }
         }
 
+        private string _temp_PV;
+        public string Temp_PV
+        {
+            get { return _temp_PV; }
+            set { SetProperty(ref _temp_PV, value); }
+        }
+
         private float _pH;
         public float PH
         {
             get { return _pH; }
             set { SetProperty(ref _pH, value); }
+        }
+
+        private string _pH_PV;
+        public string PH_PV
+        {
+            get { return _pH_PV; }
+            set { SetProperty(ref _pH_PV, value); }
         }
 
         private float _dO;
@@ -44,11 +58,25 @@ namespace RD3.Shared
             set { SetProperty(ref _dO, value); }
         }
 
+        private string _dO_PV;
+        public string DO_PV 
+        {
+            get { return _dO_PV; }
+            set { SetProperty(ref _dO_PV, value); }
+        }
+
         private float _agit;
         public float Agit
         {
             get { return _agit; }
             set { SetProperty(ref _agit, value); }
+        }
+
+        private string _agit_PV;
+        public string Agit_PV
+        {
+            get { return _agit_PV; }
+            set { SetProperty(ref _agit_PV, value); }
         }
 
         private float _base;
@@ -58,11 +86,25 @@ namespace RD3.Shared
             set { SetProperty(ref _base, value); }
         }
 
+        private string _base_PV;
+        public string Base_PV
+        {
+            get { return _base_PV; }
+            set { SetProperty(ref _base_PV, value); }
+        }
+
         private float _acid;
         public float Acid
         {
             get { return _acid; }
             set { SetProperty(ref _acid, value); }
+        }
+
+        private string _acid_PV;
+        public string Acid_PV
+        {
+            get { return _acid_PV; }
+            set { SetProperty(ref _acid_PV, value); }
         }
 
         private float _aF;
@@ -72,11 +114,137 @@ namespace RD3.Shared
             set { SetProperty(ref _aF, value); }
         }
 
+        private string _aF_PV;
+        public string AF_PV
+        {
+            get { return _aF_PV; }
+            set { SetProperty(ref _aF_PV, value); }
+        }
+
         private float _feed;
         public float Feed
         {
             get { return _feed; }
             set { SetProperty(ref _feed, value); }
+        }
+
+        private string _feed_PV;
+        public string Feed_PV
+        {
+            get { return _feed_PV; }
+            set { SetProperty(ref _feed_PV, value); }
+        }
+
+        private string _air;
+        public string Air
+        {
+            get { return _air; }
+            set { SetProperty(ref _air, value); }
+        }
+
+        private string _air_PV;
+        public string Air_PV
+        {
+            get { return _air_PV; }
+            set { SetProperty(ref _air_PV, value); }
+        }
+
+        private string _cO2;
+        public string CO2
+        {
+            get { return _cO2; }
+            set { SetProperty(ref _cO2, value); }
+        }
+
+        private string _cO2_PV;
+        public string CO2_PV
+        {
+            get { return _cO2_PV; }
+            set { SetProperty(ref _cO2_PV, value); }
+        }
+
+        private string _o2;
+        public string O2
+        {
+            get { return _o2; }
+            set { SetProperty(ref _o2, value); }
+        }
+
+        private string _o2_PV;
+        public string O2_PV
+        {
+            get { return _o2_PV; }
+            set { SetProperty(ref _o2_PV, value); }
+        }
+
+        private string _n2;
+        public string N2
+        {
+            get { return _n2; }
+            set { SetProperty(ref _n2, value); }
+        }
+
+        private string _n2_PV;
+        public string N2_PV
+        {
+            get { return _n2_PV; }
+            set { SetProperty(ref _n2_PV, value); }
+        }
+
+        private string _sample;
+        public string Sample
+        {
+            get { return _sample; }
+            set { SetProperty(ref _sample, value); }
+        }
+
+        private string _sample_PV;
+        public string Sample_PV
+        {
+            get { return _sample_PV; }
+            set { SetProperty(ref _sample_PV, value); }
+        }
+
+        private string _liquid;
+        public string Liquid
+        {
+            get { return _liquid; }
+            set { SetProperty(ref _liquid, value); }
+        }
+
+        private string _liquid_PV;
+        public string Liquid_PV
+        {
+            get { return _liquid_PV; }
+            set { SetProperty(ref _liquid_PV, value); }
+        }
+
+        private string _inoculate;
+        public string Inoculate
+        {
+            get { return _inoculate; }
+            set { SetProperty(ref _inoculate, value); }
+        }
+
+        private string _inoculate_PV;
+        public string Inoculate_PV
+        {
+            get { return _inoculate_PV; }
+            set { SetProperty(ref _inoculate_PV, value); }
+        }
+
+        private string _harvest;
+        public string Harvest
+        {
+            get { return _harvest; }
+            set { SetProperty(ref _harvest, value); }
+        }
+
+        private string _harvest_PV;
+        public string Harvest_PV
+        {
+            get { return _harvest_PV; }
+            set { SetProperty(ref _harvest_PV, value); }
         }
     }
 }

@@ -1,7 +1,7 @@
 [
   {
     "name": "client1",
-    "host": "192.168.1.30",
+    "host": "172.16.0.155",
     "port": 8080,
     "reconnectDelay": 1000,
     "retryTimes": 30

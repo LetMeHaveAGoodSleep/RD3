@@ -20,6 +20,8 @@ using Prism.Ioc;
 using System.Windows.Controls.Primitives;
 using ScottPlot.Plottables;
 using ImTools;
+using System.Timers;
+using RD3.ViewModels;
 
 namespace RD3.Views
 {
@@ -42,8 +44,17 @@ namespace RD3.Views
             tgbTrends.Checked += ToggleButton_Checked;
             tgbOverview.Checked += ToggleButton_Checked;
 
-           var plt = wpfPlot.Plot;
-            //plt.Axes.Left.Label.Text = "Agit";
+            tgbDO.Checked += ToggleButton_Checked;
+            tgbAgit.Checked += ToggleButton_Checked;
+            tgbAir.Checked += ToggleButton_Checked;
+            tgbPH.Checked += ToggleButton_Checked;
+            tgbTemp.Checked += ToggleButton_Checked;
+
+
+            wpfPlot1.Plot.Legend.IsVisible = true;
+            wpfPlot1.Plot.ShowLegend(Edge.Top);
+
+            var plt = wpfPlot.Plot;
             plt.Legend.IsVisible = true;
             plt.ShowLegend(Edge.Bottom);
 
@@ -53,7 +64,8 @@ namespace RD3.Views
             var scatter = plt.Add.Scatter(dates, ys);
             scatter.LegendText = "1";
             plt.Axes.DateTimeTicksBottom();
-            plt.Axes.Bottom.Label.Text = "Time";
+            plt.Axes.Bottom.Label.Text = language.GetValue("Time")?.ToString();
+            plt.Axes.Left.Label.Text = "DO";
 
             plt.RenderManager.RenderStarting += (s, e) =>
             {
@@ -68,16 +80,18 @@ namespace RD3.Views
 
             // create a second axis and add it to the plot
             var yAxis2 = plt.Axes.AddLeftAxis();
-            //yAxis2.LabelText = "Air";
+            yAxis2.LabelPadding = 100;
+            yAxis2.LabelText = "Agit";
+            yAxis2.LabelOffsetX = 60;
 
             var yAxis3 = plt.Axes.AddLeftAxis();
-            //yAxis3.LabelText = "DO";
+            yAxis3.LabelText = "Air";
 
             var yAxis4 = plt.Axes.AddRightAxis();
-            //yAxis4.LabelText = "Temp";
+            yAxis4.LabelText = "pH";
 
             var yAxis5 = plt.Axes.AddRightAxis();
-            //yAxis5.LabelText = "pH";
+            yAxis5.LabelText = "Temp";
 
             var sig1 = plt.Add.Scatter(dates, ScottPlot.Generate.Sin(51, mult: 0.01));
             sig1.LegendText = "2";
@@ -194,7 +208,7 @@ namespace RD3.Views
                 WpfPlot wpfPlot = sender as WpfPlot;
                 var position = e.GetPosition(wpfPlot);
                 var yAxes = wpfPlot.Plot.GetAxis(new Pixel(position.X, position.Y));
-                if (yAxes.Edge != Edge.Left && yAxes.Edge != Edge.Right)
+                if (yAxes == null || (yAxes.Edge != Edge.Left && yAxes.Edge != Edge.Right))
                 {
                     return;
                 }
@@ -219,23 +233,44 @@ namespace RD3.Views
         private void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             ToggleButton toggleButton = sender as ToggleButton;
-            if (toggleButton?.Name == "tgbDetails")
+            if (toggleButton?.Name == nameof(tgbDetails))
             {
                 tgbOverview.IsChecked = tgbTrends.IsChecked = !toggleButton.IsChecked;
                 tabDetails.IsSelected = (bool)toggleButton.IsChecked;
                 tabTrends.IsSelected = tabOverview.IsSelected = !(bool)toggleButton.IsChecked;
             }
-            else if (toggleButton?.Name == "tgbTrends")
+            else if (toggleButton?.Name == nameof(tgbTrends))
             {
                 tgbOverview.IsChecked = tgbDetails.IsChecked = !toggleButton.IsChecked;
                 tabTrends.IsSelected = (bool)toggleButton.IsChecked;
                 tabDetails.IsSelected = tabOverview.IsSelected = !(bool)toggleButton.IsChecked;
             }
-            else if (toggleButton?.Name == "tgbOverview")
+            else if (toggleButton?.Name == nameof(tgbOverview))
             {
                 tgbDetails.IsChecked = tgbTrends.IsChecked = !toggleButton.IsChecked;
                 tabOverview.IsSelected = (bool)toggleButton.IsChecked;
                 tabTrends.IsSelected = tabDetails.IsSelected = !(bool)toggleButton.IsChecked;
+            }
+            else if (toggleButton?.Name == nameof(tgbDO))
+            {
+                tgbAgit.IsChecked = tgbAir.IsChecked = tgbPH.IsChecked = tgbTemp.IsChecked = !toggleButton.IsChecked;
+                //TODO:切换曲线
+            }
+            else if (toggleButton?.Name == nameof(tgbAgit))
+            {
+                tgbDO.IsChecked = tgbAir.IsChecked = tgbPH.IsChecked = tgbTemp.IsChecked = !toggleButton.IsChecked;
+            }
+            else if (toggleButton?.Name == nameof(tgbAir))
+            {
+                tgbDO.IsChecked = tgbAgit.IsChecked = tgbPH.IsChecked = tgbTemp.IsChecked = !toggleButton.IsChecked;
+            }
+            else if (toggleButton?.Name == nameof(tgbPH))
+            {
+                tgbDO.IsChecked = tgbAgit.IsChecked = tgbAir.IsChecked = tgbTemp.IsChecked = !toggleButton.IsChecked;
+            }
+            else if (toggleButton?.Name == nameof(tgbTemp))
+            {
+                tgbDO.IsChecked = tgbAgit.IsChecked = tgbAir.IsChecked = tgbPH.IsChecked = !toggleButton.IsChecked;
             }
         }
 
@@ -272,6 +307,12 @@ namespace RD3.Views
                 wpfPlot?.Plot?.HideGrid();
                 wpfPlot?.Refresh();
             }
+        }
+
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount < 1) return;
+            ((IndexViewModel)this.DataContext)?.EditParamCommand.Execute();
         }
     }
 }

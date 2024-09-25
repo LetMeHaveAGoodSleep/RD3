@@ -20,6 +20,7 @@ namespace RD3.Shared
         public static readonly string FunctionPath = DataDirectory + "\\Function.json";
         public static readonly string BatchPath = DataDirectory + "\\Batch.json";
         public static readonly string ProjectPath = DataDirectory + "\\Project.json";
+        public static readonly string ProjectTemplatePath = DataDirectory + "\\ProjectTemplate.json";
         public static readonly string SamplePath = DataDirectory + "\\Sample.json";
         public static readonly string OperationPath = DataDirectory + "\\Operation.json";
         public static readonly string AlarmHistoryPath = AppDomain.CurrentDomain.BaseDirectory + "Alarm" + "\\AlarmHistory.log";

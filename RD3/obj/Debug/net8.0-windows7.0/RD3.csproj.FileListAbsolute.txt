@@ -211,3 +211,10 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Operation.json
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditParamView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditParamView.baml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\HandyControl.dll
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AddSampleView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AddSampleView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditTemplateView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditTemplateView.baml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\ProjectTemplate.json
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditExperimentParamView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditExperimentParamView.baml

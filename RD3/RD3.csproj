@@ -18,20 +18,48 @@
     <None Remove="Images\Button\Sample.png" />
     <None Remove="Images\Button\Start.png" />
     <None Remove="Images\Button\Stop.png" />
-    <None Remove="Images\Calibrate.png" />
-    <None Remove="Images\Control.png" />
-    <None Remove="Images\Data.png" />
     <None Remove="Images\DataGrid\Delete.png" />
     <None Remove="Images\DataGrid\Edit.png" />
-    <None Remove="Images\Debug.png" />
     <None Remove="Images\FermentationTank.png" />
+    <None Remove="Images\Link.png" />
     <None Remove="Images\login.png" />
     <None Remove="Images\logo.png" />
-    <None Remove="Images\Main.png" />
-    <None Remove="Images\Project.png" />
+    <None Remove="Images\Main\Acid.png" />
+    <None Remove="Images\Main\Acid_ass.png" />
+    <None Remove="Images\Main\AF.png" />
+    <None Remove="Images\Main\Agit.png" />
+    <None Remove="Images\Main\Agit_ass.png" />
+    <None Remove="Images\Main\Air.png" />
+    <None Remove="Images\Main\Base.png" />
+    <None Remove="Images\Main\Base_ass.png" />
+    <None Remove="Images\Main\CO2.png" />
+    <None Remove="Images\Main\DO.png" />
+    <None Remove="Images\Main\DO_ass.png" />
+    <None Remove="Images\Main\Feed.png" />
+    <None Remove="Images\Main\Feed_ass.png" />
+    <None Remove="Images\Main\MLUnit.png" />
+    <None Remove="Images\Main\N2.png" />
+    <None Remove="Images\Main\O2.png" />
+    <None Remove="Images\Main\PH.png" />
+    <None Remove="Images\Main\PH_ass.png" />
+    <None Remove="Images\Main\Temp.png" />
     <None Remove="Images\Projects.png" />
-    <None Remove="Images\Settings.png" />
-    <None Remove="Images\SideMenu\Projects.png" />
+    <None Remove="Images\SideMenu\Audit.png" />
+    <None Remove="Images\SideMenu\Audit_Primary.png" />
+    <None Remove="Images\SideMenu\Calibrate.png" />
+    <None Remove="Images\SideMenu\Calibrate_Primary.png" />
+    <None Remove="Images\SideMenu\Control.png" />
+    <None Remove="Images\SideMenu\Control_Primary.png" />
+    <None Remove="Images\SideMenu\Data.png" />
+    <None Remove="Images\SideMenu\Data_Primary.png" />
+    <None Remove="Images\SideMenu\Debug.png" />
+    <None Remove="Images\SideMenu\Debug_Primary.png" />
+    <None Remove="Images\SideMenu\Main.png" />
+    <None Remove="Images\SideMenu\Main_Primary.png" />
+    <None Remove="Images\SideMenu\Project.png" />
+    <None Remove="Images\SideMenu\Project_Primary.png" />
+    <None Remove="Images\SideMenu\Setting.png" />
+    <None Remove="Images\SideMenu\Setting_Primary.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Remove="Lang\Lang.en-US.xaml" />
@@ -74,27 +102,51 @@
     <Resource Include="Images\Button\Sample.png" />
     <Resource Include="Images\Button\Start.png" />
     <Resource Include="Images\Button\Stop.png" />
-    <Resource Include="Images\Calibrate.png" />
-    <Resource Include="Images\Control.png" />
-    <Resource Include="Images\Data.png" />
     <Resource Include="Images\DataGrid\Delete.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\DataGrid\Edit.png" />
-    <Resource Include="Images\Main.png" />
-    <Resource Include="Images\Project.png" />
-    <Resource Include="Images\Debug.png" />
-    <Resource Include="Images\Settings.png" />
-    <Resource Include="Images\SideMenu\Advance.png" />
-    <Resource Include="Images\SideMenu\Calibrate.png" />
-    <Resource Include="Images\SideMenu\Control.png" />
-    <Resource Include="Images\SideMenu\Data.png" />
-    <Resource Include="Images\SideMenu\Home.png" />
-    <Resource Include="Images\login.png" />
     <Resource Include="Assets\logo.png" />
-    <Resource Include="Images\SideMenu\Projects.png" />
-    <Resource Include="Images\SideMenu\Settings.png" />
     <Resource Include="Images\FermentationTank.png" />
+    <Resource Include="Images\Link.png" />
+    <Resource Include="Images\login.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Main\Acid.png" />
+    <Resource Include="Images\Main\Acid_ass.png" />
+    <Resource Include="Images\Main\AF.png" />
+    <Resource Include="Images\Main\Agit.png" />
+    <Resource Include="Images\Main\Agit_ass.png" />
+    <Resource Include="Images\Main\Air.png" />
+    <Resource Include="Images\Main\Base.png" />
+    <Resource Include="Images\Main\Base_ass.png" />
+    <Resource Include="Images\Main\CO2.png" />
+    <Resource Include="Images\Main\DO.png" />
+    <Resource Include="Images\Main\DO_ass.png" />
+    <Resource Include="Images\Main\Feed.png" />
+    <Resource Include="Images\Main\Feed_ass.png" />
+    <Resource Include="Images\Main\MLUnit.png" />
+    <Resource Include="Images\Main\N2.png" />
+    <Resource Include="Images\Main\O2.png" />
+    <Resource Include="Images\Main\PH.png" />
+    <Resource Include="Images\Main\Temp.png" />
+    <Resource Include="Images\Main\PH_ass.png" />
+    <Resource Include="Images\SideMenu\Audit.png" />
+    <Resource Include="Images\SideMenu\Audit_Primary.png" />
+    <Resource Include="Images\SideMenu\Calibrate.png" />
+    <Resource Include="Images\SideMenu\Calibrate_Primary.png" />
+    <Resource Include="Images\SideMenu\Control.png" />
+    <Resource Include="Images\SideMenu\Control_Primary.png" />
+    <Resource Include="Images\SideMenu\Data.png" />
+    <Resource Include="Images\SideMenu\Data_Primary.png" />
+    <Resource Include="Images\SideMenu\Debug.png" />
+    <Resource Include="Images\SideMenu\Debug_Primary.png" />
+    <Resource Include="Images\SideMenu\Main.png" />
+    <Resource Include="Images\SideMenu\Main_Primary.png" />
+    <Resource Include="Images\SideMenu\Project.png" />
+    <Resource Include="Images\SideMenu\Project_Primary.png" />
+    <Resource Include="Images\SideMenu\Setting.png" />
+    <Resource Include="Images\SideMenu\Setting_Primary.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\ProjectView.xaml.cs">
@@ -112,6 +164,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\Alarm.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\ProjectTemplate.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\Sample.json">

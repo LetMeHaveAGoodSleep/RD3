@@ -32,12 +32,7 @@ namespace RD3.Views
             aggregator.ResgiterMessage((MessageModel model) =>
             {
                 Project project = model.Model as Project;
-            }, nameof(EditBatchViewModel));
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
+            }, nameof(EditProjectViewModel));
         }
     }
 }

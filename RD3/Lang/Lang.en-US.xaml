@@ -8,7 +8,8 @@
     <system:String x:Key="Data">Data</system:String>
     <system:String x:Key="Calibrate">Calibrate</system:String>
     <system:String x:Key="Control">Control</system:String>
-    <system:String x:Key="Settings">Settings</system:String>
+    <system:String x:Key="Setting">Setting</system:String>
+    <system:String x:Key="Debug">Debug</system:String>
     <system:String x:Key="Details">Details</system:String>
     <system:String x:Key="Trends">Trends</system:String>
     <system:String x:Key="Overview">Overview</system:String>

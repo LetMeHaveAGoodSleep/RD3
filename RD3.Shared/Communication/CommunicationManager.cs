@@ -17,8 +17,13 @@ namespace RD3.Shared
         private static volatile CommunicationManager _instance; // 使用volatile确保多线程环境下的可见性
         private static readonly object _lock = new object(); // 锁对象
         private static int timeOut = 3000;
-        private List<TcpListener> tcpListeners = new List<TcpListener>();
-        private List<CustomTcpClient> tcpClients = new List<CustomTcpClient>();
+        private List<TcpListener> tcpListeners = [];
+        private List<CustomTcpClient> tcpClients = [];
+        public List<CustomTcpClient> ClientCol
+        {
+            get { return tcpClients; }
+            set { tcpClients = value; }
+        }
 
         private CommunicationManager()
         {

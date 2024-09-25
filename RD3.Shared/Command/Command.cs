@@ -8,7 +8,7 @@ namespace RD3.Shared
 {
     public class Command
     {
-        public byte ID { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
         public List<CommandParam> CommandParams { get; set; }
     }

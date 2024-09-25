@@ -78,7 +78,7 @@
         <StackPanel
             Grid.Row="6"
             Grid.ColumnSpan="2"
-            FlowDirection="RightToLeft"
+            HorizontalAlignment="Right"
             Orientation="Horizontal">
             <Button
                 Width="80"
@@ -104,7 +104,8 @@
                 Command="{Binding OKCommand}"
                 Content="{ex:Language Key='OK'}"
                 FontSize="14"
-                Foreground="White" />
+                Foreground="White"
+                Visibility="{Binding Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </StackPanel>
     </Grid>
 </UserControl>

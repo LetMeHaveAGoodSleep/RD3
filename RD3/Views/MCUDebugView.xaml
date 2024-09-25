@@ -9,6 +9,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:MCUDebugViewModel}"
     d:DesignHeight="1450"
     d:DesignWidth="800"
     Background="{StaticResource BackGroundBrush}"
@@ -100,10 +102,14 @@
                                 <Button
                                     Margin="0,22,0,0"
                                     hc:BorderElement.CornerRadius="8"
+                                    Command="{Binding ReadCommand}"
+                                    CommandParameter="1"
                                     Content="{ex:Language Key='Read'}" />
                                 <Button
                                     Margin="0,22,0,0"
                                     hc:BorderElement.CornerRadius="8"
+                                    Command="{Binding SetCommand}"
+                                    CommandParameter="1"
                                     Content="{ex:Language Key='Set'}" />
                             </hc:UniformSpacingPanel>
                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">

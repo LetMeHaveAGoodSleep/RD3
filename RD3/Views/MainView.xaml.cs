@@ -26,6 +26,9 @@ using RD3.Shared;
 using Window = System.Windows.Window;
 using System.Drawing;
 using Image = System.Windows.Controls.Image;
+using ImTools;
+using Color = System.Windows.Media.Color;
+using ColorConverter = System.Windows.Media.ColorConverter;
 
 namespace RD3.Views
 {
@@ -35,10 +38,13 @@ namespace RD3.Views
     public partial class MainView : Window
     {
         private readonly IDialogHostService dialogHostService;
+        readonly ILanguage language;
 
-        public MainView(IEventAggregator aggregator, IDialogHostService dialogHostService,IContainerProvider containerProvider)
+        public MainView(IEventAggregator aggregator, IDialogHostService dialogHostService, IContainerProvider containerProvider)
         {
             InitializeComponent();
+
+            language = containerProvider.Resolve<ILanguage>();
 
             //注册等待消息窗口
             aggregator.Resgiter(arg =>
@@ -49,36 +55,38 @@ namespace RD3.Views
                     DialogHost.DialogContent = new ProgressView();
             });
 
-            aggregator.ResgiterMessage((MessageModel model) => 
+            aggregator.ResgiterMessage((MessageModel model) =>
             {
-                ILanguage language = containerProvider.Resolve<ILanguage>();
-                
-                List<Function> functions = FunctionManager.GetInstance().Functions.Where(t => (uint)t.MinUserType <= AppSession.CurrentUser.Role)?.ToList();
-                sideMenu.Items.Clear();
-                foreach (Function function in functions) 
+                //获取无权限的功能列表
+                List<Function> functions = FunctionManager.GetInstance().Functions.Where(t => (uint)t.MinUserType > AppSession.CurrentUser.Role)?.ToList();
+                //sideMenu.Items.Clear();
+                foreach (Function function in functions)
                 {
-                    SideMenuItem sideMenuItem = new SideMenuItem();
-                    Image image = new Image();
-                    image.Source = new BitmapImage(new Uri("Pack://application:,,," + string.Format("/Images/{0}.png",function.Name)));
-                    image.Width = image.Height = 24;
-                    image.Margin = new Thickness(0, -5, -15, 0);
-                    sideMenuItem.Icon = image;
-                    sideMenuItem.Header = language.GetValue(function.Name)?.ToString();
-                    sideMenuItem.Command = ((MainViewModel)this.DataContext).SelectCmd;
-                    sideMenuItem.CommandParameter = sideMenuItem.Header;
-                    sideMenuItem.Margin = new Thickness(0, 0, 0, 10);
-                    sideMenuItem.FontSize = 16;
-                    sideMenuItem.Background = Application.Current.Resources["BackGroundBrush"] as SolidColorBrush;
-                    sideMenu.Items.Add(sideMenuItem);
+                    SideMenuItem sideMenuItem = sideMenu.Items.FindFirst(t => ((SideMenuItem)t).Tag?.ToString() == function.Name) as SideMenuItem;
+                    if (sideMenuItem == null) continue;
+                    sideMenuItem.Visibility = Visibility.Collapsed;
+                    //var bitmap = new BitmapImage(new Uri("Pack://application:,,," + string.Format("/Images/SideMenu/{0}.png", function.Name)));
+                    //if (bitmap != null)
+                    //{
+                    //    Image image = new()
+                    //    {
+
+                    //        Source = bitmap
+                    //    };
+                    //    image.Width = image.Height = 24;
+                    //    sideMenuItem.Icon = image;
+                    //}
+
+                    //sideMenuItem.Margin = new Thickness(5);
+                    //sideMenuItem.HorizontalContentAlignment = HorizontalAlignment.Left;
+                    //sideMenuItem.VerticalContentAlignment = VerticalAlignment.Center;
+                    //sideMenuItem.Header = language.GetValue(function.Name)?.ToString();
+                    //sideMenuItem.Command = ((MainViewModel)this.DataContext).SelectCmd;
+                    //sideMenuItem.CommandParameter = sideMenuItem.Header;
+                    //sideMenuItem.FontSize = 16;
+                    //sideMenuItem.Background = Application.Current.Resources["PrimaryBrush"] as LinearGradientBrush;
+                    //sideMenu.Items.Add(sideMenuItem);
                 }
-                //foreach (SideMenuItem item in sideMenu.Items)
-                //{
-                //    int index = functions.FindIndex(t => language.GetValue(t.Name) == item.Header);
-                //    if (index < 0)
-                //    {
-                //        item.Visibility = Visibility.Hidden;
-                //    }
-                //}
             }, nameof(MainViewModel));
 
             btnMin.Click += (s, e) => { this.WindowState = WindowState.Minimized; };
@@ -108,5 +116,45 @@ namespace RD3.Views
             Pop.IsOpen = true;
         }
 
+        private void SideMenuItem_MouseLeave(object sender, MouseEventArgs e)
+        {
+            //SideMenuItem sideMenuItem = (SideMenuItem)sender;
+            //if (sideMenuItem == null || sideMenuItem.IsSelected) return;
+            //var bitmap = new BitmapImage(new Uri("Pack://application:,,," + string.Format("/Images/SideMenu/{0}.png", sideMenuItem.Tag?.ToString())));
+            //if (bitmap != null)
+            //{
+            //    Image image = new()
+            //    {
+
+            //        Source = bitmap
+            //    };
+            //    image.Width = image.Height = 24;
+            //    sideMenuItem.Icon = image;
+            //}
+            //sideMenuItem.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#3d959a"));
+        }
+
+        private void SideMenuItem_MouseEnter(object sender, MouseEventArgs e)
+        {
+            //SideMenuItem sideMenuItem = (SideMenuItem)sender;
+            //if (sideMenuItem == null || sideMenuItem.IsSelected) return;
+            //var bitmap = new BitmapImage(new Uri("Pack://application:,,," + string.Format("/Images/SideMenu/{0}_Primary.png", sideMenuItem.Tag?.ToString())));
+            //if (bitmap != null)
+            //{
+            //    Image image = new()
+            //    {
+
+            //        Source = bitmap
+            //    };
+            //    image.Width = image.Height = 24;
+            //    sideMenuItem.Icon = image;
+            //}
+            //foreach (var item in sideMenu.Items)
+            //{
+            //    SideMenuItem menuItem = item as SideMenuItem;
+            //    if (menuItem == sideMenuItem) continue;
+            //    menuItem.Background = brush;
+            //}
+        }
     }
 }

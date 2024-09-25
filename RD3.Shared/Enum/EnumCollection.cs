@@ -77,8 +77,31 @@ namespace RD3.Shared
         Error = 2
     }
 
-    public enum ProjectStatus 
+    public enum ProjectStatus
     {
+        Unstarted,
+        Running,
+        Complete,
+        Unknown
+    }
 
+    public enum ExperimentParameter
+    {
+        DO,
+        Agit, 
+        Air,
+        Temp,
+        PH,
+        Acid,
+        Base,
+        Feed,
+        AF
+    }
+
+    public enum OpenMode
+    {
+        View,
+        Add,
+        Edit
     }
 }

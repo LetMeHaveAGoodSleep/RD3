@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RD3.Views
 {
     /// <summary>
-    /// EditScaleView.xaml 的交互逻辑
+    /// EditTemplateView.xaml 的交互逻辑
     /// </summary>
-    public partial class EditScaleView : UserControl
+    public partial class EditTemplateView : UserControl
     {
-        public EditScaleView()
+        public EditTemplateView()
         {
             InitializeComponent();
         }

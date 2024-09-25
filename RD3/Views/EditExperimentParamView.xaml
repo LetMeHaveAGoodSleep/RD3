@@ -1,0 +1,2565 @@
+﻿<UserControl
+    x:Class="RD3.Views.EditExperimentParamView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cv="clr-namespace:RD3.Common.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:vm="clr-namespace:RD3.ViewModels"
+    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+    Width="1780"
+    Height="1000"
+    d:DataContext="{d:DesignInstance Type=vm:EditExperimentParamViewModel}"
+    Background="{StaticResource BackGroundBrush}"
+    mc:Ignorable="d">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="False" />
+            <Setter Property="AllowsTransparency" Value="True" />
+            <Setter Property="WindowStyle" Value="None" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <Border Style="{StaticResource BorderCard}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <DockPanel LastChildFill="False">
+                <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{ex:Language Key='Advance control'}" />
+                <Button
+                    Name="btnClose"
+                    Width="30"
+                    Height="30"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding CancelCommand}"
+                    DockPanel.Dock="Right">
+                    <materialDesign:PackIcon
+                        Width="30"
+                        Height="30"
+                        Foreground="Gray"
+                        Kind="Close" />
+                </Button>
+            </DockPanel>
+
+            <hc:UniformSpacingPanel
+                Grid.Row="2"
+                Orientation="Vertical"
+                Spacing="10">
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <Border Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="10">
+                                <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{ex:Language Key='Temp'}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Control'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="375"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <ToggleButton
+                                                Name="tgbFixed"
+                                                IsChecked="True"
+                                                Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource SuccessBrush}"
+                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Fixed'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="0.5"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Fixed'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbAssociated" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="80"
+                                                        Height="30"
+                                                        Background="{DynamicResource PrimaryBrush}"
+                                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Associated'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="80"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Associated'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbFree" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="DarkOrange"
+                                                        BorderBrush="DarkOrange"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Free'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Free'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                        </hc:UniformSpacingPanel>
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
+                                        <TextBox
+                                            Width="200"
+                                            Height="30"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="36.7" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Alarm'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="385"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='LL:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="12">
+                                <TextBlock Text="{ex:Language Key='Associative modules:'}" />
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <TextBlock Text="{ex:Language Key='Direct(+):'}" />
+                                        <Border
+                                            Width="190"
+                                            Height="55"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4" />
+                                    </hc:UniformSpacingPanel>
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <TextBlock Text="{ex:Language Key='Reverse (-):'}" />
+                                        <Border
+                                            Width="190"
+                                            Height="55"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4" />
+                                    </hc:UniformSpacingPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='PID'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="365"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Kp:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Ti(s):'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Td(s):'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='OP(%):'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </Border>
+                    <Border Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="10">
+                                <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{ex:Language Key='PH'}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Control'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="375"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <ToggleButton
+                                                Name="tgbFixed1"
+                                                IsChecked="True"
+                                                Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource SuccessBrush}"
+                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Fixed'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="0.5"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Fixed'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbAssociated1" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="80"
+                                                        Height="30"
+                                                        Background="{DynamicResource PrimaryBrush}"
+                                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Associated'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="80"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Associated'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbFree1" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="DarkOrange"
+                                                        BorderBrush="DarkOrange"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Free'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Free'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                        </hc:UniformSpacingPanel>
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
+                                        <TextBox
+                                            Width="200"
+                                            Height="30"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="7.61" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Alarm'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="385"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='LL:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="12">
+                                <TextBlock Text="{ex:Language Key='Associative modules:'}" />
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <TextBlock Text="{ex:Language Key='Direct(+):'}" />
+                                        <Border
+                                            Width="190"
+                                            Height="55"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                                <CheckBox Content="{ex:Language Key='Base pump'}" IsChecked="True" />
+                                            </hc:UniformSpacingPanel>
+                                        </Border>
+                                    </hc:UniformSpacingPanel>
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <TextBlock Text="{ex:Language Key='Reverse (-):'}" />
+                                        <Border
+                                            Width="190"
+                                            Height="55"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                                <CheckBox Content="{ex:Language Key='Acid pump'}" IsChecked="True" />
+                                            </hc:UniformSpacingPanel>
+                                        </Border>
+                                    </hc:UniformSpacingPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='PID'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="365"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Kp:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Ti(s):'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Td(s):'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='OP(%):'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </Border>
+                </hc:UniformSpacingPanel>
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <Border Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="17.5">
+                                <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{ex:Language Key='Agit'}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Control'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="375"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <ToggleButton
+                                                Name="tgbFixed2"
+                                                IsChecked="True"
+                                                Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource SuccessBrush}"
+                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Fixed'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="0.5"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Fixed'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbAssociated2" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="80"
+                                                        Height="30"
+                                                        Background="{DynamicResource PrimaryBrush}"
+                                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Associated'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="80"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Associated'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbFree2" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="DarkOrange"
+                                                        BorderBrush="DarkOrange"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Free'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Free'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                        </hc:UniformSpacingPanel>
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
+                                        <TextBox
+                                            Width="200"
+                                            Height="30"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="1200" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Alarm'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="385"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='LL:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="12">
+                                <TextBlock Text="{ex:Language Key='Associative modules:'}" />
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <TextBlock Text="{ex:Language Key='Direct(+):'}" />
+                                        <Border
+                                            Width="190"
+                                            Height="85"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4" />
+                                    </hc:UniformSpacingPanel>
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <TextBlock Text="{ex:Language Key='Reverse (-):'}" />
+                                        <Border
+                                            Width="190"
+                                            Height="85"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4" />
+                                    </hc:UniformSpacingPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='PID'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="365"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Kp:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Ti(s):'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Td(s):'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='OP(%):'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </Border>
+                    <Border Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="17.5">
+                                <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{ex:Language Key='PH'}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Control'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="375"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <ToggleButton
+                                                Name="tgbFixed3"
+                                                IsChecked="True"
+                                                Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource SuccessBrush}"
+                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Fixed'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="0.5"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Fixed'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbAssociated3" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="80"
+                                                        Height="30"
+                                                        Background="{DynamicResource PrimaryBrush}"
+                                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Associated'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="80"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Associated'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbFree3" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="DarkOrange"
+                                                        BorderBrush="DarkOrange"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Free'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Free'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                        </hc:UniformSpacingPanel>
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
+                                        <TextBox
+                                            Width="200"
+                                            Height="30"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="7.61" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Alarm'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="385"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='LL:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="12">
+                                <TextBlock Text="{ex:Language Key='Associative modules:'}" />
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <TextBlock Text="{ex:Language Key='Direct(+):'}" />
+                                        <Border
+                                            Width="190"
+                                            Height="85"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                                <CheckBox Content="{ex:Language Key='Agit'}" IsChecked="True" />
+                                                <CheckBox Content="{ex:Language Key='Ait'}" IsChecked="True" />
+                                                <CheckBox Content="{ex:Language Key='Feed'}" IsChecked="True" />
+                                            </hc:UniformSpacingPanel>
+                                        </Border>
+                                    </hc:UniformSpacingPanel>
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <TextBlock Text="{ex:Language Key='Reverse (-):'}" />
+                                        <Border
+                                            Width="190"
+                                            Height="85"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                                <CheckBox Content="{ex:Language Key='N2'}" IsChecked="True" />
+                                                <CheckBox Content="{ex:Language Key='CO2'}" IsChecked="True" />
+                                            </hc:UniformSpacingPanel>
+                                        </Border>
+                                    </hc:UniformSpacingPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='PID'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="365"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Kp:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Ti(s):'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Td(s):'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='OP(%):'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </Border>
+                </hc:UniformSpacingPanel>
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <Border Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{ex:Language Key='Base'}" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="{DynamicResource SubHeadFontSize}"
+                                        Foreground="{DynamicResource SecondaryTextBrush}"
+                                        Text="{ex:Language Key='ML/H'}" />
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Control'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="350"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <ToggleButton
+                                                Name="tgbFixed4"
+                                                IsChecked="True"
+                                                Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource SuccessBrush}"
+                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Fixed'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="0.5"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Fixed'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbAssociated4" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="80"
+                                                        Height="30"
+                                                        Background="{DynamicResource PrimaryBrush}"
+                                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Associated'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="80"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Associated'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbFree4" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="DarkOrange"
+                                                        BorderBrush="DarkOrange"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Free'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Free'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbDisabled4" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource DarkPrimaryBrush}"
+                                                        BorderBrush="{DynamicResource BorderBrush}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Disabled'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Disabled'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                        </hc:UniformSpacingPanel>
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
+                                        <TextBox
+                                            Width="110"
+                                            Height="30"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Alarm'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="360"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='LL:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="12">
+                                <TextBlock Text="{ex:Language Key='Associative modules:'}" />
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <Border
+                                            Width="120"
+                                            Height="160"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                                <CheckBox Content="{ex:Language Key='PH'}" IsChecked="True" />
+                                            </hc:UniformSpacingPanel>
+                                        </Border>
+                                    </hc:UniformSpacingPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </Border>
+                    <Border Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{ex:Language Key='Acid'}" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="{DynamicResource SubHeadFontSize}"
+                                        Foreground="{DynamicResource SecondaryTextBrush}"
+                                        Text="{ex:Language Key='ML/H'}" />
+                                </hc:UniformSpacingPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Control'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="350"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <ToggleButton
+                                                Name="tgbFixed5"
+                                                IsChecked="True"
+                                                Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource SuccessBrush}"
+                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Fixed'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="0.5"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Fixed'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbAssociated5" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="80"
+                                                        Height="30"
+                                                        Background="{DynamicResource PrimaryBrush}"
+                                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Associated'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="80"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Associated'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbFree5" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="DarkOrange"
+                                                        BorderBrush="DarkOrange"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Free'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Free'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbDisabled5" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource DarkPrimaryBrush}"
+                                                        BorderBrush="{DynamicResource BorderBrush}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Disabled'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Disabled'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                        </hc:UniformSpacingPanel>
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
+                                        <TextBox
+                                            Width="110"
+                                            Height="30"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Alarm'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="360"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='LL:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="12">
+                                <TextBlock Text="{ex:Language Key='Associative modules:'}" />
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <Border
+                                            Width="120"
+                                            Height="160"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                                <CheckBox Content="{ex:Language Key='PH'}" IsChecked="True" />
+                                            </hc:UniformSpacingPanel>
+                                        </Border>
+                                    </hc:UniformSpacingPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </Border>
+                    <Border Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{ex:Language Key='Acid'}" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="{DynamicResource SubHeadFontSize}"
+                                        Foreground="{DynamicResource SecondaryTextBrush}"
+                                        Text="{ex:Language Key='ML/H'}" />
+                                </hc:UniformSpacingPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Control'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="350"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <ToggleButton
+                                                Name="tgbFixed6"
+                                                IsChecked="True"
+                                                Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource SuccessBrush}"
+                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Fixed'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="0.5"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Fixed'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbAssociated6" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="80"
+                                                        Height="30"
+                                                        Background="{DynamicResource PrimaryBrush}"
+                                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Associated'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="80"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Associated'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbFree6" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="DarkOrange"
+                                                        BorderBrush="DarkOrange"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Free'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Free'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbDisabled6" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource DarkPrimaryBrush}"
+                                                        BorderBrush="{DynamicResource BorderBrush}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Disabled'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Disabled'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                        </hc:UniformSpacingPanel>
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
+                                        <TextBox
+                                            Width="110"
+                                            Height="30"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Alarm'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="360"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='LL:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="12">
+                                <TextBlock Text="{ex:Language Key='Associative modules:'}" />
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <Border
+                                            Width="120"
+                                            Height="160"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                                <CheckBox Content="{ex:Language Key='PH'}" IsChecked="True" />
+                                            </hc:UniformSpacingPanel>
+                                        </Border>
+                                    </hc:UniformSpacingPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </Border>
+                </hc:UniformSpacingPanel>
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <Border Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{ex:Language Key='AF'}" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="{DynamicResource SubHeadFontSize}"
+                                        Foreground="{DynamicResource SecondaryTextBrush}"
+                                        Text="{ex:Language Key='ML/H'}" />
+                                </hc:UniformSpacingPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Control'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="350"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <ToggleButton
+                                                Name="tgbFixed7"
+                                                IsChecked="True"
+                                                Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource SuccessBrush}"
+                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Fixed'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="0.5"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Fixed'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbAssociated7" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="80"
+                                                        Height="30"
+                                                        Background="{DynamicResource PrimaryBrush}"
+                                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Associated'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="80"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Associated'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbFree7" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="DarkOrange"
+                                                        BorderBrush="DarkOrange"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Free'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Free'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbDisabled7" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource DarkPrimaryBrush}"
+                                                        BorderBrush="{DynamicResource BorderBrush}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Disabled'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Disabled'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                        </hc:UniformSpacingPanel>
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
+                                        <TextBox
+                                            Width="110"
+                                            Height="30"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Alarm'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="360"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='LL:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="12">
+                                <TextBlock Text="{ex:Language Key='Associative modules:'}" />
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <Border
+                                            Width="120"
+                                            Height="160"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                                <CheckBox
+                                                    Content="{ex:Language Key='PH'}"
+                                                    IsChecked="True"
+                                                    Visibility="Collapsed" />
+                                            </hc:UniformSpacingPanel>
+                                        </Border>
+                                    </hc:UniformSpacingPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </Border>
+                    <Border Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <ComboBox FontSize="{DynamicResource HeadFontSize}" SelectedIndex="0">
+                                        <ComboBoxItem Content="{ex:Language Key='Air'}" />
+                                        <ComboBoxItem Content="{ex:Language Key='CO2'}" />
+                                        <ComboBoxItem Content="{ex:Language Key='O2'}" />
+                                        <ComboBoxItem Content="{ex:Language Key='N2'}" />
+                                    </ComboBox>
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="{DynamicResource SubHeadFontSize}"
+                                        Foreground="{DynamicResource SecondaryTextBrush}"
+                                        Text="{ex:Language Key='ML/H'}" />
+                                </hc:UniformSpacingPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Control'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="470"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                            <ToggleButton
+                                                Name="tgbFixed8"
+                                                IsChecked="True"
+                                                Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource SuccessBrush}"
+                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Fixed'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="0.5"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Fixed'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbAssociated8" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="80"
+                                                        Height="30"
+                                                        Background="{DynamicResource PrimaryBrush}"
+                                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                                        BorderThickness="0.5"
+                                                        CornerRadius="4">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Associated'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="80"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Associated'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbFree8" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="DarkOrange"
+                                                        BorderBrush="DarkOrange"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Free'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Free'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                            <ToggleButton Name="tgbDisabled8" Style="{DynamicResource ToggleButtonCustom}">
+                                                <hc:StatusSwitchElement.CheckedElement>
+                                                    <Border
+                                                        Width="60"
+                                                        Height="30"
+                                                        Background="{DynamicResource DarkPrimaryBrush}"
+                                                        BorderBrush="{DynamicResource BorderBrush}"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4"
+                                                        Effect="{StaticResource EffectShadow1}">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="White"
+                                                            Text="{ex:Language Key='Disabled'}" />
+                                                    </Border>
+                                                </hc:StatusSwitchElement.CheckedElement>
+                                                <Border
+                                                    Width="60"
+                                                    Height="30"
+                                                    BorderBrush="#F5F7FA"
+                                                    BorderThickness="1"
+                                                    CornerRadius="4">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="Gray"
+                                                        Text="{ex:Language Key='Disabled'}" />
+                                                </Border>
+                                            </ToggleButton>
+                                        </hc:UniformSpacingPanel>
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Limit range:'}" />
+                                        <TextBox
+                                            Width="110"
+                                            Height="30"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="" />
+                                        <TextBlock VerticalAlignment="Center" Text="~" />
+                                        <TextBox
+                                            Width="110"
+                                            Height="30"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ex:Language Key='Alarm'}" />
+                                    <Line
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Stroke="Gray"
+                                        StrokeThickness="1"
+                                        X1="10"
+                                        X2="470"
+                                        Y1="0"
+                                        Y2="0" />
+                                </StackPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='LL:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
+                                        <TextBox
+                                            Width="70"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
+                                            IsEnabled="{Binding Enable}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding Batch.Name}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Margin="5"
+                                Orientation="Vertical"
+                                Spacing="12">
+                                <TextBlock Text="{ex:Language Key='Associative modules:'}" />
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                        <Border
+                                            Width="120"
+                                            Height="160"
+                                            Padding="5"
+                                            BorderBrush="{DynamicResource BorderBrush}"
+                                            BorderThickness="0.5"
+                                            CornerRadius="4">
+                                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                                <CheckBox Content="{ex:Language Key='DO'}" IsChecked="True" />
+                                            </hc:UniformSpacingPanel>
+                                        </Border>
+                                    </hc:UniformSpacingPanel>
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </Border>
+                </hc:UniformSpacingPanel>
+                <DockPanel Margin="0,0,10,0" LastChildFill="False">
+                    <hc:UniformSpacingPanel
+                        DockPanel.Dock="Right"
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <Button
+                            Width="80"
+                            Height="30"
+                            Margin="5"
+                            HorizontalAlignment="Right"
+                            HorizontalContentAlignment="Center"
+                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                            BorderBrush="{StaticResource PrimaryBrush}"
+                            Command="{Binding CancelCommand}"
+                            Content="{ex:Language Key='Cancel'}"
+                            FontSize="14"
+                            Foreground="{StaticResource PrimaryBrush}" />
+                        <Button
+                            Width="80"
+                            Height="30"
+                            Margin="5"
+                            HorizontalAlignment="Right"
+                            HorizontalContentAlignment="Center"
+                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                            Background="{StaticResource PrimaryBrush}"
+                            BorderBrush="{StaticResource PrimaryBrush}"
+                            Command="{Binding OKCommand}"
+                            Content="{ex:Language Key='Apply'}"
+                            FontSize="14"
+                            Foreground="White"
+                            Visibility="{Binding Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </hc:UniformSpacingPanel>
+                </DockPanel>
+            </hc:UniformSpacingPanel>
+        </Grid>
+    </Border>
+</UserControl>

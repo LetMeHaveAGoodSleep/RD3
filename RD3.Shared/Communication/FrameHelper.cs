@@ -9,6 +9,7 @@ namespace RD3.Shared
     {
         private const byte StartFlag = 0x7E; // 帧头
         private const int CommandLength = 2; // 命令长度
+        private const int ActionLength = 1; // 动作长度
         private const int DataLengthSize = 2; // 数据长度字段大小
         private const int CRCSize = 1; // CRC8大小
 
@@ -41,6 +42,9 @@ namespace RD3.Shared
 
         public static Tuple<byte[], byte[]> UnframeData(byte[] framedData)
         {
+
+            LogHelper.Info(BitConverter.ToString(framedData).Replace("-", " "));
+
             if (framedData.Length < CommandLength + DataLengthSize + CRCSize + 2)
                 throw new ArgumentException("Data is too short to be a valid frame.");
 
@@ -53,12 +57,12 @@ namespace RD3.Shared
 
             // 获取数据长度
             byte[] dataLengthBytes = framedData.Skip(2 + CommandLength).Take(DataLengthSize).ToArray();
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(dataLengthBytes); // 确保大端字节序
-            ushort dataLength = BitConverter.ToUInt16(dataLengthBytes, 0);
+            //if (BitConverter.IsLittleEndian)
+            //    Array.Reverse(dataLengthBytes); // 确保大端字节序
+            ushort dataLength = (ushort)(BitConverter.ToUInt16(dataLengthBytes, 0) - 1);
 
             // 获取数据
-            byte[] data = framedData.Skip(2 + CommandLength + DataLengthSize).Take((int)dataLength).ToArray();
+            byte[] data = framedData.Skip(2 + CommandLength + DataLengthSize + ActionLength).Take((int)dataLength).ToArray();
 
             // 计算并验证CRC8
             byte calculatedCRC = Crc8CheckSum(framedData.Take(framedData.Length - CRCSize).ToArray());

@@ -14,6 +14,7 @@ namespace RD3.Shared
         private static volatile CommandManager _instance; // 使用volatile确保多线程环境下的可见性
         private static readonly object _lock = new object(); // 锁对象
         private static List<Command> _commands = new List<Command>();
+        public List<Command> Commands { get { return _commands; } }
 
         private CommandManager()
         {

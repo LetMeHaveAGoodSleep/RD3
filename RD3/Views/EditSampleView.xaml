@@ -116,20 +116,8 @@
         <StackPanel
             Grid.Row="6"
             Grid.ColumnSpan="2"
-            FlowDirection="RightToLeft"
+            HorizontalAlignment="Right"
             Orientation="Horizontal">
-            <Button
-                Width="80"
-                Height="30"
-                Margin="5"
-                HorizontalAlignment="Right"
-                HorizontalContentAlignment="Center"
-                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                Background="{StaticResource PrimaryBrush}"
-                BorderBrush="{StaticResource PrimaryBrush}"
-                Content="{ex:Language Key='OK'}"
-                FontSize="14"
-                Foreground="White" />
             <Button
                 Width="80"
                 Height="30"
@@ -141,6 +129,19 @@
                 Content="{ex:Language Key='Cancel'}"
                 FontSize="14"
                 Foreground="{StaticResource PrimaryBrush}" />
+            <Button
+                Width="80"
+                Height="30"
+                Margin="5"
+                HorizontalAlignment="Right"
+                HorizontalContentAlignment="Center"
+                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                Background="{StaticResource PrimaryBrush}"
+                BorderBrush="{StaticResource PrimaryBrush}"
+                Content="{ex:Language Key='OK'}"
+                FontSize="14"
+                Foreground="White"
+                Visibility="{Binding Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -5,6 +5,7 @@ using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RD3.Common;
 using RD3.Shared;
+using RD3.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,13 @@ namespace RD3.ViewModels
 {
     public class ProjectViewModel : NavigationViewModel, IDialogAware
     {
+        private bool _isTemplate = false;
+        public bool IsTemplate
+        {
+            get { return _isTemplate; }
+            set { SetProperty(ref _isTemplate, value); }
+        }
+
         private readonly IDialogService dialogService;
 
         public string Title => AppSession.CompanyName;
@@ -27,8 +35,16 @@ namespace RD3.ViewModels
         private ObservableCollection<Project> _projects = [];
         public ObservableCollection<Project> Projects { get { return _projects; } set { SetProperty(ref _projects, value); } }
 
-        private ObservableCollection<Project> _ProjectCol = new ObservableCollection<Project>();
-        public ObservableCollection<Project> ProjectCol { get { return _ProjectCol; } set { SetProperty(ref _ProjectCol, value); } }
+        private ObservableCollection<Project> _projectCol = [];
+        public ObservableCollection<Project> ProjectCol { get { return _projectCol; } set { SetProperty(ref _projectCol, value); } }
+
+        private ProjectTemplate CurrentProjectTemplate;
+
+        private ObservableCollection<ProjectTemplate> _projectTemplates = [];
+        public ObservableCollection<ProjectTemplate> ProjectTemplates { get { return _projectTemplates; } set { SetProperty(ref _projectTemplates, value); } }
+
+        private ObservableCollection<ProjectTemplate> _projectTemplate = [];
+        public ObservableCollection<ProjectTemplate> ProjectTemplateCol { get { return _projectTemplates; } set { SetProperty(ref _projectTemplates, value); } }
 
         private int _pageCount = 10;
         public int PageCount
@@ -52,89 +68,192 @@ namespace RD3.ViewModels
 
         public DelegateCommand CloseCommand => new(() => RequestClose?.Invoke(new DialogResult(ButtonResult.OK)));
 
-        public DelegateCommand AddProjectCommand => new(() =>
+        public DelegateCommand AddCommand => new(() =>
         {
-            Project Project = new Project() { CreatDate = DateTime.Now, StartDate = DateTime.Now, CloseDate = DateTime.Now.AddDays(1) };
-            DialogParameters pairs = new DialogParameters
+            if (!_isTemplate)
             {
-                { "Project", Project },
-                {"Mode", "Add"  }
-            };
-            dialogService?.ShowDialog("EditProjectView", pairs, callback =>
-            {
-                if (callback.Result != ButtonResult.OK)
+                Project project = new() { StartDate = DateTime.Now, CloseDate = DateTime.Now.AddDays(1) };
+                DialogParameters pairs = new()
                 {
-                    return;
-                }
-                Projects.Add(Project);
+                    { "Project", project },
+                    {"Mode", OpenMode.Add  }
+                };
+                dialogService?.ShowDialog(nameof(EditProjectView), pairs, callback =>
+                {
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        return;
+                    }
+                    Projects.Add(project);
+                    ProjectManager.GetInstance().Save(Projects);
+                    PageUpdated(new FunctionEventArgs<int>(1));
+                });
+            }
+            else
+            {
+                ProjectTemplate template = new() { UsageTime = 0 };
+                DialogParameters pairs = new()
+                {
+                    { "Template", template },
+                    {"Mode", OpenMode.Add  }
+                };
+                dialogService?.ShowDialog(nameof(EditTemplateView), pairs, callback =>
+                {
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        return;
+                    }
+                    ProjectTemplates.Add(template);
+                    ProjectTemplateManager.GetInstance().Save(ProjectTemplates);
+                    PageUpdated(new FunctionEventArgs<int>(1));
+                });
+            }
+        });
+
+        public DelegateCommand<object> EditCommand => new((object o) =>
+        {
+            if (o == null) return;
+            if (o.GetType().Name == nameof(Project))
+            {
+                Project project = (Project)o;
+                DialogParameters pairs = new DialogParameters
+                {
+                    { "Project", project },
+                    { "Mode", OpenMode.Edit }
+                };
+                dialogService?.ShowDialog(nameof(EditProjectView), pairs, callback =>
+                {
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        return;
+                    }
+                    ProjectManager.GetInstance().Save(Projects);
+                });
+            }
+            else if (o.GetType().Name == nameof(ProjectTemplate))
+            {
+                ProjectTemplate template = (ProjectTemplate)o;
+                DialogParameters pairs = new DialogParameters
+                {
+                    { "Template", template },
+                    { "Mode", OpenMode.Edit }
+                };
+                dialogService?.ShowDialog(nameof(EditTemplateView), pairs, callback =>
+                {
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        return;
+                    }
+                    ProjectTemplateManager.GetInstance().Save(ProjectTemplates);
+                });
+            }
+        });
+
+        public DelegateCommand<object> ViewCommand => new((object o) =>
+        {
+
+            if (o == null) return;
+            if (o.GetType().Name == nameof(ProjectTemplate))
+            {
+                ProjectTemplate template = (ProjectTemplate)o;
+                DialogParameters pairs = new DialogParameters
+                {
+                    { "Template", template },
+                    { "Mode", OpenMode.View  }
+                };
+                dialogService?.ShowDialog(nameof(EditTemplateView), pairs, callback =>
+                {
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        return;
+                    }
+                });
+            }
+            else if (o.GetType().Name == nameof(Project))
+            {
+                Project project = (Project)o;
+                DialogParameters pairs = new DialogParameters
+                {
+                    { "Project", project },
+                    { "Mode", OpenMode.View }
+                };
+                dialogService?.ShowDialog(nameof(EditProjectView), pairs, callback =>
+                {
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        return;
+                    }
+                });
+            }
+        });
+
+        public DelegateCommand<object> DeleteCommand => new((object o) =>
+        {
+            if (o == null) return;
+            if (o.GetType().Name == nameof(Project))
+            {
+                Project project = (Project)o;
+                ProjectCol.Remove(project);
+                Projects.Remove(project);
                 ProjectManager.GetInstance().Save(Projects);
-                PageUpdated(new FunctionEventArgs<int>(PageIndex));
-            });
-        });
-
-        public DelegateCommand<Project> EditCommand => new((Project project) =>
-        {
-            if (project == null) return;
-            DialogParameters pairs = new DialogParameters
+            }
+            else if (o.GetType().Name == nameof(ProjectTemplate))
             {
-                { "Project", project },
-                {"Mode", "Edit"  }
-            };
-            dialogService?.ShowDialog("EditProjectView", pairs, callback =>
-            {
-                if (callback.Result != ButtonResult.OK)
-                {
-                    return;
-                }
-                ProjectManager.GetInstance().Save(Projects);
-            });
-        });
-
-        public DelegateCommand<Project> ViewCommand => new((Project Project) =>
-        {
-            DialogParameters pairs = new DialogParameters
-            {
-                { "Project", Project },
-                {"Mode", "View"  }
-            };
-            dialogService?.ShowDialog("EditProjectView", pairs, callback =>
-            {
-                if (callback.Result != ButtonResult.OK)
-                {
-                    return;
-                }
-            });
-        });
-
-        public DelegateCommand<Project> DeleteCommand => new((Project Project) =>
-        {
-            ProjectCol.Remove(Project);
-            Projects.Remove(Project);
-            ProjectManager.GetInstance().Save(Projects);
+                ProjectTemplate template = (ProjectTemplate)o;
+                ProjectTemplateCol.Remove(template);
+                ProjectTemplates.Remove(template);
+                ProjectTemplateManager.GetInstance().Save(ProjectTemplates);
+            }
         });
 
         public DelegateCommand<FunctionEventArgs<string>> SearchCommand => new((FunctionEventArgs<string> e) =>
         {
             string key = e.Info;
-            if (string.IsNullOrEmpty(key))
+            if (!IsTemplate)
             {
-                Projects = new ObservableCollection<Project>(ProjectManager.GetInstance().Projects);
+                if (string.IsNullOrEmpty(key))
+                {
+                    Projects = new ObservableCollection<Project>(ProjectManager.GetInstance().Projects);
+                }
+                else
+                {
+                    var collection = Projects.Where(t => t.Name.Contains(key) || t.Account.Contains(key)
+                    || t.Client.Contains(key) || t.Creator.Contains(key) || t.Description.Contains(key));
+                    Projects = new ObservableCollection<Project>(collection);
+                }
+                PageCount = Projects.Count / DataCountPerPage + (Projects.Count % DataCountPerPage != 0 ? 1 : 0);
+                if (PageIndex != 1)
+                {
+                    PageIndex = 1;
+                }
+                else
+                {
+                    var data = Projects.Take(DataCountPerPage);
+                    ProjectCol = new ObservableCollection<Project>(data);
+                }
             }
             else
             {
-                var collection = Projects.Where(t => t.Name.Contains(key) ||  t.Account.Contains(key)
-                || t.Client.Contains(key) || t.Creator.Contains(key) || t.Description.Contains(key));
-                Projects = new ObservableCollection<Project>(collection);
-            }
-            PageCount = Projects.Count / DataCountPerPage + (Projects.Count % DataCountPerPage != 0 ? 1 : 0);
-            if (PageIndex != 1)
-            {
-                PageIndex = 1;
-            }
-            else
-            {
-                var data = Projects.Take(DataCountPerPage);
-                ProjectCol = new ObservableCollection<Project>(data);
+                if (string.IsNullOrEmpty(key))
+                {
+                    ProjectTemplates = new ObservableCollection<ProjectTemplate>(ProjectTemplateManager.GetInstance().Templates);
+                }
+                else
+                {
+                    var collection = ProjectTemplates.Where(t => t.Name.Contains(key) || t.Creator.Contains(key)
+                    || t.UsageTime.ToString().Contains(key));
+                    ProjectTemplates = new ObservableCollection<ProjectTemplate>(collection);
+                }
+                PageCount = ProjectTemplates.Count / DataCountPerPage + (ProjectTemplates.Count % DataCountPerPage != 0 ? 1 : 0);
+                if (PageIndex != 1)
+                {
+                    PageIndex = 1;
+                }
+                else
+                {
+                    var data = ProjectTemplates.Take(DataCountPerPage);
+                    ProjectTemplateCol = new ObservableCollection<ProjectTemplate>(data);
+                }
             }
         });
 
@@ -145,6 +264,7 @@ namespace RD3.ViewModels
             PageIndex = 1;
             dialogService = dialog;
             Projects = new ObservableCollection<Project>(ProjectManager.GetInstance().Projects);
+            ProjectTemplates = new ObservableCollection<ProjectTemplate>(ProjectTemplateManager.GetInstance().Templates);
             PageCount = Projects.Count / DataCountPerPage + (Projects.Count % DataCountPerPage != 0 ? 1 : 0);
             var data = Projects.Take(DataCountPerPage);
             ProjectCol = new ObservableCollection<Project>(data);
@@ -167,8 +287,18 @@ namespace RD3.ViewModels
 
         private void PageUpdated(FunctionEventArgs<int> info)
         {
-            var data = Projects.Skip((info.Info - 1) * DataCountPerPage).Take(DataCountPerPage);
-            ProjectCol = new ObservableCollection<Project>(data);
+            if (!IsTemplate)
+            {
+                PageCount = Projects.Count / DataCountPerPage + (Projects.Count % DataCountPerPage != 0 ? 1 : 0);
+                var data = Projects.Skip((info.Info - 1) * DataCountPerPage).Take(DataCountPerPage);
+                ProjectCol = new ObservableCollection<Project>(data);
+            }
+            else 
+            {
+                PageCount = ProjectTemplates.Count / DataCountPerPage + (ProjectTemplates.Count % DataCountPerPage != 0 ? 1 : 0);
+                var data = ProjectTemplates.Skip((info.Info - 1) * DataCountPerPage).Take(DataCountPerPage);
+                ProjectTemplateCol = new ObservableCollection<ProjectTemplate>(data);
+            }
         }
     }
 }

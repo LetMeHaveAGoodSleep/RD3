@@ -38,6 +38,25 @@ namespace RD3.Shared
         {
             string jsonContent = AESEncryption.DecryptFile(FileConst.ProjectPath);
             Projects = JsonConvert.DeserializeObject<ObservableCollection<Project>>(jsonContent);
+            foreach (var item in Projects)
+            {
+                if (item.StartDate > DateTime.Now)
+                {
+                    item.Status = ProjectStatus.Unstarted;
+                }
+                else if (item.StartDate <= DateTime.Now && item.CloseDate >= DateTime.Now)
+                {
+                    item.Status = ProjectStatus.Running;
+                }
+                else if (item.CloseDate < DateTime.Now)
+                {
+                    item.Status = ProjectStatus.Complete;
+                }
+                else
+                {
+                    item.Status = ProjectStatus.Unknown;
+                }
+            }
         }
 
         public void Save(ObservableCollection<Project> dataList = null)

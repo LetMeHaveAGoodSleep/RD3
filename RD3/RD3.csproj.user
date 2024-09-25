@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\AddSampleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AlarmView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -28,6 +31,9 @@
     <Compile Update="Views\EditClientView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\EditExperimentParamView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\EditParamView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -35,6 +41,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\EditSampleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\EditTemplateView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\EditUserView.xaml.cs">
@@ -66,6 +75,9 @@
     <Page Update="Themes\WaveAnimation.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\AddSampleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\AlarmView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -81,6 +93,9 @@
     <Page Update="Views\EditClientView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\EditExperimentParamView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\EditParamView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -88,6 +103,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\EditSampleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\EditTemplateView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\EditUserView.xaml">

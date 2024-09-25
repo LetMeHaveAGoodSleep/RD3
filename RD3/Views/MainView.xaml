@@ -14,13 +14,13 @@
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Title="MainWindow"
-    Width="1485"
-    Height="835"
+    Width="1700"
+    Height="950"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowsTransparency="True"
     Background="{StaticResource BackGroundBrush}"
-    TextElement.FontFamily="{StaticResource ENGFontFamily}"
+    TextElement.FontFamily="{StaticResource CHNFontFamily}"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextOptions.TextFormattingMode="Ideal"
@@ -35,162 +35,177 @@
             Identifier="Root">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="140" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Border
-                    Margin="0,0,20,0"
-                    BorderBrush="LightGray"
-                    BorderThickness="1"
-                    Effect="{StaticResource EffectShadow2}">
-                    <Grid Background="{StaticResource BackGroundBrush}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="100" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="27*" />
-                            <ColumnDefinition Width="23*" />
-                        </Grid.ColumnDefinitions>
-                        <WrapPanel
-                            Grid.ColumnSpan="2"
-                            Background="Transparent"
-                            Orientation="Horizontal">
-                            <Image
-                                Width="24"
-                                Height="24"
-                                Margin="10,5,5,15"
-                                Source="/Assets/logo.png" />
-                            <TextBlock
-                                Margin="5,5,10,15"
-                                VerticalAlignment="Center"
-                                FontFamily="{DynamicResource CHNFontFamily}"
-                                FontSize="20"
-                                FontWeight="Bold"
-                                Foreground="#FF6A00"
-                                Text="芯造科技"
-                                TextAlignment="Left"
-                                TextWrapping="Wrap" />
-                            <TextBlock Foreground="LightGray" Text="   ____________________   " />
-                        </WrapPanel>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="10" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="4" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <Image
+                            Width="24"
+                            Height="24"
+                            Source="/Assets/logo.png" />
+                        <TextBlock
+                            Margin="8,10,10,8"
+                            FontSize="18"
+                            FontWeight="Bold"
+                            Text="芯造科技"
+                            TextAlignment="Left"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <Border
+                        Grid.Row="2"
+                        Background="{DynamicResource PrimaryBrush}"
+                        BorderBrush="{DynamicResource PrimaryBrush}"
+                        BorderThickness="0"
+                        CornerRadius="0,15,0,0">
                         <hc:SideMenu
                             Name="sideMenu"
-                            Grid.Row="2"
-                            Grid.ColumnSpan="2"
+                            Width="140"
                             hc:AutoSelect="False"
-                            hc:ExpandMode="Freedom"
-                            Background="{StaticResource BackGroundBrush}">
+                            hc:ExpandMode="Accordion"
+                            Background="Transparent"
+                            BorderBrush="{DynamicResource PrimaryBrush}"
+                            Foreground="{DynamicResource DefaultBrush}">
+                            <hc:Interaction.Triggers>
+                                <hc:EventTrigger EventName="SelectionChanged">
+                                    <hc:EventToCommand Command="{Binding SelectCmd}" PassEventArgsToCommand="True" />
+                                </hc:EventTrigger>
+                            </hc:Interaction.Triggers>
                             <hc:SideMenuItem
-                                Margin="0,0,0,10"
-                                Command="{Binding SelectCmd}"
-                                CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
+                                Margin="5"
+                                Background="{DynamicResource PrimaryBrush}"
                                 FontSize="16"
-                                Header="{ex:Language Key='Main'}">
+                                Foreground="{DynamicResource DefaultBrush}"
+                                Header="{ex:Language Key='Main'}"
+                                MouseEnter="SideMenuItem_MouseEnter"
+                                MouseLeave="SideMenuItem_MouseLeave"
+                                Tag="Main">
                                 <hc:SideMenuItem.Icon>
                                     <Image
                                         Width="24"
                                         Height="24"
-                                        Margin="0,-5,-15,0"
-                                        Source="/Images/Main.png" />
+                                        Source="/Images/SideMenu/Main.png" />
                                 </hc:SideMenuItem.Icon>
                             </hc:SideMenuItem>
                             <hc:SideMenuItem
-                                Margin="0,0,0,10"
-                                Command="{Binding SelectCmd}"
-                                CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
+                                Margin="5"
+                                Background="{DynamicResource PrimaryBrush}"
                                 FontSize="16"
-                                Header="{ex:Language Key='Project'}">
+                                Foreground="{DynamicResource DefaultBrush}"
+                                Header="{ex:Language Key='Project'}"
+                                MouseEnter="SideMenuItem_MouseEnter"
+                                MouseLeave="SideMenuItem_MouseLeave"
+                                Tag="Project">
                                 <hc:SideMenuItem.Icon>
                                     <Image
                                         Width="24"
                                         Height="24"
-                                        Margin="0,0,-15,0"
-                                        Source="/Images/Project.png" />
+                                        Source="/Images/SideMenu/Project.png" />
                                 </hc:SideMenuItem.Icon>
                             </hc:SideMenuItem>
                             <hc:SideMenuItem
-                                Margin="0,0,0,10"
-                                Command="{Binding SelectCmd}"
-                                CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
+                                Margin="5"
+                                Background="{DynamicResource PrimaryBrush}"
                                 FontSize="16"
-                                Header="{ex:Language Key='Data'}">
+                                Foreground="{DynamicResource DefaultBrush}"
+                                Header="{ex:Language Key='Data'}"
+                                MouseEnter="SideMenuItem_MouseEnter"
+                                MouseLeave="SideMenuItem_MouseLeave"
+                                Tag="Data">
                                 <hc:SideMenuItem.Icon>
                                     <Image
                                         Width="24"
                                         Height="24"
-                                        Margin="0,0,-15,0"
-                                        Source="/Images/Data.png" />
+                                        Source="/Images/SideMenu/Data.png" />
                                 </hc:SideMenuItem.Icon>
                             </hc:SideMenuItem>
                             <hc:SideMenuItem
-                                Margin="0,0,0,10"
-                                Command="{Binding SelectCmd}"
-                                CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
+                                Margin="5"
+                                Background="{DynamicResource PrimaryBrush}"
                                 FontSize="16"
-                                Header="{ex:Language Key='Calibrate'}">
+                                Foreground="{DynamicResource DefaultBrush}"
+                                Header="{ex:Language Key='Calibrate'}"
+                                MouseEnter="SideMenuItem_MouseEnter"
+                                MouseLeave="SideMenuItem_MouseLeave"
+                                Tag="Calibrate">
                                 <hc:SideMenuItem.Icon>
                                     <Image
                                         Width="24"
                                         Height="24"
-                                        Margin="0,0,-15,0"
-                                        Source="/Images/Calibrate.png" />
+                                        Source="/Images/SideMenu/Calibrate.png" />
                                 </hc:SideMenuItem.Icon>
                             </hc:SideMenuItem>
                             <hc:SideMenuItem
-                                Margin="0,0,0,10"
-                                Command="{Binding SelectCmd}"
-                                CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
+                                Margin="5"
+                                Background="{DynamicResource PrimaryBrush}"
                                 FontSize="16"
-                                Header="{ex:Language Key='Control'}">
+                                Foreground="{DynamicResource DefaultBrush}"
+                                Header="{ex:Language Key='Control'}"
+                                MouseEnter="SideMenuItem_MouseEnter"
+                                MouseLeave="SideMenuItem_MouseLeave"
+                                Tag="Control">
                                 <hc:SideMenuItem.Icon>
                                     <Image
                                         Width="24"
                                         Height="24"
-                                        Margin="0,0,-15,0"
-                                        Source="/Images/Control.png" />
+                                        Source="/Images/SideMenu/Control.png" />
                                 </hc:SideMenuItem.Icon>
                             </hc:SideMenuItem>
                             <hc:SideMenuItem
-                                Margin="0,0,0,10"
-                                Command="{Binding SelectCmd}"
-                                CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
+                                Margin="5"
+                                Background="{DynamicResource PrimaryBrush}"
                                 FontSize="16"
-                                Header="{ex:Language Key='Settings'}">
+                                Foreground="{DynamicResource DefaultBrush}"
+                                Header="{ex:Language Key='Setting'}"
+                                MouseEnter="SideMenuItem_MouseEnter"
+                                MouseLeave="SideMenuItem_MouseLeave"
+                                Tag="Setting">
                                 <hc:SideMenuItem.Icon>
                                     <Image
                                         Width="24"
                                         Height="24"
-                                        Margin="0,0,-15,0"
-                                        Source="/Images/Settings.png" />
+                                        Source="/Images/SideMenu/Setting.png" />
                                 </hc:SideMenuItem.Icon>
                             </hc:SideMenuItem>
                             <hc:SideMenuItem
-                                Margin="0,0,0,10"
-                                Command="{Binding SelectCmd}"
-                                CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
+                                Margin="5"
+                                Background="{DynamicResource PrimaryBrush}"
                                 FontSize="16"
-                                Header="{ex:Language Key='Debug'}">
+                                Foreground="{DynamicResource DefaultBrush}"
+                                Header="{ex:Language Key='Debug'}"
+                                MouseEnter="SideMenuItem_MouseEnter"
+                                MouseLeave="SideMenuItem_MouseLeave"
+                                Tag="Debug">
                                 <hc:SideMenuItem.Icon>
                                     <Image
                                         Width="24"
                                         Height="24"
-                                        Margin="0,0,-15,0"
-                                        Source="/Images/Settings.png" />
+                                        Source="/Images/SideMenu/Debug.png" />
                                 </hc:SideMenuItem.Icon>
                             </hc:SideMenuItem>
                         </hc:SideMenu>
-                    </Grid>
-                </Border>
-                <Grid Grid.Column="1">
+                    </Border>
+                </Grid>
+                <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40" />
+                        <RowDefinition Height="50" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Border
                         Background="{DynamicResource PrimaryBrush}"
                         BorderBrush="{DynamicResource PrimaryBrush}"
                         BorderThickness="1"
-                        CornerRadius="0,0,0,20"
+                        CornerRadius="0,0,0,15"
                         Effect="{StaticResource EffectShadow1}">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -220,7 +235,7 @@
                                 Command="{Binding ChangeLanguageCommand}">
                                 <TextBlock
                                     FontSize="16"
-                                    Foreground="Gray"
+                                    Foreground="{DynamicResource DefaultBrush}"
                                     Text="{Binding LanguageName}"
                                     TextDecorations="Underline" />
                             </Button>
@@ -301,6 +316,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="16"
+                                Foreground="White"
                                 Text="{Binding User.UserName}" />
                             <Button
                                 Name="btnMin"

@@ -16,7 +16,7 @@ namespace RD3.ViewModels
 {
     public class EditProjectViewModel : NavigationViewModel, IDialogAware
     {
-        private string _mode;
+        private OpenMode _mode;
 
         private bool _enable;
         public bool Enable
@@ -39,14 +39,16 @@ namespace RD3.ViewModels
         {
             CheckContent();
             var collection = ProjectManager.GetInstance().Projects.Where(t => t.Name == Project.Name);
-            int count = _mode == "Add" ? 1 : 2;
-            if (collection.Count() > count)
+            if (collection.Count() > (int)_mode)
             {
                 MessageBox.Show(Language.GetValue(string.Format("已存在名称‘{0}’", Project.Name)).ToString());
                 return;
             }
-            Project.Account = Project.Creator = AppSession.CurrentUser.UserName;
-            Project.CreatDate = DateTime.Now;
+            if (_mode == OpenMode.Add)
+            {
+                Project.Account = Project.Creator = AppSession.CurrentUser.UserName;
+                Project.CreatDate = DateTime.Now;
+            }
             RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
         });
 
@@ -93,8 +95,8 @@ namespace RD3.ViewModels
         public void OnDialogOpened(IDialogParameters parameters)
         {
             Project = parameters.GetValue<Project>("Project");
-            _mode = parameters.GetValue<string>("Mode");
-            Enable = !(_mode == "View");
+            _mode = parameters.GetValue<OpenMode>("Mode");
+            Enable = !(_mode == OpenMode.View);
             aggregator.SendMessage("", nameof(EditProjectViewModel), Project);
         }
     }

@@ -20,7 +20,7 @@ namespace RD3.ViewModels
 {
     public class EditBatchViewModel : NavigationViewModel,IDialogAware
     {
-        private string _mode;
+        private OpenMode _mode;
 
         private Project _project;
         public Project Project
@@ -67,8 +67,7 @@ namespace RD3.ViewModels
         {
             CheckContent();
             var collection = BatchManager.GetInstance().Batches.Where(t => t.Name == Batch.Name);
-            int count = _mode == "Add" ? 1 : 2;
-            if (collection.Count() > count)
+            if (collection.Count() > (int)_mode)
             {
                 MessageBox.Show(Language.GetValue(string.Format("已存在名称‘{0}’", Batch.Name)).ToString());
                 return;
@@ -128,8 +127,8 @@ namespace RD3.ViewModels
         {
             Batch = parameters.GetValue<Batch>("Batch");
             Project = ProjectManager.GetInstance().Projects.FindFirst(t => t.Name == Batch?.Project);
-            _mode = parameters.GetValue<string>("Mode");
-            Enable = !(_mode == "View");
+            _mode = parameters.GetValue<OpenMode>("Mode");
+            Enable = !(_mode == OpenMode.View);
             aggregator.SendMessage("", nameof(EditBatchViewModel), Batch);
         }
     }

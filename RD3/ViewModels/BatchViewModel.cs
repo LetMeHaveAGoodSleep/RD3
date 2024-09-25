@@ -5,6 +5,7 @@ using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RD3.Common;
 using RD3.Shared;
+using RD3.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,19 @@ namespace RD3.ViewModels
 {
     public class BatchViewModel : NavigationViewModel
     {
+        private bool _isTemplate = false;
+        public bool IsTemplate
+        {
+            get { return _isTemplate; }
+            set { SetProperty(ref _isTemplate, value); }
+        }
+
+        private ObservableCollection<ProjectTemplate> _projectTemplates = [];
+        public ObservableCollection<ProjectTemplate> ProjectTemplates { get { return _projectTemplates; } set { SetProperty(ref _projectTemplates, value); } }
+
+        private ObservableCollection<ProjectTemplate> _projectTemplate = [];
+        public ObservableCollection<ProjectTemplate> ProjectTemplateCol { get { return _projectTemplates; } set { SetProperty(ref _projectTemplates, value); } }
+
         private readonly IDialogService dialogService;
 
         public string Title => AppSession.CompanyName;
@@ -52,36 +66,58 @@ namespace RD3.ViewModels
 
         public DelegateCommand CloseCommand => new(() => RequestClose?.Invoke(new DialogResult(ButtonResult.OK)));
 
-        public DelegateCommand AddBatchCommand => new(() =>
+        public DelegateCommand AddCommand => new(() =>
         {
-            string Id = DateTime.Now.ToString("yyyyMMdd");
-            int index = 1;
-            var result = BatchManager.GetInstance().Batches.ToList().FindLast(t => t.Id.StartsWith(Id));
-            try
+            if (!IsTemplate)
             {
-                index = Convert.ToInt32(result?.Id.Substring(8, 2)) + 1;
-            }
-            catch (Exception ex)
-            {
+                string Id = DateTime.Now.ToString("yyyyMMdd");
+                int index = 1;
+                var result = BatchManager.GetInstance().Batches.ToList().FindLast(t => t.Id.StartsWith(Id));
+                try
+                {
+                    index = Convert.ToInt32(result?.Id.Substring(8, 2)) + 1;
+                }
+                catch (Exception ex)
+                {
 
-            }
-            Id += index.ToString().PadLeft(2, '0');
-            Batch batch = new Batch() { Id = Id, EndTime = DateTime.Now.AddDays(1), StartTime = DateTime.Now,Status="Add" };
-            DialogParameters pairs = new DialogParameters
+                }
+                Id += index.ToString().PadLeft(2, '0');
+                Batch batch = new Batch() { Id = Id, EndTime = DateTime.Now.AddDays(1), StartTime = DateTime.Now, Status = "Add" };
+                DialogParameters pairs = new DialogParameters
             {
                 { "Batch", batch },
-                {"Mode", "Add"  }
+                {"Mode", OpenMode.Add  }
             };
-            dialogService?.ShowDialog("EditBatchView", pairs, callback =>
-            {
-                if (callback.Result != ButtonResult.OK)
+                dialogService?.ShowDialog(nameof(EditBatchView), pairs, callback =>
                 {
-                    return;
-                }
-                Batches.Add(batch);
-                BatchManager.GetInstance().Save(Batches);
-                PageUpdated(new FunctionEventArgs<int>(PageIndex));
-            });
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        return;
+                    }
+                    Batches.Add(batch);
+                    BatchManager.GetInstance().Save(Batches);
+                    PageUpdated(new FunctionEventArgs<int>(PageIndex));
+                });
+            }
+            else
+            {
+                ProjectTemplate template = new() { UsageTime = 0 };
+                DialogParameters pairs = new()
+                {
+                    { "Template", template },
+                    {"Mode", OpenMode.Add  }
+                };
+                dialogService?.ShowDialog(nameof(EditTemplateView), pairs, callback =>
+                {
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        return;
+                    }
+                    ProjectTemplates.Add(template);
+                    ProjectTemplateManager.GetInstance().Save(ProjectTemplates);
+                    PageUpdated(new FunctionEventArgs<int>(1));
+                });
+            }
         });
 
         public DelegateCommand<Batch> CompareCommand => new((Batch batch) =>
@@ -91,74 +127,162 @@ namespace RD3.ViewModels
             BatchManager.GetInstance().Save(Batches);
         });
 
-        public DelegateCommand<Batch> ExportCommand => new((Batch batch) =>
+        public DelegateCommand<object> ExportCommand => new((object o) =>
         {
+            if (o == null) return;
+            if (o.GetType().Name == nameof(Batch))
+            {
 
+            }
+            else if (o.GetType().Name == nameof(ProjectTemplate))
+            {
+                
+            }
         });
 
-        public DelegateCommand<Batch> EditCommand => new((Batch batch) =>
+        public DelegateCommand<object> EditCommand => new((object o) =>
         {
-            if (batch == null) return;
-            DialogParameters pairs = new DialogParameters
+            if (o == null) return;
+            if (o.GetType().Name == nameof(Batch))
+            {
+                Batch batch = (Batch)o;
+                DialogParameters pairs = new DialogParameters
             {
                 { "Batch", batch },
-                {"Mode", "Edit"  }
+                {"Mode", OpenMode.Edit  }
             };
-            dialogService?.ShowDialog("EditBatchView", pairs, callback =>
-            {
-                if (callback.Result != ButtonResult.OK)
+                dialogService?.ShowDialog("EditBatchView", pairs, callback =>
                 {
-                    return;
-                }
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        return;
+                    }
+                    BatchManager.GetInstance().Save(Batches);
+                });
+            }
+            else if (o.GetType().Name == nameof(ProjectTemplate))
+            {
+                ProjectTemplate template = (ProjectTemplate)o;
+                DialogParameters pairs = new DialogParameters
+                {
+                    { "Template", template },
+                    { "Mode", OpenMode.Edit }
+                };
+                dialogService?.ShowDialog(nameof(EditTemplateView), pairs, callback =>
+                {
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        return;
+                    }
+                    ProjectTemplateManager.GetInstance().Save(ProjectTemplates);
+                });
+            }
+        });
+
+        public DelegateCommand<object> ViewCommand => new((object o) =>
+        {
+            if (o == null) return;
+            if (o.GetType().Name == nameof(Batch))
+            {
+                Batch batch = (Batch)o;
+                DialogParameters pairs = new DialogParameters
+            {
+                { "Batch", batch },
+                {"Mode", OpenMode.View }
+            };
+                dialogService?.ShowDialog("EditBatchView", pairs, callback =>
+                {
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        return;
+                    }
+                });
+            }
+            else if (o.GetType().Name == nameof(ProjectTemplate))
+            {
+                ProjectTemplate template = (ProjectTemplate)o;
+                DialogParameters pairs = new DialogParameters
+                {
+                    { "Template", template },
+                    { "Mode", OpenMode.View }
+                };
+                dialogService?.ShowDialog(nameof(EditTemplateView), pairs, callback =>
+                {
+                    if (callback.Result != ButtonResult.OK)
+                    {
+                        return;
+                    }
+                });
+            }
+        });
+
+        public DelegateCommand<object> DeleteCommand => new((object o) =>
+        {
+            if (o == null) return;
+            if (o.GetType().Name == nameof(Batch))
+            {
+                Batch batch = (Batch)o;
+                BatchCol.Remove(batch);
+                Batches.Remove(batch);
                 BatchManager.GetInstance().Save(Batches);
-            });
-        });
-
-        public DelegateCommand<Batch> ViewCommand => new((Batch batch) =>
-        {
-            DialogParameters pairs = new DialogParameters
+            }
+            else if (o.GetType().Name == nameof(ProjectTemplate))
             {
-                { "Batch", batch },
-                {"Mode", "View"  }
-            };
-            dialogService?.ShowDialog("EditBatchView", pairs, callback =>
-            {
-                if (callback.Result != ButtonResult.OK)
-                {
-                    return;
-                }
-            });
-        });
-
-        public DelegateCommand<Batch> DeleteCommand => new((Batch batch) =>
-        {
-            BatchCol.Remove(batch);
-            Batches.Remove(batch);
-            BatchManager.GetInstance().Save(Batches);
+                ProjectTemplate template = (ProjectTemplate)o;
+                ProjectTemplateCol.Remove(template);
+                ProjectTemplates.Remove(template);
+                ProjectTemplateManager.GetInstance().Save(ProjectTemplates);
+            }
         });
 
         public DelegateCommand<FunctionEventArgs<string>> SearchCommand => new((FunctionEventArgs<string> e) =>
         {
             string key = e.Info;
-            if (string.IsNullOrEmpty(key))
+            if (!IsTemplate)
             {
-                Batches = new ObservableCollection<Batch>(BatchManager.GetInstance().Batches);
+                if (string.IsNullOrEmpty(key))
+                {
+                    Batches = new ObservableCollection<Batch>(BatchManager.GetInstance().Batches);
+                }
+                else
+                {
+                    var collection = Batches.Where(t => t.Id.Contains(key) || t.Name.Contains(key) || t.Reactor.Contains(key)
+                    || t.Status.Contains(key) || t.Project.Contains(key) || t.Description.Contains(key));
+                    Batches = new ObservableCollection<Batch>(collection);
+                }
+                PageCount = Batches.Count / DataCountPerPage + (Batches.Count % DataCountPerPage != 0 ? 1 : 0);
+                if (PageIndex != 1)
+                {
+                    PageIndex = 1;
+                }
+                else
+                {
+                    var data = Batches.Take(DataCountPerPage);
+                    BatchCol = new ObservableCollection<Batch>(data);
+                }
             }
             else
             {
-                var collection = Batches.Where(t => t.Id.Contains(key) || t.Name.Contains(key) || t.Reactor.Contains(key)
-                || t.Status.Contains(key) || t.Project.Contains(key) || t.Description.Contains(key));
-                Batches = new ObservableCollection<Batch>(collection);
-            }
-            PageCount = Batches.Count / DataCountPerPage + (Batches.Count % DataCountPerPage != 0 ? 1 : 0);
-            if (PageIndex != 1)
-            {
-                PageIndex = 1;
-            }
-            else
-            {
-                var data = Batches.Take(DataCountPerPage);
-                BatchCol = new ObservableCollection<Batch>(data);
+                if (string.IsNullOrEmpty(key))
+                {
+                    ProjectTemplates = new ObservableCollection<ProjectTemplate>(ProjectTemplateManager.GetInstance().Templates);
+                }
+                else
+                {
+                    var collection = ProjectTemplates.Where(t => t.Name.Contains(key) || t.Creator.Contains(key)
+                    || t.UsageTime.ToString().Contains(key));
+                    ProjectTemplates = new ObservableCollection<ProjectTemplate>(collection);
+                }
+                PageCount = ProjectTemplates.Count / DataCountPerPage + (ProjectTemplates.Count % DataCountPerPage != 0 ? 1 : 0);
+                if (PageIndex != 1)
+                {
+                    PageIndex = 1;
+                }
+                else
+                {
+                    var data = ProjectTemplates.Take(DataCountPerPage);
+                    ProjectTemplateCol = new ObservableCollection<ProjectTemplate>(data);
+                }
             }
         });
 
@@ -169,6 +293,7 @@ namespace RD3.ViewModels
             PageIndex = 1;
             dialogService = dialog;
             Batches = new ObservableCollection<Batch>(BatchManager.GetInstance().Batches);
+            ProjectTemplates = new ObservableCollection<ProjectTemplate>(ProjectTemplateManager.GetInstance().Templates);
             PageCount = Batches.Count / DataCountPerPage + (Batches.Count % DataCountPerPage != 0 ? 1 : 0);
             var data = Batches.Take(DataCountPerPage);
             BatchCol = new ObservableCollection<Batch>(data);
@@ -191,8 +316,18 @@ namespace RD3.ViewModels
 
         private void PageUpdated(FunctionEventArgs<int> info)
         {
-            var data = Batches.Skip((info.Info - 1) * DataCountPerPage).Take(DataCountPerPage);
-            BatchCol = new ObservableCollection<Batch>(data);
+            if (!IsTemplate)
+            {
+                PageCount = Batches.Count / DataCountPerPage + (Batches.Count % DataCountPerPage != 0 ? 1 : 0);
+                var data = Batches.Skip((info.Info - 1) * DataCountPerPage).Take(DataCountPerPage);
+                BatchCol = new ObservableCollection<Batch>(data);
+            }
+            else
+            {
+                PageCount = ProjectTemplates.Count / DataCountPerPage + (ProjectTemplates.Count % DataCountPerPage != 0 ? 1 : 0);
+                var data = ProjectTemplates.Skip((info.Info - 1) * DataCountPerPage).Take(DataCountPerPage);
+                ProjectTemplateCol = new ObservableCollection<ProjectTemplate>(data);
+            }
         }
     }
 }

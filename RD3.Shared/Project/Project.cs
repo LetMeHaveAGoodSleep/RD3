@@ -33,6 +33,7 @@ namespace RD3.Shared
         public DateTime StartDate { get; set; }
 
         public DateTime CloseDate { get; set; }
+
         public DateTime CreatDate { get; set; }
 
         public string Creator { get; set; }
@@ -42,6 +43,18 @@ namespace RD3.Shared
         {
             get { return _description; }
             set { SetProperty(ref _description, value); }
+        }
+
+        private ProjectStatus _status;
+        public ProjectStatus Status
+        {
+            get { return _status; }
+            set { SetProperty(ref _status, value); }
+        }
+
+        public string StatusName
+        {
+            get { return _status.ToString(); }
         }
     }
 }
