@@ -218,3 +218,8 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditTemplateView.baml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\ProjectTemplate.json
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditExperimentParamView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditExperimentParamView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CalibrationView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CalibrationView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AuditView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AuditView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\Fonts.baml

@@ -148,8 +148,9 @@ namespace RD3.ViewModels
             MenuBars.Add(new MenuBar() { Icon = "Home", Title = Language.GetValue("Main").ToString(), NameSpace = "IndexView" });
             MenuBars.Add(new MenuBar() { Icon = "Project", Title = Language.GetValue("Project").ToString(), NameSpace = "ProjectView" });
             MenuBars.Add(new MenuBar() { Icon = "Data", Title = Language.GetValue("Data").ToString(), NameSpace = "BatchView" });
-            MenuBars.Add(new MenuBar() { Icon = "Calibrate", Title = Language.GetValue("Calibrate").ToString(), NameSpace = "CalibrateView" });
+            MenuBars.Add(new MenuBar() { Icon = "Calibrate", Title = Language.GetValue("Calibrate").ToString(), NameSpace = "CalibrationView" });
             MenuBars.Add(new MenuBar() { Icon = "Control", Title = Language.GetValue("Control").ToString(), NameSpace = "ControlView" });
+            MenuBars.Add(new MenuBar() { Icon = "Audit", Title = Language.GetValue("Audit").ToString(), NameSpace = "AuditView" });
             MenuBars.Add(new MenuBar() { Icon = "Settings", Title = Language.GetValue("Settings").ToString(), NameSpace = "OperationView" });
             MenuBars.Add(new MenuBar() { Icon = "Debug", Title = Language.GetValue("Debug").ToString(), NameSpace = "MCUDebugView" }); 
         }

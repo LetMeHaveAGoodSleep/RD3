@@ -28,8 +28,11 @@ namespace RD3.Views
         {
             InitializeComponent();
 
-            tgbHistory.Checked += ToggleButton_Checked;
-            tgbTemplate.Checked += ToggleButton_Checked;
+            foreach (RadioButton item in ButtonGroup.Items)
+            {
+                item.Checked += RadioButton_Checked;
+            }
+            tabControl.SelectionChanged += TabControl_SelectionChanged;
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
@@ -76,31 +79,40 @@ namespace RD3.Views
             control.Visibility = Visibility.Collapsed;
         }
 
-        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-            ToggleButton toggleButton = sender as ToggleButton;
-            if (toggleButton?.Name == nameof(tgbHistory))
-            {
-                tgbTemplate.IsChecked = !toggleButton.IsChecked;
-                tabHistory.IsSelected = (bool)toggleButton.IsChecked;
-                ((BatchViewModel)DataContext).IsTemplate = tabTemplate.IsSelected = !(bool)toggleButton.IsChecked;
-                ((BatchViewModel)DataContext)?.PageUpdatedCommand.Execute(new FunctionEventArgs<int>(1));
-                ButtonCompare.Visibility = ButtonCreate.Visibility = (bool)toggleButton.IsChecked == true ? Visibility.Visible : Visibility.Collapsed;
-            }
-            else if (toggleButton?.Name == nameof(tgbTemplate))
-            {
-                tgbHistory.IsChecked = !toggleButton.IsChecked;
-                ((BatchViewModel)DataContext).IsTemplate = tabTemplate.IsSelected = (bool)toggleButton.IsChecked;
-                tabHistory.IsSelected = !(bool)toggleButton.IsChecked;
-                ((BatchViewModel)DataContext)?.PageUpdatedCommand.Execute(new FunctionEventArgs<int>(1));
-                ButtonCompare.Visibility = ButtonCreate.Visibility = (bool)toggleButton.IsChecked == true ? Visibility.Collapsed : Visibility.Visible;
-            }
-        }
-
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             object o = tabHistory.IsSelected == true ? dataGrid.SelectedItem : dataGrid1.SelectedItem;
             ((BatchViewModel)this.DataContext)?.ViewCommand.Execute(o);
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioButton = sender as RadioButton;
+            foreach (TabItem item in tabControl.Items)
+            {
+                if (radioButton.Tag?.ToString() == item.Name)
+                {
+                    item.IsSelected = true;
+                    break;
+                }
+            }
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems == null) return;
+            TabItem tabItem = e.AddedItems[e.AddedItems.Count - 1] as TabItem;
+            if (tabItem == tabHistory)
+            {
+                ((BatchViewModel)DataContext).IsTemplate = false;
+                ButtonCompare.Visibility = ButtonCreate.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ((BatchViewModel)DataContext).IsTemplate = false;
+                ButtonCompare.Visibility = ButtonCreate.Visibility = Visibility.Collapsed;
+            }
+            ((BatchViewModel)DataContext)?.PageUpdatedCommand.Execute(new FunctionEventArgs<int>(1));
         }
     }
 }

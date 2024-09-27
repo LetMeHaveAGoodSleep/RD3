@@ -117,6 +117,7 @@ namespace RD3
             containerRegistry.RegisterForNavigation<ProjectView, ProjectViewModel>();
             containerRegistry.RegisterDialog<EditProjectView, EditProjectViewModel>();
             containerRegistry.RegisterDialog<EditTemplateView, EditProjectTemplateViewModel>();
+            containerRegistry.RegisterForNavigation<CalibrationView, CalibrateViewModel>(); 
             containerRegistry.RegisterForNavigation<CalibrateView, CalibrateViewModel>();
             containerRegistry.RegisterDialog<SelfCheckView, SelfCheckViewModel>();
             containerRegistry.RegisterForNavigation<BatchView, BatchViewModel>();
@@ -131,6 +132,7 @@ namespace RD3
             containerRegistry.RegisterForNavigation<ControlView, ControlViewModel>();
             containerRegistry.RegisterForNavigation<AddSampleView, AddSampleViewModel>();
             containerRegistry.RegisterDialog<EditExperimentParamView, EditExperimentParamViewModel>();
+            containerRegistry.RegisterForNavigation<AuditView, AuditViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

@@ -19,7 +19,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowsTransparency="True"
-    Background="{StaticResource BackGroundBrush}"
+    Background="{StaticResource DefaultBrush}"
     TextElement.FontFamily="{StaticResource CHNFontFamily}"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -159,6 +159,22 @@
                                         Width="24"
                                         Height="24"
                                         Source="/Images/SideMenu/Control.png" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem
+                                Margin="5"
+                                Background="{DynamicResource PrimaryBrush}"
+                                FontSize="16"
+                                Foreground="{DynamicResource DefaultBrush}"
+                                Header="{ex:Language Key='Audit'}"
+                                MouseEnter="SideMenuItem_MouseEnter"
+                                MouseLeave="SideMenuItem_MouseLeave"
+                                Tag="Audit">
+                                <hc:SideMenuItem.Icon>
+                                    <Image
+                                        Width="24"
+                                        Height="24"
+                                        Source="/Images/SideMenu/Audit.png" />
                                 </hc:SideMenuItem.Icon>
                             </hc:SideMenuItem>
                             <hc:SideMenuItem

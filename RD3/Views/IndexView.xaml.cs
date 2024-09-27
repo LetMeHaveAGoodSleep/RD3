@@ -40,17 +40,6 @@ namespace RD3.Views
 
             InitializeComponent();
 
-            tgbDetails.Checked += ToggleButton_Checked;
-            tgbTrends.Checked += ToggleButton_Checked;
-            tgbOverview.Checked += ToggleButton_Checked;
-
-            tgbDO.Checked += ToggleButton_Checked;
-            tgbAgit.Checked += ToggleButton_Checked;
-            tgbAir.Checked += ToggleButton_Checked;
-            tgbPH.Checked += ToggleButton_Checked;
-            tgbTemp.Checked += ToggleButton_Checked;
-
-
             wpfPlot1.Plot.Legend.IsVisible = true;
             wpfPlot1.Plot.ShowLegend(Edge.Top);
 
@@ -228,49 +217,15 @@ namespace RD3.Views
                 //    }
                 //}
             };
-        }
 
-        private void ToggleButton_Checked(object sender, RoutedEventArgs e)
-        {
-            ToggleButton toggleButton = sender as ToggleButton;
-            if (toggleButton?.Name == nameof(tgbDetails))
+            foreach (RadioButton item in ButtonGroup.Items)
             {
-                tgbOverview.IsChecked = tgbTrends.IsChecked = !toggleButton.IsChecked;
-                tabDetails.IsSelected = (bool)toggleButton.IsChecked;
-                tabTrends.IsSelected = tabOverview.IsSelected = !(bool)toggleButton.IsChecked;
+                item.Checked += RadioButton_Checked;
             }
-            else if (toggleButton?.Name == nameof(tgbTrends))
+
+            foreach (RadioButton item in ButtonGroup1.Items)
             {
-                tgbOverview.IsChecked = tgbDetails.IsChecked = !toggleButton.IsChecked;
-                tabTrends.IsSelected = (bool)toggleButton.IsChecked;
-                tabDetails.IsSelected = tabOverview.IsSelected = !(bool)toggleButton.IsChecked;
-            }
-            else if (toggleButton?.Name == nameof(tgbOverview))
-            {
-                tgbDetails.IsChecked = tgbTrends.IsChecked = !toggleButton.IsChecked;
-                tabOverview.IsSelected = (bool)toggleButton.IsChecked;
-                tabTrends.IsSelected = tabDetails.IsSelected = !(bool)toggleButton.IsChecked;
-            }
-            else if (toggleButton?.Name == nameof(tgbDO))
-            {
-                tgbAgit.IsChecked = tgbAir.IsChecked = tgbPH.IsChecked = tgbTemp.IsChecked = !toggleButton.IsChecked;
-                //TODO:切换曲线
-            }
-            else if (toggleButton?.Name == nameof(tgbAgit))
-            {
-                tgbDO.IsChecked = tgbAir.IsChecked = tgbPH.IsChecked = tgbTemp.IsChecked = !toggleButton.IsChecked;
-            }
-            else if (toggleButton?.Name == nameof(tgbAir))
-            {
-                tgbDO.IsChecked = tgbAgit.IsChecked = tgbPH.IsChecked = tgbTemp.IsChecked = !toggleButton.IsChecked;
-            }
-            else if (toggleButton?.Name == nameof(tgbPH))
-            {
-                tgbDO.IsChecked = tgbAgit.IsChecked = tgbAir.IsChecked = tgbTemp.IsChecked = !toggleButton.IsChecked;
-            }
-            else if (toggleButton?.Name == nameof(tgbTemp))
-            {
-                tgbDO.IsChecked = tgbAgit.IsChecked = tgbAir.IsChecked = tgbPH.IsChecked = !toggleButton.IsChecked;
+                item.Checked += RadioButton1_Checked;
             }
         }
 
@@ -313,6 +268,25 @@ namespace RD3.Views
         {
             if (e.ClickCount < 1) return;
             ((IndexViewModel)this.DataContext)?.EditParamCommand.Execute();
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioButton = sender as RadioButton;
+            foreach (TabItem item in tabControl.Items)
+            {
+                if (radioButton.Tag?.ToString() == item.Name)
+                {
+                    item.IsSelected = true;
+                    break;
+                }
+            }
+        }
+
+        private void RadioButton1_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton radioButton = sender as RadioButton;
+            //TODO:曲线切换
         }
     }
 }

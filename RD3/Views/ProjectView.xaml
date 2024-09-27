@@ -112,7 +112,6 @@
             <hc:SearchBar
                 Width="240"
                 Height="45"
-                Margin="5"
                 HorizontalAlignment="Left"
                 hc:InfoElement.ShowClearButton="True"
                 DockPanel.Dock="Left"
@@ -123,7 +122,7 @@
                     </hc:EventTrigger>
                 </hc:Interaction.Triggers>
             </hc:SearchBar>
-            <hc:UniformSpacingPanel DockPanel.Dock="Right" Spacing="10">
+            <hc:UniformSpacingPanel DockPanel.Dock="Right">
                 <Button
                     Name="ButtonCreate"
                     Height="35"
@@ -142,7 +141,8 @@
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryEdit}"
                     Click="ButtonEdit_Click"
-                    FontSize="14" />
+                    FontSize="14"
+                    Visibility="Collapsed" />
                 <Button
                     Height="35"
                     HorizontalContentAlignment="Center"
@@ -150,7 +150,8 @@
                     hc:IconElement.Geometry="{StaticResource GeometryDelete}"
                     Click="ButtonDelete_Click"
                     FontSize="14"
-                    Foreground="Red" />
+                    Foreground="Red"
+                    Visibility="Collapsed" />
             </hc:UniformSpacingPanel>
         </DockPanel>
         <TabControl

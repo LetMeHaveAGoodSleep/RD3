@@ -7,7 +7,8 @@
     xmlns:local="clr-namespace:RD3"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
-    xmlns:prism="http://prismlibrary.com/">
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:system="clr-namespace:System;assembly=netstandard">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -19,6 +20,7 @@
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
                 <ResourceDictionary Source="Themes/WaveAnimation.xaml" />
+                <ResourceDictionary Source="Themes/Fonts.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ResourceDictionary x:Key="zh_CN" Source="pack://application:,,,/Lang/Lang.zh-CN.xaml" />
             <ResourceDictionary x:Key="en_US" Source="pack://application:,,,/Lang/Lang.en-US.xaml" />
@@ -154,6 +156,21 @@
                 <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
                 <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
             </Style>
+            <Style x:Key="BorderForm" TargetType="{x:Type Border}">
+                <Setter Property="Border.CornerRadius" Value="8" />
+                <Setter Property="Border.Padding" Value="20" />
+                <Setter Property="Background" Value="{DynamicResource DefaultBrush}" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="BorderBrush" Value="{DynamicResource DefaultBrush}" />
+                <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
+            </Style>
+            <Style x:Key="BorderCommon" TargetType="{x:Type Border}">
+                <Setter Property="Border.CornerRadius" Value="8" />
+                <Setter Property="Border.Padding" Value="10" />
+                <Setter Property="Background" Value="{DynamicResource DefaultBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+            </Style>
             <Style x:Key="HeavyFontSizeStyle" TargetType="{x:Type TextBlock}">
                 <Setter Property="FontSize" Value="30" />
             </Style>
@@ -202,6 +219,7 @@
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
+            <system:Double x:Key="LargeFontSize">20</system:Double>
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

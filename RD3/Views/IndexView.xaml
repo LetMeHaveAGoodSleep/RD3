@@ -36,102 +36,46 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <Border
-                Background="#F5F7FA"
+                Height="50"
+                Background="{DynamicResource BorderBrush}"
                 BorderThickness="0.5"
                 CornerRadius="8">
-                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                    <ToggleButton
-                        Name="tgbDetails"
+                <hc:ButtonGroup
+                    Name="ButtonGroup"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ButtonGroupSolid}">
+                    <RadioButton
+                        Width="100"
+                        Height="40"
+                        Margin="5,0,0,0"
+                        hc:BorderElement.CornerRadius="8"
+                        Background="{DynamicResource BorderBrush}"
+                        Content="{ex:Language Key='Detail'}"
+                        FontSize="{DynamicResource MediumFontSize}"
+                        Foreground="{DynamicResource SecondaryTextBrush}"
                         IsChecked="True"
-                        Style="{DynamicResource ToggleButtonCustom}">
-                        <hc:StatusSwitchElement.CheckedElement>
-                            <Border
-                                Width="60"
-                                Height="30"
-                                Background="{DynamicResource DarkPrimaryBrush}"
-                                BorderBrush="{DynamicResource BorderBrush}"
-                                BorderThickness="0.5"
-                                CornerRadius="4">
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Foreground="White"
-                                    Text="{ex:Language Key='Details'}" />
-                            </Border>
-                        </hc:StatusSwitchElement.CheckedElement>
-                        <Border
-                            Width="60"
-                            Height="30"
-                            BorderBrush="#F5F7FA"
-                            BorderThickness="0"
-                            CornerRadius="4">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Foreground="Gray"
-                                Text="{ex:Language Key='Details'}" />
-                        </Border>
-                    </ToggleButton>
-                    <ToggleButton Name="tgbTrends" Style="{DynamicResource ToggleButtonCustom}">
-                        <hc:StatusSwitchElement.CheckedElement>
-                            <Border
-                                Width="60"
-                                Height="30"
-                                Background="{DynamicResource DarkPrimaryBrush}"
-                                BorderBrush="{DynamicResource BorderBrush}"
-                                BorderThickness="0.5"
-                                CornerRadius="4">
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Foreground="White"
-                                    Text="{ex:Language Key='Trends'}" />
-                            </Border>
-                        </hc:StatusSwitchElement.CheckedElement>
-                        <Border
-                            Width="60"
-                            Height="30"
-                            BorderBrush="#F5F7FA"
-                            BorderThickness="0"
-                            CornerRadius="4">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Foreground="Gray"
-                                Text="{ex:Language Key='Trends'}" />
-                        </Border>
-                    </ToggleButton>
-                    <ToggleButton Name="tgbOverview" Style="{DynamicResource ToggleButtonCustom}">
-                        <hc:StatusSwitchElement.CheckedElement>
-                            <Border
-                                Width="60"
-                                Height="30"
-                                Background="{DynamicResource DarkPrimaryBrush}"
-                                BorderBrush="{DynamicResource BorderBrush}"
-                                BorderThickness="0.5"
-                                CornerRadius="4"
-                                Effect="{StaticResource EffectShadow1}">
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Foreground="White"
-                                    Text="{ex:Language Key='Overview'}" />
-                            </Border>
-                        </hc:StatusSwitchElement.CheckedElement>
-                        <Border
-                            Width="60"
-                            Height="30"
-                            BorderBrush="#F5F7FA"
-                            BorderThickness="0"
-                            CornerRadius="4">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Foreground="Gray"
-                                Text="{ex:Language Key='Overview'}" />
-                        </Border>
-                    </ToggleButton>
-                </hc:UniformSpacingPanel>
+                        Tag="tabDetail" />
+                    <RadioButton
+                        Width="100"
+                        Height="40"
+                        Margin="5,0,5,0"
+                        hc:BorderElement.CornerRadius="8"
+                        Background="{DynamicResource BorderBrush}"
+                        Content="{ex:Language Key='Trend'}"
+                        FontSize="{DynamicResource MediumFontSize}"
+                        Foreground="{DynamicResource SecondaryTextBrush}"
+                        Tag="tabTrend" />
+                    <RadioButton
+                        Width="100"
+                        Height="40"
+                        Margin="5,0,5,0"
+                        hc:BorderElement.CornerRadius="8"
+                        Background="{DynamicResource BorderBrush}"
+                        Content="{ex:Language Key='Overview'}"
+                        FontSize="{DynamicResource MediumFontSize}"
+                        Foreground="{DynamicResource SecondaryTextBrush}"
+                        Tag="tabOverview" />
+                </hc:ButtonGroup>
             </Border>
             <hc:UniformSpacingPanel Grid.Column="2" Spacing="10">
                 <Button
@@ -219,6 +163,7 @@
             </hc:UniformSpacingPanel>
         </Grid>
         <TabControl
+            Name="tabControl"
             Grid.Row="1"
             Grid.ColumnSpan="3"
             Margin="0,20,0,0"
@@ -226,9 +171,9 @@
             Loaded="TabControl_Loaded"
             Style="{StaticResource TabControlBaseStyle}">
             <TabItem
-                Name="tabDetails"
+                Name="tabDetail"
                 hc:BorderElement.CornerRadius="8"
-                Header="{ex:Language Key='Details'}"
+                Header="{ex:Language Key='Detail'}"
                 IsSelected="True">
                 <Border Background="#F5F7FA" Style="{StaticResource BorderCard}">
                     <Grid>
@@ -282,167 +227,68 @@
                                     Style="{StaticResource BorderCard}">
                                     <DockPanel LastChildFill="True">
                                         <Border
-                                            Width="350"
                                             Height="40"
-                                            Margin="5"
                                             HorizontalAlignment="Left"
-                                            Background="#F5F7FA"
+                                            Background="{DynamicResource BorderBrush}"
                                             BorderThickness="0.5"
                                             CornerRadius="8"
                                             DockPanel.Dock="Top">
-                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                                <ToggleButton
-                                                    Name="tgbDO"
+                                            <hc:ButtonGroup
+                                                Name="ButtonGroup1"
+                                                VerticalAlignment="Center"
+                                                Style="{StaticResource ButtonGroupSolid}">
+                                                <RadioButton
+                                                    Width="60"
+                                                    Height="30"
+                                                    Margin="5,0,0,0"
+                                                    hc:BorderElement.CornerRadius="8"
+                                                    Background="{DynamicResource BorderBrush}"
+                                                    Content="{ex:Language Key='DO'}"
+                                                    FontSize="{DynamicResource TextFontSize}"
+                                                    Foreground="{DynamicResource SecondaryTextBrush}"
                                                     IsChecked="True"
-                                                    Style="{DynamicResource ToggleButtonCustom}">
-                                                    <hc:StatusSwitchElement.CheckedElement>
-                                                        <Border
-                                                            Width="60"
-                                                            Height="30"
-                                                            Background="{DynamicResource DarkPrimaryBrush}"
-                                                            BorderBrush="{DynamicResource BorderBrush}"
-                                                            BorderThickness="0.5"
-                                                            CornerRadius="4">
-                                                            <TextBlock
-                                                                HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"
-                                                                Foreground="White"
-                                                                Text="{ex:Language Key='DO'}" />
-                                                        </Border>
-                                                    </hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        BorderBrush="#F5F7FA"
-                                                        BorderThickness="0"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="Gray"
-                                                            Text="{ex:Language Key='DO'}" />
-                                                    </Border>
-                                                </ToggleButton>
-                                                <ToggleButton Name="tgbAgit" Style="{DynamicResource ToggleButtonCustom}">
-                                                    <hc:StatusSwitchElement.CheckedElement>
-                                                        <Border
-                                                            Width="60"
-                                                            Height="30"
-                                                            Background="{DynamicResource DarkPrimaryBrush}"
-                                                            BorderBrush="{DynamicResource BorderBrush}"
-                                                            BorderThickness="0.5"
-                                                            CornerRadius="4">
-                                                            <TextBlock
-                                                                HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"
-                                                                Foreground="White"
-                                                                Text="{ex:Language Key='Agit'}" />
-                                                        </Border>
-                                                    </hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        BorderBrush="#F5F7FA"
-                                                        BorderThickness="0"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="Gray"
-                                                            Text="{ex:Language Key='Agit'}" />
-                                                    </Border>
-                                                </ToggleButton>
-                                                <ToggleButton Name="tgbAir" Style="{DynamicResource ToggleButtonCustom}">
-                                                    <hc:StatusSwitchElement.CheckedElement>
-                                                        <Border
-                                                            Width="60"
-                                                            Height="30"
-                                                            Background="{DynamicResource DarkPrimaryBrush}"
-                                                            BorderBrush="{DynamicResource BorderBrush}"
-                                                            BorderThickness="0.5"
-                                                            CornerRadius="4"
-                                                            Effect="{StaticResource EffectShadow1}">
-                                                            <TextBlock
-                                                                HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"
-                                                                Foreground="White"
-                                                                Text="{ex:Language Key='Air'}" />
-                                                        </Border>
-                                                    </hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        BorderBrush="#F5F7FA"
-                                                        BorderThickness="0"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="Gray"
-                                                            Text="{ex:Language Key='Air'}" />
-                                                    </Border>
-                                                </ToggleButton>
-                                                <ToggleButton Name="tgbPH" Style="{DynamicResource ToggleButtonCustom}">
-                                                    <hc:StatusSwitchElement.CheckedElement>
-                                                        <Border
-                                                            Width="60"
-                                                            Height="30"
-                                                            Background="{DynamicResource DarkPrimaryBrush}"
-                                                            BorderBrush="{DynamicResource BorderBrush}"
-                                                            BorderThickness="0.5"
-                                                            CornerRadius="4"
-                                                            Effect="{StaticResource EffectShadow1}">
-                                                            <TextBlock
-                                                                HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"
-                                                                Foreground="White"
-                                                                Text="{ex:Language Key='PH'}" />
-                                                        </Border>
-                                                    </hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        BorderBrush="#F5F7FA"
-                                                        BorderThickness="0"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="Gray"
-                                                            Text="{ex:Language Key='PH'}" />
-                                                    </Border>
-                                                </ToggleButton>
-                                                <ToggleButton Name="tgbTemp" Style="{DynamicResource ToggleButtonCustom}">
-                                                    <hc:StatusSwitchElement.CheckedElement>
-                                                        <Border
-                                                            Width="60"
-                                                            Height="30"
-                                                            Background="{DynamicResource DarkPrimaryBrush}"
-                                                            BorderBrush="{DynamicResource BorderBrush}"
-                                                            BorderThickness="0.5"
-                                                            CornerRadius="4"
-                                                            Effect="{StaticResource EffectShadow1}">
-                                                            <TextBlock
-                                                                HorizontalAlignment="Center"
-                                                                VerticalAlignment="Center"
-                                                                Foreground="White"
-                                                                Text="{ex:Language Key='Temp'}" />
-                                                        </Border>
-                                                    </hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        BorderBrush="#F5F7FA"
-                                                        BorderThickness="0"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="Gray"
-                                                            Text="{ex:Language Key='Temp'}" />
-                                                    </Border>
-                                                </ToggleButton>
-                                            </hc:UniformSpacingPanel>
+                                                    Tag="tabAction" />
+                                                <RadioButton
+                                                    Width="60"
+                                                    Height="30"
+                                                    Margin="5,0,0,0"
+                                                    hc:BorderElement.CornerRadius="8"
+                                                    Background="{DynamicResource BorderBrush}"
+                                                    Content="{ex:Language Key='Agit'}"
+                                                    FontSize="{DynamicResource TextFontSize}"
+                                                    Foreground="{DynamicResource SecondaryTextBrush}"
+                                                    Tag="tabAction" />
+                                                <RadioButton
+                                                    Width="60"
+                                                    Height="30"
+                                                    Margin="5,0,0,0"
+                                                    hc:BorderElement.CornerRadius="8"
+                                                    Background="{DynamicResource BorderBrush}"
+                                                    Content="{ex:Language Key='Air'}"
+                                                    FontSize="{DynamicResource TextFontSize}"
+                                                    Foreground="{DynamicResource SecondaryTextBrush}"
+                                                    Tag="tabAction" />
+                                                <RadioButton
+                                                    Width="60"
+                                                    Height="30"
+                                                    Margin="5,0,0,0"
+                                                    hc:BorderElement.CornerRadius="8"
+                                                    Background="{DynamicResource BorderBrush}"
+                                                    Content="{ex:Language Key='PH'}"
+                                                    FontSize="{DynamicResource TextFontSize}"
+                                                    Foreground="{DynamicResource SecondaryTextBrush}"
+                                                    Tag="tabAction" />
+                                                <RadioButton
+                                                    Width="60"
+                                                    Height="30"
+                                                    Margin="5,0,0,0"
+                                                    hc:BorderElement.CornerRadius="8"
+                                                    Background="{DynamicResource BorderBrush}"
+                                                    Content="{ex:Language Key='Temp'}"
+                                                    FontSize="{DynamicResource TextFontSize}"
+                                                    Foreground="{DynamicResource SecondaryTextBrush}"
+                                                    Tag="tabAction" />
+                                            </hc:ButtonGroup>
                                         </Border>
                                         <wpf:WpfPlot Name="wpfPlot1" Margin="5" />
                                     </DockPanel>
@@ -1329,7 +1175,7 @@
                     </Grid>
                 </Border>
             </TabItem>
-            <TabItem Name="tabTrends" Header="{ex:Language Key='Trends'}">
+            <TabItem Name="tabTrend" Header="{ex:Language Key='Trend'}">
                 <Border Margin="5" Style="{StaticResource BorderCard}">
                     <materialDesign:DrawerHost
                         x:Name="DrawerHost"
@@ -1728,243 +1574,6 @@
                 </Border>
             </TabItem>
             <TabItem Name="tabOverview" Header="{ex:Language Key='Overview'}">
-                <!--<DataGrid
-                            Name="dataGrid"
-                            hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
-                            hc:DataGridAttach.ShowSelectAllButton="True"
-                            AutoGenerateColumns="False"
-                            Background="Transparent"
-                            FontSize="14"
-                            HeadersVisibility="All"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding Devices}"
-                            RowHeaderStyle="{StaticResource DataGridCenterRowHeaderStyle}"
-                            RowHeaderWidth="60"
-                            ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                            ScrollViewer.VerticalScrollBarVisibility="Auto">
-                            <DataGrid.RowHeaderTemplate>
-                                <DataTemplate>
-                                    <CheckBox HorizontalAlignment="Center" IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" />
-                                </DataTemplate>
-                            </DataGrid.RowHeaderTemplate>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseDoubleClick">
-                                    <i:InvokeCommandAction Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <DataGrid.Columns>
-                                <DataGridTextColumn
-                                    Width="100"
-                                    Binding="{Binding Name}"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='Device'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                                <DataGridTextColumn
-                                    Width="100"
-                                    Binding="{Binding Status}"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='Status'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                                <DataGridTemplateColumn
-                                    Width="100"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='Temp(℃)'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="{Binding Temp}" />
-                                                <TextBlock Text="/" />
-                                                <TextBlock Text="{Binding Temp_PV}" />
-                                                <TextBlock
-                                                    Width="10"
-                                                    Height="15"
-                                                    hc:BorderElement.CornerRadius="4"
-                                                    Background="{StaticResource ControlFixedModeBrush}"
-                                                    Foreground="White"
-                                                    Text="F" />
-                                            </hc:UniformSpacingPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn
-                                    Width="100"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='pH'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="{Binding PH}" />
-                                                <TextBlock Text="/" />
-                                                <TextBlock Text="{Binding PH_PV}" />
-                                                <TextBlock
-                                                    Width="10"
-                                                    Height="15"
-                                                    hc:BorderElement.CornerRadius="4"
-                                                    Background="{StaticResource ControlFixedModeBrush}"
-                                                    Foreground="White"
-                                                    Text="F" />
-                                            </hc:UniformSpacingPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn
-                                    Width="100"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='DO(%)'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="{Binding DO}" />
-                                                <TextBlock Text="/" />
-                                                <TextBlock Text="{Binding DO_PV}" />
-                                                <TextBlock
-                                                    Width="10"
-                                                    Height="15"
-                                                    hc:BorderElement.CornerRadius="4"
-                                                    Background="{StaticResource ControlAssociatedModeBrush}"
-                                                    Foreground="White"
-                                                    Text="A" />
-                                            </hc:UniformSpacingPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn
-                                    Width="100"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='Agit(rpm)'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="{Binding Agit}" />
-                                                <TextBlock Text="/" />
-                                                <TextBlock Text="{Binding Agit_PV}" />
-                                                <TextBlock
-                                                    Width="10"
-                                                    Height="15"
-                                                    hc:BorderElement.CornerRadius="4"
-                                                    Background="{StaticResource ControlFixedModeBrush}"
-                                                    Foreground="White"
-                                                    Text="F" />
-                                            </hc:UniformSpacingPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn
-                                    Width="100"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='Base(mL/h)'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="{Binding Base}" />
-                                                <TextBlock Text="/" />
-                                                <TextBlock Text="{Binding Base_PV}" />
-                                                <TextBlock
-                                                    Width="10"
-                                                    Height="15"
-                                                    hc:BorderElement.CornerRadius="4"
-                                                    Background="{StaticResource ControlAssociatedModeBrush}"
-                                                    Foreground="White"
-                                                    Text="A" />
-                                            </hc:UniformSpacingPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn
-                                    Width="100"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='Acid(mL/h)'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="{Binding Acid}" />
-                                                <TextBlock Text="/" />
-                                                <TextBlock Text="{Binding Acid_PV}" />
-                                                <TextBlock
-                                                    Width="10"
-                                                    Height="15"
-                                                    hc:BorderElement.CornerRadius="4"
-                                                    Background="{StaticResource ControlFixedModeBrush}"
-                                                    Foreground="White"
-                                                    Text="F" />
-                                            </hc:UniformSpacingPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn
-                                    Width="100"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='AF(mL/h)'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="{Binding AF}" />
-                                                <TextBlock Text="/" />
-                                                <TextBlock Text="{Binding AF_PV}" />
-                                                <TextBlock
-                                                    Width="10"
-                                                    Height="15"
-                                                    hc:BorderElement.CornerRadius="4"
-                                                    Background="{StaticResource ControlAssociatedModeBrush}"
-                                                    Foreground="White"
-                                                    Text="A" />
-                                            </hc:UniformSpacingPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn
-                                    Width="100"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='Feed(mL/h)'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                                <TextBlock Text="{Binding Feed}" />
-                                                <TextBlock Text="/" />
-                                                <TextBlock Text="{Binding Feed_PV}" />
-                                                <TextBlock
-                                                    Width="10"
-                                                    Height="15"
-                                                    hc:BorderElement.CornerRadius="4"
-                                                    Background="{StaticResource ControlDisabledModeBrush}"
-                                                    Foreground="White"
-                                                    Text="D" />
-                                            </hc:UniformSpacingPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTemplateColumn
-                                    Width="100"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='Operation'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <Button
-                                                    Margin="5"
-                                                    HorizontalContentAlignment="Center"
-                                                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                    hc:IconElement.Geometry="{StaticResource GeometryBackToHome}"
-                                                    Background="Transparent"
-                                                    BorderThickness="0" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </ScrollViewer>
-
-                </Grid>-->
                 <Border Margin="5" Style="{StaticResource BorderCard}">
                     <DataGrid
                         Name="dataGrid"

@@ -13,10 +13,16 @@
     <Compile Update="Views\AlarmView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AuditView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\BatchView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\CalibrateView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\CalibrationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\CommunicationView.xaml.cs">
@@ -72,6 +78,9 @@
     <Content Update="Lang\Lang.zh-CN.xaml">
       <SubType>Designer</SubType>
     </Content>
+    <Page Update="Themes\Fonts.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\WaveAnimation.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -79,6 +88,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AlarmView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AuditView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CalibrationView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CommunicationView.xaml">

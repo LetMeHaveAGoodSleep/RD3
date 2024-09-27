@@ -66,25 +66,25 @@ namespace RD3.Views
 
         private void ButtonEdit_Click(object sender, RoutedEventArgs e)
         {
-            object o = tabHistory.IsSelected == true ? dataGrid.SelectedItem : dataGrid1.SelectedItem;
+            object o = tabHistory.IsSelected ? dataGrid.SelectedItem : dataGrid1.SelectedItem;
             ((ProjectViewModel)this.DataContext)?.EditCommand.Execute(o);
         }
 
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
-            object o = tabHistory.IsSelected == true ? dataGrid.SelectedItem : dataGrid1.SelectedItem;
+            object o = tabHistory.IsSelected ? dataGrid.SelectedItem : dataGrid1.SelectedItem;
             ((ProjectViewModel)this.DataContext)?.DeleteCommand.Execute(o);
         }
 
         private void ButtonView_Click(object sender, RoutedEventArgs e)
         {
-            object o = tabHistory.IsSelected == true ? dataGrid.SelectedItem : dataGrid1.SelectedItem;
+            object o = tabHistory.IsSelected ? dataGrid.SelectedItem : dataGrid1.SelectedItem;
             ((ProjectViewModel)this.DataContext)?.ViewCommand.Execute(o);
         }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            object o = tabHistory.IsSelected == true ? dataGrid.SelectedItem : dataGrid1.SelectedItem;
+            object o = tabHistory.IsSelected ? dataGrid.SelectedItem : dataGrid1.SelectedItem;
             ((ProjectViewModel)this.DataContext)?.ViewCommand.Execute(o);
         }
     }

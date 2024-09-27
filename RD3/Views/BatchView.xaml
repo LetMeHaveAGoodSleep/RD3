@@ -25,149 +25,107 @@
         <local:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
     </UserControl.Resources>
-    <Grid Margin="32">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Border
-            Width="220"
-            Height="50"
-            Margin="5"
-            HorizontalAlignment="Left"
-            Background="#F5F7FA"
-            BorderThickness="0.5"
-            CornerRadius="8">
-            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                <ToggleButton
-                    Name="tgbHistory"
-                    IsChecked="True"
-                    Style="{DynamicResource ToggleButtonCustom}">
-                    <hc:StatusSwitchElement.CheckedElement>
-                        <Border
+        <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+            <DockPanel HorizontalAlignment="Left" LastChildFill="False">
+                <Border
+                    Height="50"
+                    HorizontalAlignment="Left"
+                    Background="{DynamicResource BorderBrush}"
+                    BorderThickness="0.5"
+                    CornerRadius="8">
+                    <hc:ButtonGroup
+                        Name="ButtonGroup"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource ButtonGroupSolid}">
+                        <RadioButton
                             Width="100"
                             Height="40"
-                            Background="{DynamicResource DarkPrimaryBrush}"
-                            BorderBrush="{DynamicResource BorderBrush}"
-                            BorderThickness="0.5"
-                            CornerRadius="8">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="{DynamicResource HeadFontSize}"
-                                Foreground="White"
-                                Text="{ex:Language Key='History'}" />
-                        </Border>
-                    </hc:StatusSwitchElement.CheckedElement>
-                    <Border
-                        Width="100"
-                        Height="40"
-                        BorderBrush="#F5F7FA"
-                        BorderThickness="0"
-                        CornerRadius="8">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="{DynamicResource HeadFontSize}"
-                            Foreground="Gray"
-                            Text="{ex:Language Key='History'}" />
-                    </Border>
-                </ToggleButton>
-                <ToggleButton Name="tgbTemplate" Style="{DynamicResource ToggleButtonCustom}">
-                    <hc:StatusSwitchElement.CheckedElement>
-                        <Border
+                            Margin="5,0,0,0"
+                            hc:BorderElement.CornerRadius="8"
+                            Background="{DynamicResource BorderBrush}"
+                            Content="{ex:Language Key='History'}"
+                            FontSize="{DynamicResource MediumFontSize}"
+                            Foreground="{DynamicResource SecondaryTextBrush}"
+                            IsChecked="True"
+                            Tag="tabHistory" />
+                        <RadioButton
                             Width="100"
                             Height="40"
-                            Background="{DynamicResource DarkPrimaryBrush}"
-                            BorderBrush="{DynamicResource BorderBrush}"
-                            BorderThickness="0.5"
-                            CornerRadius="8">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="{DynamicResource HeadFontSize}"
-                                Foreground="White"
-                                Text="{ex:Language Key='Template'}" />
-                        </Border>
-                    </hc:StatusSwitchElement.CheckedElement>
-                    <Border
-                        Width="100"
-                        Height="40"
-                        BorderBrush="#F5F7FA"
-                        BorderThickness="0"
-                        CornerRadius="4">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="{DynamicResource HeadFontSize}"
-                            Foreground="Gray"
-                            Text="{ex:Language Key='Template'}" />
-                    </Border>
-                </ToggleButton>
-            </hc:UniformSpacingPanel>
-        </Border>
-        <DockPanel Grid.Row="1" LastChildFill="False">
-            <hc:SearchBar
-                Width="240"
-                Height="45"
-                Margin="5"
-                HorizontalAlignment="Left"
-                hc:InfoElement.ShowClearButton="True"
-                DockPanel.Dock="Left"
-                IsRealTime="True">
-                <hc:Interaction.Triggers>
-                    <hc:EventTrigger EventName="SearchStarted">
-                        <hc:EventToCommand Command="{Binding SearchCommand}" PassEventArgsToCommand="True" />
-                    </hc:EventTrigger>
-                </hc:Interaction.Triggers>
-            </hc:SearchBar>
-            <hc:UniformSpacingPanel DockPanel.Dock="Right" Spacing="10">
-                <Button
-                    Name="ButtonCreate"
-                    Height="35"
-                    Margin="5"
-                    HorizontalContentAlignment="Center"
-                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                    hc:IconElement.Geometry="{StaticResource GeometryAdd}"
-                    Background="{StaticResource PrimaryBrush}"
-                    BorderBrush="{StaticResource PrimaryBrush}"
-                    Click="ButtonAdd_Click"
-                    Content="{ex:Language Key='Create'}"
-                    FontSize="14"
-                    Foreground="White" />
-                <Button
-                    Name="ButtonCompare"
-                    Height="35"
-                    Margin="5"
-                    HorizontalContentAlignment="Center"
-                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                    hc:IconElement.Geometry="{StaticResource GeometryCompare}"
-                    Content="{ex:Language Key='Compare'}"
-                    FontSize="14" />
-                <Button
-                    Height="35"
-                    Margin="5"
-                    HorizontalContentAlignment="Center"
-                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                    hc:IconElement.Geometry="{StaticResource GeometryExport}"
-                    Content="{ex:Language Key='Export'}"
-                    FontSize="14" />
-                <Button
-                    Height="35"
-                    Margin="5"
-                    HorizontalContentAlignment="Center"
-                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                    hc:IconElement.Geometry="{StaticResource GeometryDelete}"
-                    Command="{Binding DeleteCommand}"
-                    CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
-                    FontSize="14"
-                    Foreground="Red"
-                    Visibility="Collapsed" />
-            </hc:UniformSpacingPanel>
-        </DockPanel>
+                            Margin="5,0,5,0"
+                            hc:BorderElement.CornerRadius="8"
+                            Background="{DynamicResource BorderBrush}"
+                            Content="{ex:Language Key='Template'}"
+                            FontSize="{DynamicResource MediumFontSize}"
+                            Foreground="{DynamicResource SecondaryTextBrush}"
+                            Tag="tabTemplate" />
+                    </hc:ButtonGroup>
+                </Border>
+            </DockPanel>
+            <DockPanel LastChildFill="False">
+                <hc:SearchBar
+                    Width="240"
+                    Height="45"
+                    HorizontalAlignment="Left"
+                    hc:InfoElement.ShowClearButton="True"
+                    DockPanel.Dock="Left"
+                    IsRealTime="True">
+                    <hc:Interaction.Triggers>
+                        <hc:EventTrigger EventName="SearchStarted">
+                            <hc:EventToCommand Command="{Binding SearchCommand}" PassEventArgsToCommand="True" />
+                        </hc:EventTrigger>
+                    </hc:Interaction.Triggers>
+                </hc:SearchBar>
+                <hc:UniformSpacingPanel DockPanel.Dock="Right" Spacing="10">
+                    <Button
+                        Name="ButtonCreate"
+                        Height="35"
+                        HorizontalContentAlignment="Center"
+                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                        hc:IconElement.Geometry="{StaticResource GeometryAdd}"
+                        Background="{StaticResource PrimaryBrush}"
+                        BorderBrush="{StaticResource PrimaryBrush}"
+                        Click="ButtonAdd_Click"
+                        Content="{ex:Language Key='Create'}"
+                        FontSize="14"
+                        Foreground="White" />
+                    <Button
+                        Name="ButtonCompare"
+                        Height="35"
+                        HorizontalContentAlignment="Center"
+                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                        hc:IconElement.Geometry="{StaticResource GeometryCompare}"
+                        Content="{ex:Language Key='Compare'}"
+                        FontSize="14" />
+                    <Button
+                        Height="35"
+                        HorizontalContentAlignment="Center"
+                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                        hc:IconElement.Geometry="{StaticResource GeometryExport}"
+                        Content="{ex:Language Key='Export'}"
+                        FontSize="14" />
+                    <Button
+                        Height="35"
+                        HorizontalContentAlignment="Center"
+                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                        hc:IconElement.Geometry="{StaticResource GeometryDelete}"
+                        Command="{Binding DeleteCommand}"
+                        CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
+                        FontSize="14"
+                        Foreground="Red"
+                        Visibility="Collapsed" />
+                </hc:UniformSpacingPanel>
+            </DockPanel>
+        </hc:UniformSpacingPanel>
         <TabControl
-            Grid.Row="2"
+            Name="tabControl"
+            Grid.Row="1"
+            Margin="0,10,0,10"
             BorderThickness="0"
             Loaded="TabControl_Loaded"
             Style="{StaticResource TabControlBaseStyle}">
@@ -178,7 +136,9 @@
                     hc:DataGridAttach.ShowSelectAllButton="False"
                     AutoGenerateColumns="False"
                     Background="Transparent"
+                    ColumnWidth="*"
                     FontSize="14"
+                    FrozenColumnCount="2"
                     HeadersVisibility="All"
                     IsReadOnly="True"
                     ItemsSource="{Binding BatchCol}"
@@ -187,38 +147,38 @@
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.IsDeferredScrollingEnabled="False"
                     ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <i:Interaction.Triggers>
+                    <!--<i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseDoubleClick">
                             <i:InvokeCommandAction Command="{Binding EditCommand}" CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}" />
                         </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                    </i:Interaction.Triggers>-->
                     <DataGrid.Columns>
                         <DataGridTextColumn
-                            Width="100"
+                            MinWidth="100"
                             Binding="{Binding Id}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='ID'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTextColumn
-                            Width="100"
+                            MinWidth="100"
                             Binding="{Binding Name}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Name'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTextColumn
-                            Width="150"
+                            MinWidth="150"
                             Binding="{Binding Reactor}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Reactor'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTextColumn
-                            Width="100"
+                            MinWidth="100"
                             Binding="{Binding Status}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Status'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTemplateColumn
-                            Width="150"
+                            MinWidth="150"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Start time'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
@@ -229,7 +189,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn
-                            Width="150"
+                            MinWidth="150"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='End time'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
@@ -240,19 +200,19 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn
-                            Width="100"
+                            MinWidth="100"
                             Binding="{Binding Project}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Project'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTextColumn
-                            Width="200"
+                            MinWidth="200"
                             Binding="{Binding Description}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Description'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTemplateColumn
-                            Width="200"
+                            MinWidth="200"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Operation'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
@@ -265,6 +225,7 @@
                                             Background="Transparent"
                                             BorderThickness="0"
                                             Click="Button_Click"
+                                            Foreground="Gold"
                                             Visibility="{Binding IsFavorite, Converter={StaticResource BoolToVisConverter}}" />
                                         <Button
                                             x:Name="BtnNoFavorite"
@@ -314,8 +275,8 @@
                     ItemsSource="{Binding ProjectTemplateCol}"
                     MouseDoubleClick="DataGrid_MouseDoubleClick"
                     RowHeaderWidth="60"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <DataGrid.Columns>
                         <DataGridTextColumn
                             Width="150"
@@ -382,7 +343,8 @@
             </TabItem>
         </TabControl>
         <hc:Pagination
-            Grid.Row="3"
+            Grid.Row="2"
+            Margin="0,0,0,10"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
             Background="Transparent"

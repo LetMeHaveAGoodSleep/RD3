@@ -36,7 +36,6 @@ namespace RD3.Views
         {
             Tuple<string, string, string> tuple = new Tuple<string, string, string>(dtpStart.Text, dtpEnd.Text, e.Info);
             ((OperationViewModel)this.DataContext)?.FilterCommand.Execute(tuple);
-
         }
     }
 }
