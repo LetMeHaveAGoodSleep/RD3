@@ -1,4 +1,5 @@
-﻿using RD3.Shared;
+﻿using HandyControl.Controls;
+using RD3.Shared;
 using RD3.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,16 @@ namespace RD3.Views
         {
             Sample sample = dataGrid.SelectedItem as Sample;
             ((SampleViewModel)this.DataContext)?.DeleteCommand.Execute(sample);
+        }
+
+        private void TxtSearch_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
+        {
+            if (pagination.PageIndex != 1)
+            {
+                pagination.PageIndex = 1;
+            }
+
+            ((SampleViewModel)this.DataContext)?.SearchCommand.Execute(e);
         }
     }
 }

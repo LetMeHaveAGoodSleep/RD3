@@ -69,18 +69,14 @@
             </DockPanel>
             <DockPanel LastChildFill="False">
                 <hc:SearchBar
+                    Name="TxtSearch"
                     Width="240"
                     Height="45"
                     HorizontalAlignment="Left"
                     hc:InfoElement.ShowClearButton="True"
                     DockPanel.Dock="Left"
-                    IsRealTime="True">
-                    <hc:Interaction.Triggers>
-                        <hc:EventTrigger EventName="SearchStarted">
-                            <hc:EventToCommand Command="{Binding SearchCommand}" PassEventArgsToCommand="True" />
-                        </hc:EventTrigger>
-                    </hc:Interaction.Triggers>
-                </hc:SearchBar>
+                    IsRealTime="True"
+                    SearchStarted="TxtSearch_SearchStarted" />
                 <hc:UniformSpacingPanel DockPanel.Dock="Right" Spacing="10">
                     <Button
                         Name="ButtonCreate"
@@ -343,6 +339,7 @@
             </TabItem>
         </TabControl>
         <hc:Pagination
+            Name="pagination"
             Grid.Row="2"
             Margin="0,0,0,10"
             HorizontalAlignment="Right"

@@ -1,4 +1,5 @@
-﻿using RD3.ViewModels;
+﻿using HandyControl.Data;
+using RD3.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,12 +31,19 @@ namespace RD3.Views
             {
                 item.Checked += RadioButton_Checked;
             }
+
+            tabControl.SelectionChanged += TabControl_SelectionChanged;
         }
 
         private void TxtSearch_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
         {
+            if (pagination.PageIndex != 1)
+            {
+                pagination.PageIndex = 1;
+            }
+
             Tuple<string, string, string> tuple = new Tuple<string, string, string>(dtpStart.Text, dtpEnd.Text, e.Info);
-            ((OperationViewModel)this.DataContext)?.FilterCommand.Execute(tuple);
+            ((AuditViewModel)this.DataContext)?.FilterCommand.Execute(tuple);
         }
 
         private void TabControl_Loaded(object sender, RoutedEventArgs e)
@@ -54,8 +62,24 @@ namespace RD3.Views
                 {
                     item.IsSelected = true;
                     break;
-                }    
+                }
             }
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems == null) return;
+            TabItem tabItem = e.AddedItems[e.AddedItems.Count - 1] as TabItem;
+            if (tabItem == tabAction)
+            {
+                ((AuditViewModel)DataContext).IsAlarm = false;
+            }
+            else
+            {
+                ((AuditViewModel)DataContext).IsAlarm = true;
+            }
+
+            TxtSearch_SearchStarted(null, new FunctionEventArgs<string>(string.Empty));
         }
     }
 }

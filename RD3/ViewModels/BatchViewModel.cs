@@ -96,7 +96,8 @@ namespace RD3.ViewModels
                     }
                     Batches.Add(batch);
                     BatchManager.GetInstance().Save(Batches);
-                    PageUpdated(new FunctionEventArgs<int>(PageIndex));
+                    PageIndex = 1;
+                    PageUpdated(new FunctionEventArgs<int>(1));
                 });
             }
             else
@@ -115,6 +116,7 @@ namespace RD3.ViewModels
                     }
                     ProjectTemplates.Add(template);
                     ProjectTemplateManager.GetInstance().Save(ProjectTemplates);
+                    PageIndex = 1;
                     PageUpdated(new FunctionEventArgs<int>(1));
                 });
             }
@@ -251,15 +253,6 @@ namespace RD3.ViewModels
                     Batches = new ObservableCollection<Batch>(collection);
                 }
                 PageCount = Batches.Count / DataCountPerPage + (Batches.Count % DataCountPerPage != 0 ? 1 : 0);
-                if (PageIndex != 1)
-                {
-                    PageIndex = 1;
-                }
-                else
-                {
-                    var data = Batches.Take(DataCountPerPage);
-                    BatchCol = new ObservableCollection<Batch>(data);
-                }
             }
             else
             {
@@ -273,17 +266,8 @@ namespace RD3.ViewModels
                     || t.UsageTime.ToString().Contains(key));
                     ProjectTemplates = new ObservableCollection<ProjectTemplate>(collection);
                 }
-                PageCount = ProjectTemplates.Count / DataCountPerPage + (ProjectTemplates.Count % DataCountPerPage != 0 ? 1 : 0);
-                if (PageIndex != 1)
-                {
-                    PageIndex = 1;
-                }
-                else
-                {
-                    var data = ProjectTemplates.Take(DataCountPerPage);
-                    ProjectTemplateCol = new ObservableCollection<ProjectTemplate>(data);
-                }
             }
+            PageUpdated(new FunctionEventArgs<int>(PageIndex));
         });
 
         public DelegateCommand<FunctionEventArgs<int>> PageUpdatedCommand => new(PageUpdated);

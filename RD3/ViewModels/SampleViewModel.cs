@@ -64,16 +64,7 @@ namespace RD3.ViewModels
                 || t.Id.Contains(key) || t.Value.ToString().Contains(key) || t.Type.ToString().Contains(key) || t.MainParam.ToString().Contains(key));
                 Samples = new ObservableCollection<Sample>(collection);
             }
-            PageCount = Samples.Count / DataCountPerPage + (Samples.Count % DataCountPerPage != 0 ? 1 : 0);
-            if (PageIndex != 1)
-            {
-                PageIndex = 1;
-            }
-            else
-            {
-                var data = Samples.Take(DataCountPerPage);
-                SampleCol = new ObservableCollection<Sample>(data);
-            }
+            PageUpdated(new FunctionEventArgs<int>(PageIndex));
         });
 
         public DelegateCommand AddSampleCommand => new(() =>

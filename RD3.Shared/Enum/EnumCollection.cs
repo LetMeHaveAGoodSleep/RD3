@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -103,5 +104,19 @@ namespace RD3.Shared
         View,
         Add,
         Edit
+    }
+
+    public enum AuditAction
+    {
+        [Description("Modify control mode")]
+        ModifyControlMode,
+        [Description("Modify sontrol value")]
+        ModifySetValue,
+        [Description("Stop experiment")]
+        StopExperiment,
+        [Description("Start experiment")]
+        StartExperiment,
+        [Description("Pause experiment")]
+        PauseExperiment
     }
 }

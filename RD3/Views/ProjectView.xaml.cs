@@ -87,5 +87,15 @@ namespace RD3.Views
             object o = tabHistory.IsSelected ? dataGrid.SelectedItem : dataGrid1.SelectedItem;
             ((ProjectViewModel)this.DataContext)?.ViewCommand.Execute(o);
         }
+
+        private void TxtSearch_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
+        {
+            if (pagination.PageIndex != 1)
+            {
+                pagination.PageIndex = 1;
+            }
+
+            ((ProjectViewModel)this.DataContext)?.SearchCommand.Execute(e);
+        }
     }
 }

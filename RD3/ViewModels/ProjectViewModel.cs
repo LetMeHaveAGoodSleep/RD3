@@ -86,7 +86,7 @@ namespace RD3.ViewModels
                     }
                     Projects.Add(project);
                     ProjectManager.GetInstance().Save(Projects);
-                    PageUpdated(new FunctionEventArgs<int>(1));
+                    PageUpdated(new FunctionEventArgs<int>(PageIndex));
                 });
             }
             else
@@ -105,7 +105,7 @@ namespace RD3.ViewModels
                     }
                     ProjectTemplates.Add(template);
                     ProjectTemplateManager.GetInstance().Save(ProjectTemplates);
-                    PageUpdated(new FunctionEventArgs<int>(1));
+                    PageUpdated(new FunctionEventArgs<int>(PageIndex));
                 });
             }
         });
@@ -221,16 +221,6 @@ namespace RD3.ViewModels
                     || t.Client.Contains(key) || t.Creator.Contains(key) || t.Description.Contains(key));
                     Projects = new ObservableCollection<Project>(collection);
                 }
-                PageCount = Projects.Count / DataCountPerPage + (Projects.Count % DataCountPerPage != 0 ? 1 : 0);
-                if (PageIndex != 1)
-                {
-                    PageIndex = 1;
-                }
-                else
-                {
-                    var data = Projects.Take(DataCountPerPage);
-                    ProjectCol = new ObservableCollection<Project>(data);
-                }
             }
             else
             {
@@ -244,17 +234,8 @@ namespace RD3.ViewModels
                     || t.UsageTime.ToString().Contains(key));
                     ProjectTemplates = new ObservableCollection<ProjectTemplate>(collection);
                 }
-                PageCount = ProjectTemplates.Count / DataCountPerPage + (ProjectTemplates.Count % DataCountPerPage != 0 ? 1 : 0);
-                if (PageIndex != 1)
-                {
-                    PageIndex = 1;
-                }
-                else
-                {
-                    var data = ProjectTemplates.Take(DataCountPerPage);
-                    ProjectTemplateCol = new ObservableCollection<ProjectTemplate>(data);
-                }
             }
+            PageUpdated(new FunctionEventArgs<int>(PageIndex));
         });
 
         public DelegateCommand<FunctionEventArgs<int>> PageUpdatedCommand => new(PageUpdated);

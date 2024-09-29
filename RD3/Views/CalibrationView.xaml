@@ -1943,7 +1943,10 @@
                 </ScrollViewer>
             </Border>
         </hc:UniformSpacingPanel>
-        <Border Grid.Row="1" Style="{StaticResource BorderCommon}" Margin="0,10,0,10">
+        <Border
+            Grid.Row="1"
+            Margin="0,10,0,10"
+            Style="{StaticResource BorderCommon}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />

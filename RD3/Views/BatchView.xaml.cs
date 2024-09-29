@@ -109,10 +109,20 @@ namespace RD3.Views
             }
             else
             {
-                ((BatchViewModel)DataContext).IsTemplate = false;
+                ((BatchViewModel)DataContext).IsTemplate = true;
                 ButtonCompare.Visibility = ButtonCreate.Visibility = Visibility.Collapsed;
             }
-            ((BatchViewModel)DataContext)?.PageUpdatedCommand.Execute(new FunctionEventArgs<int>(1));
+            ((BatchViewModel)DataContext)?.SearchCommand.Execute(new FunctionEventArgs<string>(TxtSearch.Text));
+        }
+
+        private void TxtSearch_SearchStarted(object sender, HandyControl.Data.FunctionEventArgs<string> e)
+        {
+            if (pagination.PageIndex != 1)
+            {
+                pagination.PageIndex = 1;
+            }
+
+            ((BatchViewModel)this.DataContext)?.SearchCommand.Execute(e);
         }
     }
 }

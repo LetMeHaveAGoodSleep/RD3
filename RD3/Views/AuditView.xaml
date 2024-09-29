@@ -7,11 +7,13 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+    d:DataContext="{d:DesignInstance Type=viewmodels:AuditViewModel}"
     d:DesignHeight="1450"
     d:DesignWidth="1600"
     Background="{DynamicResource DefaultBrush}"
-    TextElement.FontSize="{DynamicResource SubHeadFontSize}"
+    TextElement.FontSize="{DynamicResource NormalFontSize}"
     TextElement.FontWeight="Regular"
     mc:Ignorable="d">
     <Grid Margin="20">
@@ -58,7 +60,7 @@
             <DockPanel LastChildFill="False">
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                     <hc:SearchBar
-                        Name="txtSearch"
+                        Name="TxtSearch"
                         Width="240"
                         Height="35"
                         HorizontalAlignment="Center"
@@ -101,7 +103,6 @@
                     hc:DataGridAttach.ShowSelectAllButton="False"
                     AutoGenerateColumns="False"
                     Background="Transparent"
-                    FontSize="14"
                     HeadersVisibility="All"
                     IsReadOnly="True"
                     ItemsSource="{Binding OperationCol}"
@@ -116,7 +117,7 @@
                             HeaderStyle="{StaticResource DataGridLeftColumnHeaderStyle}">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding OccurrenceTime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
+                                    <TextBlock Foreground="Gray" Text="{Binding OccurrenceTime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -214,6 +215,7 @@
             </TabItem>
         </TabControl>
         <hc:Pagination
+            Name="pagination"
             Grid.Row="2"
             Margin="0,0,0,10"
             HorizontalAlignment="Right"

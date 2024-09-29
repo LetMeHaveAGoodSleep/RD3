@@ -115,13 +115,8 @@
                 HorizontalAlignment="Left"
                 hc:InfoElement.ShowClearButton="True"
                 DockPanel.Dock="Left"
-                IsRealTime="True">
-                <hc:Interaction.Triggers>
-                    <hc:EventTrigger EventName="SearchStarted">
-                        <hc:EventToCommand Command="{Binding SearchCommand}" PassEventArgsToCommand="True" />
-                    </hc:EventTrigger>
-                </hc:Interaction.Triggers>
-            </hc:SearchBar>
+                IsRealTime="True"
+                SearchStarted="TxtSearch_SearchStarted" />
             <hc:UniformSpacingPanel DockPanel.Dock="Right">
                 <Button
                     Name="ButtonCreate"
@@ -334,12 +329,13 @@
             </TabItem>
         </TabControl>
         <hc:Pagination
+            Name="pagination"
             Grid.Row="3"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
             IsJumpEnabled="True"
             MaxPageCount="{Binding PageCount}"
-            PageIndex="1">
+            PageIndex="{Binding PageIndex}">
             <hc:Interaction.Triggers>
                 <hc:EventTrigger EventName="PageUpdated">
                     <hc:EventToCommand Command="{Binding PageUpdatedCommand}" PassEventArgsToCommand="True" />
