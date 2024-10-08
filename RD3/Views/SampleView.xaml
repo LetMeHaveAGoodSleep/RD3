@@ -78,10 +78,11 @@
             Name="dataGrid"
             AutoGenerateColumns="False"
             Background="Transparent"
-            FontSize="16"
-            HeadersVisibility="All"
+            ColumnWidth="SizeToCells"
+            FontSize="14"
+            HeadersVisibility="Column"
             ItemsSource="{Binding SampleCol}"
-            RowHeaderWidth="50"
+            RowHeaderWidth="60"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto">
             <i:Interaction.Triggers>

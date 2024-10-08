@@ -223,3 +223,6 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CalibrationView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AuditView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AuditView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\Fonts.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\SettingView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\SettingView.baml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Instruction\video.mp4

@@ -144,6 +144,7 @@ namespace RD3.ViewModels
             record.Value = array[3];
             record.Grade = (AlarmGrade)Enum.Parse(typeof(AlarmGrade), array[4]);
             record.Description = array[5];
+            record.Module = array[6];
             return record;
         }
 

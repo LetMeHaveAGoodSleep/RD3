@@ -103,7 +103,8 @@
                     hc:DataGridAttach.ShowSelectAllButton="False"
                     AutoGenerateColumns="False"
                     Background="Transparent"
-                    HeadersVisibility="All"
+                    ColumnWidth="SizeToCells"
+                    HeadersVisibility="Column"
                     IsReadOnly="True"
                     ItemsSource="{Binding OperationCol}"
                     RowHeaderWidth="60"
@@ -137,13 +138,13 @@
                             Width="100"
                             Binding="{Binding Module}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="{ex:Language Key='Value'}"
+                            Header="{ex:Language Key='Module'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTextColumn
                             Width="250"
                             Binding="{Binding OperationStatement}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="{ex:Language Key='Operation'}"
+                            Header="{ex:Language Key='Action'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTextColumn
                             Width="250"
@@ -161,8 +162,9 @@
                     hc:DataGridAttach.ShowSelectAllButton="False"
                     AutoGenerateColumns="False"
                     Background="Transparent"
+                    ColumnWidth="SizeToCells"
                     FontSize="14"
-                    HeadersVisibility="All"
+                    HeadersVisibility="Column"
                     IsReadOnly="True"
                     ItemsSource="{Binding AlarmRecordCol}"
                     RowHeaderWidth="60"
@@ -191,6 +193,12 @@
                             Binding="{Binding Reactor}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Reactor'}"
+                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                        <DataGridTextColumn
+                            Width="150"
+                            Binding="{Binding Module}"
+                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                            Header="{ex:Language Key='Module'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTextColumn
                             Width="100"

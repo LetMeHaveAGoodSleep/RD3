@@ -98,4 +98,7 @@
     <system:String x:Key="N2">氮气</system:String>
     <system:String x:Key="Agit">转速</system:String>
     <system:String x:Key="DO">溶氧</system:String>
+    <system:String x:Key="Device">设备</system:String>
+    <system:String x:Key="Liquid">加液</system:String>
+    <system:String x:Key="Harvest">收获</system:String>
 </ResourceDictionary>

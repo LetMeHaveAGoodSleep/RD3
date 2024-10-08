@@ -22,7 +22,7 @@ namespace RD3.ViewModels
 {
     public class IndexViewModel : NavigationViewModel
     {
-        private ObservableCollection<DeviceParameter> _deviceParameterCol = new ObservableCollection<DeviceParameter>();
+        private ObservableCollection<DeviceParameter> _deviceParameterCol = [];
         public ObservableCollection<DeviceParameter> DeviceParameterCol { get { return _deviceParameterCol; } set { SetProperty(ref _deviceParameterCol, value); } }
 
         private readonly IDialogHostService dialog;
@@ -43,29 +43,29 @@ namespace RD3.ViewModels
         public IndexViewModel(IContainerProvider provider,
             IDialogHostService dialog) : base(provider)
         {
-            Title = $"你好，{AppSession.CurrentUser.UserName} {DateTime.Now.GetDateTimeFormats('D')[1].ToString()}";
+            Title = $"你好，{AppSession.CurrentUser.UserName} {DateTime.Now.GetDateTimeFormats('D')[1]}";
             CreateTaskBars();
             this.regionManager = provider.Resolve<IRegionManager>();
             this.dialog = dialog;
             NavigateCommand = new DelegateCommand<TaskBar>(Navigate);
 
             ObservableCollection<DeviceParameter> temp = new ObservableCollection<DeviceParameter>();
-            for (int i = 1; i < 9; i++)
+            for (int i = 1; i < 16; i++)
             {
                 DeviceParameter device = new DeviceParameter()
                 {
-                    Name = i.ToString().PadLeft(2, '0'),
+                    Name = "G" + i.ToString().PadLeft(2, '0'),
                     Status = WorkStatus.Running,
                     Temp = 37,
                     PH = 7.2f,
                     DO = 98,
-                    DO_PV="213-232",
+                    DO_PV = "213-232",
                     Agit = 1000,
-                    Agit_PV= "2000",
+                    Agit_PV = "2000",
                     Base = 149.6f,
                     Acid = 30.0f,
                     AF = 103.3f,
-                    Feed = 0
+                    Feed = 0.00f
                 };
                 temp.Add(device);
             }

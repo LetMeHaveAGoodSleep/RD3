@@ -133,6 +133,7 @@ namespace RD3
             containerRegistry.RegisterForNavigation<AddSampleView, AddSampleViewModel>();
             containerRegistry.RegisterDialog<EditExperimentParamView, EditExperimentParamViewModel>();
             containerRegistry.RegisterForNavigation<AuditView, AuditViewModel>();
+            containerRegistry.RegisterForNavigation<SettingView, SettingViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

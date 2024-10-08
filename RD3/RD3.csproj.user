@@ -40,9 +40,6 @@
     <Compile Update="Views\EditExperimentParamView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\EditParamView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\EditProjectView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -65,6 +62,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SelfCheckView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SettingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\UnscheduleView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\UserView.xaml.cs">
@@ -111,9 +114,6 @@
     <Page Update="Views\EditExperimentParamView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\EditParamView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\EditProjectView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -156,6 +156,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SelfCheckView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SettingView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UnscheduleView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\UserView.xaml">

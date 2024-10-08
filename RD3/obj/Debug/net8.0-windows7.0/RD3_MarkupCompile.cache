@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\Project\RD3\RD3\App.xaml
-31-606308262
+32537397069
 3271424504
-82142000850
+841604069399
 2311320469617
-Themes\Fonts.xaml;Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AddSampleView.xaml;Views\AlarmView.xaml;Views\AuditView.xaml;Views\BatchView.xaml;Views\CalibrateView.xaml;Views\CalibrationView.xaml;Views\CommunicationView.xaml;Views\ControlView.xaml;Views\EditBatchView.xaml;Views\EditClientView.xaml;Views\EditExperimentParamView.xaml;Views\EditParamView.xaml;Views\EditProjectView.xaml;Views\EditSampleView.xaml;Views\EditTemplateView.xaml;Views\EditUserView.xaml;Views\ErrorView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MCUDebugView.xaml;Views\MsgView.xaml;Views\OperationView.xaml;Views\ProgressView.xaml;Views\ProjectView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\UserView.xaml;
+Themes\Fonts.xaml;Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AddSampleView.xaml;Views\AlarmView.xaml;Views\AuditView.xaml;Views\BatchView.xaml;Views\CalibrateView.xaml;Views\CalibrationView.xaml;Views\CommunicationView.xaml;Views\ControlView.xaml;Views\EditBatchView.xaml;Views\EditClientView.xaml;Views\EditExperimentParamView.xaml;Views\EditParamView.xaml;Views\EditProjectView.xaml;Views\EditSampleView.xaml;Views\EditTemplateView.xaml;Views\EditUserView.xaml;Views\ErrorView.xaml;Views\IndexView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MCUDebugView.xaml;Views\MsgView.xaml;Views\OperationView.xaml;Views\ProgressView.xaml;Views\ProjectView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\SettingView.xaml;Views\UserView.xaml;
 
 False
 

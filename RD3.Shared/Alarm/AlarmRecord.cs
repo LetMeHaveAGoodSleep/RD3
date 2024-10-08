@@ -31,6 +31,13 @@ namespace RD3.Shared
             set { _reactor = value; }
         }
 
+        private string _module;
+        public string Module
+        {
+            get { return _module; }
+            set { _module = value; }
+        }
+
         private string _value;
         public string Value
         {
@@ -54,7 +61,7 @@ namespace RD3.Shared
 
         public override string ToString()
         {
-             return $"{Time.ToString("yyyy:MM:dd HH:mm:ss")}#{Batch}#{Reactor}#{Value}#{Grade.ToString()}#{Description}";
+            return $"{Time:yyyy:MM:dd HH:mm:ss}#{Batch}#{Reactor}#{Value}#{Grade}#{Description}#{Module}";
         }
     }
 }
