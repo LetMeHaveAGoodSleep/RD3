@@ -67,6 +67,9 @@
     <Compile Update="Views\SettingView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\UnscheduledView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\UnscheduleView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -159,6 +162,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SettingView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UnscheduledView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\UnscheduleView.xaml">

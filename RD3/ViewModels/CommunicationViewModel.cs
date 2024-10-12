@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    public class CommunicationViewModel : NavigationViewModel, IDialogAware
+    public class CommunicationViewModel : BaseViewModel, IDialogAware
     {
         private IDialogService dialog;
         public ObservableCollection<ClientConfig> ClientCol

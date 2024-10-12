@@ -123,7 +123,6 @@
                 <hc:UniformSpacingPanel Spacing="10">
                     <CheckBox
                         Name="ChkAll"
-                        Checked="ChkAll_CheckChanged"
                         Content="Select all"
                         IsChecked="True" />
                     <CheckBox Content="G01" IsChecked="True" />

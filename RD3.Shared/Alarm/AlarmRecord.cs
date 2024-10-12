@@ -1,4 +1,5 @@
 ﻿using log4net.Core;
+using Newtonsoft.Json;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,8 @@ namespace RD3.Shared
 
         public override string ToString()
         {
-            return $"{Time:yyyy:MM:dd HH:mm:ss}#{Batch}#{Reactor}#{Value}#{Grade}#{Description}#{Module}";
+            return  JsonConvert.SerializeObject(this);
+            //return $"{Time:yyyy:MM:dd HH:mm:ss}#{Batch}#{Reactor}#{Value}#{Grade}#{Description}#{Module}";
         }
     }
 }

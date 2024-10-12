@@ -119,4 +119,13 @@ namespace RD3.Shared
         [Description("Pause experiment")]
         PauseExperiment
     }
+
+    public enum UnScheduleAction
+    {
+        Sample,
+        [Description("Add liquid")]
+        Addliquid,
+        Harvest,
+        Inoculate
+    }
 }

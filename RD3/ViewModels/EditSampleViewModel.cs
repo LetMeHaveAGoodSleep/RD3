@@ -18,7 +18,7 @@ using System.Windows.Documents;
 
 namespace RD3.ViewModels
 {
-    public class EditSampleViewModel : NavigationViewModel,IDialogAware
+    public class EditSampleViewModel : BaseViewModel, IDialogAware
     {
         private string _mode;
 

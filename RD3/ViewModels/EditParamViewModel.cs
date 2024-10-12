@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    public class EditParamViewModel : NavigationViewModel
+    public class EditParamViewModel : BaseViewModel
     {
 
         public EditParamViewModel(IContainerProvider containerProvider) : base(containerProvider)

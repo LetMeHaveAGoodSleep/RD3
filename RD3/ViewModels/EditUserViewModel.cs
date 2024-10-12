@@ -15,7 +15,7 @@ using System.Windows;
 
 namespace RD3.ViewModels
 {
-    public class EditUserViewModel : NavigationViewModel,IDialogAware
+    public class EditUserViewModel : BaseViewModel, IDialogAware
     {
         private string _mode;
         private User _user;

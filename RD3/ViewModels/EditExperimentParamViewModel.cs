@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    internal class EditExperimentParamViewModel : NavigationViewModel, IDialogAware
+    internal class EditExperimentParamViewModel : BaseViewModel, IDialogAware
     {
         public EditExperimentParamViewModel(IContainerProvider containerProvider) : base(containerProvider)
         {

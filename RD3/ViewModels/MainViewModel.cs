@@ -60,6 +60,7 @@ namespace RD3.ViewModels
                     }
                 }
                 SetProperty(ref _languageName, value);
+                AppSession.LanguageName = value;
             }
         }
 

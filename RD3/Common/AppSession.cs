@@ -13,5 +13,8 @@ namespace RD3.Common
         public static User CurrentUser { get; set; }
 
         public static string CompanyName { get{ return VarConfig.GetValue("Company")?.ToString(); }}
+
+        public static string LanguageName { get; set; }
+            
     }
 }

@@ -157,19 +157,20 @@
                 <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
             </Style>
             <Style x:Key="BorderForm" TargetType="{x:Type Border}">
+                <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
                 <Setter Property="Border.CornerRadius" Value="8" />
                 <Setter Property="Border.Padding" Value="20" />
                 <Setter Property="Background" Value="{DynamicResource DefaultBrush}" />
                 <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="BorderBrush" Value="{DynamicResource DefaultBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource BackGroundBrush}" />
                 <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
             </Style>
             <Style x:Key="BorderCommon" TargetType="{x:Type Border}">
                 <Setter Property="Border.CornerRadius" Value="8" />
                 <Setter Property="Border.Padding" Value="10" />
-                <Setter Property="Background" Value="{DynamicResource DefaultBrush}" />
+                <Setter Property="Background" Value="{DynamicResource BackGroundBrush}" />
                 <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource BackGroundBrush}" />
             </Style>
             <Style x:Key="HeavyFontSizeStyle" TargetType="{x:Type TextBlock}">
                 <Setter Property="FontSize" Value="30" />

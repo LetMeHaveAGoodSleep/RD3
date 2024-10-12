@@ -11,18 +11,10 @@ using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    public class NavigationViewModel : BindableBase, INavigationAware, IRegionMemberLifetime
+    public class NavigationViewModel :BaseViewModel,INavigationAware, IRegionMemberLifetime
     {
-        public readonly IContainerProvider containerProvider;
-        public readonly IEventAggregator aggregator;
-        public readonly ILanguage Language;
-
-        public NavigationViewModel(IContainerProvider containerProvider)
+        public NavigationViewModel(IContainerProvider containerProvider) : base(containerProvider)
         {
-            this.containerProvider = containerProvider;
-            this.aggregator = containerProvider.Resolve<IEventAggregator>();
-            this.Language = containerProvider.Resolve<ILanguage>();
-            Language.LoadResourceKey("zh_CN");//默认显示英文
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace RD3.ViewModels
 {
-    public class EditProjectTemplateViewModel : NavigationViewModel, IDialogAware
+    public class EditProjectTemplateViewModel : BaseViewModel, IDialogAware
     {
         private OpenMode _mode;
 

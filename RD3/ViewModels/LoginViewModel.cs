@@ -20,7 +20,7 @@ using Prism.Ioc;
 
 namespace RD3.ViewModels
 {
-    public class LoginViewModel : NavigationViewModel, IDialogAware
+    public class LoginViewModel : BaseViewModel, IDialogAware
     {
         public LoginViewModel(IContainerProvider containerProvider, IEventAggregator aggregator) : base(containerProvider)
         {

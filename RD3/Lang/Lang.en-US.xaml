@@ -10,8 +10,8 @@
     <system:String x:Key="Control">Control</system:String>
     <system:String x:Key="Setting">Setting</system:String>
     <system:String x:Key="Debug">Debug</system:String>
-    <system:String x:Key="Details">Details</system:String>
-    <system:String x:Key="Trends">Trends</system:String>
+    <system:String x:Key="Detail">Details</system:String>
+    <system:String x:Key="Trend">Trends</system:String>
     <system:String x:Key="Overview">Overview</system:String>
     <system:String x:Key="Running">Running</system:String>
     <system:String x:Key="ReactorName">Reactor Name</system:String>
@@ -102,4 +102,11 @@
     <system:String x:Key="Device">Device</system:String>
     <system:String x:Key="Liquid">Liquid</system:String>
     <system:String x:Key="Harvest">Harvest</system:String>
+    <system:String x:Key="ExportMustSelectSomething">Selected data does not exist！</system:String>
+    <system:String x:Key="Occurrence Time">Occurrence Time</system:String>
+    <system:String x:Key="Module">Module</system:String>
+    <system:String x:Key="Save as template">Save as template</system:String>
+    <system:String x:Key="Audit">Audit</system:String>
+    <system:String x:Key=" Do as unscheduled action">Do as unscheduled action</system:String>
+    <system:String x:Key="Add Liquid">Add Liquid</system:String>
 </ResourceDictionary>

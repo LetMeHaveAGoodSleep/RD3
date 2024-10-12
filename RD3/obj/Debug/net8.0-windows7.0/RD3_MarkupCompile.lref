@@ -13,7 +13,6 @@ FD:\Project\RD3\RD3\Views\ControlView.xaml;;
 FD:\Project\RD3\RD3\Views\EditBatchView.xaml;;
 FD:\Project\RD3\RD3\Views\EditClientView.xaml;;
 FD:\Project\RD3\RD3\Views\EditExperimentParamView.xaml;;
-FD:\Project\RD3\RD3\Views\EditParamView.xaml;;
 FD:\Project\RD3\RD3\Views\EditProjectView.xaml;;
 FD:\Project\RD3\RD3\Views\EditSampleView.xaml;;
 FD:\Project\RD3\RD3\Views\EditTemplateView.xaml;;
@@ -30,5 +29,7 @@ FD:\Project\RD3\RD3\Views\ProjectView.xaml;;
 FD:\Project\RD3\RD3\Views\SampleView.xaml;;
 FD:\Project\RD3\RD3\Views\SelfCheckView.xaml;;
 FD:\Project\RD3\RD3\Views\SettingView.xaml;;
+FD:\Project\RD3\RD3\Views\UnscheduledView.xaml;;
+FD:\Project\RD3\RD3\Views\UnscheduleView.xaml;;
 FD:\Project\RD3\RD3\Views\UserView.xaml;;
 

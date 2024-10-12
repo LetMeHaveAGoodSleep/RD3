@@ -18,7 +18,7 @@ using System.Windows.Documents;
 
 namespace RD3.ViewModels
 {
-    public class EditBatchViewModel : NavigationViewModel,IDialogAware
+    public class EditBatchViewModel : BaseViewModel,IDialogAware
     {
         private OpenMode _mode;
 

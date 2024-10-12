@@ -22,6 +22,12 @@ using ScottPlot.Plottables;
 using ImTools;
 using System.Timers;
 using RD3.ViewModels;
+using SkiaSharp;
+using RD3.Common.Events;
+using Prism.Events;
+using RD3.Extensions;
+using Prism.Services.Dialogs;
+using RD3.Shared;
 
 namespace RD3.Views
 {
@@ -33,9 +39,11 @@ namespace RD3.Views
         Crosshair MyCrosshair;
         ScottPlot.Plottables.Marker MyHighlightMarker;
         ScottPlot.Plottables.Text MyHighlightText;
+        private readonly IEventAggregator _aggregator;
 
-        public IndexView(IContainerProvider containerProvider)
+        public IndexView(IContainerProvider containerProvider, IEventAggregator aggregator)
         {
+            _aggregator = aggregator;
             ILanguage language = containerProvider.Resolve<ILanguage>();
 
             InitializeComponent();
@@ -45,7 +53,7 @@ namespace RD3.Views
 
             var plt = wpfPlot.Plot;
             plt.Legend.IsVisible = true;
-            plt.ShowLegend(Edge.Bottom);
+            plt.ShowLegend(Edge.Top);
 
 
             DateTime[] dates = Generate.ConsecutiveDays(100);
@@ -71,7 +79,7 @@ namespace RD3.Views
             var yAxis2 = plt.Axes.AddLeftAxis();
             yAxis2.LabelPadding = 100;
             yAxis2.LabelText = "Agit";
-            yAxis2.LabelOffsetX = 60;
+            
 
             var yAxis3 = plt.Axes.AddLeftAxis();
             yAxis3.LabelText = "Air";
@@ -227,6 +235,27 @@ namespace RD3.Views
             {
                 item.Checked += RadioButton1_Checked;
             }
+
+            aggregator.ResgiterMessage((MessageModel model) =>
+            {
+                var parameter = model.Model as DialogParameters;
+                double volume = parameter.GetValue<double>("Volume");
+                DateTime time = parameter.GetValue<DateTime>("Time");
+                List<string> devices = parameter.GetValue<List<string>>("Devices");
+                UnScheduleAction type = parameter.GetValue<UnScheduleAction>("ActionType");
+
+                DateTime[] dates = [time];
+                double[] ys = [volume];
+                foreach (string item in devices)
+                {
+                    var scatter = plt.Add.Scatter(dates, ys);
+                    scatter.LegendText = item + "_" + EnumUtil.GetEnumDescription(type) + "_" + time.ToString("HH-mm-ss");
+                    scatter.Axes.XAxis = plt.Axes.Bottom; // standard X axis
+                    scatter.Axes.YAxis = yAxis3; // custom Y axis
+                }
+                tabControl.SelectedItem = tabTrend;
+
+            }, nameof(UnscheduledViewModel));
         }
 
         private void TabControl_Loaded(object sender, RoutedEventArgs e)

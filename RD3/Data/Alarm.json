@@ -4,191 +4,167 @@
     "Name": "MCU-1",
     "Grade": "Error",
     "Description": "主板内部ROM异常",
-    "Repeat": 86400,
-    "Module": "Temp controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x02",
     "Name": "MCU-2",
     "Grade": "Error",
     "Description": "主板AD异常",
-    "Repeat": 86400,
-    "Module": "Temp controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x03",
     "Name": "MCU-3",
     "Grade": "Error",
     "Description": "环境温度异常",
-    "Repeat": 86400,
-    "Module": "Temp controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x04",
     "Name": "MCU-4",
     "Grade": "Error",
     "Description": "酸泵异常",
-    "Repeat": 86400,
-    "Module": "PH controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x05",
     "Name": "MCU-5",
     "Grade": "Error",
     "Description": "碱泵异常",
-    "Repeat": 86400,
-    "Module": "PH controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x06",
     "Name": "MCU-6",
     "Grade": "Warning",
     "Description": "气路1压力异常",
-    "Repeat": 86400,
-    "Module": "DO controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x07",
     "Name": "MCU-7",
     "Grade": "Warning",
     "Description": "气路2压力异常",
-    "Repeat": 86400,
-    "Module": "DO controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x08",
     "Name": "MCU-8",
     "Grade": "Error",
     "Description": "外部FLASH异常",
-    "Repeat": 86400,
-    "Module": "Temp controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x09",
     "Name": "MCU-9",
     "Grade": "Error",
     "Description": "相机模块通讯异常",
-    "Repeat": 86400,
-    "Module": "Temp controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x14",
     "Name": "MCU-14",
     "Grade": "Error",
     "Description": "OD模块通讯异常",
-    "Repeat": 86400,
-    "Module": "DO controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x15",
     "Name": "MCU-15",
     "Grade": "Error",
     "Description": "WIFI模块通讯异常",
-    "Repeat": 86400,
-    "Module": "Temp controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x16",
     "Name": "MCU-16",
     "Grade": "Error",
     "Description": "TEC模块通讯异常",
-    "Repeat": 86400,
-    "Module": "Temp controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x17",
     "Name": "MCU-17",
     "Grade": "Error",
     "Description": "搅拌电机模块通讯异常",
-    "Repeat": 86400,
-    "Module": "PH controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x18",
     "Name": "MCU-18",
     "Grade": "Error",
     "Description": "pH传感器异常",
-    "Repeat": 86400,
-    "Module": "PH controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x19",
     "Name": "MCU-19",
     "Grade": "Error",
     "Description": "温度传感器异常",
-    "Repeat": 86400,
-    "Module": "Temp controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x20",
     "Name": "MCU-20",
     "Grade": "Error",
     "Description": "溶氧传感器异常",
-    "Repeat": 86400,
-    "Module": "DO controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x21",
     "Name": "MCU-21",
     "Grade": "Error",
     "Description": "尾气处理模块通信异常",
-    "Repeat": 86400,
-    "Module": "DO controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x22",
     "Name": "MCU-22",
     "Grade": "Error",
     "Description": "信号板通讯异常",
-    "Repeat": 86400,
-    "Module": "PH controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x23",
     "Name": "MCU-23",
     "Grade": "Error",
     "Description": "反应座称重模块异常",
-    "Repeat": 86400,
-    "Module": "PH controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x24",
     "Name": "MCU-24",
     "Grade": "Error",
     "Description": "信号采集板称重模块异常",
-    "Repeat": 86400,
-    "Module": "PH controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x25",
     "Name": "MCU-25",
     "Grade": "Error",
     "Description": "冷凝模块通讯异常",
-    "Repeat": 86400,
-    "Module": "Temp controller"
+    "Repeat": 86400
   },
   {
     "ID": "0x26",
     "Name": "MCU-26",
     "Grade": "Error",
     "Description": "NFC模块通讯异常",
-    "Repeat": 86400,
-    "Module": "Temp controller"
+    "Repeat": 86400
   },
   {
     "ID": "0xFE",
     "Name": "MCU-FE",
     "Grade": "Warning",
     "Description": "仪器与PC通讯异常",
-    "Repeat": 86400,
-    "Module": "Temp controller"
+    "Repeat": 86400
   },
   {
     "ID": "0xFF",
     "Name": "MCU-FF",
     "Grade": "Warning",
     "Description": "仪器未连接",
-    "Repeat": 86400,
-    "Module": "Temp controller"
+    "Repeat": 86400
   }
 ]

@@ -1,4 +1,5 @@
 ﻿using HandyControl.Data;
+using Prism.Ioc;
 using RD3.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -23,9 +24,12 @@ namespace RD3.Views
     /// </summary>
     public partial class AuditView : UserControl
     {
-        public AuditView()
+        readonly ILanguage language;
+        public AuditView(IContainerProvider containerProvider)
         {
             InitializeComponent();
+
+            language = containerProvider.Resolve<ILanguage>();
 
             foreach (RadioButton item in ButtonGroup.Items)
             {

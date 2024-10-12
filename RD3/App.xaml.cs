@@ -98,6 +98,18 @@ namespace RD3
             CommandManager.GetInstance();
             AlarmManager.GetInstance();
             AlarmLogger.GetInstance();
+            for (int i = 0; i < 100; i++)
+            {
+                AlarmRecord record = new AlarmRecord();
+                record.Batch = "Batch-" + i.ToString().PadLeft(3, '0');
+                record.Value = i.ToString();
+                record.Module = "Unknown Module";
+                record.Description="It's Demo Description" + i.ToString().PadLeft(3, '0');
+                record.Time = DateTime.Now;
+                record.Reactor= "G" + i.ToString().PadLeft(3, '0');
+                record.Grade = AlarmGrade.Error;
+                AlarmLogger.GetInstance().AddAlarm(record);
+            }
             DeviceManager.GetInstance();
             CommunicationManager.GetInstance();
             base.OnInitialized();
@@ -134,6 +146,7 @@ namespace RD3
             containerRegistry.RegisterDialog<EditExperimentParamView, EditExperimentParamViewModel>();
             containerRegistry.RegisterForNavigation<AuditView, AuditViewModel>();
             containerRegistry.RegisterForNavigation<SettingView, SettingViewModel>();
+            containerRegistry.RegisterDialog<UnscheduledView, UnscheduledViewModel>(); 
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

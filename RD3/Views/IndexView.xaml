@@ -11,6 +11,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     d:DataContext="{d:DesignInstance Type=vm:IndexViewModel}"
@@ -115,7 +116,8 @@
                     hc:IconElement.Geometry="{StaticResource GeometrySample}"
                     Background="Transparent"
                     BorderThickness="1"
-                    Command="{Binding SampleCommand}"
+                    Command="{Binding UnScheduleCommand}"
+                    CommandParameter="Sample"
                     Content="{ex:Language Key='Sample'}"
                     ToolTip="Sample" />
                 <Button
@@ -125,7 +127,8 @@
                     hc:IconElement.Geometry="{StaticResource GeometryAddliquid}"
                     Background="Transparent"
                     BorderThickness="1"
-                    Command="{Binding LogCommand}"
+                    Command="{Binding UnScheduleCommand}"
+                    CommandParameter="Addliquid"
                     Content="{ex:Language Key='Add Liquid'}"
                     ToolTip="AddLiquid" />
                 <Button
@@ -135,7 +138,8 @@
                     hc:IconElement.Geometry="{StaticResource GeometryInoculate}"
                     Background="Transparent"
                     BorderThickness="1"
-                    Command="{Binding InoculateCommand}"
+                    Command="{Binding UnScheduleCommand}"
+                    CommandParameter="Inoculate"
                     Content="{ex:Language Key='Inoculate'}"
                     ToolTip="Inoculate" />
                 <Button
@@ -145,7 +149,8 @@
                     hc:IconElement.Geometry="{StaticResource GeometryHarvest}"
                     Background="Transparent"
                     BorderThickness="1"
-                    Command="{Binding LogCommand}"
+                    Command="{Binding UnScheduleCommand}"
+                    CommandParameter="Harvest"
                     Content="{ex:Language Key='Harvest'}"
                     ToolTip="Harvest" />
                 <Button
@@ -190,7 +195,7 @@
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="35" />
-                                    <RowDefinition Height="260" />
+                                    <RowDefinition Height="300" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <DockPanel>
@@ -290,7 +295,7 @@
                                                     Tag="tabAction" />
                                             </hc:ButtonGroup>
                                         </Border>
-                                        <wpf:WpfPlot Name="wpfPlot1" Margin="5" />
+                                        <wpf:WpfPlot Name="wpfPlot1" />
                                     </DockPanel>
                                 </Border>
                                 <Grid Grid.Row="2" Margin="10">

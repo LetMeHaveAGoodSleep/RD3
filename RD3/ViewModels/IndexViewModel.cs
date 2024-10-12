@@ -40,6 +40,23 @@ namespace RD3.ViewModels
             }
         }));
 
+        public DelegateCommand<string> UnScheduleCommand => new((string parameter) =>
+        {
+            Enum.TryParse(parameter, true, out UnScheduleAction parameter1);
+            DialogParameters pairs = new DialogParameters()
+            {
+                { "ActionType", parameter1 }
+            };
+            dialog?.ShowDialog(nameof(UnscheduledView), pairs, callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+                aggregator.SendMessage("", nameof(UnscheduledViewModel), callback.Parameters);
+            });
+        });
+
         public IndexViewModel(IContainerProvider provider,
             IDialogHostService dialog) : base(provider)
         {
@@ -50,7 +67,7 @@ namespace RD3.ViewModels
             NavigateCommand = new DelegateCommand<TaskBar>(Navigate);
 
             ObservableCollection<DeviceParameter> temp = new ObservableCollection<DeviceParameter>();
-            for (int i = 1; i < 16; i++)
+            for (int i = 1; i < 17; i++)
             {
                 DeviceParameter device = new DeviceParameter()
                 {

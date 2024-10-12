@@ -1,4 +1,6 @@
 ﻿using HandyControl.Data;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
@@ -10,8 +12,11 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using static MaterialDesignThemes.Wpf.Theme;
 
 namespace RD3.ViewModels
 {
@@ -79,6 +84,85 @@ namespace RD3.ViewModels
             }
             PageUpdated(new FunctionEventArgs<int>(PageIndex));
         });
+        public DelegateCommand ExportCommand => new(() =>
+        {
+            if (IsAlarm)
+            {
+                QueryAlarmRecord();
+                var csv = new StringBuilder();
+                var headers = new List<string>()
+                {
+                    Language.GetValue("Alarm Time").ToString(), Language.GetValue("Batch").ToString(),
+                    Language.GetValue("Reactor").ToString(), Language.GetValue("Description").ToString(),
+                    Language.GetValue("Grade").ToString(), Language.GetValue("Value").ToString()
+                };
+                csv.AppendLine(string.Join(",", headers));
+
+                foreach (var record in DataList)
+                {
+                    var rowValues = new List<object>()
+                {
+                    record.Time.ToString("yyyy-MM-dd HH:mm:ss"),
+                    record.Batch,
+                    record.Reactor,
+                    record.Description,
+                    record.Grade,
+                    record.Value
+                };
+                    csv.AppendLine(string.Join(",", rowValues));
+                }
+                string fileName = Language.GetValue("AlarmRecord").ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*",
+                    FileName = fileName,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                };
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    File.WriteAllText(saveFileDialog.FileName, csv.ToString());
+                }
+            }
+            else
+            {
+                var csv = new StringBuilder();
+                var headers = new List<string>()
+                {
+                    Language.GetValue("Occurrence Time").ToString(), Language.GetValue("Batch").ToString(),
+                    Language.GetValue("Reactor").ToString(), Language.GetValue("Module").ToString(),
+                    Language.GetValue("Operation").ToString(),
+                    Language.GetValue("Description").ToString()
+                };
+                csv.AppendLine(string.Join(",", headers));
+
+                foreach (var operation in Operations)
+                {
+                    var rowValues = new List<object>()
+                {
+                    operation.OccurrenceTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                    operation.Batch,
+                    operation.Reactor,
+                    operation.Module,
+                    operation.OperationStatement,
+                    operation.Description
+                };
+                    csv.AppendLine(string.Join(",", rowValues));
+                }
+                string fileName = Language.GetValue("Audit").ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*",
+                    FileName = fileName,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                };
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    File.WriteAllText(saveFileDialog.FileName, csv.ToString());
+                }
+            }
+        });
 
         private int _pageCount;
         public int PageCount
@@ -120,7 +204,8 @@ namespace RD3.ViewModels
                 {
                     try
                     {
-                        DataList.Add(ProcessAlarm(line));
+                        var temp = JsonConvert.DeserializeObject<AlarmRecord>(line);
+                        DataList.Add(temp);
                     }
                     catch
                     {
@@ -134,23 +219,9 @@ namespace RD3.ViewModels
             }
         }
 
-        AlarmRecord ProcessAlarm(string line)
-        {
-            AlarmRecord record = new AlarmRecord();
-            string[] array = line.Split('#');
-            record.Time = DateTime.ParseExact(array[0], "yyyy:MM:dd HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None);
-            record.Batch = array[1];
-            record.Reactor = array[2];
-            record.Value = array[3];
-            record.Grade = (AlarmGrade)Enum.Parse(typeof(AlarmGrade), array[4]);
-            record.Description = array[5];
-            record.Module = array[6];
-            return record;
-        }
-
         private void PageUpdated(FunctionEventArgs<int> info)
         {
-           
+
             if (!IsAlarm)
             {
                 PageCount = Operations.Count / DataCountPerPage + (Operations.Count % DataCountPerPage != 0 ? 1 : 0);
@@ -176,12 +247,12 @@ namespace RD3.ViewModels
 
         public void OnDialogClosed()
         {
-            
+
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            
+
         }
     }
 }

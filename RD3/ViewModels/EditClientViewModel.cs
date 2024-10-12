@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace RD3.ViewModels
 {
-    public class EditClientViewModel : NavigationViewModel,IDialogAware
+    public class EditClientViewModel : BaseViewModel, IDialogAware
     {
         private ClientConfig _clientConfig;
 
