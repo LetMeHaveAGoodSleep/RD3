@@ -28,6 +28,7 @@ using Prism.Events;
 using RD3.Extensions;
 using Prism.Services.Dialogs;
 using RD3.Shared;
+using System.Diagnostics;
 
 namespace RD3.Views
 {

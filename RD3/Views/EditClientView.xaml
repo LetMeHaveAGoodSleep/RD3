@@ -90,7 +90,7 @@
                 BorderBrush="{StaticResource PrimaryBrush}"
                 Command="{Binding CancelCommand}"
                 Content="{ex:Language Key='Cancel'}"
-                FontSize="14"
+                FontSize="{DynamicResource NormalFontSize}"
                 Foreground="{StaticResource PrimaryBrush}" />
             <Button
                 Width="80"
@@ -103,7 +103,7 @@
                 BorderBrush="{StaticResource PrimaryBrush}"
                 Command="{Binding OKCommand}"
                 Content="{ex:Language Key='OK'}"
-                FontSize="14"
+                FontSize="{DynamicResource NormalFontSize}"
                 Foreground="White"
                 Visibility="{Binding Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
         </StackPanel>

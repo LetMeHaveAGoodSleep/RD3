@@ -61,7 +61,7 @@
                         AutoGenerateColumns="False"
                         Background="Transparent"
                         ColumnWidth="SizeToCells"
-                        FontSize="14"
+                        FontSize="{DynamicResource NormalFontSize}"
                         HeadersVisibility="Column"
                         IsReadOnly="True"
                         ItemsSource="{Binding UserCol}"

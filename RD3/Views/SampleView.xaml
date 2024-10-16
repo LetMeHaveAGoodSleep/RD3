@@ -70,7 +70,7 @@
                     hc:IconElement.Geometry="{StaticResource GeometryDelete}"
                     Command="{Binding DeleteCommand}"
                     CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
-                    FontSize="14"
+                    FontSize="{DynamicResource NormalFontSize}"
                     Foreground="Red" />
             </hc:UniformSpacingPanel>
         </DockPanel>
@@ -79,7 +79,7 @@
             AutoGenerateColumns="False"
             Background="Transparent"
             ColumnWidth="SizeToCells"
-            FontSize="14"
+            FontSize="{DynamicResource NormalFontSize}"
             HeadersVisibility="Column"
             ItemsSource="{Binding SampleCol}"
             RowHeaderWidth="60"

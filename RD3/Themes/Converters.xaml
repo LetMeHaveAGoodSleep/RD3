@@ -1,0 +1,12 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:rd3="clr-namespace:RD3">
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <rd3:EnumToStringConverter x:Key="EnumToStringConverter" />
+    <rd3:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    <rd3:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+    <rd3:StatusToColorConverter x:Key="StatusToColorConverter" />
+    <rd3:StringToBoolConverter x:Key="StringToBoolConverter" />
+    <rd3:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+</ResourceDictionary>

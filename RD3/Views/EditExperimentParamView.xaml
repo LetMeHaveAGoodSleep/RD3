@@ -16,7 +16,6 @@
     Width="1780"
     Height="1000"
     d:DataContext="{d:DesignInstance Type=vm:EditExperimentParamViewModel}"
-    Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
@@ -88,104 +87,52 @@
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <ToggleButton
-                                                Name="tgbFixed"
-                                                IsChecked="True"
-                                                Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Fixed'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="0.5"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Fixed'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbAssociated" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="80"
-                                                        Height="30"
-                                                        Background="{DynamicResource PrimaryBrush}"
-                                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Associated'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="80"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Associated'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbFree" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="DarkOrange"
-                                                        BorderBrush="DarkOrange"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Free'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Free'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                        </hc:UniformSpacingPanel>
+                                        <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                Margin="-20,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Fixed'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                IsChecked="True" />
+                                            <RadioButton
+                                                Width="85"
+                                                Height="30"
+                                                Margin="-10,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Associated'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="70"
+                                                Height="30"
+                                                Margin="5,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Disable'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                        </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
                                         <TextBox
-                                            Width="200"
+                                            Width="150"
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
@@ -375,104 +322,52 @@
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <ToggleButton
-                                                Name="tgbFixed1"
-                                                IsChecked="True"
-                                                Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Fixed'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="0.5"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Fixed'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbAssociated1" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="80"
-                                                        Height="30"
-                                                        Background="{DynamicResource PrimaryBrush}"
-                                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Associated'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="80"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Associated'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbFree1" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="DarkOrange"
-                                                        BorderBrush="DarkOrange"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Free'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Free'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                        </hc:UniformSpacingPanel>
+                                        <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                Margin="-20,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource BorderBrush}"
+                                                Content="{ex:Language Key='Fixed'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                IsChecked="True" />
+                                            <RadioButton
+                                                Width="85"
+                                                Height="30"
+                                                Margin="-10,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Associated'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="70"
+                                                Height="30"
+                                                Margin="5,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Disable'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                        </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
                                         <TextBox
-                                            Width="200"
+                                            Width="150"
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
@@ -672,104 +567,52 @@
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <ToggleButton
-                                                Name="tgbFixed2"
-                                                IsChecked="True"
-                                                Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Fixed'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="0.5"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Fixed'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbAssociated2" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="80"
-                                                        Height="30"
-                                                        Background="{DynamicResource PrimaryBrush}"
-                                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Associated'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="80"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Associated'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbFree2" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="DarkOrange"
-                                                        BorderBrush="DarkOrange"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Free'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Free'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                        </hc:UniformSpacingPanel>
+                                        <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                Margin="-20,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Fixed'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                IsChecked="True" />
+                                            <RadioButton
+                                                Width="85"
+                                                Height="30"
+                                                Margin="-10,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Associated'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="70"
+                                                Height="30"
+                                                Margin="-5,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Disable'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                        </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
                                         <TextBox
-                                            Width="200"
+                                            Width="150"
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
@@ -959,104 +802,52 @@
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <ToggleButton
-                                                Name="tgbFixed3"
-                                                IsChecked="True"
-                                                Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Fixed'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="0.5"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Fixed'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbAssociated3" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="80"
-                                                        Height="30"
-                                                        Background="{DynamicResource PrimaryBrush}"
-                                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Associated'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="80"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Associated'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbFree3" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="DarkOrange"
-                                                        BorderBrush="DarkOrange"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Free'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Free'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                        </hc:UniformSpacingPanel>
+                                        <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                Margin="-20,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Fixed'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                IsChecked="True" />
+                                            <RadioButton
+                                                Width="85"
+                                                Height="30"
+                                                Margin="-10,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Associated'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="70"
+                                                Height="30"
+                                                Margin="5,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Disable'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                        </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
                                         <TextBox
-                                            Width="200"
+                                            Width="150"
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
@@ -1266,134 +1057,64 @@
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <ToggleButton
-                                                Name="tgbFixed4"
-                                                IsChecked="True"
-                                                Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Fixed'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="0.5"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Fixed'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbAssociated4" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="80"
-                                                        Height="30"
-                                                        Background="{DynamicResource PrimaryBrush}"
-                                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Associated'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="80"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Associated'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbFree4" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="DarkOrange"
-                                                        BorderBrush="DarkOrange"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Free'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Free'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbDisabled4" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource DarkPrimaryBrush}"
-                                                        BorderBrush="{DynamicResource BorderBrush}"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Disabled'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Disabled'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                        </hc:UniformSpacingPanel>
+                                        <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                Margin="-20,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Fixed'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                IsChecked="True" />
+                                            <RadioButton
+                                                Width="85"
+                                                Height="30"
+                                                Margin="-10,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Associated'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="#3C739A"
+                                                hc:VisualElement.HighlightBorderBrush="#3C739A"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Free'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="70"
+                                                Height="30"
+                                                Margin="-5,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Disable'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                        </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
                                         <TextBox
-                                            Width="110"
+                                            Width="90"
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
@@ -1520,134 +1241,64 @@
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <ToggleButton
-                                                Name="tgbFixed5"
-                                                IsChecked="True"
-                                                Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Fixed'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="0.5"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Fixed'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbAssociated5" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="80"
-                                                        Height="30"
-                                                        Background="{DynamicResource PrimaryBrush}"
-                                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Associated'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="80"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Associated'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbFree5" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="DarkOrange"
-                                                        BorderBrush="DarkOrange"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Free'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Free'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbDisabled5" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource DarkPrimaryBrush}"
-                                                        BorderBrush="{DynamicResource BorderBrush}"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Disabled'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Disabled'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                        </hc:UniformSpacingPanel>
+                                        <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                Margin="-15,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Fixed'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                IsChecked="True" />
+                                            <RadioButton
+                                                Width="85"
+                                                Height="30"
+                                                Margin="-10,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Associated'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="#3C739A"
+                                                hc:VisualElement.HighlightBorderBrush="#3C739A"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Free'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="70"
+                                                Height="30"
+                                                Margin="-5,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Disable'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                        </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
                                         <TextBox
-                                            Width="110"
+                                            Width="90"
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
@@ -1774,134 +1425,64 @@
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <ToggleButton
-                                                Name="tgbFixed6"
-                                                IsChecked="True"
-                                                Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Fixed'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="0.5"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Fixed'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbAssociated6" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="80"
-                                                        Height="30"
-                                                        Background="{DynamicResource PrimaryBrush}"
-                                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Associated'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="80"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Associated'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbFree6" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="DarkOrange"
-                                                        BorderBrush="DarkOrange"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Free'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Free'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbDisabled6" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource DarkPrimaryBrush}"
-                                                        BorderBrush="{DynamicResource BorderBrush}"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Disabled'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Disabled'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                        </hc:UniformSpacingPanel>
+                                        <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                Margin="-15,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Fixed'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                IsChecked="True" />
+                                            <RadioButton
+                                                Width="85"
+                                                Height="30"
+                                                Margin="-10,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Associated'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="#3C739A"
+                                                hc:VisualElement.HighlightBorderBrush="#3C739A"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Free'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="70"
+                                                Height="30"
+                                                Margin="-5,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Disable'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                        </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
                                         <TextBox
-                                            Width="110"
+                                            Width="90"
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
@@ -2030,134 +1611,63 @@
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <ToggleButton
-                                                Name="tgbFixed7"
-                                                IsChecked="True"
-                                                Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Fixed'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="0.5"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Fixed'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbAssociated7" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="80"
-                                                        Height="30"
-                                                        Background="{DynamicResource PrimaryBrush}"
-                                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Associated'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="80"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Associated'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbFree7" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="DarkOrange"
-                                                        BorderBrush="DarkOrange"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Free'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Free'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbDisabled7" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource DarkPrimaryBrush}"
-                                                        BorderBrush="{DynamicResource BorderBrush}"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Disabled'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Disabled'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                        </hc:UniformSpacingPanel>
+                                        <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                Margin="-20,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Fixed'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                IsChecked="True" />
+                                            <RadioButton
+                                                Width="85"
+                                                Height="30"
+                                                Margin="-10,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Associated'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="#3C739A"
+                                                hc:VisualElement.HighlightBorderBrush="#3C739A"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Free'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="70"
+                                                Height="30"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Disable'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                        </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
                                         <TextBox
-                                            Width="110"
+                                            Width="90"
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
@@ -2292,134 +1802,63 @@
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
-                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                            <ToggleButton
-                                                Name="tgbFixed8"
-                                                IsChecked="True"
-                                                Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Fixed'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="0.5"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Fixed'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbAssociated8" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="80"
-                                                        Height="30"
-                                                        Background="{DynamicResource PrimaryBrush}"
-                                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                                        BorderThickness="0.5"
-                                                        CornerRadius="4">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Associated'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="80"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Associated'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbFree8" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="DarkOrange"
-                                                        BorderBrush="DarkOrange"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Free'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Free'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                            <ToggleButton Name="tgbDisabled8" Style="{DynamicResource ToggleButtonCustom}">
-                                                <hc:StatusSwitchElement.CheckedElement>
-                                                    <Border
-                                                        Width="60"
-                                                        Height="30"
-                                                        Background="{DynamicResource DarkPrimaryBrush}"
-                                                        BorderBrush="{DynamicResource BorderBrush}"
-                                                        BorderThickness="1"
-                                                        CornerRadius="4"
-                                                        Effect="{StaticResource EffectShadow1}">
-                                                        <TextBlock
-                                                            HorizontalAlignment="Center"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="White"
-                                                            Text="{ex:Language Key='Disabled'}" />
-                                                    </Border>
-                                                </hc:StatusSwitchElement.CheckedElement>
-                                                <Border
-                                                    Width="60"
-                                                    Height="30"
-                                                    BorderBrush="#F5F7FA"
-                                                    BorderThickness="1"
-                                                    CornerRadius="4">
-                                                    <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Foreground="Gray"
-                                                        Text="{ex:Language Key='Disabled'}" />
-                                                </Border>
-                                            </ToggleButton>
-                                        </hc:UniformSpacingPanel>
+                                        <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                Margin="-20,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource SuccessBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Fixed'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                IsChecked="True" />
+                                            <RadioButton
+                                                Width="85"
+                                                Height="30"
+                                                Margin="-10,0,0,0"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Associated'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="60"
+                                                Height="30"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="#3C739A"
+                                                hc:VisualElement.HighlightBorderBrush="#3C739A"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Free'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                            <RadioButton
+                                                Width="70"
+                                                Height="30"
+                                                hc:BorderElement.CornerRadius="4"
+                                                hc:VisualElement.HighlightBackground="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightBorderBrush="{DynamicResource ThirdlyTextBrush}"
+                                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                                                Background="{DynamicResource DefaultBrush}"
+                                                Content="{ex:Language Key='Disable'}"
+                                                FontSize="{DynamicResource TextFontSize}"
+                                                Foreground="{DynamicResource SecondaryTextBrush}"
+                                                Tag="tabAction" />
+                                        </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Limit range:'}" />
                                         <TextBox
-                                            Width="110"
+                                            Width="90"
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
@@ -2428,7 +1867,7 @@
                                             Text="" />
                                         <TextBlock VerticalAlignment="Center" Text="~" />
                                         <TextBox
-                                            Width="110"
+                                            Width="90"
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
@@ -2541,7 +1980,7 @@
                             BorderBrush="{StaticResource PrimaryBrush}"
                             Command="{Binding CancelCommand}"
                             Content="{ex:Language Key='Cancel'}"
-                            FontSize="14"
+                            FontSize="{DynamicResource NormalFontSize}"
                             Foreground="{StaticResource PrimaryBrush}" />
                         <Button
                             Width="80"
@@ -2554,7 +1993,7 @@
                             BorderBrush="{StaticResource PrimaryBrush}"
                             Command="{Binding OKCommand}"
                             Content="{ex:Language Key='Apply'}"
-                            FontSize="14"
+                            FontSize="{DynamicResource NormalFontSize}"
                             Foreground="White"
                             Visibility="{Binding Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     </hc:UniformSpacingPanel>

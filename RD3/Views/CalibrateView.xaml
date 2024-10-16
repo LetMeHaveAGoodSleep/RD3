@@ -13,7 +13,7 @@
     d:DesignWidth="900"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{StaticResource ENGFontFamily}"
-    TextElement.FontSize="14"
+    TextElement.FontSize="{DynamicResource NormalFontSize}"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextOptions.TextFormattingMode="Ideal"

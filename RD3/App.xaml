@@ -21,6 +21,7 @@
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
                 <ResourceDictionary Source="Themes/WaveAnimation.xaml" />
                 <ResourceDictionary Source="Themes/Fonts.xaml" />
+                <ResourceDictionary Source="Themes/Converters.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ResourceDictionary x:Key="zh_CN" Source="pack://application:,,,/Lang/Lang.zh-CN.xaml" />
             <ResourceDictionary x:Key="en_US" Source="pack://application:,,,/Lang/Lang.en-US.xaml" />
@@ -220,7 +221,6 @@
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
-            <system:Double x:Key="LargeFontSize">20</system:Double>
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

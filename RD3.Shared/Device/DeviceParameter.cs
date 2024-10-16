@@ -9,20 +9,11 @@ namespace RD3.Shared
 {
     public class DeviceParameter : BindableBase
     {
-        const string format = "F2";
-
         private string _name;
         public string Name
         {
             get { return _name; }
             set { SetProperty(ref _name, value); }
-        }
-
-        private WorkStatus _status = WorkStatus.Idle;
-        public WorkStatus Status
-        {
-            get { return _status; }
-            set { SetProperty(ref _status, value); }
         }
 
         private float _temp = 0f;
@@ -32,13 +23,13 @@ namespace RD3.Shared
             set { SetProperty(ref _temp, value); }
         }
 
-        private string _temp_PV = "-";
-        public string Temp_PV
+        private TempParam _tempParam = new();
+        public TempParam TempParam
         {
-            get { return _temp_PV; }
-            set { SetProperty(ref _temp_PV, value); }
+            get { return _tempParam; }
+            set { SetProperty(ref _tempParam, value); }
         }
-
+        
         private float _pH = 0f;
         public float PH
         {
@@ -46,11 +37,11 @@ namespace RD3.Shared
             set { SetProperty(ref _pH, value); }
         }
 
-        private string _pH_PV = "-";
-        public string PH_PV
+        private PHParam _pHParam = new();
+        public PHParam PHParam
         {
-            get { return _pH_PV; }
-            set { SetProperty(ref _pH_PV, value); }
+            get { return _pHParam; }
+            set { SetProperty(ref _pHParam, value); }
         }
 
         private float _dO = 0f;
@@ -60,11 +51,11 @@ namespace RD3.Shared
             set { SetProperty(ref _dO, value); }
         }
 
-        private string _dO_PV = "-";
-        public string DO_PV 
+        private DOParam _dOParam = new();
+        public DOParam DOParam
         {
-            get { return _dO_PV; }
-            set { SetProperty(ref _dO_PV, value); }
+            get { return _dOParam; }
+            set { SetProperty(ref _dOParam, value); }
         }
 
         private float _agit = 0f;
@@ -74,11 +65,11 @@ namespace RD3.Shared
             set { SetProperty(ref _agit, value); }
         }
 
-        private string _agit_PV = "-";
-        public string Agit_PV
+        private AgitParam _agitParam = new();
+        public AgitParam AgitParam
         {
-            get { return _agit_PV; }
-            set { SetProperty(ref _agit_PV, value); }
+            get { return _agitParam; }
+            set { SetProperty(ref _agitParam, value); }
         }
 
         private float _base = 0f;
@@ -88,11 +79,11 @@ namespace RD3.Shared
             set { SetProperty(ref _base, value); }
         }
 
-        private string _base_PV = "-";
-        public string Base_PV
+        private BaseParam _baseParam = new();
+        public BaseParam BaseParam
         {
-            get { return _base_PV; }
-            set { SetProperty(ref _base_PV, value); }
+            get { return _baseParam; }
+            set { SetProperty(ref _baseParam, value); }
         }
 
         private float _acid = 0f;
@@ -102,11 +93,11 @@ namespace RD3.Shared
             set { SetProperty(ref _acid, value); }
         }
 
-        private string _acid_PV = "-";
-        public string Acid_PV
+        private AcidParam _acidParam = new();
+        public AcidParam AcidParam
         {
-            get { return _acid_PV; }
-            set { SetProperty(ref _acid_PV, value); }
+            get { return _acidParam; }
+            set { SetProperty(ref _acidParam, value); }
         }
 
         private float _aF = 0f;
@@ -116,11 +107,11 @@ namespace RD3.Shared
             set { SetProperty(ref _aF, value); }
         }
 
-        private string _aF_PV = "-";
-        public string AF_PV
+        private AFParam _aFParam = new();
+        public AFParam AFParam
         {
-            get { return _aF_PV; }
-            set { SetProperty(ref _aF_PV, value); }
+            get { return _aFParam; }
+            set { SetProperty(ref _aFParam, value); }
         }
 
         private float _feed = 0f;
@@ -130,12 +121,13 @@ namespace RD3.Shared
             set { SetProperty(ref _feed, value); }
         }
 
-        private string _feed_PV = "-";
-        public string Feed_PV
+        private FeedParam _feedParam = new();
+        public FeedParam FeedParam
         {
-            get { return _feed_PV; }
-            set { SetProperty(ref _feed_PV, value); }
+            get { return _feedParam; }
+            set { SetProperty(ref _feedParam, value); }
         }
+        
 
         private float _air = 0f;
         public float Air
@@ -144,11 +136,11 @@ namespace RD3.Shared
             set { SetProperty(ref _air, value); }
         }
 
-        private string _air_PV = "-";
-        public string Air_PV
+        private AirParam _airParam = new();
+        public AirParam AirParam
         {
-            get { return _air_PV; }
-            set { SetProperty(ref _air_PV, value); }
+            get { return _airParam; }
+            set { SetProperty(ref _airParam, value); }
         }
 
         private float _cO2 = 0f;
@@ -158,11 +150,11 @@ namespace RD3.Shared
             set { SetProperty(ref _cO2, value); }
         }
 
-        private string _cO2_PV = "-";
-        public string CO2_PV
+        private CO2Param _cO2Param = new();
+        public CO2Param CO2Param
         {
-            get { return _cO2_PV; }
-            set { SetProperty(ref _cO2_PV, value); }
+            get { return _cO2Param; }
+            set { SetProperty(ref _cO2Param, value); }
         }
 
         private float _o2 = 0f;
@@ -172,11 +164,11 @@ namespace RD3.Shared
             set { SetProperty(ref _o2, value); }
         }
 
-        private string _o2_PV = "-";
-        public string O2_PV
+        private O2Param _o2Param = new();
+        public O2Param O2Param
         {
-            get { return _o2_PV; }
-            set { SetProperty(ref _o2_PV, value); }
+            get { return _o2Param; }
+            set { SetProperty(ref _o2Param, value); }
         }
 
         private float _n2 = 0f;
@@ -186,11 +178,11 @@ namespace RD3.Shared
             set { SetProperty(ref _n2, value); }
         }
 
-        private string _n2_PV = "-";
-        public string N2_PV
+        private N2Param _n2Param = new();
+        public N2Param N2Param
         {
-            get { return _n2_PV; }
-            set { SetProperty(ref _n2_PV, value); }
+            get { return _n2Param; }
+            set { SetProperty(ref _n2Param, value); }
         }
 
         private float _sample = 0f;

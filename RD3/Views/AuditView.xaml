@@ -88,7 +88,7 @@
                         hc:IconElement.Geometry="{StaticResource GeometryExport}"
                         Command="{Binding ExportCommand}"
                         Content="{ex:Language Key='Export'}"
-                        FontSize="14" />
+                        FontSize="{DynamicResource NormalFontSize}" />
                 </hc:UniformSpacingPanel>
             </DockPanel>
         </hc:UniformSpacingPanel>
@@ -165,7 +165,7 @@
                     AutoGenerateColumns="False"
                     Background="Transparent"
                     ColumnWidth="SizeToCells"
-                    FontSize="14"
+                    FontSize="{DynamicResource NormalFontSize}"
                     HeadersVisibility="Column"
                     IsReadOnly="True"
                     ItemsSource="{Binding AlarmRecordCol}"

@@ -84,6 +84,9 @@
     <Content Update="Lang\Lang.zh-CN.xaml">
       <SubType>Designer</SubType>
     </Content>
+    <Page Update="Themes\Converters.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\Fonts.xaml">
       <SubType>Designer</SubType>
     </Page>

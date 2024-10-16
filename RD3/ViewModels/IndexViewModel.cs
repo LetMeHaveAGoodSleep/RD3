@@ -22,11 +22,55 @@ namespace RD3.ViewModels
 {
     public class IndexViewModel : NavigationViewModel
     {
+        private double _progress1 = 45;
+        public double Progress1
+        {
+            get { return _progress1; }
+            set { SetProperty(ref _progress1, value); }
+        }
+
+        private double _progress2 = 50;
+        public double Progress2
+        {
+            get { return _progress2; }
+            set { SetProperty(ref _progress2, value); }
+        }
+
+        private double _progress3 = 60;
+        public double Progress3
+        {
+            get { return _progress3; }
+            set { SetProperty(ref _progress3, value); }
+        }
+
+        private double _progress4 = 70;
+        public double Progress4
+        {
+            get { return _progress4; }
+            set { SetProperty(ref _progress4, value); }
+        }
+        private DeviceParameter _currentDeviceParameter;
+      public DeviceParameter CurrentDeviceParameter
+        {
+            get { return _currentDeviceParameter; }
+            set { SetProperty(ref _currentDeviceParameter, value); }
+        }
+
+
         private ObservableCollection<DeviceParameter> _deviceParameterCol = [];
         public ObservableCollection<DeviceParameter> DeviceParameterCol { get { return _deviceParameterCol; } set { SetProperty(ref _deviceParameterCol, value); } }
 
         private readonly IDialogHostService dialog;
         private readonly IRegionManager regionManager;
+
+        public DelegateCommand SaveAsTemplateCommand => new(() => 
+        {
+            // 创建一个 Random 对象
+            Random random = new Random();
+            // 生成一个介于 0 和 100 之间的随机数
+            int randomNumber = random.Next(0, 101);
+            Progress1 = randomNumber; 
+        });
 
         public DelegateCommand<string> ExecuteCommand { get; private set; }
         public DelegateCommand<TaskBar> NavigateCommand { get; private set; }
@@ -57,6 +101,13 @@ namespace RD3.ViewModels
             });
         });
 
+        public DelegateCommand<object> ChangeDeviceCommand => new((object o) => 
+        {
+            int.TryParse(o.ToString(), out int index);
+            if (index < 0 || index > DeviceParameterCol.Count - 1) return;
+            CurrentDeviceParameter = DeviceParameterCol[index]; 
+        });
+
         public IndexViewModel(IContainerProvider provider,
             IDialogHostService dialog) : base(provider)
         {
@@ -72,21 +123,23 @@ namespace RD3.ViewModels
                 DeviceParameter device = new DeviceParameter()
                 {
                     Name = "G" + i.ToString().PadLeft(2, '0'),
-                    Status = WorkStatus.Running,
-                    Temp = 37,
+                    Temp = 37 + i,
                     PH = 7.2f,
                     DO = 98,
-                    DO_PV = "213-232",
                     Agit = 1000,
-                    Agit_PV = "2000",
                     Base = 149.6f,
                     Acid = 30.0f,
                     AF = 103.3f,
                     Feed = 0.00f
                 };
+                device.TempParam.Temp_PV = "37.1";
+                device.PHParam.PH_PV = "7.2";
+                device.DOParam.DO_PV = "213-232";
+                device.AgitParam.Agit_PV = "2000";
                 temp.Add(device);
             }
             DeviceParameterCol = new ObservableCollection<DeviceParameter>(temp);
+            CurrentDeviceParameter = DeviceParameterCol[0];
         }
 
         private void Navigate(TaskBar obj)

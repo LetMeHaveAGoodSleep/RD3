@@ -12,7 +12,8 @@ namespace RD3.Shared
     {
         Fixed,
         Associated,
-        Free
+        Free,
+        Disable
     }
 
     public enum PHPump

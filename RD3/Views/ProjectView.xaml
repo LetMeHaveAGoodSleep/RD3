@@ -16,7 +16,7 @@
     d:DesignWidth="1350"
     Background="{StaticResource DefaultBrush}"
     FontFamily="{StaticResource ENGFontFamily}"
-    TextElement.FontSize="14"
+    TextElement.FontSize="{DynamicResource NormalFontSize}"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextOptions.TextFormattingMode="Ideal"
@@ -128,7 +128,7 @@
                     BorderBrush="{StaticResource PrimaryBrush}"
                     Click="ButtonAdd_Click"
                     Content="{ex:Language Key='Create'}"
-                    FontSize="14"
+                    FontSize="{DynamicResource NormalFontSize}"
                     Foreground="White" />
                 <Button
                     Height="35"
@@ -136,7 +136,7 @@
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryEdit}"
                     Click="ButtonEdit_Click"
-                    FontSize="14"
+                    FontSize="{DynamicResource NormalFontSize}"
                     Visibility="Collapsed" />
                 <Button
                     Height="35"
@@ -144,7 +144,7 @@
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryDelete}"
                     Click="ButtonDelete_Click"
-                    FontSize="14"
+                    FontSize="{DynamicResource NormalFontSize}"
                     Foreground="Red"
                     Visibility="Collapsed" />
             </hc:UniformSpacingPanel>
@@ -162,7 +162,7 @@
                     AutoGenerateColumns="False"
                     Background="Transparent"
                     ColumnWidth="SizeToCells"
-                    FontSize="14"
+                    FontSize="{DynamicResource NormalFontSize}"
                     HeadersVisibility="Column"
                     IsReadOnly="True"
                     ItemsSource="{Binding ProjectCol}"
@@ -288,7 +288,7 @@
                     Background="Transparent"
                     CanUserSortColumns="False"
                     ColumnWidth="SizeToCells"
-                    FontSize="14"
+                    FontSize="{DynamicResource NormalFontSize}"
                     HeadersVisibility="Column"
                     IsReadOnly="True"
                     ItemsSource="{Binding ProjectTemplateCol}"

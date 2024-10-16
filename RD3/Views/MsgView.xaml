@@ -20,7 +20,7 @@
         <TextBlock
             Padding="5"
             d:Text="温馨提示"
-            FontSize="14"
+            FontSize="{DynamicResource NormalFontSize}"
             Text="{Binding Title}" />
 
         <TextBlock
@@ -28,7 +28,7 @@
             Padding="15,0"
             VerticalAlignment="Center"
             d:Text="确认删除该数据吗？"
-            FontSize="14"
+            FontSize="{DynamicResource NormalFontSize}"
             Text="{Binding Content}" />
 
         <StackPanel

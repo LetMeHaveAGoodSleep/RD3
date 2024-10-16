@@ -112,9 +112,10 @@
                         hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                         Background="{StaticResource PrimaryBrush}"
                         BorderBrush="{StaticResource PrimaryBrush}"
+                        Click="Button_Click"
                         Content="{ex:Language Key='Do as unscheduled action'}"
                         FontSize="{DynamicResource NormalFontSize}"
-                        Foreground="White" Click="Button_Click" />
+                        Foreground="White" />
                 </hc:SimpleStackPanel>
             </DockPanel>
         </hc:UniformSpacingPanel>

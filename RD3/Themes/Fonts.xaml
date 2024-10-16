@@ -2,6 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=netstandard">
+    <system:Double x:Key="SuperFontSize">40</system:Double>
+    <system:Double x:Key="HeavyFontSize">30</system:Double>
     <system:Double x:Key="LargeFontSize">24</system:Double>
     <system:Double x:Key="HeadFontSize">20</system:Double>
     <system:Double x:Key="MediumFontSize">18</system:Double>
