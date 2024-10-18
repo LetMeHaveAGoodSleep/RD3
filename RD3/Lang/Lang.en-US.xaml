@@ -109,4 +109,5 @@
     <system:String x:Key="Audit">Audit</system:String>
     <system:String x:Key=" Do as unscheduled action">Do as unscheduled action</system:String>
     <system:String x:Key="Add Liquid">Add Liquid</system:String>
+    <system:String x:Key="Load Setting">Load Setting</system:String>
 </ResourceDictionary>

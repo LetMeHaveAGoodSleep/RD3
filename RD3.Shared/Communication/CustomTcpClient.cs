@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace RD3.Shared
 {
@@ -28,6 +29,12 @@ namespace RD3.Shared
         public bool IsConnected
         { 
             get { return _isConnected; }
+        }
+
+        public string Name
+        {
+            get;
+            set;
         }
 
         public CustomTcpClient(string serverIp, int serverPort, int reconnectCount, int reconnectIntervalMilliseconds)
@@ -250,7 +257,7 @@ namespace RD3.Shared
                 Array.Reverse(bytes); // 确保大端字节序
             var a = BitConverter.ToSingle(bytes, 0);
             // 这里可以处理接收到的数据，例如输出到控制台
-            Console.WriteLine("Received data: " + BitConverter.ToString(data));
+            LogHelper.Debug("Received data: " + BitConverter.ToString(data));
         }
     }
 }

@@ -104,8 +104,9 @@
     <system:String x:Key="ExportMustSelectSomething">未选中数据！</system:String>
     <system:String x:Key="Occurrence Time">发生时间</system:String>
     <system:String x:Key="Module">模块</system:String>
-    <system:String x:Key="Save as template">另存为模板</system:String>
+    <system:String x:Key="Save as template">保存模板</system:String>
     <system:String x:Key="Audit">审计追踪</system:String>
     <system:String x:Key=" Do as unscheduled action">增加记录</system:String>
     <system:String x:Key="Add Liquid">加液</system:String>
+    <system:String x:Key="Load Setting">加载配置</system:String>
 </ResourceDictionary>

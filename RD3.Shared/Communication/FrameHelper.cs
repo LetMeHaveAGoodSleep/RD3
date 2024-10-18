@@ -42,7 +42,6 @@ namespace RD3.Shared
 
         public static Tuple<byte[], byte[]> UnframeData(byte[] framedData)
         {
-
             LogHelper.Info(BitConverter.ToString(framedData).Replace("-", " "));
 
             if (framedData.Length < CommandLength + DataLengthSize + CRCSize + 2)

@@ -17,7 +17,7 @@
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     d:DataContext="{d:DesignInstance Type=vm:IndexViewModel}"
-    d:DesignHeight="1900"
+    d:DesignHeight="950"
     d:DesignWidth="1550"
     Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
@@ -47,6 +47,14 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <materialDesign:Snackbar
+            x:Name="LoginSnakeBar"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Width="200"
+            Height="100"
+            Panel.ZIndex="1"
+            MessageQueue="{materialDesign:MessageQueue}" />
         <Grid Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
@@ -95,16 +103,28 @@
                         Tag="tabOverview" />
                 </hc:ButtonGroup>
             </Border>
-            <hc:UniformSpacingPanel Grid.Column="2" Spacing="10">
+            <hc:UniformSpacingPanel Grid.Column="2" Spacing="5">
                 <Button
                     Height="30"
                     HorizontalAlignment="Left"
                     hc:BorderElement.CornerRadius="8"
-                    hc:IconElement.Geometry="{StaticResource GeometryTimeSequence}"
+                    hc:IconElement.Geometry="{StaticResource GeometryLoadSetting}"
                     Background="Transparent"
                     BorderThickness="1"
-                    Command="{Binding SetPIDCommand}"
-                    ToolTip="PID Setting"
+                    Command="{Binding LoadSettingCommand}"
+                    Content="{ex:Language Key='Load Setting'}"
+                    ToolTip="Load Setting"
+                    Visibility="Collapsed" />
+                <Button
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    hc:BorderElement.CornerRadius="8"
+                    hc:IconElement.Geometry="{StaticResource GeometryImportTemplate}"
+                    Background="Transparent"
+                    BorderThickness="1"
+                    Command="{Binding ImportTemplateCommand}"
+                    Content="{ex:Language Key='Import template'}"
+                    ToolTip="Import template"
                     Visibility="Collapsed" />
                 <Button
                     Height="30"
@@ -115,7 +135,7 @@
                     BorderThickness="1"
                     Command="{Binding SaveAsTemplateCommand}"
                     Content="{ex:Language Key='Save as template'}"
-                    ToolTip="Pause" />
+                    ToolTip="Save as template" />
                 <Button
                     Height="30"
                     HorizontalAlignment="Left"
@@ -125,6 +145,7 @@
                     BorderThickness="1"
                     Command="{Binding PauseCommand}"
                     Content="{ex:Language Key='Pause'}"
+                    IsEnabled="{Binding Running}"
                     ToolTip="Pause" />
                 <Button
                     Height="30"
@@ -136,6 +157,7 @@
                     Command="{Binding UnScheduleCommand}"
                     CommandParameter="Sample"
                     Content="{ex:Language Key='Sample'}"
+                    IsEnabled="{Binding Running}"
                     ToolTip="Sample" />
                 <Button
                     Height="30"
@@ -147,6 +169,7 @@
                     Command="{Binding UnScheduleCommand}"
                     CommandParameter="Addliquid"
                     Content="{ex:Language Key='Add Liquid'}"
+                    IsEnabled="{Binding Running}"
                     ToolTip="AddLiquid" />
                 <Button
                     Height="30"
@@ -158,6 +181,7 @@
                     Command="{Binding UnScheduleCommand}"
                     CommandParameter="Inoculate"
                     Content="{ex:Language Key='Inoculate'}"
+                    IsEnabled="{Binding Running}"
                     ToolTip="Inoculate" />
                 <Button
                     Height="30"
@@ -169,19 +193,34 @@
                     Command="{Binding UnScheduleCommand}"
                     CommandParameter="Harvest"
                     Content="{ex:Language Key='Harvest'}"
+                    IsEnabled="{Binding Running}"
                     ToolTip="Harvest" />
                 <Button
                     Width="80"
                     Height="30"
                     hc:BorderElement.CornerRadius="8"
                     hc:IconElement.Geometry="{StaticResource GeometryStop}"
-                    Background="#F56C6C"
-                    BorderBrush="#F56C6C"
+                    Background="{DynamicResource StopBrush}"
+                    BorderBrush="{DynamicResource StopBrush}"
                     BorderThickness="1"
                     Command="{Binding StopCommand}"
                     Content="{ex:Language Key='Stop'}"
                     Foreground="White"
-                    ToolTip="Stop" />
+                    ToolTip="Stop"
+                    Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                <Button
+                    Width="80"
+                    Height="30"
+                    hc:BorderElement.CornerRadius="8"
+                    hc:IconElement.Geometry="{StaticResource GeometryStart}"
+                    Background="Teal"
+                    BorderBrush="Teal"
+                    BorderThickness="1"
+                    Command="{Binding StartCommand}"
+                    Content="{ex:Language Key='Start'}"
+                    Foreground="White"
+                    ToolTip="Start"
+                    Visibility="{Binding Running, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
             </hc:UniformSpacingPanel>
         </Grid>
         <TabControl
@@ -492,7 +531,7 @@
                                                 <RowDefinition Height="30" />
                                                 <RowDefinition Height="30" />
                                             </Grid.RowDefinitions>
-                                            <Image Grid.RowSpan="2" Source="/Images/Main/Temp.png" />
+                                            <Image Grid.RowSpan="2" Source="/Images/Main/Temp_Primary.png" />
                                             <TextBlock
                                                 Grid.Row="0"
                                                 Grid.Column="2"
@@ -637,7 +676,7 @@
                                                 <RowDefinition Height="30" />
                                                 <RowDefinition Height="30" />
                                             </Grid.RowDefinitions>
-                                            <Image Grid.RowSpan="2" Source="/Images/Main/PH.png" />
+                                            <Image Grid.RowSpan="2" Source="/Images/Main/PH_Primary.png" />
                                             <TextBlock
                                                 Grid.Row="0"
                                                 Grid.Column="2"
@@ -778,7 +817,7 @@
                                                 <RowDefinition Height="30" />
                                                 <RowDefinition Height="30" />
                                             </Grid.RowDefinitions>
-                                            <Image Grid.RowSpan="2" Source="/Images/Main/AGit.png" />
+                                            <Image Grid.RowSpan="2" Source="/Images/Main/Agit_Primary.png" />
                                             <TextBlock
                                                 Grid.Row="0"
                                                 Grid.Column="2"
@@ -926,7 +965,7 @@
                                                 <RowDefinition Height="30" />
                                                 <RowDefinition Height="30" />
                                             </Grid.RowDefinitions>
-                                            <Image Grid.RowSpan="2" Source="/Images/Main/DO.png" />
+                                            <Image Grid.RowSpan="2" Source="/Images/Main/O2_Primary.png" />
                                             <TextBlock
                                                 Grid.Row="0"
                                                 Grid.Column="2"

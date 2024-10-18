@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
-    public class DeviceParameter : BindableBase
+    public class DeviceParameter : BindableBase,ICloneable
     {
         private string _name;
         public string Name
@@ -239,6 +239,12 @@ namespace RD3.Shared
         {
             get { return _harvest_PV; }
             set { SetProperty(ref _harvest_PV, value); }
+        }
+
+        public object Clone()
+        {
+            var clonedObject = ObjectCloner.DeepCopy(this);
+            return clonedObject;
         }
     }
 }

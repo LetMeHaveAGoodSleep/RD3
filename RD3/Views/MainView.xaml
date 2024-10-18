@@ -238,7 +238,7 @@
                                 VerticalAlignment="Center"
                                 FontSize="20"
                                 Foreground="White"
-                                Text="{ex:Language Key='Fermentation process control system V1.0--芯造科技'}" />
+                                Text="{ex:Language Key='Fermentation process control system--芯造科技'}" />
                             <Button
                                 Name="btnChooseLanguage"
                                 Grid.Column="1"

@@ -257,6 +257,12 @@ namespace RD3.Views
                 tabControl.SelectedItem = tabTrend;
 
             }, nameof(UnscheduledViewModel));
+
+            //注册提示消息
+            aggregator.ResgiterMessage(arg =>
+            {
+                LoginSnakeBar.MessageQueue.Enqueue(arg.Message);
+            }, nameof(IndexViewModel));
         }
 
         private void TabControl_Loaded(object sender, RoutedEventArgs e)

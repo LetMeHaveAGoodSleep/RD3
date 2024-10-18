@@ -63,10 +63,7 @@
                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                             <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='PH'}" />
                         </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel
-                            Grid.Row="1"
-                            Orientation="Horizontal"
-                            Spacing="10">
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
                             <Image
                                 Width="25"
                                 Height="25"
@@ -76,7 +73,7 @@
                                 FontSize="{DynamicResource SubHeadFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="Base,Acid" />
-                        </hc:UniformSpacingPanel>
+                        </StackPanel>
                         <TextBox
                             Grid.Row="2"
                             Width="200"
@@ -135,10 +132,7 @@
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="％" />
                         </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel
-                            Grid.Row="1"
-                            Orientation="Horizontal"
-                            Spacing="10">
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
                             <Image
                                 Width="25"
                                 Height="25"
@@ -148,7 +142,7 @@
                                 FontSize="{DynamicResource SubHeadFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="Agit,Air,Feed" />
-                        </hc:UniformSpacingPanel>
+                        </StackPanel>
                         <TextBox
                             Grid.Row="2"
                             Width="200"
@@ -172,10 +166,7 @@
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="ML/H" />
                         </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel
-                            Grid.Row="1"
-                            Orientation="Horizontal"
-                            Spacing="10">
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
                             <Image
                                 Width="25"
                                 Height="25"
@@ -185,7 +176,7 @@
                                 FontSize="{DynamicResource SubHeadFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="DO" />
-                        </hc:UniformSpacingPanel>
+                        </StackPanel>
                         <TextBox
                             Grid.Row="2"
                             Width="200"
@@ -219,10 +210,7 @@
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="ML/H" />
                         </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel
-                            Grid.Row="1"
-                            Orientation="Horizontal"
-                            Spacing="10">
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
                             <Image
                                 Width="25"
                                 Height="25"
@@ -232,7 +220,7 @@
                                 FontSize="{DynamicResource SubHeadFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="PH" />
-                        </hc:UniformSpacingPanel>
+                        </StackPanel>
                         <TextBox
                             Grid.Row="2"
                             Width="200"
@@ -254,10 +242,7 @@
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="ML/H" />
                         </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel
-                            Grid.Row="1"
-                            Orientation="Horizontal"
-                            Spacing="10">
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
                             <Image
                                 Width="25"
                                 Height="25"
@@ -267,7 +252,7 @@
                                 FontSize="{DynamicResource SubHeadFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="PH" />
-                        </hc:UniformSpacingPanel>
+                        </StackPanel>
                         <TextBox
                             Grid.Row="2"
                             Width="200"
@@ -375,10 +360,7 @@
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="ML/H" />
                         </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel
-                            Grid.Row="1"
-                            Orientation="Horizontal"
-                            Spacing="10">
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
                             <Image
                                 Width="25"
                                 Height="25"
@@ -388,7 +370,7 @@
                                 FontSize="{DynamicResource SubHeadFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="DO" />
-                        </hc:UniformSpacingPanel>
+                        </StackPanel>
                         <TextBox
                             Grid.Row="2"
                             Width="200"
@@ -410,10 +392,7 @@
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="ML/H" />
                         </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel
-                            Grid.Row="1"
-                            Orientation="Horizontal"
-                            Spacing="10">
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
                             <Image
                                 Width="25"
                                 Height="25"
@@ -423,7 +402,7 @@
                                 FontSize="{DynamicResource SubHeadFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="DO" />
-                        </hc:UniformSpacingPanel>
+                        </StackPanel>
                         <TextBox
                             Grid.Row="2"
                             Width="200"
@@ -445,10 +424,7 @@
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="ML/H" />
                         </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel
-                            Grid.Row="1"
-                            Orientation="Horizontal"
-                            Spacing="10">
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
                             <Image
                                 Width="25"
                                 Height="25"
@@ -458,7 +434,7 @@
                                 FontSize="{DynamicResource SubHeadFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
                                 Text="DO" />
-                        </hc:UniformSpacingPanel>
+                        </StackPanel>
                         <TextBox
                             Grid.Row="2"
                             Width="200"

@@ -392,7 +392,7 @@
                             Background="Transparent"
                             BorderThickness="1"
                             Command="{Binding PauseCommand}"
-                            Content="{ex:Language Key='Pause'}"
+                            Content="{ex:Language Key='Loop'}"
                             ToolTip="Loop" />
                         <Button
                             Height="30"
@@ -412,7 +412,7 @@
                             Background="Transparent"
                             BorderThickness="1"
                             Command="{Binding PauseCommand}"
-                            Content="{ex:Language Key='Import'}"
+                            Content="{ex:Language Key='Save'}"
                             ToolTip="Save" />
                     </hc:UniformSpacingPanel>
                     <!--<lvc:CartesianChart

@@ -38,6 +38,13 @@ namespace RD3.Shared
         {
             string jsonContent = AESEncryption.DecryptFile(FileConst.ProjectTemplatePath);
             Templates = JsonConvert.DeserializeObject<ObservableCollection<ProjectTemplate>>(jsonContent);
+            Templates = new ObservableCollection<ProjectTemplate>(Templates.OrderByDescending(t => t.CreatDate));
+        }
+
+        public void AddTemplate(ProjectTemplate template)
+        {
+            Templates.Add(template);
+            Templates = new ObservableCollection<ProjectTemplate>(Templates.OrderByDescending(t => t.CreatDate));
         }
 
         public void Save(ObservableCollection<ProjectTemplate> dataList = null)
@@ -46,6 +53,7 @@ namespace RD3.Shared
             {
                 Templates = dataList;
             }
+            Templates = new ObservableCollection<ProjectTemplate>(Templates.OrderByDescending(t => t.CreatDate));
             string json = JsonConvert.SerializeObject(dataList ?? Templates);
             json = AESEncryption.Encrypt(json);
             File.Delete(FileConst.ProjectTemplatePath);

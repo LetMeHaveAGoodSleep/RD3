@@ -15,7 +15,7 @@ namespace RD3.ViewModels
         public DelegateCommand<string> ReadCommand => new((string commandText) => 
         {
             int command = Convert.ToInt32(commandText);
-            foreach (var item in CommunicationManager.GetInstance().ClientCol) 
+            foreach (var item in CommunicationManager.GetInstance().TcpClients) 
             {
                 if (!item.IsConnected) continue;
                 byte[] bytes =
@@ -39,7 +39,7 @@ namespace RD3.ViewModels
                 MessageBox.Show("无此命令");
                 return;
             }
-            foreach (var item in CommunicationManager.GetInstance().ClientCol)
+            foreach (var item in CommunicationManager.GetInstance().TcpClients)
             {
                 if (!item.IsConnected) continue;
                 byte[] bytes =

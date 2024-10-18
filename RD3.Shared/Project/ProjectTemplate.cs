@@ -111,27 +111,5 @@ namespace RD3.Shared
             get { return _cO2; }
             set { SetProperty(ref _cO2, value); }
         }
-
-        private ObservableCollection<ExperimentParam> _experimentParams = [];
-        public ObservableCollection<ExperimentParam> ExperimentParams
-        {
-            get { return _experimentParams; }
-            set { SetProperty(ref _experimentParams, value); }
-        }
-
-        public ProjectTemplate() 
-        {
-            ExperimentParam param = new()
-            {
-                Name = "PH"
-
-            };
-            ExperimentParam param1 = new()
-            {
-                Name = "Agit"
-
-            };
-            ExperimentParams.Add(param);
-        }
     }
 }

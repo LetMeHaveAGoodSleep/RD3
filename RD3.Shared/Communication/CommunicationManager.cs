@@ -13,13 +13,13 @@ namespace RD3.Shared
 {
     public class CommunicationManager
     {
-        public ObservableCollection<ClientConfig> Clients = new ObservableCollection<ClientConfig>();
+        public ObservableCollection<ClientConfig> ClientConfigCol = new ObservableCollection<ClientConfig>();
         private static volatile CommunicationManager _instance; // 使用volatile确保多线程环境下的可见性
         private static readonly object _lock = new object(); // 锁对象
         private static int timeOut = 3000;
         private List<TcpListener> tcpListeners = [];
         private List<CustomTcpClient> tcpClients = [];
-        public List<CustomTcpClient> ClientCol
+        public List<CustomTcpClient> TcpClients
         {
             get { return tcpClients; }
             set { tcpClients = value; }
@@ -30,9 +30,10 @@ namespace RD3.Shared
             LoadCommunication();
 
             // 创建客户端
-            foreach (var client in Clients)
+            foreach (var client in ClientConfigCol)
             {
                 CustomTcpClient tcpClient = new CustomTcpClient(client.Host, client.Port,client.RetryTimes,client.ReconnectDelay);
+                tcpClient.Name = client.Name;
                 Task.Run(() => 
                 {
                     tcpClient.Connect();
@@ -60,12 +61,12 @@ namespace RD3.Shared
         void LoadCommunication()
         {
             string jsonContent = AESEncryption.DecryptFile(FileConst.CommunicationPath);
-            Clients = JsonConvert.DeserializeObject<ObservableCollection<ClientConfig>>(jsonContent);
+            ClientConfigCol = JsonConvert.DeserializeObject<ObservableCollection<ClientConfig>>(jsonContent);
         }
 
         public void Save()
         {
-            string json = JsonConvert.SerializeObject(Clients);
+            string json = JsonConvert.SerializeObject(ClientConfigCol);
             File.Delete(FileConst.CommunicationPath);
             File.WriteAllText(FileConst.CommunicationPath, json);
         }

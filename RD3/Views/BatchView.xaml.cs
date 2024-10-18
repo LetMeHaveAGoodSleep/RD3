@@ -1,4 +1,7 @@
 ﻿using HandyControl.Data;
+using Prism.Events;
+using Prism.Ioc;
+using RD3.Extensions;
 using RD3.Shared;
 using RD3.ViewModels;
 using System;
@@ -24,9 +27,15 @@ namespace RD3.Views
     /// </summary>
     public partial class BatchView : UserControl
     {
-        public BatchView()
+        private readonly ILanguage Language;
+
+        private readonly IEventAggregator aggregator;
+        public BatchView(IContainerProvider containerProvider, IEventAggregator aggregator)
         {
             InitializeComponent();
+
+            this.Language = containerProvider.Resolve<ILanguage>();
+            this.aggregator = aggregator;
 
             foreach (RadioButton item in ButtonGroup.Items)
             {
@@ -123,6 +132,29 @@ namespace RD3.Views
             }
 
             ((BatchViewModel)this.DataContext)?.SearchCommand.Execute(e);
+        }
+
+        private void ButtonExport_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabControl.SelectedItem == tabTemplate)
+            {
+                if (dataGrid1.SelectedItem == null)
+                {
+                    MessageBox.Show(Language.GetValue("请选择模板").ToString());
+                    return;
+                }
+                (DataContext as BatchViewModel)?.ExportCommand.Execute(dataGrid1.SelectedItem);
+            }
+            else
+            {
+                (DataContext as BatchViewModel)?.ExportCommand.Execute(null);
+            }
+        }
+
+        private void ButtonUseTemplate_Click(object sender, RoutedEventArgs e)
+        {
+            aggregator.SendMessage("", dataGrid1.SelectedItem.GetType().Name, dataGrid1.SelectedItem);
+            MessageBox.Show(Language.GetValue("设置成功").ToString());
         }
     }
 }

@@ -103,9 +103,9 @@
                         HorizontalContentAlignment="Center"
                         hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                         hc:IconElement.Geometry="{StaticResource GeometryExport}"
+                        Click="ButtonExport_Click"
                         Content="{ex:Language Key='Export'}"
-                        FontSize="{DynamicResource NormalFontSize}"
-                        />
+                        FontSize="{DynamicResource NormalFontSize}" />
                     <Button
                         Height="35"
                         HorizontalContentAlignment="Center"
@@ -223,6 +223,7 @@
                                             BorderThickness="0"
                                             Click="Button_Click"
                                             Foreground="Gold"
+                                            ToolTip="{ex:Language Key='Set Favorite'}"
                                             Visibility="{Binding IsFavorite, Converter={StaticResource BoolToVisConverter}}" />
                                         <Button
                                             x:Name="BtnNoFavorite"
@@ -231,26 +232,30 @@
                                             Background="Transparent"
                                             BorderThickness="0"
                                             Click="Button_Click"
+                                            ToolTip="{ex:Language Key='Delete Favorite'}"
                                             Visibility="{Binding IsFavorite, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                                         <Button
                                             HorizontalAlignment="Left"
                                             hc:IconElement.Geometry="{StaticResource GeometryEdit}"
                                             Background="Transparent"
                                             BorderThickness="0"
-                                            Click="ButtonEdit_Click" />
+                                            Click="ButtonEdit_Click"
+                                            ToolTip="{ex:Language Key='Edit'}" />
                                         <Button
                                             HorizontalAlignment="Left"
                                             hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
                                             Background="Transparent"
                                             BorderThickness="0"
-                                            Click="ButtonView_Click" />
+                                            Click="ButtonView_Click"
+                                            ToolTip="{ex:Language Key='View'}" />
                                         <Button
                                             HorizontalAlignment="Left"
                                             hc:IconElement.Geometry="{StaticResource GeometryDelete}"
                                             Background="Transparent"
                                             BorderThickness="0"
                                             Click="ButtonDelete_Click"
-                                            Foreground="Red" />
+                                            Foreground="Red"
+                                            ToolTip="{ex:Language Key='Delete'}" />
                                     </hc:UniformSpacingPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -315,23 +320,33 @@
                                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                         <Button
                                             HorizontalAlignment="Left"
+                                            hc:IconElement.Geometry="{StaticResource GeometryUseTemplate}"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Click="ButtonUseTemplate_Click"
+                                            ToolTip="{ex:Language Key='Use Template'}" />
+                                        <Button
+                                            HorizontalAlignment="Left"
                                             hc:IconElement.Geometry="{StaticResource GeometryEdit}"
                                             Background="Transparent"
                                             BorderThickness="0"
-                                            Click="ButtonEdit_Click" />
+                                            Click="ButtonEdit_Click"
+                                            ToolTip="{ex:Language Key='Edit'}" />
                                         <Button
                                             HorizontalAlignment="Left"
                                             hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
                                             Background="Transparent"
                                             BorderThickness="0"
-                                            Click="ButtonView_Click" />
+                                            Click="ButtonView_Click"
+                                            ToolTip="{ex:Language Key='View'}" />
                                         <Button
                                             HorizontalAlignment="Left"
                                             hc:IconElement.Geometry="{StaticResource GeometryDelete}"
                                             Background="Transparent"
                                             BorderThickness="0"
                                             Click="ButtonDelete_Click"
-                                            Foreground="Red" />
+                                            Foreground="Red"
+                                            ToolTip="{ex:Language Key='Delete'}" />
                                     </hc:UniformSpacingPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

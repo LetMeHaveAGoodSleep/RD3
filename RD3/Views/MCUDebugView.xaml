@@ -72,7 +72,7 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>
-    <TabControl Margin="10" Style="{StaticResource TabControlCapsuleSolid}">
+    <TabControl Margin="10">
         <TabItem Header="{ex:Language Key='Parameter Setting'}">
             <Border Effect="{StaticResource EffectShadow1}">
                 <hc:ScrollViewer

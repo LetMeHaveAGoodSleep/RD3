@@ -9,11 +9,46 @@ namespace RD3.Shared
 {
     public class TempParam : BindableBase
     {
-        private string _temp_PV = "-";
-        public string Temp_PV
+        private float _temp_PV = 0f;
+        public float Temp_PV
         {
             get { return _temp_PV; }
             set { SetProperty(ref _temp_PV, value); }
+        }
+
+        private float _dBand = 0f;
+        public float DBand
+        {
+            get { return _dBand; }
+            set { SetProperty(ref _dBand, value); }
+        }
+
+        private float _alarmLowerLimit;
+        public float AlarmLowerLimit
+        {
+            get { return _alarmLowerLimit; }
+            set { SetProperty(ref _alarmLowerLimit, value); }
+        }
+
+        private float _alarmUpperLimit;
+        public float AlarmUpperLimit
+        {
+            get { return _alarmUpperLimit; }
+            set { SetProperty(ref _alarmUpperLimit, value); }
+        }
+
+        private float _lowerLimit;
+        public float LowerLimit
+        {
+            get { return _lowerLimit; }
+            set { SetProperty(ref _lowerLimit, value); }
+        }
+
+        private float _upperLimit;
+        public float UpperLimit
+        {
+            get { return _upperLimit; }
+            set { SetProperty(ref _upperLimit, value); }
         }
 
         private ControlMode _controlMode = ControlMode.Fixed;

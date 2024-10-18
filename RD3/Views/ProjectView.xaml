@@ -151,6 +151,7 @@
         </DockPanel>
         <TabControl
             Grid.Row="2"
+            Margin="0,10,0,10"
             BorderThickness="0"
             Loaded="TabControl_Loaded"
             Style="{StaticResource TabControlBaseStyle}">
@@ -258,20 +259,23 @@
                                             hc:IconElement.Geometry="{StaticResource GeometryEdit}"
                                             Background="Transparent"
                                             BorderThickness="0"
-                                            Click="ButtonEdit_Click" />
+                                            Click="ButtonEdit_Click"
+                                            ToolTip="{ex:Language Key='Edit'}" />
                                         <Button
                                             HorizontalAlignment="Left"
                                             hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
                                             Background="Transparent"
                                             BorderThickness="0"
-                                            Click="ButtonView_Click" />
+                                            Click="ButtonView_Click"
+                                            ToolTip="{ex:Language Key='View'}" />
                                         <Button
                                             HorizontalAlignment="Left"
                                             hc:IconElement.Geometry="{StaticResource GeometryDelete}"
                                             Background="Transparent"
                                             BorderThickness="0"
                                             Click="ButtonDelete_Click"
-                                            Foreground="Red" />
+                                            Foreground="Red"
+                                            ToolTip="{ex:Language Key='Delete'}" />
                                     </hc:UniformSpacingPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

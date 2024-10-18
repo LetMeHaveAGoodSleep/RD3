@@ -17,11 +17,32 @@ using System.Windows.Navigation;
 using System.Windows.Media;
 using RD3.Shared;
 using RD3.Views;
+using Microsoft.Win32;
+using Newtonsoft.Json;
+using System.Windows;
+using System.IO;
+using RD3.Common.Events;
+using System.Net.Http.Json;
+using DryIoc;
 
 namespace RD3.ViewModels
 {
     public class IndexViewModel : NavigationViewModel
     {
+        private bool _running;
+        public bool Running
+        {
+            get { return _running; }
+            set { SetProperty(ref _running, value); }
+        }
+
+        private bool _isPause;
+        public bool IsPause
+        {
+            get { return _isPause; }
+            set { SetProperty(ref _isPause, value); }
+        }
+
         private double _progress1 = 45;
         public double Progress1
         {
@@ -65,24 +86,90 @@ namespace RD3.ViewModels
 
         public DelegateCommand SaveAsTemplateCommand => new(() => 
         {
-            // 创建一个 Random 对象
-            Random random = new Random();
-            // 生成一个介于 0 和 100 之间的随机数
-            int randomNumber = random.Next(0, 101);
-            Progress1 = randomNumber; 
+            try
+            {
+                ProjectTemplate template = new ProjectTemplate();
+                template.Temp = CurrentDeviceParameter.TempParam.Temp_PV;
+                template.PH = CurrentDeviceParameter.PHParam.PH_PV;
+                template.DO = CurrentDeviceParameter.DOParam.DO_PV;
+                template.Agit = CurrentDeviceParameter.AgitParam.Agit_PV;
+                template.Air = CurrentDeviceParameter.AirParam.Air_PV;
+                template.CO2 = CurrentDeviceParameter.CO2Param.CO2_PV;
+                template.O2 = CurrentDeviceParameter.O2Param.O2_PV;
+                template.N2 = CurrentDeviceParameter.N2Param.N2_PV;
+                template.Feed = CurrentDeviceParameter.FeedParam.Feed_PV;
+                template.Base = CurrentDeviceParameter.BaseParam.Base_PV;
+                template.Acid = CurrentDeviceParameter.AcidParam.Acid_PV;
+                template.AF = CurrentDeviceParameter.AFParam.AF_PV;
+                template.CreatDate = DateTime.Now;
+                template.Creator = AppSession.CurrentUser.UserName;
+                template.Name = "Template_" + Guid.NewGuid().ToString().Replace("-", "");
+                template.UsageTime = 0;
+
+                ProjectTemplateManager.GetInstance().AddTemplate(template);
+                ProjectTemplateManager.GetInstance().Save();
+
+                aggregator.SendMessage(Language.GetValue("模板保存成功").ToString(), nameof(IndexViewModel));
+            }
+            catch (FormatException ex)
+            {
+                // 处理解析失败的情况
+                MessageBox.Show("解析浮点数失败: " + ex.Message);
+            }
+        });
+
+        public DelegateCommand ImportTemplateCommand => new(() =>
+        {
+            OpenFileDialog openFileDialog = new()
+            {
+                Filter = "Temp Files (*.template)|*.template"
+            };
+            if (openFileDialog.ShowDialog() != true) return;
+            try 
+            {
+                string jsonContent = AESEncryption.DecryptFile(openFileDialog.FileName);
+                ProjectTemplate template = JsonConvert.DeserializeObject<ProjectTemplate>(jsonContent);
+                CurrentDeviceParameter.TempParam.Temp_PV = template.Temp;
+                CurrentDeviceParameter.PHParam.PH_PV = template.PH;
+                CurrentDeviceParameter.DOParam.DO_PV = template.DO;
+                CurrentDeviceParameter.AgitParam.Agit_PV = template.Agit;
+                CurrentDeviceParameter.AirParam.Air_PV = template.Air;
+                CurrentDeviceParameter.CO2Param.CO2_PV = template.CO2;
+                CurrentDeviceParameter.O2Param.O2_PV = template.O2;
+                CurrentDeviceParameter.N2Param.N2_PV = template.N2;
+                CurrentDeviceParameter.FeedParam.Feed_PV = template.Feed;
+                CurrentDeviceParameter.BaseParam.Base_PV = template.Base;
+                CurrentDeviceParameter.AcidParam.Acid_PV = template.Acid;
+                CurrentDeviceParameter.AFParam.AF_PV = template.AF;
+
+                //TODO：下发指令，重新控制
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }
         });
 
         public DelegateCommand<string> ExecuteCommand { get; private set; }
+
         public DelegateCommand<TaskBar> NavigateCommand { get; private set; }
 
         public DelegateCommand EditParamCommand => new(() =>
-        dialog?.ShowDialog(nameof(EditExperimentParamView), callback =>
         {
-            if (callback.Result != ButtonResult.OK)
+            DialogParameters pairs = new DialogParameters
             {
-                return;
-            }
-        }));
+                { "DeviceParam", CurrentDeviceParameter }
+            };
+            dialog?.ShowDialog(nameof(EditExperimentParamView),pairs, callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+
+                CurrentDeviceParameter = callback.Parameters.GetValue<DeviceParameter>("DeviceParam");
+            });
+        });
 
         public DelegateCommand<string> UnScheduleCommand => new((string parameter) =>
         {
@@ -106,6 +193,25 @@ namespace RD3.ViewModels
             int.TryParse(o.ToString(), out int index);
             if (index < 0 || index > DeviceParameterCol.Count - 1) return;
             CurrentDeviceParameter = DeviceParameterCol[index]; 
+        });
+
+        public DelegateCommand StartCommand => new(() =>
+        {
+            Running = true;
+            IsPause = false;
+            CommandWrapper.SetTemp(CurrentDeviceParameter.TempParam);
+            CommandWrapper.SetDO(CurrentDeviceParameter.DOParam);
+        });
+
+        public DelegateCommand PauseCommand => new(() => 
+        {
+            IsPause = false;
+        });
+
+        public DelegateCommand StopCommand => new(() =>
+        {
+            Running = false;//标志位重置
+            IsPause = false;
         });
 
         public IndexViewModel(IContainerProvider provider,
@@ -132,14 +238,33 @@ namespace RD3.ViewModels
                     AF = 103.3f,
                     Feed = 0.00f
                 };
-                device.TempParam.Temp_PV = "37.1";
-                device.PHParam.PH_PV = "7.2";
-                device.DOParam.DO_PV = "213-232";
-                device.AgitParam.Agit_PV = "2000";
+                device.TempParam.Temp_PV = 37.1f;
+                device.PHParam.PH_PV = 7.2f;
+                device.DOParam.DO_PV = 100f;
+                device.AgitParam.Agit_PV = 2000f;
                 temp.Add(device);
             }
             DeviceParameterCol = new ObservableCollection<DeviceParameter>(temp);
             CurrentDeviceParameter = DeviceParameterCol[0];
+
+            aggregator.ResgiterMessage((MessageModel model) =>
+            {
+                ProjectTemplate template = model.Model as ProjectTemplate;
+                CurrentDeviceParameter.TempParam.Temp_PV = template.Temp;
+                CurrentDeviceParameter.PHParam.PH_PV = template.PH;
+                CurrentDeviceParameter.DOParam.DO_PV = template.DO;
+                CurrentDeviceParameter.AgitParam.Agit_PV = template.Agit;
+                CurrentDeviceParameter.AirParam.Air_PV = template.Air;
+                CurrentDeviceParameter.CO2Param.CO2_PV = template.CO2;
+                CurrentDeviceParameter.O2Param.O2_PV = template.O2;
+                CurrentDeviceParameter.N2Param.N2_PV = template.N2;
+                CurrentDeviceParameter.FeedParam.Feed_PV = template.Feed;
+                CurrentDeviceParameter.BaseParam.Base_PV = template.Base;
+                CurrentDeviceParameter.AcidParam.Acid_PV = template.Acid;
+                CurrentDeviceParameter.AFParam.AF_PV = template.AF;
+
+                //TODO:下发指令
+            }, nameof(ProjectTemplate));
         }
 
         private void Navigate(TaskBar obj)

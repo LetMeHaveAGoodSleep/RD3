@@ -19,7 +19,7 @@ namespace RD3.ViewModels
         private IDialogService dialog;
         public ObservableCollection<ClientConfig> ClientCol
         {
-            get { return CommunicationManager.GetInstance().Clients; }
+            get { return CommunicationManager.GetInstance().ClientConfigCol; }
         }
 
         public DelegateCommand CloseCommand => new(() => RequestClose?.Invoke(new DialogResult(ButtonResult.OK)));

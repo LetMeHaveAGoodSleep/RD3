@@ -99,5 +99,19 @@ namespace RD3.Shared
             get { return _inoculate; }
             set { SetProperty(ref _inoculate, value); }
         }
+
+        private WorkStatus  _workStatus;
+        public WorkStatus WorkStatus
+        {
+            get { return _workStatus; }
+            set { SetProperty(ref _workStatus, value); }
+        }
+
+        private byte[] _alarmBytes;
+        public byte[] AlarmBytes
+        {
+            get { return _alarmBytes; }
+            set { SetProperty(ref _alarmBytes, value); }
+        }
     }
 }

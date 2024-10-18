@@ -229,3 +229,6 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\UnscheduleView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\UnscheduledView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\UnscheduledView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\Converters.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\Geometry.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\Brushes.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\Colors.baml

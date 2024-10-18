@@ -1,4 +1,6 @@
 ﻿using HandyControl.Data;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
@@ -9,6 +11,7 @@ using RD3.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -124,21 +127,68 @@ namespace RD3.ViewModels
 
         public DelegateCommand<Batch> CompareCommand => new((Batch batch) =>
         {
-            BatchCol.Remove(batch);
-            Batches.Remove(batch);
-            BatchManager.GetInstance().Save(Batches);
+
         });
 
         public DelegateCommand<object> ExportCommand => new((object o) =>
         {
-            if (o == null) return;
-            if (o.GetType().Name == nameof(Batch))
+            if (!IsTemplate)//批次信息
             {
+                var csv = new StringBuilder();
+                var headers = new List<string>()
+                {
+                    Language.GetValue("ID").ToString(), Language.GetValue("Name").ToString(),
+                    Language.GetValue("Reactor").ToString(),Language.GetValue("Status").ToString(),
+                    Language.GetValue("Start Time").ToString(), Language.GetValue("Close Time").ToString(),
+                    Language.GetValue("Project").ToString(),Language.GetValue("Description").ToString()
+                };
+                csv.AppendLine(string.Join(",", headers));
 
+                foreach (var batch in Batches)
+                {
+                    var rowValues = new List<object>()
+                    {
+                        batch.Id,
+                        batch.Name,
+                        batch.Reactor,
+                        batch.Status,
+                        batch.StartTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                        batch.EndTime.ToString("yyyy-MM-dd HH:mm:ss"),
+                        batch.Project,
+                        batch.Description
+                    };
+                    csv.AppendLine(string.Join(",", rowValues));
+                }
+                string fileName = Language.GetValue("Batch").ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss");
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "CSV Files (*.csv)|*.csv|All Files (*.*)|*.*",
+                    FileName = fileName,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                };
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    File.WriteAllText(saveFileDialog.FileName, csv.ToString());
+                }
             }
-            else if (o.GetType().Name == nameof(ProjectTemplate))
+            else//批次参数模板导出
             {
-                
+                ProjectTemplate template = o as ProjectTemplate;
+                string fileName = "";
+                SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "Temp Files (*.template)|*.template",
+                    FileName = fileName,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+                };
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    string json = JsonConvert.SerializeObject(template);
+                    json = AESEncryption.Encrypt(json);
+                    File.WriteAllText(saveFileDialog.FileName, json);
+                }
             }
         });
 
