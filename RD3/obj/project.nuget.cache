@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "T0tNCy3ZRlA=",
+  "dgSpecHash": "FTOQWmYu/uY=",
   "success": true,
   "projectFilePath": "D:\\Project\\RD3\\RD3\\RD3.csproj",
   "expectedPackageFiles": [
@@ -36,8 +36,8 @@
     "C:\\Users\\Administrator\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
-    "C:\\Users\\Administrator\\.nuget\\packages\\scottplot\\5.0.37\\scottplot.5.0.37.nupkg.sha512",
-    "C:\\Users\\Administrator\\.nuget\\packages\\scottplot.wpf\\5.0.37\\scottplot.wpf.5.0.37.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\scottplot\\5.0.40\\scottplot.5.0.40.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\scottplot.wpf\\5.0.40\\scottplot.wpf.5.0.40.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\skiasharp\\2.88.8\\skiasharp.2.88.8.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\skiasharp.nativeassets.linux.nodependencies\\2.88.8\\skiasharp.nativeassets.linux.nodependencies.2.88.8.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\skiasharp.nativeassets.macos\\2.88.8\\skiasharp.nativeassets.macos.2.88.8.nupkg.sha512",

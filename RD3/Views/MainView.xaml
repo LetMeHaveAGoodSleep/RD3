@@ -222,7 +222,7 @@
                         BorderBrush="{DynamicResource PrimaryBrush}"
                         BorderThickness="1"
                         CornerRadius="0,0,0,15"
-                        Effect="{StaticResource EffectShadow1}">
+                        Effect="{StaticResource EffectShadow1}" MouseMove="Border_MouseMove">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -273,8 +273,6 @@
                             </Button>
                             <Popup
                                 x:Name="Pop"
-                                Width="150"
-                                Height="150"
                                 AllowsTransparency="True"
                                 HorizontalOffset="0"
                                 IsHitTestVisible="True"
@@ -284,7 +282,7 @@
                                 StaysOpen="False"
                                 VerticalOffset="0">
                                 <hc:UniformSpacingPanel
-                                    Background="#F8F9F9"
+                                    Background="{DynamicResource BorderBrush}"
                                     Opacity="1"
                                     Orientation="Vertical"
                                     Spacing="5">
@@ -292,7 +290,7 @@
                                         hc:IconElement.Geometry="{StaticResource GeometryUserInfo}"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Content="Account manage">
+                                        Content="{ex:Language Key='Account manage'}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
                                                 <prism:InvokeCommandAction Command="{Binding ManageUserCommand}" />
@@ -300,11 +298,10 @@
                                         </i:Interaction.Triggers>
                                     </Button>
                                     <Button
-                                        Margin="-5,0,0,0"
                                         hc:IconElement.Geometry="{StaticResource GeometrySwitchUser}"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Content="Switch Account">
+                                        Content="{ex:Language Key='Switch account'}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
                                                 <prism:InvokeCommandAction Command="{Binding LoginOutCommand}" />
@@ -312,12 +309,11 @@
                                         </i:Interaction.Triggers>
                                     </Button>
                                     <Button
-                                        Margin="-40,0,0,0"
                                         hc:IconElement.Geometry="{StaticResource GeometryLogOutRed}"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Content="Log out"
-                                        Foreground="#FF7969">
+                                        Content="{ex:Language Key='Log out'}"
+                                        Foreground="{StaticResource StopBrush}">
                                         <i:Interaction.Triggers>
                                             <i:EventTrigger EventName="Click">
                                                 <prism:InvokeCommandAction Command="{Binding LoginOutCommand}" />

@@ -13,7 +13,7 @@
     xmlns:prism="http://prismlibrary.com/"
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
-    Width="1750"
+    Width="1690"
     Height="1040"
     d:DataContext="{d:DesignInstance Type=vm:EditExperimentParamViewModel}"
     mc:Ignorable="d">
@@ -64,7 +64,10 @@
                 Orientation="Vertical"
                 Spacing="10">
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <Border Style="{StaticResource BorderCard}">
+                    <Border
+                        Width="830"
+                        Height="210"
+                        Style="{StaticResource BorderCard}">
                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
                             <hc:UniformSpacingPanel
                                 Margin="5"
@@ -79,7 +82,7 @@
                                         Stroke="Gray"
                                         StrokeThickness="1"
                                         X1="10"
-                                        X2="375"
+                                        X2="350"
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
@@ -99,7 +102,7 @@
                                                 Content="{ex:Language Key='Fixed'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Fixed}" />
                                             <RadioButton
                                                 Width="85"
                                                 Height="30"
@@ -112,7 +115,7 @@
                                                 Content="{ex:Language Key='Associated'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
                                             <RadioButton
                                                 Width="70"
                                                 Height="30"
@@ -125,7 +128,7 @@
                                                 Content="{ex:Language Key='Disable'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
                                         </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
@@ -147,7 +150,7 @@
                                         Stroke="Gray"
                                         StrokeThickness="1"
                                         X1="10"
-                                        X2="385"
+                                        X2="350"
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
@@ -159,7 +162,7 @@
                                             VerticalAlignment="Center"
                                             hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
                                             Style="{StaticResource TextBoxExtend}"
-                                            Text="" />
+                                            Text="{Binding CurrentDeviceParameter.TempParam.DBand}" />
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='LL:'}" />
@@ -288,8 +291,11 @@
                             </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>
                     </Border>
-                    <Border Style="{StaticResource BorderCard}">
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                    <Border
+                        Width="830"
+                        Height="210"
+                        Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                             <hc:UniformSpacingPanel
                                 Margin="5"
                                 Orientation="Vertical"
@@ -303,7 +309,7 @@
                                         Stroke="Gray"
                                         StrokeThickness="1"
                                         X1="10"
-                                        X2="375"
+                                        X2="350"
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
@@ -323,7 +329,7 @@
                                                 Content="{ex:Language Key='Fixed'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.PHParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.PHParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Fixed}" />
                                             <RadioButton
                                                 Width="85"
                                                 Height="30"
@@ -336,7 +342,7 @@
                                                 Content="{ex:Language Key='Associated'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.PHParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.PHParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
                                             <RadioButton
                                                 Width="70"
                                                 Height="30"
@@ -349,7 +355,7 @@
                                                 Content="{ex:Language Key='Disable'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.PHParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.PHParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
                                         </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
@@ -371,7 +377,7 @@
                                         Stroke="Gray"
                                         StrokeThickness="1"
                                         X1="10"
-                                        X2="385"
+                                        X2="350"
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
@@ -522,8 +528,11 @@
                     </Border>
                 </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <Border Style="{StaticResource BorderCard}">
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                    <Border
+                        Width="830"
+                        Height="240"
+                        Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                             <hc:UniformSpacingPanel
                                 Margin="5"
                                 Orientation="Vertical"
@@ -537,7 +546,7 @@
                                         Stroke="Gray"
                                         StrokeThickness="1"
                                         X1="10"
-                                        X2="375"
+                                        X2="350"
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
@@ -557,7 +566,7 @@
                                                 Content="{ex:Language Key='Fixed'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.AgitParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.AgitParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Fixed}" />
                                             <RadioButton
                                                 Width="85"
                                                 Height="30"
@@ -570,11 +579,11 @@
                                                 Content="{ex:Language Key='Associated'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.AgitParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.AgitParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
                                             <RadioButton
                                                 Width="70"
                                                 Height="30"
-                                                Margin="-5,0,0,0"
+                                                Margin="5,0,0,0"
                                                 hc:BorderElement.CornerRadius="4"
                                                 hc:VisualElement.HighlightBackground="{DynamicResource ThirdlyTextBrush}"
                                                 hc:VisualElement.HighlightBorderBrush="{DynamicResource ThirdlyTextBrush}"
@@ -583,7 +592,7 @@
                                                 Content="{ex:Language Key='Disable'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.AgitParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.AgitParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
                                         </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
@@ -605,7 +614,7 @@
                                         Stroke="Gray"
                                         StrokeThickness="1"
                                         X1="10"
-                                        X2="385"
+                                        X2="350"
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
@@ -746,8 +755,11 @@
                             </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>
                     </Border>
-                    <Border Style="{StaticResource BorderCard}">
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                    <Border
+                        Width="830"
+                        Height="240"
+                        Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                             <hc:UniformSpacingPanel
                                 Margin="5"
                                 Orientation="Vertical"
@@ -761,7 +773,7 @@
                                         Stroke="Gray"
                                         StrokeThickness="1"
                                         X1="10"
-                                        X2="375"
+                                        X2="350"
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
@@ -781,7 +793,7 @@
                                                 Content="{ex:Language Key='Fixed'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Fixed}" />
                                             <RadioButton
                                                 Width="85"
                                                 Height="30"
@@ -794,7 +806,7 @@
                                                 Content="{ex:Language Key='Associated'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
                                             <RadioButton
                                                 Width="70"
                                                 Height="30"
@@ -807,7 +819,7 @@
                                                 Content="{ex:Language Key='Disable'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
                                         </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
@@ -829,7 +841,7 @@
                                         Stroke="Gray"
                                         StrokeThickness="1"
                                         X1="10"
-                                        X2="385"
+                                        X2="350"
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
@@ -983,8 +995,11 @@
                     </Border>
                 </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <Border Style="{StaticResource BorderCard}">
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                    <Border
+                        Width="550"
+                        Height="210"
+                        Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                             <hc:UniformSpacingPanel
                                 Margin="5"
                                 Orientation="Vertical"
@@ -1009,7 +1024,7 @@
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
                                         <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
@@ -1025,7 +1040,7 @@
                                                 Content="{ex:Language Key='Fixed'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.BaseParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.BaseParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Fixed}" />
                                             <RadioButton
                                                 Width="85"
                                                 Height="30"
@@ -1038,7 +1053,7 @@
                                                 Content="{ex:Language Key='Associated'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.BaseParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.BaseParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
                                             <RadioButton
                                                 Width="60"
                                                 Height="30"
@@ -1050,7 +1065,7 @@
                                                 Content="{ex:Language Key='Free'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.BaseParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Free}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.BaseParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Free}" />
                                             <RadioButton
                                                 Width="70"
                                                 Height="30"
@@ -1063,7 +1078,7 @@
                                                 Content="{ex:Language Key='Disable'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.BaseParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.BaseParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
                                         </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
@@ -1085,7 +1100,7 @@
                                         Stroke="Gray"
                                         StrokeThickness="1"
                                         X1="10"
-                                        X2="360"
+                                        X2="350"
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
@@ -1137,10 +1152,7 @@
                                     </DockPanel>
                                 </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
-                            <hc:UniformSpacingPanel
-                                Margin="5"
-                                Orientation="Vertical"
-                                Spacing="12">
+                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                                 <TextBlock Text="{ex:Language Key='Associative modules:'}" />
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
@@ -1160,8 +1172,11 @@
                             </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>
                     </Border>
-                    <Border Style="{StaticResource BorderCard}">
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                    <Border
+                        Width="550"
+                        Height="210"
+                        Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                             <hc:UniformSpacingPanel
                                 Margin="5"
                                 Orientation="Vertical"
@@ -1187,7 +1202,7 @@
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
                                         <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
@@ -1203,7 +1218,7 @@
                                                 Content="{ex:Language Key='Fixed'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.AcidParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.AcidParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Fixed}" />
                                             <RadioButton
                                                 Width="85"
                                                 Height="30"
@@ -1216,7 +1231,7 @@
                                                 Content="{ex:Language Key='Associated'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.AcidParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.AcidParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
                                             <RadioButton
                                                 Width="60"
                                                 Height="30"
@@ -1228,7 +1243,7 @@
                                                 Content="{ex:Language Key='Free'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.AcidParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Free}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.AcidParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Free}" />
                                             <RadioButton
                                                 Width="70"
                                                 Height="30"
@@ -1241,7 +1256,7 @@
                                                 Content="{ex:Language Key='Disable'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.AcidParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.AcidParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
                                         </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
@@ -1263,7 +1278,7 @@
                                         Stroke="Gray"
                                         StrokeThickness="1"
                                         X1="10"
-                                        X2="360"
+                                        X2="350"
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
@@ -1315,10 +1330,7 @@
                                     </DockPanel>
                                 </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
-                            <hc:UniformSpacingPanel
-                                Margin="5"
-                                Orientation="Vertical"
-                                Spacing="12">
+                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                                 <TextBlock Text="{ex:Language Key='Associative modules:'}" />
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
@@ -1338,8 +1350,11 @@
                             </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>
                     </Border>
-                    <Border Style="{StaticResource BorderCard}">
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                    <Border
+                        Width="550"
+                        Height="210"
+                        Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                             <hc:UniformSpacingPanel
                                 Margin="5"
                                 Orientation="Vertical"
@@ -1352,7 +1367,6 @@
                                         Foreground="{DynamicResource SecondaryTextBrush}"
                                         Text="{ex:Language Key='ML/H'}" />
                                 </hc:UniformSpacingPanel>
-
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{ex:Language Key='Control'}" />
                                     <Line
@@ -1365,7 +1379,7 @@
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
                                         <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
@@ -1381,7 +1395,7 @@
                                                 Content="{ex:Language Key='Fixed'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.FeedParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.FeedParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Fixed}" />
                                             <RadioButton
                                                 Width="85"
                                                 Height="30"
@@ -1394,7 +1408,7 @@
                                                 Content="{ex:Language Key='Associated'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.FeedParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.FeedParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
                                             <RadioButton
                                                 Width="60"
                                                 Height="30"
@@ -1406,7 +1420,7 @@
                                                 Content="{ex:Language Key='Free'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.FeedParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Free}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.FeedParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Free}" />
                                             <RadioButton
                                                 Width="70"
                                                 Height="30"
@@ -1419,7 +1433,7 @@
                                                 Content="{ex:Language Key='Disable'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.FeedParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.FeedParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
                                         </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
@@ -1441,7 +1455,7 @@
                                         Stroke="Gray"
                                         StrokeThickness="1"
                                         X1="10"
-                                        X2="360"
+                                        X2="350"
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
@@ -1493,10 +1507,7 @@
                                     </DockPanel>
                                 </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
-                            <hc:UniformSpacingPanel
-                                Margin="5"
-                                Orientation="Vertical"
-                                Spacing="12">
+                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                                 <TextBlock Text="{ex:Language Key='Associative modules:'}" />
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
@@ -1518,8 +1529,11 @@
                     </Border>
                 </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <Border Style="{StaticResource BorderCard}">
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                    <Border
+                        Width="550"
+                        Height="210"
+                        Style="{StaticResource BorderCard}">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                             <hc:UniformSpacingPanel
                                 Margin="5"
                                 Orientation="Vertical"
@@ -1532,7 +1546,6 @@
                                         Foreground="{DynamicResource SecondaryTextBrush}"
                                         Text="{ex:Language Key='ML/H'}" />
                                 </hc:UniformSpacingPanel>
-
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{ex:Language Key='Control'}" />
                                     <Line
@@ -1545,7 +1558,7 @@
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                     <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Status:'}" />
                                         <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
@@ -1561,7 +1574,7 @@
                                                 Content="{ex:Language Key='Fixed'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Fixed}" />
                                             <RadioButton
                                                 Width="85"
                                                 Height="30"
@@ -1574,7 +1587,7 @@
                                                 Content="{ex:Language Key='Associated'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
                                             <RadioButton
                                                 Width="60"
                                                 Height="30"
@@ -1586,7 +1599,7 @@
                                                 Content="{ex:Language Key='Free'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Free}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Free}" />
                                             <RadioButton
                                                 Width="70"
                                                 Height="30"
@@ -1598,7 +1611,7 @@
                                                 Content="{ex:Language Key='Disable'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                IsChecked="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
                                         </hc:ButtonGroup>
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
@@ -1672,10 +1685,7 @@
                                     </DockPanel>
                                 </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
-                            <hc:UniformSpacingPanel
-                                Margin="5"
-                                Orientation="Vertical"
-                                Spacing="12">
+                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                                 <TextBlock Text="{ex:Language Key='Associative modules:'}" />
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
@@ -1698,10 +1708,13 @@
                             </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>
                     </Border>
-                    <Border Style="{StaticResource BorderCard}">
+                    <Border
+                        Width="550"
+                        Height="210"
+                        Style="{StaticResource BorderCard}">
                         <TabControl>
                             <TabItem Header="{ex:Language Key='Air'}">
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                     <hc:UniformSpacingPanel
                                         Margin="5"
                                         Orientation="Vertical"
@@ -1734,9 +1747,8 @@
                                                         Content="{ex:Language Key='Fixed'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.AirParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.AirParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Fixed}" />
                                                     <RadioButton
-                                                        Name="RadioAssociated"
                                                         Width="85"
                                                         Height="30"
                                                         Margin="-10,0,0,0"
@@ -1748,7 +1760,7 @@
                                                         Content="{ex:Language Key='Associated'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.AirParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
                                                     <RadioButton
                                                         Width="60"
                                                         Height="30"
@@ -1760,7 +1772,7 @@
                                                         Content="{ex:Language Key='Free'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Free}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.AirParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Free}" />
                                                     <RadioButton
                                                         Width="70"
                                                         Height="30"
@@ -1772,26 +1784,10 @@
                                                         Content="{ex:Language Key='Disable'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.AirParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
                                                 </hc:ButtonGroup>
                                             </DockPanel>
                                             <DockPanel LastChildFill="False">
-                                                <!--<TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Limit range:'}" />
-                <TextBox
-                    Width="90"
-                    Height="30"
-                    VerticalAlignment="Center"
-                    HorizontalContentAlignment="Center"
-                    Style="{StaticResource TextBoxExtend}"
-                    Text="" />
-                <TextBlock VerticalAlignment="Center" Text="~" />
-                <TextBox
-                    Width="90"
-                    Height="30"
-                    VerticalAlignment="Center"
-                    HorizontalContentAlignment="Center"
-                    Style="{StaticResource TextBoxExtend}"
-                    Text="" />-->
                                                 <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Set value(SV):'}" />
                                                 <TextBox
                                                     Width="90"
@@ -1862,16 +1858,13 @@
                                             </DockPanel>
                                         </hc:UniformSpacingPanel>
                                     </hc:UniformSpacingPanel>
-                                    <hc:UniformSpacingPanel
-                                        Margin="5"
-                                        Orientation="Vertical"
-                                        Spacing="12">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                                         <TextBlock Text="{ex:Language Key='Associative modules:'}" />
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
                                                 <Border
                                                     Width="120"
-                                                    Height="160"
+                                                    Height="140"
                                                     Padding="5"
                                                     BorderBrush="{DynamicResource BorderBrush}"
                                                     BorderThickness="0.5"
@@ -1886,7 +1879,7 @@
                                 </hc:UniformSpacingPanel>
                             </TabItem>
                             <TabItem Header="{ex:Language Key='CO2'}">
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                     <hc:UniformSpacingPanel
                                         Margin="5"
                                         Orientation="Vertical"
@@ -1899,7 +1892,7 @@
                                                 Stroke="Gray"
                                                 StrokeThickness="1"
                                                 X1="10"
-                                                X2="470"
+                                                X2="350"
                                                 Y1="0"
                                                 Y2="0" />
                                         </StackPanel>
@@ -1919,7 +1912,7 @@
                                                         Content="{ex:Language Key='Fixed'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.CO2Param.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.CO2Param.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Fixed}" />
                                                     <RadioButton
                                                         Width="85"
                                                         Height="30"
@@ -1932,7 +1925,7 @@
                                                         Content="{ex:Language Key='Associated'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.CO2Param.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.CO2Param.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
                                                     <RadioButton
                                                         Width="60"
                                                         Height="30"
@@ -1944,7 +1937,7 @@
                                                         Content="{ex:Language Key='Free'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.CO2Param.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Free}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.CO2Param.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Free}" />
                                                     <RadioButton
                                                         Width="70"
                                                         Height="30"
@@ -1956,7 +1949,7 @@
                                                         Content="{ex:Language Key='Disable'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.CO2Param.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.CO2Param.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
                                                 </hc:ButtonGroup>
                                             </DockPanel>
                                             <DockPanel LastChildFill="False">
@@ -1978,7 +1971,7 @@
                                                 Stroke="Gray"
                                                 StrokeThickness="1"
                                                 X1="10"
-                                                X2="470"
+                                                X2="350"
                                                 Y1="0"
                                                 Y2="0" />
                                         </StackPanel>
@@ -2030,16 +2023,13 @@
                                             </DockPanel>
                                         </hc:UniformSpacingPanel>
                                     </hc:UniformSpacingPanel>
-                                    <hc:UniformSpacingPanel
-                                        Margin="5"
-                                        Orientation="Vertical"
-                                        Spacing="12">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                                         <TextBlock Text="{ex:Language Key='Associative modules:'}" />
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
                                                 <Border
                                                     Width="120"
-                                                    Height="160"
+                                                    Height="140"
                                                     Padding="5"
                                                     BorderBrush="{DynamicResource BorderBrush}"
                                                     BorderThickness="0.5"
@@ -2054,7 +2044,7 @@
                                 </hc:UniformSpacingPanel>
                             </TabItem>
                             <TabItem Header="{ex:Language Key='N2'}">
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                     <hc:UniformSpacingPanel
                                         Margin="5"
                                         Orientation="Vertical"
@@ -2067,7 +2057,7 @@
                                                 Stroke="Gray"
                                                 StrokeThickness="1"
                                                 X1="10"
-                                                X2="470"
+                                                X2="350"
                                                 Y1="0"
                                                 Y2="0" />
                                         </StackPanel>
@@ -2087,7 +2077,7 @@
                                                         Content="{ex:Language Key='Fixed'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.N2Param.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.N2Param.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Fixed}" />
                                                     <RadioButton
                                                         Width="85"
                                                         Height="30"
@@ -2100,7 +2090,7 @@
                                                         Content="{ex:Language Key='Associated'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.N2Param.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.N2Param.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
                                                     <RadioButton
                                                         Width="60"
                                                         Height="30"
@@ -2112,7 +2102,7 @@
                                                         Content="{ex:Language Key='Free'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.N2Param.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Free}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.N2Param.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Free}" />
                                                     <RadioButton
                                                         Width="70"
                                                         Height="30"
@@ -2124,7 +2114,7 @@
                                                         Content="{ex:Language Key='Disable'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.N2Param.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.N2Param.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
                                                 </hc:ButtonGroup>
                                             </DockPanel>
                                             <DockPanel LastChildFill="False">
@@ -2146,7 +2136,7 @@
                                                 Stroke="Gray"
                                                 StrokeThickness="1"
                                                 X1="10"
-                                                X2="470"
+                                                X2="350"
                                                 Y1="0"
                                                 Y2="0" />
                                         </StackPanel>
@@ -2198,16 +2188,13 @@
                                             </DockPanel>
                                         </hc:UniformSpacingPanel>
                                     </hc:UniformSpacingPanel>
-                                    <hc:UniformSpacingPanel
-                                        Margin="5"
-                                        Orientation="Vertical"
-                                        Spacing="12">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                                         <TextBlock Text="{ex:Language Key='Associative modules:'}" />
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
                                                 <Border
                                                     Width="120"
-                                                    Height="160"
+                                                    Height="140"
                                                     Padding="5"
                                                     BorderBrush="{DynamicResource BorderBrush}"
                                                     BorderThickness="0.5"
@@ -2222,7 +2209,7 @@
                                 </hc:UniformSpacingPanel>
                             </TabItem>
                             <TabItem Header="{ex:Language Key='O2'}">
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                     <hc:UniformSpacingPanel
                                         Margin="5"
                                         Orientation="Vertical"
@@ -2235,7 +2222,7 @@
                                                 Stroke="Gray"
                                                 StrokeThickness="1"
                                                 X1="10"
-                                                X2="470"
+                                                X2="350"
                                                 Y1="0"
                                                 Y2="0" />
                                         </StackPanel>
@@ -2255,7 +2242,7 @@
                                                         Content="{ex:Language Key='Fixed'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.O2Param.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.O2Param.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Fixed}" />
                                                     <RadioButton
                                                         Width="85"
                                                         Height="30"
@@ -2268,7 +2255,7 @@
                                                         Content="{ex:Language Key='Associated'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.O2Param.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.O2Param.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
                                                     <RadioButton
                                                         Width="60"
                                                         Height="30"
@@ -2280,7 +2267,7 @@
                                                         Content="{ex:Language Key='Free'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.O2Param.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Free}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.O2Param.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Free}" />
                                                     <RadioButton
                                                         Width="70"
                                                         Height="30"
@@ -2292,7 +2279,7 @@
                                                         Content="{ex:Language Key='Disable'}"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="{DynamicResource SecondaryTextBrush}"
-                                                        IsChecked="{Binding CurrentDeviceParameter.O2Param.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                        IsChecked="{Binding CurrentDeviceParameter.O2Param.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
                                                 </hc:ButtonGroup>
                                             </DockPanel>
                                             <DockPanel LastChildFill="False">
@@ -2314,7 +2301,7 @@
                                                 Stroke="Gray"
                                                 StrokeThickness="1"
                                                 X1="10"
-                                                X2="470"
+                                                X2="350"
                                                 Y1="0"
                                                 Y2="0" />
                                         </StackPanel>
@@ -2366,16 +2353,13 @@
                                             </DockPanel>
                                         </hc:UniformSpacingPanel>
                                     </hc:UniformSpacingPanel>
-                                    <hc:UniformSpacingPanel
-                                        Margin="5"
-                                        Orientation="Vertical"
-                                        Spacing="12">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                                         <TextBlock Text="{ex:Language Key='Associative modules:'}" />
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
                                                 <Border
                                                     Width="120"
-                                                    Height="160"
+                                                    Height="140"
                                                     Padding="5"
                                                     BorderBrush="{DynamicResource BorderBrush}"
                                                     BorderThickness="0.5"

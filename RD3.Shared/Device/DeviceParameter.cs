@@ -16,6 +16,27 @@ namespace RD3.Shared
             set { SetProperty(ref _name, value); }
         }
 
+        private string _id;
+        public string Id
+        {
+            get { return _id; }
+            set { SetProperty(ref _id, value); }
+        }
+
+        private int _serialNumber;
+        public int SerialNumber
+        {
+            get { return _serialNumber; }
+            set { SetProperty(ref _serialNumber, value); }
+        }
+
+        private WorkStatus _workStatus;
+        public WorkStatus WorkStatus
+        {
+            get { return _workStatus; }
+            set { SetProperty(ref _workStatus, value); }
+        }
+
         private float _temp = 0f;
         public float Temp
         {

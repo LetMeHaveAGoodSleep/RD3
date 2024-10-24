@@ -23,9 +23,9 @@ namespace RD3.ViewModels
             this.containerProvider = containerProvider;
             this.aggregator = containerProvider.Resolve<IEventAggregator>();
             this.Language = containerProvider.Resolve<ILanguage>();
-            Language.LoadResourceKey("zh_CN");//默认显示英文
+            Language.LoadResourceKey("zh_CN");//默认显示中文
 
-            CommandWrapper = containerProvider.Resolve<ICommandWrapper>();
+            CommandWrapper = InstrumentSolution.GetInstance().CommandWrapper;
         }
     }
 }

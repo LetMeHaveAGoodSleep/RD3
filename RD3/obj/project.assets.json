@@ -492,7 +492,7 @@
           }
         }
       },
-      "ScottPlot/5.0.37": {
+      "ScottPlot/5.0.40": {
         "type": "package",
         "dependencies": {
           "SkiaSharp": "2.88.8",
@@ -509,12 +509,12 @@
           }
         }
       },
-      "ScottPlot.WPF/5.0.37": {
+      "ScottPlot.WPF/5.0.40": {
         "type": "package",
         "dependencies": {
           "OpenTK": "4.3.0",
           "OpenTK.GLWpfControl": "4.2.3",
-          "ScottPlot": "5.0.37",
+          "ScottPlot": "5.0.40",
           "SkiaSharp.Views.WPF": "2.88.8"
         },
         "compile": {
@@ -1799,10 +1799,10 @@
         "version.txt"
       ]
     },
-    "ScottPlot/5.0.37": {
-      "sha512": "d5jkB/eHbyjL1+gKPQGHhnmif/sOaJAhmqQg21dE3/tzgIvpu5r6JZPUpmV6TxB5f0q35zm0j9wKn2Xl4zIy5w==",
+    "ScottPlot/5.0.40": {
+      "sha512": "Kg0J4QxsSdap0xucASnvmHsAFVfMC18aq1U9mp1IME6H+U4n0yZw7/ibYYVUWcBmhK9QMBBdrZyQqtCOjrgwRA==",
       "type": "package",
-      "path": "scottplot/5.0.37",
+      "path": "scottplot/5.0.40",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1816,14 +1816,14 @@
         "lib/netstandard2.0/ScottPlot.dll",
         "lib/netstandard2.0/ScottPlot.xml",
         "readme.md",
-        "scottplot.5.0.37.nupkg.sha512",
+        "scottplot.5.0.40.nupkg.sha512",
         "scottplot.nuspec"
       ]
     },
-    "ScottPlot.WPF/5.0.37": {
-      "sha512": "a3fmQiwtkaEz9jznN/Sw70KE01cHWNT6S8TSCydcnjFLoW0HgZu9Ji78tPddTa574YAwwpKRZ0FgINxGBSIqjw==",
+    "ScottPlot.WPF/5.0.40": {
+      "sha512": "iSBR3BON0lXrXultVAeU/F6Ol32+fz4HJIgVuqxBT+jOMMTW58xRmxa/XP02DYTL0id/w8QYdElUJ7RuGqgUUw==",
       "type": "package",
-      "path": "scottplot.wpf/5.0.37",
+      "path": "scottplot.wpf/5.0.40",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1833,7 +1833,7 @@
         "lib/net6.0-windows7.0/ScottPlot.WPF.dll",
         "lib/net6.0-windows7.0/ScottPlot.WPF.xml",
         "readme.md",
-        "scottplot.wpf.5.0.37.nupkg.sha512",
+        "scottplot.wpf.5.0.40.nupkg.sha512",
         "scottplot.wpf.nuspec"
       ]
     },
@@ -3127,7 +3127,7 @@
       "Prism.DryIoc >= 8.1.97",
       "RD3.Shared >= 1.0.0",
       "SQLite >= 3.13.0",
-      "ScottPlot.WPF >= 5.0.37",
+      "ScottPlot.WPF >= 5.0.40",
       "log4net >= 2.0.17"
     ]
   },
@@ -3207,7 +3207,7 @@
           },
           "ScottPlot.WPF": {
             "target": "Package",
-            "version": "[5.0.37, )"
+            "version": "[5.0.40, )"
           },
           "log4net": {
             "target": "Package",

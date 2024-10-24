@@ -7,6 +7,8 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:SettingViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Background="{DynamicResource DefaultBrush}"
@@ -58,7 +60,7 @@
             Grid.Row="2"
             BorderThickness="0"
             Loaded="TabControl_Loaded">
-            <TabItem Name="tabGeneral">
+            <TabItem Name="tabGeneral" Header="General">
                 <Border Background="#F5F7FA" Style="{StaticResource BorderCard}">
                     <hc:UniformSpacingPanel Orientation="Vertical" Spacing="20">
                         <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
@@ -146,6 +148,21 @@
                                 </Grid>
                             </Border>
                         </hc:UniformSpacingPanel>
+                        <DockPanel LastChildFill="False">
+                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Instrument mode'}" />
+                                <TextBlock
+                                    FontSize="10"
+                                    FontStyle="Oblique"
+                                    Foreground="gray"
+                                    Text="{ex:Language Key='Turn on simulation mode.'}" />
+                            </hc:UniformSpacingPanel>
+                            <ToggleButton
+                                BorderThickness="0"
+                                DockPanel.Dock="Right"
+                                IsChecked="{Binding IsSimulation}"
+                                Style="{StaticResource ToggleButtonSwitch}" />
+                        </DockPanel>
                     </hc:UniformSpacingPanel>
                 </Border>
             </TabItem>

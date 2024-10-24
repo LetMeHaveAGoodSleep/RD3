@@ -24,15 +24,12 @@ namespace RD3.Shared
         }
         public static void SetValue(string key, object value)
         {
-            if (!dictionary.ContainsKey(key))
-            {
-                dictionary.Add(key, value);
-            }
-            else
+            if (!dictionary.TryAdd(key, value))
             {
                 dictionary[key] = value;
             }
             string json = JsonConvert.SerializeObject(dictionary);
+            File.Delete(FileConst.VarPath);
             File.WriteAllText(FileConst.VarPath, json);
         }    
     }

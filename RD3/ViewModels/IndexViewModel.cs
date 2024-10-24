@@ -24,11 +24,32 @@ using System.IO;
 using RD3.Common.Events;
 using System.Net.Http.Json;
 using DryIoc;
+using System.Windows.Threading;
+using System.Xml.Linq;
+using ImTools;
+using ScottPlot;
 
 namespace RD3.ViewModels
 {
     public class IndexViewModel : NavigationViewModel
     {
+        List<DeviceExperimentHistoryData> DeviceExperimentHistoryDatas = [];
+
+        private DispatcherTimer experimentTimer;
+
+        private TimeSpan elapsedTime;
+
+        private string _formattedTime="00:00:00";
+
+        public string FormattedTime
+        {
+            get => _formattedTime;
+            set
+            {
+                SetProperty(ref _formattedTime, value);
+            }
+        }
+
         private bool _running;
         public bool Running
         {
@@ -70,19 +91,24 @@ namespace RD3.ViewModels
             get { return _progress4; }
             set { SetProperty(ref _progress4, value); }
         }
+
+        public Batch CurrentBatch { get; private set; }
+
         private DeviceParameter _currentDeviceParameter;
-      public DeviceParameter CurrentDeviceParameter
+        public DeviceParameter CurrentDeviceParameter
         {
             get { return _currentDeviceParameter; }
             set { SetProperty(ref _currentDeviceParameter, value); }
         }
 
-
         private ObservableCollection<DeviceParameter> _deviceParameterCol = [];
-        public ObservableCollection<DeviceParameter> DeviceParameterCol { get { return _deviceParameterCol; } set { SetProperty(ref _deviceParameterCol, value); } }
+        public ObservableCollection<DeviceParameter> DeviceParameterCol
+        { 
+            get { return _deviceParameterCol; } 
+            set { SetProperty(ref _deviceParameterCol, value); } 
+        }
 
         private readonly IDialogHostService dialog;
-        private readonly IRegionManager regionManager;
 
         public DelegateCommand SaveAsTemplateCommand => new(() => 
         {
@@ -152,8 +178,6 @@ namespace RD3.ViewModels
 
         public DelegateCommand<string> ExecuteCommand { get; private set; }
 
-        public DelegateCommand<TaskBar> NavigateCommand { get; private set; }
-
         public DelegateCommand EditParamCommand => new(() =>
         {
             DialogParameters pairs = new DialogParameters
@@ -199,36 +223,75 @@ namespace RD3.ViewModels
         {
             Running = true;
             IsPause = false;
-            CommandWrapper.SetTemp(CurrentDeviceParameter.TempParam);
-            CommandWrapper.SetDO(CurrentDeviceParameter.DOParam);
+            foreach (var item in DeviceParameterCol)
+            {
+                item.WorkStatus = WorkStatus.Running;
+            }
+            InstrumentSolution.GetInstance().CommandWrapper.SetTemp(CurrentDeviceParameter.TempParam);
+            InstrumentSolution.GetInstance().CommandWrapper.SetDO(CurrentDeviceParameter.DOParam);
+
+            elapsedTime = TimeSpan.Zero;
+            experimentTimer.Start();
+
+            //Test Data
+            int numberOfHours = 24;
+            DateTime startDateTime = new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            double[] dateDoubles = new double[numberOfHours];
+            double startDouble = startDateTime.ToOADate(); // days since 1900
+            double deltaDouble = 1.0 / 24.0; // an hour is 1/24 of a day
+            for (int i = 0; i < numberOfHours; i++)
+            {
+                dateDoubles[i] = startDouble + i * deltaDouble;
+            }
+            foreach (var item in DeviceExperimentHistoryDatas)
+            {
+                foreach (var item2 in item.ExperimentHistoryDatas) 
+                {
+                    item2.Data.Add(dateDoubles, Generate.Sin(numberOfHours));
+                }
+            }
+
+            aggregator.SendMessage("", "UpdatePlot", DeviceExperimentHistoryDatas);
         });
 
         public DelegateCommand PauseCommand => new(() => 
         {
-            IsPause = false;
+            IsPause = true;
         });
 
         public DelegateCommand StopCommand => new(() =>
         {
             Running = false;//标志位重置
             IsPause = false;
+
+
+            foreach (var item in DeviceParameterCol)
+            {
+                item.WorkStatus = WorkStatus.Idle;
+            }
+
+            experimentTimer.Stop();
         });
 
         public IndexViewModel(IContainerProvider provider,
             IDialogHostService dialog) : base(provider)
         {
-            Title = $"你好，{AppSession.CurrentUser.UserName} {DateTime.Now.GetDateTimeFormats('D')[1]}";
-            CreateTaskBars();
-            this.regionManager = provider.Resolve<IRegionManager>();
-            this.dialog = dialog;
-            NavigateCommand = new DelegateCommand<TaskBar>(Navigate);
 
-            ObservableCollection<DeviceParameter> temp = new ObservableCollection<DeviceParameter>();
+            experimentTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            experimentTimer.Tick += ExperimentTimer_Tick;
+
+            this.dialog = dialog;
+
+            ObservableCollection<DeviceParameter> temp = [];
             for (int i = 1; i < 17; i++)
             {
-                DeviceParameter device = new DeviceParameter()
+                DeviceParameter device = new()
                 {
                     Name = "G" + i.ToString().PadLeft(2, '0'),
+                    SerialNumber = i,
                     Temp = 37 + i,
                     PH = 7.2f,
                     DO = 98,
@@ -243,7 +306,15 @@ namespace RD3.ViewModels
                 device.DOParam.DO_PV = 100f;
                 device.AgitParam.Agit_PV = 2000f;
                 temp.Add(device);
+
+
+                DeviceExperimentHistoryData experimentHistoryData = new()
+                {
+                    DeviceName = "G" + i.ToString().PadLeft(2, '0')
+                };
+                DeviceExperimentHistoryDatas.Add(experimentHistoryData);
             }
+            CurrentBatch = BatchManager.GetInstance().Batches.First();
             DeviceParameterCol = new ObservableCollection<DeviceParameter>(temp);
             CurrentDeviceParameter = DeviceParameterCol[0];
 
@@ -267,46 +338,10 @@ namespace RD3.ViewModels
             }, nameof(ProjectTemplate));
         }
 
-        private void Navigate(TaskBar obj)
+        private void ExperimentTimer_Tick(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(obj.Target)) return;
-
-            NavigationParameters param = new NavigationParameters();
-
-            if (obj.Title == "已完成")
-            {
-                param.Add("Value", 2);
-            }
-            regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(obj.Target, param);
-        }
-
-        #region 属性
-
-        private string title;
-
-        public string Title
-        {
-            get { return title; }
-            set { title = value; RaisePropertyChanged(); }
-        }
-
-        private ObservableCollection<TaskBar> taskBars;
-
-        public ObservableCollection<TaskBar> TaskBars
-        {
-            get { return taskBars; }
-            set { taskBars = value; RaisePropertyChanged(); }
-        }
-
-        #endregion
-
-        void CreateTaskBars()
-        {
-            TaskBars = new ObservableCollection<TaskBar>();
-            TaskBars.Add(new TaskBar() { Icon = "ClockFast", Title = "汇总", Color = "#FF0CA0FF", Target = "ToDoView" });
-            TaskBars.Add(new TaskBar() { Icon = "ClockCheckOutline", Title = "已完成", Color = "#FF1ECA3A", Target = "ToDoView" });
-            TaskBars.Add(new TaskBar() { Icon = "ChartLineVariant", Title = "完成比例", Color = "#FF02C6DC", Target = "" });
-            TaskBars.Add(new TaskBar() { Icon = "PlaylistStar", Title = "备忘录", Color = "#FFFFA000", Target = "MemoView" });
+            elapsedTime += TimeSpan.FromSeconds(1);
+            FormattedTime = elapsedTime.ToString(@"hh\:mm\:ss");
         }
 
         public override async void OnNavigatedTo(NavigationContext navigationContext)

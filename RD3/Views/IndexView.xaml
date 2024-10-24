@@ -288,7 +288,16 @@
                                             FontWeight="Bold"
                                             Foreground="{StaticResource SuccessBrush}"
                                             Text="{ex:Language Key='Running'}"
-                                            TextAlignment="Right" />
+                                            TextAlignment="Right"
+                                            Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="16"
+                                            FontWeight="Bold"
+                                            Foreground="{StaticResource SuccessBrush}"
+                                            Text="{ex:Language Key='Idle'}"
+                                            TextAlignment="Right"
+                                            Visibility="{Binding Running, Converter={StaticResource InverseBooleanConverter}}" />
                                     </hc:UniformSpacingPanel>
                                 </DockPanel>
                                 <Border
@@ -368,7 +377,9 @@
                                 </Border>
                                 <Grid Grid.Row="2" Margin="10">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="30" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="40" />
+                                        <RowDefinition Height="0" />
                                         <RowDefinition Height="40" />
                                         <RowDefinition Height="40" />
                                         <RowDefinition Height="40" />
@@ -376,14 +387,13 @@
                                         <RowDefinition Height="40" />
                                         <RowDefinition Height="40" />
                                         <RowDefinition Height="40" />
-                                        <RowDefinition Height="40" />
-                                        <RowDefinition Height="40" />
-                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="20" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="110" />
-                                        <ColumnDefinition Width="70" />
+                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="120" />
                                         <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
                                         <ColumnDefinition Width="30" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
@@ -395,9 +405,9 @@
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="G01"
+                                        Text="{Binding CurrentDeviceParameter.Name}"
                                         TextAlignment="Right" />
-                                    <TextBlock
+                                    <!--<TextBlock
                                         Grid.Row="2"
                                         Style="{StaticResource BodyFontSizeStyle}"
                                         Text="{ex:Language Key='Reactor ID'}"
@@ -406,8 +416,8 @@
                                         Grid.Row="2"
                                         Grid.Column="1"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="1001"
-                                        TextAlignment="Right" />
+                                        Text="{Binding CurrentDeviceParameter.Id}"
+                                        TextAlignment="Right" />-->
                                     <TextBlock
                                         Grid.Row="3"
                                         Style="{StaticResource BodyFontSizeStyle}"
@@ -417,7 +427,7 @@
                                         Grid.Row="3"
                                         Grid.Column="1"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="1"
+                                        Text="{Binding CurrentDeviceParameter.SerialNumber}"
                                         TextAlignment="Right" />
                                     <TextBlock
                                         Grid.Row="4"
@@ -439,7 +449,7 @@
                                         Grid.Row="5"
                                         Grid.Column="1"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="Running"
+                                        Text="{Binding CurrentDeviceParameter.WorkStatus, Converter={StaticResource EnumToStringConverter}}"
                                         TextAlignment="Right" />
                                     <TextBlock
                                         Grid.Row="6"
@@ -450,7 +460,7 @@
                                         Grid.Row="6"
                                         Grid.Column="1"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="24071101"
+                                        Text="{Binding CurrentBatch.Id}"
                                         TextAlignment="Right" />
                                     <TextBlock
                                         Grid.Row="7"
@@ -461,7 +471,7 @@
                                         Grid.Row="7"
                                         Grid.Column="1"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="G03"
+                                        Text="{Binding CurrentBatch.Name}"
                                         TextAlignment="Right" />
                                     <TextBlock
                                         Grid.Row="8"
@@ -472,7 +482,7 @@
                                         Grid.Row="8"
                                         Grid.Column="1"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="kla"
+                                        Text="{Binding CurrentBatch.Project}"
                                         TextAlignment="Right" />
                                     <TextBlock
                                         Grid.Row="9"
@@ -483,7 +493,7 @@
                                         Grid.Row="9"
                                         Grid.Column="1"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="01:02:03"
+                                        Text="{Binding FormattedTime}"
                                         TextAlignment="Right" />
                                     <Image
                                         Grid.Row="3"
@@ -2107,6 +2117,7 @@
                                     </Grid.ColumnDefinitions>
                                     <TextBlock VerticalAlignment="Center" Text="{ex:Language Key='Axis name'}" />
                                     <hc:ComboBox
+                                        Name="CmbYAxis"
                                         Grid.Column="2"
                                         Width="80"
                                         VerticalContentAlignment="Center"
@@ -2136,20 +2147,29 @@
                                         <ColumnDefinition Width="auto" />
                                         <ColumnDefinition Width="5" />
                                         <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="10" />
+                                        <ColumnDefinition Width="auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock VerticalAlignment="Center" Text="{ex:Language Key='Scale'}" />
+                                    <TextBlock VerticalAlignment="Center" Text="{ex:Language Key='Scale Range'}" />
                                     <TextBox
+                                        Name="TxtMinScale"
                                         Grid.Column="2"
                                         Width="50"
                                         VerticalAlignment="Center"
                                         Style="{StaticResource TextBoxExtend}" />
                                     <TextBox
+                                        Name="TxtMaxScale"
                                         Grid.Column="4"
                                         Width="50"
                                         VerticalAlignment="Center"
                                         Style="{StaticResource TextBoxExtend}" />
+                                    <Button
+                                        Name="BtnScale"
+                                        Grid.Column="6"
+                                        Click="BtnScale_Click"
+                                        Content="{ex:Language Key='OK'}" />
                                 </Grid>
-                                <Line
+                                <!--<Line
                                     Grid.Row="7"
                                     HorizontalAlignment="Left"
                                     Stroke="LightGray"
@@ -2167,16 +2187,17 @@
                                     </Grid.ColumnDefinitions>
                                     <TextBlock VerticalAlignment="Center" Text="{ex:Language Key='Bottom axis scale'}" />
                                     <hc:ComboBox
+                                        Name="ComboBoxTime"
                                         Grid.Column="2"
                                         Width="80"
                                         VerticalContentAlignment="Center"
                                         hc:BorderElement.CornerRadius="4"
-                                        SelectedIndex="0">
+                                        SelectedIndex="1">
+                                        <ComboBoxItem Content="Minute" />
                                         <ComboBoxItem Content="Hour" />
                                         <ComboBoxItem Content="Day" />
-                                        <ComboBoxItem Content="Minute" />
                                     </hc:ComboBox>
-                                </Grid>
+                                </Grid>-->
                             </Grid>
                         </materialDesign:DrawerHost.RightDrawerContent>
                         <Grid>
@@ -2192,12 +2213,18 @@
                                     <ColumnDefinition Width="auto" />
                                     <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBlock
-                                    Margin="5"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Top"
-                                    FontSize="{DynamicResource NormalFontSize}"
-                                    Text="Runnning time:05:06:33" />
+                                <hc:UniformSpacingPanel Spacing="5">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        FontSize="{DynamicResource NormalFontSize}"
+                                        Text="Runnning time:" />
+                                    <TextBlock
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        FontSize="{DynamicResource NormalFontSize}"
+                                        Text="{Binding FormattedTime}" />
+                                </hc:UniformSpacingPanel>
                                 <Border
                                     Grid.Column="2"
                                     Height="30"
@@ -2269,7 +2296,7 @@
                                         Checked="ToggleButtonGraphParam_CheckChanged"
                                         IsChecked="True"
                                         Style="{DynamicResource ToggleButtonCustom}"
-                                        Tag="DO"
+                                        Tag="Air"
                                         Unchecked="ToggleButtonGraphParam_CheckChanged">
                                         <hc:StatusSwitchElement.CheckedElement>
                                             <Border
@@ -2337,7 +2364,7 @@
                                         Checked="ToggleButtonGraphParam_CheckChanged"
                                         IsChecked="True"
                                         Style="{DynamicResource ToggleButtonCustom}"
-                                        Tag="Air"
+                                        Tag="DO"
                                         Unchecked="ToggleButtonGraphParam_CheckChanged">
                                         <hc:StatusSwitchElement.CheckedElement>
                                             <Border
@@ -2503,7 +2530,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding TempParam.Temp_PV}" />
+                                                Text="{Binding TempParam.Temp_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2536,7 +2563,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding PHParam.PH_PV}" />
+                                                Text="{Binding PHParam.PH_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2569,7 +2596,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding DOParam.DO_PV}" />
+                                                Text="{Binding DOParam.DO_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2602,7 +2629,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding AgitParam.Agit_PV}" />
+                                                Text="{Binding AgitParam.Agit_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2635,7 +2662,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding BaseParam.Base_PV}" />
+                                                Text="{Binding BaseParam.Base_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2668,7 +2695,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding AcidParam.Acid_PV}" />
+                                                Text="{Binding AcidParam.Acid_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2701,7 +2728,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding AFParam.AF_PV}" />
+                                                Text="{Binding AFParam.AF_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2734,7 +2761,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding FeedParam.Feed_PV}" />
+                                                Text="{Binding FeedParam.Feed_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2767,7 +2794,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding AirParam.Air_PV}" />
+                                                Text="{Binding AirParam.Air_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2800,7 +2827,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding CO2Param.CO2_PV}" />
+                                                Text="{Binding CO2Param.CO2_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2833,7 +2860,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding O2Param.O2_PV}" />
+                                                Text="{Binding O2Param.O2_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2866,7 +2893,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding N2Param.N2_PV}" />
+                                                Text="{Binding N2Param.N2_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2899,7 +2926,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding Sample_PV}" />
+                                                Text="{Binding Sample_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2932,7 +2959,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding Liquid_PV}" />
+                                                Text="{Binding Liquid_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2965,7 +2992,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding Inoculate_PV}" />
+                                                Text="{Binding Inoculate_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -2998,7 +3025,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding Harvest_PV}" />
+                                                Text="{Binding Harvest_PV, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

@@ -14,15 +14,15 @@
     <system:String x:Key="Trend">Trends</system:String>
     <system:String x:Key="Overview">Overview</system:String>
     <system:String x:Key="Running">Running</system:String>
-    <system:String x:Key="ReactorName">Reactor Name</system:String>
-    <system:String x:Key="ReactorID">Reactor ID</system:String>
-    <system:String x:Key="SerialNumber">Serial Number</system:String>
+    <system:String x:Key="Reactor name">Reactor name</system:String>
+    <system:String x:Key="Reactor ID">Reactor ID</system:String>
+    <system:String x:Key="Serial number">Serial Number</system:String>
     <system:String x:Key="Type">Type</system:String>
     <system:String x:Key="Status">Status</system:String>
-    <system:String x:Key="BatchID">Batch ID</system:String>
-    <system:String x:Key="BatchName">Batch Name</system:String>
-    <system:String x:Key="AffiliatedProject">Affiliated Project</system:String>
-    <system:String x:Key="RunningTime">Running Time</system:String>
+    <system:String x:Key="Batch ID">Batch ID</system:String>
+    <system:String x:Key="Batch name">Batch Name</system:String>
+    <system:String x:Key="Affiliated project">Affiliated Project</system:String>
+    <system:String x:Key="Running time">Running Time</system:String>
     <system:String x:Key="Pause">Pause</system:String>
     <system:String x:Key="Sample">Sample</system:String>
     <system:String x:Key="Log">Log</system:String>
@@ -45,7 +45,7 @@
     <system:String x:Key="UpdateTime">Update Time</system:String>
     <system:String x:Key="Creator">Creator</system:String>
     <system:String x:Key="UserType">UserType</system:String>
-    <system:String x:Key="SetValue">Set Value</system:String>
+    <system:String x:Key="Set Value">Set Value</system:String>
     <system:String x:Key="AssociativeModules">Associative Modules</system:String>
     <system:String x:Key="Alarm">Alarm</system:String>
     <system:String x:Key="DBand">dBand</system:String>
@@ -110,4 +110,7 @@
     <system:String x:Key=" Do as unscheduled action">Do as unscheduled action</system:String>
     <system:String x:Key="Add Liquid">Add Liquid</system:String>
     <system:String x:Key="Load Setting">Load Setting</system:String>
+    <system:String x:Key="Account manage">Account manage</system:String>
+    <system:String x:Key="Switch account">Switch account</system:String>
+    <system:String x:Key="Log out">Log out</system:String>
 </ResourceDictionary>

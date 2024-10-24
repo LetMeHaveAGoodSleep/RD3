@@ -34,7 +34,7 @@ namespace RD3.Shared
             }
             string json = JsonConvert.SerializeObject(dictionary);
             json = AESEncryption.Encrypt(json);
-            File.WriteAllText(FileConst.VarPath, json);
+            File.WriteAllText(FileConst.ConstPath, json);
         }    
     }
 }

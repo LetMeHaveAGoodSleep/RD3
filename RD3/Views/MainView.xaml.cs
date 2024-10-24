@@ -103,11 +103,13 @@ namespace RD3.Views
                 if (dialogResult.Result != Prism.Services.Dialogs.ButtonResult.OK) return;
                 this.Close();
             };
-            this.MouseMove += (s, e) =>
-            {
-                if (e.LeftButton == MouseButtonState.Pressed)
-                    this.DragMove();
-            };
+            //this.MouseMove += (s, e) =>
+            //{
+            //    if (e.LeftButton == MouseButtonState.Pressed)
+            //    {
+            //        this.DragMove();
+            //    }   
+            //};
             this.dialogHostService = dialogHostService;
         }
 
@@ -155,6 +157,14 @@ namespace RD3.Views
             //    if (menuItem == sideMenuItem) continue;
             //    menuItem.Background = brush;
             //}
+        }
+
+        private void Border_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
     }
 }

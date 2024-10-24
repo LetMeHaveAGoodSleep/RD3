@@ -159,7 +159,7 @@
             },
             "ScottPlot.WPF": {
               "target": "Package",
-              "version": "[5.0.37, )"
+              "version": "[5.0.40, )"
             },
             "log4net": {
               "target": "Package",

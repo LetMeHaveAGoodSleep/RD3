@@ -24,7 +24,26 @@ namespace RD3
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            object enumValue;
+            try
+            {
+                enumValue = Enum.Parse(targetType, parameter.ToString());
+                if (enumValue != null)
+                {
+                    return enumValue;
+                }
+                else
+                {
+                    var values = Enum.GetValues(targetType);
+                    enumValue = values.GetValue(0);
+                }
+            }
+            catch
+            {
+                var values = Enum.GetValues(targetType);
+                enumValue = values.GetValue(0);
+            }
+            return enumValue;
         }
     }
 }

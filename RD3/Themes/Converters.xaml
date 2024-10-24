@@ -10,4 +10,5 @@
     <rd3:StringToBoolConverter x:Key="StringToBoolConverter" />
     <rd3:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
     <rd3:NumberToSpecialStringConverter x:Key="NumberToSpecialStringConverter" />
+    <rd3:EnumToBoolConverter x:Key="EnumToBoolConverter" />
 </ResourceDictionary>

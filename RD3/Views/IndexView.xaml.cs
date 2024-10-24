@@ -29,6 +29,8 @@ using RD3.Extensions;
 using Prism.Services.Dialogs;
 using RD3.Shared;
 using System.Diagnostics;
+using ScottPlot.TickGenerators;
+using System.CodeDom;
 
 namespace RD3.Views
 {
@@ -37,15 +39,22 @@ namespace RD3.Views
     /// </summary>
     public partial class IndexView : UserControl
     {
+        DateTimeXAxis bottomAxis;
+        LeftAxis yAxis2, yAxis3;
+        RightAxis yAxis4, yAxis5;
+
         Crosshair MyCrosshair;
         ScottPlot.Plottables.Marker MyHighlightMarker;
         ScottPlot.Plottables.Text MyHighlightText;
         private readonly IEventAggregator _aggregator;
+        private readonly ILanguage language;
+
+        List<DeviceExperimentHistoryData> dataSource = [];
 
         public IndexView(IContainerProvider containerProvider, IEventAggregator aggregator)
         {
             _aggregator = aggregator;
-            ILanguage language = containerProvider.Resolve<ILanguage>();
+            language = containerProvider.Resolve<ILanguage>();
 
             InitializeComponent();
 
@@ -57,175 +66,73 @@ namespace RD3.Views
             plt.ShowLegend(Edge.Top);
 
 
-            DateTime[] dates = Generate.ConsecutiveDays(100);
-            double[] ys = Generate.RandomWalk(100);
-            var scatter = plt.Add.Scatter(dates, ys);
-            scatter.LegendText = "1";
-            plt.Axes.DateTimeTicksBottom();
-            plt.Axes.Bottom.Label.Text = language.GetValue("Time")?.ToString();
+            // create an array of DateTimes one hour apart
+            int numberOfHours = 24;
+            DateTime[] dateTimes = new DateTime[numberOfHours];
+            DateTime startDateTime = new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            TimeSpan deltaTimeSpan = TimeSpan.FromHours(1);
+            for (int i = 0; i < numberOfHours; i++)
+            {
+                dateTimes[i] = startDateTime + i * deltaTimeSpan;
+            }
+
+            // create an array of doubles representing the same DateTimes one hour apart
+            double[] dateDoubles = new double[numberOfHours];
+            double startDouble = startDateTime.ToOADate(); // days since 1900
+            double deltaDouble = 1.0 / 24.0; // an hour is 1/24 of a day
+            for (int i = 0; i < numberOfHours; i++)
+            {
+                dateDoubles[i] = startDouble + i * deltaDouble;
+            }
+
+            bottomAxis = plt.Axes.DateTimeTicksBottom();
+            plt.Axes.SetLimitsX(dateDoubles[0], dateDoubles[dateDoubles.Length - 1], bottomAxis);
+            DateTimeAutomatic tickGen = (DateTimeAutomatic)bottomAxis.TickGenerator;
+            tickGen.LabelFormatter = CustomFormatter;
             plt.Axes.Left.Label.Text = "DO";
 
-            plt.RenderManager.RenderStarting += (s, e) =>
-            {
-                Tick[] ticks = plt.Axes.Bottom.TickGenerator.Ticks;
-                for (int i = 0; i < ticks.Length; i++)
-                {
-                    DateTime dt = DateTime.FromOADate(ticks[i].Position);
-                    string label = $"{dt:HH:mm:ss}\r\n{dt:yyyy/MM/dd}";
-                    ticks[i] = new Tick(ticks[i].Position, label);
-                }
-            };
+            // now both arrays represent the same dates
+            //var scatter1 = plt.Add.ScatterLine(dateTimes, Generate.Sin(numberOfHours));
+            var scatter3 = plt.Add.Scatter(dateDoubles, Generate.Cos(numberOfHours));
+            scatter3.Axes.YAxis = plt.Axes.Left;
+            scatter3.Axes.XAxis = plt.Axes.Bottom;
+            scatter3.LegendText = "1";
+            //var scatter4 = plt.Add.ScatterPoints(dateDoubles, Generate.Cos(numberOfHours));
+            //var scatter2 = plt.Add.SignalXY(dateDoubles, Generate.Cos(numberOfHours));
+            //scatter2.LegendText = "2";
+
+            // add padding on the right to make room for wide tick labels
+            //plt.Axes.Right.MinimumSize = 50;
 
             // create a second axis and add it to the plot
-            var yAxis2 = plt.Axes.AddLeftAxis();
+            yAxis2 = plt.Axes.AddLeftAxis();
             yAxis2.LabelPadding = 100;
             yAxis2.LabelText = "Agit";
+            yAxis2.EmptyLabelPadding = new PixelPadding(100);
+            plt.Axes.SetLimitsY(0, 10000, yAxis2);
+
+
+            yAxis3 = plt.Axes.AddLeftAxis();
+            yAxis3.LabelText = "Air";
+            plt.Axes.SetLimitsY(0, 100, yAxis3);
+
+            yAxis4 = plt.Axes.AddRightAxis();
+            yAxis4.LabelText = "pH";
+            plt.Axes.SetLimitsY(0, 10, yAxis4);
+
+            yAxis5 = plt.Axes.AddRightAxis();
+            yAxis5.LabelText = "Temp";
+            plt.Axes.SetLimitsY(0, 100,yAxis5);
             
 
-            var yAxis3 = plt.Axes.AddLeftAxis();
-            yAxis3.LabelText = "Air";
+            plt.Axes.SetLimitsX(dateDoubles[0], dateDoubles[dateDoubles.Length - 1], bottomAxis);
 
-            var yAxis4 = plt.Axes.AddRightAxis();
-            yAxis4.LabelText = "pH";
+            CreatePlotMark();
 
-            var yAxis5 = plt.Axes.AddRightAxis();
-            yAxis5.LabelText = "Temp";
+            CustomMouseAction(wpfPlot);
 
-            var sig1 = plt.Add.Scatter(dates, ScottPlot.Generate.Sin(51, mult: 0.01));
-            sig1.LegendText = "2";
-            sig1.Axes.XAxis = plt.Axes.Bottom; // standard X axis
-            sig1.Axes.YAxis = plt.Axes.Left; // standard Y axis
-
-            // add a new plottable and tell it to use the custom Y axis
-            var sig2 = plt.Add.Signal(ScottPlot.Generate.Cos(51, mult: 100));
-            sig2.Axes.XAxis = plt.Axes.Bottom; // standard X axis
-            sig2.Axes.YAxis = yAxis2; // custom Y axis
-
-
-            // add a new plottable and tell it to use the custom Y axis
-            var sig3 = plt.Add.Signal(ScottPlot.Generate.Cos(51, mult: 10));
-            sig3.Axes.XAxis = plt.Axes.Bottom; // standard X axis
-            sig3.Axes.YAxis = yAxis3; // custom Y axis
-
-            var sig4 = plt.Add.Signal(ScottPlot.Generate.Cos(51, mult: 50));
-            sig4.Axes.XAxis = plt.Axes.Bottom; // standard X axis
-            sig4.Axes.YAxis = yAxis4; // custom Y axis
-
-            var sig5 = plt.Add.Signal(ScottPlot.Generate.Cos(51, mult: 8));
-            sig5.Axes.XAxis = plt.Axes.Bottom; // standard X axis
-            sig5.Axes.YAxis = yAxis5; // custom Y axis
-
-            plt.Axes.SetLimitsY(-10, 100, yAxis4);
-
-            MyCrosshair = wpfPlot.Plot.Add.Crosshair(0, 0);
-            MyCrosshair.IsVisible = false;
-            MyCrosshair.MarkerShape = MarkerShape.OpenCircle;
-            MyCrosshair.MarkerSize = 15;
-
-            MyHighlightMarker = wpfPlot.Plot.Add.Marker(0, 0);
-            MyHighlightMarker.Shape = MarkerShape.OpenCircle;
-            MyHighlightMarker.Size = 17;
-            MyHighlightMarker.LineWidth = 2;
-
-            // Create a text label to place near the highlighted value
-            MyHighlightText = wpfPlot.Plot.Add.Text("", 0, 0);
-            MyHighlightText.LabelAlignment = Alignment.LowerLeft;
-            MyHighlightText.LabelBold = true;
-            MyHighlightText.OffsetX = 7;
-            MyHighlightText.OffsetY = -15;
-
-            wpfPlot.MouseMove += (sender, e) =>
-            {
-                WpfPlot wpfPlot = sender as WpfPlot;
-                var position = e.GetPosition(wpfPlot);
-                Pixel mousePixel = new(position.X, position.Y);
-                Coordinates mouseLocation = wpfPlot.Plot.GetCoordinates(mousePixel);
-                var curveList = wpfPlot.Plot.GetPlottables();
-                var scatterPlots = curveList.OfType<Scatter>().ToList();
-                Dictionary<int, DataPoint> nearestPoints = new();
-                for (int i = 0; i < scatterPlots.Count; i++)
-                {
-                    DataPoint nearestPoint = scatterPlots[i].Data.GetNearest(mouseLocation, wpfPlot.Plot.LastRender);
-                    nearestPoints.Add(i, nearestPoint);
-                }
-
-                bool pointSelected = false;
-                int scatterIndex = -1;
-                double smallestDistance = double.MaxValue;
-                for (int i = 0; i < nearestPoints.Count; i++)
-                {
-                    if (nearestPoints[i].IsReal)
-                    {
-                        // calculate the distance of the point to the mouse
-                        double distance = nearestPoints[i].Coordinates.Distance(mouseLocation);
-                        if (distance < smallestDistance)
-                        {
-                            // store the index
-                            scatterIndex = i;
-                            pointSelected = true;
-                            // update the smallest distance
-                            smallestDistance = distance;
-                        }
-                    }
-                }
-
-                if (pointSelected)
-                {
-                    ScottPlot.Plottables.Scatter scatter = scatterPlots[scatterIndex];
-                    DataPoint point = nearestPoints[scatterIndex];
-
-                    MyCrosshair.IsVisible = true;
-                    MyCrosshair.Position = point.Coordinates;
-                    MyCrosshair.LineColor = scatter.MarkerStyle.FillColor;
-
-                    MyHighlightMarker.IsVisible = true;
-                    MyHighlightMarker.Location = point.Coordinates;
-                    MyHighlightMarker.MarkerStyle.LineColor = scatter.MarkerStyle.FillColor;
-
-                    MyHighlightText.IsVisible = true;
-                    MyHighlightText.Location = point.Coordinates;
-                    DateTime dt = DateTime.FromOADate(point.X);
-                    string label = $"{dt:HH:mm:ss}\r\n{dt:yyyy/MM/dd}";
-                    MyHighlightText.LabelText = $"X:{dt:HH:mm:ss} {dt:yyyy/MM/dd}\r\nY:{point.Y:0.###}";
-                    MyHighlightText.LabelFontColor = scatter.MarkerStyle.FillColor;
-
-                    wpfPlot.Refresh();
-
-                }
-
-                // hide the crosshair, marker and text when no point is selected
-                if (!pointSelected && MyCrosshair.IsVisible)
-                {
-                    MyHighlightText.IsVisible = MyHighlightMarker.IsVisible = MyCrosshair.IsVisible = false;
-                    wpfPlot.Refresh();
-                }
-            };
-
-            wpfPlot.MouseDoubleClick += (sender, e) =>
-            {
-                WpfPlot wpfPlot = sender as WpfPlot;
-                var position = e.GetPosition(wpfPlot);
-                var yAxes = wpfPlot.Plot.GetAxis(new Pixel(position.X, position.Y));
-                if (yAxes == null || (yAxes.Edge != Edge.Left && yAxes.Edge != Edge.Right))
-                {
-                    return;
-                }
-
-                // 弹出对话框，让用户输入新的 Y 轴范围
-                //var inputY = Prompt.ShowDialog($"Enter Y-axis {yAxis.Id} range (min,max):", $"Edit Y-axis {yAxis.Id}");
-                //if (inputY != null)
-                //{
-                //    var range = inputY.Split(',');
-                //    if (range.Length == 2)
-                //    {
-                //        double yMin = double.Parse(range[0]);
-                //        double yMax = double.Parse(range[1]);
-                //        yAxes.Min = yMin;
-                //        yAxes.Max = yMax;
-                //        wpfPlot.Refresh();
-                //    }
-                //}
-            };
+            CustomContextMenu(wpfPlot);
+            CustomContextMenu(wpfPlot1);
 
             foreach (RadioButton item in ButtonGroup.Items)
             {
@@ -249,10 +156,10 @@ namespace RD3.Views
                 double[] ys = [volume];
                 foreach (string item in devices)
                 {
-                    var scatter = plt.Add.Scatter(dates, ys);
+                    var scatter = plt.Add.ScatterPoints(dates, ys);
                     scatter.LegendText = item + "_" + EnumUtil.GetEnumDescription(type) + "_" + time.ToString("HH-mm-ss");
                     scatter.Axes.XAxis = plt.Axes.Bottom; // standard X axis
-                    scatter.Axes.YAxis = yAxis3; // custom Y axis
+                    scatter.Axes.YAxis = yAxis5; // custom Y axis
                 }
                 tabControl.SelectedItem = tabTrend;
 
@@ -263,6 +170,167 @@ namespace RD3.Views
             {
                 LoginSnakeBar.MessageQueue.Enqueue(arg.Message);
             }, nameof(IndexViewModel));
+
+            aggregator.ResgiterMessage(arg =>
+            {
+                var model = arg.Model as DialogParameters;
+                wpfPlot.Refresh();
+                wpfPlot1.Refresh();
+            }, "UpdatePlot");
+
+            //ComboBoxTime.SelectionChanged += ComboBoxTime_SelectionChanged;
+            wpfPlot.MouseMove += WpfPlot_MouseMove;
+            wpfPlot.MouseDoubleClick += WpfPlot_MouseDoubleClick;
+        }
+
+        private void WpfPlot_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            wpfPlot.Plot.Axes.AutoScale();
+            wpfPlot.Refresh();
+        }
+
+        private void CustomMouseAction(WpfPlot wpfPlot)
+        {
+            ScottPlot.Control.InputBindings customInputBindings = new()
+            {
+                DragPanButton = ScottPlot.Control.MouseButton.Left,
+                DragZoomRectangleButton = ScottPlot.Control.MouseButton.Left,
+                //DragZoomButton = ScottPlot.Control.MouseButton.Right,
+                ZoomInWheelDirection = ScottPlot.Control.MouseWheelDirection.Up,
+                ZoomOutWheelDirection = ScottPlot.Control.MouseWheelDirection.Down,
+                ClickContextMenuButton = ScottPlot.Control.MouseButton.Right,
+                DoubleClickButton = ScottPlot.Control.MouseButton.Left
+            };
+
+            ScottPlot.Control.Interaction interaction = new(wpfPlot)
+            {
+                Inputs = customInputBindings,
+            };
+
+            wpfPlot.Interaction = interaction;
+        }
+
+        private void CustomContextMenu(WpfPlot wpfPlot)
+        {
+            // clear existing menu items
+            wpfPlot.Menu.Clear();
+
+            wpfPlot.Menu.Add("Add Text", (formsplot1) =>
+            {
+                var txt = formsplot1.Plot.Add.Text("Test", Generate.RandomLocation());
+                txt.LabelFontSize = 10 + Generate.RandomInteger(20);
+                txt.LabelFontColor = Generate.RandomColor(128);
+                txt.LabelBold = true;
+                formsplot1.Plot.Axes.AutoScale();
+                formsplot1.Refresh();
+            });
+
+            //wpfPlot.Menu.AddSeparator();
+
+            //wpfPlot.Menu.Add(language.GetValue("Reset").ToString(), (formsplot1) =>
+            //{
+            //    formsplot1.Reset();
+            //    formsplot1.Refresh();
+            //});
+
+            //wpfPlot.Plot.Title("Custom Right-Click Menu");
+            //wpfPlot.Refresh();
+        }
+
+        private void WpfPlot_MouseMove(object sender, MouseEventArgs e)
+        {
+            WpfPlot wpfPlot = sender as WpfPlot;
+            MyCrosshair.IsVisible = MyHighlightText.IsVisible = MyHighlightMarker.IsVisible = false;
+            var position = e.GetPosition(wpfPlot);
+            Pixel mousePixel = new(position.X, position.Y);
+            Coordinates mouseLocation = wpfPlot.Plot.GetCoordinates(mousePixel);
+            var curveList = wpfPlot.Plot.GetPlottables();
+            var scatterPlots = curveList.OfType<Scatter>().ToList();
+            Dictionary<int, DataPoint> nearestPoints = new();
+            for (int i = 0; i < scatterPlots.Count; i++)
+            {
+                DataPoint nearestPoint = scatterPlots[i].Data.GetNearest(mouseLocation, wpfPlot.Plot.LastRender);
+                nearestPoints.Add(i, nearestPoint);
+            }
+
+            bool pointSelected = false;
+            int scatterIndex = -1;
+            double smallestDistance = double.MaxValue;
+            for (int i = 0; i < nearestPoints.Count; i++)
+            {
+                if (nearestPoints[i].IsReal)
+                {
+                    // calculate the distance of the point to the mouse
+                    double distance = nearestPoints[i].Coordinates.Distance(mouseLocation);
+                    if (distance < smallestDistance)
+                    {
+                        // store the index
+                        scatterIndex = i;
+                        pointSelected = true;
+                        // update the smallest distance
+                        smallestDistance = distance;
+                    }
+                }
+            }
+
+            if (pointSelected)
+            {
+                ScottPlot.Plottables.Scatter scatter = scatterPlots[scatterIndex];
+                DataPoint point = nearestPoints[scatterIndex];
+
+                MyCrosshair.IsVisible = true;
+                MyCrosshair.Position = point.Coordinates;
+                MyCrosshair.LineColor = scatter.MarkerStyle.FillColor;
+
+                MyHighlightMarker.IsVisible = true;
+                MyHighlightMarker.Location = point.Coordinates;
+                MyHighlightMarker.MarkerStyle.LineColor = scatter.MarkerStyle.FillColor;
+
+                MyHighlightText.IsVisible = true;
+                MyHighlightText.Location = point.Coordinates;
+                DateTime dt = DateTime.FromOADate(point.X);
+                string label = $"{dt:HH:mm:ss}\r\n{dt:yyyy/MM/dd}";
+                MyHighlightText.LabelText = $"X:{dt:HH:mm:ss} {dt:yyyy/MM/dd}\r\nY:{point.Y:0.###}";
+                MyHighlightText.LabelFontColor = scatter.MarkerStyle.FillColor;
+
+                wpfPlot.Refresh();
+
+            }
+
+            // hide the crosshair, marker and text when no point is selected
+            if (!pointSelected && MyCrosshair.IsVisible)
+            {
+                MyHighlightText.IsVisible = MyHighlightMarker.IsVisible = MyCrosshair.IsVisible = false;
+                wpfPlot.Refresh();
+            }
+        }
+
+        private void CreatePlotMark()
+        {
+            MyCrosshair = wpfPlot.Plot.Add.Crosshair(0, 0);
+            MyCrosshair.IsVisible = false;
+            MyCrosshair.MarkerShape = MarkerShape.OpenCircle;
+            MyCrosshair.MarkerSize = 15;
+
+            MyHighlightMarker = wpfPlot.Plot.Add.Marker(0, 0);
+            MyHighlightMarker.Shape = MarkerShape.OpenCircle;
+            MyHighlightMarker.Size = 17;
+            MyHighlightMarker.LineWidth = 2;
+
+            // Create a text label to place near the highlighted value
+            MyHighlightText = wpfPlot.Plot.Add.Text("", 0, 0);
+            MyHighlightText.LabelAlignment = Alignment.LowerLeft;
+            MyHighlightText.LabelBold = true;
+            MyHighlightText.OffsetX = 7;
+            MyHighlightText.OffsetY = -15;
+        }
+
+        static string CustomFormatter(DateTime dt)
+        {
+            bool isMidnight = dt is { Hour: 0, Minute: 0, Second: 0 };
+            return isMidnight
+                ? DateOnly.FromDateTime(dt).ToString()
+                : TimeOnly.FromDateTime(dt).ToString();
         }
 
         private void TabControl_Loaded(object sender, RoutedEventArgs e)
@@ -323,6 +391,49 @@ namespace RD3.Views
         {
             RadioButton radioButton = sender as RadioButton;
             //TODO:曲线切换
+        }
+
+        private void ComboBoxTime_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            if (comboBox?.SelectedIndex == -1) return;
+
+        }
+
+        private void BtnScale_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(TxtMaxScale.Text) || string.IsNullOrEmpty(TxtMinScale.Text))
+            {
+                return;
+            }
+            if (!double.TryParse(TxtMinScale.Text, out double minScle) || !double.TryParse(TxtMaxScale.Text, out double maxScle))
+            {
+                MessageBox.Show(language.GetValue("Must be numeric").ToString());
+                return;
+            }
+            switch (CmbYAxis.SelectedIndex)
+            {
+                case 0:
+                    wpfPlot.Plot.Axes.SetLimitsY(minScle, maxScle, yAxis3);
+                    wpfPlot.Refresh();
+                    break;
+                case 1:
+                    wpfPlot.Plot.Axes.SetLimitsY(minScle, maxScle, yAxis2);
+                    wpfPlot.Refresh();
+                    break;
+                case 2:
+                    wpfPlot.Plot.Axes.SetLimitsY(minScle, maxScle, wpfPlot.Plot.Axes.Left);
+                    wpfPlot.Refresh();
+                    break;
+                case 3:
+                    wpfPlot.Plot.Axes.SetLimitsY(minScle, maxScle, yAxis4);
+                    wpfPlot.Refresh();
+                    break;
+                case 4:
+                    wpfPlot.Plot.Axes.SetLimitsY(minScle, maxScle, yAxis5);
+                    wpfPlot.Refresh();
+                    break;
+            }
         }
     }
 }
