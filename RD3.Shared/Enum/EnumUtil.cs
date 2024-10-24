@@ -20,5 +20,10 @@ namespace RD3
             DescriptionAttribute descriptionAttribute = (DescriptionAttribute)objs[0];
             return descriptionAttribute.Description;
         }
+
+        public static IEnumerable<T> GetEnumValues<T>()
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>();
+        }
     }
 }

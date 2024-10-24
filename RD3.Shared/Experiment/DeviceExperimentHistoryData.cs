@@ -10,6 +10,6 @@ namespace RD3.Shared
     {
         public string DeviceName {  get; set; }
 
-        public IEnumerable<ExperimentHistoryData> ExperimentHistoryDatas { get; set; }= [];
+        public List<ExperimentHistoryData> ExperimentHistoryDatas { get; set; }= [];
     }
 }

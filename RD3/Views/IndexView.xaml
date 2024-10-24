@@ -297,7 +297,7 @@
                                             Foreground="{StaticResource SuccessBrush}"
                                             Text="{ex:Language Key='Idle'}"
                                             TextAlignment="Right"
-                                            Visibility="{Binding Running, Converter={StaticResource InverseBooleanConverter}}" />
+                                            Visibility="{Binding Running, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                                     </hc:UniformSpacingPanel>
                                 </DockPanel>
                                 <Border
@@ -328,8 +328,7 @@
                                                     Content="{ex:Language Key='DO'}"
                                                     FontSize="{DynamicResource TextFontSize}"
                                                     Foreground="{DynamicResource SecondaryTextBrush}"
-                                                    IsChecked="True"
-                                                    Tag="tabAction" />
+                                                    IsChecked="{Binding CurrentExperimentParameter, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=DO}" />
                                                 <RadioButton
                                                     Width="60"
                                                     Height="30"
@@ -339,7 +338,7 @@
                                                     Content="{ex:Language Key='Agit'}"
                                                     FontSize="{DynamicResource TextFontSize}"
                                                     Foreground="{DynamicResource SecondaryTextBrush}"
-                                                    Tag="tabAction" />
+                                                    IsChecked="{Binding CurrentExperimentParameter, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Agit}" />
                                                 <RadioButton
                                                     Width="60"
                                                     Height="30"
@@ -349,7 +348,7 @@
                                                     Content="{ex:Language Key='Air'}"
                                                     FontSize="{DynamicResource TextFontSize}"
                                                     Foreground="{DynamicResource SecondaryTextBrush}"
-                                                    Tag="tabAction" />
+                                                    IsChecked="{Binding CurrentExperimentParameter, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Air}" />
                                                 <RadioButton
                                                     Width="60"
                                                     Height="30"
@@ -359,7 +358,7 @@
                                                     Content="{ex:Language Key='PH'}"
                                                     FontSize="{DynamicResource TextFontSize}"
                                                     Foreground="{DynamicResource SecondaryTextBrush}"
-                                                    Tag="tabAction" />
+                                                    IsChecked="{Binding CurrentExperimentParameter, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=PH}" />
                                                 <RadioButton
                                                     Width="60"
                                                     Height="30"
@@ -369,7 +368,7 @@
                                                     Content="{ex:Language Key='Temp'}"
                                                     FontSize="{DynamicResource TextFontSize}"
                                                     Foreground="{DynamicResource SecondaryTextBrush}"
-                                                    Tag="tabAction" />
+                                                    IsChecked="{Binding CurrentExperimentParameter, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Temp}" />
                                             </hc:ButtonGroup>
                                         </Border>
                                         <wpf:WpfPlot Name="wpfPlot1" />

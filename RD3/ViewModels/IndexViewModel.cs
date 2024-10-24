@@ -33,6 +33,17 @@ namespace RD3.ViewModels
 {
     public class IndexViewModel : NavigationViewModel
     {
+        private ExperimentParameter _currentExperimentParameter = ExperimentParameter.DO;
+
+        public ExperimentParameter CurrentExperimentParameter
+        {
+            get => _currentExperimentParameter;
+            set
+            {
+                SetProperty(ref _currentExperimentParameter, value);
+            }
+        }
+
         List<DeviceExperimentHistoryData> DeviceExperimentHistoryDatas = [];
 
         private DispatcherTimer experimentTimer;
@@ -238,16 +249,18 @@ namespace RD3.ViewModels
             DateTime startDateTime = new(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
             double[] dateDoubles = new double[numberOfHours];
             double startDouble = startDateTime.ToOADate(); // days since 1900
-            double deltaDouble = 1.0 / 24.0; // an hour is 1/24 of a day
+            double deltaDouble = 1.0 / numberOfHours; // an hour is 1/24 of a day
             for (int i = 0; i < numberOfHours; i++)
             {
                 dateDoubles[i] = startDouble + i * deltaDouble;
             }
+
             foreach (var item in DeviceExperimentHistoryDatas)
             {
                 foreach (var item2 in item.ExperimentHistoryDatas) 
                 {
-                    item2.Data.Add(dateDoubles, Generate.Sin(numberOfHours));
+                    item2.Xs.Add([.. dateDoubles]);
+                    item2.Ys.Add([..Generate.RandomWalk(numberOfHours)]);
                 }
             }
 
@@ -308,11 +321,22 @@ namespace RD3.ViewModels
                 temp.Add(device);
 
 
-                DeviceExperimentHistoryData experimentHistoryData = new()
+                //Test Data
+                DeviceExperimentHistoryData deviceExperimentHistoryData = new()
                 {
                     DeviceName = "G" + i.ToString().PadLeft(2, '0')
                 };
-                DeviceExperimentHistoryDatas.Add(experimentHistoryData);
+                var collection = EnumUtil.GetEnumValues<ExperimentParameter>();
+                foreach (var item in collection)
+                {
+                    ExperimentHistoryData historyData = new ExperimentHistoryData()
+                    {
+                        ExperimentParameter = item
+                    };
+                    deviceExperimentHistoryData.ExperimentHistoryDatas.Add(historyData);
+                }
+
+                DeviceExperimentHistoryDatas.Add(deviceExperimentHistoryData);
             }
             CurrentBatch = BatchManager.GetInstance().Batches.First();
             DeviceParameterCol = new ObservableCollection<DeviceParameter>(temp);

@@ -10,6 +10,8 @@ namespace RD3.Shared
     {
         public ExperimentParameter ExperimentParameter { get; set; }
 
-        public Dictionary<IEnumerable<double>, IEnumerable<double>> Data { get; set; } = [];
+        public List<List<double>> Xs { get; set; } = [];
+
+        public List<List<double>> Ys { get; set; } = [];
     }
 }

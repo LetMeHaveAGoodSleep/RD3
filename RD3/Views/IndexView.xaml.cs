@@ -39,9 +39,13 @@ namespace RD3.Views
     /// </summary>
     public partial class IndexView : UserControl
     {
-        DateTimeXAxis bottomAxis;
-        LeftAxis yAxis2, yAxis3;
-        RightAxis yAxis4, yAxis5;
+        List<DeviceExperimentHistoryData> DeviceExperimentHistoryDatas = [];
+
+        private readonly DateTimeXAxis bottomAxis;
+        private readonly LeftAxis yAxis2;
+        private readonly LeftAxis yAxis3;
+        private readonly RightAxis yAxis4;
+        private readonly RightAxis yAxis5;
 
         Crosshair MyCrosshair;
         ScottPlot.Plottables.Marker MyHighlightMarker;
@@ -60,6 +64,7 @@ namespace RD3.Views
 
             wpfPlot1.Plot.Legend.IsVisible = true;
             wpfPlot1.Plot.ShowLegend(Edge.Top);
+            wpfPlot1.Plot.Axes.DateTimeTicksBottom();
 
             var plt = wpfPlot.Plot;
             plt.Legend.IsVisible = true;
@@ -97,12 +102,6 @@ namespace RD3.Views
             scatter3.Axes.YAxis = plt.Axes.Left;
             scatter3.Axes.XAxis = plt.Axes.Bottom;
             scatter3.LegendText = "1";
-            //var scatter4 = plt.Add.ScatterPoints(dateDoubles, Generate.Cos(numberOfHours));
-            //var scatter2 = plt.Add.SignalXY(dateDoubles, Generate.Cos(numberOfHours));
-            //scatter2.LegendText = "2";
-
-            // add padding on the right to make room for wide tick labels
-            //plt.Axes.Right.MinimumSize = 50;
 
             // create a second axis and add it to the plot
             yAxis2 = plt.Axes.AddLeftAxis();
@@ -141,7 +140,7 @@ namespace RD3.Views
 
             foreach (RadioButton item in ButtonGroup1.Items)
             {
-                item.Checked += RadioButton1_Checked;
+                item.Checked += RadioButtonParamOverview_Checked;
             }
 
             aggregator.ResgiterMessage((MessageModel model) =>
@@ -173,8 +172,37 @@ namespace RD3.Views
 
             aggregator.ResgiterMessage(arg =>
             {
-                var model = arg.Model as DialogParameters;
+                wpfPlot.Plot.Clear();
+                wpfPlot1.Plot.Clear();
+
+                DeviceExperimentHistoryDatas = arg.Model as List<DeviceExperimentHistoryData>;
+                foreach (var item in DeviceExperimentHistoryDatas)
+                {
+                    foreach (var item1 in item.ExperimentHistoryDatas)
+                    {
+                        var count = item1.Xs.Count <= item1.Ys.Count ? item1.Xs.Count : item1.Ys.Count;
+                        for (int i = 0; i < count; i++)
+                        {
+                            var scatter = wpfPlot.Plot.Add.Scatter(item1.Xs[i], item1.Ys[i]);
+                            foreach (var item2 in wpfPlot.Plot.Axes.GetAxes().Where(t => t.Label.Text == item1.ExperimentParameter.ToString()))
+                            {
+                                scatter.Axes.YAxis = (IYAxis)item2;
+                                break;
+                            }
+                            scatter.Axes.XAxis = wpfPlot.Plot.Axes.Bottom;
+                            scatter.LegendText = item.DeviceName + "_" + item1.ExperimentParameter.ToString() + "_" + (i + 1).ToString();
+
+                            if (item1.ExperimentParameter == ((IndexViewModel)this.DataContext).CurrentExperimentParameter)
+                            {
+                                var scatter1 = wpfPlot1.Plot.Add.Scatter(item1.Xs[i], item1.Ys[i]);
+                                //scatter1.Axes.XAxis = wpfPlot1.Plot.Axes.Bottom;
+                            }
+                        }
+                    }
+                }
+                wpfPlot.Plot.Axes.AutoScale();
                 wpfPlot.Refresh();
+                wpfPlot1.Plot.Axes.AutoScale();
                 wpfPlot1.Refresh();
             }, "UpdatePlot");
 
@@ -387,10 +415,22 @@ namespace RD3.Views
             }
         }
 
-        private void RadioButton1_Checked(object sender, RoutedEventArgs e)
+        private void RadioButtonParamOverview_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton radioButton = sender as RadioButton;
+            wpfPlot1.Plot.Clear();
             //TODO:曲线切换
+            foreach (var item in DeviceExperimentHistoryDatas)
+            {
+                foreach (var item1 in item.ExperimentHistoryDatas.Where(t=>t.ExperimentParameter== ((IndexViewModel)this.DataContext).CurrentExperimentParameter))
+                {
+                    var count = item1.Xs.Count <= item1.Ys.Count ? item1.Xs.Count : item1.Ys.Count;
+                    for (int i = 0; i < count; i++)
+                    {
+                        var scatter = wpfPlot1.Plot.Add.Scatter(item1.Xs[i], item1.Ys[i]);
+                    }
+                }
+            }
         }
 
         private void ComboBoxTime_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -434,6 +474,11 @@ namespace RD3.Views
                     wpfPlot.Refresh();
                     break;
             }
+        }
+
+        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

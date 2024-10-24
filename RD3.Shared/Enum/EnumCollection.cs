@@ -93,11 +93,7 @@ namespace RD3.Shared
         Agit, 
         Air,
         Temp,
-        PH,
-        Acid,
-        Base,
-        Feed,
-        AF
+        PH
     }
 
     public enum OpenMode
