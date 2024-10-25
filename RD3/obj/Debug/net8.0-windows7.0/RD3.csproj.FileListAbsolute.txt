@@ -212,8 +212,6 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\Fonts.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\SettingView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\SettingView.baml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Instruction\video.mp4
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\UnscheduleView.g.cs
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\UnscheduleView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\UnscheduledView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\UnscheduledView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\Converters.baml

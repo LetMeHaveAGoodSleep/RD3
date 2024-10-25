@@ -35,6 +35,13 @@
             <Setter Property="Opacity" Value="1" />
         </Style>
     </prism:Dialog.WindowStyle>
+    <UserControl.Resources>
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
     <Border Background="White" Style="{StaticResource BorderCommon}">
         <hc:UniformSpacingPanel Orientation="Vertical" Spacing="20">
             <DockPanel LastChildFill="False">
@@ -54,35 +61,29 @@
                     Command="{Binding CancelCommand}"
                     DockPanel.Dock="Right" />
             </DockPanel>
-
             <Border
                 Background="White"
                 Effect="{StaticResource EffectShadow1}"
                 Style="{StaticResource BorderCommon}">
-                <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
-                    <hc:UniformSpacingPanel Spacing="10">
-                        <CheckBox Name="ChkAll" Content="Select all" />
-                        <CheckBox Content="G01" />
-                        <CheckBox Content="G02" />
-                        <CheckBox Content="G03" />
-                        <CheckBox Content="G04" />
-                        <CheckBox Content="G05" />
-                        <CheckBox Content="G06" />
-                        <CheckBox Content="G07" />
-                        <CheckBox Content="G08" />
-                    </hc:UniformSpacingPanel>
-                    <hc:UniformSpacingPanel Spacing="10">
-                        <CheckBox Content="Select all" Visibility="Hidden" />
-                        <CheckBox Content="G09" />
-                        <CheckBox Content="G10" />
-                        <CheckBox Content="G11" />
-                        <CheckBox Content="G12" />
-                        <CheckBox Content="G13" />
-                        <CheckBox Content="G14" />
-                        <CheckBox Content="G15" />
-                        <CheckBox Content="G16" />
-                    </hc:UniformSpacingPanel>
-                </hc:UniformSpacingPanel>
+                <WrapPanel Orientation="Horizontal">
+                    <CheckBox Name="ChkAll" Content="Select all" />
+                    <CheckBox Content="G01" />
+                    <CheckBox Content="G02" />
+                    <CheckBox Content="G03" />
+                    <CheckBox Content="G04" />
+                    <CheckBox Content="G05" />
+                    <CheckBox Content="G06" />
+                    <CheckBox Content="G07" />
+                    <CheckBox Content="G08" />
+                    <CheckBox Content="G09" />
+                    <CheckBox Content="G10" />
+                    <CheckBox Content="G11" />
+                    <CheckBox Content="G12" />
+                    <CheckBox Content="G13" />
+                    <CheckBox Content="G14" />
+                    <CheckBox Content="G15" />
+                    <CheckBox Content="G16" />
+                </WrapPanel>
             </Border>
             <DockPanel LastChildFill="False">
                 <TextBox

@@ -7,7 +7,9 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+    d:DataContext="{d:DesignInstance Type=viewmodels:CalibrateViewModel}"
     d:DesignHeight="1450"
     d:DesignWidth="1600"
     Background="{DynamicResource DefaultBrush}"
@@ -211,7 +213,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -224,7 +226,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -237,7 +239,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -250,7 +252,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -323,7 +325,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -336,7 +338,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -349,7 +351,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -362,7 +364,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -435,7 +437,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -448,7 +450,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -461,7 +463,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -474,7 +476,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -547,7 +549,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -560,7 +562,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -573,7 +575,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -586,7 +588,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -659,7 +661,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -672,7 +674,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -685,7 +687,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -698,7 +700,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -771,7 +773,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -784,7 +786,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -797,7 +799,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -810,7 +812,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -883,7 +885,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -896,7 +898,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -909,7 +911,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -922,7 +924,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -995,7 +997,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1008,7 +1010,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1021,7 +1023,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1034,7 +1036,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1107,7 +1109,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1120,7 +1122,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1133,7 +1135,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1146,7 +1148,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1219,7 +1221,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1232,7 +1234,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1245,7 +1247,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1258,7 +1260,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1331,7 +1333,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1344,7 +1346,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1357,7 +1359,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1370,7 +1372,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1443,7 +1445,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1456,7 +1458,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1469,7 +1471,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1482,7 +1484,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1555,7 +1557,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1568,7 +1570,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1581,7 +1583,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1594,7 +1596,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1667,7 +1669,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1680,7 +1682,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1693,7 +1695,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1706,7 +1708,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1779,7 +1781,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1792,7 +1794,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1805,7 +1807,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1818,7 +1820,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1891,7 +1893,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Slope"
+                                Content="{ex:Language Key='Slope'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1904,7 +1906,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Intercept"
+                                Content="{ex:Language Key='Intercept'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1917,7 +1919,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Linear"
+                                Content="{ex:Language Key='Linear'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1930,7 +1932,7 @@
                                 HorizontalContentAlignment="Center"
                                 Background="{DynamicResource PrimaryBrush}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                Content="Excursion"
+                                Content="{ex:Language Key='Excursion'}"
                                 Foreground="{DynamicResource DefaultBrush}" />
                             <TextBox
                                 Width="120"
@@ -1951,9 +1953,13 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                    <TextBlock Foreground="{DynamicResource SuccessBrush}" Text="Calibrating" />
-                    <TextBlock Text="Running time:  01:06:53" />
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <TextBlock
+                        Foreground="{DynamicResource SuccessBrush}"
+                        Text="Calibrating"
+                        Visibility="{Binding Calibrating, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <TextBlock Text="Running time:" />
+                    <TextBlock Text="{Binding FormattedTime}" />
                 </hc:UniformSpacingPanel>
                 <wpf:WpfPlot Name="wpfPlot1" Grid.Row="1" />
             </Grid>

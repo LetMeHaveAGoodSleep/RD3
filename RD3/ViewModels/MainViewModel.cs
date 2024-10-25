@@ -120,7 +120,7 @@ namespace RD3.ViewModels
         {
             if (string.IsNullOrWhiteSpace((info.Info as SideMenuItem)?.Header.ToString())) return;
 
-            MenuBar menuBar = MenuBars.FindFirst(t => t.Title.Trim().Equals((info.Info as SideMenuItem)?.Header.ToString()));
+            MenuBar menuBar = MenuBars.FindFirst(t => Language.GetValue(t.Title.Trim()).ToString().Equals((info.Info as SideMenuItem)?.Header.ToString()));
             Navigate(menuBar);
         } 
 
@@ -146,14 +146,14 @@ namespace RD3.ViewModels
 
         void CreateMenuBar()
         {
-            MenuBars.Add(new MenuBar() { Icon = "Home", Title = Language.GetValue("Main").ToString(), NameSpace = "IndexView" });
-            MenuBars.Add(new MenuBar() { Icon = "Project", Title = Language.GetValue("Project").ToString(), NameSpace = "ProjectView" });
-            MenuBars.Add(new MenuBar() { Icon = "Data", Title = Language.GetValue("Data").ToString(), NameSpace = "BatchView" });
-            MenuBars.Add(new MenuBar() { Icon = "Calibrate", Title = Language.GetValue("Calibrate").ToString(), NameSpace = "CalibrationView" });
-            MenuBars.Add(new MenuBar() { Icon = "Control", Title = Language.GetValue("Control").ToString(), NameSpace = "ControlView" });
-            MenuBars.Add(new MenuBar() { Icon = "Audit", Title = Language.GetValue("Audit").ToString(), NameSpace = "AuditView" });
-            MenuBars.Add(new MenuBar() { Icon = "Setting", Title = Language.GetValue("Setting").ToString(), NameSpace = "SettingView" });
-            MenuBars.Add(new MenuBar() { Icon = "Debug", Title = Language.GetValue("Debug").ToString(), NameSpace = "MCUDebugView" }); 
+            MenuBars.Add(new MenuBar() { Icon = "Home", Title = "Main", NameSpace = "IndexView" });
+            MenuBars.Add(new MenuBar() { Icon = "Project", Title = "Project", NameSpace = "ProjectView" });
+            MenuBars.Add(new MenuBar() { Icon = "Data", Title = "Data", NameSpace = "BatchView" });
+            MenuBars.Add(new MenuBar() { Icon = "Calibrate", Title = "Calibrate", NameSpace = "CalibrationView" });
+            MenuBars.Add(new MenuBar() { Icon = "Control", Title = "Control", NameSpace = "ControlView" });
+            MenuBars.Add(new MenuBar() { Icon = "Audit", Title = "Audit", NameSpace = "AuditView" });
+            MenuBars.Add(new MenuBar() { Icon = "Setting", Title = "Setting", NameSpace = "SettingView" });
+            MenuBars.Add(new MenuBar() { Icon = "Debug", Title = "Debug", NameSpace = "MCUDebugView" }); 
         }
 
         /// <summary>

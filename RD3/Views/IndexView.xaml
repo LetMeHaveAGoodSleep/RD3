@@ -21,7 +21,13 @@
     d:DesignWidth="1550"
     Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
-    <UserControl.Resources />
+    <UserControl.Resources>
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="UserControl.Loaded">
             <BeginStoryboard>
@@ -129,7 +135,7 @@
                 <Button
                     Height="30"
                     HorizontalAlignment="Left"
-                    hc:BorderElement.CornerRadius="8"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryAddTemplate}"
                     Background="Transparent"
                     BorderThickness="1"
@@ -139,7 +145,7 @@
                 <Button
                     Height="30"
                     HorizontalAlignment="Left"
-                    hc:BorderElement.CornerRadius="8"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryPause}"
                     Background="Transparent"
                     BorderThickness="1"
@@ -150,7 +156,7 @@
                 <Button
                     Height="30"
                     HorizontalAlignment="Left"
-                    hc:BorderElement.CornerRadius="8"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometrySample}"
                     Background="Transparent"
                     BorderThickness="1"
@@ -162,7 +168,7 @@
                 <Button
                     Height="30"
                     HorizontalAlignment="Left"
-                    hc:BorderElement.CornerRadius="8"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryAddliquid}"
                     Background="Transparent"
                     BorderThickness="1"
@@ -174,7 +180,7 @@
                 <Button
                     Height="30"
                     HorizontalAlignment="Left"
-                    hc:BorderElement.CornerRadius="8"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryInoculate}"
                     Background="Transparent"
                     BorderThickness="1"
@@ -186,7 +192,7 @@
                 <Button
                     Height="30"
                     HorizontalAlignment="Left"
-                    hc:BorderElement.CornerRadius="8"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryHarvest}"
                     Background="Transparent"
                     BorderThickness="1"
@@ -198,7 +204,7 @@
                 <Button
                     Width="80"
                     Height="30"
-                    hc:BorderElement.CornerRadius="8"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryStop}"
                     Background="{DynamicResource StopBrush}"
                     BorderBrush="{DynamicResource StopBrush}"
@@ -209,14 +215,15 @@
                     ToolTip="Stop"
                     Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <Button
+                    Name="ButtonStart"
                     Width="80"
                     Height="30"
-                    hc:BorderElement.CornerRadius="8"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryStart}"
-                    Background="Teal"
-                    BorderBrush="Teal"
+                    Background="{DynamicResource PrimaryBrush}"
+                    BorderBrush="{DynamicResource PrimaryBrush}"
                     BorderThickness="1"
-                    Command="{Binding StartCommand}"
+                    Click="ButtonStart_Click"
                     Content="{ex:Language Key='Start'}"
                     Foreground="White"
                     ToolTip="Start"
@@ -289,7 +296,7 @@
                                             Foreground="{StaticResource SuccessBrush}"
                                             Text="{ex:Language Key='Running'}"
                                             TextAlignment="Right"
-                                            Visibility="{Binding Running, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                            Visibility="{Binding CurrentDeviceParameter.WorkStatus, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Running}" />
                                         <TextBlock
                                             VerticalAlignment="Center"
                                             FontSize="16"
@@ -297,7 +304,7 @@
                                             Foreground="{StaticResource SuccessBrush}"
                                             Text="{ex:Language Key='Idle'}"
                                             TextAlignment="Right"
-                                            Visibility="{Binding Running, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                                            Visibility="{Binding CurrentDeviceParameter.WorkStatus, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Idle}" />
                                     </hc:UniformSpacingPanel>
                                 </DockPanel>
                                 <Border
@@ -2202,6 +2209,7 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
+                                <RowDefinition Height="20" />
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
@@ -2210,81 +2218,61 @@
                                     <ColumnDefinition Width="auto" />
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
                                 <hc:UniformSpacingPanel Spacing="5">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
-                                        FontSize="{DynamicResource NormalFontSize}"
+                                        FontSize="{DynamicResource SubHeadFontSize}"
                                         Text="Runnning time:" />
                                     <TextBlock
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Top"
-                                        FontSize="{DynamicResource NormalFontSize}"
+                                        FontSize="{DynamicResource SubHeadFontSize}"
                                         Text="{Binding FormattedTime}" />
                                 </hc:UniformSpacingPanel>
-                                <Border
-                                    Grid.Column="2"
-                                    Height="30"
-                                    Margin="10"
-                                    BorderBrush="LightGray"
-                                    BorderThickness="1"
-                                    CornerRadius="8">
-                                    <hc:UniformSpacingPanel Spacing="5">
-                                        <CheckBox
-                                            Margin="5"
-                                            Content="G01"
-                                            IsChecked="True" />
-                                        <CheckBox
-                                            Margin="5"
-                                            Content="G02"
-                                            IsChecked="True" />
-                                        <CheckBox
-                                            Margin="5"
-                                            Content="G03"
-                                            IsChecked="True" />
-                                        <CheckBox
-                                            Margin="5"
-                                            Content="G04"
-                                            IsChecked="True" />
-                                        <CheckBox
-                                            Margin="5"
-                                            Content="G05"
-                                            IsChecked="True" />
-                                        <CheckBox
-                                            Margin="5"
-                                            Content="G06"
-                                            IsChecked="True" />
-                                        <CheckBox
-                                            Margin="5"
-                                            Content="G07"
-                                            IsChecked="True" />
-                                        <CheckBox
-                                            Margin="5"
-                                            Content="G08"
-                                            IsChecked="True" />
-                                        <Button
-                                            VerticalAlignment="Top"
-                                            HorizontalContentAlignment="Left"
-                                            BorderThickness="0"
-                                            Content="..." />
-                                    </hc:UniformSpacingPanel>
-                                </Border>
-                                <Button
-                                    Grid.Column="3"
-                                    Height="30"
-                                    HorizontalAlignment="Left"
-                                    hc:BorderElement.CornerRadius="8"
-                                    hc:IconElement.Geometry="{StaticResource GeometrySetting}"
-                                    Background="Transparent"
-                                    BorderThickness="1"
-                                    Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                                    CommandParameter="{x:Static Dock.Right}"
-                                    Content="{ex:Language Key='Graph Setting'}"
-                                    ToolTip="Pause" />
+                                <hc:UniformSpacingPanel Grid.Column="2" Spacing="10">
+                                    <Border
+                                        Name="BorderDevice"
+                                        Background="White"
+                                        BorderBrush="LightGray"
+                                        BorderThickness="1"
+                                        CornerRadius="8">
+                                        <WrapPanel Orientation="Horizontal">
+                                            <CheckBox Name="ChkAll" Content="Select all" />
+                                            <CheckBox Content="G01" />
+                                            <CheckBox Content="G02" />
+                                            <CheckBox Content="G03" />
+                                            <CheckBox Content="G04" />
+                                            <CheckBox Content="G05" />
+                                            <CheckBox Content="G06" />
+                                            <CheckBox Content="G07" />
+                                            <CheckBox Content="G08" />
+                                            <CheckBox Content="G09" />
+                                            <CheckBox Content="G10" />
+                                            <CheckBox Content="G11" />
+                                            <CheckBox Content="G12" />
+                                            <CheckBox Content="G13" />
+                                            <CheckBox Content="G14" />
+                                            <CheckBox Content="G15" />
+                                            <CheckBox Content="G16" />
+                                        </WrapPanel>
+                                    </Border>
+                                    <Button
+                                        Grid.Column="3"
+                                        Height="35"
+                                        HorizontalAlignment="Left"
+                                        hc:BorderElement.CornerRadius="8"
+                                        hc:IconElement.Geometry="{StaticResource GeometrySetting}"
+                                        Background="Transparent"
+                                        BorderThickness="1"
+                                        Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                                        CommandParameter="{x:Static Dock.Right}"
+                                        Content="{ex:Language Key='Graph Setting'}"
+                                        ToolTip="Pause" />
+                                </hc:UniformSpacingPanel>
                             </Grid>
-                            <Grid Grid.Row="1">
+                            <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto" />
                                     <ColumnDefinition Width="*" />
@@ -2466,7 +2454,7 @@
                                     </ToggleButton>
                                 </hc:UniformSpacingPanel>
                             </Grid>
-                            <wpf:WpfPlot Name="wpfPlot" Grid.Row="2" />
+                            <wpf:WpfPlot Name="wpfPlot" Grid.Row="3" />
                         </Grid>
                     </materialDesign:DrawerHost>
                 </Border>

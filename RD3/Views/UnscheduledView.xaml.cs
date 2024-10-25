@@ -136,7 +136,13 @@ namespace RD3.Views
                 MessageBox.Show("请输入大于0的数值");
                 return;
             }
-            ((UnscheduledViewModel)DataContext).Devices = GetCheckedDevice();
+            var devices = GetCheckedDevice();
+            if (devices.Count < 1)
+            {
+                MessageBox.Show("请选择仪器");
+                return;
+            }
+            ((UnscheduledViewModel)DataContext).Devices = devices;
             ((UnscheduledViewModel)DataContext)?.OKCommand.Execute();
         }
     }

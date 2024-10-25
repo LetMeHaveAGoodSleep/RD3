@@ -39,7 +39,7 @@
                             Margin="5,0,0,0"
                             hc:BorderElement.CornerRadius="8"
                             Background="{DynamicResource BorderBrush}"
-                            Content="{ex:Language Key='Action'}"
+                            Content="{ex:Language Key='Audit'}"
                             FontSize="{DynamicResource MediumFontSize}"
                             Foreground="{DynamicResource SecondaryTextBrush}"
                             IsChecked="True"
@@ -125,19 +125,19 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn
-                            Width="100"
+                            Width="150"
                             Binding="{Binding Batch}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Batch'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTextColumn
-                            Width="100"
+                            Width="150"
                             Binding="{Binding Reactor}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Reactor'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTextColumn
-                            Width="100"
+                            Width="200"
                             Binding="{Binding Module}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Module'}"
@@ -149,7 +149,7 @@
                             Header="{ex:Language Key='Action'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTextColumn
-                            Width="250"
+                            Width="300"
                             Binding="{Binding Description}"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Description'}"

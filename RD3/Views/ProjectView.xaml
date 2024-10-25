@@ -14,7 +14,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:ProjectViewModel}"
     d:DesignHeight="700"
     d:DesignWidth="1350"
-    Background="{StaticResource DefaultBrush}"
+    Background="{StaticResource BackGroundBrush}"
     FontFamily="{StaticResource ENGFontFamily}"
     TextElement.FontSize="{DynamicResource NormalFontSize}"
     TextElement.FontWeight="Regular"

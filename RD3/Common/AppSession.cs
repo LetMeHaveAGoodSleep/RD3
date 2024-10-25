@@ -14,7 +14,9 @@ namespace RD3.Common
 
         public static string CompanyName { get{ return VarConfig.GetValue("Company")?.ToString(); }}
 
-        public static string LanguageName { get; set; }
-            
+        public static string LanguageName { get; set; } = Const.CHNLanguage;
+
+        public static Batch CurrentBatch { get; set; }
+
     }
 }

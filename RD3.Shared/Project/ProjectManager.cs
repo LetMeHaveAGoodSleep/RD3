@@ -57,6 +57,7 @@ namespace RD3.Shared
                     item.Status = ProjectStatus.Unknown;
                 }
             }
+            Projects = new ObservableCollection<Project>(Projects.OrderByDescending(t => t.CreatDate));
         }
 
         public void Save(ObservableCollection<Project> dataList = null)

@@ -22,8 +22,8 @@ namespace RD3.Shared
             get { return _reactor; }
             set { SetProperty(ref _reactor, value); }
         }
-        private string _module;
-        public string Module
+        private AuditModule _module;
+        public AuditModule Module
         {
             get { return _module; }
             set { SetProperty(ref _module, value); }

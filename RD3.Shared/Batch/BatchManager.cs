@@ -38,6 +38,7 @@ namespace RD3.Shared
         {
             string jsonContent = AESEncryption.DecryptFile(FileConst.BatchPath);
             Batches = JsonConvert.DeserializeObject<ObservableCollection<Batch>>(jsonContent);
+            Batches = new ObservableCollection<Batch>(Batches.OrderByDescending(t => t.StartTime));
         }
 
         public void Save(ObservableCollection<Batch> dataList = null)

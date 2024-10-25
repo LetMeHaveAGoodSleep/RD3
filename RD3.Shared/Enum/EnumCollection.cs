@@ -107,7 +107,7 @@ namespace RD3.Shared
     {
         [Description("Modify control mode")]
         ModifyControlMode,
-        [Description("Modify sontrol value")]
+        [Description("Modify set value")]
         ModifySetValue,
         [Description("Stop experiment")]
         StopExperiment,
@@ -115,6 +115,15 @@ namespace RD3.Shared
         StartExperiment,
         [Description("Pause experiment")]
         PauseExperiment
+    }
+
+    public enum AuditModule
+    {
+        Agitation,
+        Acid_pump,
+        Base_pump,
+        Temp_controller,
+        Air_inflow
     }
 
     public enum UnScheduleAction

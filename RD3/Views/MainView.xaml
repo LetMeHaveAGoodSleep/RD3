@@ -87,8 +87,6 @@
                                 FontSize="16"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Main'}"
-                                MouseEnter="SideMenuItem_MouseEnter"
-                                MouseLeave="SideMenuItem_MouseLeave"
                                 Tag="Main">
                                 <hc:SideMenuItem.Icon>
                                     <Image
@@ -103,8 +101,6 @@
                                 FontSize="16"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Project'}"
-                                MouseEnter="SideMenuItem_MouseEnter"
-                                MouseLeave="SideMenuItem_MouseLeave"
                                 Tag="Project">
                                 <hc:SideMenuItem.Icon>
                                     <Image
@@ -119,8 +115,6 @@
                                 FontSize="16"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Data'}"
-                                MouseEnter="SideMenuItem_MouseEnter"
-                                MouseLeave="SideMenuItem_MouseLeave"
                                 Tag="Data">
                                 <hc:SideMenuItem.Icon>
                                     <Image
@@ -135,8 +129,6 @@
                                 FontSize="16"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Calibrate'}"
-                                MouseEnter="SideMenuItem_MouseEnter"
-                                MouseLeave="SideMenuItem_MouseLeave"
                                 Tag="Calibrate">
                                 <hc:SideMenuItem.Icon>
                                     <Image
@@ -151,8 +143,6 @@
                                 FontSize="16"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Control'}"
-                                MouseEnter="SideMenuItem_MouseEnter"
-                                MouseLeave="SideMenuItem_MouseLeave"
                                 Tag="Control">
                                 <hc:SideMenuItem.Icon>
                                     <Image
@@ -167,8 +157,6 @@
                                 FontSize="16"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Audit'}"
-                                MouseEnter="SideMenuItem_MouseEnter"
-                                MouseLeave="SideMenuItem_MouseLeave"
                                 Tag="Audit">
                                 <hc:SideMenuItem.Icon>
                                     <Image
@@ -183,8 +171,6 @@
                                 FontSize="16"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Setting'}"
-                                MouseEnter="SideMenuItem_MouseEnter"
-                                MouseLeave="SideMenuItem_MouseLeave"
                                 Tag="Setting">
                                 <hc:SideMenuItem.Icon>
                                     <Image
@@ -199,8 +185,6 @@
                                 FontSize="16"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Debug'}"
-                                MouseEnter="SideMenuItem_MouseEnter"
-                                MouseLeave="SideMenuItem_MouseLeave"
                                 Tag="Debug">
                                 <hc:SideMenuItem.Icon>
                                     <Image
@@ -222,7 +206,8 @@
                         BorderBrush="{DynamicResource PrimaryBrush}"
                         BorderThickness="1"
                         CornerRadius="0,0,0,15"
-                        Effect="{StaticResource EffectShadow1}" MouseMove="Border_MouseMove">
+                        Effect="{StaticResource EffectShadow1}"
+                        MouseMove="Border_MouseMove">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -353,10 +338,11 @@
                                 Background="Transparent"
                                 BorderThickness="0">
                                 <materialDesign:PackIcon
+                                    Name="PackIconWindowState"
                                     Width="16"
                                     Height="16"
                                     Foreground="White"
-                                    Kind="WindowRestore" />
+                                    Kind="WindowMaximize" />
                             </Button>
                             <Button
                                 Name="btnClose"

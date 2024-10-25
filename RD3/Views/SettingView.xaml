@@ -148,7 +148,7 @@
                                 </Grid>
                             </Border>
                         </hc:UniformSpacingPanel>
-                        <DockPanel LastChildFill="False">
+                        <hc:UniformSpacingPanel Spacing="100">
                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
                                 <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Instrument mode'}" />
                                 <TextBlock
@@ -159,10 +159,9 @@
                             </hc:UniformSpacingPanel>
                             <ToggleButton
                                 BorderThickness="0"
-                                DockPanel.Dock="Right"
                                 IsChecked="{Binding IsSimulation}"
                                 Style="{StaticResource ToggleButtonSwitch}" />
-                        </DockPanel>
+                        </hc:UniformSpacingPanel>
                     </hc:UniformSpacingPanel>
                 </Border>
             </TabItem>

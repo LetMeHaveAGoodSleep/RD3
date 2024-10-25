@@ -33,6 +33,8 @@ namespace RD3.ViewModels
 {
     public class IndexViewModel : NavigationViewModel
     {
+        public List<string> Devices { get; set; }
+
         private ExperimentParameter _currentExperimentParameter = ExperimentParameter.DO;
 
         public ExperimentParameter CurrentExperimentParameter
@@ -195,14 +197,37 @@ namespace RD3.ViewModels
             {
                 { "DeviceParam", CurrentDeviceParameter }
             };
+            var _backupDeviceParameter = CurrentDeviceParameter.Clone() as DeviceParameter;
             dialog?.ShowDialog(nameof(EditExperimentParamView),pairs, callback =>
             {
                 if (callback.Result != ButtonResult.OK)
                 {
                     return;
                 }
-
                 CurrentDeviceParameter = callback.Parameters.GetValue<DeviceParameter>("DeviceParam");
+                //AuditUtil.AddAuditRecord(_backupDeviceParameter, CurrentDeviceParameter);
+                Operation operation = new() 
+                {
+                    OccurrenceTime = DateTime.Now,
+                    Batch = AppSession.CurrentBatch?.Name,
+                    Reactor = AppSession.CurrentBatch?.Reactor,
+                    Module=AuditModule.Temp_controller,
+                    Description = string.Format("Changed from '{0}' to '{1}'", _backupDeviceParameter.TempParam.ControlMode.ToString(), CurrentDeviceParameter.TempParam.ControlMode.ToString()),
+                    OperationStatement = EnumUtil.GetEnumDescription(AuditAction.ModifyControlMode)
+                };
+
+                Operation operation1 = new()
+                {
+                    OccurrenceTime = DateTime.Now,
+                    Batch = AppSession.CurrentBatch?.Name,
+                    Reactor = AppSession.CurrentBatch?.Reactor,
+                    Module = AuditModule.Temp_controller,
+                    Description = string.Format("Changed from '{0}' to '{1}'", _backupDeviceParameter.TempParam.Temp_PV, CurrentDeviceParameter.TempParam.Temp_PV),
+                    OperationStatement = EnumUtil.GetEnumDescription(AuditAction.ModifySetValue)
+                };
+                OperationManager.GetInstance().AddOperation(operation);
+                OperationManager.GetInstance().AddOperation(operation1);
+                OperationManager.GetInstance().Save();
             });
         });
 
@@ -236,7 +261,14 @@ namespace RD3.ViewModels
             IsPause = false;
             foreach (var item in DeviceParameterCol)
             {
-                item.WorkStatus = WorkStatus.Running;
+                if (Devices.Contains(item.Name))
+                {
+                    item.WorkStatus = WorkStatus.Running;
+                }
+                else 
+                {
+                    item.WorkStatus = WorkStatus.Idle;
+                }
             }
             InstrumentSolution.GetInstance().CommandWrapper.SetTemp(CurrentDeviceParameter.TempParam);
             InstrumentSolution.GetInstance().CommandWrapper.SetDO(CurrentDeviceParameter.DOParam);
@@ -265,6 +297,30 @@ namespace RD3.ViewModels
             }
 
             aggregator.SendMessage("", "UpdatePlot", DeviceExperimentHistoryDatas);
+
+            Batch batch = new();
+            string Id = DateTime.Now.ToString("yyyyMMdd");
+            int index = 1;
+            var result = BatchManager.GetInstance().Batches.ToList().FindLast(t => t.Id.StartsWith(Id));
+            try
+            {
+                index = Convert.ToInt32(result?.Id.Substring(8, 2)) + 1;
+            }
+            catch (Exception ex)
+            {
+
+            }
+            Id += index.ToString().PadLeft(2, '0');
+            CurrentBatch.Id = Id;
+            CurrentBatch.Name = "Experiment_" + DateTime.Now.ToString("yyyy-MM-dd-HH:mm:ss");
+            CurrentBatch.Creator = AppSession.CurrentUser.UserName;
+            CurrentBatch.Reactor = string.Join(",", Devices);
+            CurrentBatch.Status = "Add";
+            CurrentBatch.StartTime = DateTime.Now;
+            CurrentBatch.EndTime = DateTime.Now.AddDays(1);
+            CurrentBatch.Description = "New Experiment";
+            BatchManager.GetInstance().Batches.Add(batch);
+            AppSession.CurrentBatch = CurrentBatch;
         });
 
         public DelegateCommand PauseCommand => new(() => 
@@ -338,7 +394,6 @@ namespace RD3.ViewModels
 
                 DeviceExperimentHistoryDatas.Add(deviceExperimentHistoryData);
             }
-            CurrentBatch = BatchManager.GetInstance().Batches.First();
             DeviceParameterCol = new ObservableCollection<DeviceParameter>(temp);
             CurrentDeviceParameter = DeviceParameterCol[0];
 

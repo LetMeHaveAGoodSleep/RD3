@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
-    public class TempParam : BindableBase
+    public class TempParam : BindableBase, IAuditRecord
     {
         private float _temp_PV = 0f;
         public float Temp_PV
@@ -57,5 +57,7 @@ namespace RD3.Shared
             get { return _controlMode; }
             set { SetProperty(ref _controlMode, value); }
         }
+
+        public AuditModule Module { get => AuditModule.Temp_controller; }
     }
 }

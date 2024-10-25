@@ -59,33 +59,16 @@ namespace RD3.Views
             {
                 //获取无权限的功能列表
                 List<Function> functions = FunctionManager.GetInstance().Functions.Where(t => (uint)t.MinUserType > AppSession.CurrentUser.Role)?.ToList();
+                foreach (SideMenuItem item in sideMenu.Items)
+                {
+                    item.Visibility = Visibility.Visible;
+                }
                 //sideMenu.Items.Clear();
                 foreach (Function function in functions)
                 {
                     SideMenuItem sideMenuItem = sideMenu.Items.FindFirst(t => ((SideMenuItem)t).Tag?.ToString() == function.Name) as SideMenuItem;
                     if (sideMenuItem == null) continue;
                     sideMenuItem.Visibility = Visibility.Collapsed;
-                    //var bitmap = new BitmapImage(new Uri("Pack://application:,,," + string.Format("/Images/SideMenu/{0}.png", function.Name)));
-                    //if (bitmap != null)
-                    //{
-                    //    Image image = new()
-                    //    {
-
-                    //        Source = bitmap
-                    //    };
-                    //    image.Width = image.Height = 24;
-                    //    sideMenuItem.Icon = image;
-                    //}
-
-                    //sideMenuItem.Margin = new Thickness(5);
-                    //sideMenuItem.HorizontalContentAlignment = HorizontalAlignment.Left;
-                    //sideMenuItem.VerticalContentAlignment = VerticalAlignment.Center;
-                    //sideMenuItem.Header = language.GetValue(function.Name)?.ToString();
-                    //sideMenuItem.Command = ((MainViewModel)this.DataContext).SelectCmd;
-                    //sideMenuItem.CommandParameter = sideMenuItem.Header;
-                    //sideMenuItem.FontSize = 16;
-                    //sideMenuItem.Background = Application.Current.Resources["PrimaryBrush"] as LinearGradientBrush;
-                    //sideMenu.Items.Add(sideMenuItem);
                 }
             }, nameof(MainViewModel));
 
@@ -93,9 +76,15 @@ namespace RD3.Views
             btnMax.Click += (s, e) =>
             {
                 if (this.WindowState == WindowState.Maximized)
+                {
                     this.WindowState = WindowState.Normal;
+                    PackIconWindowState.Kind = PackIconKind.WindowMaximize;
+                }
                 else
+                {
                     this.WindowState = WindowState.Maximized;
+                    PackIconWindowState.Kind = PackIconKind.WindowRestore;
+                }      
             };
             btnClose.Click += async (s, e) =>
             {
@@ -103,13 +92,6 @@ namespace RD3.Views
                 if (dialogResult.Result != Prism.Services.Dialogs.ButtonResult.OK) return;
                 this.Close();
             };
-            //this.MouseMove += (s, e) =>
-            //{
-            //    if (e.LeftButton == MouseButtonState.Pressed)
-            //    {
-            //        this.DragMove();
-            //    }   
-            //};
             this.dialogHostService = dialogHostService;
         }
 

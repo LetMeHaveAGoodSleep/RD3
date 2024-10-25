@@ -64,7 +64,15 @@ namespace RD3.Views
 
             wpfPlot1.Plot.Legend.IsVisible = true;
             wpfPlot1.Plot.ShowLegend(Edge.Top);
-            wpfPlot1.Plot.Axes.DateTimeTicksBottom();
+            var xAxis = wpfPlot1.Plot.Axes.DateTimeTicksBottom();
+            ((DateTimeAutomatic)xAxis.TickGenerator).LabelFormatter = CustomFormatter;
+            wpfPlot1.Menu.Clear();
+            //wpfPlot1.Interaction = null;
+            wpfPlot1.MouseDoubleClick += (s, e) => //点击小图表跳转到曲线Tag
+            {
+                tabControl.SelectedItem = tabTrend;
+            };
+
 
             var plt = wpfPlot.Plot;
             plt.Legend.IsVisible = true;
@@ -209,6 +217,99 @@ namespace RD3.Views
             //ComboBoxTime.SelectionChanged += ComboBoxTime_SelectionChanged;
             wpfPlot.MouseMove += WpfPlot_MouseMove;
             wpfPlot.MouseDoubleClick += WpfPlot_MouseDoubleClick;
+
+
+            ChkAll.Checked += ChkAll_Checked;
+            ChkAll.Unchecked += ChkAll_Unchecked;
+
+            var parent = ChkAll.Parent;
+            var count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child == null) continue;
+                var item = child as CheckBox;
+                if (item == null) continue;
+                item.Checked += CheckBox_CheckChanged;
+                item.Unchecked += CheckBox_CheckChanged;
+            }
+        }
+
+        private void ChkAll_Checked(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            var parent = checkBox.Parent;
+            var count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child == null) continue;
+                var item = child as CheckBox;
+                if (item == null || object.ReferenceEquals(item, checkBox)) continue;
+                item.IsChecked = true;
+            }
+        }
+
+        private void ChkAll_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            var parent = checkBox.Parent;
+            var count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child == null) continue;
+                var item = child as CheckBox;
+                if (item == null || object.ReferenceEquals(item, checkBox)) continue;
+                item.IsChecked = false;
+            }
+        }
+
+        private void CheckBox_CheckChanged(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            var parent = checkBox.Parent;
+            var count = VisualTreeHelper.GetChildrenCount(parent);
+            int checkedCount = 0;
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child == null) continue;
+                var item = child as CheckBox;
+                if (item == null) continue;
+                if (item.Name == nameof(ChkAll)) continue;
+                checkedCount += Convert.ToInt32(item.IsChecked);
+            }
+            if (checkedCount == count - 1)
+            {
+                ChkAll.IsChecked = true;
+            }
+            else if (checkedCount == 0)
+            {
+                ChkAll.IsChecked = false;
+            }
+            else
+            {
+                ChkAll.IsChecked = null;
+            }
+        }
+        private List<string> GetCheckedDevice()
+        {
+            List<string> devices = new List<string>();
+            var parent = ChkAll.Parent;
+            var count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child == null) continue;
+                var item = child as CheckBox;
+                if (item == null) continue;
+                if (item.Name != nameof(ChkAll) && (bool)item.IsChecked)
+                {
+                    devices.Add(item.Content.ToString());
+                }
+            }
+            return devices;
         }
 
         private void WpfPlot_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -476,9 +577,19 @@ namespace RD3.Views
             }
         }
 
-        private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
+        private void ButtonStart_Click(object sender, RoutedEventArgs e)
         {
+            var devices = GetCheckedDevice();
+            if (devices.Count < 1)
+            {
+                MessageBox.Show("请选择仪器");
+                tabControl.SelectedItem = tabTrend;
+                BorderDevice.Focus();
+                return;
+            }
 
+            ((IndexViewModel)DataContext).Devices = devices;
+            ((IndexViewModel)DataContext)?.StartCommand.Execute();
         }
     }
 }
