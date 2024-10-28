@@ -1,5 +1,6 @@
 ﻿using Prism.Ioc;
 using Prism.Services.Dialogs;
+using RD3.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace RD3.ViewModels
 {
     public class AddSampleViewModel : NavigationViewModel, IDialogAware
     {
-        public AddSampleViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public AddSampleViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
 
         }

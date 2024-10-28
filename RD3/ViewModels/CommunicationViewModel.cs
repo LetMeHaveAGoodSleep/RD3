@@ -4,6 +4,7 @@ using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using RD3.Common;
 using RD3.Shared;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,7 @@ namespace RD3.ViewModels
             
         }
 
-        public CommunicationViewModel(IContainerProvider containerProvider, IDialogService dialogService) : base(containerProvider)
+        public CommunicationViewModel(IContainerProvider containerProvider, IDialogService dialogService, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             dialog = dialogService;
         }

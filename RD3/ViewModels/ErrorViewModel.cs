@@ -1,6 +1,7 @@
 ﻿using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using RD3.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace RD3.ViewModels
 {
     public class ErrorViewModel : NavigationViewModel
     {
-        public ErrorViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public ErrorViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
         }
     }

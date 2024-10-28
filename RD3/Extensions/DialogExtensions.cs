@@ -32,6 +32,19 @@ namespace RD3.Extensions
             return dialogResult;
         }
 
+        public static async Task<IDialogResult> Info(this IDialogHostService dialogHost,
+    string title, string content, string dialogHostName = "Root"
+    )
+        {
+            DialogParameters param = new DialogParameters();
+            param.Add("Title", title);
+            param.Add("Content", content);
+            param.Add("CancelVisible", false);
+            param.Add("dialogHostName", dialogHostName);
+            var dialogResult = await dialogHost.ShowDialog("MsgView", param, dialogHostName);
+            return dialogResult;
+        }
+
         /// <summary>
         /// 推送等待消息
         /// </summary>

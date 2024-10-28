@@ -31,6 +31,7 @@ using RD3.Shared;
 using System.Diagnostics;
 using ScottPlot.TickGenerators;
 using System.CodeDom;
+using RD3.Common;
 
 namespace RD3.Views
 {
@@ -54,11 +55,13 @@ namespace RD3.Views
         private readonly ILanguage language;
 
         List<DeviceExperimentHistoryData> dataSource = [];
+        private readonly IDialogHostService _dialogHostService;
 
-        public IndexView(IContainerProvider containerProvider, IEventAggregator aggregator)
+        public IndexView(IContainerProvider containerProvider, IEventAggregator aggregator,IDialogHostService dialogHostService)
         {
             _aggregator = aggregator;
             language = containerProvider.Resolve<ILanguage>();
+            _dialogHostService = dialogHostService;
 
             InitializeComponent();
 
@@ -579,12 +582,12 @@ namespace RD3.Views
             }
         }
 
-        private void ButtonStart_Click(object sender, RoutedEventArgs e)
+        private async void ButtonStart_Click(object sender, RoutedEventArgs e)
         {
             var devices = GetCheckedDevice();
             if (devices.Count < 1)
             {
-                MessageBox.Show("请选择仪器");
+                await _dialogHostService.Info("温馨提示", "请选择仪器!");
                 tabControl.SelectedItem = tabTrend;
                 RadioButtonTrend.IsChecked = true;
                 BorderDevice.Focus();

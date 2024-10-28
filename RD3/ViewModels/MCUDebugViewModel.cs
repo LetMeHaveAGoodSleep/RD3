@@ -1,6 +1,7 @@
 ﻿using HandyControl.Controls;
 using Prism.Commands;
 using Prism.Ioc;
+using RD3.Common;
 using RD3.Shared;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,7 @@ namespace RD3.ViewModels
             }
         });
 
-        public MCUDebugViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public MCUDebugViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
         }
     }

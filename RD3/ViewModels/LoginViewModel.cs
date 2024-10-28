@@ -22,7 +22,7 @@ namespace RD3.ViewModels
 {
     public class LoginViewModel : BaseViewModel, IDialogAware
     {
-        public LoginViewModel(IContainerProvider containerProvider, IEventAggregator aggregator) : base(containerProvider)
+        public LoginViewModel(IContainerProvider containerProvider, IEventAggregator aggregator, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             UserDto = new ResgiterUserDto();
             ExecuteCommand = new DelegateCommand<string>(Execute);

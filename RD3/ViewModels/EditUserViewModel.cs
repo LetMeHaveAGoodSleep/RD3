@@ -65,7 +65,7 @@ namespace RD3.ViewModels
 
         public DelegateCommand CancelCommand => new(() => RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel)));
 
-        public EditUserViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public EditUserViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
 
         }

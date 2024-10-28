@@ -109,7 +109,7 @@ namespace RD3.ViewModels
 
         public DelegateCommand CancelCommand => new(() => RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel)));
 
-        public EditSampleViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public EditSampleViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             _reactorList = new List<string>(DeviceManager.GetInstance().Devices.Select(t => t.Name));
             _batchList = new ObservableCollection<Batch>(BatchManager.GetInstance().Batches);

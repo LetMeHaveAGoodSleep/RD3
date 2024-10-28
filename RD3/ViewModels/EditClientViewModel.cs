@@ -2,6 +2,7 @@
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using RD3.Common;
 using RD3.Shared;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace RD3.ViewModels
     {
         private ClientConfig _clientConfig;
 
-        public EditClientViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public EditClientViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
         }
 

@@ -184,7 +184,7 @@ namespace RD3.ViewModels
             set { SetProperty(ref _dataCountPerPage, value); }
         }
 
-        public AuditViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public AuditViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             Operations = new ObservableCollection<Operation>(OperationManager.GetInstance().Operations);
             _pageIndex = 1;

@@ -19,7 +19,9 @@ namespace RD3.ViewModels
         public readonly ILanguage Language;
         public readonly ICommandWrapper CommandWrapper;
 
-        public BaseViewModel(IContainerProvider containerProvider)
+        public readonly IDialogHostService DialogHostService;
+
+        public BaseViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService)
         {
             this.containerProvider = containerProvider;
             this.aggregator = containerProvider.Resolve<IEventAggregator>();
@@ -34,6 +36,8 @@ namespace RD3.ViewModels
             }
 
             CommandWrapper = InstrumentSolution.GetInstance().CommandWrapper;
+
+            DialogHostService = dialogHostService;
         }
     }
 }

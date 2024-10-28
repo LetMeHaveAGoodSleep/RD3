@@ -14,7 +14,7 @@ namespace RD3.ViewModels
 {
     public class MsgViewModel : NavigationViewModel, IDialogHostAware
     {
-        public MsgViewModel(IContainerProvider containerProvider):base(containerProvider)
+        public MsgViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             SaveCommand = new DelegateCommand(Save);
             CancelCommand = new DelegateCommand(Cancel);
@@ -35,6 +35,16 @@ namespace RD3.ViewModels
             get { return content; }
             set { content = value; RaisePropertyChanged(); }
         }
+
+        private bool _cancelVisible;
+
+        public bool CancelVisible
+        {
+            get { return _cancelVisible; }
+            set { _cancelVisible = value; RaisePropertyChanged(); }
+        }
+
+        
 
         private void Cancel()
         {
@@ -62,6 +72,9 @@ namespace RD3.ViewModels
 
             if (parameters.ContainsKey("Content"))
                 Content = parameters.GetValue<string>("Content");
+
+            if (parameters.ContainsKey("CancelVisible"))
+                CancelVisible = parameters.GetValue<bool>("CancelVisible");
         }
     }
 }

@@ -3,6 +3,7 @@ using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
 using Prism.Services.Dialogs;
+using RD3.Common;
 using RD3.Common.Models;
 using RD3.Extensions;
 using System;
@@ -39,7 +40,7 @@ namespace RD3.ViewModels
             }
         }
 
-        public CalibrateViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public CalibrateViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             calibrateTimer = new DispatcherTimer
             {

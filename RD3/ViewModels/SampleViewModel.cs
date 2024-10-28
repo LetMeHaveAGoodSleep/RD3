@@ -135,7 +135,7 @@ namespace RD3.ViewModels
             SampleManager.GetInstance().Save(Samples);
         });
 
-        public SampleViewModel(IContainerProvider containerProvider, IDialogService dialog) : base(containerProvider)
+        public SampleViewModel(IContainerProvider containerProvider, IDialogService dialog, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             dialogService = dialog;
             PageIndex = 1;

@@ -126,7 +126,7 @@ namespace RD3.ViewModels
             set { SetProperty(ref _deviceParameterCol, value); } 
         }
 
-        private readonly IDialogHostService dialog;
+        private readonly IDialogService dialog;
 
         public DelegateCommand SaveAsTemplateCommand => new(() => 
         {
@@ -349,7 +349,7 @@ namespace RD3.ViewModels
         });
 
         public IndexViewModel(IContainerProvider provider,
-            IDialogHostService dialog) : base(provider)
+            IDialogService dialog, IDialogHostService dialogHostService) : base(provider, dialogHostService)
         {
 
             experimentTimer = new DispatcherTimer

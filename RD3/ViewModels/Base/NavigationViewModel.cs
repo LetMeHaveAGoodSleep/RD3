@@ -2,6 +2,7 @@
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
+using RD3.Common;
 using RD3.Extensions;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace RD3.ViewModels
 {
     public class NavigationViewModel :BaseViewModel,INavigationAware, IRegionMemberLifetime
     {
-        public NavigationViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public NavigationViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
         }
 

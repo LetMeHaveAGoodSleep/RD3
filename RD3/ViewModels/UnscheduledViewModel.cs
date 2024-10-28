@@ -54,7 +54,7 @@ namespace RD3.ViewModels
             RequestClose?.Invoke(result);
         });
 
-        public UnscheduledViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public UnscheduledViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
         }
 

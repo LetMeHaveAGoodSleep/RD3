@@ -3,6 +3,7 @@ using Prism.Events;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using RD3.Common;
 using RD3.Extensions;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace RD3.ViewModels
 
         private DispatcherTimer countdownTimer;
 
-        public SelfCheckViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public SelfCheckViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
         }
 

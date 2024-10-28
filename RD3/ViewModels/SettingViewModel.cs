@@ -1,6 +1,7 @@
 ﻿using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using RD3.Common;
 using RD3.Shared;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace RD3.ViewModels
             }
         }
 
-        public SettingViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public SettingViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             IsSimulation = Convert.ToBoolean(VarConfig.GetValue("IsSimulation"));
         }

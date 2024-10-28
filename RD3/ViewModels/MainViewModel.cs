@@ -110,7 +110,7 @@ namespace RD3.ViewModels
         }
 
         public MainViewModel(IContainerProvider containerProvider,
-            IRegionManager regionManager) : base(containerProvider)
+            IRegionManager regionManager, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             this.regionManager = regionManager;
             this.dialogService = containerProvider.Resolve<IDialogService>();

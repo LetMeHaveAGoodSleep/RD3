@@ -4,6 +4,7 @@ using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using RD3.Common;
 using RD3.Shared;
 using System;
 using System.Collections.Generic;
@@ -103,7 +104,7 @@ namespace RD3.ViewModels
         }
         
 
-        public AlarmViewModel(IContainerProvider containerProvider):base(containerProvider) 
+        public AlarmViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService) 
         {
             QueryAlarmRecord();
             _pageIndex = 1;

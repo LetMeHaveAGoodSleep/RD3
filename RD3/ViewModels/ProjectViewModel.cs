@@ -240,7 +240,7 @@ namespace RD3.ViewModels
 
         public DelegateCommand<FunctionEventArgs<int>> PageUpdatedCommand => new(PageUpdated);
 
-        public ProjectViewModel(IContainerProvider containerProvider, IDialogService dialog) : base(containerProvider)
+        public ProjectViewModel(IContainerProvider containerProvider, IDialogService dialog, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             PageIndex = 1;
             dialogService = dialog;

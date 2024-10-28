@@ -4,6 +4,7 @@ using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
+using RD3.Common;
 using RD3.Shared;
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,7 @@ namespace RD3.ViewModels
         }
         
 
-        public OperationViewModel(IContainerProvider containerProvider):base(containerProvider) 
+        public OperationViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService) 
         {
             Operations = new ObservableCollection<Operation>(OperationManager.GetInstance().Operations);
             _pageIndex = 1;

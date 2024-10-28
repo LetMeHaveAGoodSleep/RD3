@@ -1,6 +1,7 @@
 ﻿using Prism.Commands;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
+using RD3.Common;
 using RD3.Shared;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace RD3.ViewModels
             set { SetProperty(ref _currentDeviceParameter, value); }
         }
 
-        public EditExperimentParamViewModel(IContainerProvider containerProvider) : base(containerProvider)
+        public EditExperimentParamViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
         }
 
