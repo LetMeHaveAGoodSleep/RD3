@@ -71,6 +71,7 @@ namespace RD3.Views
             wpfPlot1.MouseDoubleClick += (s, e) => //点击小图表跳转到曲线Tag
             {
                 tabControl.SelectedItem = tabTrend;
+                RadioButtonTrend.IsChecked = true;
             };
 
 
@@ -169,6 +170,7 @@ namespace RD3.Views
                     scatter.Axes.YAxis = yAxis5; // custom Y axis
                 }
                 tabControl.SelectedItem = tabTrend;
+                RadioButtonTrend.IsChecked = true;
 
             }, nameof(UnscheduledViewModel));
 
@@ -584,6 +586,7 @@ namespace RD3.Views
             {
                 MessageBox.Show("请选择仪器");
                 tabControl.SelectedItem = tabTrend;
+                RadioButtonTrend.IsChecked = true;
                 BorderDevice.Focus();
                 return;
             }

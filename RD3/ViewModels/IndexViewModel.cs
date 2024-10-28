@@ -52,7 +52,7 @@ namespace RD3.ViewModels
 
         private TimeSpan elapsedTime;
 
-        private string _formattedTime="00:00:00";
+        private string _formattedTime = "00:00:00";
 
         public string FormattedTime
         {
@@ -105,7 +105,12 @@ namespace RD3.ViewModels
             set { SetProperty(ref _progress4, value); }
         }
 
-        public Batch CurrentBatch { get; private set; }
+        private Batch _currentBatch;
+        public Batch CurrentBatch
+        {
+            get => _currentBatch;
+            private set { SetProperty(ref _currentBatch, value); }
+        }
 
         private DeviceParameter _currentDeviceParameter;
         public DeviceParameter CurrentDeviceParameter
@@ -298,10 +303,10 @@ namespace RD3.ViewModels
 
             aggregator.SendMessage("", "UpdatePlot", DeviceExperimentHistoryDatas);
 
-            Batch batch = new();
+            CurrentBatch = new();
             string Id = DateTime.Now.ToString("yyyyMMdd");
             int index = 1;
-            var result = BatchManager.GetInstance().Batches.ToList().FindLast(t => t.Id.StartsWith(Id));
+            var result = BatchManager.GetInstance().Batches.ToList().Where(t=>!string.IsNullOrWhiteSpace(t.Id)).ToList().FindLast(t => t.Id.StartsWith(Id));
             try
             {
                 index = Convert.ToInt32(result?.Id.Substring(8, 2)) + 1;
@@ -312,14 +317,15 @@ namespace RD3.ViewModels
             }
             Id += index.ToString().PadLeft(2, '0');
             CurrentBatch.Id = Id;
-            CurrentBatch.Name = "Experiment_" + DateTime.Now.ToString("yyyy-MM-dd-HH:mm:ss");
+            CurrentBatch.Name = DateTime.Now.ToString("yyyy-MM-dd-HH:mm:ss");
             CurrentBatch.Creator = AppSession.CurrentUser.UserName;
             CurrentBatch.Reactor = string.Join(",", Devices);
             CurrentBatch.Status = "Add";
+            CurrentBatch.Project = "default";
             CurrentBatch.StartTime = DateTime.Now;
             CurrentBatch.EndTime = DateTime.Now.AddDays(1);
             CurrentBatch.Description = "New Experiment";
-            BatchManager.GetInstance().Batches.Add(batch);
+            BatchManager.GetInstance().Batches.Add(CurrentBatch);
             AppSession.CurrentBatch = CurrentBatch;
         });
 

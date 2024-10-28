@@ -19,7 +19,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowsTransparency="True"
-    Background="{StaticResource DefaultBrush}"
+    Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{StaticResource CHNFontFamily}"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -28,7 +28,7 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
-    <Border BorderThickness="1" CornerRadius="8">
+    <Border>
         <materialDesign:DialogHost
             x:Name="DialogHost"
             DialogTheme="Inherit"
