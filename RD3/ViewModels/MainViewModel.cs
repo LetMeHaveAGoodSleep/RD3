@@ -174,6 +174,7 @@ namespace RD3.ViewModels
                     journal = navigationCallback.Context.NavigationService.Journal;
                 }
             });
+            RegisterManager.MonitorRegister();
         }
     }
 }

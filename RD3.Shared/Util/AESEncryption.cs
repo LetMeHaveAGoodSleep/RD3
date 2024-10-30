@@ -11,11 +11,11 @@ namespace RD3.Shared
 {
     public class AESEncryption
     {
-        static readonly byte[] key = new byte[32] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32 };
+        static readonly byte[] key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32];
 
         public static void EncryptFile(string filePath)
         {
-          string plainText=  File.ReadAllText(filePath);
+            string plainText = File.ReadAllText(filePath);
             plainText = Encrypt(plainText);
             File.WriteAllText(filePath, plainText);
         }
@@ -47,9 +47,14 @@ namespace RD3.Shared
         public static string DecryptFile(string filePath)
         {
             string cipherText = File.ReadAllText(filePath);
-            if (!IsEncrypt(cipherText))
+            return Decrypt(cipherText);
+        }
+
+        public static string Decrypt(string plainText)
+        {
+            if (!IsEncrypt(plainText))
             {
-                return cipherText;
+                return plainText;
             }
             using (Aes aesAlg = Aes.Create())
             {
@@ -58,7 +63,7 @@ namespace RD3.Shared
 
                 ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
 
-                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(cipherText)))
+                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(plainText)))
                 {
                     using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {

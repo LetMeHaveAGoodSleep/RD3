@@ -17,15 +17,20 @@ using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using Prism.Regions;
 using Prism.Ioc;
+using HandyControl.Controls;
+using RD3.Views;
 
 namespace RD3.ViewModels
 {
     public class LoginViewModel : BaseViewModel, IDialogAware
     {
+        private IDialogService _dialogService;
+
         public LoginViewModel(IContainerProvider containerProvider, IEventAggregator aggregator, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             UserDto = new ResgiterUserDto();
             ExecuteCommand = new DelegateCommand<string>(Execute);
+            _dialogService = containerProvider.Resolve<IDialogService>();
         }
 
         public string Title { get; set; } = AppSession.CompanyName;
@@ -44,7 +49,23 @@ namespace RD3.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-
+            var result = RegisterManager.CheckRegistry();
+            switch (result)
+            {
+                case RegistrationStatus.Success:
+                    
+                    break;
+                default:
+                    _dialogService.ShowDialog(nameof(RegisterView), callback =>
+                    {
+                        if (callback.Result != ButtonResult.OK)
+                        {
+                            Environment.Exit(0);
+                            return;
+                        }
+                    });
+                    break;
+            }
         }
 
         #region Login

@@ -230,3 +230,5 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\osx\native\libSkiaSharp.
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\win-arm64\native\libSkiaSharp.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\win-x64\native\libSkiaSharp.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\runtimes\win-x86\native\libSkiaSharp.dll
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\RegisterView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\RegisterView.baml

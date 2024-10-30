@@ -21,6 +21,7 @@ namespace RD3.Shared
         Base,
         Acid
     }
+
     public enum DOPump
     {
         Agit,
@@ -133,5 +134,12 @@ namespace RD3.Shared
         Addliquid,
         Harvest,
         Inoculate
+    }
+
+    public enum RegistrationStatus
+    {
+        NoRegister,
+        Success,
+        Expired
     }
 }

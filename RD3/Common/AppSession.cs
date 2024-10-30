@@ -18,5 +18,7 @@ namespace RD3.Common
 
         public static Batch CurrentBatch { get; set; }
 
+        public static DateTime ResgistrationTime { get; set; }
+
     }
 }

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MaterialDesignThemes.Wpf;
+using Prism.Ioc;
 
 namespace RD3.Extensions
 {
@@ -36,6 +38,35 @@ namespace RD3.Extensions
     string title, string content, string dialogHostName = "Root"
     )
         {
+            DialogParameters param = new DialogParameters();
+            param.Add("Title", title);
+            param.Add("Content", content);
+            param.Add("CancelVisible", false);
+            param.Add("dialogHostName", dialogHostName);
+            var dialogResult = await dialogHost.ShowDialog("MsgView", param, dialogHostName);
+            return dialogResult;
+        }
+
+        public static async Task<IDialogResult> Question(
+    string title, string content, string dialogHostName = "Root"
+    )
+        {
+            var containerProvider = (System.Windows.Application.Current as App).Container;
+            var dialogHost = containerProvider.Resolve<IDialogHostService>();
+            DialogParameters param = new DialogParameters();
+            param.Add("Title", title);
+            param.Add("Content", content);
+            param.Add("dialogHostName", dialogHostName);
+            var dialogResult = await dialogHost.ShowDialog("MsgView", param, dialogHostName);
+            return dialogResult;
+        }
+
+        public static async Task<IDialogResult> Info(
+    string title, string content, string dialogHostName = "Root"
+    )
+        {
+            var containerProvider = (System.Windows.Application.Current as App).Container;
+            var dialogHost = containerProvider.Resolve<IDialogHostService>();
             DialogParameters param = new DialogParameters();
             param.Add("Title", title);
             param.Add("Content", content);
