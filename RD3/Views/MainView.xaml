@@ -212,152 +212,129 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                FontSize="20"
+                                FontSize="{DynamicResource HeadFontSize}"
                                 Foreground="White"
                                 Text="{ex:Language Key='Fermentation process control system--芯造科技'}" />
-                            <Button
-                                Name="btnChooseLanguage"
+                            <hc:UniformSpacingPanel
                                 Grid.Column="1"
-                                Height="40"
-                                Margin="0,0,50,0"
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Center"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Command="{Binding ChangeLanguageCommand}">
-                                <TextBlock
-                                    FontSize="16"
-                                    Foreground="{DynamicResource DefaultBrush}"
-                                    Text="{Binding LanguageName}"
-                                    TextDecorations="Underline" />
-                            </Button>
-                            <Button
-                                Name="btnUser"
-                                Grid.Column="2"
-                                Width="50"
-                                Height="50"
-                                HorizontalAlignment="Stretch"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Click="BtnUser_Click"
-                                ToolTip="User Setting">
-                                <materialDesign:PackIcon
-                                    Width="24"
-                                    Height="24"
-                                    Foreground="White"
-                                    Kind="AccountCircle" />
-                            </Button>
-                            <Popup
-                                x:Name="Pop"
-                                AllowsTransparency="True"
-                                HorizontalOffset="0"
-                                IsHitTestVisible="True"
-                                Placement=" Bottom"
-                                PlacementTarget="{Binding ElementName=btnUser}"
-                                PopupAnimation="Slide"
-                                StaysOpen="False"
-                                VerticalOffset="0">
-                                <hc:UniformSpacingPanel
-                                    Background="{DynamicResource BorderBrush}"
-                                    Opacity="1"
-                                    Orientation="Vertical"
-                                    Spacing="5">
+                                Orientation="Horizontal"
+                                Spacing="50">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <Button
-                                        hc:IconElement.Geometry="{StaticResource GeometryUserInfo}"
+                                        Name="btnRegister"
+                                        Height="40"
+                                        HorizontalContentAlignment="Center"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Content="{ex:Language Key='Account manage'}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <prism:InvokeCommandAction Command="{Binding ManageUserCommand}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
+                                        Command="{Binding RegisterCommand}">
+                                        <TextBlock
+                                            FontSize="{DynamicResource SubHeadFontSize}"
+                                            Foreground="{DynamicResource DefaultBrush}"
+                                            Text="{ex:Language Key='Register software'}"
+                                            TextDecorations="Underline" />
                                     </Button>
                                     <Button
-                                        hc:IconElement.Geometry="{StaticResource GeometrySwitchUser}"
+                                        Name="btnChooseLanguage"
+                                        Height="40"
+                                        HorizontalContentAlignment="Center"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Content="{ex:Language Key='Switch account'}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <prism:InvokeCommandAction Command="{Binding LoginOutCommand}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
+                                        Command="{Binding ChangeLanguageCommand}">
+                                        <TextBlock
+                                            FontSize="{DynamicResource SubHeadFontSize}"
+                                            Foreground="{DynamicResource DefaultBrush}"
+                                            Text="{Binding LanguageName}"
+                                            TextDecorations="Underline" />
                                     </Button>
                                     <Button
-                                        hc:IconElement.Geometry="{StaticResource GeometryLogOutRed}"
+                                        Name="btnUser"
+                                        hc:IconElement.Geometry="{StaticResource GeometryUserCircle}"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Content="{ex:Language Key='Log out'}"
-                                        Foreground="{StaticResource StopBrush}">
-                                        <i:Interaction.Triggers>
-                                            <i:EventTrigger EventName="Click">
-                                                <prism:InvokeCommandAction Command="{Binding LoginOutCommand}" />
-                                            </i:EventTrigger>
-                                        </i:Interaction.Triggers>
-                                    </Button>
+                                        Click="BtnUser_Click"
+                                        Content="{Binding User.UserName}"
+                                        Foreground="White"
+                                        ToolTip="User Setting" />
+                                    <Popup
+                                        x:Name="Pop"
+                                        AllowsTransparency="True"
+                                        HorizontalOffset="0"
+                                        IsHitTestVisible="True"
+                                        Placement=" Bottom"
+                                        PlacementTarget="{Binding ElementName=btnUser}"
+                                        PopupAnimation="Slide"
+                                        StaysOpen="False"
+                                        VerticalOffset="0">
+                                        <hc:UniformSpacingPanel
+                                            Background="{DynamicResource BorderBrush}"
+                                            Opacity="1"
+                                            Orientation="Vertical"
+                                            Spacing="5">
+                                            <Button
+                                                hc:IconElement.Geometry="{StaticResource GeometryUserInfo}"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Content="{ex:Language Key='Account manage'}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <prism:InvokeCommandAction Command="{Binding ManageUserCommand}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+                                            <Button
+                                                hc:IconElement.Geometry="{StaticResource GeometrySwitchUser}"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Content="{ex:Language Key='Switch account'}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <prism:InvokeCommandAction Command="{Binding LoginOutCommand}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+                                            <Button
+                                                hc:IconElement.Geometry="{StaticResource GeometryLogOutRed}"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Content="{ex:Language Key='Log out'}"
+                                                Foreground="{StaticResource StopBrush}">
+                                                <i:Interaction.Triggers>
+                                                    <i:EventTrigger EventName="Click">
+                                                        <prism:InvokeCommandAction Command="{Binding LoginOutCommand}" />
+                                                    </i:EventTrigger>
+                                                </i:Interaction.Triggers>
+                                            </Button>
+                                        </hc:UniformSpacingPanel>
+                                    </Popup>
                                 </hc:UniformSpacingPanel>
-                            </Popup>
-                            <TextBlock
-                                Grid.Column="3"
-                                Margin="-5,0,70,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                FontSize="16"
-                                Foreground="White"
-                                Text="{Binding User.UserName}" />
-                            <Button
-                                Name="btnMin"
-                                Grid.Column="4"
-                                Width="40"
-                                Height="40"
-                                HorizontalAlignment="Stretch"
-                                Background="Transparent"
-                                BorderThickness="0">
-                                <materialDesign:PackIcon
-                                    Width="16"
-                                    Height="16"
-                                    Foreground="White"
-                                    Kind="Minus" />
-                            </Button>
-                            <Button
-                                Name="btnMax"
-                                Grid.Column="5"
-                                Width="40"
-                                Height="40"
-                                HorizontalAlignment="Stretch"
-                                Background="Transparent"
-                                BorderThickness="0">
-                                <materialDesign:PackIcon
-                                    Name="PackIconWindowState"
-                                    Width="16"
-                                    Height="16"
-                                    Foreground="White"
-                                    Kind="WindowMaximize" />
-                            </Button>
-                            <Button
-                                Name="btnClose"
-                                Grid.Column="6"
-                                Width="40"
-                                Height="40"
-                                HorizontalAlignment="Stretch"
-                                Background="Transparent"
-                                BorderThickness="0">
-                                <materialDesign:PackIcon
-                                    Width="16"
-                                    Height="16"
-                                    Foreground="White"
-                                    Kind="Close" />
-                            </Button>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <Button
+                                        Name="btnMin"
+                                        hc:IconElement.Geometry="{StaticResource WindowMinGeometry}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Foreground="White" />
+                                    <Button
+                                        Name="btnMax"
+                                        Background="Transparent"
+                                        BorderThickness="0">
+                                        <materialDesign:PackIcon
+                                            Name="PackIconWindowState"
+                                            Foreground="White"
+                                            Kind="WindowMaximize" />
+                                    </Button>
+                                    <Button
+                                        Name="btnClose"
+                                        hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Foreground="White" />
+                                </hc:UniformSpacingPanel>
+                            </hc:UniformSpacingPanel>
                         </Grid>
                     </Border>
                     <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static ext:PrismManager.MainViewRegionName}" />

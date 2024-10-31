@@ -98,6 +98,19 @@ namespace RD3.ViewModels
 
         public DelegateCommand<FunctionEventArgs<object>> SelectCmd => new(SwitchMenuItem);
 
+        public DelegateCommand RegisterCommand => new(() =>
+        {
+            DialogParameters keyValuePairs = new DialogParameters();
+            keyValuePairs.Add("RegistrationCode",RegisterManager.GetRegistrationCode());
+            dialogService.ShowDialog(nameof(RegisterView), keyValuePairs, callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+            });
+        });
+
         private ObservableCollection<MenuBar> menuBars = new ObservableCollection<MenuBar>();
         private readonly IRegionManager regionManager;
         private IRegionNavigationJournal journal;

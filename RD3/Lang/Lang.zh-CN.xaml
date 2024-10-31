@@ -150,5 +150,6 @@
     <system:String x:Key="Registration code">注册码</system:String>
     <system:String x:Key="Register">注册</system:String>
     <system:String x:Key="Please register software!">请注册软件！</system:String>
+    <system:String x:Key="Register software">软件注册</system:String>
 
 </ResourceDictionary>

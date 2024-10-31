@@ -49,23 +49,24 @@ namespace RD3.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            var result = RegisterManager.CheckRegistry();
-            switch (result)
-            {
-                case RegistrationStatus.Success:
+            //登录之后再检查注册信息
+            //var result = RegisterManager.CheckRegistry();
+            //switch (result)
+            //{
+            //    case RegistrationStatus.Success:
                     
-                    break;
-                default:
-                    _dialogService.ShowDialog(nameof(RegisterView), callback =>
-                    {
-                        if (callback.Result != ButtonResult.OK)
-                        {
-                            Environment.Exit(0);
-                            return;
-                        }
-                    });
-                    break;
-            }
+            //        break;
+            //    default:
+            //        _dialogService.ShowDialog(nameof(RegisterView), callback =>
+            //        {
+            //            if (callback.Result != ButtonResult.OK)
+            //            {
+            //                Environment.Exit(0);
+            //                return;
+            //            }
+            //        });
+            //        break;
+            //}
         }
 
         #region Login
