@@ -56,10 +56,12 @@ namespace RD3.Views
 
         List<DeviceExperimentHistoryData> dataSource = [];
         private readonly IDialogHostService _dialogHostService;
+        private readonly IContainerProvider _containerProvider;
 
         public IndexView(IContainerProvider containerProvider, IEventAggregator aggregator,IDialogHostService dialogHostService)
         {
             _aggregator = aggregator;
+            _containerProvider = containerProvider;
             language = containerProvider.Resolve<ILanguage>();
             _dialogHostService = dialogHostService;
 
@@ -596,6 +598,12 @@ namespace RD3.Views
 
             ((IndexViewModel)DataContext).Devices = devices;
             ((IndexViewModel)DataContext)?.StartCommand.Execute();
+        }
+
+        private void BorderFeed_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount < 1) return;
+            ((IndexViewModel)this.DataContext)?.FeedCommand.Execute();
         }
     }
 }

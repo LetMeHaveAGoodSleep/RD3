@@ -348,6 +348,22 @@ namespace RD3.ViewModels
             experimentTimer.Stop();
         });
 
+        public DelegateCommand FeedCommand => new(() =>
+        {
+            DialogParameters pairs = new DialogParameters
+            {
+                { "DeviceParam", CurrentDeviceParameter }
+            };
+            var _backupDeviceParameter = CurrentDeviceParameter.Clone() as DeviceParameter;
+            dialog?.ShowDialog(nameof(FeedView), pairs, callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+            });
+        });
+
         public IndexViewModel(IContainerProvider provider,
             IDialogService dialog, IDialogHostService dialogHostService) : base(provider, dialogHostService)
         {

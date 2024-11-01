@@ -22,6 +22,11 @@
     <None Remove="Images\Button\Stop.png" />
     <None Remove="Images\DataGrid\Delete.png" />
     <None Remove="Images\DataGrid\Edit.png" />
+    <None Remove="Images\Feed\Ass.png" />
+    <None Remove="Images\Feed\Constant.png" />
+    <None Remove="Images\Feed\Gradient.png" />
+    <None Remove="Images\Feed\Loop.png" />
+    <None Remove="Images\Feed\MultiLinear.png" />
     <None Remove="Images\FermentationTank.png" />
     <None Remove="Images\Link.png" />
     <None Remove="Images\login.png" />
@@ -113,6 +118,11 @@
     </Resource>
     <Resource Include="Images\DataGrid\Edit.png" />
     <Resource Include="Assets\logo.png" />
+    <Resource Include="Images\Feed\Ass.png" />
+    <Resource Include="Images\Feed\Constant.png" />
+    <Resource Include="Images\Feed\Gradient.png" />
+    <Resource Include="Images\Feed\Loop.png" />
+    <Resource Include="Images\Feed\MultiLinear.png" />
     <Resource Include="Images\FermentationTank.png" />
     <Resource Include="Images\Link.png" />
     <Resource Include="Images\login.png">

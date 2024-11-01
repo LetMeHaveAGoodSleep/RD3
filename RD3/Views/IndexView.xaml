@@ -1490,7 +1490,7 @@
                                             Grid.Row="1"
                                             Grid.Column="1"
                                             Margin="10"
-                                            MouseLeftButtonDown="Border_MouseLeftButtonDown"
+                                            MouseLeftButtonDown="BorderFeed_MouseLeftButtonDown"
                                             Style="{StaticResource BorderCard}">
                                             <Grid Margin="5">
                                                 <Grid.RowDefinitions>

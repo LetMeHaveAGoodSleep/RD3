@@ -32,6 +32,7 @@
     <system:String x:Key="Base">碱</system:String>
     <system:String x:Key="Acid">酸</system:String>
     <system:String x:Key="Associated">关联</system:String>
+    <system:String x:Key="Associate">关联</system:String>
     <system:String x:Key="Feed">补料</system:String>
     <system:String x:Key="Disable">禁用</system:String>
     <system:String x:Key="AF">消泡</system:String>
@@ -151,5 +152,8 @@
     <system:String x:Key="Register">注册</system:String>
     <system:String x:Key="Please register software!">请注册软件！</system:String>
     <system:String x:Key="Register software">软件注册</system:String>
-
+    <system:String x:Key="Feed Setting">补料设置</system:String>
+    <system:String x:Key="Gradient">梯度</system:String>
+    <system:String x:Key="Function">函数</system:String>
+    <system:String x:Key="Mutil-linear">多端线性</system:String>
 </ResourceDictionary>

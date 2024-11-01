@@ -39,7 +39,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <md:Snackbar
@@ -109,20 +109,12 @@
                 </DockPanel>
             </md:TransitionerSlide>
         </md:Transitioner>
-        <StackPanel Grid.ColumnSpan="2">
-            <Button
-                Name="btnClose"
-                Width="30"
-                Height="30"
-                HorizontalAlignment="Right"
-                Background="Transparent"
-                BorderThickness="0">
-                <materialDesign:PackIcon
-                    Width="24"
-                    Height="24"
-                    Foreground="Gray"
-                    Kind="Close" />
-            </Button>
-        </StackPanel>
+        <Button
+            Name="btnClose"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Right"
+            hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+            Background="Transparent"
+            BorderThickness="0" />
     </Grid>
 </UserControl>

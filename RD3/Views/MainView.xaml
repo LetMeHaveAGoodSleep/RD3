@@ -35,7 +35,7 @@
             Identifier="Root">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="0" />
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -53,6 +53,7 @@
                         <Image
                             Width="24"
                             Height="24"
+                            Margin="5"
                             Source="/Assets/logo.png" />
                         <TextBlock
                             Margin="8,10,10,8"

@@ -34,7 +34,7 @@
             <Setter Property="Opacity" Value="1" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Border Style="{StaticResource BorderCard}">
+    <Border Style="{StaticResource BorderForm}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
@@ -45,19 +45,11 @@
                 <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{ex:Language Key='Advance control'}" />
                 <Button
                     Name="btnClose"
-                    Width="30"
-                    Height="30"
-                    VerticalAlignment="Top"
+                    hc:IconElement.Geometry="{StaticResource CloseGeometry}"
                     Background="Transparent"
                     BorderThickness="0"
                     Command="{Binding CancelCommand}"
-                    DockPanel.Dock="Right">
-                    <materialDesign:PackIcon
-                        Width="30"
-                        Height="30"
-                        Foreground="Gray"
-                        Kind="Close" />
-                </Button>
+                    DockPanel.Dock="Right" />
             </DockPanel>
             <hc:UniformSpacingPanel
                 Grid.Row="2"
