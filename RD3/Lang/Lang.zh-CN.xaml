@@ -51,6 +51,7 @@
     <system:String x:Key="OP">输出</system:String>
     <system:String x:Key="Limit range">限制范围</system:String>
     <system:String x:Key="AssociativeController">关联控制器</system:String>
+    <system:String x:Key="Associative Controller">关联控制器</system:String>
     <system:String x:Key="Time series">顺序控制</system:String>
     <system:String x:Key="Import">导入</system:String>
     <system:String x:Key="Save">导出</system:String>
@@ -156,4 +157,17 @@
     <system:String x:Key="Gradient">梯度</system:String>
     <system:String x:Key="Function">函数</system:String>
     <system:String x:Key="Mutil-linear">多端线性</system:String>
+    <system:String x:Key="Set successfully">设置成功</system:String>
+    <system:String x:Key="Patterns added">添加模式</system:String>
+    <system:String x:Key="Dose">剂量</system:String>
+    <system:String x:Key="Threshold selection">阈值选择</system:String>
+    <system:String x:Key="Additive volume">添加量</system:String>
+    <system:String x:Key="Added amount">已添加量</system:String>
+    <system:String x:Key="Speed">速度</system:String>
+    <system:String x:Key="Timer">定时器</system:String>
+    <system:String x:Key="Feeding time:">补料时间:</system:String>
+    <system:String x:Key="Runnning time:">运行时间:</system:String>
+    <system:String x:Key="Amount:">累积量:</system:String>
+    <system:String x:Key="Available function:">可用函数:</system:String>
+    <system:String x:Key="Check">检查</system:String>
 </ResourceDictionary>

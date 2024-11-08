@@ -142,4 +142,58 @@ namespace RD3.Shared
         Success,
         Expired
     }
+
+    public enum FeedMethod
+    {
+        Unknown,
+        Constant,
+        Associate,
+        Gradient,
+        Function,
+        Loop,
+        MutilLinear
+    }
+
+    public enum IndicatorType
+    {
+        Stop = 0,
+        Start = 1,
+        Warning = 2,
+        Error = 3,
+        Fatal = 4,
+    }
+
+    public enum FeedAssociateModule
+    {
+        DO,
+        PH
+    }
+
+    public enum FeedAssociatePattern
+    {
+        Dose,
+        Speed
+    }
+
+    public enum FeedAssociateThreshold
+    {
+        Lowerlimit,
+        Upperlimit
+    }
+
+    public enum FeedTimer
+    {
+        Day = 86400,
+        Hour = 3600,
+        Minute = 60
+    }
+
+    public enum FeedFormulaParam
+    {
+        Air_output,
+        CO2_output,
+        O2_output,
+        N2_output,
+        Agit_output
+    }
 }

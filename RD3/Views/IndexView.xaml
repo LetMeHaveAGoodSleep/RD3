@@ -2227,7 +2227,7 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Top"
                                         FontSize="{DynamicResource SubHeadFontSize}"
-                                        Text="Runnning time:" />
+                                        Text="{ex:Language Key='Runnning time:'}" />
                                     <TextBlock
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Top"

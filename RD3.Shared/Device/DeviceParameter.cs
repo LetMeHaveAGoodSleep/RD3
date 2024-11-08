@@ -148,7 +148,14 @@ namespace RD3.Shared
             get { return _feedParam; }
             set { SetProperty(ref _feedParam, value); }
         }
-        
+
+        private FeedStrategy _feedStrategy = new();
+        public FeedStrategy FeedStrategy
+        {
+            get { return _feedStrategy; }
+            set { SetProperty(ref _feedStrategy, value); }
+        }
+
 
         private float _air = 0f;
         public float Air

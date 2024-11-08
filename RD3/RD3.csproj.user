@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\IndicatorLight.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AddSampleView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -87,6 +90,9 @@
     <Content Update="Lang\Lang.zh-CN.xaml">
       <SubType>Designer</SubType>
     </Content>
+    <Page Update="Controls\IndicatorLight.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Themes\Colors.xaml">
       <SubType>Designer</SubType>
     </Page>

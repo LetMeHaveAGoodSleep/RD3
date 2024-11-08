@@ -130,8 +130,15 @@
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV}" />
+                                            Style="{StaticResource TextBoxExtend}">
+                                            <TextBox.Text>
+                                                <Binding Path="CurrentDeviceParameter.TempParam.Temp_PV" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <hc:RegexRule Type="NnDouble" />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
                                     </DockPanel>
                                 </hc:UniformSpacingPanel>
                                 <StackPanel Orientation="Horizontal">
@@ -357,8 +364,15 @@
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding CurrentDeviceParameter.PHParam.PH_PV}" />
+                                            Style="{StaticResource TextBoxExtend}">
+                                            <TextBox.Text>
+                                                <Binding Path="CurrentDeviceParameter.PHParam.PH_PV" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <hc:RegexRule Type="NnDouble" />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
                                     </DockPanel>
                                 </hc:UniformSpacingPanel>
                                 <StackPanel Orientation="Horizontal">
@@ -594,8 +608,15 @@
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV}" />
+                                            Style="{StaticResource TextBoxExtend}">
+                                            <TextBox.Text>
+                                                <Binding Path="CurrentDeviceParameter.AgitParam.Agit_PV" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <hc:RegexRule Type="NnDouble" />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
                                     </DockPanel>
                                 </hc:UniformSpacingPanel>
                                 <StackPanel Orientation="Horizontal">
@@ -821,8 +842,15 @@
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding CurrentDeviceParameter.DOParam.DO_PV}" />
+                                            Style="{StaticResource TextBoxExtend}">
+                                            <TextBox.Text>
+                                                <Binding Path="CurrentDeviceParameter.DOParam.DO_PV" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <hc:RegexRule Type="NnDouble" />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
                                     </DockPanel>
                                 </hc:UniformSpacingPanel>
                                 <StackPanel Orientation="Horizontal">
@@ -1080,8 +1108,15 @@
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding CurrentDeviceParameter.BaseParam.Base_PV}" />
+                                            Style="{StaticResource TextBoxExtend}">
+                                            <TextBox.Text>
+                                                <Binding Path="CurrentDeviceParameter.BaseParam.Base_PV" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <hc:RegexRule Type="NnDouble" />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
                                     </DockPanel>
                                 </hc:UniformSpacingPanel>
                                 <StackPanel Orientation="Horizontal">
@@ -1258,8 +1293,15 @@
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding CurrentDeviceParameter.AcidParam.Acid_PV}" />
+                                            Style="{StaticResource TextBoxExtend}">
+                                            <TextBox.Text>
+                                                <Binding Path="CurrentDeviceParameter.AcidParam.Acid_PV" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <hc:RegexRule Type="NnDouble" />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
                                     </DockPanel>
                                 </hc:UniformSpacingPanel>
                                 <StackPanel Orientation="Horizontal">
@@ -1435,8 +1477,15 @@
                                             Height="30"
                                             VerticalAlignment="Center"
                                             HorizontalContentAlignment="Center"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding CurrentDeviceParameter.FeedParam.Feed_PV}" />
+                                            Style="{StaticResource TextBoxExtend}">
+                                            <TextBox.Text>
+                                                <Binding Path="CurrentDeviceParameter.FeedParam.Feed_PV" UpdateSourceTrigger="PropertyChanged">
+                                                    <Binding.ValidationRules>
+                                                        <hc:RegexRule Type="NnDouble" />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
                                     </DockPanel>
                                 </hc:UniformSpacingPanel>
                                 <StackPanel Orientation="Horizontal">
@@ -1614,8 +1663,15 @@
                                                 Height="30"
                                                 VerticalAlignment="Center"
                                                 HorizontalContentAlignment="Center"
-                                                Style="{StaticResource TextBoxExtend}"
-                                                Text="{Binding CurrentDeviceParameter.AFParam.AF_PV}" />
+                                                Style="{StaticResource TextBoxExtend}">
+                                                <TextBox.Text>
+                                                    <Binding Path="CurrentDeviceParameter.AFParam.AF_PV" UpdateSourceTrigger="PropertyChanged">
+                                                        <Binding.ValidationRules>
+                                                            <hc:RegexRule Type="NnDouble" />
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </TextBox.Text>
+                                            </TextBox>
                                         </DockPanel>
                                     </hc:UniformSpacingPanel>
                                     <StackPanel Orientation="Horizontal">
@@ -1787,8 +1843,15 @@
                                                         Height="30"
                                                         VerticalAlignment="Center"
                                                         HorizontalContentAlignment="Center"
-                                                        Style="{StaticResource TextBoxExtend}"
-                                                        Text="{Binding CurrentDeviceParameter.AirParam.Air_PV}" />
+                                                        Style="{StaticResource TextBoxExtend}">
+                                                        <TextBox.Text>
+                                                            <Binding Path="CurrentDeviceParameter.AirParam.Air_PV" UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <hc:RegexRule Type="NnDouble" />
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
+                                                        </TextBox.Text>
+                                                    </TextBox>
                                                 </DockPanel>
                                             </hc:UniformSpacingPanel>
                                             <StackPanel Orientation="Horizontal">
@@ -1952,8 +2015,15 @@
                                                         Height="30"
                                                         VerticalAlignment="Center"
                                                         HorizontalContentAlignment="Center"
-                                                        Style="{StaticResource TextBoxExtend}"
-                                                        Text="{Binding CurrentDeviceParameter.CO2Param.CO2_PV}" />
+                                                        Style="{StaticResource TextBoxExtend}">
+                                                        <TextBox.Text>
+                                                            <Binding Path="CurrentDeviceParameter.CO2Param.CO2_PV" UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <hc:RegexRule Type="NnDouble" />
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
+                                                        </TextBox.Text>
+                                                    </TextBox>
                                                 </DockPanel>
                                             </hc:UniformSpacingPanel>
                                             <StackPanel Orientation="Horizontal">
@@ -2117,8 +2187,15 @@
                                                         Height="30"
                                                         VerticalAlignment="Center"
                                                         HorizontalContentAlignment="Center"
-                                                        Style="{StaticResource TextBoxExtend}"
-                                                        Text="{Binding CurrentDeviceParameter.N2Param.N2_PV}" />
+                                                        Style="{StaticResource TextBoxExtend}">
+                                                        <TextBox.Text>
+                                                            <Binding Path="CurrentDeviceParameter.N2Param.N2_PV" UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <hc:RegexRule Type="NnDouble" />
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
+                                                        </TextBox.Text>
+                                                    </TextBox>
                                                 </DockPanel>
                                             </hc:UniformSpacingPanel>
                                             <StackPanel Orientation="Horizontal">
@@ -2282,8 +2359,15 @@
                                                         Height="30"
                                                         VerticalAlignment="Center"
                                                         HorizontalContentAlignment="Center"
-                                                        Style="{StaticResource TextBoxExtend}"
-                                                        Text="{Binding CurrentDeviceParameter.O2Param.O2_PV}" />
+                                                        Style="{StaticResource TextBoxExtend}">
+                                                        <TextBox.Text>
+                                                            <Binding Path="CurrentDeviceParameter.O2Param.O2_PV" UpdateSourceTrigger="PropertyChanged">
+                                                                <Binding.ValidationRules>
+                                                                    <hc:RegexRule Type="NnDouble" />
+                                                                </Binding.ValidationRules>
+                                                            </Binding>
+                                                        </TextBox.Text>
+                                                    </TextBox>
                                                 </DockPanel>
                                             </hc:UniformSpacingPanel>
                                             <StackPanel Orientation="Horizontal">

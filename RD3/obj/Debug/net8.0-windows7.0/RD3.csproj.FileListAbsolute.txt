@@ -235,3 +235,5 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\RegisterView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FeedView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FeedView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\ProgressRing.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Controls\IndicatorLight.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Controls\IndicatorLight.g.cs

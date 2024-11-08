@@ -24,6 +24,7 @@
     <None Remove="Images\DataGrid\Edit.png" />
     <None Remove="Images\Feed\Ass.png" />
     <None Remove="Images\Feed\Constant.png" />
+    <None Remove="Images\Feed\Function.png" />
     <None Remove="Images\Feed\Gradient.png" />
     <None Remove="Images\Feed\Loop.png" />
     <None Remove="Images\Feed\MultiLinear.png" />
@@ -120,6 +121,7 @@
     <Resource Include="Assets\logo.png" />
     <Resource Include="Images\Feed\Ass.png" />
     <Resource Include="Images\Feed\Constant.png" />
+    <Resource Include="Images\Feed\Function.png" />
     <Resource Include="Images\Feed\Gradient.png" />
     <Resource Include="Images\Feed\Loop.png" />
     <Resource Include="Images\Feed\MultiLinear.png" />

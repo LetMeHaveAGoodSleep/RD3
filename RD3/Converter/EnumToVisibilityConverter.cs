@@ -16,10 +16,12 @@ namespace RD3
             if (value == null || parameter == null)
                 return Visibility.Collapsed;
 
-            string targetValue = parameter.ToString();
-            string sourceValue = value.ToString();
-
-            return sourceValue.Equals(targetValue, StringComparison.OrdinalIgnoreCase) ? Visibility.Visible : Visibility.Collapsed;
+            //string targetValue = parameter.ToString();
+            Enum.TryParse(value.GetType(), parameter?.ToString(), true, out var targetValue);
+            Enum.TryParse(value.GetType(), value?.ToString(), true, out var sourceValue);
+            //string sourceValue = value.ToString();
+            return Enum.Equals(targetValue, sourceValue) ? Visibility.Visible : Visibility.Collapsed;
+            //return sourceValue.Equals(targetValue, StringComparison.OrdinalIgnoreCase) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

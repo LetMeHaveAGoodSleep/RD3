@@ -28,6 +28,7 @@ using System.Windows.Threading;
 using System.Xml.Linq;
 using ImTools;
 using ScottPlot;
+using System.Reflection.Metadata;
 
 namespace RD3.ViewModels
 {
@@ -275,8 +276,8 @@ namespace RD3.ViewModels
                     item.WorkStatus = WorkStatus.Idle;
                 }
             }
-            InstrumentSolution.GetInstance().CommandWrapper.SetTemp(CurrentDeviceParameter.TempParam);
-            InstrumentSolution.GetInstance().CommandWrapper.SetDO(CurrentDeviceParameter.DOParam);
+            CommandWrapper.SetTemp(CurrentDeviceParameter.TempParam);
+            CommandWrapper.SetDO(CurrentDeviceParameter.DOParam);
 
             elapsedTime = TimeSpan.Zero;
             experimentTimer.Start();
@@ -352,14 +353,21 @@ namespace RD3.ViewModels
         {
             DialogParameters pairs = new DialogParameters
             {
-                { "DeviceParam", CurrentDeviceParameter }
+                { nameof(FeedStrategy), CurrentDeviceParameter.FeedStrategy },
+                {nameof(DOParam), CurrentDeviceParameter.DOParam },
+                {nameof(PHParam), CurrentDeviceParameter.PHParam }
             };
-            var _backupDeviceParameter = CurrentDeviceParameter.Clone() as DeviceParameter;
+            var _backupFeedStrategy = CurrentDeviceParameter.FeedStrategy.Clone() as FeedStrategy;
             dialog?.ShowDialog(nameof(FeedView), pairs, callback =>
             {
                 if (callback.Result != ButtonResult.OK)
                 {
                     return;
+                }
+                CurrentDeviceParameter.FeedStrategy = callback.Parameters.GetValue<FeedStrategy>(nameof(FeedStrategy));
+                foreach (var pair in DeviceParameterCol)
+                {
+                    pair.FeedStrategy = CurrentDeviceParameter.FeedStrategy;
                 }
             });
         });
@@ -397,7 +405,6 @@ namespace RD3.ViewModels
                 device.DOParam.DO_PV = 100f;
                 device.AgitParam.Agit_PV = 2000f;
                 temp.Add(device);
-
 
                 //Test Data
                 DeviceExperimentHistoryData deviceExperimentHistoryData = new()
