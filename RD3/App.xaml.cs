@@ -136,7 +136,7 @@ namespace RD3
             containerRegistry.RegisterForNavigation<SettingView, SettingViewModel>();
             containerRegistry.RegisterDialog<UnscheduledView, UnscheduledViewModel>();
             containerRegistry.RegisterDialog<RegisterView, RegisterViewModel>();
-            containerRegistry.RegisterDialog<FeedView, FeedViewModel>(); 
+            containerRegistry.RegisterDialog<FeedView, FeedViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

@@ -312,13 +312,14 @@
                                         </hc:UniformSpacingPanel>
                                     </Popup>
                                 </hc:UniformSpacingPanel>
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                     <Button
                                         Name="btnMin"
                                         hc:IconElement.Geometry="{StaticResource WindowMinGeometry}"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Foreground="White" />
+                                        Foreground="White"
+                                        ToolTip="{ex:Language Key='Minimize'}" />
                                     <Button
                                         Name="btnMax"
                                         Background="Transparent"
@@ -326,14 +327,16 @@
                                         <materialDesign:PackIcon
                                             Name="PackIconWindowState"
                                             Foreground="White"
-                                            Kind="WindowMaximize" />
+                                            Kind="WindowMaximize"
+                                            ToolTip="{ex:Language Key='Maximize'}" />
                                     </Button>
                                     <Button
                                         Name="btnClose"
                                         hc:IconElement.Geometry="{StaticResource CloseGeometry}"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Foreground="White" />
+                                        Foreground="White"
+                                        ToolTip="{ex:Language Key='Close'}" />
                                 </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
                         </Grid>

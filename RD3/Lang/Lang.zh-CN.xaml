@@ -170,4 +170,7 @@
     <system:String x:Key="Amount:">累积量:</system:String>
     <system:String x:Key="Available function:">可用函数:</system:String>
     <system:String x:Key="Check">检查</system:String>
+    <system:String x:Key="Maximize">最大化</system:String>
+    <system:String x:Key="Minimize">最小化</system:String>
+    <system:String x:Key="Close">关闭</system:String>
 </ResourceDictionary>

@@ -114,7 +114,6 @@
             Grid.ColumnSpan="2"
             HorizontalAlignment="Right"
             hc:IconElement.Geometry="{StaticResource CloseGeometry}"
-            Background="Transparent"
-            BorderThickness="0" />
+            Style="{StaticResource ToolButtonStyle}" />
     </Grid>
 </UserControl>
