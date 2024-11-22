@@ -1,0 +1,145 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:RD3.Controls">
+    <Style
+        x:Key="PrimaryBorderButtonStyle"
+        BasedOn="{StaticResource ButtonBaseStyle}"
+        TargetType="Button">
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
+        <Setter Property="Background" Value="{DynamicResource DefaultBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="{DynamicResource NormalFontSize}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.Setters>
+                    <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource DefaultBrush}" />
+                </Trigger.Setters>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style
+        x:Key="PrimaryBackgroundButtonStyle"
+        BasedOn="{StaticResource ButtonBaseStyle}"
+        TargetType="Button">
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource DefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="{DynamicResource NormalFontSize}" />
+    </Style>
+    <Style
+        x:Key="ToolButtonStyle"
+        BasedOn="{StaticResource ButtonBaseStyle}"
+        TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="Gray" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Red" />
+                <Setter Property="Foreground" Value="{DynamicResource DefaultBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="{x:Type local:ImageButton}">
+        <Setter Property="Cursor" Value="Arrow" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ImageButton}">
+
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid x:Name="grid" Background="{TemplateBinding Background}">
+                            <Border
+                                x:Name="PART_Border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{TemplateBinding CornerRadius}" />
+
+                            <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
+                                <StackPanel
+                                    Margin="{TemplateBinding Padding}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Orientation="{TemplateBinding IconContentOrientation}">
+                                    <Grid HorizontalAlignment="Center" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                        <Image
+                                            x:Name="PART_Icon"
+                                            Width="{TemplateBinding IconWidth}"
+                                            Height="{TemplateBinding IconHeight}"
+                                            Source="{TemplateBinding Icon}" />
+                                        <Image
+                                            x:Name="PART_MouseOverIcon"
+                                            Width="{TemplateBinding IconWidth}"
+                                            Height="{TemplateBinding IconHeight}"
+                                            Source="{TemplateBinding IconMouseOver}"
+                                            Visibility="Collapsed" />
+                                        <Image
+                                            x:Name="PART_PressIcon"
+                                            Width="{TemplateBinding IconWidth}"
+                                            Height="{TemplateBinding IconHeight}"
+                                            Source="{TemplateBinding IconPress}"
+                                            Visibility="Collapsed" />
+                                    </Grid>
+                                    <TextBlock
+                                        x:Name="PART_Content"
+                                        Margin="{TemplateBinding IconContentMargin}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        Text="{TemplateBinding Content}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_Content" Property="Foreground" Value="{Binding MouseOverForeground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ImageButton}}}" />
+                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding MouseOverBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ImageButton}}}" />
+                            <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding MouseOverBorderBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ImageButton}}}" />
+                            <Setter TargetName="PART_MouseOverIcon" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_PressIcon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_Content" Property="Foreground" Value="{Binding MouseDownForeground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ImageButton}}}" />
+                            <Setter TargetName="PART_Border" Property="Background" Value="{Binding MouseDownBackground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ImageButton}}}" />
+                            <Setter TargetName="PART_Border" Property="BorderBrush" Value="{Binding MouseDownBorderBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:ImageButton}}}" />
+                            <Setter TargetName="PART_PressIcon" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
+                            <Setter TargetName="PART_MouseOverIcon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+
+                        <Trigger SourceName="PART_Content" Property="Text" Value="">
+                            <Setter TargetName="PART_Content" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+
+                        <Trigger SourceName="PART_Content" Property="Text" Value="{x:Null}">
+                            <Setter TargetName="PART_Content" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+
+                        <Trigger SourceName="PART_Icon" Property="Source" Value="{x:Null}">
+                            <Setter TargetName="PART_Icon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
