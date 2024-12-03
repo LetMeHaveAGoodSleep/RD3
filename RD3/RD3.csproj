@@ -104,6 +104,21 @@
     <ProjectReference Include="..\RD3.Shared\RD3.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Fpi.Assembly">
+      <HintPath>..\ImportDll\Fpi.Assembly.dll</HintPath>
+    </Reference>
+    <Reference Include="Fpi.Communication">
+      <HintPath>..\ImportDll\Fpi.Communication.dll</HintPath>
+    </Reference>
+    <Reference Include="Fpi.Instrument">
+      <HintPath>..\ImportDll\Fpi.Instrument.dll</HintPath>
+    </Reference>
+    <Reference Include="Fpi.Util">
+      <HintPath>..\ImportDll\Fpi.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="Fpi.Xml">
+      <HintPath>..\ImportDll\Fpi.Xml.dll</HintPath>
+    </Reference>
     <Reference Include="HandyControl">
       <HintPath>..\ImportDll\HandyControl.dll</HintPath>
     </Reference>
@@ -181,6 +196,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Assets\NotoSans-Regular.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\LibraryManager.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\PortManager.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\Operation.json">

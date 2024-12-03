@@ -173,4 +173,8 @@
     <system:String x:Key="Maximize">最大化</system:String>
     <system:String x:Key="Minimize">最小化</system:String>
     <system:String x:Key="Close">关闭</system:String>
+    <system:String x:Key="An exception occurred while loading {0}! The program will exit soon">加载{0}异常! 程序即将退出</system:String>
+    <system:String x:Key="Loading {0}\r\nException: {1}\r\nSource: {2}">加载{0}\r\n异常:{1}\r\n来源:{2}</system:String>
+    <system:String x:Key="Loading {0}...">正在加载 {0} ...</system:String>
+    <system:String x:Key="Loading completed">加载完成</system:String>
 </ResourceDictionary>

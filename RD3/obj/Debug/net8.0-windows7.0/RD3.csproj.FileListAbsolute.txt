@@ -257,3 +257,10 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\ru\FSharp.Core.resources.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\tr\FSharp.Core.resources.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\zh-Hans\FSharp.Core.resources.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\zh-Hant\FSharp.Core.resources.dll
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Fpi.Assembly.dll
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Fpi.Communication.dll
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Fpi.Instrument.dll
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Fpi.Util.dll
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Fpi.Xml.dll
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\PortManager.xml
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\LibraryManager.xml

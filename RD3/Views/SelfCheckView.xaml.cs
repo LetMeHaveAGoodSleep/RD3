@@ -1,5 +1,10 @@
-﻿using Prism.Events;
+﻿using HandyControl.Controls;
+using Prism.Events;
+using RD3.Common.Events;
+using RD3.Common;
 using RD3.Extensions;
+using RD3.Shared;
+using RD3.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,15 +26,9 @@ namespace RD3.Views
     /// </summary>
     public partial class SelfCheckView : UserControl
     {
-        public SelfCheckView()
+        public SelfCheckView(IEventAggregator aggregator)
         {
             InitializeComponent();
-        }
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            //textBox?.ScrollToEnd();
         }
     }
 }

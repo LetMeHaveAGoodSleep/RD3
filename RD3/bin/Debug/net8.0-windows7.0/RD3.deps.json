@@ -17,6 +17,11 @@
           "SQLite": "3.13.0",
           "ScottPlot.WPF": "5.0.40",
           "log4net": "2.0.17",
+          "Fpi.Assembly": "1.0.0.0",
+          "Fpi.Communication": "0.0.0.0",
+          "Fpi.Instrument": "1.0.0.0",
+          "Fpi.Util": "0.0.0.0",
+          "Fpi.Xml": "0.0.0.0",
           "HandyControl": "3.5.2.0"
         },
         "runtime": {
@@ -755,6 +760,46 @@
           }
         }
       },
+      "Fpi.Assembly/1.0.0.0": {
+        "runtime": {
+          "Fpi.Assembly.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Fpi.Communication/0.0.0.0": {
+        "runtime": {
+          "Fpi.Communication.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Fpi.Instrument/1.0.0.0": {
+        "runtime": {
+          "Fpi.Instrument.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Fpi.Util/0.0.0.0": {
+        "runtime": {
+          "Fpi.Util.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Fpi.Xml/0.0.0.0": {
+        "runtime": {
+          "Fpi.Xml.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
       "HandyControl/3.5.2.0": {
         "runtime": {
           "HandyControl.dll": {
@@ -1249,6 +1294,31 @@
     },
     "RD3.Shared/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fpi.Assembly/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fpi.Communication/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fpi.Instrument/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fpi.Util/0.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fpi.Xml/0.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     },

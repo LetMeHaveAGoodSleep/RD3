@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6E37D7B3-8D08-4EF3-A924-3B87982AB246}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Fpi.Util</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Fpi</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;DEBUG;NET_VER_1;COMPACT_FRAMEWORK_V10</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE;NET_VER_1;COMPACT_FRAMEWORK_V10</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>pdbonly</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxInterop.ShockwaveFlashObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DllImports\AxInterop.ShockwaveFlashObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.ShockwaveFlashObjects">
+      <HintPath>..\DllImports\Interop.ShockwaveFlashObjects.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>ImportDll\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.7.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DllImports\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Util\EnumRelated\EnumOperate.cs" />
+    <Compile Include="Util\Flash\ExternalInterfaceProxy\ExternalInterfaceCall.cs" />
+    <Compile Include="Util\Flash\ExternalInterfaceProxy\ExternalInterfaceCallEventArgs.cs" />
+    <Compile Include="Util\Flash\ExternalInterfaceProxy\ExternalInterfaceProxy.cs" />
+    <Compile Include="Util\Flash\ExternalInterfaceProxy\ExternalInterfaceSerializer.cs" />
+    <Compile Include="Util\Flash\FlashShieldRightKey\FlashShieldKey.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Util\JsonUtil\JsonHelper.cs" />
+    <Compile Include="Util\LogHelper.cs" />
+    <Compile Include="Util\MathUtil\FpiMatrix.cs" />
+    <Compile Include="Util\MathUtil\MatlabFunc.cs" />
+    <Compile Include="Util\MathUtil\PeakInfo.cs" />
+    <Compile Include="Util\Picture\PictureProcessing.cs" />
+    <Compile Include="Util\Reflection\ReflectionHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\Security\AesCrypt.cs" />
+    <Compile Include="Util\Security\IXmlEncrypt.cs" />
+    <Compile Include="Util\Serializes\BinarySerializer.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\ArraySerializer.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\BaseSerializableObject.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\ColorSerializer.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\DataOjbect.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\EnumSerializer.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\FontSerializer.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\ImageSerializer.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\NamedXmlSettings.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\SerializeFieldAttribute.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\SerializerBase.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\XmlDataObject.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\XmlSettings.cs" />
+    <Compile Include="Util\Serializes\CustomSerializer\StringFormatSerializer.cs" />
+    <Compile Include="Util\Sundry\Hook.cs" />
+    <Compile Include="Util\WinApiUtil\CommDataType\DCB.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\WinApiUtil\CommDataType\PortSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\WinApiUtil\CommDataType\StructsAndEnums.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\Compress\CompressUtil.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\BZip2\BZip2.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\BZip2\BZip2Constants.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\BZip2\BZip2Exception.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\BZip2\BZip2InputStream.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\BZip2\BZip2OutputStream.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Checksums\Adler32.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Checksums\CRC32.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Checksums\IChecksum.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Checksums\StrangeCRC.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Core\FileSystemScanner.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Core\INameTransform.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Core\IScanFilter.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Core\IScanner.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Core\NameFilter.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Core\PathFilter.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Core\StreamUtils.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Encryption\PkzipClassic.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\GZip\GZIPConstants.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\GZip\GZipException.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\GZip\GzipInputStream.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\GZip\GzipOutputStream.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\SharpZipBaseException.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Tar\InvalidHeaderException.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Tar\TarArchive.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Tar\TarBuffer.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Tar\TarEntry.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Tar\TarException.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Tar\TarHeader.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Tar\TarInputStream.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Tar\TarOutputStream.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\Deflater.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\DeflaterConstants.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\DeflaterEngine.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\DeflaterHuffman.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\DeflaterPending.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\Inflater.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\InflaterDynHeader.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\InflaterHuffmanTree.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\PendingBuffer.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\Streams\DeflaterOutputStream.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\Streams\InflaterInputStream.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\Streams\OutputWindow.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\Compression\Streams\StreamManipulator.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\FastZip.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\IEntryFactory.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\ZipConstants.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\ZipEntry.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\ZipEntryFactory.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\ZipException.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\ZipExtraData.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\ZipFile.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\ZipHelperStream.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\ZipInputStream.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\ZipNameTransform.cs" />
+    <Compile Include="Util\Compress\SharpZipLib\Zip\ZipOutputStream.cs" />
+    <Compile Include="Util\Interfaces\ICondition.cs" />
+    <Compile Include="Util\Interfaces\INaming.cs" />
+    <Compile Include="Util\Interfaces\Initialize\IInitialization.cs" />
+    <Compile Include="Util\Interfaces\Initialize\IInitializationListener.cs" />
+    <Compile Include="Util\Interfaces\Initialize\InitException.cs" />
+    <Compile Include="Util\MathUtil\MathTool.cs" />
+    <Compile Include="Util\MathUtil\Matrix.cs" />
+    <Compile Include="Util\MathUtil\MatrixException.cs" />
+    <Compile Include="Util\Security\IEncrypt.cs" />
+    <Compile Include="Util\Sundry\DateTimeUtil.cs" />
+    <Compile Include="Util\WinApiUtil\Enums.cs" />
+    <Compile Include="Util\WinApiUtil\WindowsController.cs" />
+    <Compile Include="Util\Exceptions\FpiException.cs" />
+    <Compile Include="Util\Exceptions\ApplicationException.cs" />
+    <Compile Include="Util\Exceptions\PlatformException.cs" />
+    <Compile Include="Util\Sundry\FileUtil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\Security\RsaCrypt.cs" />
+    <Compile Include="Util\Sundry\StringUtil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\Sundry\ValidateUtil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\WinApiUtil\WinApiWrapper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Util\Sundry\ListUtil.cs" />
+    <Compile Include="Util\WinApiUtil\WinFrmAboutApiWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.en-US.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

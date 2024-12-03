@@ -3384,7 +3384,7 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Administrator\\.nuget\\packages\\": {},
+    "D:\\packages": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
@@ -3393,7 +3393,7 @@
       "projectUniqueName": "D:\\Project\\RD3\\RD3\\RD3.csproj",
       "projectName": "RD3",
       "projectPath": "D:\\Project\\RD3\\RD3\\RD3.csproj",
-      "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
+      "packagesPath": "D:\\packages",
       "outputPath": "D:\\Project\\RD3\\RD3\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [

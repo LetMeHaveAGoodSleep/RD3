@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Modify" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Modify.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Add.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Edit.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Remove.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Search" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Search.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="AcceptTcpConnect" xml:space="preserve">
+    <value>接受 TCP Client 连接:{0}</value>
+  </data>
+  <data name="BindChannel" xml:space="preserve">
+    <value>CAN通讯必须绑定具体通道</value>
+  </data>
+  <data name="BuildRouterExeption" xml:space="preserve">
+    <value>在生成物理链路类型列表时发生异常:{0}\r\n物理链路类型:{1}</value>
+  </data>
+  <data name="CANConfigOption" xml:space="preserve">
+    <value>CAN配置选项</value>
+  </data>
+  <data name="CANNotConfig" xml:space="preserve">
+    <value>CAN参数未配置</value>
+  </data>
+  <data name="CloseCanFailed" xml:space="preserve">
+    <value>关闭Can总线失败:{0}</value>
+  </data>
+  <data name="CloseCanSucceed" xml:space="preserve">
+    <value>关闭Can总线成功:{0}</value>
+  </data>
+  <data name="CloseTcpFailed" xml:space="preserve">
+    <value>关闭TCP连接失败:</value>
+  </data>
+  <data name="CloseTcpPortFailed" xml:space="preserve">
+    <value>关闭TCP端口失败:{0}</value>
+  </data>
+  <data name="CloseTcpPortSucceed" xml:space="preserve">
+    <value>关闭TCP端口成功:{0}</value>
+  </data>
+  <data name="CloseTcpSucceed" xml:space="preserve">
+    <value>关闭TCP连接成功:</value>
+  </data>
+  <data name="CloseUsbFailed" xml:space="preserve">
+    <value>关闭USB总线失败</value>
+  </data>
+  <data name="CloseUsbSucceed" xml:space="preserve">
+    <value>关闭USB总线成功</value>
+  </data>
+  <data name="CommConfigOption" xml:space="preserve">
+    <value>串口(RS232)配置选项</value>
+  </data>
+  <data name="CommParamNotConfig" xml:space="preserve">
+    <value>串口参数未配置</value>
+  </data>
+  <data name="ConfigComm" xml:space="preserve">
+    <value>必须配置串口</value>
+  </data>
+  <data name="ConfigFileError" xml:space="preserve">
+    <value>配置文件错误</value>
+  </data>
+  <data name="ConfigGPRSChannel" xml:space="preserve">
+    <value>多通道GPRS必须配置通道索引</value>
+  </data>
+  <data name="ConfigListenPort" xml:space="preserve">
+    <value>TCP服务器的本地监听端口不能为零且不能冲突!推荐1024～65535</value>
+  </data>
+  <data name="ConfigTcpClient" xml:space="preserve">
+    <value>必须配置TCP服务器域名或IP地址</value>
+  </data>
+  <data name="CreateBusFailed" xml:space="preserve">
+    <value>创建Bus失败:{0}</value>
+  </data>
+  <data name="GPRSChannel" xml:space="preserve">
+    <value>GPRS 通道:{0}</value>
+  </data>
+  <data name="GPRSConfigOption" xml:space="preserve">
+    <value>宏电多通道GPRS配置选项</value>
+  </data>
+  <data name="HongDianCommNotConfig" xml:space="preserve">
+    <value>HongDianBus未配置串口</value>
+  </data>
+  <data name="HongDianGPRSNotConfig" xml:space="preserve">
+    <value>多通道宏电模块的通道索引参数未配置</value>
+  </data>
+  <data name="OpenCanFailed" xml:space="preserve">
+    <value>打开Can总线失败:{0}</value>
+  </data>
+  <data name="OpenCanSucceed" xml:space="preserve">
+    <value>打开Can总线成功:{0}</value>
+  </data>
+  <data name="OpenTcpFailed" xml:space="preserve">
+    <value>建立TCP连接失败:</value>
+  </data>
+  <data name="OpenTcpPortFailed" xml:space="preserve">
+    <value>打开TCP端口失败:{0}</value>
+  </data>
+  <data name="OpenTcpPortSucceed" xml:space="preserve">
+    <value>打开TCP端口成功:{0}</value>
+  </data>
+  <data name="OpenTcpSucceed" xml:space="preserve">
+    <value>建立TCP连接成功:</value>
+  </data>
+  <data name="OpenUsbFailed" xml:space="preserve">
+    <value>打开USB总线失败</value>
+  </data>
+  <data name="OpenUsbSucceed" xml:space="preserve">
+    <value>打开USB总线成功</value>
+  </data>
+  <data name="Recv" xml:space="preserve">
+    <value>接收</value>
+  </data>
+  <data name="RemoteServerNotConfig" xml:space="preserve">
+    <value>TCP客户端的远程服务端参数未配置。</value>
+  </data>
+  <data name="RouterConflict" xml:space="preserve">
+    <value>物理链路类型冲突:{0}</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>发送</value>
+  </data>
+  <data name="TcpClientConfigOption" xml:space="preserve">
+    <value>TCP客户端配置选项</value>
+  </data>
+  <data name="TcpListenError" xml:space="preserve">
+    <value>TCP 侦听器错误:{0}</value>
+  </data>
+  <data name="TcpLocalPortNotConfig" xml:space="preserve">
+    <value>TCP服务端的本地监听端口参数未配置</value>
+  </data>
+  <data name="TcpServerConfigOption" xml:space="preserve">
+    <value>TCP服务端配置选项</value>
+  </data>
+  <data name="TcpServerPortEmpty" xml:space="preserve">
+    <value>TCP服务器端口不能为零</value>
+  </data>
+  <data name="TcpServerReadError" xml:space="preserve">
+    <value>TcpServer 读取数据发生错误:{0}</value>
+  </data>
+  <data name="ChannelCloseException" xml:space="preserve">
+    <value>{0} 通道关闭时发生异常:{1}</value>
+  </data>
+  <data name="ChannelDisable" xml:space="preserve">
+    <value>{0} 通道未启用</value>
+  </data>
+  <data name="ChannelDisableAndSendFailed" xml:space="preserve">
+    <value>[0] 通道未启用或未正确开启，导致发送失败</value>
+  </data>
+  <data name="ChannelOpenException" xml:space="preserve">
+    <value>{0} 通道打开时发生异常:{1}</value>
+  </data>
+  <data name="ChannelOpenFailed" xml:space="preserve">
+    <value>{0} 通道打开失败</value>
+  </data>
+  <data name="ChannelProtocolNotConfig" xml:space="preserve">
+    <value>{0} 通道未配置有效的通讯协议</value>
+  </data>
+  <data name="ChannelRooterNotConfig" xml:space="preserve">
+    <value>{0} 通道未配置有效的物理链路</value>
+  </data>
+  <data name="ConstructRooterException" xml:space="preserve">
+    <value>{0} 构造通讯链路时发生异常:{1}</value>
+  </data>
+  <data name="CustomReceiver" xml:space="preserve">
+    <value>自定义接收器</value>
+  </data>
+  <data name="CustomSender" xml:space="preserve">
+    <value>自定义发送器</value>
+  </data>
+  <data name="ParamConfig" xml:space="preserve">
+    <value>参数配置</value>
+  </data>
+  <data name="ProtocolConfig" xml:space="preserve">
+    <value>协议配置</value>
+  </data>
+  <data name="RooterConfig" xml:space="preserve">
+    <value>链路配置</value>
+  </data>
+  <data name="DataTooLong" xml:space="preserve">
+    <value>数据帧太多,传输数据太大。</value>
+  </data>
+  <data name="DestAddressError" xml:space="preserve">
+    <value>目标地址与当前地址不匹配, 目标地址:{0}</value>
+  </data>
+  <data name="DestAddressLength" xml:space="preserve">
+    <value>目标地址长度小于0,当前目标地址长度为: {0}</value>
+  </data>
+  <data name="IntScope" xml:space="preserve">
+    <value>根据FPI-485数据帧格式，整型数据范围应在0~9999之间</value>
+  </data>
+  <data name="LongScope" xml:space="preserve">
+    <value>FPI-485数据帧格式，长整型数据范围应在0~99999999之间</value>
+  </data>
+  <data name="SourceAddressLength" xml:space="preserve">
+    <value>源地址长度小于0,当前源地址长度为:{0}</value>
+  </data>
+  <data name="BuildPortTypeException" xml:space="preserve">
+    <value>在生成port类型列表时发生异常:{0}\r\n port类型:{1}</value>
+  </data>
+  <data name="BuildProtocolTypeException" xml:space="preserve">
+    <value>在生成协议列表时发生异常:{0} \r\n协议类型:{1}</value>
+  </data>
+  <data name="BuildProtocolViewException" xml:space="preserve">
+    <value>生成协议配置界面异常:{0}</value>
+  </data>
+  <data name="BusReadException" xml:space="preserve">
+    <value>物理链路:{0} 发生读取异常:{1}</value>
+  </data>
+  <data name="CommunicationTimeOut" xml:space="preserve">
+    <value>通讯超时!</value>
+  </data>
+  <data name="CreatePortFailed" xml:space="preserve">
+    <value>创建Port失败:{0}</value>
+  </data>
+  <data name="CreateProtocolFailed" xml:space="preserve">
+    <value>创建Protocol失败:{0}</value>
+  </data>
+  <data name="FrameNotInWindow" xml:space="preserve">
+    <value>接收到的数据帧没有在窗口中。帧号:{0}</value>
+  </data>
+  <data name="NotConfigView" xml:space="preserve">
+    <value>{0} 配置界面非 BaseConfigureView 类型</value>
+  </data>
+  <data name="NotContainParser" xml:space="preserve">
+    <value>{0} 未包含正确的解析器</value>
+  </data>
+  <data name="NotSupportType" xml:space="preserve">
+    <value>{0}类型不受支持</value>
+  </data>
+  <data name="ParamNotIdentical" xml:space="preserve">
+    <value>读回应与写的参数不一致,请将读写分开处理.</value>
+  </data>
+  <data name="PortTypeConflict" xml:space="preserve">
+    <value>port类型冲突:{0}</value>
+  </data>
+  <data name="ProtocolConflict" xml:space="preserve">
+    <value>协议冲突:{0}</value>
+  </data>
+  <data name="ReadNotResponse" xml:space="preserve">
+    <value>读取命令无回应</value>
+  </data>
+  <data name="SettingFailed" xml:space="preserve">
+    <value>设置失败</value>
+  </data>
+  <data name="SettingSucceed" xml:space="preserve">
+    <value>设置成功</value>
+  </data>
+  <data name="SystemPrompt" xml:space="preserve">
+    <value>系统提示</value>
+  </data>
+  <data name="WriteNotResponse" xml:space="preserve">
+    <value>设置命令无回应</value>
+  </data>
+  <data name="Channel" xml:space="preserve">
+    <value>通道{0}</value>
+  </data>
+  <data name="ChannelIdConflict" xml:space="preserve">
+    <value>通道编号冲突:{0}</value>
+  </data>
+  <data name="ConfigSave" xml:space="preserve">
+    <value>配置已保存，是否立即生效?</value>
+  </data>
+  <data name="DeleteChannel" xml:space="preserve">
+    <value>删除该通道:{0}?</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>否</value>
+  </data>
+  <data name="ProtocolInternalParamConfig" xml:space="preserve">
+    <value>通讯协议内部参数配置 [{0}]</value>
+  </data>
+  <data name="ProtocolNotNeedConfig" xml:space="preserve">
+    <value>此通讯协议无须配置!</value>
+  </data>
+  <data name="ProtocolUserParamConfig" xml:space="preserve">
+    <value>通讯协议用户参数配置 [{0}]</value>
+  </data>
+  <data name="RooterNotNeedConfig" xml:space="preserve">
+    <value>此通讯链路无须配置!</value>
+  </data>
+  <data name="SelectDeleteChannel" xml:space="preserve">
+    <value>请先选中要删除的通道</value>
+  </data>
+  <data name="SelectModifyChannel" xml:space="preserve">
+    <value>请先选中要修改的通道</value>
+  </data>
+  <data name="TheItemNotNeedConfig" xml:space="preserve">
+    <value>该项无须配置...</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>是</value>
+  </data>
+  <data name="ChannelId" xml:space="preserve">
+    <value>通道编号</value>
+  </data>
+  <data name="ChannelName" xml:space="preserve">
+    <value>通道命名</value>
+  </data>
+  <data name="ReceiveData" xml:space="preserve">
+    <value>接收数据：</value>
+  </data>
+  <data name="SendData" xml:space="preserve">
+    <value>发送数据：</value>
+  </data>
+</root>

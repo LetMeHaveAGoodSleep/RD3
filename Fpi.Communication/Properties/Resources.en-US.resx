@@ -1,0 +1,479 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="OpenTcpSucceed" xml:space="preserve">
+    <value>Found TCP connection succeed :</value>
+  </data>
+  <data name="SelectDeleteChannel" xml:space="preserve">
+    <value>Please choose the delect channel first</value>
+  </data>
+  <data name="CreatePortFailed" xml:space="preserve">
+    <value>Found port fail : {0}</value>
+  </data>
+  <data name="SourceAddressLength" xml:space="preserve">
+    <value>The source address length is smaller than 0 , the current source address length is : {0}</value>
+  </data>
+  <data name="CloseTcpSucceed" xml:space="preserve">
+    <value>Shut TCP connection succeed :</value>
+  </data>
+  <data name="DeleteChannel" xml:space="preserve">
+    <value>Delete the channel : {0} ?</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Modify" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAVNJREFUOE/tkjFS
+        wzAQRZ0TyDeQOjw0VieTRirpSEnpki7uoItvYHfJ0Ng3wDewynSopFRJh07AsqvEQ0IyZIYaN2t59v39
+        +utZcuFpnjs5+5y9lveLJISQOOcT/+4T94Z1a7/pUbN0nDM53rDFqFhvC+aGOx3aTQ8IgvcehsECncuq
+        BlMY0HMto0IEC9YSiLXCarrHpQlGQNjaC7BiYg+byU+z7sQEh00LYOTR5KbgFTneTcdpo+LiMIqfsLs1
+        YLM02l4pXlvFPHFn4/sN1koLBMWYsxYzGk4EPjQvw1MJk+1pciUEaK13lsk15oQC4UTAK+7DwyLemeBB
+        pEDwYSNZpw3RNY4Emutc1thsCSzkCRzXjCtG0NocM8D3Y4Er7mkaiSyz3K0yXkW7exAnU3jnYWqshIQm
+        48NLzvvYiHe0RQqx4jmumn6yaX1nV/D/8U8JfAE+8fJQ43r5LQAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="CloseTcpPortSucceed" xml:space="preserve">
+    <value>Shut TCP Port succeed : {0}</value>
+  </data>
+  <data name="RouterConflict" xml:space="preserve">
+    <value>Physical link type conflict : {0}</value>
+  </data>
+  <data name="ChannelProtocolNotConfig" xml:space="preserve">
+    <value>{0} channel don't configure available communication arrangement</value>
+  </data>
+  <data name="TcpClientConfigOption" xml:space="preserve">
+    <value>TCP client port configure option</value>
+  </data>
+  <data name="ReadNotResponse" xml:space="preserve">
+    <value>Read order without response</value>
+  </data>
+  <data name="CloseUsbFailed" xml:space="preserve">
+    <value>Shut USB bus fail</value>
+  </data>
+  <data name="NotContainParser" xml:space="preserve">
+    <value>{0} don't  contain correct resolver</value>
+  </data>
+  <data name="RooterConfig" xml:space="preserve">
+    <value>Chain circuit Configuration</value>
+  </data>
+  <data name="OpenCanSucceed" xml:space="preserve">
+    <value>Open Can bus succeed : {0}</value>
+  </data>
+  <data name="DestAddressError" xml:space="preserve">
+    <value>Destination address and current address don't match, destination address : {0}</value>
+  </data>
+  <data name="ConfigTcpClient" xml:space="preserve">
+    <value>Configure TCP server domain name or IP address</value>
+  </data>
+  <data name="BuildPortTypeException" xml:space="preserve">
+    <value>There is abnormity in making port type list : {0} \ r\n port type :{1}</value>
+  </data>
+  <data name="CommParamNotConfig" xml:space="preserve">
+    <value>Serial port parameter doesn't configure</value>
+  </data>
+  <data name="LongScope" xml:space="preserve">
+    <value>FPI -485data frame format , the range of long integer data is in 0~99999999</value>
+  </data>
+  <data name="ChannelOpenException" xml:space="preserve">
+    <value>{0} channel opening occur disorder: {1}</value>
+  </data>
+  <data name="BindChannel" xml:space="preserve">
+    <value>CAN communication must bind concretion channel</value>
+  </data>
+  <data name="OpenTcpPortSucceed" xml:space="preserve">
+    <value>Open TCP port succeed : {0}</value>
+  </data>
+  <data name="Remove" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAd1JREFUOE+FkyFz
+        20AQhfUPbBZosZRJ0MzHaiaxhlmsZhJriyQWsxia9WBYjsWsy2rWZTVcVrMcLNLr3jl2HKd1b+bNzUj7
+        vn2zKyXJhYMvs7JvZ/x0W6fnZfhYWGSD6pI/waeZxecK/W0tT22dH4qjeZoD1wldBISXqIsS8xJ9XQg+
+        TNJ+XjiYFH6U2P+aefOVRBjeLYEb7VhkHuNodv80O2IE2WUFv7OAZ/KeIV0D5EN4BfyYZG9mEoHBeDjO
+        tl6N7H+xx6JCjN1UEIVwgFwP3kJOAbwhUUUTxtr5xkCJ8HYJThUyGsjD6Azi1i8J+r4XH2JrNyjE7zzA
+        RJ4cqG2F3g3hrhJ5NYszAOO3mpYdwt1/J+ZpCvnJbB3Jt3HWPFydJbCPvI/ABDxazetJzYQNEesWOMTf
+        etTtHR87d/cdmlUFd7+E0wK76nQDHXjRQLQj5gZS5iD9oES8bkhgygpHgNtalJUBdu5ZFl6eIQolMwQp
+        iDUc6UICIJ+eAJp1CaMT3gP25kaBQmVMQ9bCrWw0/xVQOQVMDUzY71qnvW3iHSAHZe9n1uqGohy/ThAA
+        uckxyQYmQOxi311cGFoOt0gjPMQ+aFLMmuMMgjnN0ziUAFG5YDiVPnsxnP0EfwBtn9Xlb9kSygAAAABJ
+        RU5ErkJggg==
+</value>
+  </data>
+  <data name="CreateBusFailed" xml:space="preserve">
+    <value>Found Bus fail : {0}</value>
+  </data>
+  <data name="Search" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAVtJREFUOE/Nki12
+        g0AQx3MDuEFzA3DFBYkLrnHgWgcStytxu7IOZBx7g6ysREaurBxZN51ZAg0vqcmr6Ly3gpnhN//52Gz+
+        0lRvXdUaiF6Uu+aqztp7/pvau4My8IUYRNUK8Jt/BeAqUhvM33qMc41RJoAT9NHiPf9NdfluEam6sQ5r
+        bXGbSeSkxf/hUPbj4l8BhBpCTizlj4L0QCpoFmVjsG7JX5MygjK4EEO4AkiqCADI/dszeBAnBokYa2qL
+        zcdGwJyAszoPUd1JcgU2OzrUJJOrhanESg2SAePZ0YMpxoBkinmA7i14iZfhzTJDSgqehVti1FKcadwS
+        OExqjOnbA/yQyNwnoJ0HRUnXPXJLHHcOpiG31s9jAnCP3B/9zBJLSRv4VwBe2dyCV3m8DHJuoWj6sWx6
+        TEuNvHt+TzsB9JZdF8LA/lU53g7H+VLp3P2lPmz7qlsf06Okb4/oi1FL11wVAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="OpenTcpPortFailed" xml:space="preserve">
+    <value>Open TCP port fail : {0}</value>
+  </data>
+  <data name="SelectModifyChannel" xml:space="preserve">
+    <value>Please choose the modified channel first</value>
+  </data>
+  <data name="CustomReceiver" xml:space="preserve">
+    <value>User-defined receiver</value>
+  </data>
+  <data name="ParamConfig" xml:space="preserve">
+    <value>Parameter configure</value>
+  </data>
+  <data name="ChannelCloseException" xml:space="preserve">
+    <value>{0} channel closing occur disorder: {1}</value>
+  </data>
+  <data name="FrameNotInWindow" xml:space="preserve">
+    <value>The receive data frame isn't in the window  Number : {0}</value>
+  </data>
+  <data name="RooterNotNeedConfig" xml:space="preserve">
+    <value>This Communication chain circuit needn't configure !</value>
+  </data>
+  <data name="TcpListenError" xml:space="preserve">
+    <value>TCP dictograph error : {0}</value>
+  </data>
+  <data name="ConstructRooterException" xml:space="preserve">
+    <value>{0} structure communication chain circuit occur disorder : {1}</value>
+  </data>
+  <data name="HongDianGPRSNotConfig" xml:space="preserve">
+    <value>Multiple channel macro electricity modular channel indices parameter don't configure</value>
+  </data>
+  <data name="ChannelDisableAndSendFailed" xml:space="preserve">
+    <value>[0]channel doesn't  enable or right turn-on , result in sending fail</value>
+  </data>
+  <data name="OpenTcpFailed" xml:space="preserve">
+    <value>Found TCP connection failure :</value>
+  </data>
+  <data name="PortTypeConflict" xml:space="preserve">
+    <value>Port type conflict : {0}</value>
+  </data>
+  <data name="TheItemNotNeedConfig" xml:space="preserve">
+    <value>This item needn't configure ...</value>
+  </data>
+  <data name="BuildProtocolViewException" xml:space="preserve">
+    <value>Making arrangement configuration interface disorder  : {0}</value>
+  </data>
+  <data name="Channel" xml:space="preserve">
+    <value>Channel {0}</value>
+  </data>
+  <data name="CreateProtocolFailed" xml:space="preserve">
+    <value>Found protocol fail : {0}</value>
+  </data>
+  <data name="ProtocolNotNeedConfig" xml:space="preserve">
+    <value>This Communication arrangement needn't configure !</value>
+  </data>
+  <data name="SystemPrompt" xml:space="preserve">
+    <value>System prompt</value>
+  </data>
+  <data name="ProtocolConfig" xml:space="preserve">
+    <value>Arrangement configuration</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="IntScope" xml:space="preserve">
+    <value>According to FPI -485data frame format ， the range of integer data is in 0 ~ 9999</value>
+  </data>
+  <data name="GPRSConfigOption" xml:space="preserve">
+    <value>Macro emultiple channel lectricity GPRS configuration option</value>
+  </data>
+  <data name="CommConfigOption" xml:space="preserve">
+    <value>Serial port (RS 232) configure option</value>
+  </data>
+  <data name="ChannelDisable" xml:space="preserve">
+    <value>{0} channel don't  turn on</value>
+  </data>
+  <data name="Add" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAZhJREFUOE+dk6Fy
+        4zAQhq9PcH2EvEH1BhFrWAXLLFgWwbAamsXQrAvDsqxmFQyrYFkFyyJY9ndXqae9O3furjvzj2ds/d+/
+        u7bPfnyz7u6PPh6y+Za92T73bpOw3T2G/wY020xuE3FLKe0fnr/u4O4BjpkQuQVTC01aV3PCehvT/vE4
+        b+aYoApDRqCCeIjIqUfoCL5L8BvG/nB0s62rcaq2j7BBQQUtxWp2YsYr0Kwp/RWgoHZQyCQGjxKw6xGd
+        rSP9UfXAVJKk1Uu69YR+J89kF+naYL1c8j8DFBJltNKLebVAjoyrm9v5Eeg+nVpIERgJeMlAKSjDKTkN
+        0n7KMCv/MUK7a2VRHiyzMfUgOUya1gVkScSNRXYGceORcwGNvwH4ieC8lTTZcBWh5HeILsyeIwooSXPx
+        MAMIo4O9ngAncxBgjq52E4nAg3xQSb+JGYBnAawsrDlHGj3KU6hXhUy6uGyI5A1Vcfp1Bwow1mB58dMq
+        hLpTemZZGhlwt6hwXdyk5VXz8ROpeWEWdasKEbEaPkvuffnXvQFAzLhB0lSrDgAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="BuildProtocolTypeException" xml:space="preserve">
+    <value>There is abnormity in making the arrangement list : {0} \ r\n protocol type :{1}</value>
+  </data>
+  <data name="TcpLocalPortNotConfig" xml:space="preserve">
+    <value>TCP service port local listening port parameter  don't  configure</value>
+  </data>
+  <data name="ChannelOpenFailed" xml:space="preserve">
+    <value>{0} channel open fail</value>
+  </data>
+  <data name="OpenCanFailed" xml:space="preserve">
+    <value>Open Can bus fail : {0}</value>
+  </data>
+  <data name="ParamNotIdentical" xml:space="preserve">
+    <value>The reading response and the writing parameter are different, Please dispose the read-write separately.</value>
+  </data>
+  <data name="DataTooLong" xml:space="preserve">
+    <value>Data frame is too much ,transmitting data is oversize .</value>
+  </data>
+  <data name="SettingSucceed" xml:space="preserve">
+    <value>Setting succeed</value>
+  </data>
+  <data name="OpenUsbSucceed" xml:space="preserve">
+    <value>Open USB bus succeed</value>
+  </data>
+  <data name="ProtocolInternalParamConfig" xml:space="preserve">
+    <value>Communication arrangement interior parameter configuration [{0}]</value>
+  </data>
+  <data name="OpenUsbFailed" xml:space="preserve">
+    <value>Open USB bus fail</value>
+  </data>
+  <data name="DestAddressLength" xml:space="preserve">
+    <value>The destination address  length is smaller than 0 , the current destination address length is : {0}</value>
+  </data>
+  <data name="CANConfigOption" xml:space="preserve">
+    <value>CAN configure option</value>
+  </data>
+  <data name="HongDianCommNotConfig" xml:space="preserve">
+    <value>HongDianBus don't configure serial port</value>
+  </data>
+  <data name="CommunicationTimeOut" xml:space="preserve">
+    <value>Communication overtime !</value>
+  </data>
+  <data name="BuildRouterExeption" xml:space="preserve">
+    <value>There is abnormity in making physical  link type list : {0} \r\n physical link type : {1}</value>
+  </data>
+  <data name="CloseTcpFailed" xml:space="preserve">
+    <value>Shut TCP connection failure :</value>
+  </data>
+  <data name="CloseTcpPortFailed" xml:space="preserve">
+    <value>Shut TCP Port fail : {0}</value>
+  </data>
+  <data name="BusReadException" xml:space="preserve">
+    <value>Physical link : {0} occur reading disorder : {1}</value>
+  </data>
+  <data name="CloseUsbSucceed" xml:space="preserve">
+    <value>Shut USB bus succeed</value>
+  </data>
+  <data name="ChannelRooterNotConfig" xml:space="preserve">
+    <value>{0} channel don't configure available physical link</value>
+  </data>
+  <data name="SettingFailed" xml:space="preserve">
+    <value>Setting fail</value>
+  </data>
+  <data name="ConfigFileError" xml:space="preserve">
+    <value>Configuration files error</value>
+  </data>
+  <data name="CloseCanSucceed" xml:space="preserve">
+    <value>Shut Can bus succeed : {0}</value>
+  </data>
+  <data name="TcpServerPortEmpty" xml:space="preserve">
+    <value>TCP server port can't be zero</value>
+  </data>
+  <data name="CANNotConfig" xml:space="preserve">
+    <value>CAN parameter don't been configured</value>
+  </data>
+  <data name="ConfigGPRSChannel" xml:space="preserve">
+    <value>Multiple channel GPRS must configure channel indices</value>
+  </data>
+  <data name="ProtocolUserParamConfig" xml:space="preserve">
+    <value>Communication arrangement user parameter configuration [{0}]</value>
+  </data>
+  <data name="TcpServerReadError" xml:space="preserve">
+    <value>TcpServer take a reading data occur error : {0}</value>
+  </data>
+  <data name="ConfigListenPort" xml:space="preserve">
+    <value>TCP server local listening port can't be zero and collision !Recommend 1024～65535</value>
+  </data>
+  <data name="ConfigComm" xml:space="preserve">
+    <value>Configure Serial port</value>
+  </data>
+  <data name="ConfigSave" xml:space="preserve">
+    <value>The configuration saved， whether effect immediately ?</value>
+  </data>
+  <data name="NotConfigView" xml:space="preserve">
+    <value>{0} configure interface isn't BaseConfigureView type</value>
+  </data>
+  <data name="ProtocolConflict" xml:space="preserve">
+    <value>Arrangement collision : {0}</value>
+  </data>
+  <data name="TcpServerConfigOption" xml:space="preserve">
+    <value>TCP service port configure option</value>
+  </data>
+  <data name="CloseCanFailed" xml:space="preserve">
+    <value>Shut Can bus fail : {0}</value>
+  </data>
+  <data name="AcceptTcpConnect" xml:space="preserve">
+    <value>Accept TCP client connection : {0}</value>
+  </data>
+  <data name="ChannelIdConflict" xml:space="preserve">
+    <value>Channel number collision : {0}</value>
+  </data>
+  <data name="NotSupportType" xml:space="preserve">
+    <value>{0} Type are free from support</value>
+  </data>
+  <data name="WriteNotResponse" xml:space="preserve">
+    <value>Setting order without response</value>
+  </data>
+  <data name="CustomSender" xml:space="preserve">
+    <value>User-defined sender</value>
+  </data>
+  <data name="RemoteServerNotConfig" xml:space="preserve">
+    <value>TCP client port remote service port parameter don't configure.</value>
+  </data>
+  <data name="Edit" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAASVJREFUOE+Vkq1y
+        wzAQhJU36SP4EfoIfgTDQMNAwULDQMFCw0LDQpUFChYalm13lTlXlpXJVDPfOP65vb29nNw/D3oHlXwl
+        57roTm76SNgx8574dxHhA7mSaQFCALxH7Fwm99bH9Vl/ACOtgLBiDD3Qv2DqX48CuWODh8XmoOxY/24V
+        j2/zvbuOOlpR3b1VHG8JewGGVAp0HSCwxhxYOXP8BpZIAV86oIAFJQfbkYBg8gpM7xbmfRTgimqBcA15
+        TVYs0U3gkw4upQPuN9Ga2DmodmsCM22Ml/AX4kgBzSYerdGea4SjAFdiAvmqORWWriU3Fgs+HMbSARO1
+        D585eCpQd80FNXJwbjjQH8TQqjJMXJZr9gJMVKk24ayad4OdVTycp20Lv0oXpblEMTJFAAAAAElFTkSu
+        QmCC
+</value>
+  </data>
+  <data name="Recv" xml:space="preserve">
+    <value>Receive</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="GPRSChannel" xml:space="preserve">
+    <value>GPRS channel : {0}</value>
+  </data>
+  <data name="ChannelId" xml:space="preserve">
+    <value>Channel Id</value>
+  </data>
+  <data name="ChannelName" xml:space="preserve">
+    <value>Channel Name</value>
+  </data>
+  <data name="ReceiveData" xml:space="preserve">
+    <value>Receive Data:</value>
+  </data>
+  <data name="SendData" xml:space="preserve">
+    <value>Send Data:</value>
+  </data>
+</root>

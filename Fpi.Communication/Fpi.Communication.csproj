@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Fpi.Communication</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Fpi</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>4194304</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Communication\Buses\BusHelper.cs" />
+    <Compile Include="Communication\Buses\CanBus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Communication\Buses\GprsBuses\GprsUDPServerBus.cs" />
+    <Compile Include="Communication\Buses\GprsBuses\GprsUserInfo.cs" />
+    <Compile Include="Communication\Buses\GprsBuses\HDAPIWapper.cs" />
+    <Compile Include="Communication\Buses\TcpServers\ClientKeyPacket.cs" />
+    <Compile Include="Communication\Buses\SPCommBus.cs" />
+    <Compile Include="Communication\Buses\TcpClientSocket.cs" />
+    <Compile Include="Communication\Buses\CommBus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Communication\Buses\BusLogHelper.cs" />
+    <Compile Include="Communication\Buses\HongDianBus.cs" />
+    <Compile Include="Communication\Buses\TcpServers\FpiClientKeyPacket.cs" />
+    <Compile Include="Communication\Buses\TcpServers\NetTcpServer.cs" />
+    <Compile Include="Communication\Buses\TcpServers\TcpServerForMany.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Communication\Buses\UdpBus.cs" />
+    <Compile Include="Communication\Converter\BracketDataConverter.cs" />
+    <Compile Include="Communication\Converter\DataConverter.cs" />
+    <Compile Include="Communication\Converter\IDataConvertable.cs" />
+    <Compile Include="Communication\Converter\UnReverseDataConverter.cs" />
+    <Compile Include="Communication\Exceptions\CommunicationParamException.cs" />
+    <Compile Include="Communication\Interfaces\IBus.cs" />
+    <Compile Include="Communication\Buses\BaseBus.cs" />
+    <Compile Include="Communication\Buses\PhysicalCanBus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Communication\Buses\PhysicalHongDianBus.cs" />
+    <Compile Include="Communication\Buses\TcpServers\TcpServer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Communication\Buses\UsbBus.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Communication\ByteArrayWrap.cs" />
+    <Compile Include="Communication\Commands\Command.cs" />
+    <Compile Include="Communication\Commands\CommandExtendId.cs" />
+    <Compile Include="Communication\Commands\CommandPort.cs" />
+    <Compile Include="Communication\Commands\CommandResendKey.cs" />
+    <Compile Include="Communication\Commands\Config\SpecCommandManager.cs" />
+    <Compile Include="Communication\Commands\Config\WebCommandManager.cs" />
+    <Compile Include="Communication\Commands\SendCommand.cs" />
+    <Compile Include="Communication\Commands\RecvCommand.cs" />
+    <Compile Include="Communication\Crc\Crc16.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Communication\Exceptions\CommunicationException.cs" />
+    <Compile Include="Communication\Commands\Config\CommandDesc.cs" />
+    <Compile Include="Communication\Commands\Config\CommandExtend.cs" />
+    <Compile Include="Communication\Commands\Config\CommandManager.cs" />
+    <Compile Include="Communication\Commands\Config\Display.cs" />
+    <Compile Include="Communication\Commands\Config\Param.cs" />
+    <Compile Include="Communication\Commands\ICommandListener.cs" />
+    <Compile Include="Communication\Commands\ParametersData.cs" />
+    <Compile Include="Communication\Exceptions\CommandException.cs" />
+    <Compile Include="Communication\Exceptions\CrcException.cs" />
+    <Compile Include="Communication\Exceptions\DataFormatException.cs" />
+    <Compile Include="Communication\Exceptions\DeviceException.cs" />
+    <Compile Include="Communication\Exceptions\PortException.cs" />
+    <Compile Include="Communication\Exceptions\WebException.cs" />
+    <Compile Include="Communication\Exceptions\CommandDelaySetException.cs" />
+    <Compile Include="Communication\Interfaces\ISupportPipe.cs" />
+    <Compile Include="Communication\Config\PipeLogHelper.cs" />
+    <Compile Include="Communication\Interfaces\IExceptionReceivable.cs" />
+    <Compile Include="Communication\Interfaces\IPortStatck.cs" />
+    <Compile Include="Communication\Ports\FpiPorts\InsertFilterPort.cs" />
+    <Compile Include="Communication\Ports\PortLogHelper.cs" />
+    <Compile Include="Communication\Ports\ModBus\ModBusPort.cs" />
+    <Compile Include="Communication\Ports\PortHelper.cs" />
+    <Compile Include="Communication\Ports\FpiPorts\BracketPort.cs" />
+    <Compile Include="Communication\Ports\SyncPorts\ResendKeys\Fpi485ResendKey.cs" />
+    <Compile Include="Communication\Ports\FpiPorts\FpiRouterPort.cs" />
+    <Compile Include="Communication\Ports\FpiPorts\HJ212Port.cs" />
+    <Compile Include="Communication\Ports\FpiPorts\InsertPort.cs" />
+    <Compile Include="Communication\Ports\FpiPorts\UsbSpec3010Port.cs" />
+    <Compile Include="Communication\Ports\FpiPorts\UsbSpecPort.cs" />
+    <Compile Include="Communication\Ports\Grouping\GroupingFrame.cs" />
+    <Compile Include="Communication\Ports\Grouping\GroupingPort.cs" />
+    <Compile Include="Communication\Ports\Grouping\ReceiverSlideWindow.cs" />
+    <Compile Include="Communication\Ports\Grouping\ResendThread.cs" />
+    <Compile Include="Communication\Ports\Grouping\SenderSlideWindow.cs" />
+    <Compile Include="Communication\Ports\Grouping\SendState.cs" />
+    <Compile Include="Communication\Ports\Grouping\SlideWindow.cs" />
+    <Compile Include="Communication\Interfaces\IConnector.cs" />
+    <Compile Include="Communication\Interfaces\IByteStream.cs" />
+    <Compile Include="Communication\Interfaces\IReceivable.cs" />
+    <Compile Include="Communication\Commands\CommandException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Communication\Ports\AsynPorts\DataNode.cs" />
+    <Compile Include="Communication\Ports\AsynPorts\AsynThread.cs" />
+    <Compile Include="Communication\Ports\AsynPorts\AsynRecvPort.cs" />
+    <Compile Include="Communication\Ports\BasePort.cs" />
+    <Compile Include="Communication\Ports\BusPort.cs" />
+    <Compile Include="Communication\Ports\AsynPorts\AsynSendPort.cs" />
+    <Compile Include="Communication\Ports\CommPorts\SimplePort.cs" />
+    <Compile Include="Communication\Interfaces\IPort.cs" />
+    <Compile Include="Communication\Interfaces\IPortOwner.cs" />
+    <Compile Include="Communication\Ports\CommPorts\CompressPort.cs" />
+    <Compile Include="Communication\Ports\NumberPorts\NumberData.cs" />
+    <Compile Include="Communication\Ports\NumberPorts\NumberResendKey.cs" />
+    <Compile Include="Communication\Ports\NumberPorts\NumberPort.cs" />
+    <Compile Include="Communication\Interfaces\IOvertime.cs" />
+    <Compile Include="Communication\Ports\SyncPorts\TimeoutException.cs" />
+    <Compile Include="Communication\Ports\SyncPorts\ResendKeys\IResendKey.cs" />
+    <Compile Include="Communication\Ports\SyncPorts\SyncPort.cs" />
+    <Compile Include="Communication\Ports\SyncPorts\SyncSendNode.cs" />
+    <Compile Include="Communication\Ports\SyncPorts\NumberSyncPort.cs" />
+    <Compile Include="Communication\Exceptions\ProtocolException.cs" />
+    <Compile Include="Communication\Protocols\Common\Simple\SimpleParser.cs" />
+    <Compile Include="Communication\Protocols\Common\Simple\SimpleProtocol.cs" />
+    <Compile Include="Communication\Protocols\Interfaces\IProtocolComponent.cs" />
+    <Compile Include="Communication\Protocols\Interfaces\IRC_Informer.cs" />
+    <Compile Include="Communication\Protocols\Interfaces\ISender.cs" />
+    <Compile Include="Communication\Protocols\ProtocolLogHelper.cs" />
+    <Compile Include="Communication\Protocols\Parser.cs" />
+    <Compile Include="Communication\Protocols\Protocol.cs" />
+    <Compile Include="Communication\Protocols\ProtocolComparer.cs" />
+    <Compile Include="Communication\Protocols\ProtocolComponent.cs" />
+    <Compile Include="Communication\Protocols\ProtocolDesc.cs" />
+    <Compile Include="Communication\Protocols\ProtocolHelper.cs" />
+    <Compile Include="Communication\Protocols\ProtocolManager.cs" />
+    <Compile Include="Communication\Protocols\Receiver.cs" />
+    <Compile Include="Communication\Protocols\Sender.cs" />
+    <Compile Include="Communication\StringWrap.cs" />
+    <Compile Include="Communication\TimeoutByteStream.cs" />
+    <Compile Include="Communication\Ports\Web\WebPort.cs" />
+    <Compile Include="Communication\Ports\Web\WebRecvCommand.cs" />
+    <Compile Include="Communication\Ports\Web\WebSendCommand.cs" />
+    <Compile Include="Communication\Config\Pipe.cs" />
+    <Compile Include="Communication\Config\PortManager.cs" />
+    <Compile Include="Communication\Config\SendThread.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.en-US.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Modify.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Search.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

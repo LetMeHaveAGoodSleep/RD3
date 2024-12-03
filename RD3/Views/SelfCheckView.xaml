@@ -9,8 +9,10 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="640"
     Height="360"
+    d:DataContext="{d:DesignInstance Type=viewmodels:SelfCheckViewModel}"
     Background="#012148"
     mc:Ignorable="d">
     <prism:Dialog.WindowStyle>
@@ -38,23 +40,18 @@
             Height="30"
             Color="DarkOrange"
             Duration="0:0:2.0" />
-        <TextBox
+        <TextBlock
+            Name="TxtInit"
             Grid.Row="1"
             Width="400"
             Height="130"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Background="Transparent"
-            BorderThickness="0"
-            FontSize="16"
+            FontSize="{DynamicResource SubHeadFontSize}"
             Foreground="WhiteSmoke"
-            IsReadOnly="True"
-            IsReadOnlyCaretVisible="True"
-            IsUndoEnabled="False"
-            Text="Application is initializing..."
+            Text="{Binding Content}"
             TextAlignment="Left"
-            TextChanged="TextBox_TextChanged"
-            TextWrapping="Wrap"
-            VerticalScrollBarVisibility="Auto" />
+            TextWrapping="Wrap" />
     </Grid>
 </UserControl>

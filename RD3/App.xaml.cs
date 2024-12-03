@@ -1,4 +1,5 @@
 ﻿using DryIoc;
+using Fpi.Util.Interfaces.Initialize;
 using log4net;
 using MaterialDesignThemes.Wpf;
 using Prism.DryIoc;
@@ -128,6 +129,7 @@ namespace RD3
             containerRegistry.RegisterDialog<CommunicationView, CommunicationViewModel>();
             containerRegistry.RegisterDialog<EditClientView, EditClientViewModel>();
             containerRegistry.RegisterInstance<ILanguage>(new XZLanguage());
+            containerRegistry.RegisterInstance<IInitializationListener>(new InitializationListener()); 
             containerRegistry.RegisterForNavigation<MCUDebugView, MCUDebugViewModel>();
             containerRegistry.RegisterForNavigation<ControlView, ControlViewModel>();
             containerRegistry.RegisterForNavigation<AddSampleView, AddSampleViewModel>();
