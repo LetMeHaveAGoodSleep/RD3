@@ -28,7 +28,6 @@
             <Setter Property="AllowsTransparency" Value="True" />
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
             <Setter Property="Opacity" Value="1" />
         </Style>
     </prism:Dialog.WindowStyle>

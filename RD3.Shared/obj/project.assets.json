@@ -431,6 +431,54 @@
             "rid": "win"
           }
         }
+      },
+      "Fpi.Communication/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "Fpi.Instrument": "1.0.0",
+          "Fpi.Util": "1.0.0",
+          "Fpi.Xml": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Fpi.Communication.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fpi.Communication.dll": {}
+        }
+      },
+      "Fpi.Instrument/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "Fpi.Util": "1.0.0",
+          "Fpi.Xml": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Fpi.Instrument.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fpi.Instrument.dll": {}
+        }
+      },
+      "Fpi.Util/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fpi.Util.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fpi.Util.dll": {}
+        }
+      },
+      "Fpi.Xml/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "Fpi.Util": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Fpi.Xml.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fpi.Xml.dll": {}
+        }
       }
     }
   },
@@ -1331,10 +1379,32 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "Fpi.Communication/1.0.0": {
+      "type": "project",
+      "path": "../Fpi.Communication/Fpi.Communication.csproj",
+      "msbuildProject": "../Fpi.Communication/Fpi.Communication.csproj"
+    },
+    "Fpi.Instrument/1.0.0": {
+      "type": "project",
+      "path": "../Fpi.Instrument/Fpi.Instrument.csproj",
+      "msbuildProject": "../Fpi.Instrument/Fpi.Instrument.csproj"
+    },
+    "Fpi.Util/1.0.0": {
+      "type": "project",
+      "path": "../Fpi.Util/Fpi.Util.csproj",
+      "msbuildProject": "../Fpi.Util/Fpi.Util.csproj"
+    },
+    "Fpi.Xml/1.0.0": {
+      "type": "project",
+      "path": "../Fpi.Xml/Fpi.Xml.csproj",
+      "msbuildProject": "../Fpi.Xml/Fpi.Xml.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
+      "Fpi.Communication >= 1.0.0",
+      "Fpi.Xml >= 1.0.0",
       "Newtonsoft.Json >= 13.0.3",
       "Prism.Core >= 8.1.97",
       "System.Data.SQLite >= 1.0.118",
@@ -1373,7 +1443,14 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
+              "projectPath": "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj"
+            },
+            "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+              "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

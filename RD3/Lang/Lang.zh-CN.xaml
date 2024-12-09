@@ -177,4 +177,5 @@
     <system:String x:Key="Loading {0}\r\nException: {1}\r\nSource: {2}">加载{0}\r\n异常:{1}\r\n来源:{2}</system:String>
     <system:String x:Key="Loading {0}...">正在加载 {0} ...</system:String>
     <system:String x:Key="Loading completed">加载完成</system:String>
+    <system:String x:Key="DOE">实验设计</system:String>
 </ResourceDictionary>

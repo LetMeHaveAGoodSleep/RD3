@@ -12,7 +12,6 @@
     Width="250"
     Height="350"
     d:DataContext="{d:DesignInstance Type=viewmodels:EditClientViewModel}"
-    Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
@@ -27,85 +26,86 @@
             <Setter Property="AllowsTransparency" Value="True" />
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
             <Setter Property="Opacity" Value="1" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Grid Margin="5">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
-        <TextBox
-            Width="200"
-            VerticalAlignment="Center"
-            hc:InfoElement.Title="{ex:Language Key='Name'}"
-            Style="{StaticResource TextBoxExtend}"
-            Text="{Binding Client.Name}" />
-        <TextBox
-            Grid.Row="1"
-            Width="200"
-            VerticalAlignment="Center"
-            hc:InfoElement.Title="{ex:Language Key='Host'}"
-            Style="{StaticResource TextBoxExtend}"
-            Text="{Binding Client.Host}" />
-        <TextBox
-            Grid.Row="2"
-            Width="200"
-            VerticalAlignment="Center"
-            hc:InfoElement.Title="{ex:Language Key='Port'}"
-            Style="{StaticResource TextBoxExtend}"
-            Text="{Binding Client.Port}" />
-        <TextBox
-            Grid.Row="3"
-            Width="200"
-            VerticalAlignment="Center"
-            hc:InfoElement.Title="{ex:Language Key='ReconnectDelay'}"
-            Style="{StaticResource TextBoxExtend}"
-            Text="{Binding Client.ReconnectDelay}" />
-        <TextBox
-            Grid.Row="4"
-            Width="200"
-            VerticalAlignment="Center"
-            hc:InfoElement.Title="{ex:Language Key='RetryTimes'}"
-            Style="{StaticResource TextBoxExtend}"
-            Text="{Binding Client.RetryTimes}" />
-        <StackPanel
-            Grid.Row="6"
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal">
-            <Button
-                Width="80"
-                Height="30"
-                Margin="5"
+    <Border Style="{StaticResource BorderCard}">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBox
+                Width="200"
+                VerticalAlignment="Center"
+                hc:InfoElement.Title="{ex:Language Key='Name'}"
+                Style="{StaticResource TextBoxExtend}"
+                Text="{Binding Client.Name}" />
+            <TextBox
+                Grid.Row="1"
+                Width="200"
+                VerticalAlignment="Center"
+                hc:InfoElement.Title="{ex:Language Key='Host'}"
+                Style="{StaticResource TextBoxExtend}"
+                Text="{Binding Client.Host}" />
+            <TextBox
+                Grid.Row="2"
+                Width="200"
+                VerticalAlignment="Center"
+                hc:InfoElement.Title="{ex:Language Key='Port'}"
+                Style="{StaticResource TextBoxExtend}"
+                Text="{Binding Client.Port}" />
+            <TextBox
+                Grid.Row="3"
+                Width="200"
+                VerticalAlignment="Center"
+                hc:InfoElement.Title="{ex:Language Key='ReconnectDelay'}"
+                Style="{StaticResource TextBoxExtend}"
+                Text="{Binding Client.ReconnectDelay}" />
+            <TextBox
+                Grid.Row="4"
+                Width="200"
+                VerticalAlignment="Center"
+                hc:InfoElement.Title="{ex:Language Key='RetryTimes'}"
+                Style="{StaticResource TextBoxExtend}"
+                Text="{Binding Client.RetryTimes}" />
+            <StackPanel
+                Grid.Row="6"
+                Grid.ColumnSpan="2"
                 HorizontalAlignment="Right"
-                HorizontalContentAlignment="Center"
-                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                BorderBrush="{StaticResource PrimaryBrush}"
-                Command="{Binding CancelCommand}"
-                Content="{ex:Language Key='Cancel'}"
-                FontSize="{DynamicResource NormalFontSize}"
-                Foreground="{StaticResource PrimaryBrush}" />
-            <Button
-                Width="80"
-                Height="30"
-                Margin="5"
-                HorizontalAlignment="Right"
-                HorizontalContentAlignment="Center"
-                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                Background="{StaticResource PrimaryBrush}"
-                BorderBrush="{StaticResource PrimaryBrush}"
-                Command="{Binding OKCommand}"
-                Content="{ex:Language Key='OK'}"
-                FontSize="{DynamicResource NormalFontSize}"
-                Foreground="White"
-                Visibility="{Binding Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        </StackPanel>
-    </Grid>
+                Orientation="Horizontal">
+                <Button
+                    Width="80"
+                    Height="30"
+                    Margin="5"
+                    HorizontalAlignment="Right"
+                    HorizontalContentAlignment="Center"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                    BorderBrush="{StaticResource PrimaryBrush}"
+                    Command="{Binding CancelCommand}"
+                    Content="{ex:Language Key='Cancel'}"
+                    FontSize="{DynamicResource NormalFontSize}"
+                    Foreground="{StaticResource PrimaryBrush}" />
+                <Button
+                    Width="80"
+                    Height="30"
+                    Margin="5"
+                    HorizontalAlignment="Right"
+                    HorizontalContentAlignment="Center"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                    Background="{StaticResource PrimaryBrush}"
+                    BorderBrush="{StaticResource PrimaryBrush}"
+                    Command="{Binding OKCommand}"
+                    Content="{ex:Language Key='OK'}"
+                    FontSize="{DynamicResource NormalFontSize}"
+                    Foreground="White"
+                    Visibility="{Binding Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>

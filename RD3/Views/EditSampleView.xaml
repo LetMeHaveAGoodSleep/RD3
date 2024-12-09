@@ -13,7 +13,6 @@
     Width="220"
     Height="400"
     d:DataContext="{d:DesignInstance Type=viewmodels:EditSampleViewModel}"
-    Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ObjectDataProvider
@@ -38,110 +37,115 @@
             <Setter Property="AllowsTransparency" Value="True" />
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
             <Setter Property="Opacity" Value="1" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Grid Margin="5">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="70" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
-        <TextBox
-            Grid.ColumnSpan="2"
-            Width="200"
-            VerticalAlignment="Center"
-            hc:InfoElement.Title="{ex:Language Key='Sample ID'}"
-            IsEnabled="False"
-            Style="{StaticResource TextBoxExtend}"
-            Text="{Binding Sample.Id}" />
-        <ComboBox
-            Grid.Row="1"
-            Grid.ColumnSpan="2"
-            Width="200"
-            VerticalAlignment="Center"
-            hc:InfoElement.Title="{ex:Language Key='Batch'}"
-            ItemsSource="{Binding BatchList}"
-            SelectedItem="{Binding Batch}"
-            Style="{StaticResource ComboBoxExtend}" />
-        <hc:CheckComboBox
-            Name="cmbReactor"
-            Grid.Row="2"
-            Grid.ColumnSpan="2"
-            MaxWidth="200"
-            MaxHeight="60"
-            hc:InfoElement.ShowClearButton="True"
-            hc:InfoElement.Title="{ex:Language Key='Reactor'}"
-            IsEnabled="{Binding Enable}"
-            ItemsSource="{Binding ReactorList}"
-            ShowSelectAllButton="True"
-            Style="{StaticResource CheckComboBoxPlus}" />
-        <ComboBox
-            Grid.Row="3"
-            Grid.ColumnSpan="2"
-            Width="200"
-            hc:InfoElement.Title="{ex:Language Key='Type'}"
-            ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
-            SelectedItem="{Binding UserType}"
-            Style="{StaticResource ComboBoxExtend}" />
-        <ComboBox
-            Grid.Row="4"
-            Width="130"
-            hc:InfoElement.Title="{ex:Language Key='Main parameter'}"
-            ItemsSource="{Binding DataList}"
-            SelectedIndex="0"
-            Style="{StaticResource ComboBoxExtend}" />
-        <TextBox
-            Grid.Row="4"
-            Grid.Column="1"
-            Width="70"
-            VerticalAlignment="Center"
-            hc:InfoElement.Title="{ex:Language Key='Value'}"
-            Style="{StaticResource TextBoxExtend}" />
-        <TextBox
-            Grid.Row="5"
-            Grid.ColumnSpan="2"
-            VerticalAlignment="Stretch"
-            hc:InfoElement.Title="{ex:Language Key='Remark'}"
-            Style="{StaticResource TextBoxExtend}" />
-        <StackPanel
-            Grid.Row="6"
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal">
-            <Button
-                Width="80"
-                Height="30"
-                Margin="5"
+    <Border
+        Background="{StaticResource BackGroundBrush}"
+        BorderBrush="{DynamicResource BorderBrush}"
+        BorderThickness="0"
+        CornerRadius="4">
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="70" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBox
+                Grid.ColumnSpan="2"
+                Width="200"
+                VerticalAlignment="Center"
+                hc:InfoElement.Title="{ex:Language Key='Sample ID'}"
+                IsEnabled="False"
+                Style="{StaticResource TextBoxExtend}"
+                Text="{Binding Sample.Id}" />
+            <ComboBox
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Width="200"
+                VerticalAlignment="Center"
+                hc:InfoElement.Title="{ex:Language Key='Batch'}"
+                ItemsSource="{Binding BatchList}"
+                SelectedItem="{Binding Batch}"
+                Style="{StaticResource ComboBoxExtend}" />
+            <hc:CheckComboBox
+                Name="cmbReactor"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                MaxWidth="200"
+                MaxHeight="60"
+                hc:InfoElement.ShowClearButton="True"
+                hc:InfoElement.Title="{ex:Language Key='Reactor'}"
+                IsEnabled="{Binding Enable}"
+                ItemsSource="{Binding ReactorList}"
+                ShowSelectAllButton="True"
+                Style="{StaticResource CheckComboBoxPlus}" />
+            <ComboBox
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                Width="200"
+                hc:InfoElement.Title="{ex:Language Key='Type'}"
+                ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+                SelectedItem="{Binding UserType}"
+                Style="{StaticResource ComboBoxExtend}" />
+            <ComboBox
+                Grid.Row="4"
+                Width="130"
+                hc:InfoElement.Title="{ex:Language Key='Main parameter'}"
+                ItemsSource="{Binding DataList}"
+                SelectedIndex="0"
+                Style="{StaticResource ComboBoxExtend}" />
+            <TextBox
+                Grid.Row="4"
+                Grid.Column="1"
+                Width="70"
+                VerticalAlignment="Center"
+                hc:InfoElement.Title="{ex:Language Key='Value'}"
+                Style="{StaticResource TextBoxExtend}" />
+            <TextBox
+                Grid.Row="5"
+                Grid.ColumnSpan="2"
+                VerticalAlignment="Stretch"
+                hc:InfoElement.Title="{ex:Language Key='Remark'}"
+                Style="{StaticResource TextBoxExtend}" />
+            <StackPanel
+                Grid.Row="6"
+                Grid.ColumnSpan="2"
                 HorizontalAlignment="Right"
-                HorizontalContentAlignment="Center"
-                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                BorderBrush="{StaticResource PrimaryBrush}"
-                Content="{ex:Language Key='Cancel'}"
-                FontSize="{DynamicResource NormalFontSize}"
-                Foreground="{StaticResource PrimaryBrush}" />
-            <Button
-                Width="80"
-                Height="30"
-                Margin="5"
-                HorizontalAlignment="Right"
-                HorizontalContentAlignment="Center"
-                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                Background="{StaticResource PrimaryBrush}"
-                BorderBrush="{StaticResource PrimaryBrush}"
-                Content="{ex:Language Key='OK'}"
-                FontSize="{DynamicResource NormalFontSize}"
-                Foreground="White"
-                Visibility="{Binding Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
-        </StackPanel>
-    </Grid>
+                Orientation="Horizontal">
+                <Button
+                    Width="80"
+                    Height="30"
+                    Margin="5"
+                    HorizontalAlignment="Right"
+                    HorizontalContentAlignment="Center"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                    BorderBrush="{StaticResource PrimaryBrush}"
+                    Content="{ex:Language Key='Cancel'}"
+                    FontSize="{DynamicResource NormalFontSize}"
+                    Foreground="{StaticResource PrimaryBrush}" />
+                <Button
+                    Width="80"
+                    Height="30"
+                    Margin="5"
+                    HorizontalAlignment="Right"
+                    HorizontalContentAlignment="Center"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                    Background="{StaticResource PrimaryBrush}"
+                    BorderBrush="{StaticResource PrimaryBrush}"
+                    Content="{ex:Language Key='OK'}"
+                    FontSize="{DynamicResource NormalFontSize}"
+                    Foreground="White"
+                    Visibility="{Binding Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>

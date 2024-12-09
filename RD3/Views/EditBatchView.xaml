@@ -16,7 +16,6 @@
     Width="220"
     Height="500"
     d:DataContext="{d:DesignInstance Type=viewmodels:EditBatchViewModel}"
-    Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
@@ -35,10 +34,7 @@
             <Setter Property="Opacity" Value="1" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Border
-        BorderBrush="{StaticResource PrimaryBorderBrush}"
-        CornerRadius="8"
-        Effect="{StaticResource EffectShadow1}">
+    <Border Style="{StaticResource BorderCard}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />

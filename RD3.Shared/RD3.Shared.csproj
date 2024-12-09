@@ -17,6 +17,12 @@
 
   <ItemGroup>
     <Folder Include="Rule\" />
+    <Folder Include="CustomProtocol\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fpi.Communication\Fpi.Communication.csproj" />
+    <ProjectReference Include="..\Fpi.Xml\Fpi.Xml.csproj" />
   </ItemGroup>
 
 </Project>

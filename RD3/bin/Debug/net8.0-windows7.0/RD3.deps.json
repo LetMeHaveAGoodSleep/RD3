@@ -8,6 +8,11 @@
     ".NETCoreApp,Version=v8.0": {
       "RD3/1.0.0": {
         "dependencies": {
+          "Fpi.Assembly": "1.0.0",
+          "Fpi.Communication": "1.0.0",
+          "Fpi.Instrument": "1.0.0",
+          "Fpi.Util": "1.0.0",
+          "Fpi.Xml": "1.0.0",
           "LayUI.Wpf.Extensions": "1.0.2.240505",
           "MaterialDesignThemes": "5.0.0",
           "MathNet.Symbolics": "0.25.0",
@@ -17,11 +22,6 @@
           "SQLite": "3.13.0",
           "ScottPlot.WPF": "5.0.40",
           "log4net": "2.0.17",
-          "Fpi.Assembly": "1.0.0.0",
-          "Fpi.Communication": "0.0.0.0",
-          "Fpi.Instrument": "1.0.0.0",
-          "Fpi.Util": "0.0.0.0",
-          "Fpi.Xml": "0.0.0.0",
           "HandyControl": "3.5.2.0"
         },
         "runtime": {
@@ -746,8 +746,91 @@
           "System.Drawing.Common": "4.7.3"
         }
       },
+      "Fpi.Assembly/1.0.0": {
+        "dependencies": {
+          "Fpi.Util": "1.0.0",
+          "Fpi.Xml": "1.0.0"
+        },
+        "runtime": {
+          "Fpi.Assembly.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "resources": {
+          "en-US/Fpi.Assembly.resources.dll": {
+            "locale": "en-US"
+          }
+        }
+      },
+      "Fpi.Communication/1.0.0": {
+        "dependencies": {
+          "Fpi.Instrument": "1.0.0",
+          "Fpi.Util": "1.0.0",
+          "Fpi.Xml": "1.0.0"
+        },
+        "runtime": {
+          "Fpi.Communication.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        },
+        "resources": {
+          "en-US/Fpi.Communication.resources.dll": {
+            "locale": "en-US"
+          }
+        }
+      },
+      "Fpi.Instrument/1.0.0": {
+        "dependencies": {
+          "Fpi.Util": "1.0.0",
+          "Fpi.Xml": "1.0.0"
+        },
+        "runtime": {
+          "Fpi.Instrument.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "resources": {
+          "en-US/Fpi.Instrument.resources.dll": {
+            "locale": "en-US"
+          }
+        }
+      },
+      "Fpi.Util/1.0.0": {
+        "runtime": {
+          "Fpi.Util.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        },
+        "resources": {
+          "en-US/Fpi.Util.resources.dll": {
+            "locale": "en-US"
+          }
+        }
+      },
+      "Fpi.Xml/1.0.0": {
+        "dependencies": {
+          "Fpi.Util": "1.0.0"
+        },
+        "runtime": {
+          "Fpi.Xml.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        },
+        "resources": {
+          "en-US/Fpi.Xml.resources.dll": {
+            "locale": "en-US"
+          }
+        }
+      },
       "RD3.Shared/1.0.0": {
         "dependencies": {
+          "Fpi.Communication": "1.0.0",
+          "Fpi.Xml": "1.0.0",
           "Newtonsoft.Json": "13.0.3",
           "Prism.Core": "8.1.97",
           "System.Data.SQLite": "1.0.118",
@@ -760,51 +843,19 @@
           }
         }
       },
-      "Fpi.Assembly/1.0.0.0": {
-        "runtime": {
-          "Fpi.Assembly.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "Fpi.Communication/0.0.0.0": {
-        "runtime": {
-          "Fpi.Communication.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "Fpi.Instrument/1.0.0.0": {
-        "runtime": {
-          "Fpi.Instrument.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "Fpi.Util/0.0.0.0": {
-        "runtime": {
-          "Fpi.Util.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "Fpi.Xml/0.0.0.0": {
-        "runtime": {
-          "Fpi.Xml.dll": {
-            "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
       "HandyControl/3.5.2.0": {
         "runtime": {
           "HandyControl.dll": {
             "assemblyVersion": "3.5.2.0",
             "fileVersion": "3.5.2.0"
+          }
+        }
+      },
+      "AxInterop.ShockwaveFlashObjects/1.0.0.0": {
+        "runtime": {
+          "AxInterop.ShockwaveFlashObjects.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       }
@@ -1292,37 +1343,42 @@
       "path": "system.windows.extensions/4.7.0",
       "hashPath": "system.windows.extensions.4.7.0.nupkg.sha512"
     },
+    "Fpi.Assembly/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fpi.Communication/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fpi.Instrument/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fpi.Util/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fpi.Xml/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "RD3.Shared/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Fpi.Assembly/1.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Fpi.Communication/0.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Fpi.Instrument/1.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Fpi.Util/0.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Fpi.Xml/0.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
     "HandyControl/3.5.2.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AxInterop.ShockwaveFlashObjects/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

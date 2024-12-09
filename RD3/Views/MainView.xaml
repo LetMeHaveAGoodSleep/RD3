@@ -157,6 +157,20 @@
                                 Background="{DynamicResource PrimaryBrush}"
                                 FontSize="16"
                                 Foreground="{DynamicResource DefaultBrush}"
+                                Header="{ex:Language Key='DOE'}"
+                                Tag="DOE">
+                                <hc:SideMenuItem.Icon>
+                                    <Image
+                                        Width="24"
+                                        Height="24"
+                                        Source="/Images/SideMenu/DOE.png" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem
+                                Margin="5"
+                                Background="{DynamicResource PrimaryBrush}"
+                                FontSize="16"
+                                Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Audit'}"
                                 Tag="Audit">
                                 <hc:SideMenuItem.Icon>

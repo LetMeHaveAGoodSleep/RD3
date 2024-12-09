@@ -239,6 +239,10 @@
     <Compile Include="Communication\Config\Pipe.cs" />
     <Compile Include="Communication\Config\PortManager.cs" />
     <Compile Include="Communication\Config\SendThread.cs" />
+    <Compile Include="Communication\XZ\XZParser.cs" />
+    <Compile Include="Communication\XZ\XZPort.cs" />
+    <Compile Include="Communication\XZ\XZProtocol.cs" />
+    <Compile Include="Communication\XZ\XZReceiver.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -269,6 +273,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fpi.Instrument\Fpi.Instrument.csproj">
+      <Project>{e8d1eb85-2b23-4622-8cde-80d5f850cc74}</Project>
+      <Name>Fpi.Instrument</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fpi.Util\Fpi.Util.csproj">
+      <Project>{6e37d7b3-8d08-4ef3-a924-3b87982ab246}</Project>
+      <Name>Fpi.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fpi.Xml\Fpi.Xml.csproj">
+      <Project>{3af9654d-39ee-4be9-8553-a9bb9b83a33b}</Project>
+      <Name>Fpi.Xml</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

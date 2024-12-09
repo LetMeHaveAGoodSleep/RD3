@@ -16,7 +16,6 @@
     Width="220"
     Height="400"
     d:DataContext="{d:DesignInstance Type=viewmodels:EditBatchViewModel}"
-    Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
@@ -31,14 +30,10 @@
             <Setter Property="AllowsTransparency" Value="True" />
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
             <Setter Property="Opacity" Value="1" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Border
-        BorderBrush="{StaticResource PrimaryBorderBrush}"
-        CornerRadius="8"
-        Effect="{StaticResource EffectShadow1}">
+    <Border Style="{StaticResource BorderCard}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />

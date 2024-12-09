@@ -4,6 +4,109 @@
     "D:\\Project\\RD3\\RD3\\RD3.csproj": {}
   },
   "projects": {
+    "D:\\Project\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\Project\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj",
+        "projectName": "Fpi.Assembly",
+        "projectPath": "D:\\Project\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              },
+              "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj",
+        "projectName": "Fpi.Communication",
+        "projectPath": "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj"
+              },
+              "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              },
+              "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj",
+        "projectName": "Fpi.Instrument",
+        "projectPath": "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              },
+              "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj",
+        "projectName": "Fpi.Util",
+        "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
+    "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj",
+        "projectName": "Fpi.Xml",
+        "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj",
+        "frameworks": {
+          "net48": {
+            "projectReferences": {
+              "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
+      }
+    },
     "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -32,7 +135,14 @@
         "frameworks": {
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows",
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj"
+              },
+              "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -116,6 +226,21 @@
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows7.0",
             "projectReferences": {
+              "D:\\Project\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj"
+              },
+              "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj"
+              },
+              "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj"
+              },
+              "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              },
+              "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              },
               "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj": {
                 "projectPath": "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj"
               }

@@ -14,7 +14,6 @@
     Width="640"
     Height="480"
     d:DataContext="{d:DesignInstance Type=viewmodels:CommunicationViewModel}"
-    Background="{StaticResource BackGroundBrush}"
     FontFamily="{StaticResource ENGFontFamily}"
     TextElement.FontSize="{DynamicResource NormalFontSize}"
     TextElement.FontWeight="Regular"
@@ -35,15 +34,10 @@
             <Setter Property="AllowsTransparency" Value="True" />
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
             <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Border
-        BorderBrush="{StaticResource BackGroundBrush}"
-        BorderThickness="1"
-        CornerRadius="8"
-        Effect="{StaticResource EffectShadow1}">
+    <Border Style="{StaticResource BorderCard}">
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />

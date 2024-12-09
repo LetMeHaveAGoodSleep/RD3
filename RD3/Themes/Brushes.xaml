@@ -6,4 +6,23 @@
         x:Key="StopBrush"
         o:Freeze="True"
         Color="{DynamicResource StopColor}" />
+
+    <DrawingBrush
+        x:Key="CloudDrawingBrush"
+        o:Freeze="True"
+        Opacity=".1"
+        RenderOptions.CacheInvalidationThresholdMaximum="2.0"
+        RenderOptions.CacheInvalidationThresholdMinimum="0.5"
+        RenderOptions.CachingHint="Cache"
+        Stretch="Uniform"
+        TileMode="Tile"
+        Viewport="0,0,157,157"
+        ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <ImageDrawing
+                o:Freeze="True"
+                ImageSource="/RD3;component/Images/cloud.png"
+                Rect="0,0,157,157" />
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
 </ResourceDictionary>

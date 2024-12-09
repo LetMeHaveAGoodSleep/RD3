@@ -2,67 +2,17 @@
 <PortManager>
 	<pipes>
 		<Fpi.Communication.Manager.Pipe>
-			<id>cantest</id>
-			<name>can测试</name>
+			<id>TCP1</id>
+			<name>TCP1</name>
 			<valid>True</valid>
 			<autoConnect>True</autoConnect>
 			<autoReConnect>True</autoReConnect>
 			<impBus>Fpi.Communication.Buses.TcpClientSocket</impBus>
-			<impProtocol>Fpi.Communication.Protocols.Common.Simple.SimpleProtocol</impProtocol>
+			<impProtocol>Fpi.Communication.XZ.XZProtocol</impProtocol>
 			<targets>
-				<target>cantest</target>
+				<target>G01</target>
 			</targets>
 			<propertys>
-				<Fpi.Xml.Property>
-					<id>Fpi.Communication.Buses.CanBus</id>
-					<name>链路配置</name>
-					<propertys>
-						<Fpi.Xml.Property>
-							<id>port</id>
-							<name>port</name>
-							<value>1</value>
-						</Fpi.Xml.Property>
-
-						<Fpi.Xml.Property>
-							<id>errorCount</id>
-							<name>errorCount</name>
-							<value>30</value>
-						</Fpi.Xml.Property>
-
-					</propertys>
-
-				</Fpi.Xml.Property>
-
-				<Fpi.Xml.Property>
-					<id>Fpi.Communication.Protocols.Common.Simple.SimpleProtocol</id>
-					<name>协议配置</name>
-				</Fpi.Xml.Property>
-
-				<Fpi.Xml.Property>
-					<id>Fpi.Communication.Buses.TcpServer</id>
-					<name>链路配置</name>
-					<propertys>
-						<Fpi.Xml.Property>
-							<id>port</id>
-							<name>port</name>
-							<value>1000</value>
-						</Fpi.Xml.Property>
-
-						<Fpi.Xml.Property>
-							<id>errorCount</id>
-							<name>errorCount</name>
-							<value>30</value>
-						</Fpi.Xml.Property>
-
-					</propertys>
-
-				</Fpi.Xml.Property>
-
-				<Fpi.Xml.Property>
-					<id>Fpi.Communication.Buses.TcpServerForMany</id>
-					<name>链路配置</name>
-				</Fpi.Xml.Property>
-
 				<Fpi.Xml.Property>
 					<id>Fpi.Communication.Buses.TcpClientSocket</id>
 					<name>链路配置</name>
@@ -76,7 +26,7 @@
 						<Fpi.Xml.Property>
 							<id>port</id>
 							<name>port</name>
-							<value>1000</value>
+							<value>8080</value>
 						</Fpi.Xml.Property>
 
 						<Fpi.Xml.Property>
@@ -87,6 +37,16 @@
 
 					</propertys>
 
+				</Fpi.Xml.Property>
+
+				<Fpi.Xml.Property>
+					<id>Fpi.Communication.Buses.TcpServer</id>
+					<name>链路配置</name>
+				</Fpi.Xml.Property>
+
+				<Fpi.Xml.Property>
+					<id>Fpi.Communication.Protocols.Common.Simple.SimpleProtocol</id>
+					<name>协议配置</name>
 				</Fpi.Xml.Property>
 
 			</propertys>
