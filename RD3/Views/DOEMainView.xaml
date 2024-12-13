@@ -1,0 +1,102 @@
+﻿<UserControl
+    x:Class="RD3.Views.DOEMainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="700"
+    d:DesignWidth="1350"
+    FontFamily="{StaticResource ENGFontFamily}"
+    TextElement.FontSize="{DynamicResource NormalFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <Border
+        Background="{StaticResource BackGroundBrush}"
+        BorderBrush="{DynamicResource BorderBrush}"
+        BorderThickness="0"
+        CornerRadius="{StaticResource DefaultCornerRadius}">
+        <!--<Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    x:Name="ColumnDefinitionLeft"
+                    Width="250"
+                    MinWidth="250"
+                    MaxWidth="400" />
+                <ColumnDefinition MinWidth="200" />
+            </Grid.ColumnDefinitions>
+            <Button
+                x:Name="ButtonShiftOut"
+                Margin="0,26,-16,0"
+                Padding="8,8,0,8"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                hc:IconElement.Geometry="{StaticResource LeftGeometry}"
+                Click="OnLeftMainContentShiftOut"
+                Style="{StaticResource ButtonIconCircular}" />
+            <Border
+                Name="BorderLeft"
+                Margin="5,5,0,5"
+                hc:ScrollViewer.IsInertiaEnabled="True"
+                Background="{DynamicResource RegionBrush}"
+                CornerRadius="10"
+                Effect="{StaticResource EffectShadow4}">
+                <hc:SideMenu
+                    Name="SideMenu"
+                    Margin="5"
+                    hc:ExpandMode="Accordion"
+                    Background="Transparent">
+                    <hc:Interaction.Triggers>
+                        <hc:EventTrigger EventName="SelectionChanged">
+                            <hc:EventToCommand Command="{Binding SelectCommand}" PassEventArgsToCommand="True" />
+                        </hc:EventTrigger>
+                    </hc:Interaction.Triggers>
+                    <hc:SideMenuItem
+                        FontSize="{DynamicResource SubHeadFontSize}"
+                        Header="{ex:Language Key='Full factorial'}"
+                        Tag="Main" />
+                    <hc:SideMenuItem
+                        FontSize="{DynamicResource SubHeadFontSize}"
+                        Header="{ex:Language Key='Plackett-Burman'}"
+                        Tag="Plackett-Burman" />
+                    <hc:SideMenuItem
+                        FontSize="{DynamicResource SubHeadFontSize}"
+                        Header="{ex:Language Key='Box-Behnken'}"
+                        Tag="Box-Behnken" />
+                    <hc:SideMenuItem
+                        FontSize="{DynamicResource SubHeadFontSize}"
+                        Header="{ex:Language Key='Central Composite Design'}"
+                        Tag="Central Composite Design" />
+
+
+                </hc:SideMenu>
+                <UIElement.RenderTransform>
+                    <TranslateTransform />
+                </UIElement.RenderTransform>
+            </Border>
+            <GridSplitter
+                x:Name="GridSplitter"
+                Grid.Column="0"
+                Width="4"
+                Margin="0,26,0,26"
+                HorizontalAlignment="Right"
+                Background="Transparent" />
+            <Button
+                x:Name="ButtonShiftIn"
+                Grid.Column="0"
+                Margin="-12,26,0,0"
+                Padding="8,8,0,8"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                hc:IconElement.Geometry="{StaticResource RightGeometry}"
+                Click="OnLeftMainContentShiftIn"
+                Style="{StaticResource ButtonIconCircular}"
+                Visibility="Collapsed" />
+        </Grid>-->
+    </Border>
+</UserControl>

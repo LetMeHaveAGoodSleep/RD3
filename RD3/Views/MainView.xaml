@@ -19,7 +19,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowsTransparency="True"
-    Background="{StaticResource BackGroundBrush}"
+    Background="Transparent"
     TextElement.FontFamily="{StaticResource CHNFontFamily}"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -28,7 +28,7 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
-    <Border>
+    <Border Background="{StaticResource BackGroundBrush}" CornerRadius="{StaticResource DefaultCornerRadius}">
         <materialDesign:DialogHost
             x:Name="DialogHost"
             DialogTheme="Inherit"
@@ -219,8 +219,8 @@
                     <Border
                         Background="{DynamicResource PrimaryBrush}"
                         BorderBrush="{DynamicResource PrimaryBrush}"
-                        BorderThickness="1"
-                        CornerRadius="0,0,0,15"
+                        BorderThickness="0"
+                        CornerRadius="0,4,0,15"
                         Effect="{StaticResource EffectShadow1}"
                         MouseMove="Border_MouseMove">
                         <Grid>

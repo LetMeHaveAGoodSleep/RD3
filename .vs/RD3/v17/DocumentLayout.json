@@ -3,44 +3,56 @@
   "WorkspaceRootPath": "D:\\Project\\RD3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|d:\\project\\rd3\\fpi.communication\\communication\\xz\\xzport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|solutionrelative:fpi.communication\\communication\\xz\\xzport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|d:\\project\\rd3\\fpi.communication\\communication\\xz\\xzparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|solutionrelative:fpi.communication\\communication\\xz\\xzparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|d:\\project\\rd3\\fpi.communication\\communication\\ports\\busport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|solutionrelative:fpi.communication\\communication\\ports\\busport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|d:\\project\\rd3\\fpi.communication\\communication\\xz\\xzprotocol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|solutionrelative:fpi.communication\\communication\\xz\\xzprotocol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\config\\portmanager.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\portmanager.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|d:\\project\\rd3\\rd3.shared\\command\\realcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|solutionrelative:rd3.shared\\command\\realcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|d:\\project\\rd3\\rd3.shared\\command\\virtualcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|solutionrelative:rd3.shared\\command\\virtualcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|d:\\project\\rd3\\rd3.shared\\command\\icommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|solutionrelative:rd3.shared\\command\\icommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|d:\\project\\rd3\\rd3.shared\\command\\commanddefine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|solutionrelative:rd3.shared\\command\\commanddefine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\config\\commandmanager.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\commandmanager.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\selfcheckviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\selfcheckviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\doemainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\doemainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\config\\portmanager.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\portmanager.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\monitor\\clocksupervisor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\monitor\\clocksupervisor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|d:\\project\\rd3\\fpi.communication\\communication\\config\\pipe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|solutionrelative:fpi.communication\\communication\\config\\pipe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|d:\\project\\rd3\\fpi.communication\\communication\\xz\\xzport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|solutionrelative:fpi.communication\\communication\\xz\\xzport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\doemainview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\doemainview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\mainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\doemainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\doemainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\app.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\app.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,7 +62,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,122 +70,162 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PortManager.xml",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Config\\PortManager.xml",
-              "RelativeDocumentMoniker": "RD3\\Config\\PortManager.xml",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Config\\PortManager.xml",
-              "RelativeToolTip": "RD3\\Config\\PortManager.xml",
-              "ViewState": "AgIAAAwAAAAAAAAAAADwvxgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
-              "WhenOpened": "2024-12-09T07:45:09.496Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SelfCheckViewModel.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\SelfCheckViewModel.cs",
-              "RelativeDocumentMoniker": "RD3\\ViewModels\\SelfCheckViewModel.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\SelfCheckViewModel.cs",
-              "RelativeToolTip": "RD3\\ViewModels\\SelfCheckViewModel.cs",
-              "ViewState": "AgIAAEMAAAAAAAAAAAAYwE8AAABIAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "VirtualCommandWrapper.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3.Shared\\Command\\VirtualCommandWrapper.cs",
+              "RelativeDocumentMoniker": "RD3.Shared\\Command\\VirtualCommandWrapper.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3.Shared\\Command\\VirtualCommandWrapper.cs",
+              "RelativeToolTip": "RD3.Shared\\Command\\VirtualCommandWrapper.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAkwEMAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T07:43:18.94Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "XZPort.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\XZ\\XZPort.cs",
-              "RelativeDocumentMoniker": "Fpi.Communication\\Communication\\XZ\\XZPort.cs",
-              "ToolTip": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\XZ\\XZPort.cs",
-              "RelativeToolTip": "Fpi.Communication\\Communication\\XZ\\XZPort.cs",
-              "ViewState": "AgIAAFsAAAAAAAAAAAAjwGgAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T03:20:18.551Z",
+              "WhenOpened": "2024-12-13T09:51:03.614Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "BusPort.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\Ports\\BusPort.cs",
-              "RelativeDocumentMoniker": "Fpi.Communication\\Communication\\Ports\\BusPort.cs",
-              "ToolTip": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\Ports\\BusPort.cs",
-              "RelativeToolTip": "Fpi.Communication\\Communication\\Ports\\BusPort.cs",
-              "ViewState": "AgIAAIYAAAAAAAAAAAAjwJEAAAAYAAAAAAAAAA==",
+              "Title": "ICommandWrapper.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3.Shared\\Command\\ICommandWrapper.cs",
+              "RelativeDocumentMoniker": "RD3.Shared\\Command\\ICommandWrapper.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3.Shared\\Command\\ICommandWrapper.cs",
+              "RelativeToolTip": "RD3.Shared\\Command\\ICommandWrapper.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAgwDQAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T08:01:57.77Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RealCommandWrapper.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3.Shared\\Command\\RealCommandWrapper.cs",
-              "RelativeDocumentMoniker": "RD3.Shared\\Command\\RealCommandWrapper.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3.Shared\\Command\\RealCommandWrapper.cs",
-              "RelativeToolTip": "RD3.Shared\\Command\\RealCommandWrapper.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAYwHEAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T03:04:22.752Z",
+              "WhenOpened": "2024-12-13T09:50:47.891Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "XZProtocol.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\XZ\\XZProtocol.cs",
-              "RelativeDocumentMoniker": "Fpi.Communication\\Communication\\XZ\\XZProtocol.cs",
-              "ToolTip": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\XZ\\XZProtocol.cs",
-              "RelativeToolTip": "Fpi.Communication\\Communication\\XZ\\XZProtocol.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAtwBoAAAAJAAAAAAAAAA==",
+              "Title": "CommandDefine.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3.Shared\\Command\\CommandDefine.cs",
+              "RelativeDocumentMoniker": "RD3.Shared\\Command\\CommandDefine.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3.Shared\\Command\\CommandDefine.cs",
+              "RelativeToolTip": "RD3.Shared\\Command\\CommandDefine.cs",
+              "ViewState": "AgIAAFQBAAAAAAAAAAAswG0BAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T07:56:31.473Z",
+              "WhenOpened": "2024-12-13T09:41:27.462Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "XZParser.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\XZ\\XZParser.cs",
-              "RelativeDocumentMoniker": "Fpi.Communication\\Communication\\XZ\\XZParser.cs",
-              "ToolTip": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\XZ\\XZParser.cs",
-              "RelativeToolTip": "Fpi.Communication\\Communication\\XZ\\XZParser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAEwBEAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T07:59:46.296Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "DOEMainView.xaml.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\DOEMainView.xaml.cs",
-              "RelativeDocumentMoniker": "RD3\\Views\\DOEMainView.xaml.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\DOEMainView.xaml.cs",
-              "RelativeToolTip": "RD3\\Views\\DOEMainView.xaml.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAIwCIAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-06T08:35:06.087Z",
+              "DocumentIndex": 4,
+              "Title": "CommandManager.xml",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Config\\CommandManager.xml",
+              "RelativeDocumentMoniker": "RD3\\Config\\CommandManager.xml",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Config\\CommandManager.xml",
+              "RelativeToolTip": "RD3\\Config\\CommandManager.xml",
+              "ViewState": "AgIAAJECAAAAAAAAAAAAAKUCAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2024-12-13T03:49:17.062Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "MainView.xaml",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\MainView.xaml",
-              "RelativeDocumentMoniker": "RD3\\Views\\MainView.xaml",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\MainView.xaml",
-              "RelativeToolTip": "RD3\\Views\\MainView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-12-06T06:27:54.896Z"
+              "Title": "XZPort.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\XZ\\XZPort.cs",
+              "RelativeDocumentMoniker": "Fpi.Communication\\Communication\\XZ\\XZPort.cs",
+              "ToolTip": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\XZ\\XZPort.cs",
+              "RelativeToolTip": "Fpi.Communication\\Communication\\XZ\\XZPort.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAYwFEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T01:49:21.775Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DOEMainView.xaml.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\DOEMainView.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\DOEMainView.xaml.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\DOEMainView.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\DOEMainView.xaml.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAFUAAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T01:21:04.5Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SelfCheckViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\SelfCheckViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\SelfCheckViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\SelfCheckViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\SelfCheckViewModel.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAmwFAAAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T01:20:32.724Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RealCommandWrapper.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3.Shared\\Command\\RealCommandWrapper.cs",
+              "RelativeDocumentMoniker": "RD3.Shared\\Command\\RealCommandWrapper.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3.Shared\\Command\\RealCommandWrapper.cs",
+              "RelativeToolTip": "RD3.Shared\\Command\\RealCommandWrapper.cs",
+              "ViewState": "AgIAAB0BAAAAAAAAAADwv14BAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T01:19:35.913Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Pipe.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\Config\\Pipe.cs",
+              "RelativeDocumentMoniker": "Fpi.Communication\\Communication\\Config\\Pipe.cs",
+              "ToolTip": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\Config\\Pipe.cs",
+              "RelativeToolTip": "Fpi.Communication\\Communication\\Config\\Pipe.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAlwDsAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T01:51:08.474Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "ClockSupervisor.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Monitor\\ClockSupervisor.cs",
+              "RelativeDocumentMoniker": "RD3\\Monitor\\ClockSupervisor.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Monitor\\ClockSupervisor.cs",
+              "RelativeToolTip": "RD3\\Monitor\\ClockSupervisor.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAIwDcAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T01:19:55.766Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "PortManager.xml",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Config\\PortManager.xml",
+              "RelativeDocumentMoniker": "RD3\\Config\\PortManager.xml",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Config\\PortManager.xml",
+              "RelativeToolTip": "RD3\\Config\\PortManager.xml",
+              "ViewState": "AgIAAAYAAAAAAAAAAADwvxYAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2024-12-13T01:19:03.874Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\App.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\App.xaml.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\App.xaml.cs",
+              "RelativeToolTip": "RD3\\App.xaml.cs",
+              "ViewState": "AgIAAHUAAAAAAAAAAAAcwI4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-12T09:14:05.918Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "DOEMainView.xaml",
               "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\DOEMainView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\DOEMainView.xaml",

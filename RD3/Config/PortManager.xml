@@ -20,7 +20,7 @@
 						<Fpi.Xml.Property>
 							<id>host</id>
 							<name>host</name>
-							<value>127.0.0.1</value>
+							<value>172.16.0.146</value>
 						</Fpi.Xml.Property>
 
 						<Fpi.Xml.Property>
