@@ -1215,7 +1215,7 @@
                                                         <TextBlock
                                                             VerticalAlignment="Center"
                                                             FontSize="{DynamicResource SuperFontSize}"
-                                                            Text="149.6" />
+                                                            Text="{Binding CurrentDeviceParameter.Base}" />
                                                         <DockPanel
                                                             Grid.Column="2"
                                                             VerticalAlignment="Center"
@@ -1337,7 +1337,7 @@
                                                         <TextBlock
                                                             VerticalAlignment="Center"
                                                             FontSize="{DynamicResource SuperFontSize}"
-                                                            Text="149.6" />
+                                                            Text="{Binding CurrentDeviceParameter.Acid}" />
                                                         <DockPanel
                                                             Grid.Column="2"
                                                             VerticalAlignment="Center"
@@ -1454,7 +1454,7 @@
                                                         <TextBlock
                                                             VerticalAlignment="Center"
                                                             FontSize="{DynamicResource SuperFontSize}"
-                                                            Text="149.6" />
+                                                            Text="{Binding CurrentDeviceParameter.AF}" />
                                                         <DockPanel
                                                             Grid.Column="2"
                                                             VerticalAlignment="Center"
@@ -1576,7 +1576,7 @@
                                                         <TextBlock
                                                             VerticalAlignment="Center"
                                                             FontSize="{DynamicResource SuperFontSize}"
-                                                            Text="149.6" />
+                                                            Text="{Binding CurrentDeviceParameter.Feed}" />
                                                         <DockPanel
                                                             Grid.Column="2"
                                                             VerticalAlignment="Center"
@@ -1644,7 +1644,7 @@
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Center"
                                                     FontSize="30"
-                                                    Text="0" />
+                                                    Text="{Binding CurrentDeviceParameter.Air}" />
                                                 <hc:UniformSpacingPanel Grid.Column="3" Orientation="Horizontal">
                                                     <Label
                                                         Width="70"

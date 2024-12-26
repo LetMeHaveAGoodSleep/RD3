@@ -54,7 +54,7 @@
     <system:String x:Key="Associative Controller">关联控制器</system:String>
     <system:String x:Key="Time series">顺序控制</system:String>
     <system:String x:Key="Import">导入</system:String>
-    <system:String x:Key="Save">导出</system:String>
+    <system:String x:Key="Save">保存</system:String>
     <system:String x:Key="Loop">循环</system:String>
     <system:String x:Key="Start">开始</system:String>
     <system:String x:Key="Item">参数</system:String>
@@ -178,4 +178,11 @@
     <system:String x:Key="Loading {0}...">正在加载 {0} ...</system:String>
     <system:String x:Key="Loading completed">加载完成</system:String>
     <system:String x:Key="DOE">实验设计</system:String>
+    <system:String x:Key="Design type:">设计类型:</system:String>
+    <system:String x:Key="Full factorial">全因子</system:String>
+    <system:String x:Key="2-level fractional factorial">二水平部分因子</system:String>
+    <system:String x:Key="Central composite">中心复合</system:String>
+    <system:String x:Key="Box-Behnken">Box-Behnken</system:String>
+    <system:String x:Key="Plackett-Burman">Plackett-Burman</system:String>
+    <system:String x:Key="Design type">设计类型</system:String>
 </ResourceDictionary>

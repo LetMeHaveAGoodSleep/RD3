@@ -6,9 +6,13 @@
     xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="700"
-    d:DesignWidth="1350"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    Width="900"
+    Height="530"
+    d:DataContext="{d:DesignInstance Type=viewmodels:DOEMainViewModel}"
     FontFamily="{StaticResource ENGFontFamily}"
     TextElement.FontSize="{DynamicResource NormalFontSize}"
     TextElement.FontWeight="Regular"
@@ -16,87 +20,248 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
-    <Border
-        Background="{StaticResource BackGroundBrush}"
-        BorderBrush="{DynamicResource BorderBrush}"
-        BorderThickness="0"
-        CornerRadius="{StaticResource DefaultCornerRadius}">
-        <!--<Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition
-                    x:Name="ColumnDefinitionLeft"
-                    Width="250"
-                    MinWidth="250"
-                    MaxWidth="400" />
-                <ColumnDefinition MinWidth="200" />
-            </Grid.ColumnDefinitions>
-            <Button
-                x:Name="ButtonShiftOut"
-                Margin="0,26,-16,0"
-                Padding="8,8,0,8"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                hc:IconElement.Geometry="{StaticResource LeftGeometry}"
-                Click="OnLeftMainContentShiftOut"
-                Style="{StaticResource ButtonIconCircular}" />
-            <Border
-                Name="BorderLeft"
-                Margin="5,5,0,5"
-                hc:ScrollViewer.IsInertiaEnabled="True"
-                Background="{DynamicResource RegionBrush}"
-                CornerRadius="10"
-                Effect="{StaticResource EffectShadow4}">
-                <hc:SideMenu
-                    Name="SideMenu"
-                    Margin="5"
-                    hc:ExpandMode="Accordion"
-                    Background="Transparent">
-                    <hc:Interaction.Triggers>
-                        <hc:EventTrigger EventName="SelectionChanged">
-                            <hc:EventToCommand Command="{Binding SelectCommand}" PassEventArgsToCommand="True" />
-                        </hc:EventTrigger>
-                    </hc:Interaction.Triggers>
-                    <hc:SideMenuItem
-                        FontSize="{DynamicResource SubHeadFontSize}"
-                        Header="{ex:Language Key='Full factorial'}"
-                        Tag="Main" />
-                    <hc:SideMenuItem
-                        FontSize="{DynamicResource SubHeadFontSize}"
-                        Header="{ex:Language Key='Plackett-Burman'}"
-                        Tag="Plackett-Burman" />
-                    <hc:SideMenuItem
-                        FontSize="{DynamicResource SubHeadFontSize}"
-                        Header="{ex:Language Key='Box-Behnken'}"
-                        Tag="Box-Behnken" />
-                    <hc:SideMenuItem
-                        FontSize="{DynamicResource SubHeadFontSize}"
-                        Header="{ex:Language Key='Central Composite Design'}"
-                        Tag="Central Composite Design" />
-
-
-                </hc:SideMenu>
-                <UIElement.RenderTransform>
-                    <TranslateTransform />
-                </UIElement.RenderTransform>
-            </Border>
-            <GridSplitter
-                x:Name="GridSplitter"
-                Grid.Column="0"
-                Width="4"
-                Margin="0,26,0,26"
-                HorizontalAlignment="Right"
-                Background="Transparent" />
-            <Button
-                x:Name="ButtonShiftIn"
-                Grid.Column="0"
-                Margin="-12,26,0,0"
-                Padding="8,8,0,8"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                hc:IconElement.Geometry="{StaticResource RightGeometry}"
-                Click="OnLeftMainContentShiftIn"
-                Style="{StaticResource ButtonIconCircular}"
-                Visibility="Collapsed" />
-        </Grid>-->
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="False" />
+            <Setter Property="AllowsTransparency" Value="True" />
+            <Setter Property="WindowStyle" Value="None" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <Border Style="{StaticResource BorderForm}">
+        <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+            <DockPanel LastChildFill="False">
+                <hc:UniformSpacingPanel
+                    DockPanel.Dock="Right"
+                    Orientation="Horizontal"
+                    Spacing="5">
+                    <Button
+                        Name="btnMin"
+                        hc:IconElement.Geometry="{StaticResource WindowMinGeometry}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        ToolTip="{ex:Language Key='Minimize'}"
+                        Visibility="Collapsed" />
+                    <Button
+                        Name="btnMax"
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <materialDesign:PackIcon
+                            Name="PackIconWindowState"
+                            Kind="WindowMaximize"
+                            ToolTip="{ex:Language Key='Maximize'}"
+                            Visibility="Collapsed" />
+                    </Button>
+                    <Button
+                        Name="btnClose"
+                        hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+                        BorderThickness="0"
+                        Command="{Binding CloseCommand}"
+                        Style="{StaticResource ToolButtonStyle}"
+                        ToolTip="{ex:Language Key='Close'}" />
+                </hc:UniformSpacingPanel>
+            </DockPanel>
+            <hc:UniformSpacingPanel
+                Margin="0,0,10,0"
+                Orientation="Vertical"
+                Spacing="5">
+                <DockPanel LastChildFill="False">
+                    <hc:UniformSpacingPanel
+                        Margin="10,0,10,0"
+                        DockPanel.Dock="Left"
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <Button
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                            hc:IconElement.Geometry="{StaticResource GeometryChoose}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding SaveAsTemplateCommand}"
+                            Content="{ex:Language Key='Reactor'}"
+                            IsEnabled="False"
+                            ToolTip="Reactor" />
+                        <Button
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                            hc:IconElement.Geometry="{StaticResource DownloadGeometry}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding SaveAsTemplateCommand}"
+                            Content="{ex:Language Key='Get Result'}"
+                            IsEnabled="False"
+                            ToolTip="Get Result" />
+                        <Button
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                            hc:IconElement.Geometry="{StaticResource GeometryAnalyse}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding SaveAsTemplateCommand}"
+                            Content="{ex:Language Key='Analyse'}"
+                            IsEnabled="False"
+                            ToolTip="Analyse" />
+                    </hc:UniformSpacingPanel>
+                    <hc:UniformSpacingPanel
+                        DockPanel.Dock="Right"
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <Button
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                            hc:IconElement.Geometry="{StaticResource GeometryDesign}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding DesignCommand}"
+                            Content="{ex:Language Key='Design'}"
+                            IsEnabled="{Binding DesignEnable}"
+                            ToolTip="Design" />
+                        <Button
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                            hc:IconElement.Geometry="{StaticResource GeometryBind}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding SaveAsTemplateCommand}"
+                            Content="{ex:Language Key='Bind'}"
+                            IsEnabled="{Binding SelectedItem, ElementName=ListBoxDOE, Converter={StaticResource SelectedItemCountToVisibilityConverter}}"
+                            ToolTip="Bind" />
+                        <Button
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                            hc:IconElement.Geometry="{StaticResource GeometryUnBind}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding SaveAsTemplateCommand}"
+                            Content="{ex:Language Key='Unbind'}"
+                            IsEnabled="{Binding SelectedItem, ElementName=ListBoxDOE, Converter={StaticResource SelectedItemCountToVisibilityConverter}}"
+                            ToolTip="Unbind" />
+                        <Button
+                            Height="30"
+                            HorizontalAlignment="Left"
+                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                            hc:IconElement.Geometry="{StaticResource GeometrySave}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding SaveAsTemplateCommand}"
+                            Content="{ex:Language Key='Save'}"
+                            ToolTip="Save" />
+                    </hc:UniformSpacingPanel>
+                </DockPanel>
+                <Grid Height="450" Margin="10,0,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid
+                        Name="dataGrid"
+                        hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
+                        hc:DataGridAttach.ShowSelectAllButton="False"
+                        AutoGenerateColumns="True"
+                        Background="{StaticResource DefaultBrush}"
+                        ColumnWidth="SizeToCells"
+                        HeadersVisibility="Column"
+                        IsReadOnly="False"
+                        ItemsSource="{Binding OperationCol}"
+                        RowHeaderWidth="60"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        SelectionMode="Single"
+                        SelectionUnit="Cell" />
+                    <Grid Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <DockPanel Grid.RowSpan="2" LastChildFill="True">
+                            <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='DOE columns:'}" />
+                            <ListBox
+                                Name="ListBoxDOE"
+                                Width="220"
+                                Height="310"
+                                ItemsSource="{Binding DoeColunms}"
+                                Style="{StaticResource ListBox.Small}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DockPanel>
+                        <DockPanel Grid.Column="2" LastChildFill="True">
+                            <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Factors:'}" />
+                            <ListBox
+                                Name="ListboxFactor"
+                                Width="220"
+                                Height="145"
+                                ItemsSource="{Binding UnSelectedFactors}"
+                                SelectionChanged="ListboxFactor_SelectionChanged"
+                                SelectionMode="Multiple"
+                                Style="{StaticResource ListBox.Small}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DockPanel>
+                        <DockPanel
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            LastChildFill="True">
+                            <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Responses:'}" />
+                            <ListBox
+                                Width="220"
+                                Height="145"
+                                ItemsSource="{Binding Responses}"
+                                Style="{StaticResource ListBox.Small}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DockPanel>
+                        <DockPanel
+                            Grid.Row="2"
+                            Grid.ColumnSpan="3"
+                            LastChildFill="True">
+                            <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Parameter pairs:'}" />
+                            <ListBox
+                                Height="100"
+                                ItemsSource="{Binding ParameterPairs}"
+                                Style="{StaticResource ListBox.Small}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DockPanel>
+                    </Grid>
+                </Grid>
+            </hc:UniformSpacingPanel>
+        </hc:UniformSpacingPanel>
     </Border>
 </UserControl>

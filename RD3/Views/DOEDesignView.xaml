@@ -1,0 +1,265 @@
+﻿<UserControl
+    x:Class="RD3.Views.DOEDesignView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:shared="clr-namespace:RD3.Shared;assembly=RD3.Shared"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    Width="1200"
+    Height="530"
+    d:DataContext="{d:DesignInstance Type=viewmodels:DOEDesignViewModel}"
+    FontFamily="{StaticResource ENGFontFamily}"
+    TextElement.FontSize="{DynamicResource NormalFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="False" />
+            <Setter Property="AllowsTransparency" Value="True" />
+            <Setter Property="WindowStyle" Value="None" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <UserControl.Resources>
+        <ObjectDataProvider
+            x:Key="DataFromEnum"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shared:DOEAlpha" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum1"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shared:DOEFace" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <Border Style="{StaticResource BorderCard}">
+        <DockPanel LastChildFill="True">
+            <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+                <hc:UniformSpacingPanel
+                    DockPanel.Dock="Right"
+                    Orientation="Horizontal"
+                    Spacing="5">
+                    <Button
+                        Name="btnMin"
+                        hc:IconElement.Geometry="{StaticResource WindowMinGeometry}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        ToolTip="{ex:Language Key='Minimize'}"
+                        Visibility="Collapsed" />
+                    <Button
+                        Name="btnMax"
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <materialDesign:PackIcon
+                            Name="PackIconWindowState"
+                            Kind="WindowMaximize"
+                            ToolTip="{ex:Language Key='Maximize'}"
+                            Visibility="Collapsed" />
+                    </Button>
+                    <Button
+                        Name="btnClose"
+                        hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+                        BorderThickness="0"
+                        Command="{Binding CloseCommand}"
+                        Style="{StaticResource ToolButtonStyle}"
+                        ToolTip="{ex:Language Key='Close'}" />
+                </hc:UniformSpacingPanel>
+            </DockPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="4*" />
+                </Grid.ColumnDefinitions>
+                <Border BorderBrush="{DynamicResource MaterialDesignDarkSeparatorBackground}" BorderThickness="2">
+                    <DockPanel LastChildFill="True">
+                        <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+                            <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Design type'}" />
+                            <ComboBox
+                                Name="ComboBoxDesignType"
+                                VerticalAlignment="Center"
+                                SelectedIndex="{Binding DoeIndex}"
+                                Style="{StaticResource ComboBoxExtend}">
+                                <ComboBoxItem Content="{ex:Language Key='Full factorial'}" />
+                                <ComboBoxItem Content="{ex:Language Key='2-level fractional factorial'}" />
+                                <ComboBoxItem Content="{ex:Language Key='Central composite'}" />
+                                <!--<ComboBoxItem Content="{ex:Language Key='Box-Behnken'}" />
+                                <ComboBoxItem Content="{ex:Language Key='Plackett-Burman'}" />-->
+                            </ComboBox>
+                        </DockPanel>
+                        <DockPanel Margin="0,5,0,0" LastChildFill="True">
+                            <hc:UniformSpacingPanel
+                                DockPanel.Dock="Bottom"
+                                Orientation="Vertical"
+                                Spacing="10">
+                                <DockPanel LastChildFill="False">
+                                    <hc:UniformSpacingPanel
+                                        DockPanel.Dock="Right"
+                                        Orientation="Horizontal"
+                                        Spacing="10">
+                                        <TextBox
+                                            Width="100"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Title="{ex:Language Key='Center points'}"
+                                            Style="{StaticResource TextBoxExtend}"
+                                            Text="{Binding CenterPoint}" />
+                                        <TextBox Width="100"
+                                                 VerticalAlignment="Center"
+                                                 hc:InfoElement.Title="{ex:Language Key='Repeat'}"
+                                                 Style="{StaticResource TextBoxExtend}"
+                                                 Text="{Binding RepeatCount}" />
+                                        <hc:ComboBox
+                                            Width="100"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Title="{ex:Language Key='Alpha'}"
+                                            ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+                                            SelectedItem="{Binding SelectedAlpha}"
+                                            Style="{StaticResource ComboBoxExtend}" />
+                                        <hc:ComboBox
+                                            Width="100"
+                                            VerticalAlignment="Center"
+                                            hc:InfoElement.Title="{ex:Language Key='Face'}"
+                                            ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
+                                            SelectedItem="{Binding SelectedFace}"
+                                            Style="{StaticResource ComboBoxExtend}" />
+                                    </hc:UniformSpacingPanel>
+                                </DockPanel>
+                                <DockPanel LastChildFill="False">
+                                    <hc:UniformSpacingPanel
+                                        DockPanel.Dock="Right"
+                                        Orientation="Horizontal"
+                                        Spacing="5">
+                                        <Button
+                                            Width="70"
+                                            Height="30"
+                                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                            Background="Transparent"
+                                            BorderThickness="1"
+                                            Command="{Binding GenerateCommand}"
+                                            Content="{ex:Language Key='Generate'}"
+                                            ToolTip="Generate" />
+                                        <Button
+                                            Width="70"
+                                            Height="30"
+                                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                            Background="Transparent"
+                                            BorderThickness="1"
+                                            Command="{Binding OKCommand}"
+                                            Content="{ex:Language Key='OK'}"
+                                            ToolTip="OK" />
+                                        <Button
+                                            Width="70"
+                                            Height="30"
+                                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                            Background="Transparent"
+                                            BorderThickness="1"
+                                            Command="{Binding CloseCommand}"
+                                            Content="{ex:Language Key='Cancel'}"
+                                            ToolTip="Cancel" />
+                                    </hc:UniformSpacingPanel>
+                                </DockPanel>
+
+                            </hc:UniformSpacingPanel>
+                            <DataGrid
+                                Name="DataGridDesign"
+                                hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
+                                hc:DataGridAttach.ShowSelectAllButton="False"
+                                AutoGenerateColumns="False"
+                                Background="{StaticResource DefaultBrush}"
+                                CanUserSortColumns="False"
+                                ColumnWidth="SizeToCells"
+                                HeadersVisibility="Column"
+                                IsReadOnly="False"
+                                ItemsSource="{Binding DesignCol}"
+                                MouseDoubleClick="DataGridDesign_MouseDoubleClick"
+                                RowHeaderWidth="60"
+                                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                SelectionMode="Single"
+                                SelectionUnit="Cell">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                        MinWidth="50"
+                                        Binding="{Binding Name}"
+                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                        Header="{ex:Language Key=''}"
+                                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                                        IsReadOnly="True" />
+                                    <DataGridTextColumn
+                                        MinWidth="60"
+                                        Binding="{Binding Low}"
+                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                        Header="{ex:Language Key='Low'}"
+                                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                    <DataGridTextColumn
+                                        MinWidth="60"
+                                        Binding="{Binding High}"
+                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                        Header="{ex:Language Key='High'}"
+                                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </DockPanel>
+                </Border>
+                <Border
+                    Grid.Column="1"
+                    BorderBrush="{DynamicResource MaterialDesignDarkSeparatorBackground}"
+                    BorderThickness="2">
+                    <DockPanel LastChildFill="True">
+                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Result'}" />
+                        <DataGrid
+                            Name="DataGridResult"
+                            hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
+                            hc:DataGridAttach.ShowSelectAllButton="False"
+                            AutoGenerateColumns="True"
+                            Background="{StaticResource DefaultBrush}"
+                            CanUserSortColumns="False"
+                            ColumnWidth="SizeToHeader"
+                            HeadersVisibility="Column"
+                            IsReadOnly="True"
+                            ItemsSource="{Binding DataSource.DefaultView}"
+                            RowHeaderWidth="60"
+                            ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                            ScrollViewer.VerticalScrollBarVisibility="Visible"
+                            SelectionMode="Single"
+                            SelectionUnit="FullRow" />
+                    </DockPanel>
+                </Border>
+                <Border
+                    Grid.Column="2"
+                    BorderBrush="{DynamicResource MaterialDesignDarkSeparatorBackground}"
+                    BorderThickness="2">
+                    <DockPanel LastChildFill="True">
+                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='3D Design'}" />
+                    </DockPanel>
+                </Border>
+            </Grid>
+        </DockPanel>
+    </Border>
+</UserControl>

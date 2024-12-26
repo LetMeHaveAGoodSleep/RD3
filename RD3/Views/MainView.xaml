@@ -158,7 +158,8 @@
                                 FontSize="16"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='DOE'}"
-                                Tag="DOE">
+                                Tag="DOE"
+                                Visibility="Collapsed">
                                 <hc:SideMenuItem.Icon>
                                     <Image
                                         Width="24"

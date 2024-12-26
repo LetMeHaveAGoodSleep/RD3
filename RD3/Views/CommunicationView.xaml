@@ -35,6 +35,7 @@
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
+            <Setter Property="Background" Value="Transparent" />
         </Style>
     </prism:Dialog.WindowStyle>
     <Border Style="{StaticResource BorderCard}">

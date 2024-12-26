@@ -55,25 +55,25 @@
 	<instruments>
 		<instrument>
 			<id>G01</id>
-			<name>主控板1</name>
+			<name>G01</name>
 			<type>Device</type>
 			<address>1</address>
 		</instrument>
 		<instrument>
 			<id>G02</id>
-			<name>主控板2</name>
+			<name>G02</name>
 			<type>Device</type>
 			<address>2</address>
 		</instrument>
 		<instrument>
 			<id>G03</id>
-			<name>主控板3</name>
+			<name>G03</name>
 			<type>Device</type>
 			<address>3</address>
 		</instrument>
 		<instrument>
 			<id>G04</id>
-			<name>主控板4</name>
+			<name>G04</name>
 			<type>Device</type>
 			<address>4</address>
 		</instrument>

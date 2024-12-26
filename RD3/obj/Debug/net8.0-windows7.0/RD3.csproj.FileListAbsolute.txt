@@ -280,3 +280,5 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\CommandManager.xml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\InstrumentManager.xml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOEMainView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOEMainView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOEDesignView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOEDesignView.baml

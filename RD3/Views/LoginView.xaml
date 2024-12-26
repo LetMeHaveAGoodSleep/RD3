@@ -30,14 +30,10 @@
             <Setter Property="AllowsTransparency" Value="True" />
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <!--<Setter Property="Background" Value="{StaticResource BackGroundBrush}" />-->
+            <Setter Property="Background" Value="Transparent" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Border
-        Background="{StaticResource BackGroundBrush}"
-        BorderBrush="{DynamicResource BorderBrush}"
-        BorderThickness="0"
-        CornerRadius="4">
+    <Border Style="{StaticResource BorderForm}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.5*" />

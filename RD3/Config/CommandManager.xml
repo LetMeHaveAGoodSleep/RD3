@@ -145,12 +145,6 @@
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
-							<id>DO</id>
-							<name>溶氧值</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-						<param>
 							<id>DOLower</id>
 							<name>溶氧下限</name>
 							<type>float</type>
@@ -165,6 +159,12 @@
 						<param>
 							<id>ControlMode</id>
 							<name>控制模式</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>Pump</id>
+							<name>关联泵</name>
 							<type>byte</type>
 							<length>1</length>
 						</param>
@@ -744,6 +744,394 @@
 
 			</commandExtends>
 		</commandDesc>
+
+		<commandDesc>
+			<id>RWORPParam</id>
+			<name>读写ORP</name>
+			<commandCode>0x0F</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xff</id>
+					<name>ReadWrite</name>
+					<parameters>
+						<param>
+							<id>ORP</id>
+							<name>转速</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
+			<id>WSensorCorrect</id>
+			<name>写传感器校正</name>
+			<commandCode>0x21</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x66</id>
+					<name>Write</name>
+					<parameters>
+						<param>
+							<id>CorrectMode</id>
+							<name>校正模式</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>DeviceType</id>
+							<name>校正设备类型</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>SensorNo</id>
+							<name>传感器序号</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>CorrectValue</id>
+							<name>校准值</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
+			<id>RWMotorDebug</id>
+			<name>电机调试</name>
+			<commandCode>0x22</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+					<parameters>
+						<param>
+							<id>MotorNo</id>
+							<name>电机序号</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xaa</id>
+					<name>ReadResponse</name>
+					<parameters>
+						<param>
+							<id>RPM</id>
+							<name>转速</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>Direction</id>
+							<name>方向</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x66</id>
+					<name>Write</name>
+					<parameters>
+						<param>
+							<id>RPM</id>
+							<name>转速</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>Direction</id>
+							<name>方向</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
+			<id>RWTempTECDebug</id>
+			<name>温度TEC调试</name>
+			<commandCode>0x23</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+					<parameters>
+						<param>
+							<id>DeviceNo</id>
+							<name>设备序号</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xaa</id>
+					<name>ReadResponse</name>
+					<parameters>
+						<param>
+							<id>Temp</id>
+							<name>实时温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>P</id>
+							<name>P参数</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>I</id>
+							<name>I参数</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>D</id>
+							<name>D参数</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x66</id>
+					<name>Write</name>
+					<parameters>
+						<param>
+							<id>DeviceNo</id>
+							<name>设备序号</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>Temp</id>
+							<name>实时温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>P</id>
+							<name>P参数</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>I</id>
+							<name>I参数</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>D</id>
+							<name>D参数</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
+			<id>RWDeviceParam</id>
+			<name>读写设备参数</name>
+			<commandCode>0x24</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xaa</id>
+					<name>ReadResponse</name>
+					<parameters>
+						<param>
+							<id>MainIPAdress</id>
+							<name>主板IP地址</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>MainPort</id>
+							<name>主板端口号</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>NFCParam</id>
+							<name>NFC参数</name>
+							<type>byte</type>
+							<length>64</length>
+						</param>
+						<param>
+							<id>WifiIPAdress</id>
+							<name>Wifi模组IP地址</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>WifiPort</id>
+							<name>Wifi端口号</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>ScreenParam</id>
+							<name>屏幕参数</name>
+							<type>byte</type>
+							<length>32</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x66</id>
+					<name>Write</name>
+					<parameters>
+						<param>
+							<id>MainIPAdress</id>
+							<name>主板IP地址</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>MainPort</id>
+							<name>主板端口号</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>NFCParam</id>
+							<name>NFC参数</name>
+							<type>byte</type>
+							<length>64</length>
+						</param>
+						<param>
+							<id>WifiIPAdress</id>
+							<name>Wifi模组IP地址</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>WifiPort</id>
+							<name>Wifi端口号</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>ScreenParam</id>
+							<name>屏幕参数</name>
+							<type>byte</type>
+							<length>32</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+		
 
 	</commandDescs>
 </commandManager>

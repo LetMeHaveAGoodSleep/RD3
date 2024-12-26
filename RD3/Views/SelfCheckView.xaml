@@ -13,7 +13,6 @@
     Width="640"
     Height="360"
     d:DataContext="{d:DesignInstance Type=viewmodels:SelfCheckViewModel}"
-    Background="#012148"
     mc:Ignorable="d">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
@@ -28,30 +27,33 @@
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="ShowInTaskbar" Value="True" />
+            <Setter Property="Background" Value="Transparent" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Grid Margin="32">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <controls:WaveAnimation
-            Width="30"
-            Height="30"
-            Color="DarkOrange"
-            Duration="0:0:2.0" />
-        <TextBlock
-            Name="TxtInit"
-            Grid.Row="1"
-            Width="400"
-            Height="130"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Background="Transparent"
-            FontSize="{DynamicResource SubHeadFontSize}"
-            Foreground="WhiteSmoke"
-            Text="{Binding Content}"
-            TextAlignment="Left"
-            TextWrapping="Wrap" />
-    </Grid>
+    <Border Background="#012148" Style="{StaticResource BorderForm}">
+        <Grid Margin="32">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <controls:WaveAnimation
+                Width="30"
+                Height="30"
+                Color="DarkOrange"
+                Duration="0:0:2.0" />
+            <TextBlock
+                Name="TxtInit"
+                Grid.Row="1"
+                Width="400"
+                Height="130"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                FontSize="{DynamicResource SubHeadFontSize}"
+                Foreground="WhiteSmoke"
+                Text="{Binding Content}"
+                TextAlignment="Left"
+                TextWrapping="Wrap" />
+        </Grid>
+    </Border>
 </UserControl>

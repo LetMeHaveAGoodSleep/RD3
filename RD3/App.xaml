@@ -114,6 +114,20 @@
                 <Setter Property="Background" Value="Transparent" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
             </Style>
+            <Style x:Key="CustomBorderStyle" TargetType="Border">
+                <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+                <Setter Property="BorderThickness" Value="1.5" />
+                <Setter Property="CornerRadius" Value="{StaticResource DefaultCornerRadius}" />
+                <Setter Property="Effect">
+                    <Setter.Value>
+                        <DropShadowEffect
+                            BlurRadius="4"
+                            Direction="215"
+                            ShadowDepth="2"
+                            Color="Gray" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

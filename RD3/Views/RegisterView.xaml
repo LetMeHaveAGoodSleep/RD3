@@ -32,79 +32,76 @@
             <Setter Property="AllowsTransparency" Value="True" />
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="Background" Value="Transparent" />
             <Setter Property="Opacity" Value="1" />
             <Setter Property="AllowDrop" Value="True" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <materialDesign:DialogHost
-        x:Name="DialogHost"
-        DialogTheme="Inherit"
-        Identifier="Register">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Border
-                Background="{DynamicResource PrimaryBrush}"
-                BorderBrush="{DynamicResource PrimaryBrush}"
-                BorderThickness="1"
-                Effect="{StaticResource EffectShadow1}">
-                <DockPanel LastChildFill="False">
-                    <!--<Image
-                        Width="16"
-                        Height="{Binding Width, RelativeSource={RelativeSource Mode=Self}}"
-                        Source="../Assets/logo.png" Margin="0,0,10,20"/>-->
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        FontSize="{DynamicResource SubHeadFontSize}"
-                        Foreground="{DynamicResource DefaultBrush}"
-                        Text="{ex:Language Key='Please register software!'}" />
-                    <Button
-                        Name="btnClose"
-                        hc:IconElement.Geometry="{StaticResource CloseGeometry}"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Command="{Binding CloseCommand}"
-                        DockPanel.Dock="Right"
-                        Foreground="White" />
-                </DockPanel>
-            </Border>
-            <Grid Grid.Row="1" Margin="10">
+    <Border Style="{StaticResource BorderForm}">
+        <materialDesign:DialogHost
+            x:Name="DialogHost"
+            DialogTheme="Inherit"
+            Identifier="Register">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="10" />
                     <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBox
-                    hc:InfoElement.Title="{ex:Language Key='Registration code'}"
-                    Style="{StaticResource TextBoxExtend}"
-                    Text="{Binding RegistrationCode}"
-                    TextWrapping="Wrap" />
-                <hc:UniformSpacingPanel
-                    Grid.Row="2"
-                    HorizontalAlignment="Right"
-                    Orientation="Horizontal"
-                    Spacing="10">
-                    <Button
-                        Name="btnCancel"
-                        BorderBrush="{DynamicResource PrimaryBrush}"
-                        BorderThickness="1"
-                        Command="{Binding CloseCommand}"
-                        Content="{ex:Language Key='Cancel'}"
-                        Foreground="{DynamicResource PrimaryBrush}" />
-                    <Button
-                        Name="btnRegister"
-                        Background="{DynamicResource PrimaryBrush}"
-                        BorderThickness="0"
-                        Command="{Binding RegisterCommand}"
-                        Content="{ex:Language Key='Register'}"
-                        Foreground="White" />
-                </hc:UniformSpacingPanel>
+                <Border
+                    Background="{DynamicResource PrimaryBrush}"
+                    BorderBrush="{DynamicResource PrimaryBrush}"
+                    BorderThickness="1"
+                    CornerRadius="4 4 0 0"
+                    Effect="{StaticResource EffectShadow1}">
+                    <DockPanel LastChildFill="False">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="{DynamicResource SubHeadFontSize}"
+                            Foreground="{DynamicResource DefaultBrush}"
+                            Text="{ex:Language Key='Please register software!'}" />
+                        <Button
+                            Name="btnClose"
+                            hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding CloseCommand}"
+                            DockPanel.Dock="Right"
+                            Foreground="White" />
+                    </DockPanel>
+                </Border>
+                <Grid Grid.Row="1" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBox
+                        hc:InfoElement.Title="{ex:Language Key='Registration code'}"
+                        Style="{StaticResource TextBoxExtend}"
+                        Text="{Binding RegistrationCode}"
+                        TextWrapping="Wrap" />
+                    <hc:UniformSpacingPanel
+                        Grid.Row="2"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <Button
+                            Name="btnCancel"
+                            BorderBrush="{DynamicResource PrimaryBrush}"
+                            BorderThickness="1"
+                            Command="{Binding CloseCommand}"
+                            Content="{ex:Language Key='Cancel'}"
+                            Foreground="{DynamicResource PrimaryBrush}" />
+                        <Button
+                            Name="btnRegister"
+                            Background="{DynamicResource PrimaryBrush}"
+                            BorderThickness="0"
+                            Command="{Binding RegisterCommand}"
+                            Content="{ex:Language Key='Register'}"
+                            Foreground="White" />
+                    </hc:UniformSpacingPanel>
+                </Grid>
             </Grid>
-        </Grid>
-
-    </materialDesign:DialogHost>
-
+        </materialDesign:DialogHost>
+    </Border>
 </UserControl>

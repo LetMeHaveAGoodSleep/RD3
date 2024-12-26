@@ -33,5 +33,10 @@
     "Name": "Debug",
     "NameSpace": "MCUDebugView",
     "MinUserType": 0
+  },
+  {
+    "Name": "DOE",
+    "NameSpace": "DOEMainView",
+    "MinUserType": 0
   }
 ]
