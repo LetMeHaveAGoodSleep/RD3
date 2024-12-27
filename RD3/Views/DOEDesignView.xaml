@@ -92,9 +92,9 @@
             </DockPanel>
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3.5*" />
+                    <ColumnDefinition Width="3.5*" />
                     <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="4*" />
                 </Grid.ColumnDefinitions>
                 <Border BorderBrush="{DynamicResource MaterialDesignDarkSeparatorBackground}" BorderThickness="2">
                     <DockPanel LastChildFill="True">
@@ -122,31 +122,43 @@
                                         DockPanel.Dock="Right"
                                         Orientation="Horizontal"
                                         Spacing="10">
-                                        <TextBox
-                                            Width="100"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Title="{ex:Language Key='Center points'}"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding CenterPoint}" />
-                                        <TextBox Width="100"
-                                                 VerticalAlignment="Center"
-                                                 hc:InfoElement.Title="{ex:Language Key='Repeat'}"
-                                                 Style="{StaticResource TextBoxExtend}"
-                                                 Text="{Binding RepeatCount}" />
-                                        <hc:ComboBox
-                                            Width="100"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Title="{ex:Language Key='Alpha'}"
-                                            ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
-                                            SelectedItem="{Binding SelectedAlpha}"
-                                            Style="{StaticResource ComboBoxExtend}" />
-                                        <hc:ComboBox
-                                            Width="100"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Title="{ex:Language Key='Face'}"
-                                            ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
-                                            SelectedItem="{Binding SelectedFace}"
-                                            Style="{StaticResource ComboBoxExtend}" />
+                                        <DockPanel VerticalAlignment="Center">
+                                            <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Center points'}" />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox
+                                                    Width="60"
+                                                    VerticalAlignment="Center"
+                                                    Style="{StaticResource TextBoxExtend}"
+                                                    Text="{Binding CenterPoint}" />
+                                                <TextBox
+                                                    Grid.Column="1"
+                                                    Width="60"
+                                                    VerticalAlignment="Center"
+                                                    Style="{StaticResource TextBoxExtend}"
+                                                    Text="{Binding RepeatCount}" />
+                                            </Grid>
+                                        </DockPanel>
+                                        <DockPanel LastChildFill="True">
+                                            <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Alpha'}" />
+                                            <hc:ComboBox
+                                                Width="120"
+                                                Height="30"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+                                                SelectedItem="{Binding SelectedAlpha}"
+                                                Style="{StaticResource ComboBoxExtend}" />
+                                        </DockPanel>
+                                        <DockPanel LastChildFill="True">
+                                            <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Face'}" />
+                                            <hc:ComboBox
+                                                Width="120"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
+                                                SelectedItem="{Binding SelectedFace}"
+                                                Style="{StaticResource ComboBoxExtend}" />
+                                        </DockPanel>
                                     </hc:UniformSpacingPanel>
                                 </DockPanel>
                                 <DockPanel LastChildFill="False">
@@ -248,7 +260,7 @@
                             ScrollViewer.HorizontalScrollBarVisibility="Visible"
                             ScrollViewer.VerticalScrollBarVisibility="Visible"
                             SelectionMode="Single"
-                            SelectionUnit="FullRow" />
+                            SelectionUnit="Cell" />
                     </DockPanel>
                 </Border>
                 <Border

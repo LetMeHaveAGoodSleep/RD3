@@ -185,4 +185,6 @@
     <system:String x:Key="Box-Behnken">Box-Behnken</system:String>
     <system:String x:Key="Plackett-Burman">Plackett-Burman</system:String>
     <system:String x:Key="Design type">设计类型</system:String>
+    <system:String x:Key="Connect Status">连接状态</system:String>
+    <system:String x:Key="Condensation Temp">冷凝温度</system:String>
 </ResourceDictionary>

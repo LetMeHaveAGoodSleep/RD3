@@ -396,6 +396,7 @@
                                         <RowDefinition Height="40" />
                                         <RowDefinition Height="40" />
                                         <RowDefinition Height="40" />
+                                        <RowDefinition Height="40" />
                                         <RowDefinition Height="20" />
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
@@ -503,6 +504,17 @@
                                         Grid.Column="1"
                                         Style="{StaticResource BodyFontSizeStyle}"
                                         Text="{Binding FormattedTime}"
+                                        TextAlignment="Right" />
+                                    <TextBlock
+                                        Grid.Row="10"
+                                        Style="{StaticResource BodyFontSizeStyle}"
+                                        Text="{ex:Language Key='Connect Status'}"
+                                        TextAlignment="Left" />
+                                    <TextBlock
+                                        Grid.Row="10"
+                                        Grid.Column="1"
+                                        Style="{StaticResource BodyFontSizeStyle}"
+                                        Text="{Binding ConnectStatus}"
                                         TextAlignment="Right" />
                                     <Image
                                         Grid.Row="3"

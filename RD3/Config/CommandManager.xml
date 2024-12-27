@@ -787,6 +787,65 @@
 		</commandDesc>
 
 		<commandDesc>
+			<id>RWCondensationParam</id>
+			<name>读写冷凝温度参数</name>
+			<commandCode>0x10</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xff</id>
+					<name>ReadWrite</name>
+					<parameters>
+						<param>
+							<id>Temp</id>
+							<name>温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>TempLower</id>
+							<name>温度下限</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>TempUpper</id>
+							<name>温度上限</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>ControlMode</id>
+							<name>控制模式</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
 			<id>WSensorCorrect</id>
 			<name>写传感器校正</name>
 			<commandCode>0x21</commandCode>
@@ -1131,7 +1190,5 @@
 
 			</commandExtends>
 		</commandDesc>
-		
-
 	</commandDescs>
 </commandManager>
