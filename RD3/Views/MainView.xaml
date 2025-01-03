@@ -45,7 +45,7 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="4" />
+                        <RowDefinition Height="0" />
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
@@ -214,7 +214,7 @@
                 </Grid>
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50" />
+                        <RowDefinition Height="40" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Border
@@ -327,7 +327,10 @@
                                         </hc:UniformSpacingPanel>
                                     </Popup>
                                 </hc:UniformSpacingPanel>
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                <hc:UniformSpacingPanel
+                                    VerticalAlignment="Stretch"
+                                    Orientation="Horizontal"
+                                    Spacing="5">
                                     <Button
                                         Name="btnMin"
                                         hc:IconElement.Geometry="{StaticResource WindowMinGeometry}"

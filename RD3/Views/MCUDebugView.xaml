@@ -76,13 +76,24 @@
             <RowDefinition Height="auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <hc:ComboBox
-            Width="100"
+        <hc:UniformSpacingPanel
             Margin="0,0,0,5"
-            HorizontalAlignment="Left"
-            hc:InfoElement.Title="{ex:Language Key='Reactor'}"
-            ItemsSource="{Binding Instruments}"
-            SelectedItem="{Binding SelectedInstrument}" />
+            Orientation="Horizontal"
+            Spacing="10">
+            <!--<hc:ComboBox
+                Width="100"
+                hc:InfoElement.Title="{ex:Language Key='Reactor'}"
+                ItemsSource="{Binding Instruments}"
+                SelectedItem="{Binding SelectedInstrument}" />-->
+            <hc:CheckComboBox
+                Width="400"
+                hc:InfoElement.ShowClearButton="True"
+                ItemsSource="{Binding Instruments}"
+                SelectionChanged="CheckComboBox_SelectionChanged"
+                SelectionMode="Multiple"
+                ShowSelectAllButton="True" />
+        </hc:UniformSpacingPanel>
+
         <TabControl Grid.Row="1">
             <TabItem Header="{ex:Language Key='Parameter Setting'}">
                 <Border Effect="{StaticResource EffectShadow1}">
@@ -626,13 +637,20 @@
                                         Style="{StaticResource TextBoxExtend}"
                                         Text="{Binding DeviceParam.WifiPort}" />
                                 </hc:UniformSpacingPanel>
+                                <TextBox
+                                    Width="532"
+                                    Height="70"
+                                    HorizontalAlignment="Left"
+                                    hc:InfoElement.Title="{ex:Language Key='NFC Parameter'}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding DeviceParam.NFC}" />
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <TextBox
                                         Width="532"
                                         Height="70"
-                                        hc:InfoElement.Title="{ex:Language Key='NFC Parameter'}"
+                                        hc:InfoElement.Title="{ex:Language Key='Screen Parameter'}"
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding DeviceParam.NFC}" />
+                                        Text="{Binding DeviceParam.Screen}" />
                                     <Button
                                         Width="100"
                                         Height="40"

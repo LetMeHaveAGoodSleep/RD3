@@ -22,37 +22,70 @@
 							<name>host</name>
 							<value>172.16.0.146</value>
 						</Fpi.Xml.Property>
-
 						<Fpi.Xml.Property>
 							<id>port</id>
 							<name>port</name>
 							<value>8080</value>
 						</Fpi.Xml.Property>
-
 						<Fpi.Xml.Property>
 							<id>errorCount</id>
 							<name>errorCount</name>
 							<value>30</value>
 						</Fpi.Xml.Property>
-
 					</propertys>
-
 				</Fpi.Xml.Property>
-
 				<Fpi.Xml.Property>
 					<id>Fpi.Communication.Buses.TcpServer</id>
 					<name>链路配置</name>
 				</Fpi.Xml.Property>
-
 				<Fpi.Xml.Property>
 					<id>Fpi.Communication.Protocols.Common.Simple.SimpleProtocol</id>
 					<name>协议配置</name>
 				</Fpi.Xml.Property>
-
 			</propertys>
-
 		</Fpi.Communication.Manager.Pipe>
-
+		<Fpi.Communication.Manager.Pipe>
+			<id>TCP2</id>
+			<name>TCP2</name>
+			<valid>True</valid>
+			<autoConnect>True</autoConnect>
+			<autoReConnect>True</autoReConnect>
+			<impBus>Fpi.Communication.Buses.TcpClientSocket</impBus>
+			<impProtocol>Fpi.Communication.XZ.XZProtocol</impProtocol>
+			<targets>
+				<target>G02</target>
+			</targets>
+			<propertys>
+				<Fpi.Xml.Property>
+					<id>Fpi.Communication.Buses.TcpClientSocket</id>
+					<name>链路配置</name>
+					<propertys>
+						<Fpi.Xml.Property>
+							<id>host</id>
+							<name>host</name>
+							<value>172.16.0.147</value>
+						</Fpi.Xml.Property>
+						<Fpi.Xml.Property>
+							<id>port</id>
+							<name>port</name>
+							<value>8080</value>
+						</Fpi.Xml.Property>
+						<Fpi.Xml.Property>
+							<id>errorCount</id>
+							<name>errorCount</name>
+							<value>30</value>
+						</Fpi.Xml.Property>
+					</propertys>
+				</Fpi.Xml.Property>
+				<Fpi.Xml.Property>
+					<id>Fpi.Communication.Buses.TcpServer</id>
+					<name>链路配置</name>
+				</Fpi.Xml.Property>
+				<Fpi.Xml.Property>
+					<id>Fpi.Communication.Protocols.Common.Simple.SimpleProtocol</id>
+					<name>协议配置</name>
+				</Fpi.Xml.Property>
+			</propertys>
+		</Fpi.Communication.Manager.Pipe>
 	</pipes>
-
 </PortManager>
