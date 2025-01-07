@@ -28,6 +28,9 @@
     <Compile Update="Views\CalibrationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ChooseReactorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\CommunicationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -127,6 +130,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CalibrationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChooseReactorView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CommunicationView.xaml">

@@ -66,6 +66,12 @@
                 <Setter Property="BorderThickness" Value="1" />
                 <Setter Property="BorderBrush" Value="{DynamicResource BackGroundBrush}" />
             </Style>
+            <Style x:Key="BorderGray" TargetType="{x:Type Border}">
+                <Setter Property="Border.CornerRadius" Value="{StaticResource DefaultCornerRadius}" />
+                <Setter Property="Background" Value="#EEEEEE" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="BorderBrush" Value="#EEEEEE" />
+            </Style>
             <Style x:Key="HeavyFontSizeStyle" TargetType="{x:Type TextBlock}">
                 <Setter Property="FontSize" Value="30" />
             </Style>

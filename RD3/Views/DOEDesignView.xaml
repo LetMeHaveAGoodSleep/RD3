@@ -252,7 +252,7 @@
                             AutoGenerateColumns="True"
                             Background="{StaticResource DefaultBrush}"
                             CanUserSortColumns="False"
-                            ColumnWidth="SizeToHeader"
+                            ColumnWidth="SizeToCells"
                             HeadersVisibility="Column"
                             IsReadOnly="True"
                             ItemsSource="{Binding DataSource.DefaultView}"
