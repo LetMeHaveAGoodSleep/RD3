@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:SettingViewModel}"
-    d:DesignHeight="450"
+    d:DesignHeight="650"
     d:DesignWidth="800"
     Background="{DynamicResource DefaultBrush}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
@@ -161,6 +161,21 @@
                                 BorderThickness="0"
                                 IsChecked="{Binding IsSimulation}"
                                 Style="{StaticResource ToggleButtonSwitch}" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel Spacing="70">
+                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Time Interval'}" />
+                                <TextBlock
+                                    FontSize="10"
+                                    FontStyle="Oblique"
+                                    Foreground="gray"
+                                    Text="{ex:Language Key='Read real-time data  unit:sencond'}" />
+                            </hc:UniformSpacingPanel>
+                            <ComboBox
+                                Width="100"
+                                ItemsSource="{Binding IntervalSource}"
+                                SelectedItem="{Binding TimeInterval}"
+                                Style="{StaticResource ComboBoxExtend}" />
                         </hc:UniformSpacingPanel>
                     </hc:UniformSpacingPanel>
                 </Border>

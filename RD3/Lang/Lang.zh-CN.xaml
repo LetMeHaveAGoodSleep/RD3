@@ -92,7 +92,7 @@
     <system:String x:Key="Alarm Time">报警时间</system:String>
     <system:String x:Key="Value">数值</system:String>
     <system:String x:Key="Grade">等级</system:String>
-    <system:String x:Key="pH">pH</system:String>
+    <system:String x:Key="PH">PH</system:String>
     <system:String x:Key="Air">空气</system:String>
     <system:String x:Key="CO2">二氧化碳</system:String>
     <system:String x:Key="O2">氧气</system:String>

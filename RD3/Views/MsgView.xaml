@@ -7,10 +7,12 @@
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:rd3="clr-namespace:RD3"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="380"
     Height="220"
     d:DataContext="{d:DesignInstance Type=viewmodels:MsgViewModel}"
+    rd3:DraggableUserControlAttach.IsDraggable="True"
     mc:Ignorable="d">
     <Border Background="{StaticResource BackGroundBrush}" CornerRadius="4">
         <Grid>

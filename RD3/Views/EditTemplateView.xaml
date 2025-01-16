@@ -11,11 +11,13 @@
     xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:pass="clr-namespace:RD3.Extensions"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:rd3="clr-namespace:RD3"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="650"
-    Height="630"
+    Height="550"
     d:DataContext="{d:DesignInstance Type=viewmodels:EditProjectTemplateViewModel}"
+    rd3:DraggableUserControlAttach.IsDraggable="True"
     mc:Ignorable="d">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
@@ -297,7 +299,10 @@
                             Text="{Binding Template.AF}" />
                     </Grid>
                 </hc:UniformSpacingPanel>
-                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                <hc:UniformSpacingPanel
+                    Orientation="Horizontal"
+                    Spacing="10"
+                    Visibility="Collapsed">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />

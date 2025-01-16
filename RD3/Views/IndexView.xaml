@@ -14,11 +14,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     d:DataContext="{d:DesignInstance Type=vm:IndexViewModel}"
-    d:DesignHeight="950"
-    d:DesignWidth="1550"
+    d:DesignHeight="930"
+    d:DesignWidth="1400"
     Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
     <UserControl.Resources>
@@ -27,6 +28,15 @@
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
         </Style>
+
+        <ObjectDataProvider
+            x:Key="DataFromEnum"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:ExperimentParameter" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="UserControl.Loaded">
@@ -128,13 +138,32 @@
                     Height="30"
                     HorizontalAlignment="Left"
                     hc:BorderElement.CornerRadius="8"
+                    hc:IconElement.Geometry="{StaticResource GeometryImport}"
+                    Background="Transparent"
+                    BorderThickness="1"
+                    Command="{Binding ImportHistoryDataCommand}"
+                    Content="{ex:Language Key='Import history data'}"
+                    ToolTip="Import template" />
+                <Button
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                    hc:IconElement.Geometry="{StaticResource SaveGeometry}"
+                    Background="Transparent"
+                    BorderThickness="1"
+                    Command="{Binding SaveDataCommand}"
+                    Content="{ex:Language Key='Save data'}"
+                    ToolTip="Save as template" />
+                <Button
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    hc:BorderElement.CornerRadius="8"
                     hc:IconElement.Geometry="{StaticResource GeometryImportTemplate}"
                     Background="Transparent"
                     BorderThickness="1"
                     Command="{Binding ImportTemplateCommand}"
                     Content="{ex:Language Key='Import template'}"
-                    ToolTip="Import template"
-                    Visibility="Collapsed" />
+                    ToolTip="Import template" />
                 <Button
                     Height="30"
                     HorizontalAlignment="Left"
@@ -269,6 +298,7 @@
                                         Name="CmbDevice"
                                         BorderThickness="0"
                                         FontSize="{DynamicResource LargeFontSize}"
+                                        ItemsSource="{Binding ReactorCol}"
                                         SelectedIndex="0"
                                         Style="{StaticResource ComboBoxExtend}">
                                         <i:Interaction.Triggers>
@@ -279,14 +309,19 @@
                                                     PassEventArgsToCommand="True" />
                                             </i:EventTrigger>
                                         </i:Interaction.Triggers>
-                                        <ComboBoxItem Content="G01" />
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Name}" />
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                        <!--<ComboBoxItem Content="G01" />
                                         <ComboBoxItem Content="G02" />
                                         <ComboBoxItem Content="G03" />
                                         <ComboBoxItem Content="G04" />
                                         <ComboBoxItem Content="G05" />
                                         <ComboBoxItem Content="G06" />
                                         <ComboBoxItem Content="G07" />
-                                        <ComboBoxItem Content="G08" />
+                                        <ComboBoxItem Content="G08" />-->
                                     </hc:ComboBox>
                                     <hc:UniformSpacingPanel
                                         DockPanel.Dock="Right"
@@ -296,7 +331,7 @@
                                             VerticalAlignment="Center"
                                             FontSize="16"
                                             FontWeight="Bold"
-                                            Foreground="{StaticResource SuccessBrush}"
+                                            Foreground="{StaticResource FixedBrush}"
                                             Text="{ex:Language Key='Running'}"
                                             TextAlignment="Right"
                                             Visibility="{Binding CurrentDeviceParameter.WorkStatus, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Running}" />
@@ -304,7 +339,7 @@
                                             VerticalAlignment="Center"
                                             FontSize="16"
                                             FontWeight="Bold"
-                                            Foreground="{StaticResource SuccessBrush}"
+                                            Foreground="{StaticResource FixedBrush}"
                                             Text="{ex:Language Key='Idle'}"
                                             TextAlignment="Right"
                                             Visibility="{Binding CurrentDeviceParameter.WorkStatus, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Idle}" />
@@ -514,7 +549,7 @@
                                         Grid.Row="10"
                                         Grid.Column="1"
                                         Style="{StaticResource BodyFontSizeStyle}"
-                                        Text="{Binding ConnectStatus}"
+                                        Text="{Binding CurrentDeviceParameter.ReactorStatus}"
                                         TextAlignment="Right" />
                                     <Image
                                         Grid.Row="3"
@@ -537,8 +572,8 @@
                                     <RowDefinition Height="220" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="440" />
-                                    <ColumnDefinition Width="440" />
+                                    <ColumnDefinition Width="360" />
+                                    <ColumnDefinition Width="360" />
                                 </Grid.ColumnDefinitions>
                                 <Border
                                     Margin="10"
@@ -553,7 +588,7 @@
                                         <Grid Grid.Row="0">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="auto" />
-                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="5" />
                                                 <ColumnDefinition Width="auto" />
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="auto" />
@@ -562,22 +597,28 @@
                                                 <RowDefinition Height="30" />
                                                 <RowDefinition Height="30" />
                                             </Grid.RowDefinitions>
-                                            <Image Grid.RowSpan="2" Source="/Images/Main/Temp_Primary.png" />
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="2"
-                                                FontSize="{DynamicResource LargeFontSize}"
-                                                Text="{ex:Language Key='Temp'}" />
+                                            <Image
+                                                Grid.RowSpan="2"
+                                                Height="50"
+                                                VerticalAlignment="Top"
+                                                Source="/Images/Main/Temp_Primary.png" />
                                             <hc:UniformSpacingPanel
-                                                Grid.Row="1"
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
                                                 Grid.Column="2"
-                                                Orientation="Horizontal"
-                                                Spacing="5">
-                                                <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="37.6" />
-                                                <TextBlock
-                                                    FontSize="{DynamicResource HeadFontSize}"
-                                                    Foreground="Gray"
-                                                    Text="℃" />
+                                                Orientation="Vertical">
+                                                <TextBlock FontSize="{DynamicResource LargeFontSize}" Text="{ex:Language Key='Temp'}" />
+                                                <hc:UniformSpacingPanel
+                                                    Grid.Row="1"
+                                                    Grid.Column="2"
+                                                    Orientation="Horizontal"
+                                                    Spacing="5">
+                                                    <!--<TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, StringFormat=N2}" />-->
+                                                    <TextBlock
+                                                        FontSize="{DynamicResource SubHeadFontSize}"
+                                                        Foreground="Gray"
+                                                        Text="℃" />
+                                                </hc:UniformSpacingPanel>
                                             </hc:UniformSpacingPanel>
                                             <hc:UniformSpacingPanel Grid.Column="4" Orientation="Horizontal">
                                                 <Label
@@ -585,8 +626,8 @@
                                                     Height="30"
                                                     HorizontalAlignment="Left"
                                                     HorizontalContentAlignment="Center"
-                                                    Background="{DynamicResource SuccessBrush}"
-                                                    BorderBrush="{DynamicResource SuccessBrush}"
+                                                    Background="{DynamicResource FixedBrush}"
+                                                    BorderBrush="{DynamicResource FixedBrush}"
                                                     Content="Fixed"
                                                     FontSize="10"
                                                     Foreground="{DynamicResource DefaultBrush}"
@@ -625,11 +666,6 @@
                                                     Foreground="{DynamicResource DefaultBrush}"
                                                     Visibility="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
                                             </hc:UniformSpacingPanel>
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="2"
-                                                FontSize="{DynamicResource LargeFontSize}"
-                                                Text="{ex:Language Key='Temp'}" />
                                         </Grid>
                                         <Grid
                                             Grid.Row="2"
@@ -672,7 +708,7 @@
                                                 Spacing="10">
                                                 <TextBlock
                                                     HorizontalAlignment="Center"
-                                                    FontSize="{DynamicResource HeadFontSize}"
+                                                    FontSize="{DynamicResource LargeFontSize}"
                                                     Foreground="{DynamicResource PrimaryBrush}"
                                                     Text="{Binding CurrentDeviceParameter.Temp, StringFormat=N2}"
                                                     TextAlignment="Center" />
@@ -698,7 +734,7 @@
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="auto" />
-                                                <ColumnDefinition Width="10" />
+                                                <ColumnDefinition Width="5" />
                                                 <ColumnDefinition Width="auto" />
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="auto" />
@@ -707,27 +743,33 @@
                                                 <RowDefinition Height="30" />
                                                 <RowDefinition Height="30" />
                                             </Grid.RowDefinitions>
-                                            <Image Grid.RowSpan="2" Source="/Images/Main/PH_Primary.png" />
+                                            <Image
+                                                Grid.RowSpan="2"
+                                                Height="50"
+                                                VerticalAlignment="Top"
+                                                Source="/Images/Main/PH_Primary.png" />
                                             <TextBlock
                                                 Grid.Row="0"
+                                                Grid.RowSpan="2"
                                                 Grid.Column="2"
-                                                FontSize="{DynamicResource LargeFontSize}"
+                                                VerticalAlignment="Stretch"
+                                                FontSize="{DynamicResource HeavyFontSize}"
                                                 Text="{ex:Language Key='PH'}" />
-                                            <hc:UniformSpacingPanel
+                                            <!--<hc:UniformSpacingPanel
                                                 Grid.Row="1"
                                                 Grid.Column="2"
                                                 Orientation="Horizontal"
                                                 Spacing="5">
-                                                <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="7.53" />
-                                            </hc:UniformSpacingPanel>
+                                                <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, StringFormat=N2}" />
+                                            </hc:UniformSpacingPanel>-->
                                             <hc:UniformSpacingPanel Grid.Column="4" Orientation="Horizontal">
                                                 <Label
                                                     Width="70"
                                                     Height="30"
                                                     HorizontalAlignment="Left"
                                                     HorizontalContentAlignment="Center"
-                                                    Background="{DynamicResource SuccessBrush}"
-                                                    BorderBrush="{DynamicResource SuccessBrush}"
+                                                    Background="{DynamicResource FixedBrush}"
+                                                    BorderBrush="{DynamicResource FixedBrush}"
                                                     Content="Fixed"
                                                     FontSize="10"
                                                     Foreground="{DynamicResource DefaultBrush}"
@@ -813,7 +855,7 @@
                                                 Spacing="10">
                                                 <TextBlock
                                                     HorizontalAlignment="Center"
-                                                    FontSize="{DynamicResource HeadFontSize}"
+                                                    FontSize="{DynamicResource LargeFontSize}"
                                                     Foreground="{DynamicResource PrimaryBrush}"
                                                     Text="{Binding CurrentDeviceParameter.PH, StringFormat=N2}"
                                                     TextAlignment="Center" />
@@ -848,22 +890,24 @@
                                                 <RowDefinition Height="30" />
                                                 <RowDefinition Height="30" />
                                             </Grid.RowDefinitions>
-                                            <Image Grid.RowSpan="2" Source="/Images/Main/Agit_Primary.png" />
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="2"
-                                                FontSize="{DynamicResource LargeFontSize}"
-                                                Text="{ex:Language Key='Agit'}" />
+                                            <Image
+                                                Grid.RowSpan="2"
+                                                Height="50"
+                                                VerticalAlignment="Top"
+                                                Source="/Images/Main/Agit_Primary.png" />
                                             <hc:UniformSpacingPanel
-                                                Grid.Row="1"
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
                                                 Grid.Column="2"
-                                                Orientation="Horizontal"
-                                                Spacing="5">
-                                                <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="1000" />
-                                                <TextBlock
-                                                    FontSize="{DynamicResource HeadFontSize}"
-                                                    Foreground="Gray"
-                                                    Text="RPM" />
+                                                Orientation="Vertical">
+                                                <TextBlock FontSize="{DynamicResource LargeFontSize}" Text="{ex:Language Key='Agit'}" />
+                                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                                    <!--<TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat=N2}" />-->
+                                                    <TextBlock
+                                                        FontSize="{DynamicResource SubHeadFontSize}"
+                                                        Foreground="Gray"
+                                                        Text="RPM" />
+                                                </hc:UniformSpacingPanel>
                                             </hc:UniformSpacingPanel>
                                             <hc:UniformSpacingPanel Grid.Column="4" Orientation="Horizontal">
                                                 <Label
@@ -871,8 +915,8 @@
                                                     Height="30"
                                                     HorizontalAlignment="Left"
                                                     HorizontalContentAlignment="Center"
-                                                    Background="{DynamicResource SuccessBrush}"
-                                                    BorderBrush="{DynamicResource SuccessBrush}"
+                                                    Background="{DynamicResource FixedBrush}"
+                                                    BorderBrush="{DynamicResource FixedBrush}"
                                                     Content="Fixed"
                                                     FontSize="10"
                                                     Foreground="{DynamicResource DefaultBrush}"
@@ -959,7 +1003,7 @@
                                                 Spacing="10">
                                                 <TextBlock
                                                     HorizontalAlignment="Center"
-                                                    FontSize="{DynamicResource HeadFontSize}"
+                                                    FontSize="{DynamicResource LargeFontSize}"
                                                     Foreground="{DynamicResource PrimaryBrush}"
                                                     Text="{Binding CurrentDeviceParameter.Agit, StringFormat=N2}"
                                                     TextAlignment="Center" />
@@ -996,22 +1040,24 @@
                                                 <RowDefinition Height="30" />
                                                 <RowDefinition Height="30" />
                                             </Grid.RowDefinitions>
-                                            <Image Grid.RowSpan="2" Source="/Images/Main/O2_Primary.png" />
-                                            <TextBlock
-                                                Grid.Row="0"
-                                                Grid.Column="2"
-                                                FontSize="{DynamicResource LargeFontSize}"
-                                                Text="{ex:Language Key='DO'}" />
+                                            <Image
+                                                Grid.RowSpan="2"
+                                                Height="50"
+                                                VerticalAlignment="Top"
+                                                Source="/Images/Main/O2_Primary.png" />
                                             <hc:UniformSpacingPanel
-                                                Grid.Row="1"
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
                                                 Grid.Column="2"
-                                                Orientation="Horizontal"
-                                                Spacing="5">
-                                                <TextBlock FontSize="{DynamicResource HeadFontSize}" Text="53.80" />
-                                                <TextBlock
-                                                    FontSize="{DynamicResource HeadFontSize}"
-                                                    Foreground="Gray"
-                                                    Text="%" />
+                                                Orientation="Vertical">
+                                                <TextBlock FontSize="{DynamicResource LargeFontSize}" Text="{ex:Language Key='DO'}" />
+                                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                                    <!--<TextBlock FontSize="{DynamicResource HeadFontSize}" Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, StringFormat=N2}" />-->
+                                                    <TextBlock
+                                                        FontSize="{DynamicResource SubHeadFontSize}"
+                                                        Foreground="Gray"
+                                                        Text="%" />
+                                                </hc:UniformSpacingPanel>
                                             </hc:UniformSpacingPanel>
                                             <hc:UniformSpacingPanel Grid.Column="4" Orientation="Horizontal">
                                                 <Label
@@ -1019,8 +1065,8 @@
                                                     Height="30"
                                                     HorizontalAlignment="Left"
                                                     HorizontalContentAlignment="Center"
-                                                    Background="{DynamicResource SuccessBrush}"
-                                                    BorderBrush="{DynamicResource SuccessBrush}"
+                                                    Background="{DynamicResource FixedBrush}"
+                                                    BorderBrush="{DynamicResource FixedBrush}"
                                                     Content="Fixed"
                                                     FontSize="10"
                                                     Foreground="{DynamicResource DefaultBrush}"
@@ -1107,7 +1153,7 @@
                                                 Spacing="10">
                                                 <TextBlock
                                                     HorizontalAlignment="Center"
-                                                    FontSize="{DynamicResource HeadFontSize}"
+                                                    FontSize="{DynamicResource LargeFontSize}"
                                                     Foreground="{DynamicResource PrimaryBrush}"
                                                     Text="{Binding CurrentDeviceParameter.DO, StringFormat=N2}"
                                                     TextAlignment="Center" />
@@ -1115,8 +1161,6 @@
                                                     <TextBlock Text="{ex:Language Key='Target Value:'}" />
                                                     <TextBlock Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, StringFormat=N2}" />
                                                 </hc:UniformSpacingPanel>
-
-
                                             </hc:UniformSpacingPanel>
                                         </Grid>
                                     </Grid>
@@ -1135,11 +1179,11 @@
                                             <RowDefinition Height="175" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="300" />
-                                            <ColumnDefinition Width="300" />
+                                            <ColumnDefinition Width="225" />
+                                            <ColumnDefinition Width="225" />
                                         </Grid.ColumnDefinitions>
                                         <Border
-                                            Margin="10"
+                                            Margin="10,10,5,10"
                                             MouseLeftButtonDown="Border_MouseLeftButtonDown"
                                             Style="{StaticResource BorderCard}">
                                             <Grid Margin="5">
@@ -1169,8 +1213,8 @@
                                                             Height="30"
                                                             HorizontalAlignment="Left"
                                                             HorizontalContentAlignment="Center"
-                                                            Background="{DynamicResource SuccessBrush}"
-                                                            BorderBrush="{DynamicResource SuccessBrush}"
+                                                            Background="{DynamicResource FixedBrush}"
+                                                            BorderBrush="{DynamicResource FixedBrush}"
                                                             Content="Fixed"
                                                             FontSize="10"
                                                             Foreground="{DynamicResource DefaultBrush}"
@@ -1216,22 +1260,20 @@
                                                     Width="60"
                                                     HorizontalAlignment="Left"
                                                     Source="/Images/Main/Base_ass.png" />
+                                                <TextBlock
+                                                    Grid.Row="2"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="{DynamicResource LargeFontSize}"
+                                                    Text="{Binding CurrentDeviceParameter.Base, StringFormat=N2}" />
                                                 <DockPanel Grid.Row="3" LastChildFill="False">
                                                     <Grid DockPanel.Dock="Bottom">
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="110" />
-                                                            <ColumnDefinition Width="10" />
-                                                            <ColumnDefinition />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="5" />
                                                             <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            FontSize="{DynamicResource SuperFontSize}"
-                                                            Text="{Binding CurrentDeviceParameter.Base}" />
-                                                        <DockPanel
-                                                            Grid.Column="2"
-                                                            VerticalAlignment="Center"
-                                                            LastChildFill="False">
+                                                        <DockPanel VerticalAlignment="Center" LastChildFill="False">
                                                             <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Consumed:'}" />
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock
@@ -1261,7 +1303,7 @@
                                         </Border>
                                         <Border
                                             Grid.Column="1"
-                                            Margin="10"
+                                            Margin="10,10,5,10"
                                             MouseLeftButtonDown="Border_MouseLeftButtonDown"
                                             Style="{StaticResource BorderCard}">
                                             <Grid Margin="5">
@@ -1291,8 +1333,8 @@
                                                             Height="30"
                                                             HorizontalAlignment="Left"
                                                             HorizontalContentAlignment="Center"
-                                                            Background="{DynamicResource SuccessBrush}"
-                                                            BorderBrush="{DynamicResource SuccessBrush}"
+                                                            Background="{DynamicResource FixedBrush}"
+                                                            BorderBrush="{DynamicResource FixedBrush}"
                                                             Content="Fixed"
                                                             FontSize="10"
                                                             Foreground="{DynamicResource DefaultBrush}"
@@ -1338,22 +1380,21 @@
                                                     Width="60"
                                                     HorizontalAlignment="Left"
                                                     Source="/Images/Main/Base_ass.png" />
+                                                <TextBlock
+                                                    Grid.Row="2"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="{DynamicResource LargeFontSize}"
+                                                    Text="{Binding CurrentDeviceParameter.Acid, StringFormat=N2}" />
                                                 <DockPanel Grid.Row="3" LastChildFill="False">
                                                     <Grid DockPanel.Dock="Bottom">
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="110" />
-                                                            <ColumnDefinition Width="10" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="5" />
                                                             <ColumnDefinition />
                                                             <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            FontSize="{DynamicResource SuperFontSize}"
-                                                            Text="{Binding CurrentDeviceParameter.Acid}" />
-                                                        <DockPanel
-                                                            Grid.Column="2"
-                                                            VerticalAlignment="Center"
-                                                            LastChildFill="False">
+                                                        <DockPanel VerticalAlignment="Center" LastChildFill="False">
                                                             <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Consumed:'}" />
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock
@@ -1384,15 +1425,15 @@
                                         <Border
                                             Grid.Row="1"
                                             Grid.Column="0"
-                                            Margin="10"
+                                            Margin="10,10,5,10"
                                             MouseLeftButtonDown="Border_MouseLeftButtonDown"
                                             Style="{StaticResource BorderCard}">
                                             <Grid Margin="5">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="auto" />
                                                     <RowDefinition Height="auto" />
-                                                    <RowDefinition Height="20" />
                                                     <RowDefinition Height="*" />
+                                                    <RowDefinition Height="auto" />
                                                 </Grid.RowDefinitions>
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
@@ -1414,8 +1455,8 @@
                                                             Height="30"
                                                             HorizontalAlignment="Left"
                                                             HorizontalContentAlignment="Center"
-                                                            Background="{DynamicResource SuccessBrush}"
-                                                            BorderBrush="{DynamicResource SuccessBrush}"
+                                                            Background="{DynamicResource FixedBrush}"
+                                                            BorderBrush="{DynamicResource FixedBrush}"
                                                             Content="Fixed"
                                                             FontSize="10"
                                                             Foreground="{DynamicResource DefaultBrush}"
@@ -1455,22 +1496,21 @@
                                                             Visibility="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
                                                     </hc:UniformSpacingPanel>
                                                 </Grid>
+                                                <TextBlock
+                                                    Grid.Row="2"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="{DynamicResource LargeFontSize}"
+                                                    Text="{Binding CurrentDeviceParameter.AF, StringFormat=N2}" />
                                                 <DockPanel Grid.Row="3" LastChildFill="False">
                                                     <Grid DockPanel.Dock="Bottom">
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="110" />
-                                                            <ColumnDefinition Width="10" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="5" />
                                                             <ColumnDefinition />
                                                             <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            FontSize="{DynamicResource SuperFontSize}"
-                                                            Text="{Binding CurrentDeviceParameter.AF}" />
-                                                        <DockPanel
-                                                            Grid.Column="2"
-                                                            VerticalAlignment="Center"
-                                                            LastChildFill="False">
+                                                        <DockPanel VerticalAlignment="Center" LastChildFill="False">
                                                             <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Consumed:'}" />
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock
@@ -1501,15 +1541,15 @@
                                         <Border
                                             Grid.Row="1"
                                             Grid.Column="1"
-                                            Margin="10"
+                                            Margin="10,10,5,10"
                                             MouseLeftButtonDown="BorderFeed_MouseLeftButtonDown"
                                             Style="{StaticResource BorderCard}">
                                             <Grid Margin="5">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="auto" />
                                                     <RowDefinition Height="auto" />
-                                                    <RowDefinition Height="20" />
                                                     <RowDefinition Height="*" />
+                                                    <RowDefinition Height="auto" />
                                                 </Grid.RowDefinitions>
                                                 <Grid>
                                                     <Grid.ColumnDefinitions>
@@ -1526,13 +1566,13 @@
                                                             Text="{ex:Language Key='ML/H'}" />
                                                     </hc:UniformSpacingPanel>
                                                     <hc:UniformSpacingPanel Grid.Column="3" Orientation="Horizontal">
-                                                        <Label
+                                                        <!--<Label
                                                             Width="70"
                                                             Height="30"
                                                             HorizontalAlignment="Left"
                                                             HorizontalContentAlignment="Center"
-                                                            Background="{DynamicResource SuccessBrush}"
-                                                            BorderBrush="{DynamicResource SuccessBrush}"
+                                                            Background="{DynamicResource FixedBrush}"
+                                                            BorderBrush="{DynamicResource FixedBrush}"
                                                             Content="Fixed"
                                                             FontSize="10"
                                                             Foreground="{DynamicResource DefaultBrush}"
@@ -1569,7 +1609,18 @@
                                                             Content="Disable"
                                                             FontSize="10"
                                                             Foreground="{DynamicResource DefaultBrush}"
-                                                            Visibility="{Binding CurrentDeviceParameter.FeedParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                            Visibility="{Binding CurrentDeviceParameter.FeedParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />-->
+                                                        <Label
+                                                            Width="80"
+                                                            Height="30"
+                                                            HorizontalAlignment="Left"
+                                                            HorizontalContentAlignment="Center"
+                                                            Background="{DynamicResource PrimaryBrush}"
+                                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                                            Content="{Binding CurrentDeviceParameter.FeedStrategy.FeedMethod}"
+                                                            FontSize="10"
+                                                            Foreground="{DynamicResource DefaultBrush}"
+                                                            Visibility="Visible" />
                                                     </hc:UniformSpacingPanel>
                                                 </Grid>
                                                 <Image
@@ -1577,22 +1628,21 @@
                                                     Width="80"
                                                     HorizontalAlignment="Left"
                                                     Source="/Images/Main/Feed_ass.png" />
+                                                <TextBlock
+                                                    Grid.Row="2"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="{DynamicResource LargeFontSize}"
+                                                    Text="{Binding CurrentDeviceParameter.Feed, StringFormat=N2}" />
                                                 <DockPanel Grid.Row="3" LastChildFill="False">
                                                     <Grid DockPanel.Dock="Bottom">
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="110" />
-                                                            <ColumnDefinition Width="10" />
+                                                            <ColumnDefinition Width="65" />
+                                                            <ColumnDefinition Width="5" />
                                                             <ColumnDefinition />
                                                             <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            FontSize="{DynamicResource SuperFontSize}"
-                                                            Text="{Binding CurrentDeviceParameter.Feed}" />
-                                                        <DockPanel
-                                                            Grid.Column="2"
-                                                            VerticalAlignment="Center"
-                                                            LastChildFill="False">
+                                                        <DockPanel VerticalAlignment="Center" LastChildFill="False">
                                                             <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Consumed:'}" />
                                                             <StackPanel Orientation="Horizontal">
                                                                 <TextBlock
@@ -1624,7 +1674,7 @@
                                 </Grid>
                                 <Border
                                     Grid.Column="1"
-                                    Width="260"
+                                    Width="250"
                                     Height="330"
                                     Margin="10"
                                     MouseLeftButtonDown="Border_MouseLeftButtonDown"
@@ -1638,8 +1688,7 @@
                                             </Grid.RowDefinitions>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="150" />
-                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="100" />
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="auto" />
                                                 </Grid.ColumnDefinitions>
@@ -1653,18 +1702,18 @@
                                                 </hc:UniformSpacingPanel>
                                                 <TextBlock
                                                     Grid.Column="1"
-                                                    HorizontalAlignment="Left"
+                                                    HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
-                                                    FontSize="30"
-                                                    Text="{Binding CurrentDeviceParameter.Air}" />
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Text="{Binding CurrentDeviceParameter.Air, StringFormat=N2}" />
                                                 <hc:UniformSpacingPanel Grid.Column="3" Orientation="Horizontal">
                                                     <Label
                                                         Width="70"
                                                         Height="30"
                                                         HorizontalAlignment="Left"
                                                         HorizontalContentAlignment="Center"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        Background="{DynamicResource FixedBrush}"
+                                                        BorderBrush="{DynamicResource FixedBrush}"
                                                         Content="Fixed"
                                                         FontSize="10"
                                                         Foreground="{DynamicResource DefaultBrush}"
@@ -1718,18 +1767,21 @@
                                                     Margin="0,0,5,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="10"
-                                                    Text="{ex:Language Key='Consumed:'}" />
+                                                    Text="{ex:Language Key='Consumed:'}"
+                                                    Visibility="Collapsed" />
                                                 <TextBlock
                                                     Grid.Column="3"
                                                     Margin="0,0,5,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource HeadFontSize}"
-                                                    Text="0" />
+                                                    Text="0"
+                                                    Visibility="Collapsed" />
                                                 <TextBlock
                                                     Grid.Column="4"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource TextFontSize}"
-                                                    Text="ML" />
+                                                    Text="ML"
+                                                    Visibility="Collapsed" />
                                             </Grid>
                                             <Line
                                                 Grid.Row="2"
@@ -1749,8 +1801,7 @@
                                             </Grid.RowDefinitions>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="150" />
-                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="100" />
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="auto" />
                                                 </Grid.ColumnDefinitions>
@@ -1772,16 +1823,16 @@
                                                     Grid.Column="1"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Center"
-                                                    FontSize="30"
-                                                    Text="0" />
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Text="{Binding CurrentDeviceParameter.CO2, StringFormat=N2}" />
                                                 <hc:UniformSpacingPanel Grid.Column="3" Orientation="Horizontal">
                                                     <Label
                                                         Width="70"
                                                         Height="30"
                                                         HorizontalAlignment="Left"
                                                         HorizontalContentAlignment="Center"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        Background="{DynamicResource FixedBrush}"
+                                                        BorderBrush="{DynamicResource FixedBrush}"
                                                         Content="Fixed"
                                                         FontSize="10"
                                                         Foreground="{DynamicResource DefaultBrush}"
@@ -1835,18 +1886,21 @@
                                                     Margin="0,0,5,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="10"
-                                                    Text="{ex:Language Key='Consumed:'}" />
+                                                    Text="{ex:Language Key='Consumed:'}"
+                                                    Visibility="Collapsed" />
                                                 <TextBlock
                                                     Grid.Column="3"
                                                     Margin="0,0,5,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource HeadFontSize}"
-                                                    Text="0" />
+                                                    Text="0"
+                                                    Visibility="Collapsed" />
                                                 <TextBlock
                                                     Grid.Column="4"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource TextFontSize}"
-                                                    Text="ML" />
+                                                    Text="ML"
+                                                    Visibility="Collapsed" />
                                             </Grid>
                                             <Line
                                                 Grid.Row="2"
@@ -1866,8 +1920,7 @@
                                             </Grid.RowDefinitions>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="150" />
-                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="100" />
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="auto" />
                                                 </Grid.ColumnDefinitions>
@@ -1883,16 +1936,16 @@
                                                     Grid.Column="1"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Center"
-                                                    FontSize="30"
-                                                    Text="0" />
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Text="{Binding CurrentDeviceParameter.O2, StringFormat=N2}" />
                                                 <hc:UniformSpacingPanel Grid.Column="3" Orientation="Horizontal">
                                                     <Label
                                                         Width="70"
                                                         Height="30"
                                                         HorizontalAlignment="Left"
                                                         HorizontalContentAlignment="Center"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        Background="{DynamicResource FixedBrush}"
+                                                        BorderBrush="{DynamicResource FixedBrush}"
                                                         Content="Fixed"
                                                         FontSize="10"
                                                         Foreground="{DynamicResource DefaultBrush}"
@@ -1946,18 +1999,21 @@
                                                     Margin="0,0,5,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="10"
-                                                    Text="{ex:Language Key='Consumed:'}" />
+                                                    Text="{ex:Language Key='Consumed:'}"
+                                                    Visibility="Collapsed" />
                                                 <TextBlock
                                                     Grid.Column="3"
                                                     Margin="0,0,5,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource HeadFontSize}"
-                                                    Text="0" />
+                                                    Text="0"
+                                                    Visibility="Collapsed" />
                                                 <TextBlock
                                                     Grid.Column="4"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource TextFontSize}"
-                                                    Text="ML" />
+                                                    Text="ML"
+                                                    Visibility="Collapsed" />
                                             </Grid>
                                             <Line
                                                 Grid.Row="2"
@@ -1977,8 +2033,7 @@
                                             </Grid.RowDefinitions>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="150" />
-                                                    <ColumnDefinition Width="auto" />
+                                                    <ColumnDefinition Width="100" />
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="auto" />
                                                 </Grid.ColumnDefinitions>
@@ -1994,16 +2049,16 @@
                                                     Grid.Column="1"
                                                     HorizontalAlignment="Left"
                                                     VerticalAlignment="Center"
-                                                    FontSize="30"
-                                                    Text="0" />
+                                                    FontSize="{StaticResource LargeFontSize}"
+                                                    Text="{Binding CurrentDeviceParameter.N2, StringFormat=N2}" />
                                                 <hc:UniformSpacingPanel Grid.Column="3" Orientation="Horizontal">
                                                     <Label
                                                         Width="70"
                                                         Height="30"
                                                         HorizontalAlignment="Left"
                                                         HorizontalContentAlignment="Center"
-                                                        Background="{DynamicResource SuccessBrush}"
-                                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                                        Background="{DynamicResource FixedBrush}"
+                                                        BorderBrush="{DynamicResource FixedBrush}"
                                                         Content="Fixed"
                                                         FontSize="10"
                                                         Foreground="{DynamicResource DefaultBrush}"
@@ -2057,18 +2112,21 @@
                                                     Margin="0,0,5,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="10"
-                                                    Text="{ex:Language Key='Consumed:'}" />
+                                                    Text="{ex:Language Key='Consumed:'}"
+                                                    Visibility="Collapsed" />
                                                 <TextBlock
                                                     Grid.Column="3"
                                                     Margin="0,0,5,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource HeadFontSize}"
-                                                    Text="0" />
+                                                    Text="0"
+                                                    Visibility="Collapsed" />
                                                 <TextBlock
                                                     Grid.Column="4"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource TextFontSize}"
-                                                    Text="ML" />
+                                                    Text="ML"
+                                                    Visibility="Collapsed" />
                                             </Grid>
                                         </Grid>
                                     </hc:UniformSpacingPanel>
@@ -2094,6 +2152,8 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="auto" />
                                     <RowDefinition Height="20" />
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="5" />
                                     <RowDefinition Height="auto" />
                                     <RowDefinition Height="5" />
                                     <RowDefinition Height="auto" />
@@ -2143,13 +2203,7 @@
                                         Width="80"
                                         VerticalContentAlignment="Center"
                                         hc:BorderElement.CornerRadius="4"
-                                        SelectedIndex="0">
-                                        <ComboBoxItem Content="Air" />
-                                        <ComboBoxItem Content="Agit" />
-                                        <ComboBoxItem Content="DO" />
-                                        <ComboBoxItem Content="pH" />
-                                        <ComboBoxItem Content="Temp" />
-                                    </hc:ComboBox>
+                                        ItemsSource="{Binding Source={StaticResource DataFromEnum}}" />
                                 </Grid>
                                 <Line
                                     Grid.Row="5"
@@ -2162,6 +2216,31 @@
                                     Y1="0"
                                     Y2="0" />
                                 <Grid Grid.Row="6" Margin="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Center" Text="{ex:Language Key='Auto Scale'}" />
+                                    <ToggleButton
+                                        Name="ToggleAutoScale"
+                                        Grid.Column="2"
+                                        Checked="ToggleButtonGraphSetting_CheckChanged"
+                                        IsChecked="False"
+                                        Style="{StaticResource ToggleButtonSwitch}"
+                                        Unchecked="ToggleButtonGraphSetting_CheckChanged" />
+                                </Grid>
+                                <Line
+                                    Grid.Row="7"
+                                    HorizontalAlignment="Left"
+                                    Stroke="LightGray"
+                                    StrokeDashArray="2 2"
+                                    StrokeThickness="1"
+                                    X1="10"
+                                    X2="240"
+                                    Y1="0"
+                                    Y2="0" />
+                                <Grid Grid.Row="8" Margin="5">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto" />
                                         <ColumnDefinition Width="*" />
@@ -2430,7 +2509,7 @@
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
                                                 Foreground="Gray"
-                                                Text="{ex:Language Key='pH'}" />
+                                                Text="{ex:Language Key='PH'}" />
                                         </Border>
                                     </ToggleButton>
                                     <ToggleButton

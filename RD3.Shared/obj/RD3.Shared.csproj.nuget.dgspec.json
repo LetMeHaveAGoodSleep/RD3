@@ -9,6 +9,7 @@
         "projectUniqueName": "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj",
         "projectName": "Fpi.Communication",
         "projectPath": "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj",
+        "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
             "projectReferences": {
@@ -34,6 +35,7 @@
         "projectUniqueName": "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj",
         "projectName": "Fpi.Instrument",
         "projectPath": "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj",
+        "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
             "projectReferences": {
@@ -56,6 +58,7 @@
         "projectUniqueName": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj",
         "projectName": "Fpi.Util",
         "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj",
+        "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
             "projectReferences": {}
@@ -71,6 +74,7 @@
         "projectUniqueName": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj",
         "projectName": "Fpi.Xml",
         "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj",
+        "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
             "projectReferences": {
@@ -132,7 +136,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -171,7 +176,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.404/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

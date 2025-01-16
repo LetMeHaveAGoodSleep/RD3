@@ -8,11 +8,13 @@
     xmlns:local="clr-namespace:RD3.Shared;assembly=RD3.Shared"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:rd3="clr-namespace:RD3"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="220"
     Height="400"
     d:DataContext="{d:DesignInstance Type=viewmodels:EditSampleViewModel}"
+    rd3:DraggableUserControlAttach.IsDraggable="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ObjectDataProvider

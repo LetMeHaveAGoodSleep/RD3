@@ -11,12 +11,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:rd="clr-namespace:RD3"
+    xmlns:rd3="clr-namespace:RD3"
     xmlns:shared="clr-namespace:RD3.Shared;assembly=RD3.Shared"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="420"
     Height="560"
     d:DataContext="{d:DesignInstance Type=viewmodels:FeedViewModel}"
+    rd3:DraggableUserControlAttach.IsDraggable="True"
     TextElement.FontFamily="{StaticResource CHNFontFamily}"
     TextElement.FontSize="{DynamicResource NormalFontSize}"
     TextElement.FontWeight="Regular"
@@ -98,172 +100,183 @@
                 BorderThickness="0"
                 Style="{StaticResource TabControlBaseStyle}">
                 <TabItem FontSize="{DynamicResource SubHeadFontSize}" Header="{ex:Language Key='Operation'}">
-                    <hc:UniformSpacingPanel
-                        Margin="10"
-                        Orientation="Vertical"
-                        Spacing="20">
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
-                            <Image Source="../Images/Feed/Constant.png" />
-                            <TextBox
-                                Width="100"
-                                Height="30"
-                                hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
-                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Unknown}"
-                                Style="{StaticResource TextBoxExtendBaseStyle}">
-                                <TextBox.Text>
-                                    <Binding Path="FeedStrategy.ConstantVal" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <hc:RegexRule Type="NnDouble" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <Button
-                                Width="100"
-                                Height="30"
-                                Command="{Binding ExcuteCommand}"
-                                CommandParameter="Constant"
-                                Content="{ex:Language Key='Set'}" />
-                            <!--<hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
-                                <RadioButton Width="100"
-                                             Height="30"
-                                             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                             hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
-                                             hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
-                                             hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
-                                             BorderBrush="{DynamicResource BorderBrush}"
-                                             Command="{Binding ExcuteCommand}"
-                                             CommandParameter="Constant"
-                                             Content="{ex:Language Key='Set'}"
-                                             FontSize="{DynamicResource TextFontSize}"
-                                             Foreground="{DynamicResource SecondaryTextBrush}"
-                                             IsChecked="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Constant}" />
-                            </hc:ButtonGroup>-->
-                            <controls:IndicatorLight
-                                Height="15"
-                                HorizontalAlignment="Center"
-                                LightType="Start"
-                                Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Constant}" />
-                        </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
-                            <Image
-                                MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                                Source="../Images/Feed/Ass.png"
-                                Tag="Associate" />
-                            <TextBox
-                                Width="100"
-                                Height="30"
-                                IsEnabled="False"
-                                Style="{StaticResource TextBoxExtendBaseStyle}"
-                                Text="{Binding FeedStrategy.AssociateStrategy.AssociateVal}" />
-                            <Button
-                                Width="100"
-                                Height="30"
-                                Command="{Binding ExcuteCommand}"
-                                CommandParameter="Associate"
-                                Content="{ex:Language Key='Associate'}" />
-                            <controls:IndicatorLight
-                                Height="15"
-                                HorizontalAlignment="Center"
-                                LightType="Start"
-                                Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associate}" />
-                        </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
-                            <Image
-                                MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                                Source="../Images/Feed/Gradient.png"
-                                Tag="Gradient" />
-                            <TextBox
-                                Width="100"
-                                Height="30"
-                                hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
-                                Style="{StaticResource TextBoxExtendBaseStyle}" />
-                            <Button
-                                Width="100"
-                                Height="30"
-                                Command="{Binding ExcuteCommand}"
-                                CommandParameter="Gradient"
-                                Content="{ex:Language Key='Gradient'}" />
-                            <controls:IndicatorLight
-                                Height="15"
-                                HorizontalAlignment="Center"
-                                LightType="Start"
-                                Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Gradient}" />
-                        </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
-                            <Image
-                                MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                                Source="../Images/Feed/Function.png"
-                                Tag="Function" />
-                            <TextBox
-                                Width="100"
-                                Height="30"
-                                hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
-                                Style="{StaticResource TextBoxExtendBaseStyle}" />
-                            <Button
-                                Width="100"
-                                Height="30"
-                                Command="{Binding ExcuteCommand}"
-                                CommandParameter="Function"
-                                Content="{ex:Language Key='Function'}" />
-                            <controls:IndicatorLight
-                                Height="15"
-                                HorizontalAlignment="Center"
-                                LightType="Start"
-                                Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Function}" />
-                        </hc:UniformSpacingPanel>
+                    <DockPanel LastChildFill="True">
+                        <CheckBox
+                            Margin="5"
+                            Content="Applied to all reactors"
+                            DockPanel.Dock="Top"
+                            IsChecked="{Binding AllApplied}" />
                         <hc:UniformSpacingPanel
-                            Orientation="Horizontal"
-                            Spacing="20"
-                            Visibility="Collapsed">
-                            <Image
-                                MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                                Source="../Images/Feed/Loop.png"
-                                Tag="Loop" />
-                            <TextBox
-                                Width="100"
-                                Height="30"
-                                hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
-                                Style="{StaticResource TextBoxExtendBaseStyle}" />
-                            <Button
-                                Width="100"
-                                Height="30"
-                                Command="{Binding ExcuteCommand}"
-                                CommandParameter="Loop"
-                                Content="{ex:Language Key='Loop'}" />
-                            <controls:IndicatorLight
-                                Height="15"
-                                HorizontalAlignment="Center"
-                                LightType="Start"
-                                Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Loop}" />
+                            Margin="10"
+                            Orientation="Vertical"
+                            Spacing="20">
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                                <Image Source="../Images/Feed/Constant.png" />
+                                <TextBox
+                                    Width="100"
+                                    Height="30"
+                                    hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
+                                    IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Unknown}"
+                                    Style="{StaticResource TextBoxExtendBaseStyle}"
+                                    Text="{Binding FeedStrategy.ConstantVal}">
+                                    <!--<TextBox.Text>
+                                        <Binding Path="FeedStrategy.ConstantVal" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <hc:RegexRule Type="PDouble" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>-->
+                                </TextBox>
+                                <Button
+                                    Width="100"
+                                    Height="30"
+                                    Command="{Binding ExcuteCommand}"
+                                    CommandParameter="Constant"
+                                    Content="{ex:Language Key='Set'}" />
+                                <!--<hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+            <RadioButton Width="100"
+                         Height="30"
+                         hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                         hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
+                         hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
+                         hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
+                         BorderBrush="{DynamicResource BorderBrush}"
+                         Command="{Binding ExcuteCommand}"
+                         CommandParameter="Constant"
+                         Content="{ex:Language Key='Set'}"
+                         FontSize="{DynamicResource TextFontSize}"
+                         Foreground="{DynamicResource SecondaryTextBrush}"
+                         IsChecked="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Constant}" />
+        </hc:ButtonGroup>-->
+                                <controls:IndicatorLight
+                                    Height="15"
+                                    HorizontalAlignment="Center"
+                                    LightType="Start"
+                                    Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Constant}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                                <Image
+                                    MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                                    Source="../Images/Feed/Ass.png"
+                                    Tag="Associate" />
+                                <TextBox
+                                    Width="100"
+                                    Height="30"
+                                    IsEnabled="False"
+                                    Style="{StaticResource TextBoxExtendBaseStyle}"
+                                    Text="{Binding FeedStrategy.AssociateStrategy.AssociateVal}" />
+                                <Button
+                                    Width="100"
+                                    Height="30"
+                                    Command="{Binding ExcuteCommand}"
+                                    CommandParameter="Associate"
+                                    Content="{ex:Language Key='Associate'}" />
+                                <controls:IndicatorLight
+                                    Height="15"
+                                    HorizontalAlignment="Center"
+                                    LightType="Start"
+                                    Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associate}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                                <Image
+                                    MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                                    Source="../Images/Feed/Gradient.png"
+                                    Tag="Gradient" />
+                                <TextBox
+                                    Width="100"
+                                    Height="30"
+                                    hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource TextBoxExtendBaseStyle}" />
+                                <Button
+                                    Width="100"
+                                    Height="30"
+                                    Command="{Binding ExcuteCommand}"
+                                    CommandParameter="Gradient"
+                                    Content="{ex:Language Key='Gradient'}" />
+                                <controls:IndicatorLight
+                                    Height="15"
+                                    HorizontalAlignment="Center"
+                                    LightType="Start"
+                                    Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Gradient}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                                <Image
+                                    MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                                    Source="../Images/Feed/Function.png"
+                                    Tag="Function" />
+                                <TextBox
+                                    Width="100"
+                                    Height="30"
+                                    hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource TextBoxExtendBaseStyle}" />
+                                <Button
+                                    Width="100"
+                                    Height="30"
+                                    Command="{Binding ExcuteCommand}"
+                                    CommandParameter="Function"
+                                    Content="{ex:Language Key='Function'}" />
+                                <controls:IndicatorLight
+                                    Height="15"
+                                    HorizontalAlignment="Center"
+                                    LightType="Start"
+                                    Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Function}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Orientation="Horizontal"
+                                Spacing="20"
+                                Visibility="Collapsed">
+                                <Image
+                                    MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                                    Source="../Images/Feed/Loop.png"
+                                    Tag="Loop" />
+                                <TextBox
+                                    Width="100"
+                                    Height="30"
+                                    hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
+                                    Style="{StaticResource TextBoxExtendBaseStyle}" />
+                                <Button
+                                    Width="100"
+                                    Height="30"
+                                    Command="{Binding ExcuteCommand}"
+                                    CommandParameter="Loop"
+                                    Content="{ex:Language Key='Loop'}" />
+                                <controls:IndicatorLight
+                                    Height="15"
+                                    HorizontalAlignment="Center"
+                                    LightType="Start"
+                                    Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Loop}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Orientation="Horizontal"
+                                Spacing="20"
+                                Visibility="Collapsed">
+                                <Image
+                                    MouseLeftButtonDown="Image_MouseLeftButtonDown"
+                                    Source="../Images/Feed/MultiLinear.png"
+                                    Tag="Mutil-linear" />
+                                <TextBox
+                                    Width="100"
+                                    Height="30"
+                                    hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
+                                    IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Unknown}"
+                                    Style="{StaticResource TextBoxExtendBaseStyle}" />
+                                <Button
+                                    Width="100"
+                                    Height="30"
+                                    Command="{Binding ExcuteCommand}"
+                                    CommandParameter="MutilLinear"
+                                    Content="{ex:Language Key='Mutil-linear'}" />
+                                <controls:IndicatorLight
+                                    Height="15"
+                                    HorizontalAlignment="Center"
+                                    LightType="Start"
+                                    Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=MutilLinear}" />
+                            </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel
-                            Orientation="Horizontal"
-                            Spacing="20"
-                            Visibility="Collapsed">
-                            <Image
-                                MouseLeftButtonDown="Image_MouseLeftButtonDown"
-                                Source="../Images/Feed/MultiLinear.png"
-                                Tag="Mutil-linear" />
-                            <TextBox
-                                Width="100"
-                                Height="30"
-                                hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
-                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Unknown}"
-                                Style="{StaticResource TextBoxExtendBaseStyle}" />
-                            <Button
-                                Width="100"
-                                Height="30"
-                                Command="{Binding ExcuteCommand}"
-                                CommandParameter="MutilLinear"
-                                Content="{ex:Language Key='Mutil-linear'}" />
-                            <controls:IndicatorLight
-                                Height="15"
-                                HorizontalAlignment="Center"
-                                LightType="Start"
-                                Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=MutilLinear}" />
-                        </hc:UniformSpacingPanel>
-                    </hc:UniformSpacingPanel>
+                    </DockPanel>
+
                 </TabItem>
                 <TabItem
                     FontSize="{DynamicResource SubHeadFontSize}"

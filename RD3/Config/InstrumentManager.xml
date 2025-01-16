@@ -62,20 +62,92 @@
 		<instrument>
 			<id>G02</id>
 			<name>G02</name>
-			<type>Device</type>
+			<type>Device1</type>
 			<address>2</address>
 		</instrument>
 		<instrument>
 			<id>G03</id>
 			<name>G03</name>
-			<type>Device</type>
+			<type>Device2</type>
 			<address>3</address>
 		</instrument>
 		<instrument>
 			<id>G04</id>
 			<name>G04</name>
-			<type>Device</type>
+			<type>Device3</type>
 			<address>4</address>
+		</instrument>
+		<instrument>
+			<id>G05</id>
+			<name>G05</name>
+			<type>Device5</type>
+			<address>5</address>
+		</instrument>
+		<instrument>
+			<id>G06</id>
+			<name>G06</name>
+			<type>Device6</type>
+			<address>6</address>
+		</instrument>
+		<instrument>
+			<id>G07</id>
+			<name>G07</name>
+			<type>Device7</type>
+			<address>7</address>
+		</instrument>
+		<instrument>
+			<id>G08</id>
+			<name>G08</name>
+			<type>Device8</type>
+			<address>8</address>
+		</instrument>
+		<instrument>
+			<id>G09</id>
+			<name>G09</name>
+			<type>Device9</type>
+			<address>9</address>
+		</instrument>
+		<instrument>
+			<id>G10</id>
+			<name>G10</name>
+			<type>Device10</type>
+			<address>10</address>
+		</instrument>
+		<instrument>
+			<id>G11</id>
+			<name>G11</name>
+			<type>Device11</type>
+			<address>11</address>
+		</instrument>
+		<instrument>
+			<id>G12</id>
+			<name>G12</name>
+			<type>Device12</type>
+			<address>12</address>
+		</instrument>
+		<instrument>
+			<id>G13</id>
+			<name>G13</name>
+			<type>Device13</type>
+			<address>13</address>
+		</instrument>
+		<instrument>
+			<id>G14</id>
+			<name>G14</name>
+			<type>Device14</type>
+			<address>14</address>
+		</instrument>
+		<instrument>
+			<id>G15</id>
+			<name>G15</name>
+			<type>Device15</type>
+			<address>15</address>
+		</instrument>
+		<instrument>
+			<id>G16</id>
+			<name>G16</name>
+			<type>Device16</type>
+			<address>16</address>
 		</instrument>
 	</instruments>
 </InstrumentManager>

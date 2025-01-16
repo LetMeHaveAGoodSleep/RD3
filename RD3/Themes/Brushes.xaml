@@ -6,7 +6,6 @@
         x:Key="StopBrush"
         o:Freeze="True"
         Color="{DynamicResource StopColor}" />
-
     <DrawingBrush
         x:Key="CloudDrawingBrush"
         o:Freeze="True"
@@ -25,4 +24,12 @@
                 Rect="0,0,157,157" />
         </DrawingBrush.Drawing>
     </DrawingBrush>
+    <SolidColorBrush
+        x:Key="FixedBrush"
+        o:Freeze="True"
+        Color="{StaticResource FixedColor}" />
+    <LinearGradientBrush x:Key="FixedGradientBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Offset="0" Color="{DynamicResource SuccessColor}" />
+        <GradientStop Offset="1" Color="{DynamicResource FixedColor}" />
+    </LinearGradientBrush>
 </ResourceDictionary>

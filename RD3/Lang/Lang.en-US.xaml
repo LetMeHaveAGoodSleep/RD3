@@ -92,7 +92,7 @@
     <system:String x:Key="Alarm Time">Alarm Time</system:String>
     <system:String x:Key="Value">Value</system:String>
     <system:String x:Key="Grade">Grade</system:String>
-    <system:String x:Key="pH">pH</system:String>
+    <system:String x:Key="PH">PH</system:String>
     <system:String x:Key="Air">Air</system:String>
     <system:String x:Key="CO2">CO2</system:String>
     <system:String x:Key="O2">O2</system:String>

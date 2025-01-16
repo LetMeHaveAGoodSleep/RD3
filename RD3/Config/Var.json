@@ -3,5 +3,6 @@
   "LastUser": "",
   "AutoLogin": "False",
   "IsSimulation": "False",
-  "RegistrationKey": "XinzaoTechnology"
+  "RegistrationKey": "XinzaoTechnology",
+  "TimeInterval": "5"
 }
