@@ -13,8 +13,12 @@
     d:DesignHeight="1450"
     d:DesignWidth="1600"
     Background="{DynamicResource DefaultBrush}"
-    TextElement.FontSize="{DynamicResource SubHeadFontSize}"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource TextFontSize}"
     TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
     <Grid Margin="20">
         <Grid.RowDefinitions>

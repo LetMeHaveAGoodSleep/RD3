@@ -142,7 +142,6 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CalibrateView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CalibrateView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\SelfCheckView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\SelfCheckView.baml
-D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Assets\NotoSans-Regular.otf
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\WaveAnimation.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ErrorView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ErrorView.baml

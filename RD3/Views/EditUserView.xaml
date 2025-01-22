@@ -18,6 +18,12 @@
     Height="250"
     d:DataContext="{d:DesignInstance Type=viewmodels:EditUserViewModel}"
     rd3:DraggableUserControlAttach.IsDraggable="True"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource TextFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">

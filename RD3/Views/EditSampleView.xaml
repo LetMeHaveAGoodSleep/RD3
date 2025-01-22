@@ -15,6 +15,12 @@
     Height="400"
     d:DataContext="{d:DesignInstance Type=viewmodels:EditSampleViewModel}"
     rd3:DraggableUserControlAttach.IsDraggable="True"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource TextFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ObjectDataProvider

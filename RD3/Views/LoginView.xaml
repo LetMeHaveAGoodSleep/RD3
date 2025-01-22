@@ -18,6 +18,12 @@
     Height="350"
     d:DataContext="{d:DesignInstance Type=viewmodels:LoginViewModel}"
     rd3:DraggableUserControlAttach.IsDraggable="True"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource TextFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
@@ -33,6 +39,7 @@
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Topmost" Value="True" />
         </Style>
     </prism:Dialog.WindowStyle>
     <Border Style="{StaticResource BorderForm}">
@@ -120,5 +127,4 @@
                 Style="{StaticResource ToolButtonStyle}" />
         </Grid>
     </Border>
-
 </UserControl>

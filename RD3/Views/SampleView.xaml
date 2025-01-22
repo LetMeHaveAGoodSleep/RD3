@@ -14,9 +14,10 @@
     d:DesignHeight="700"
     d:DesignWidth="1350"
     Background="{StaticResource DefaultBrush}"
-    FontFamily="{StaticResource ENGFontFamily}"
-    TextElement.FontSize="{DynamicResource NormalFontSize}"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource TextFontSize}"
     TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">

@@ -4,5 +4,7 @@
   "AutoLogin": "False",
   "IsSimulation": "False",
   "RegistrationKey": "XinzaoTechnology",
-  "TimeInterval": "5"
+  "TimeInterval": "5",
+  "FontFamily": "SimSun",
+  "SoftVersion": "V1.0.0.1"
 }

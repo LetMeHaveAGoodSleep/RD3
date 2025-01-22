@@ -3,12 +3,84 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    Width="600"
+    Height="350"
+    d:DataContext="{d:DesignInstance Type=viewmodels:AboutViewModel}"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource SubHeadFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
-    <Grid>
-        <TextBlock FontSize="50" Text="关于作者" />
-    </Grid>
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="False" />
+            <Setter Property="AllowsTransparency" Value="True" />
+            <Setter Property="WindowStyle" Value="None" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <Border Style="{StaticResource BorderForm}">
+        <DockPanel LastChildFill="True">
+            <Button
+                Name="btnClose"
+                HorizontalAlignment="Right"
+                hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+                Command="{Binding CloseCommand}"
+                DockPanel.Dock="Top"
+                Style="{StaticResource ToolButtonStyle}" />
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="{ex:Language Key='Software version：'}" />
+                <TextBlock Grid.Column="1" Text="{Binding SoftVersion}" />
+                <TextBlock
+                    Grid.Row="2"
+                    VerticalAlignment="Center"
+                    Text="{ex:Language Key='版权声明：'}" />
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Text="{ex:Language Key='本软件的所有内容，包括但不限于程序代码、界面设计、图标、文档等，均受中华人民共和国版权法及相关国际版权公约的保护。版权归 [版权所有者名称] 所有，未经授权，不得擅自复制、传播、修改或用于商业用途。'}"
+                    TextWrapping="WrapWithOverflow" />
+                <TextBlock
+                    Grid.Row="4"
+                    VerticalAlignment="Center"
+                    Text="{ex:Language Key='版权年份：'}" />
+                <TextBlock
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Text="{ex:Language Key='2024-2034'}"
+                    TextWrapping="WrapWithOverflow" />
+            </Grid>
+        </DockPanel>
+    </Border>
 </UserControl>

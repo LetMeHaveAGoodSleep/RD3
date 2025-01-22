@@ -20,7 +20,7 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowsTransparency="True"
     Background="Transparent"
-    TextElement.FontFamily="{StaticResource CHNFontFamily}"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextOptions.TextFormattingMode="Ideal"
@@ -326,6 +326,13 @@
                                             </Button>
                                         </hc:UniformSpacingPanel>
                                     </Popup>
+                                    <Button
+                                        hc:IconElement.Geometry="{StaticResource GeometryAsk}"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{Binding AboutCommand}"
+                                            Foreground="White"
+                                            ToolTip="User Setting" />
                                 </hc:UniformSpacingPanel>
                                 <hc:UniformSpacingPanel
                                     VerticalAlignment="Stretch"

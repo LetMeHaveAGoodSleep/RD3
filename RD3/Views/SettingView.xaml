@@ -12,8 +12,12 @@
     d:DesignHeight="650"
     d:DesignWidth="800"
     Background="{DynamicResource DefaultBrush}"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
     TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -148,7 +152,19 @@
                                 </Grid>
                             </Border>
                         </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel Spacing="100">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="20" />
+                            </Grid.RowDefinitions>
                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
                                 <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Instrument mode'}" />
                                 <TextBlock
@@ -158,25 +174,49 @@
                                     Text="{ex:Language Key='Turn on simulation mode.'}" />
                             </hc:UniformSpacingPanel>
                             <ToggleButton
+                                Grid.Column="1"
+                                Width="150"
+                                HorizontalAlignment="Center"
                                 BorderThickness="0"
                                 IsChecked="{Binding IsSimulation}"
                                 Style="{StaticResource ToggleButtonSwitch}" />
-                        </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel Spacing="70">
-                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                            <hc:UniformSpacingPanel
+                                Grid.Row="2"
+                                Orientation="Vertical"
+                                Spacing="5">
                                 <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Time Interval'}" />
                                 <TextBlock
                                     FontSize="10"
                                     FontStyle="Oblique"
                                     Foreground="gray"
-                                    Text="{ex:Language Key='Read real-time data  unit:sencond'}" />
+                                    Text="{ex:Language Key='Read real-time data  unit:sencond.'}" />
                             </hc:UniformSpacingPanel>
                             <ComboBox
-                                Width="100"
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Width="150"
                                 ItemsSource="{Binding IntervalSource}"
                                 SelectedItem="{Binding TimeInterval}"
                                 Style="{StaticResource ComboBoxExtend}" />
-                        </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Grid.Row="4"
+                                Orientation="Vertical"
+                                Spacing="5">
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='FontFamily'}" />
+                                <TextBlock
+                                    FontSize="10"
+                                    FontStyle="Oblique"
+                                    Foreground="gray"
+                                    Text="{ex:Language Key='Choose FontFamily.'}" />
+                            </hc:UniformSpacingPanel>
+                            <ComboBox
+                                Grid.Row="4"
+                                Grid.Column="1"
+                                Width="150"
+                                ItemsSource="{Binding FontSource}"
+                                SelectedItem="{Binding FontFamily}"
+                                Style="{StaticResource ComboBoxExtend}" />
+                        </Grid>
                     </hc:UniformSpacingPanel>
                 </Border>
             </TabItem>

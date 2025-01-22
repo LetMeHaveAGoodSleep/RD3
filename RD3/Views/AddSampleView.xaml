@@ -19,6 +19,12 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:EditBatchViewModel}"
     rd3:DraggableUserControlAttach.IsDraggable="True"
     Background="Transparent"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource TextFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">

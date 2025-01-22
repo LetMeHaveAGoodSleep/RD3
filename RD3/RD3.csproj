@@ -6,6 +6,7 @@
     <ApplicationIcon>Assets\icon_48.ico</ApplicationIcon>
     <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Language\LanguageExtension.cs" />
@@ -13,6 +14,9 @@
     <Compile Remove="Views\UserControl1.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\AlibabaPuHuiTi-2-55-Regular.otf" />
+    <None Remove="Assets\MiSans-Regular.otf" />
+    <None Remove="Assets\NotoSans-Regular.otf" />
     <None Remove="Images\Advance.png" />
     <None Remove="Images\Button\Inoculate.png" />
     <None Remove="Images\Button\Log.png" />
@@ -117,6 +121,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Fonts\AlibabaPuHuiTi-2-55-Regular.otf" />
+    <Resource Include="Fonts\MiSans-Regular.otf" />
+    <Resource Include="Fonts\NotoSans-Regular.otf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Button\Inoculate.png" />
     <Resource Include="Images\Button\Log.png" />
     <Resource Include="Images\Button\Pause.png" />
@@ -189,9 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="App.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Assets\NotoSans-Regular.otf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Config\CommandManager.xml">
