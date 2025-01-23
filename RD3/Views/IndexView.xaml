@@ -285,7 +285,7 @@
                 IsSelected="True">
                 <Border
                     Name="BorderMain"
-                    Background="#F5F7FA"
+                    Background="{StaticResource BackGroundBrush}"
                     Style="{StaticResource BorderCard}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -1414,7 +1414,7 @@
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="5" />
-                                                            <ColumnDefinition />
+                                                            <ColumnDefinition Width="auto" />
                                                             <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
                                                         <DockPanel VerticalAlignment="Center" LastChildFill="False">
@@ -1531,7 +1531,7 @@
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="5" />
-                                                            <ColumnDefinition />
+                                                            <ColumnDefinition Width="auto" />
                                                             <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
                                                         <DockPanel VerticalAlignment="Center" LastChildFill="False">
@@ -1664,7 +1664,7 @@
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="65" />
                                                             <ColumnDefinition Width="5" />
-                                                            <ColumnDefinition />
+                                                            <ColumnDefinition Width="auto" />
                                                             <ColumnDefinition Width="*" />
                                                         </Grid.ColumnDefinitions>
                                                         <DockPanel VerticalAlignment="Center" LastChildFill="False">

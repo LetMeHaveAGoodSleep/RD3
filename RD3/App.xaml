@@ -30,7 +30,8 @@
             </ResourceDictionary.MergedDictionaries>
             <ResourceDictionary x:Key="zh_CN" Source="pack://application:,,,/Lang/Lang.zh-CN.xaml" />
             <ResourceDictionary x:Key="en_US" Source="pack://application:,,,/Lang/Lang.en-US.xaml" />
-            <SolidColorBrush x:Key="BackGroundBrush" Color="#F5F7FA" />
+            <!--<SolidColorBrush x:Key="BackGroundBrush" Color="#F5F7FA" />-->
+            <SolidColorBrush x:Key="BackGroundBrush" Color="#F6F8FA" />
             <SolidColorBrush x:Key="PrimaryBorderBrush" Color="LightGray" />
             <SolidColorBrush x:Key="ControlFixedModeBrush" Color="#F5D462" />
             <SolidColorBrush x:Key="ControlAssociatedModeBrush" Color="#99CBFF" />
@@ -61,9 +62,9 @@
                 <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
                 <Setter Property="Border.CornerRadius" Value="8" />
                 <Setter Property="Background" Value="{DynamicResource DefaultBrush}" />
-                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="BorderThickness" Value="0.5" />
                 <Setter Property="BorderBrush" Value="{DynamicResource BackGroundBrush}" />
-                <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
+                <Setter Property="Effect" Value="{StaticResource EffectShadow5}" />
             </Style>
             <Style x:Key="BorderCommon" TargetType="{x:Type Border}">
                 <Setter Property="Border.CornerRadius" Value="8" />
@@ -79,16 +80,16 @@
                 <Setter Property="BorderBrush" Value="#EEEEEE" />
             </Style>
             <Style x:Key="HeavyFontSizeStyle" TargetType="{x:Type TextBlock}">
-                <Setter Property="FontSize" Value="30" />
+                <Setter Property="FontSize" Value="{DynamicResource HeavyFontSize}" />
             </Style>
             <Style x:Key="TitleFontSizeStyle" TargetType="{x:Type TextBlock}">
-                <Setter Property="FontSize" Value="30" />
+                <Setter Property="FontSize" Value="{DynamicResource HeavyFontSize}" />
             </Style>
             <Style x:Key="SubTitleFontSizeStyle" TargetType="{x:Type TextBlock}">
-                <Setter Property="FontSize" Value="24" />
+                <Setter Property="FontSize" Value="{DynamicResource LargeFontSize}" />
             </Style>
             <Style x:Key="BodyFontSizeStyle" TargetType="{x:Type TextBlock}">
-                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontSize" Value="{DynamicResource NormalFontSize}" />
             </Style>
             <Style
                 x:Key="DataGridLeftColumnHeaderStyle"

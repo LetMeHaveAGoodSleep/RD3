@@ -57,7 +57,7 @@
                             Source="/Assets/logo.png" />
                         <TextBlock
                             Margin="8,10,10,8"
-                            FontSize="18"
+                            FontSize="{StaticResource HeadFontSize}"
                             FontWeight="Bold"
                             Text="芯造科技"
                             TextAlignment="Left"
@@ -85,7 +85,7 @@
                             <hc:SideMenuItem
                                 Margin="5"
                                 Background="{DynamicResource PrimaryBrush}"
-                                FontSize="16"
+                                FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Main'}"
                                 Tag="Main">
@@ -99,7 +99,7 @@
                             <hc:SideMenuItem
                                 Margin="5"
                                 Background="{DynamicResource PrimaryBrush}"
-                                FontSize="16"
+                                FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Project'}"
                                 Tag="Project">
@@ -113,7 +113,7 @@
                             <hc:SideMenuItem
                                 Margin="5"
                                 Background="{DynamicResource PrimaryBrush}"
-                                FontSize="16"
+                                FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Data'}"
                                 Tag="Data">
@@ -127,7 +127,7 @@
                             <hc:SideMenuItem
                                 Margin="5"
                                 Background="{DynamicResource PrimaryBrush}"
-                                FontSize="16"
+                                FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Calibrate'}"
                                 Tag="Calibrate">
@@ -141,7 +141,7 @@
                             <hc:SideMenuItem
                                 Margin="5"
                                 Background="{DynamicResource PrimaryBrush}"
-                                FontSize="16"
+                                FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Control'}"
                                 Tag="Control">
@@ -170,7 +170,7 @@
                             <hc:SideMenuItem
                                 Margin="5"
                                 Background="{DynamicResource PrimaryBrush}"
-                                FontSize="16"
+                                FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Audit'}"
                                 Tag="Audit">
@@ -184,7 +184,7 @@
                             <hc:SideMenuItem
                                 Margin="5"
                                 Background="{DynamicResource PrimaryBrush}"
-                                FontSize="16"
+                                FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Setting'}"
                                 Tag="Setting">
@@ -198,7 +198,7 @@
                             <hc:SideMenuItem
                                 Margin="5"
                                 Background="{DynamicResource PrimaryBrush}"
-                                FontSize="16"
+                                FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{DynamicResource DefaultBrush}"
                                 Header="{ex:Language Key='Debug'}"
                                 Tag="Debug">
@@ -331,8 +331,8 @@
                                         Background="Transparent"
                                         BorderThickness="0"
                                         Command="{Binding AboutCommand}"
-                                            Foreground="White"
-                                            ToolTip="User Setting" />
+                                        Foreground="White"
+                                        ToolTip="User Setting" />
                                 </hc:UniformSpacingPanel>
                                 <hc:UniformSpacingPanel
                                     VerticalAlignment="Stretch"
