@@ -1219,7 +1219,6 @@
                                                     </Grid.ColumnDefinitions>
                                                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                                         <TextBlock
-                                                            Width="53"
                                                             HorizontalAlignment="Right"
                                                             FontSize="{DynamicResource LargeFontSize}"
                                                             Text="{ex:Language Key='Base'}" />
@@ -2353,7 +2352,7 @@
                                         FontSize="{DynamicResource SubHeadFontSize}"
                                         Text="{Binding FormattedTime}" />
                                 </hc:UniformSpacingPanel>
-                                <hc:UniformSpacingPanel Grid.Column="2" Spacing="10">
+                                <hc:UniformSpacingPanel Grid.Column="2" Spacing="5">
                                     <Border
                                         Name="BorderDevice"
                                         Background="White"

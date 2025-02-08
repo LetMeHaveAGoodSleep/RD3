@@ -224,9 +224,6 @@
     <None Update="Data\Sample.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Config\Communication.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Data\Batch.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -244,9 +241,6 @@
     </None>
     <None Update="Data\User.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Update="Config\Command.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Config\Var.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

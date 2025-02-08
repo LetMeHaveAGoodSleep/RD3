@@ -150,8 +150,6 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\log4net.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\App.config
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AlarmView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AlarmView.baml
-D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Communication.json
-D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Command.json
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CommunicationView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CommunicationView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditClientView.g.cs
@@ -207,7 +205,6 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CalibrationView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CalibrationView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AuditView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AuditView.baml
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\Fonts.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\SettingView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\SettingView.baml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Instruction\video.mp4
@@ -283,3 +280,4 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOEDesignView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOEDesignView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ChooseReactorView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ChooseReactorView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\Sizes.baml

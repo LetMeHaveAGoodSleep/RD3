@@ -20,7 +20,7 @@
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
                 <ResourceDictionary Source="Themes/WaveAnimation.xaml" />
-                <ResourceDictionary Source="Themes/Fonts.xaml" />
+                <ResourceDictionary Source="Themes/Sizes.xaml" />
                 <ResourceDictionary Source="Themes/Converters.xaml" />
                 <ResourceDictionary Source="Themes/Geometry.xaml" />
                 <ResourceDictionary Source="Themes/Colors.xaml" />
