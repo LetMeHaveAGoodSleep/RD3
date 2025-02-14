@@ -187,4 +187,22 @@
     <system:String x:Key="Design type">设计类型</system:String>
     <system:String x:Key="Connect Status">连接状态</system:String>
     <system:String x:Key="Condensation Temp">冷凝温度</system:String>
+    <system:String x:Key="Software version：">软件版本号：</system:String>
+    <system:String x:Key="Advance control">高级控制</system:String>
+    <system:String x:Key="Status:">状态：</system:String>
+    <system:String x:Key="Set value(SV):">设定值：</system:String>
+    <system:String x:Key="Associative modules:">关联模块：</system:String>
+    <system:String x:Key="Direct(+):">正向(+)：</system:String>
+    <system:String x:Key="Reverse (-):">反向(+)：</system:String>
+    <system:String x:Key="L:">下限：</system:String>
+    <system:String x:Key="H:">上限：</system:String>
+    <system:String x:Key="Enable">使能</system:String>
+    <system:String x:Key="Reset Flow Capacity">流量清零</system:String>
+    <system:String x:Key="Peristaltic pump">蠕动泵</system:String>
+    <system:String x:Key="AutoDefoaming">自动消泡</system:String>
+    <system:String x:Key="Air Flow Speed">空气流速</system:String>
+    <system:String x:Key="O2 Flow Speed">氧气流速</system:String>
+    <system:String x:Key="CO2 Flow Speed">二氧化碳流速</system:String>
+    <system:String x:Key="N2 Flow Speed">氮气流速</system:String>
+    <system:String x:Key="Sensor Kind">传感器型号</system:String>
 </ResourceDictionary>

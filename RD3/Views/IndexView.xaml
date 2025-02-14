@@ -818,11 +818,34 @@
                                                     Visibility="{Binding CurrentDeviceParameter.PHParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
                                             </hc:UniformSpacingPanel>
                                         </Grid>
-                                        <Image
+                                        <hc:SimpleStackPanel
                                             Grid.Row="1"
-                                            Width="200"
-                                            HorizontalAlignment="Left"
-                                            Source="/Images/Main/PH_ass.png" />
+                                            Margin="5,0,0,0"
+                                            Orientation="Horizontal">
+                                            <Path
+                                                Width="24"
+                                                Height="24"
+                                                Data="{StaticResource GeometryLink}"
+                                                Fill="Gray"
+                                                SnapsToDevicePixels="True"
+                                                Stretch="Uniform" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="{StaticResource SubHeadFontSize}"
+                                                Foreground="Gray"
+                                                Text="Acid"
+                                                Visibility="{Binding CurrentDeviceParameter.PHParam.AcidAssociated, Converter={StaticResource Boolean2VisibilityConverter}}" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="{StaticResource SubHeadFontSize}"
+                                                Foreground="Gray"
+                                                Text="Base"
+                                                Visibility="{Binding CurrentDeviceParameter.PHParam.BaseAssociated, Converter={StaticResource Boolean2VisibilityConverter}}" />
+                                        </hc:SimpleStackPanel>
                                         <Grid
                                             Name="GridPH"
                                             Grid.Row="2"
@@ -968,12 +991,26 @@
                                                     Visibility="{Binding CurrentDeviceParameter.AgitParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
                                             </hc:UniformSpacingPanel>
                                         </Grid>
-                                        <Image
+                                        <hc:SimpleStackPanel
                                             Grid.Row="1"
-                                            Grid.ColumnSpan="3"
-                                            Width="200"
-                                            HorizontalAlignment="Left"
-                                            Source="/Images/Main/Agit_ass.png" />
+                                            Margin="5,0,0,0"
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding CurrentDeviceParameter.DOParam.AgitAssociated, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                            <Path
+                                                Width="24"
+                                                Height="24"
+                                                Data="{StaticResource GeometryLink}"
+                                                Fill="Gray"
+                                                SnapsToDevicePixels="True"
+                                                Stretch="Uniform" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="{StaticResource SubHeadFontSize}"
+                                                Foreground="Gray"
+                                                Text="DO" />
+                                        </hc:SimpleStackPanel>
                                         <Grid
                                             Name="GridAgit"
                                             Grid.Row="2"
@@ -1120,12 +1157,41 @@
                                                     Visibility="{Binding CurrentDeviceParameter.DOParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
                                             </hc:UniformSpacingPanel>
                                         </Grid>
-                                        <Image
+                                        <hc:SimpleStackPanel
                                             Grid.Row="1"
-                                            Grid.ColumnSpan="3"
-                                            Width="200"
-                                            HorizontalAlignment="Left"
-                                            Source="/Images/Main/DO_ass.png" />
+                                            Margin="5,0,0,0"
+                                            Orientation="Horizontal">
+                                            <Path
+                                                Width="24"
+                                                Height="24"
+                                                Data="{StaticResource GeometryLink}"
+                                                Fill="Gray"
+                                                SnapsToDevicePixels="True"
+                                                Stretch="Uniform" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="{StaticResource SubHeadFontSize}"
+                                                Foreground="Gray"
+                                                Text="Agit"
+                                                Visibility="{Binding CurrentDeviceParameter.DOParam.AgitAssociated, Converter={StaticResource Boolean2VisibilityConverter}}" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="{StaticResource SubHeadFontSize}"
+                                                Foreground="Gray"
+                                                Text="Air"
+                                                Visibility="{Binding CurrentDeviceParameter.DOParam.AirAssociated, Converter={StaticResource Boolean2VisibilityConverter}}" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="{StaticResource SubHeadFontSize}"
+                                                Foreground="Gray"
+                                                Text="Feed" />
+                                        </hc:SimpleStackPanel>
                                         <Grid
                                             Name="GridDO"
                                             Grid.Row="2"
@@ -1275,12 +1341,25 @@
                                                             Visibility="{Binding CurrentDeviceParameter.BaseParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
                                                     </hc:UniformSpacingPanel>
                                                 </Grid>
-                                                <Image
+                                                <hc:SimpleStackPanel
                                                     Grid.Row="1"
-                                                    Grid.ColumnSpan="3"
-                                                    Width="60"
-                                                    HorizontalAlignment="Left"
-                                                    Source="/Images/Main/Base_ass.png" />
+                                                    Orientation="Horizontal"
+                                                    Visibility="{Binding CurrentDeviceParameter.PHParam.BaseAssociated, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                                    <Path
+                                                        Width="24"
+                                                        Height="24"
+                                                        Data="{StaticResource GeometryLink}"
+                                                        Fill="Gray"
+                                                        SnapsToDevicePixels="True"
+                                                        Stretch="Uniform" />
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="{StaticResource SubHeadFontSize}"
+                                                        Foreground="Gray"
+                                                        Text="PH" />
+                                                </hc:SimpleStackPanel>
                                                 <TextBlock
                                                     Grid.Row="2"
                                                     HorizontalAlignment="Center"
@@ -1396,12 +1475,25 @@
                                                             Visibility="{Binding CurrentDeviceParameter.AcidParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
                                                     </hc:UniformSpacingPanel>
                                                 </Grid>
-                                                <Image
+                                                <hc:SimpleStackPanel
                                                     Grid.Row="1"
-                                                    Grid.ColumnSpan="3"
-                                                    Width="60"
-                                                    HorizontalAlignment="Left"
-                                                    Source="/Images/Main/Base_ass.png" />
+                                                    Orientation="Horizontal"
+                                                    Visibility="{Binding CurrentDeviceParameter.PHParam.AcidAssociated, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                                    <Path
+                                                        Width="24"
+                                                        Height="24"
+                                                        Data="{StaticResource GeometryLink}"
+                                                        Fill="Gray"
+                                                        SnapsToDevicePixels="True"
+                                                        Stretch="Uniform" />
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="{StaticResource SubHeadFontSize}"
+                                                        Foreground="Gray"
+                                                        Text="PH" />
+                                                </hc:SimpleStackPanel>
                                                 <TextBlock
                                                     Grid.Row="2"
                                                     HorizontalAlignment="Center"
@@ -1647,11 +1739,22 @@
                                                             Visibility="Visible" />
                                                     </hc:UniformSpacingPanel>
                                                 </Grid>
-                                                <Image
-                                                    Grid.Row="1"
-                                                    Width="80"
-                                                    HorizontalAlignment="Left"
-                                                    Source="/Images/Main/Feed_ass.png" />
+                                                <hc:SimpleStackPanel Grid.Row="1" Orientation="Horizontal">
+                                                    <Path
+                                                        Width="24"
+                                                        Height="24"
+                                                        Data="{StaticResource GeometryLink}"
+                                                        Fill="Gray"
+                                                        SnapsToDevicePixels="True"
+                                                        Stretch="Uniform" />
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="{StaticResource SubHeadFontSize}"
+                                                        Foreground="Gray"
+                                                        Text="PH,DO" />
+                                                </hc:SimpleStackPanel>
                                                 <TextBlock
                                                     Grid.Row="2"
                                                     HorizontalAlignment="Center"
@@ -1730,7 +1833,7 @@
                                                         VerticalAlignment="Center"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="Gray"
-                                                        Text="{ex:Language Key='ML/H'}" />
+                                                        Text="{ex:Language Key='L/min'}" />
                                                 </hc:UniformSpacingPanel>
                                                 <hc:UniformSpacingPanel Grid.Column="3" Orientation="Horizontal">
                                                     <Label
@@ -1784,7 +1887,22 @@
                                                     <ColumnDefinition Width="50" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
-                                                <Image Source="/Images/Main/Base_ass.png" />
+                                                <hc:SimpleStackPanel Orientation="Horizontal" Visibility="{Binding CurrentDeviceParameter.DOParam.AirAssociated, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                                    <Path
+                                                        Width="24"
+                                                        Height="24"
+                                                        Data="{StaticResource GeometryLink}"
+                                                        Fill="Gray"
+                                                        SnapsToDevicePixels="True"
+                                                        Stretch="Uniform" />
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="{StaticResource SubHeadFontSize}"
+                                                        Foreground="Gray"
+                                                        Text="DO" />
+                                                </hc:SimpleStackPanel>
                                                 <TextBlock
                                                     Grid.Column="1"
                                                     HorizontalAlignment="Center"
@@ -1847,7 +1965,7 @@
                                                         VerticalAlignment="Center"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="Gray"
-                                                        Text="{ex:Language Key='ML/H'}" />
+                                                        Text="{ex:Language Key='L/min'}" />
                                                 </hc:UniformSpacingPanel>
                                                 <hc:UniformSpacingPanel Grid.Column="3" Orientation="Horizontal">
                                                     <Label
@@ -1901,7 +2019,25 @@
                                                     <ColumnDefinition Width="50" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
-                                                <Image Source="/Images/Main/Base_ass.png" />
+                                                <hc:SimpleStackPanel
+                                                    Grid.Row="1"
+                                                    Orientation="Horizontal"
+                                                    Visibility="{Binding CurrentDeviceParameter.DOParam.AirAssociated, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                                    <Path
+                                                        Width="24"
+                                                        Height="24"
+                                                        Data="{StaticResource GeometryLink}"
+                                                        Fill="Gray"
+                                                        SnapsToDevicePixels="True"
+                                                        Stretch="Uniform" />
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="{StaticResource SubHeadFontSize}"
+                                                        Foreground="Gray"
+                                                        Text="DO" />
+                                                </hc:SimpleStackPanel>
                                                 <TextBlock
                                                     Grid.Column="1"
                                                     HorizontalAlignment="Center"
@@ -1960,7 +2096,7 @@
                                                         VerticalAlignment="Center"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="Gray"
-                                                        Text="{ex:Language Key='ML/H'}" />
+                                                        Text="{ex:Language Key='L/min'}" />
                                                 </hc:UniformSpacingPanel>
                                                 <hc:UniformSpacingPanel Grid.Column="2" Orientation="Horizontal">
                                                     <Label
@@ -2014,7 +2150,25 @@
                                                     <ColumnDefinition Width="50" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
-                                                <Image Source="/Images/Main/Base_ass.png" />
+                                                <hc:SimpleStackPanel
+                                                    Grid.Row="1"
+                                                    Orientation="Horizontal"
+                                                    Visibility="{Binding CurrentDeviceParameter.DOParam.AirAssociated, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                                    <Path
+                                                        Width="24"
+                                                        Height="24"
+                                                        Data="{StaticResource GeometryLink}"
+                                                        Fill="Gray"
+                                                        SnapsToDevicePixels="True"
+                                                        Stretch="Uniform" />
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="{StaticResource SubHeadFontSize}"
+                                                        Foreground="Gray"
+                                                        Text="DO" />
+                                                </hc:SimpleStackPanel>
                                                 <TextBlock
                                                     Grid.Column="1"
                                                     HorizontalAlignment="Center"
@@ -2073,7 +2227,7 @@
                                                         VerticalAlignment="Center"
                                                         FontSize="{DynamicResource TextFontSize}"
                                                         Foreground="Gray"
-                                                        Text="{ex:Language Key='ML/H'}" />
+                                                        Text="{ex:Language Key='L/min'}" />
                                                 </hc:UniformSpacingPanel>
                                                 <hc:UniformSpacingPanel Grid.Column="3" Orientation="Horizontal">
                                                     <Label
@@ -2127,7 +2281,25 @@
                                                     <ColumnDefinition Width="50" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
-                                                <Image Source="/Images/Main/Base_ass.png" />
+                                                <hc:SimpleStackPanel
+                                                    Grid.Row="1"
+                                                    Orientation="Horizontal"
+                                                    Visibility="{Binding CurrentDeviceParameter.DOParam.AirAssociated, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                                    <Path
+                                                        Width="24"
+                                                        Height="24"
+                                                        Data="{StaticResource GeometryLink}"
+                                                        Fill="Gray"
+                                                        SnapsToDevicePixels="True"
+                                                        Stretch="Uniform" />
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="{StaticResource SubHeadFontSize}"
+                                                        Foreground="Gray"
+                                                        Text="DO" />
+                                                </hc:SimpleStackPanel>
                                                 <TextBlock
                                                     Grid.Column="1"
                                                     HorizontalAlignment="Center"

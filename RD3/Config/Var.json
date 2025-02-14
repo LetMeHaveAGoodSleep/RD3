@@ -6,5 +6,47 @@
   "RegistrationKey": "XinzaoTechnology",
   "TimeInterval": "5",
   "FontFamily": "SimSun",
-  "SoftVersion": "V1.0.0.1"
+  "SoftVersion": "V1.0.0.1",
+  "PumpSetting": {
+    "G01": {
+      "AcidPump": 1,
+      "BasePump": 2,
+      "FeedPump": 3,
+      "AFPump": 4,
+      "Air": 1,
+      "O2": 2,
+      "CO2": 0,
+      "N2": 0
+    },
+    "G02": {
+      "AcidPump": 1,
+      "BasePump": 2,
+      "FeedPump": 3,
+      "AFPump": 4,
+      "Air": 1,
+      "O2": 2,
+      "CO2": 0,
+      "N2": 0
+    },
+    "G03": {
+      "AcidPump": 1,
+      "BasePump": 2,
+      "FeedPump": 3,
+      "AFPump": 4,
+      "Air": 1,
+      "O2": 2,
+      "CO2": 0,
+      "N2": 0
+    },
+    "G04": {
+      "AcidPump": 1,
+      "BasePump": 2,
+      "FeedPump": 3,
+      "AFPump": 4,
+      "Air": 1,
+      "O2": 2,
+      "CO2": 0,
+      "N2": 0
+    }
+  }
 }

@@ -34,11 +34,11 @@
             <Setter Property="AllowsTransparency" Value="True" />
             <Setter Property="WindowStyle" Value="None" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
             <Setter Property="Opacity" Value="1" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Border Style="{StaticResource BorderForm}">
+    <Border Background="{StaticResource CloudDrawingBrush}" Style="{StaticResource BorderForm}">
         <DockPanel LastChildFill="True">
             <Button
                 Name="btnClose"

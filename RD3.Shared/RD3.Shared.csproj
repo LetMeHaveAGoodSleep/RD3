@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Device\Parameter\SensorCorrectParam.cs" />
     <Compile Remove="Role\RoleFunciton.cs" />
   </ItemGroup>
 
@@ -18,7 +19,6 @@
   <ItemGroup>
     <Folder Include="Behavior\" />
     <Folder Include="Rule\" />
-    <Folder Include="CustomProtocol\" />
   </ItemGroup>
 
   <ItemGroup>

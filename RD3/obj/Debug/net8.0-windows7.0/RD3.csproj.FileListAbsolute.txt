@@ -150,10 +150,6 @@ D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\log4net.dll
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\App.config
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AlarmView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AlarmView.baml
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CommunicationView.g.cs
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CommunicationView.baml
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditClientView.g.cs
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditClientView.baml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Lang\Lang.en-US.xaml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Lang\Lang.zh-CN.xaml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\LayUI.Wpf.Extensions.dll
