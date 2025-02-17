@@ -105,7 +105,7 @@
                                                 Content="{ex:Language Key='Enable'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Enable}" />
+                                                IsEnabled="False" />
                                             <RadioButton
                                                 Width="85"
                                                 Height="30"
@@ -118,7 +118,7 @@
                                                 Content="{ex:Language Key='Associated'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Associated}" />
+                                                IsEnabled="False" />
                                             <RadioButton
                                                 Width="70"
                                                 Height="30"
@@ -131,7 +131,7 @@
                                                 Content="{ex:Language Key='Disable'}"
                                                 FontSize="{DynamicResource TextFontSize}"
                                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                                IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
+                                                IsEnabled="False" />
                                         </hc:ButtonGroup>
                                     </DockPanel>
 
@@ -477,56 +477,6 @@
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
-                                <hc:UniformSpacingPanel
-                                    Orientation="Horizontal"
-                                    Spacing="10"
-                                    Visibility="Collapsed">
-                                    <DockPanel LastChildFill="False">
-                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
-                                        <TextBox
-                                            Width="70"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding CurrentDeviceParameter.AgitParam.DBand}" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="False">
-                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Kp:'}" />
-                                        <TextBox
-                                            Width="70"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="False">
-                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Ti(s):'}" />
-                                        <TextBox
-                                            Width="70"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="False">
-                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Td(s):'}" />
-                                        <TextBox
-                                            Width="70"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="False">
-                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='OP(%):'}" />
-                                        <TextBox
-                                            Width="70"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="" />
-                                    </DockPanel>
-                                </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>
                     </Border>
@@ -729,15 +679,6 @@
                                     Spacing="10"
                                     Visibility="Collapsed">
                                     <DockPanel LastChildFill="False">
-                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
-                                        <TextBox
-                                            Width="70"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding CurrentDeviceParameter.DOParam.DBand}" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="False">
                                         <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Kp:'}" />
                                         <TextBox
                                             Width="70"
@@ -899,34 +840,7 @@
                                                     HorizontalContentAlignment="Center"
                                                     hc:InfoElement.Placeholder="{ex:Language Key='unit:L/min'}"
                                                     Style="{StaticResource TextBoxExtend}"
-                                                    Text="{Binding CurrentDeviceParameter.AirParam.Air_PV}" />
-                                            </DockPanel>
-                                            <DockPanel LastChildFill="False">
-                                                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
-                                                <TextBox
-                                                    Width="70"
-                                                    VerticalAlignment="Center"
-                                                    hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                                    Style="{StaticResource TextBoxExtend}"
-                                                    Text="{Binding CurrentDeviceParameter.AirParam.AlarmLowerLimit}" />
-                                            </DockPanel>
-                                            <DockPanel LastChildFill="False">
-                                                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
-                                                <TextBox
-                                                    Width="70"
-                                                    VerticalAlignment="Center"
-                                                    hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                                    Style="{StaticResource TextBoxExtend}"
-                                                    Text="{Binding CurrentDeviceParameter.AirParam.AlarmUpperLimit}" />
-                                            </DockPanel>
-                                            <DockPanel LastChildFill="False" Visibility="Collapsed">
-                                                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
-                                                <TextBox
-                                                    Width="70"
-                                                    VerticalAlignment="Center"
-                                                    hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                                    Style="{StaticResource TextBoxExtend}"
-                                                    Text="" />
+                                                    Text="{Binding CurrentDeviceParameter.AirParam.FlowSpeed}" />
                                             </DockPanel>
                                         </hc:UniformSpacingPanel>
                                     </hc:UniformSpacingPanel>
@@ -1070,34 +984,7 @@
                                                     HorizontalContentAlignment="Center"
                                                     hc:InfoElement.Placeholder="{ex:Language Key='unit:L/min'}"
                                                     Style="{StaticResource TextBoxExtend}"
-                                                    Text="{Binding CurrentDeviceParameter.CO2Param.CO2_PV}" />
-                                            </DockPanel>
-                                            <DockPanel LastChildFill="False">
-                                                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
-                                                <TextBox
-                                                    Width="70"
-                                                    VerticalAlignment="Center"
-                                                    hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                                    Style="{StaticResource TextBoxExtend}"
-                                                    Text="{Binding CurrentDeviceParameter.CO2Param.LowerLimit}" />
-                                            </DockPanel>
-                                            <DockPanel LastChildFill="False">
-                                                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
-                                                <TextBox
-                                                    Width="70"
-                                                    VerticalAlignment="Center"
-                                                    hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                                    Style="{StaticResource TextBoxExtend}"
-                                                    Text="{Binding CurrentDeviceParameter.CO2Param.UpperLimit}" />
-                                            </DockPanel>
-                                            <DockPanel LastChildFill="False" Visibility="Collapsed">
-                                                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
-                                                <TextBox
-                                                    Width="70"
-                                                    VerticalAlignment="Center"
-                                                    hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                                    Style="{StaticResource TextBoxExtend}"
-                                                    Text="" />
+                                                    Text="{Binding CurrentDeviceParameter.CO2Param.FlowSpeed}" />
                                             </DockPanel>
                                         </hc:UniformSpacingPanel>
                                     </hc:UniformSpacingPanel>
@@ -1241,34 +1128,7 @@
                                                     HorizontalContentAlignment="Center"
                                                     hc:InfoElement.Placeholder="{ex:Language Key='unit:L/min'}"
                                                     Style="{StaticResource TextBoxExtend}"
-                                                    Text="{Binding CurrentDeviceParameter.N2Param.N2_PV}" />
-                                            </DockPanel>
-                                            <DockPanel LastChildFill="False">
-                                                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
-                                                <TextBox
-                                                    Width="70"
-                                                    VerticalAlignment="Center"
-                                                    hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                                    Style="{StaticResource TextBoxExtend}"
-                                                    Text="{Binding CurrentDeviceParameter.N2Param.LowerLimit}" />
-                                            </DockPanel>
-                                            <DockPanel LastChildFill="False">
-                                                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
-                                                <TextBox
-                                                    Width="70"
-                                                    VerticalAlignment="Center"
-                                                    hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                                    Style="{StaticResource TextBoxExtend}"
-                                                    Text="{Binding CurrentDeviceParameter.N2Param.UpperLimit}" />
-                                            </DockPanel>
-                                            <DockPanel LastChildFill="False" Visibility="Collapsed">
-                                                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
-                                                <TextBox
-                                                    Width="70"
-                                                    VerticalAlignment="Center"
-                                                    hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                                    Style="{StaticResource TextBoxExtend}"
-                                                    Text="" />
+                                                    Text="{Binding CurrentDeviceParameter.N2Param.FlowSpeed}" />
                                             </DockPanel>
                                         </hc:UniformSpacingPanel>
                                     </hc:UniformSpacingPanel>
@@ -1412,34 +1272,7 @@
                                                     HorizontalContentAlignment="Center"
                                                     hc:InfoElement.Placeholder="{ex:Language Key='unit:L/min'}"
                                                     Style="{StaticResource TextBoxExtend}"
-                                                    Text="{Binding CurrentDeviceParameter.O2Param.O2_PV}" />
-                                            </DockPanel>
-                                            <DockPanel LastChildFill="False">
-                                                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='L:'}" />
-                                                <TextBox
-                                                    Width="70"
-                                                    VerticalAlignment="Center"
-                                                    hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                                    Style="{StaticResource TextBoxExtend}"
-                                                    Text="{Binding CurrentDeviceParameter.O2Param.LowerLimit}" />
-                                            </DockPanel>
-                                            <DockPanel LastChildFill="False">
-                                                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='H:'}" />
-                                                <TextBox
-                                                    Width="70"
-                                                    VerticalAlignment="Center"
-                                                    hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                                    Style="{StaticResource TextBoxExtend}"
-                                                    Text="{Binding CurrentDeviceParameter.O2Param.UpperLimit}" />
-                                            </DockPanel>
-                                            <DockPanel LastChildFill="False" Visibility="Collapsed">
-                                                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='HH:'}" />
-                                                <TextBox
-                                                    Width="70"
-                                                    VerticalAlignment="Center"
-                                                    hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                                    Style="{StaticResource TextBoxExtend}"
-                                                    Text="" />
+                                                    Text="{Binding CurrentDeviceParameter.O2Param.FlowSpeed}" />
                                             </DockPanel>
                                         </hc:UniformSpacingPanel>
                                     </hc:UniformSpacingPanel>
@@ -1656,56 +1489,6 @@
                                         Y1="0"
                                         Y2="0" />
                                 </StackPanel>
-                                <hc:UniformSpacingPanel
-                                    Orientation="Horizontal"
-                                    Spacing="10"
-                                    Visibility="Collapsed">
-                                    <DockPanel LastChildFill="False">
-                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='dBand:'}" />
-                                        <TextBox
-                                            Width="70"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding CurrentDeviceParameter.PHParam.DBand}" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="False">
-                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Kp:'}" />
-                                        <TextBox
-                                            Width="70"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="False">
-                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Ti(s):'}" />
-                                        <TextBox
-                                            Width="70"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="False">
-                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='Td(s):'}" />
-                                        <TextBox
-                                            Width="70"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="False">
-                                        <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='OP(%):'}" />
-                                        <TextBox
-                                            Width="70"
-                                            VerticalAlignment="Center"
-                                            hc:InfoElement.Placeholder="{ex:Language Key='Set value'}"
-                                            Style="{StaticResource TextBoxExtend}"
-                                            Text="" />
-                                    </DockPanel>
-                                </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>
                     </Border>
@@ -2123,7 +1906,8 @@
                                                     Content="{ex:Language Key='Enable'}"
                                                     FontSize="{DynamicResource TextFontSize}"
                                                     Foreground="{DynamicResource SecondaryTextBrush}"
-                                                    IsChecked="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Enable}" />
+                                                    IsChecked="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Enable}"
+                                                    IsEnabled="False" />
                                                 <RadioButton
                                                     Width="85"
                                                     Height="30"
@@ -2163,7 +1947,8 @@
                                                     Content="{ex:Language Key='Disable'}"
                                                     FontSize="{DynamicResource TextFontSize}"
                                                     Foreground="{DynamicResource SecondaryTextBrush}"
-                                                    IsChecked="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}" />
+                                                    IsChecked="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Disable}"
+                                                    IsEnabled="False" />
                                             </hc:ButtonGroup>
                                         </DockPanel>
                                     </hc:UniformSpacingPanel>

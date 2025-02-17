@@ -77,6 +77,38 @@
                 <x:Type TypeName="share:SensorCorrectMode" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum7"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:TwoPointCorrectParam" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum8"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:PeristalticCalibrationParam" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum9"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:PeristalticPump" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum10"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:GasType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -513,6 +545,8 @@
                                                 IsEnabled="False"
                                                 Style="{StaticResource TextBoxExtend}"
                                                 Text="{Binding RealTimeParam.PH}" />
+                                        </hc:UniformSpacingPanel>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                             <TextBox
                                                 Width="120"
                                                 hc:InfoElement.Title="{ex:Language Key='Acid Flow Speed'}"
@@ -563,6 +597,8 @@
                                                 IsEnabled="False"
                                                 Style="{StaticResource TextBoxExtend}"
                                                 Text="{Binding RealTimeParam.O2FlowCapacity}" />
+                                        </hc:UniformSpacingPanel>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                             <TextBox
                                                 Width="120"
                                                 hc:InfoElement.Title="{ex:Language Key='CO2 Flow Speed'}"
@@ -602,7 +638,7 @@
                                                 Style="{StaticResource TextBoxExtend}"
                                                 Text="{Binding RealTimeParam.FeedFlowCapacity}" />
                                             <TextBox
-                                                Width="100"
+                                                Width="120"
                                                 hc:InfoElement.Title="{ex:Language Key='AF Flow Speed'}"
                                                 IsEnabled="False"
                                                 Style="{StaticResource TextBoxExtend}"
@@ -622,8 +658,8 @@
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                             <TextBox
-                                                Width="540"
-                                                Height="80"
+                                                Width="640"
+                                                Height="50"
                                                 IsEnabled="False"
                                                 Style="{StaticResource TextBoxExtend}"
                                                 Text="{Binding RealTimeParam.AlarmCodes}" />
@@ -673,11 +709,12 @@
                         <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                             <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                 <TextBox
-                                    Width="100"
+                                    Width="120"
                                     hc:InfoElement.Title="{ex:Language Key='Motor No'}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding MotorParam.MotorIndex}" />
                                 <hc:ComboBox
+                                    Width="120"
                                     hc:InfoElement.Title="{ex:Language Key='Debug Mode'}"
                                     ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
                                     SelectedItem="{Binding MotorParam.DebugMode}" />
@@ -692,17 +729,17 @@
                             </hc:UniformSpacingPanel>
                             <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                 <TextBox
-                                    Width="100"
+                                    Width="120"
                                     hc:InfoElement.Title="{ex:Language Key='TEC P'}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding TECParam.P}" />
                                 <TextBox
-                                    Width="100"
+                                    Width="120"
                                     hc:InfoElement.Title="{ex:Language Key='TEC I'}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding TECParam.I}" />
                                 <TextBox
-                                    Width="100"
+                                    Width="120"
                                     hc:InfoElement.Title="{ex:Language Key='TEC D'}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding TECParam.D}" />
@@ -726,22 +763,22 @@
                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <TextBox
-                                        Width="150"
+                                        Width="120"
                                         hc:InfoElement.Title="{ex:Language Key='MainBoard IP'}"
                                         Style="{StaticResource TextBoxExtend}"
                                         Text="{Binding DeviceParam.MainAdress}" />
                                     <TextBox
-                                        Width="100"
+                                        Width="120"
                                         hc:InfoElement.Title="{ex:Language Key='Port'}"
                                         Style="{StaticResource TextBoxExtend}"
                                         Text="{Binding DeviceParam.MainPort}" />
                                     <TextBox
-                                        Width="150"
+                                        Width="120"
                                         hc:InfoElement.Title="{ex:Language Key='Wifi Module IP'}"
                                         Style="{StaticResource TextBoxExtend}"
                                         Text="{Binding DeviceParam.WifiAdress}" />
                                     <TextBox
-                                        Width="100"
+                                        Width="120"
                                         hc:InfoElement.Title="{ex:Language Key='Port'}"
                                         Style="{StaticResource TextBoxExtend}"
                                         Text="{Binding DeviceParam.WifiPort}" />
@@ -762,49 +799,305 @@
                                         CommandParameter="13"
                                         Content="{ex:Language Key='Set'}" />
                                 </hc:UniformSpacingPanel>
+                                <GroupBox Header="{ex:Language Key='PH Sensor'}" Style="{StaticResource MaterialDesignCardGroupBox}">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <TextBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='PH Sensor Bias'}"
+                                                IsEnabled="False"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding PHSensorCalibrationParam.SensorBias}" />
+                                            <TextBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='PH Sensor Coefficient'}"
+                                                IsEnabled="False"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding PHSensorCalibrationParam.SensorCoefficient}" />
+                                            <Button
+                                                Width="80"
+                                                Height="30"
+                                                Margin="0,20,0,0"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                Command="{Binding ReadCommand}"
+                                                CommandParameter="14"
+                                                Content="{ex:Language Key='Read'}" />
+                                        </hc:UniformSpacingPanel>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <hc:ComboBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Mode'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum6}}"
+                                                SelectedItem="{Binding PHSensorCalibrationParam.SensorCorrectMode}" />
+                                            <hc:ComboBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Param'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum7}}"
+                                                SelectedItem="{Binding PHSensorCalibrationParam.CalibrationParam}" />
+                                            <TextBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Value'}"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding PHSensorCalibrationParam.CalibrationValue}" />
+                                            <Button
+                                                Width="80"
+                                                Height="30"
+                                                Margin="0,20,0,0"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                Command="{Binding SetCommand}"
+                                                CommandParameter="14"
+                                                Content="{ex:Language Key='Set'}" />
+                                        </hc:UniformSpacingPanel>
+                                    </hc:UniformSpacingPanel>
+                                </GroupBox>
+                                <GroupBox Header="{ex:Language Key='DO Sensor'}" Style="{StaticResource MaterialDesignCardGroupBox}">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <TextBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='PH Sensor Coefficient'}"
+                                                IsEnabled="False"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding DOSensorCalibrationParam.SensorCoefficient}" />
+                                            <Button
+                                                Width="80"
+                                                Height="30"
+                                                Margin="0,20,0,0"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                Command="{Binding ReadCommand}"
+                                                CommandParameter="15"
+                                                Content="{ex:Language Key='Read'}" />
+                                        </hc:UniformSpacingPanel>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <TextBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Value'}"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding DOSensorCalibrationParam.CalibrationValue}" />
+                                            <Button
+                                                Width="80"
+                                                Height="30"
+                                                Margin="0,20,0,0"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                Command="{Binding SetCommand}"
+                                                CommandParameter="15"
+                                                Content="{ex:Language Key='Set'}" />
+                                        </hc:UniformSpacingPanel>
+                                    </hc:UniformSpacingPanel>
+                                </GroupBox>
+                                <GroupBox Header="{ex:Language Key='Weight Sensor'}" Style="{StaticResource MaterialDesignCardGroupBox}">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <TextBox
+                                                Width="170"
+                                                hc:InfoElement.Title="{ex:Language Key='Weight Sensor Bias'}"
+                                                IsEnabled="False"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding WeightSensorCalibrationParam.SensorBias}" />
+                                            <TextBox
+                                                Width="170"
+                                                hc:InfoElement.Title="{ex:Language Key='Weight Sensor Coefficient'}"
+                                                IsEnabled="False"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding WeightSensorCalibrationParam.SensorCoefficient}" />
+                                            <Button
+                                                Width="80"
+                                                Height="30"
+                                                Margin="0,20,0,0"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                Command="{Binding ReadCommand}"
+                                                CommandParameter="16"
+                                                Content="{ex:Language Key='Read'}" />
+                                        </hc:UniformSpacingPanel>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='Sensor No'}"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding WeightSensorCalibrationParam.SerialNo}" />
+                                            <hc:ComboBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Mode'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum6}}"
+                                                SelectedItem="{Binding WeightSensorCalibrationParam.SensorCorrectMode}" />
+                                            <hc:ComboBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Param'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum7}}"
+                                                SelectedItem="{Binding WeightSensorCalibrationParam.CalibrationParam}" />
+                                            <TextBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Value'}"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding WeightSensorCalibrationParam.CalibrationValue}" />
+                                            <Button
+                                                Width="80"
+                                                Height="30"
+                                                Margin="0,20,0,0"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                Command="{Binding SetCommand}"
+                                                CommandParameter="16"
+                                                Content="{ex:Language Key='Set'}" />
+                                        </hc:UniformSpacingPanel>
+                                    </hc:UniformSpacingPanel>
+                                </GroupBox>
+                                <GroupBox Header="{ex:Language Key='PT100 Sensor'}" Style="{StaticResource MaterialDesignCardGroupBox}">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <TextBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='PT100 Sensor Bias'}"
+                                                IsEnabled="False"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding PT100SensorCalibrationParam.SensorBias}" />
+                                            <TextBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='PT100 Sensor Coefficient'}"
+                                                IsEnabled="False"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding PT100SensorCalibrationParam.SensorCoefficient}" />
+                                            <Button
+                                                Width="80"
+                                                Height="30"
+                                                Margin="0,20,0,0"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                Command="{Binding ReadCommand}"
+                                                CommandParameter="17"
+                                                Content="{ex:Language Key='Read'}" />
+                                        </hc:UniformSpacingPanel>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <hc:ComboBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Mode'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum6}}"
+                                                SelectedItem="{Binding PT100SensorCalibrationParam.SensorCorrectMode}" />
+                                            <hc:ComboBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Param'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum7}}"
+                                                SelectedItem="{Binding PT100SensorCalibrationParam.CalibrationParam}" />
+                                            <TextBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Value'}"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding PT100SensorCalibrationParam.CalibrationValue}" />
+                                            <Button
+                                                Width="80"
+                                                Height="30"
+                                                Margin="0,20,0,0"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                Command="{Binding SetCommand}"
+                                                CommandParameter="17"
+                                                Content="{ex:Language Key='Set'}" />
+                                        </hc:UniformSpacingPanel>
+                                    </hc:UniformSpacingPanel>
+                                </GroupBox>
+                                <GroupBox Header="{ex:Language Key='Peristaltic Pump'}" Style="{StaticResource MaterialDesignCardGroupBox}">
+                                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="30">
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <hc:ComboBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='Peristaltic Pump'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum9}}"
+                                                SelectedItem="{Binding PeristalticPumpCalibrationParam.PeristalticPump}" />
+                                            <TextBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='Coefficient'}"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding PeristalticPumpCalibrationParam.Coefficient}" />
+                                            <hc:ComboBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Param'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum8}}"
+                                                SelectedItem="{Binding PeristalticPumpCalibrationParam.CalibrationParam}" />
+                                            <TextBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Value'}"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding PeristalticPumpCalibrationParam.CalibrationValue}" />
+                                            <Button
+                                                Width="80"
+                                                Height="30"
+                                                Margin="0,20,0,0"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                Command="{Binding ReadCommand}"
+                                                CommandParameter="18"
+                                                Content="{ex:Language Key='Read'}" />
+                                            <Button
+                                                Width="80"
+                                                Height="30"
+                                                Margin="0,20,0,0"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                Command="{Binding SetCommand}"
+                                                CommandParameter="18"
+                                                Content="{ex:Language Key='Set'}" />
+                                        </hc:UniformSpacingPanel>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <hc:ComboBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='Pump1'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum9}}"
+                                                SelectedItem="{Binding Pump1}" />
+                                            <hc:ComboBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='Pump2'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum9}}"
+                                                SelectedItem="{Binding Pump2}" />
+                                            <hc:ComboBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='Pump3'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum9}}"
+                                                SelectedItem="{Binding Pump3}" />
+                                            <hc:ComboBox
+                                                Width="160"
+                                                hc:InfoElement.Title="{ex:Language Key='Pump4'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum9}}"
+                                                SelectedItem="{Binding Pump4}" />
+                                            <Button
+                                                Width="80"
+                                                Height="30"
+                                                Margin="0,20,0,0"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                Command="{Binding ReadCommand}"
+                                                CommandParameter="19"
+                                                Content="{ex:Language Key='Read'}" />
+                                            <Button
+                                                Width="80"
+                                                Height="30"
+                                                Margin="0,20,0,0"
+                                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                Command="{Binding SetCommand}"
+                                                CommandParameter="19"
+                                                Content="{ex:Language Key='Set'}" />
+                                        </hc:UniformSpacingPanel>
+                                    </hc:UniformSpacingPanel>
+                                </GroupBox>
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBox
-                                        Width="100"
-                                        hc:InfoElement.Title="{ex:Language Key='PH Sensor Bias'}"
-                                        IsEnabled="False"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding PHSensorBias}" />
-                                    <TextBox
-                                        Width="100"
-                                        hc:InfoElement.Title="{ex:Language Key='PH Sensor Bias'}"
-                                        IsEnabled="False"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding PHSensorBias}" />
+                                    <hc:ComboBox
+                                        Width="160"
+                                        hc:InfoElement.Title="{ex:Language Key='MFC1'}"
+                                        ItemsSource="{Binding Source={StaticResource DataFromEnum10}}"
+                                        SelectedItem="{Binding MFC1}" />
+                                    <hc:ComboBox
+                                        Width="160"
+                                        hc:InfoElement.Title="{ex:Language Key='MFC2'}"
+                                        ItemsSource="{Binding Source={StaticResource DataFromEnum10}}"
+                                        SelectedItem="{Binding MFC2}" />
                                     <Button
                                         Width="80"
                                         Height="30"
                                         Margin="0,20,0,0"
                                         hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                         Command="{Binding ReadCommand}"
-                                        CommandParameter="14"
+                                        CommandParameter="20"
                                         Content="{ex:Language Key='Read'}" />
-                                </hc:UniformSpacingPanel>
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                                    <hc:ComboBox
-                                        hc:InfoElement.Title="{ex:Language Key='Calitration Mode'}"
-                                        ItemsSource="{Binding Source={StaticResource DataFromEnum4}}"
-                                        SelectedItem="{Binding SensorCorrectParam.SensorCorrectionMode}" />
-                                    <hc:ComboBox
-                                        hc:InfoElement.Title="{ex:Language Key='Calitration Param'}"
-                                        ItemsSource="{Binding Source={StaticResource DataFromEnum5}}"
-                                        SelectedItem="{Binding SensorCorrectParam.SensorType}" />
-                                    <TextBox
-                                        Width="120"
-                                        hc:InfoElement.Title="{ex:Language Key='Calitration Value'}"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding SensorCorrectParam.CorrectValue}" />
                                     <Button
                                         Width="80"
                                         Height="30"
                                         Margin="0,20,0,0"
                                         hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                         Command="{Binding SetCommand}"
-                                        CommandParameter="14"
+                                        CommandParameter="20"
                                         Content="{ex:Language Key='Set'}" />
                                 </hc:UniformSpacingPanel>
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">

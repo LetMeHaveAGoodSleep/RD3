@@ -636,41 +636,7 @@
                                                     BorderBrush="{DynamicResource FixedBrush}"
                                                     Content="Fixed"
                                                     FontSize="10"
-                                                    Foreground="{DynamicResource DefaultBrush}"
-                                                    Visibility="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
-                                                <Label
-                                                    Width="80"
-                                                    Height="30"
-                                                    HorizontalAlignment="Left"
-                                                    HorizontalContentAlignment="Center"
-                                                    Background="{DynamicResource PrimaryBrush}"
-                                                    BorderBrush="{DynamicResource PrimaryBrush}"
-                                                    Content="Associated"
-                                                    FontSize="10"
-                                                    Foreground="{DynamicResource DefaultBrush}"
-                                                    Visibility="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
-                                                <Label
-                                                    Width="70"
-                                                    Height="30"
-                                                    HorizontalAlignment="Left"
-                                                    HorizontalContentAlignment="Center"
-                                                    Background="#3C739A"
-                                                    BorderBrush="#3C739A"
-                                                    Content="Free"
-                                                    FontSize="10"
-                                                    Foreground="{DynamicResource DefaultBrush}"
-                                                    Visibility="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Free}" />
-                                                <Label
-                                                    Width="70"
-                                                    Height="30"
-                                                    HorizontalAlignment="Left"
-                                                    HorizontalContentAlignment="Center"
-                                                    Background="{DynamicResource ThirdlyTextBrush}"
-                                                    BorderBrush="{DynamicResource ThirdlyTextBrush}"
-                                                    Content="Disable"
-                                                    FontSize="10"
-                                                    Foreground="{DynamicResource DefaultBrush}"
-                                                    Visibility="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
+                                                    Foreground="{DynamicResource DefaultBrush}" />
                                             </hc:UniformSpacingPanel>
                                         </Grid>
                                         <Grid
@@ -1365,7 +1331,7 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     FontSize="{DynamicResource LargeFontSize}"
-                                                    Text="{Binding CurrentDeviceParameter.Base, StringFormat=N2}" />
+                                                    Text="{Binding CurrentDeviceParameter.BaseFlowSpeed, StringFormat=N2}" />
                                                 <DockPanel Grid.Row="3" LastChildFill="False">
                                                     <Grid DockPanel.Dock="Bottom">
                                                         <Grid.ColumnDefinitions>
@@ -1379,7 +1345,7 @@
                                                                 <TextBlock
                                                                     DockPanel.Dock="Top"
                                                                     FontSize="{DynamicResource SubHeadFontSize}"
-                                                                    Text="55.3" />
+                                                                    Text="{Binding CurrentDeviceParameter.BaseFlowCapacity, StringFormat=N2}" />
                                                                 <TextBlock
                                                                     VerticalAlignment="Center"
                                                                     FontSize="{DynamicResource NormalFontSize}"
@@ -1499,7 +1465,7 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     FontSize="{DynamicResource LargeFontSize}"
-                                                    Text="{Binding CurrentDeviceParameter.Acid, StringFormat=N2}" />
+                                                    Text="{Binding CurrentDeviceParameter.AcidFlowSpeed, StringFormat=N2}" />
                                                 <DockPanel Grid.Row="3" LastChildFill="False">
                                                     <Grid DockPanel.Dock="Bottom">
                                                         <Grid.ColumnDefinitions>
@@ -1514,7 +1480,7 @@
                                                                 <TextBlock
                                                                     DockPanel.Dock="Top"
                                                                     FontSize="{DynamicResource SubHeadFontSize}"
-                                                                    Text="55.3" />
+                                                                    Text="{Binding CurrentDeviceParameter.AcidFlowCapacity, StringFormat=N2}" />
                                                                 <TextBlock
                                                                     VerticalAlignment="Center"
                                                                     FontSize="{DynamicResource NormalFontSize}"
@@ -1576,39 +1542,6 @@
                                                             FontSize="10"
                                                             Foreground="{DynamicResource DefaultBrush}"
                                                             Visibility="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Fixed}" />
-                                                        <Label
-                                                            Width="80"
-                                                            Height="30"
-                                                            HorizontalAlignment="Left"
-                                                            HorizontalContentAlignment="Center"
-                                                            Background="{DynamicResource PrimaryBrush}"
-                                                            BorderBrush="{DynamicResource PrimaryBrush}"
-                                                            Content="Associated"
-                                                            FontSize="10"
-                                                            Foreground="{DynamicResource DefaultBrush}"
-                                                            Visibility="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
-                                                        <Label
-                                                            Width="70"
-                                                            Height="30"
-                                                            HorizontalAlignment="Left"
-                                                            HorizontalContentAlignment="Center"
-                                                            Background="#3C739A"
-                                                            BorderBrush="#3C739A"
-                                                            Content="Free"
-                                                            FontSize="10"
-                                                            Foreground="{DynamicResource DefaultBrush}"
-                                                            Visibility="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Free}" />
-                                                        <Label
-                                                            Width="70"
-                                                            Height="30"
-                                                            HorizontalAlignment="Left"
-                                                            HorizontalContentAlignment="Center"
-                                                            Background="{DynamicResource ThirdlyTextBrush}"
-                                                            BorderBrush="{DynamicResource ThirdlyTextBrush}"
-                                                            Content="Disable"
-                                                            FontSize="10"
-                                                            Foreground="{DynamicResource DefaultBrush}"
-                                                            Visibility="{Binding CurrentDeviceParameter.AFParam.ControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Disable}" />
                                                     </hc:UniformSpacingPanel>
                                                 </Grid>
                                                 <TextBlock
@@ -1616,7 +1549,7 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     FontSize="{DynamicResource LargeFontSize}"
-                                                    Text="{Binding CurrentDeviceParameter.AF, StringFormat=N2}" />
+                                                    Text="{Binding CurrentDeviceParameter.AFFlowSpeed, StringFormat=N2}" />
                                                 <DockPanel Grid.Row="3" LastChildFill="False">
                                                     <Grid DockPanel.Dock="Bottom">
                                                         <Grid.ColumnDefinitions>
@@ -1631,7 +1564,7 @@
                                                                 <TextBlock
                                                                     DockPanel.Dock="Top"
                                                                     FontSize="{DynamicResource SubHeadFontSize}"
-                                                                    Text="55.3" />
+                                                                    Text="{Binding CurrentDeviceParameter.AFFlowCapacity, StringFormat=N2}" />
                                                                 <TextBlock
                                                                     VerticalAlignment="Center"
                                                                     FontSize="{DynamicResource NormalFontSize}"
@@ -1760,7 +1693,7 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     FontSize="{DynamicResource LargeFontSize}"
-                                                    Text="{Binding CurrentDeviceParameter.Feed, StringFormat=N2}" />
+                                                    Text="{Binding CurrentDeviceParameter.FeedFlowSpeed, StringFormat=N2}" />
                                                 <DockPanel Grid.Row="3" LastChildFill="False">
                                                     <Grid DockPanel.Dock="Bottom">
                                                         <Grid.ColumnDefinitions>
@@ -1775,7 +1708,7 @@
                                                                 <TextBlock
                                                                     DockPanel.Dock="Top"
                                                                     FontSize="{DynamicResource SubHeadFontSize}"
-                                                                    Text="55.3" />
+                                                                    Text="{Binding CurrentDeviceParameter.FeedFlowCapacity, StringFormat=N2}" />
                                                                 <TextBlock
                                                                     VerticalAlignment="Center"
                                                                     FontSize="{DynamicResource NormalFontSize}"
@@ -1884,8 +1817,9 @@
                                             </Grid>
                                             <Grid Grid.Row="1">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="auto" />
                                                     <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <hc:SimpleStackPanel Orientation="Horizontal" Visibility="{Binding CurrentDeviceParameter.DOParam.AirAssociated, Converter={StaticResource Boolean2VisibilityConverter}}">
                                                     <Path
@@ -1908,12 +1842,11 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource LargeFontSize}"
-                                                    Text="{Binding CurrentDeviceParameter.Air, StringFormat=N2}" />
+                                                    Text="{Binding CurrentDeviceParameter.AirFlowSpeed, StringFormat=N2}" />
                                                 <StackPanel
-                                                    Grid.Column="1"
+                                                    Grid.Column="2"
                                                     HorizontalAlignment="Right"
-                                                    Orientation="Horizontal"
-                                                    Visibility="Collapsed">
+                                                    Orientation="Horizontal">
                                                     <TextBlock
                                                         Margin="0,0,5,0"
                                                         VerticalAlignment="Center"
@@ -1923,7 +1856,7 @@
                                                         Margin="0,0,5,0"
                                                         VerticalAlignment="Center"
                                                         FontSize="{StaticResource HeadFontSize}"
-                                                        Text="0" />
+                                                        Text="{Binding CurrentDeviceParameter.AirFlowCapacity, StringFormat=N2}" />
                                                     <TextBlock
                                                         VerticalAlignment="Center"
                                                         FontSize="{StaticResource TextFontSize}"
@@ -2016,8 +1949,9 @@
                                             </Grid>
                                             <Grid Grid.Row="1">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="auto" />
                                                     <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <hc:SimpleStackPanel
                                                     Grid.Row="1"
@@ -2043,12 +1977,11 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource LargeFontSize}"
-                                                    Text="{Binding CurrentDeviceParameter.CO2, StringFormat=N2}" />
+                                                    Text="{Binding CurrentDeviceParameter.CO2FlowSpeed, StringFormat=N2}" />
                                                 <StackPanel
-                                                    Grid.Column="1"
+                                                    Grid.Column="2"
                                                     HorizontalAlignment="Right"
-                                                    Orientation="Horizontal"
-                                                    Visibility="Collapsed">
+                                                    Orientation="Horizontal">
                                                     <TextBlock
                                                         Margin="0,0,5,0"
                                                         VerticalAlignment="Center"
@@ -2058,7 +1991,7 @@
                                                         Margin="0,0,5,0"
                                                         VerticalAlignment="Center"
                                                         FontSize="{StaticResource HeadFontSize}"
-                                                        Text="0" />
+                                                        Text="{Binding CurrentDeviceParameter.CO2FlowCapacity, StringFormat=N2}" />
                                                     <TextBlock
                                                         VerticalAlignment="Center"
                                                         FontSize="{StaticResource TextFontSize}"
@@ -2147,8 +2080,9 @@
                                             </Grid>
                                             <Grid Grid.Row="1">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="auto" />
                                                     <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <hc:SimpleStackPanel
                                                     Grid.Row="1"
@@ -2174,12 +2108,11 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource LargeFontSize}"
-                                                    Text="{Binding CurrentDeviceParameter.O2, StringFormat=N2}" />
+                                                    Text="{Binding CurrentDeviceParameter.O2FlowSpeed, StringFormat=N2}" />
                                                 <StackPanel
-                                                    Grid.Column="1"
+                                                    Grid.Column="2"
                                                     HorizontalAlignment="Right"
-                                                    Orientation="Horizontal"
-                                                    Visibility="Collapsed">
+                                                    Orientation="Horizontal">
                                                     <TextBlock
                                                         Margin="0,0,5,0"
                                                         VerticalAlignment="Center"
@@ -2189,7 +2122,7 @@
                                                         Margin="0,0,5,0"
                                                         VerticalAlignment="Center"
                                                         FontSize="{StaticResource HeadFontSize}"
-                                                        Text="0" />
+                                                        Text="{Binding CurrentDeviceParameter.O2FlowCapacity, StringFormat=N2}" />
                                                     <TextBlock
                                                         VerticalAlignment="Center"
                                                         FontSize="{StaticResource TextFontSize}"
@@ -2278,8 +2211,9 @@
                                             </Grid>
                                             <Grid Grid.Row="1">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="auto" />
                                                     <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <hc:SimpleStackPanel
                                                     Grid.Row="1"
@@ -2305,12 +2239,11 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     FontSize="{StaticResource LargeFontSize}"
-                                                    Text="{Binding CurrentDeviceParameter.N2, StringFormat=N2}" />
+                                                    Text="{Binding CurrentDeviceParameter.N2FlowSpeed, StringFormat=N2}" />
                                                 <StackPanel
-                                                    Grid.Column="1"
+                                                    Grid.Column="2"
                                                     HorizontalAlignment="Right"
-                                                    Orientation="Horizontal"
-                                                    Visibility="Collapsed">
+                                                    Orientation="Horizontal">
                                                     <TextBlock
                                                         Margin="0,0,5,0"
                                                         VerticalAlignment="Center"
@@ -2320,7 +2253,7 @@
                                                         Margin="0,0,5,0"
                                                         VerticalAlignment="Center"
                                                         FontSize="{StaticResource HeadFontSize}"
-                                                        Text="0" />
+                                                        Text="{Binding CurrentDeviceParameter.N2FlowCapacity, StringFormat=N2}" />
                                                     <TextBlock
                                                         VerticalAlignment="Center"
                                                         FontSize="{StaticResource TextFontSize}"
@@ -3074,7 +3007,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding AirParam.Air_PV, StringFormat={}{0:F2}}" />
+                                                Text="{Binding AirParam.FlowSpeed, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -3107,7 +3040,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding CO2Param.CO2_PV, StringFormat={}{0:F2}}" />
+                                                Text="{Binding CO2Param.FlowSpeed, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -3140,7 +3073,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding O2Param.O2_PV, StringFormat={}{0:F2}}" />
+                                                Text="{Binding O2Param.FlowSpeed, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -3173,7 +3106,7 @@
                                             <TextBlock
                                                 HorizontalAlignment="Center"
                                                 VerticalAlignment="Center"
-                                                Text="{Binding N2Param.N2_PV, StringFormat={}{0:F2}}" />
+                                                Text="{Binding N2Param.FlowSpeed, StringFormat={}{0:F2}}" />
                                         </hc:UniformSpacingPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
