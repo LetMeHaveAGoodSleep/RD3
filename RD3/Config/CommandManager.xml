@@ -575,6 +575,24 @@
 							<length>1</length>
 						</param>
 						<param>
+							<id>JarWeight</id>
+							<name>罐体重量</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>Bottle1Weight</id>
+							<name>瓶子1重量</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>Bottle2Weight</id>
+							<name>瓶子2重量</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
 							<id>WorkStatus</id>
 							<name>工作状态</name>
 							<type>byte</type>
@@ -795,6 +813,12 @@
 							<name>Wifi端口号</name>
 							<type>byte</type>
 							<length>4</length>
+						</param>
+						<param>
+						<id>MainGateway</id>
+						<name>主板网关</name>
+						<type>byte</type>
+						<length>4</length>
 						</param>
 						<param>
 							<id>Reserve</id>

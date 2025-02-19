@@ -15,4 +15,5 @@
     <rd3:SelectedItemCountToVisibilityConverter x:Key="SelectedItemCountToVisibilityConverter" />
     <rd3:NumericCompareToVisibilityConverter x:Key="NumericCompareToVisibilityConverter" />
     <rd3:NumericToBoolConverter x:Key="NumericToBoolConverter" />
+    <rd3:EnumToInverseBoolConverter x:Key="EnumToInverseBoolConverter" />
 </ResourceDictionary>

@@ -205,4 +205,6 @@
     <system:String x:Key="CO2 Flow Speed">二氧化碳流速</system:String>
     <system:String x:Key="N2 Flow Speed">氮气流速</system:String>
     <system:String x:Key="Sensor Kind">传感器型号</system:String>
+    <system:String x:Key="Consumed:">消耗量:</system:String>
+    <system:String x:Key="Applied to all reactors">应用于所有反应器</system:String>
 </ResourceDictionary>

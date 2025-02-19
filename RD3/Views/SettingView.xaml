@@ -164,6 +164,8 @@
                                 <RowDefinition Height="20" />
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="20" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="20" />
                             </Grid.RowDefinitions>
                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
                                 <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Instrument mode'}" />
@@ -184,6 +186,26 @@
                                 Grid.Row="2"
                                 Orientation="Vertical"
                                 Spacing="5">
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Log Switch'}" />
+                                <TextBlock
+                                    Grid.Row="2"
+                                    FontSize="10"
+                                    FontStyle="Oblique"
+                                    Foreground="gray"
+                                    Text="{ex:Language Key='Turn on Log.'}" />
+                            </hc:UniformSpacingPanel>
+                            <ToggleButton
+                                Grid.Row="2"
+                                Grid.Column="1"
+                                Width="150"
+                                HorizontalAlignment="Center"
+                                BorderThickness="0"
+                                IsChecked="{Binding LogOpen}"
+                                Style="{StaticResource ToggleButtonSwitch}" />
+                            <hc:UniformSpacingPanel
+                                Grid.Row="4"
+                                Orientation="Vertical"
+                                Spacing="5">
                                 <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Time Interval'}" />
                                 <TextBlock
                                     FontSize="10"
@@ -192,14 +214,14 @@
                                     Text="{ex:Language Key='Read real-time data  unit:sencond.'}" />
                             </hc:UniformSpacingPanel>
                             <ComboBox
-                                Grid.Row="2"
+                                Grid.Row="4"
                                 Grid.Column="1"
                                 Width="150"
                                 ItemsSource="{Binding IntervalSource}"
                                 SelectedItem="{Binding TimeInterval}"
                                 Style="{StaticResource ComboBoxExtend}" />
                             <hc:UniformSpacingPanel
-                                Grid.Row="4"
+                                Grid.Row="6"
                                 Orientation="Vertical"
                                 Spacing="5">
                                 <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='FontFamily'}" />
@@ -210,7 +232,7 @@
                                     Text="{ex:Language Key='Choose FontFamily.'}" />
                             </hc:UniformSpacingPanel>
                             <ComboBox
-                                Grid.Row="4"
+                                Grid.Row="6"
                                 Grid.Column="1"
                                 Width="150"
                                 ItemsSource="{Binding FontSource}"

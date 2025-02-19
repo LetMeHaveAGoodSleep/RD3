@@ -7,6 +7,7 @@
   "TimeInterval": "5",
   "FontFamily": "SimSun",
   "SoftVersion": "V1.0.0.1",
+  "LogOpen": "False",
   "PumpSetting": {
     "G01": {
       "AcidPump": 1,
