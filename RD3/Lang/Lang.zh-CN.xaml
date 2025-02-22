@@ -215,4 +215,7 @@
     <system:String x:Key="Weight3">称重3</system:String>
     <system:String x:Key="Finish">完成</system:String>
     <system:String x:Key="Copy to other reactor">复制到其他反应器</system:String>
+    <system:String x:Key="Open">打开</system:String>
+    <system:String x:Key="Write">写入</system:String>
+    <system:String x:Key="Reset Flow Rate">流量清零</system:String>
 </ResourceDictionary>

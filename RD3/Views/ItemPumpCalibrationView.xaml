@@ -1,0 +1,115 @@
+﻿<UserControl
+    x:Class="RD3.Views.ItemPumpCalibrationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:RD3.ViewModels"
+    Width="auto"
+    Height="auto"
+    d:DataContext="{d:DesignInstance Type=vm:ItemPumpCalibrationViewModel}"
+    Background="{StaticResource BackGroundBrush}"
+    mc:Ignorable="d">
+    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+        <DockPanel>
+            <Label
+                Width="80"
+                VerticalAlignment="Bottom"
+                HorizontalContentAlignment="Center"
+                Background="{DynamicResource DefaultBrush}"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                Content="{Binding PumpName}"
+                DockPanel.Dock="Bottom"
+                Foreground="{DynamicResource PrimaryBrush}" />
+        </DockPanel>
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Text="当前流量" />
+            <Label
+                Width="100"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                hc:InfoElement.Title="{ex:Language Key='Current Value'}"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                Content="{Binding CurrentValue}"
+                IsEnabled="False" />
+        </DockPanel>
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Text="速度" />
+            <TextBox
+                Width="100"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                hc:InfoElement.Title="{ex:Language Key='Pump Speed'}"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                Text="{Binding Speed}" />
+        </DockPanel>
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Text="时间（s）" />
+            <TextBox
+                Width="100"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                Text="{Binding Time}" />
+        </DockPanel>
+        <DockPanel>
+            <Button
+                Width="80"
+                VerticalAlignment="Bottom"
+                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                BorderBrush="{StaticResource PrimaryBrush}"
+                Command="{Binding CalibrateCommand}"
+                CommandParameter="1"
+                Content="{ex:Language Key='Open'}"
+                FontSize="{DynamicResource NormalFontSize}"
+                Foreground="{StaticResource PrimaryBrush}" />
+        </DockPanel>
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Text="体积" />
+            <TextBox
+                Width="100"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                Text="{Binding Flow}" />
+        </DockPanel>
+        <DockPanel>
+            <Button
+                Width="80"
+                VerticalAlignment="Bottom"
+                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                BorderBrush="{StaticResource PrimaryBrush}"
+                Command="{Binding CalibrateCommand}"
+                CommandParameter="2"
+                Content="{ex:Language Key='Write'}"
+                FontSize="{DynamicResource NormalFontSize}"
+                Foreground="{StaticResource PrimaryBrush}" />
+        </DockPanel>
+        <DockPanel>
+            <Button
+                Width="80"
+                VerticalAlignment="Bottom"
+                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                BorderBrush="{StaticResource PrimaryBrush}"
+                Command="{Binding CalibrateCommand}"
+                CommandParameter="255"
+                Content="{ex:Language Key='Finish'}"
+                FontSize="{DynamicResource NormalFontSize}"
+                Foreground="{StaticResource PrimaryBrush}" />
+        </DockPanel>
+        <DockPanel>
+            <Button
+                Width="150"
+                VerticalAlignment="Bottom"
+                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                BorderBrush="{StaticResource PrimaryBrush}"
+                Command="{Binding ResetCommand}"
+                Content="{ex:Language Key='Reset Flow Rate'}"
+                FontSize="{DynamicResource NormalFontSize}"
+                Foreground="{StaticResource PrimaryBrush}" />
+        </DockPanel>
+    </hc:UniformSpacingPanel>
+</UserControl>

@@ -2223,7 +2223,8 @@
                                         Width="80"
                                         VerticalContentAlignment="Center"
                                         hc:BorderElement.CornerRadius="4"
-                                        ItemsSource="{Binding Source={StaticResource DataFromEnum}}" SelectionChanged="CmbYAxis_SelectionChanged"/>
+                                        ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+                                        SelectionChanged="CmbYAxis_SelectionChanged" />
                                 </Grid>
                                 <Line
                                     Grid.Row="5"

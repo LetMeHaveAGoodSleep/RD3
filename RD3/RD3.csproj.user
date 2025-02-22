@@ -64,6 +64,9 @@
     <Compile Update="Views\ItemCalibrationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ItemPumpCalibrationView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\MCUDebugView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -174,6 +177,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ItemCalibrationView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ItemPumpCalibrationView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MCUDebugView.xaml">

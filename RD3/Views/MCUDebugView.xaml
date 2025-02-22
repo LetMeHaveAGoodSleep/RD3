@@ -119,11 +119,6 @@
             Margin="0,0,0,5"
             Orientation="Horizontal"
             Spacing="10">
-            <!--<hc:ComboBox
-                Width="100"
-                hc:InfoElement.Title="{ex:Language Key='Reactor'}"
-                ItemsSource="{Binding Instruments}"
-                SelectedItem="{Binding SelectedInstrument}" />-->
             <hc:CheckComboBox
                 Width="400"
                 hc:InfoElement.ShowClearButton="True"

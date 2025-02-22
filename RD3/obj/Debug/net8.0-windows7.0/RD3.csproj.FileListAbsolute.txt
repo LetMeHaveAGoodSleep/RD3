@@ -279,3 +279,5 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ChooseReactorView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Themes\Sizes.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ItemCalibrationView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ItemCalibrationView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ItemPumpCalibrationView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ItemPumpCalibrationView.baml

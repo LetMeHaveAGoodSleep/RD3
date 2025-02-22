@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\Project\RD3\RD3\App.xaml
-43-273652229
+44305528144
 3271424504
-1271610324834
+129-270368032
 242-522342694
-Controls\IndicatorLight.xaml;Themes\Brushes.xaml;Themes\Colors.xaml;Themes\Converters.xaml;Themes\Geometry.xaml;Themes\ProgressRing.xaml;Themes\Sizes.xaml;Themes\Styles\Button.xaml;Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AddSampleView.xaml;Views\AlarmView.xaml;Views\AuditView.xaml;Views\BatchView.xaml;Views\CalibrateView.xaml;Views\CalibrationView.xaml;Views\ChooseReactorView.xaml;Views\ControlView.xaml;Views\DOEDesignView.xaml;Views\DOEMainView.xaml;Views\EditBatchView.xaml;Views\EditExperimentParamView.xaml;Views\EditProjectView.xaml;Views\EditSampleView.xaml;Views\EditTemplateView.xaml;Views\EditUserView.xaml;Views\ErrorView.xaml;Views\FeedView.xaml;Views\IndexView.xaml;Views\ItemCalibrationView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MCUDebugView.xaml;Views\MsgView.xaml;Views\OperationView.xaml;Views\ProgressView.xaml;Views\ProjectView.xaml;Views\RegisterView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\SettingView.xaml;Views\UnscheduledView.xaml;Views\UserView.xaml;
+Controls\IndicatorLight.xaml;Themes\Brushes.xaml;Themes\Colors.xaml;Themes\Converters.xaml;Themes\Geometry.xaml;Themes\ProgressRing.xaml;Themes\Sizes.xaml;Themes\Styles\Button.xaml;Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AddSampleView.xaml;Views\AlarmView.xaml;Views\AuditView.xaml;Views\BatchView.xaml;Views\CalibrateView.xaml;Views\CalibrationView.xaml;Views\ChooseReactorView.xaml;Views\ControlView.xaml;Views\DOEDesignView.xaml;Views\DOEMainView.xaml;Views\EditBatchView.xaml;Views\EditExperimentParamView.xaml;Views\EditProjectView.xaml;Views\EditSampleView.xaml;Views\EditTemplateView.xaml;Views\EditUserView.xaml;Views\ErrorView.xaml;Views\FeedView.xaml;Views\IndexView.xaml;Views\ItemCalibrationView.xaml;Views\ItemPumpCalibrationView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MCUDebugView.xaml;Views\MsgView.xaml;Views\OperationView.xaml;Views\ProgressView.xaml;Views\ProjectView.xaml;Views\RegisterView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\SettingView.xaml;Views\UnscheduledView.xaml;Views\UserView.xaml;
 
 False
 

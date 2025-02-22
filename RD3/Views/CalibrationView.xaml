@@ -21,13 +21,32 @@
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
     <TabControl Style="{StaticResource TabControlBaseStyle}">
-        <TabItem Header="传感器校准">
+        <TabItem Header="传感器校准" IsSelected="True">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
+
                 <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                    <Border
+                        Height="30"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        CornerRadius="8">
+                        <hc:ScrollViewer
+                            hc:ScrollViewerAttach.AutoHide="True"
+                            hc:ScrollViewerAttach.Orientation="Vertical"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto">
+                            <hc:UniformSpacingPanel Name="ChkList" Spacing="10">
+                                <CheckBox
+                                    Name="ChkAll"
+                                    Content="{ex:Language Key='Select all'}"
+                                    IsChecked="True" />
+                            </hc:UniformSpacingPanel>
+                        </hc:ScrollViewer>
+                    </Border>
                     <DockPanel HorizontalAlignment="Left" LastChildFill="False">
                         <Border
                             Height="45"
@@ -87,7 +106,7 @@
                                     Content="{ex:Language Key='Weight2'}"
                                     FontSize="{DynamicResource SubHeadFontSize}"
                                     Foreground="{DynamicResource SecondaryTextBrush}"
-                                    IsChecked="{Binding CalibrationModule, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=JarWeight}" />
+                                    IsChecked="{Binding CalibrationModule, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Bottle1Weight}" />
                                 <RadioButton
                                     Width="80"
                                     Height="35"
@@ -97,29 +116,10 @@
                                     Content="{ex:Language Key='Weight3'}"
                                     FontSize="{DynamicResource SubHeadFontSize}"
                                     Foreground="{DynamicResource SecondaryTextBrush}"
-                                    IsChecked="{Binding CalibrationModule, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=JarWeight}" />
+                                    IsChecked="{Binding CalibrationModule, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Bottle2Weight}" />
                             </hc:ButtonGroup>
                         </Border>
                     </DockPanel>
-                    <Border
-                        Height="40"
-                        Padding="10"
-                        BorderBrush="LightGray"
-                        BorderThickness="1"
-                        CornerRadius="8">
-                        <hc:ScrollViewer
-                            hc:ScrollViewerAttach.AutoHide="True"
-                            hc:ScrollViewerAttach.Orientation="Vertical"
-                            HorizontalScrollBarVisibility="Auto"
-                            VerticalScrollBarVisibility="Auto">
-                            <hc:UniformSpacingPanel Name="ChkList" Spacing="10">
-                                <CheckBox
-                                    Name="ChkAll"
-                                    Content="{ex:Language Key='Select all'}"
-                                    IsChecked="True" />
-                            </hc:UniformSpacingPanel>
-                        </hc:ScrollViewer>
-                    </Border>
                     <Border Height="340" Style="{StaticResource BorderCommon}">
                         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                             <hc:UniformSpacingPanel
@@ -147,7 +147,26 @@
                 </Border>
             </Grid>
         </TabItem>
-        <TabItem Header="蠕动泵校准" />
+        <TabItem Header="蠕动泵校准">
+            <DockPanel Margin="10" LastChildFill="True">
+                <ComboBox
+                    Width="300"
+                    Height="40"
+                    Margin="0,0,0,10"
+                    HorizontalAlignment="Left"
+                    hc:InfoElement.ShowClearButton="True"
+                    DockPanel.Dock="Top"
+                    ItemsSource="{Binding Instruments}"
+                    SelectedItem="{Binding SelectedInstrument}" />
+                <Border Style="{StaticResource BorderCommon}">
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <hc:UniformSpacingPanel
+                            Name="PumpPanel"
+                            Orientation="Vertical"
+                            Spacing="5" />
+                    </ScrollViewer>
+                </Border>
+            </DockPanel>
+        </TabItem>
     </TabControl>
-
 </UserControl>
