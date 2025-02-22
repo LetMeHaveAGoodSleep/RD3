@@ -8,6 +8,16 @@
   "FontFamily": "SimSun",
   "SoftVersion": "V1.0.0.1",
   "LogOpen": "False",
+  "DOScaleMin": "0",
+  "DOScaleMax": "100",
+  "TempScaleMin": "20",
+  "TempScaleMax": "60",
+  "AgitScaleMin": "900",
+  "AgitScaleMax": "2000",
+  "PHScaleMin": "0",
+  "PHScaleMax": "14",
+  "AirScaleMin": "0",
+  "AirScaleMax": "4",
   "PumpSetting": {
     "G01": {
       "AcidPump": 1,

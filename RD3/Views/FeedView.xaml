@@ -299,7 +299,7 @@
                                 Content="{ex:Language Key='DO'}"
                                 FontSize="{DynamicResource TextFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateModule, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=DO}"
+                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateModule, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=DO}"
                                 IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}" />
                             <RadioButton
                                 Width="100"
@@ -313,7 +313,7 @@
                                 Content="{ex:Language Key='PH'}"
                                 FontSize="{DynamicResource TextFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateModule, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=PH}"
+                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateModule, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=PH}"
                                 IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}" />
                         </hc:ButtonGroup>
                         <TextBlock
@@ -337,7 +337,7 @@
                                 Content="{ex:Language Key='Speed'}"
                                 FontSize="{DynamicResource TextFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociatePattern, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Speed}"
+                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociatePattern, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Speed}"
                                 IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}" />
                             <RadioButton
                                 Width="100"
@@ -351,7 +351,7 @@
                                 Content="{ex:Language Key='Dose'}"
                                 FontSize="{DynamicResource TextFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociatePattern, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Dose}"
+                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociatePattern, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Dose}"
                                 IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}" />
                         </hc:ButtonGroup>
                         <TextBlock
@@ -375,7 +375,7 @@
                                 Content="{ex:Language Key='Upper limit'}"
                                 FontSize="{DynamicResource TextFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateThreshold, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Upperlimit}"
+                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateThreshold, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Upperlimit}"
                                 IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}" />
                             <RadioButton
                                 Width="100"
@@ -389,7 +389,7 @@
                                 Content="{ex:Language Key='Lower limit'}"
                                 FontSize="{DynamicResource TextFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateThreshold, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Lowerlimit}"
+                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateThreshold, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Lowerlimit}"
                                 IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}" />
                         </hc:ButtonGroup>
                         <TextBlock

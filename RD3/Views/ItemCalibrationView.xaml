@@ -1,0 +1,108 @@
+﻿<UserControl
+    x:Class="RD3.Views.ItemCalibrationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:RD3.ViewModels"
+    Width="auto"
+    Height="auto"
+    d:DataContext="{d:DesignInstance Type=vm:ItemCalibrationViewModel}"
+    Background="{StaticResource BackGroundBrush}"
+    mc:Ignorable="d">
+    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+        <Label
+            Width="60"
+            Height="30"
+            HorizontalContentAlignment="Center"
+            Background="{DynamicResource DefaultBrush}"
+            BorderBrush="{DynamicResource PrimaryBrush}"
+            Content="{Binding ReactorName}"
+            Foreground="{DynamicResource PrimaryBrush}" />
+        <ComboBox
+            Width="120"
+            VerticalAlignment="Center"
+            BorderBrush="{DynamicResource PrimaryBrush}"
+            SelectedIndex="{Binding CalibrateIndex}"
+            Style="{StaticResource ComboBoxExtend}">
+            <ComboBoxItem Content="单点" />
+            <ComboBoxItem Content="两点" />
+        </ComboBox>
+        <Label
+            Width="100"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            hc:InfoElement.Title="{ex:Language Key='Current Value'}"
+            BorderBrush="{DynamicResource PrimaryBrush}"
+            Content="{Binding CurrentValue}"
+            IsEnabled="False" />
+        <TextBox
+            Width="100"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            hc:InfoElement.Title="{ex:Language Key='Calibration Point 1'}"
+            BorderBrush="{DynamicResource PrimaryBrush}"
+            Text="{Binding CaliPoint1}" />
+        <Button
+            Width="80"
+            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+            BorderBrush="{StaticResource PrimaryBrush}"
+            Command="{Binding CalibrateCommand}"
+            CommandParameter="1"
+            Content="{ex:Language Key='Calibrate'}"
+            FontSize="{DynamicResource NormalFontSize}"
+            Foreground="{StaticResource PrimaryBrush}" />
+        <TextBox
+            Width="100"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            hc:InfoElement.Title="{ex:Language Key='Calibration Point 1'}"
+            BorderBrush="{DynamicResource PrimaryBrush}"
+            Text="{Binding CaliPoint2}" />
+        <Button
+            Width="80"
+            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+            BorderBrush="{StaticResource PrimaryBrush}"
+            Command="{Binding CalibrateCommand}"
+            CommandParameter="2"
+            Content="{ex:Language Key='Calibrate'}"
+            FontSize="{DynamicResource NormalFontSize}"
+            Foreground="{StaticResource PrimaryBrush}" />
+        <Button
+            Width="80"
+            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+            BorderBrush="{StaticResource PrimaryBrush}"
+            Command="{Binding CalibrateCommand}"
+            CommandParameter="255"
+            Content="{ex:Language Key='Finish'}"
+            FontSize="{DynamicResource NormalFontSize}"
+            Foreground="{StaticResource PrimaryBrush}" />
+        <Button
+            Width="180"
+            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+            BorderBrush="{StaticResource PrimaryBrush}"
+            Command="{Binding CopyCommand}"
+            Content="{ex:Language Key='Copy to other reactor'}"
+            FontSize="{DynamicResource NormalFontSize}"
+            Foreground="{StaticResource PrimaryBrush}" />
+        <Label
+            Width="100"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            hc:InfoElement.Title="{ex:Language Key='Slope'}"
+            BorderBrush="{DynamicResource PrimaryBrush}"
+            Content="{Binding StrSlope}"
+            IsEnabled="False" />
+        <Label
+            Width="100"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            hc:InfoElement.Title="{ex:Language Key='Intercept'}"
+            BorderBrush="{DynamicResource PrimaryBrush}"
+            Content="{Binding StrIntercept}"
+            IsEnabled="False" />
+    </hc:UniformSpacingPanel>
+</UserControl>

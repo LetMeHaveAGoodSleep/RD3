@@ -163,11 +163,6 @@
                                             hc:InfoElement.Title="{ex:Language Key='Upper limit'}"
                                             Style="{StaticResource TextBoxExtend}"
                                             Text="{Binding TempParam.UpperLimit}" />
-                                        <hc:ComboBox
-                                            hc:InfoElement.Title="{ex:Language Key='Control Mode'}"
-                                            ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
-                                            SelectedItem="{Binding TempParam.ControlMode}"
-                                            Visibility="Collapsed" />
                                         <Button
                                             Width="80"
                                             Height="30"
@@ -855,7 +850,13 @@
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                             <TextBox
                                                 Width="150"
-                                                hc:InfoElement.Title="{ex:Language Key='PH Sensor Coefficient'}"
+                                                hc:InfoElement.Title="{ex:Language Key='DO Sensor Bias'}"
+                                                IsEnabled="False"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding DOSensorCalibrationParam.SensorBias}" />
+                                            <TextBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='DO Sensor Coefficient'}"
                                                 IsEnabled="False"
                                                 Style="{StaticResource TextBoxExtend}"
                                                 Text="{Binding DOSensorCalibrationParam.SensorCoefficient}" />
@@ -869,6 +870,16 @@
                                                 Content="{ex:Language Key='Read'}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <hc:ComboBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Mode'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum6}}"
+                                                SelectedItem="{Binding DOSensorCalibrationParam.SensorCorrectMode}" />
+                                            <hc:ComboBox
+                                                Width="150"
+                                                hc:InfoElement.Title="{ex:Language Key='Calitration Param'}"
+                                                ItemsSource="{Binding Source={StaticResource DataFromEnum7}}"
+                                                SelectedItem="{Binding DOSensorCalibrationParam.CalibrationParam}" />
                                             <TextBox
                                                 Width="150"
                                                 hc:InfoElement.Title="{ex:Language Key='Calitration Value'}"

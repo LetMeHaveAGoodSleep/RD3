@@ -20,7 +20,7 @@
           "Prism.DryIoc": "8.1.97",
           "RD3.Shared": "1.0.0",
           "SQLite": "3.13.0",
-          "ScottPlot.WPF": "5.0.44",
+          "ScottPlot.WPF": "5.0.36",
           "log4net": "2.0.17",
           "HandyControl": "3.5.2.0"
         },
@@ -433,47 +433,47 @@
           }
         }
       },
-      "ScottPlot/5.0.44": {
+      "ScottPlot/5.0.36": {
         "dependencies": {
-          "SkiaSharp": "2.88.9",
-          "SkiaSharp.NativeAssets.Linux.NoDependencies": "2.88.9"
+          "SkiaSharp": "2.88.8",
+          "SkiaSharp.NativeAssets.Linux.NoDependencies": "2.88.8"
         },
         "runtime": {
           "lib/net8.0/ScottPlot.dll": {
-            "assemblyVersion": "5.0.44.0",
-            "fileVersion": "5.0.44.0"
+            "assemblyVersion": "5.0.36.0",
+            "fileVersion": "5.0.36.0"
           }
         }
       },
-      "ScottPlot.WPF/5.0.44": {
+      "ScottPlot.WPF/5.0.36": {
         "dependencies": {
           "OpenTK": "4.3.0",
           "OpenTK.GLWpfControl": "4.2.3",
-          "ScottPlot": "5.0.44",
-          "SkiaSharp.Views.WPF": "2.88.9"
+          "ScottPlot": "5.0.36",
+          "SkiaSharp.Views.WPF": "2.88.8"
         },
         "runtime": {
           "lib/net6.0-windows7.0/ScottPlot.WPF.dll": {
-            "assemblyVersion": "5.0.44.0",
-            "fileVersion": "5.0.44.0"
+            "assemblyVersion": "5.0.36.0",
+            "fileVersion": "5.0.36.0"
           }
         }
       },
-      "SkiaSharp/2.88.9": {
+      "SkiaSharp/2.88.8": {
         "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "2.88.9",
-          "SkiaSharp.NativeAssets.macOS": "2.88.9"
+          "SkiaSharp.NativeAssets.Win32": "2.88.8",
+          "SkiaSharp.NativeAssets.macOS": "2.88.8"
         },
         "runtime": {
           "lib/net6.0/SkiaSharp.dll": {
             "assemblyVersion": "2.88.0.0",
-            "fileVersion": "2.88.9.0"
+            "fileVersion": "2.88.8.0"
           }
         }
       },
-      "SkiaSharp.NativeAssets.Linux.NoDependencies/2.88.9": {
+      "SkiaSharp.NativeAssets.Linux.NoDependencies/2.88.8": {
         "dependencies": {
-          "SkiaSharp": "2.88.9"
+          "SkiaSharp": "2.88.8"
         },
         "runtimeTargets": {
           "runtimes/linux-arm/native/libSkiaSharp.so": {
@@ -498,7 +498,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.macOS/2.88.9": {
+      "SkiaSharp.NativeAssets.macOS/2.88.8": {
         "runtimeTargets": {
           "runtimes/osx/native/libSkiaSharp.dylib": {
             "rid": "osx",
@@ -507,7 +507,7 @@
           }
         }
       },
-      "SkiaSharp.NativeAssets.Win32/2.88.9": {
+      "SkiaSharp.NativeAssets.Win32/2.88.8": {
         "runtimeTargets": {
           "runtimes/win-arm64/native/libSkiaSharp.dll": {
             "rid": "win-arm64",
@@ -526,27 +526,27 @@
           }
         }
       },
-      "SkiaSharp.Views.Desktop.Common/2.88.9": {
+      "SkiaSharp.Views.Desktop.Common/2.88.8": {
         "dependencies": {
-          "SkiaSharp": "2.88.9",
+          "SkiaSharp": "2.88.8",
           "System.Drawing.Common": "4.7.3"
         },
         "runtime": {
           "lib/netcoreapp3.1/SkiaSharp.Views.Desktop.Common.dll": {
             "assemblyVersion": "2.88.0.0",
-            "fileVersion": "2.88.9.0"
+            "fileVersion": "2.88.8.0"
           }
         }
       },
-      "SkiaSharp.Views.WPF/2.88.9": {
+      "SkiaSharp.Views.WPF/2.88.8": {
         "dependencies": {
-          "SkiaSharp": "2.88.9",
-          "SkiaSharp.Views.Desktop.Common": "2.88.9"
+          "SkiaSharp": "2.88.8",
+          "SkiaSharp.Views.Desktop.Common": "2.88.8"
         },
         "runtime": {
           "lib/netcoreapp3.1/SkiaSharp.Views.WPF.dll": {
             "assemblyVersion": "2.88.0.0",
-            "fileVersion": "2.88.9.0"
+            "fileVersion": "2.88.8.0"
           }
         }
       },
@@ -1126,61 +1126,61 @@
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
     },
-    "ScottPlot/5.0.44": {
+    "ScottPlot/5.0.36": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-sA2YzjJuf9uiZJK/NibsQiklT1NnObL4I/tzlq/Ts9y11PiYOHG9arIimBtvLgGYN0jq3MYShmL4ODjLQNgF/Q==",
-      "path": "scottplot/5.0.44",
-      "hashPath": "scottplot.5.0.44.nupkg.sha512"
+      "sha512": "sha512-i4olo+gXuQy6Q0wqwYKB+xiF/2zwc72MSkpYB8OVPc6PLGmH3XZ1Jp+nLVmOwTchzBi6x37nLG92mZODUzBt5A==",
+      "path": "scottplot/5.0.36",
+      "hashPath": "scottplot.5.0.36.nupkg.sha512"
     },
-    "ScottPlot.WPF/5.0.44": {
+    "ScottPlot.WPF/5.0.36": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-+933hkqWQZ+ZAlrV2pD+q1EB3eVhxHP71PX8pe4j3VDsjAjY0m/IJpydhTyQWj52TzTabK450vomI1V2W8sJhA==",
-      "path": "scottplot.wpf/5.0.44",
-      "hashPath": "scottplot.wpf.5.0.44.nupkg.sha512"
+      "sha512": "sha512-FFZE9EgVosJ6k+hivb8LQU+RPZcQr1cR0ASgvjkaSQdhd9p6eNpTha1Yipq6bxEWHrr/X1X/clWjKDXAqD9TXg==",
+      "path": "scottplot.wpf/5.0.36",
+      "hashPath": "scottplot.wpf.5.0.36.nupkg.sha512"
     },
-    "SkiaSharp/2.88.9": {
+    "SkiaSharp/2.88.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-3MD5VHjXXieSHCleRLuaTXmL2pD0mB7CcOB1x2kA1I4bhptf4e3R27iM93264ZYuAq6mkUyX5XbcxnZvMJYc1Q==",
-      "path": "skiasharp/2.88.9",
-      "hashPath": "skiasharp.2.88.9.nupkg.sha512"
+      "sha512": "sha512-bRkp3uKp5ZI8gXYQT57uKwil1uobb2p8c69n7v5evlB/2JNcMAXVcw9DZAP5Ig3WSvgzGm2YSn27UVeOi05NlA==",
+      "path": "skiasharp/2.88.8",
+      "hashPath": "skiasharp.2.88.8.nupkg.sha512"
     },
-    "SkiaSharp.NativeAssets.Linux.NoDependencies/2.88.9": {
+    "SkiaSharp.NativeAssets.Linux.NoDependencies/2.88.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ZA9syMvIuoqxPhyFTgde/bNV6VMdeYT9gRdNQT5O+ZjPK+a/nVkKRrqBbn7EVA7XQiW+xIycyT4gW/sea9eh+w==",
-      "path": "skiasharp.nativeassets.linux.nodependencies/2.88.9",
-      "hashPath": "skiasharp.nativeassets.linux.nodependencies.2.88.9.nupkg.sha512"
+      "sha512": "sha512-/DoKtdyvRgCC5GR/SH+ps3ZiOjmf0BYpAyrhWQELFOO1hdcqddrDVJjDNCOJ41vV+NlS5b3kcDoZZ7jLhFjyXg==",
+      "path": "skiasharp.nativeassets.linux.nodependencies/2.88.8",
+      "hashPath": "skiasharp.nativeassets.linux.nodependencies.2.88.8.nupkg.sha512"
     },
-    "SkiaSharp.NativeAssets.macOS/2.88.9": {
+    "SkiaSharp.NativeAssets.macOS/2.88.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Nv5spmKc4505Ep7oUoJ5vp3KweFpeNqxpyGDWyeEPTX2uR6S6syXIm3gj75dM0YJz7NPvcix48mR5laqs8dPuA==",
-      "path": "skiasharp.nativeassets.macos/2.88.9",
-      "hashPath": "skiasharp.nativeassets.macos.2.88.9.nupkg.sha512"
+      "sha512": "sha512-6Kn5TSkKlfyS6azWHF3Jk2sW5C4jCE5uSshM/5AbfFrR+5n6qM5XEnz9h4VaVl7LTxBvHvMkuPb/3bpbq0vxTw==",
+      "path": "skiasharp.nativeassets.macos/2.88.8",
+      "hashPath": "skiasharp.nativeassets.macos.2.88.8.nupkg.sha512"
     },
-    "SkiaSharp.NativeAssets.Win32/2.88.9": {
+    "SkiaSharp.NativeAssets.Win32/2.88.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-wb2kYgU7iy84nQLYZwMeJXixvK++GoIuECjU4ECaUKNuflyRlJKyiRhN1MAHswvlvzuvkrjRWlK0Za6+kYQK7w==",
-      "path": "skiasharp.nativeassets.win32/2.88.9",
-      "hashPath": "skiasharp.nativeassets.win32.2.88.9.nupkg.sha512"
+      "sha512": "sha512-O9QXoWEXA+6cweR4h3BOnwMz+pO9vL9mXdjLrpDd0w1QzCgWmLQBxa1VgySDITiH7nQndrDG1h6937zm9pLj1Q==",
+      "path": "skiasharp.nativeassets.win32/2.88.8",
+      "hashPath": "skiasharp.nativeassets.win32.2.88.8.nupkg.sha512"
     },
-    "SkiaSharp.Views.Desktop.Common/2.88.9": {
+    "SkiaSharp.Views.Desktop.Common/2.88.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-a9geU/Xe5Tn6OnadnfnMCUqqO3vB7GwCxJM8f7rRay8JrGXm7rgYKBPQX0baymxmVlPqYXeMm8AWhQj5RVtwPw==",
-      "path": "skiasharp.views.desktop.common/2.88.9",
-      "hashPath": "skiasharp.views.desktop.common.2.88.9.nupkg.sha512"
+      "sha512": "sha512-SBP7byk9a5gmzHriOTC6BjykqJ5rCTqXIo/RLNszPaKwDs8naCZGUM9GZmreshPkpsyez3Ci4sm3+eleuSGgVQ==",
+      "path": "skiasharp.views.desktop.common/2.88.8",
+      "hashPath": "skiasharp.views.desktop.common.2.88.8.nupkg.sha512"
     },
-    "SkiaSharp.Views.WPF/2.88.9": {
+    "SkiaSharp.Views.WPF/2.88.8": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-80fEK0dYEJpi36Ko9WylN2rCf4w/hzzHEe+nyEL79dTHvUVfuXLZONmIwrDJ+pL5JSi8YmktQVxbYZexS+NZCw==",
-      "path": "skiasharp.views.wpf/2.88.9",
-      "hashPath": "skiasharp.views.wpf.2.88.9.nupkg.sha512"
+      "sha512": "sha512-of9rrurnrX8Y7TYcegA+Lbp9CzEOA6962HUF0lcIZfGsOu3fehPAFcCWgehVUDIHdsb5+P8VVx7dhQXQt21qQQ==",
+      "path": "skiasharp.views.wpf/2.88.8",
+      "hashPath": "skiasharp.views.wpf.2.88.8.nupkg.sha512"
     },
     "SQLite/3.13.0": {
       "type": "package",

@@ -2223,7 +2223,7 @@
                                         Width="80"
                                         VerticalContentAlignment="Center"
                                         hc:BorderElement.CornerRadius="4"
-                                        ItemsSource="{Binding Source={StaticResource DataFromEnum}}" />
+                                        ItemsSource="{Binding Source={StaticResource DataFromEnum}}" SelectionChanged="CmbYAxis_SelectionChanged"/>
                                 </Grid>
                                 <Line
                                     Grid.Row="5"
@@ -2289,40 +2289,11 @@
                                         Click="BtnScale_Click"
                                         Content="{ex:Language Key='OK'}" />
                                 </Grid>
-                                <!--<Line
-                                    Grid.Row="7"
-                                    HorizontalAlignment="Left"
-                                    Stroke="LightGray"
-                                    StrokeDashArray="2 2"
-                                    StrokeThickness="1"
-                                    X1="10"
-                                    X2="240"
-                                    Y1="0"
-                                    Y2="0" />
-                                <Grid Grid.Row="8" Margin="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto" />
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock VerticalAlignment="Center" Text="{ex:Language Key='Bottom axis scale'}" />
-                                    <hc:ComboBox
-                                        Name="ComboBoxTime"
-                                        Grid.Column="2"
-                                        Width="80"
-                                        VerticalContentAlignment="Center"
-                                        hc:BorderElement.CornerRadius="4"
-                                        SelectedIndex="1">
-                                        <ComboBoxItem Content="Minute" />
-                                        <ComboBoxItem Content="Hour" />
-                                        <ComboBoxItem Content="Day" />
-                                    </hc:ComboBox>
-                                </Grid>-->
                             </Grid>
                         </materialDesign:DrawerHost.RightDrawerContent>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" MaxHeight="100" />
                                 <RowDefinition Height="20" />
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="*" />
@@ -2333,49 +2304,41 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
-                                <hc:UniformSpacingPanel Spacing="5">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Top"
-                                        FontSize="{DynamicResource SubHeadFontSize}"
-                                        Text="{ex:Language Key='Runnning time:'}" />
+                                <hc:UniformSpacingPanel VerticalAlignment="Center" Spacing="5">
+                                    <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Runnning time:'}" />
                                     <TextBlock
                                         HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
                                         FontSize="{DynamicResource SubHeadFontSize}"
+                                        Foreground="Green"
                                         Text="{Binding FormattedTime}" />
                                 </hc:UniformSpacingPanel>
-                                <hc:UniformSpacingPanel Grid.Column="2" Spacing="5">
-                                    <Border
-                                        Name="BorderDevice"
-                                        Background="White"
-                                        BorderBrush="LightGray"
-                                        BorderThickness="1"
-                                        CornerRadius="8">
-                                        <WrapPanel Orientation="Horizontal">
+                                <Border
+                                    Name="BorderDevice"
+                                    Grid.Column="1"
+                                    Margin="5,0,5,0"
+                                    Background="White"
+                                    BorderBrush="LightGray"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
+                                    <hc:ScrollViewer
+                                        hc:ScrollViewerAttach.AutoHide="True"
+                                        hc:ScrollViewerAttach.Orientation="Vertical"
+                                        HorizontalScrollBarVisibility="Disabled"
+                                        VerticalScrollBarVisibility="Auto">
+                                        <WrapPanel
+                                            Name="ChkList"
+                                            Orientation="Horizontal"
+                                            ScrollViewer.CanContentScroll="True">
                                             <CheckBox Name="ChkAll" Content="Select all" />
-                                            <CheckBox Content="G01" />
-                                            <CheckBox Content="G02" />
-                                            <CheckBox Content="G03" />
-                                            <CheckBox Content="G04" />
-                                            <CheckBox Content="G05" />
-                                            <CheckBox Content="G06" />
-                                            <CheckBox Content="G07" />
-                                            <CheckBox Content="G08" />
-                                            <CheckBox Content="G09" />
-                                            <CheckBox Content="G10" />
-                                            <CheckBox Content="G11" />
-                                            <CheckBox Content="G12" />
-                                            <CheckBox Content="G13" />
-                                            <CheckBox Content="G14" />
-                                            <CheckBox Content="G15" />
-                                            <CheckBox Content="G16" />
                                         </WrapPanel>
-                                    </Border>
+                                    </hc:ScrollViewer>
+                                </Border>
+                                <hc:UniformSpacingPanel Grid.Column="2" Spacing="5">
+
                                     <Button
-                                        Grid.Column="3"
                                         Height="35"
                                         HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
                                         hc:BorderElement.CornerRadius="8"
                                         hc:IconElement.Geometry="{StaticResource GeometrySetting}"
                                         Background="Transparent"
@@ -2592,11 +2555,6 @@
                         RowHeaderWidth="60"
                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
                         ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <!--<DataGrid.RowHeaderTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridRow}}" />
-                            </DataTemplate>
-                        </DataGrid.RowHeaderTemplate>-->
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 Width="SizeToCells"

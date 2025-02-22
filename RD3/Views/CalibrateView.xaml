@@ -10,7 +10,7 @@
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:CalibrateViewModel}"
     d:DesignHeight="680"
-    d:DesignWidth="900"
+    d:DesignWidth="1000"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"

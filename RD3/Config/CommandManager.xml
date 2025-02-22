@@ -955,6 +955,12 @@
 							<type>byte</type>
 							<length>4</length>
 						</param>
+						<param>
+							<id>SensorBias</id>
+							<name>传感器偏置</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
 					</parameters>
 				</commandExtend>
 
@@ -965,6 +971,12 @@
 						<param>
 							<id>CorrectMode</id>
 							<name>校准模式</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>CorrectParam</id>
+							<name>校准参数</name>
 							<type>byte</type>
 							<length>1</length>
 						</param>
