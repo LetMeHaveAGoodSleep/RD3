@@ -46,6 +46,9 @@
     <Compile Update="Views\EditExperimentParamView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\EditMVOptionView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\EditProjectView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -148,6 +151,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\EditExperimentParamView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\EditMVOptionView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\EditProjectView.xaml">

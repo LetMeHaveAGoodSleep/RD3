@@ -61,8 +61,6 @@
                     Text="{Binding SubTitle}" />
                 <Button
                     Name="btnClose"
-                    Width="26"
-                    Height="24"
                     hc:IconElement.Geometry="{StaticResource CloseGeometry}"
                     Background="Transparent"
                     BorderThickness="0"
@@ -73,25 +71,19 @@
                 Background="White"
                 Effect="{StaticResource EffectShadow1}"
                 Style="{StaticResource BorderCommon}">
-                <WrapPanel Orientation="Horizontal">
-                    <CheckBox Name="ChkAll" Content="Select all" />
-                    <CheckBox Content="G01" />
-                    <CheckBox Content="G02" />
-                    <CheckBox Content="G03" />
-                    <CheckBox Content="G04" />
-                    <CheckBox Content="G05" />
-                    <CheckBox Content="G06" />
-                    <CheckBox Content="G07" />
-                    <CheckBox Content="G08" />
-                    <CheckBox Content="G09" />
-                    <CheckBox Content="G10" />
-                    <CheckBox Content="G11" />
-                    <CheckBox Content="G12" />
-                    <CheckBox Content="G13" />
-                    <CheckBox Content="G14" />
-                    <CheckBox Content="G15" />
-                    <CheckBox Content="G16" />
-                </WrapPanel>
+                <hc:ScrollViewer
+                    hc:ScrollViewerAttach.AutoHide="True"
+                    hc:ScrollViewerAttach.Orientation="Vertical"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <WrapPanel
+                        Name="ChkList"
+                        Height="70"
+                        Orientation="Horizontal"
+                        ScrollViewer.CanContentScroll="True">
+                        <CheckBox Name="ChkAll" Content="Select all" />
+                    </WrapPanel>
+                </hc:ScrollViewer>
             </Border>
             <DockPanel LastChildFill="False">
                 <TextBox
@@ -122,7 +114,7 @@
                         Background="{StaticResource PrimaryBrush}"
                         BorderBrush="{StaticResource PrimaryBrush}"
                         Click="Button_Click"
-                        Content="{ex:Language Key='Do as unscheduled action'}"
+                        Content="{ex:Language Key='Confirm'}"
                         FontSize="{DynamicResource NormalFontSize}"
                         Foreground="White" />
                 </hc:SimpleStackPanel>

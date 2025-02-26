@@ -163,7 +163,7 @@
                         <hc:UniformSpacingPanel
                             Name="PumpPanel"
                             Orientation="Vertical"
-                            Spacing="5" />
+                            Spacing="10" />
                     </ScrollViewer>
                 </Border>
             </DockPanel>

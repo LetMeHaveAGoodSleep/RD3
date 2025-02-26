@@ -11,7 +11,6 @@
     Width="auto"
     Height="auto"
     d:DataContext="{d:DesignInstance Type=vm:ItemPumpCalibrationViewModel}"
-    Background="{StaticResource BackGroundBrush}"
     mc:Ignorable="d">
     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
         <DockPanel>
@@ -37,7 +36,7 @@
                 IsEnabled="False" />
         </DockPanel>
         <DockPanel>
-            <TextBlock DockPanel.Dock="Top" Text="速度" />
+            <TextBlock DockPanel.Dock="Top" Text="速度(mL/h)" />
             <TextBox
                 Width="100"
                 HorizontalContentAlignment="Center"
@@ -47,7 +46,7 @@
                 Text="{Binding Speed}" />
         </DockPanel>
         <DockPanel>
-            <TextBlock DockPanel.Dock="Top" Text="时间（s）" />
+            <TextBlock DockPanel.Dock="Top" Text="持续时间（s）" />
             <TextBox
                 Width="100"
                 HorizontalContentAlignment="Center"
@@ -63,12 +62,12 @@
                 BorderBrush="{StaticResource PrimaryBrush}"
                 Command="{Binding CalibrateCommand}"
                 CommandParameter="1"
-                Content="{ex:Language Key='Open'}"
+                Content="{ex:Language Key='Start'}"
                 FontSize="{DynamicResource NormalFontSize}"
                 Foreground="{StaticResource PrimaryBrush}" />
         </DockPanel>
         <DockPanel>
-            <TextBlock DockPanel.Dock="Top" Text="体积" />
+            <TextBlock DockPanel.Dock="Top" Text="体积(mL)" />
             <TextBox
                 Width="100"
                 HorizontalContentAlignment="Center"
@@ -83,7 +82,7 @@
                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                 BorderBrush="{StaticResource PrimaryBrush}"
                 Command="{Binding CalibrateCommand}"
-                CommandParameter="2"
+                CommandParameter="3"
                 Content="{ex:Language Key='Write'}"
                 FontSize="{DynamicResource NormalFontSize}"
                 Foreground="{StaticResource PrimaryBrush}" />

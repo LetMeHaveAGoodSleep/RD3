@@ -218,4 +218,10 @@
     <system:String x:Key="Open">打开</system:String>
     <system:String x:Key="Write">写入</system:String>
     <system:String x:Key="Reset Flow Rate">流量清零</system:String>
+    <system:String x:Key="Calibrate1">校准1</system:String>
+    <system:String x:Key="Calibrate2">校准2</system:String>
+    <system:String x:Key="Volume">体积</system:String>
+    <system:String x:Key="Clear all">清空</system:String>
+    <system:String x:Key="Do as unscheduled action">计划外的动作</system:String>
+    <system:String x:Key="Confirm">确认</system:String>
 </ResourceDictionary>

@@ -47,12 +47,12 @@
             BorderBrush="{DynamicResource PrimaryBrush}"
             Text="{Binding CaliPoint1}" />
         <Button
-            Width="80"
+            Width="90"
             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
             BorderBrush="{StaticResource PrimaryBrush}"
             Command="{Binding CalibrateCommand}"
             CommandParameter="1"
-            Content="{ex:Language Key='Calibrate'}"
+            Content="{ex:Language Key='Calibrate1'}"
             FontSize="{DynamicResource NormalFontSize}"
             Foreground="{StaticResource PrimaryBrush}" />
         <TextBox
@@ -61,16 +61,18 @@
             VerticalContentAlignment="Center"
             hc:InfoElement.Title="{ex:Language Key='Calibration Point 1'}"
             BorderBrush="{DynamicResource PrimaryBrush}"
+            IsEnabled="{Binding Calibrate2Enabled}"
             Text="{Binding CaliPoint2}" />
         <Button
-            Width="80"
+            Width="90"
             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
             BorderBrush="{StaticResource PrimaryBrush}"
             Command="{Binding CalibrateCommand}"
             CommandParameter="2"
-            Content="{ex:Language Key='Calibrate'}"
+            Content="{ex:Language Key='Calibrate2'}"
             FontSize="{DynamicResource NormalFontSize}"
-            Foreground="{StaticResource PrimaryBrush}" />
+            Foreground="{StaticResource PrimaryBrush}"
+            IsEnabled="{Binding Calibrate2Enabled}" />
         <Button
             Width="80"
             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
