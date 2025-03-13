@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:rd3="clr-namespace:RD3">
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <rd3:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
     <rd3:EnumToStringConverter x:Key="EnumToStringConverter" />
     <rd3:InverseBooleanConverter x:Key="InverseBooleanConverter" />
     <rd3:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />

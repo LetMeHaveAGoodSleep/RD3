@@ -15,9 +15,10 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="220"
-    Height="250"
+    Height="357"
     d:DataContext="{d:DesignInstance Type=viewmodels:EditUserViewModel}"
     rd3:DraggableUserControlAttach.IsDraggable="True"
+    Loaded="UserControl_Loaded"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
     TextElement.FontWeight="Regular"
@@ -53,7 +54,7 @@
         </ObjectDataProvider>
     </UserControl.Resources>
     <Border Style="{StaticResource BorderForm}">
-        <Grid>
+        <Grid Margin="0,0,0,-1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
@@ -94,6 +95,10 @@
                 hc:InfoElement.Title="{ex:Language Key='User Type'}"
                 ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                 SelectedItem="{Binding UserType}" />
+            <WrapPanel
+                Name="ChkList"
+                Grid.Row="4"
+                Margin="0,10,0,10" />
             <StackPanel
                 Grid.Row="5"
                 Grid.ColumnSpan="2"

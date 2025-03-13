@@ -195,7 +195,7 @@
     <system:String x:Key="Set value(SV):">设定值：</system:String>
     <system:String x:Key="Associative modules:">关联模块：</system:String>
     <system:String x:Key="Direct(+):">正向(+)：</system:String>
-    <system:String x:Key="Reverse (-):">反向(+)：</system:String>
+    <system:String x:Key="Reverse (-):">反向(-)：</system:String>
     <system:String x:Key="L:">下限：</system:String>
     <system:String x:Key="H:">上限：</system:String>
     <system:String x:Key="Enable">使能</system:String>
@@ -224,4 +224,5 @@
     <system:String x:Key="Clear all">清空</system:String>
     <system:String x:Key="Do as unscheduled action">计划外的动作</system:String>
     <system:String x:Key="Confirm">确认</system:String>
+    <system:String x:Key="dBand:">死区:</system:String>
 </ResourceDictionary>

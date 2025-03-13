@@ -38,18 +38,6 @@
             <SolidColorBrush x:Key="ControlDisabledModeBrush" Color="#D4D7DE" />
             <!--  定义字体资源  -->
             <FontFamily x:Key="AppFontFamily">SimSun</FontFamily>
-            <!--<FontFamily x:Key="NotoSansFamily">/RD3;component/Fonts/#Noto Sans</FontFamily>
-            <FontFamily x:Key="MiSansFamily">/RD3;component/Fonts/#MiSans</FontFamily>
-            <FontFamily x:Key="AlibabaFamily">/RD3;component/Fonts/#阿里巴巴普惠体 2.0 55 Regular</FontFamily>-->
-            <!--  定义全局样式  -->
-            <!--<Style TargetType="{x:Type TextElement}">
-                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
-                <Setter Property="FontFamily" Value="{DynamicResource AppFamily}" />
-            </Style>-->
-            <!--<Style TargetType="TextBlock">
-                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
-                <Setter Property="FontFamily" Value="{DynamicResource NotoSansFamily}" />
-            </Style>-->
             <Style x:Key="BorderCard" TargetType="{x:Type Border}">
                 <Setter Property="Border.CornerRadius" Value="8" />
                 <Setter Property="Border.Padding" Value="5" />

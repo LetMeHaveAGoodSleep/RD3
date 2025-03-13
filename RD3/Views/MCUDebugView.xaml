@@ -195,7 +195,7 @@
                                             Margin="0,20,0,0"
                                             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                             Command="{Binding SetCommand}"
-                                            CommandParameter="4"
+                                            CommandParameter="2"
                                             Content="{ex:Language Key='Set'}" />
                                     </hc:UniformSpacingPanel>
                                     <GroupBox Header="{ex:Language Key='Peristaltic pump'}" Style="{StaticResource MaterialDesignCardGroupBox}">
@@ -213,7 +213,7 @@
                                                         Text="{Binding AcidParam.FlowSpeed}" />
                                                     <TextBox
                                                         Width="100"
-                                                        hc:InfoElement.Title="{ex:Language Key='Acid Capacity'}"
+                                                        hc:InfoElement.Title="{ex:Language Key='总量'}"
                                                         Style="{StaticResource TextBoxExtend}"
                                                         Text="{Binding AcidParam.FlowCapacity}" />
                                                     <Button
@@ -245,7 +245,7 @@
                                                         Text="{Binding BaseParam.FlowSpeed}" />
                                                     <TextBox
                                                         Width="100"
-                                                        hc:InfoElement.Title="{ex:Language Key='Base Speed'}"
+                                                        hc:InfoElement.Title="{ex:Language Key='总量'}"
                                                         Style="{StaticResource TextBoxExtend}"
                                                         Text="{Binding BaseParam.FlowCapacity}" />
                                                     <Button
@@ -279,7 +279,7 @@
                                                         Text="{Binding FeedParam.FlowSpeed}" />
                                                     <TextBox
                                                         Width="100"
-                                                        hc:InfoElement.Title="{ex:Language Key='Feed Capacity'}"
+                                                        hc:InfoElement.Title="{ex:Language Key='总量'}"
                                                         Style="{StaticResource TextBoxExtend}"
                                                         Text="{Binding FeedParam.FlowCapacity}" />
                                                     <Button
@@ -311,7 +311,7 @@
                                                         Text="{Binding AFParam.FlowSpeed}" />
                                                     <TextBox
                                                         Width="100"
-                                                        hc:InfoElement.Title="{ex:Language Key='AF Speed'}"
+                                                        hc:InfoElement.Title="{ex:Language Key='总量'}"
                                                         Style="{StaticResource TextBoxExtend}"
                                                         Text="{Binding AFParam.FlowCapacity}" />
                                                     <Button
@@ -334,28 +334,55 @@
                                             </hc:UniformSpacingPanel>
                                         </hc:UniformSpacingPanel>
                                     </GroupBox>
-                                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                                        <hc:ComboBox
-                                            hc:InfoElement.Title="{ex:Language Key='AutoDefoaming'}"
-                                            ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
-                                            SelectedItem="{Binding DefoamingParam.SwitchMode}" />
-                                        <Button
-                                            Width="80"
-                                            Height="30"
-                                            Margin="0,20,0,0"
-                                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                            Command="{Binding ReadCommand}"
-                                            CommandParameter="4"
-                                            Content="{ex:Language Key='Read'}" />
-                                        <Button
-                                            Width="80"
-                                            Height="30"
-                                            Margin="0,20,0,0"
-                                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                            Command="{Binding SetCommand}"
-                                            CommandParameter="4"
-                                            Content="{ex:Language Key='Set'}" />
-                                    </hc:UniformSpacingPanel>
+                                    <GroupBox Header="{ex:Language Key='消泡'}" Style="{StaticResource MaterialDesignCardGroupBox}">
+                                        <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                                <CheckBox
+                                                    VerticalAlignment="Center"
+                                                    Content="存在泡沫"
+                                                    IsChecked="{Binding DefoamingParam.HasFoam}"
+                                                    IsEnabled="False" />
+                                                <CheckBox
+                                                    VerticalAlignment="Center"
+                                                    Content="泡沫传感器使能"
+                                                    IsChecked="{Binding DefoamingParam.SensorEnable}"
+                                                    IsEnabled="False" />
+                                                <Button
+                                                    Width="80"
+                                                    Height="30"
+                                                    VerticalAlignment="Center"
+                                                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                    Command="{Binding ReadCommand}"
+                                                    CommandParameter="4"
+                                                    Content="{ex:Language Key='Read'}" />
+                                            </hc:UniformSpacingPanel>
+                                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                                <TextBox
+                                                    Width="120"
+                                                    hc:InfoElement.Title="{ex:Language Key='检测周期'}"
+                                                    Style="{StaticResource TextBoxExtend}"
+                                                    Text="{Binding DefoamingParam.Cycle}" />
+                                                <TextBox
+                                                    Width="120"
+                                                    hc:InfoElement.Title="{ex:Language Key='时间占比'}"
+                                                    Style="{StaticResource TextBoxExtend}"
+                                                    Text="{Binding DefoamingParam.TimeRatio}" />
+                                                <CheckBox
+                                                    Margin="0,15,0,0"
+                                                    Content="泡沫传感器使能"
+                                                    IsChecked="{Binding DefoamingParam.SensorEnable}" />
+                                                <Button
+                                                    Width="80"
+                                                    Height="30"
+                                                    Margin="0,20,0,0"
+                                                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                                    Command="{Binding SetCommand}"
+                                                    CommandParameter="4"
+                                                    Content="{ex:Language Key='Set'}" />
+                                            </hc:UniformSpacingPanel>
+                                        </hc:UniformSpacingPanel>
+
+                                    </GroupBox>
                                     <GroupBox Header="{ex:Language Key='MFC'}" Style="{StaticResource MaterialDesignCardGroupBox}">
                                         <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                                             <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
@@ -498,7 +525,7 @@
                                             Margin="0,20,0,0"
                                             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                             Command="{Binding ReadCommand}"
-                                            CommandParameter="4"
+                                            CommandParameter="8"
                                             Content="{ex:Language Key='Read'}" />
                                         <Button
                                             Width="80"
@@ -506,7 +533,7 @@
                                             Margin="0,20,0,0"
                                             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                             Command="{Binding SetCommand}"
-                                            CommandParameter="4"
+                                            CommandParameter="8"
                                             Content="{ex:Language Key='Set'}" />
                                     </hc:UniformSpacingPanel>
                                     <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
@@ -641,6 +668,12 @@
                                                 Text="{Binding RealTimeParam.AFFlowCapacity}" />
                                             <TextBox
                                                 Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='存在泡沫'}"
+                                                IsEnabled="False"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.HasFoam}" />
+                                            <TextBox
+                                                Width="120"
                                                 hc:InfoElement.Title="{ex:Language Key='Work Status'}"
                                                 IsEnabled="False"
                                                 Style="{StaticResource TextBoxExtend}"
@@ -706,7 +739,7 @@
                                 <hc:ComboBox
                                     Width="120"
                                     hc:InfoElement.Title="{ex:Language Key='Debug Mode'}"
-                                    ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
+                                    ItemsSource="{Binding Source={StaticResource DataFromEnum5}}"
                                     SelectedItem="{Binding MotorParam.DebugMode}" />
                                 <Button
                                     Width="80"
@@ -764,6 +797,11 @@
                                         Text="{Binding DeviceParam.MainPort}" />
                                     <TextBox
                                         Width="120"
+                                        hc:InfoElement.Title="{ex:Language Key='GateWay'}"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding DeviceParam.Gateway}" />
+                                    <TextBox
+                                        Width="120"
                                         hc:InfoElement.Title="{ex:Language Key='Wifi Module IP'}"
                                         Style="{StaticResource TextBoxExtend}"
                                         Text="{Binding DeviceParam.WifiAdress}" />
@@ -772,6 +810,11 @@
                                         hc:InfoElement.Title="{ex:Language Key='Port'}"
                                         Style="{StaticResource TextBoxExtend}"
                                         Text="{Binding DeviceParam.WifiPort}" />
+                                    <TextBox
+                                        Width="120"
+                                        hc:InfoElement.Title="{ex:Language Key='GateWay'}"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding DeviceParam.Gateway1}" />
                                     <Button
                                         Width="80"
                                         Height="30"
@@ -1121,6 +1164,44 @@
                                         Command="{Binding SetCommand}"
                                         CommandParameter="21"
                                         Content="{ex:Language Key='Reset Flow Capacity'}" />
+                                </hc:UniformSpacingPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:ComboBox
+                                        Width="150"
+                                        hc:InfoElement.Title="{ex:Language Key='红灯'}"
+                                        ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
+                                        SelectedItem="{Binding AlarmParam.RedLightEnable}" />
+                                    <hc:ComboBox
+                                        Width="150"
+                                        hc:InfoElement.Title="{ex:Language Key='绿灯'}"
+                                        ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
+                                        SelectedItem="{Binding AlarmParam.GreenLightEnable}" />
+                                    <hc:ComboBox
+                                        Width="150"
+                                        hc:InfoElement.Title="{ex:Language Key='蓝灯'}"
+                                        ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
+                                        SelectedItem="{Binding AlarmParam.BlueLightEnable}" />
+                                    <hc:ComboBox
+                                        Width="150"
+                                        hc:InfoElement.Title="{ex:Language Key='蜂鸣器'}"
+                                        ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
+                                        SelectedItem="{Binding AlarmParam.BuzzerEnable}" />
+                                    <Button
+                                        Width="80"
+                                        Height="30"
+                                        Margin="0,20,0,0"
+                                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                        Command="{Binding ReadCommand}"
+                                        CommandParameter="22"
+                                        Content="{ex:Language Key='Read'}" />
+                                    <Button
+                                        Width="80"
+                                        Height="30"
+                                        Margin="0,20,0,0"
+                                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                        Command="{Binding SetCommand}"
+                                        CommandParameter="22"
+                                        Content="{ex:Language Key='Set'}" />
                                 </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>

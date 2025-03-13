@@ -76,7 +76,7 @@
                             Header="{ex:Language Key='Reactor'}" />
                         <GridViewColumn
                             Width="150"
-                            DisplayMemberBinding="{Binding ReactorStatus}"
+                            DisplayMemberBinding="{Binding ReactorStatusName}"
                             Header="{ex:Language Key='Status'}" />
                     </GridView>
                 </ListView.View>

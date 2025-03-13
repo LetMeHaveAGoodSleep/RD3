@@ -32,6 +32,82 @@
           "buildTransitive/netcoreapp3.0/EntityFramework.targets": {}
         }
       },
+      "FParsec/2.0.0-beta2": {
+        "type": "package",
+        "dependencies": {
+          "FSharp.Core": "4.3.4"
+        },
+        "compile": {
+          "lib/netstandard2.1/FParsec.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/netstandard2.1/FParsecCS.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/FParsec.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/netstandard2.1/FParsecCS.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "FSharp.Core/8.0.100": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/FSharp.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/FSharp.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "resource": {
+          "lib/netstandard2.1/cs/FSharp.Core.resources.dll": {
+            "locale": "cs"
+          },
+          "lib/netstandard2.1/de/FSharp.Core.resources.dll": {
+            "locale": "de"
+          },
+          "lib/netstandard2.1/es/FSharp.Core.resources.dll": {
+            "locale": "es"
+          },
+          "lib/netstandard2.1/fr/FSharp.Core.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/netstandard2.1/it/FSharp.Core.resources.dll": {
+            "locale": "it"
+          },
+          "lib/netstandard2.1/ja/FSharp.Core.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/netstandard2.1/ko/FSharp.Core.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/netstandard2.1/pl/FSharp.Core.resources.dll": {
+            "locale": "pl"
+          },
+          "lib/netstandard2.1/pt-BR/FSharp.Core.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/netstandard2.1/ru/FSharp.Core.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/netstandard2.1/tr/FSharp.Core.resources.dll": {
+            "locale": "tr"
+          },
+          "lib/netstandard2.1/zh-Hans/FSharp.Core.resources.dll": {
+            "locale": "zh-Hans"
+          },
+          "lib/netstandard2.1/zh-Hant/FSharp.Core.resources.dll": {
+            "locale": "zh-Hant"
+          }
+        }
+      },
       "log4net/2.0.17": {
         "type": "package",
         "dependencies": {
@@ -44,6 +120,55 @@
         },
         "runtime": {
           "lib/netstandard2.0/log4net.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "MathNet.Numerics/6.0.0-beta1": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/MathNet.Numerics.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/MathNet.Numerics.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "MathNet.Numerics.FSharp/6.0.0-beta1": {
+        "type": "package",
+        "dependencies": {
+          "FSharp.Core": "8.0.100",
+          "MathNet.Numerics": "6.0.0-beta1"
+        },
+        "compile": {
+          "lib/net8.0/MathNet.Numerics.FSharp.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/MathNet.Numerics.FSharp.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "MathNet.Symbolics/0.25.0": {
+        "type": "package",
+        "dependencies": {
+          "FParsec": "2.0.0-beta2",
+          "FSharp.Core": "8.0.100",
+          "MathNet.Numerics": "6.0.0-beta1",
+          "MathNet.Numerics.FSharp": "6.0.0-beta1"
+        },
+        "compile": {
+          "lib/net8.0/MathNet.Symbolics.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/MathNet.Symbolics.dll": {
             "related": ".xml"
           }
         }
@@ -540,6 +665,72 @@
         "tools/netcoreapp3.0/any/ef6.runtimeconfig.json"
       ]
     },
+    "FParsec/2.0.0-beta2": {
+      "sha512": "bNoeKNYoLBg1oQttwAZFnhXJKxX6vtYBApbVHJlYa6SyGcuxwewJemwmO6eh7tD49vTzhAVjZo1SDGZ0o7RxxA==",
+      "type": "package",
+      "path": "fparsec/2.0.0-beta2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "fparsec.2.0.0-beta2.nupkg.sha512",
+        "fparsec.nuspec",
+        "lib/netstandard2.0/FParsec.dll",
+        "lib/netstandard2.0/FParsec.pdb",
+        "lib/netstandard2.0/FParsec.xml",
+        "lib/netstandard2.0/FParsecCS.dll",
+        "lib/netstandard2.0/FParsecCS.pdb",
+        "lib/netstandard2.0/FParsecCS.xml",
+        "lib/netstandard2.1/FParsec.dll",
+        "lib/netstandard2.1/FParsec.pdb",
+        "lib/netstandard2.1/FParsec.xml",
+        "lib/netstandard2.1/FParsecCS.dll",
+        "lib/netstandard2.1/FParsecCS.pdb",
+        "lib/netstandard2.1/FParsecCS.xml"
+      ]
+    },
+    "FSharp.Core/8.0.100": {
+      "sha512": "ZOVZ/o+jI3ormTZOa28Wh0tSRoyle1f7lKFcUN61sPiXI7eDZu8eSveFybgTeyIEyW0ujjp31cp7GOglDgsNEg==",
+      "type": "package",
+      "path": "fsharp.core/8.0.100",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "fsharp.core.8.0.100.nupkg.sha512",
+        "fsharp.core.nuspec",
+        "lib/netstandard2.0/FSharp.Core.dll",
+        "lib/netstandard2.0/FSharp.Core.xml",
+        "lib/netstandard2.0/cs/FSharp.Core.resources.dll",
+        "lib/netstandard2.0/de/FSharp.Core.resources.dll",
+        "lib/netstandard2.0/es/FSharp.Core.resources.dll",
+        "lib/netstandard2.0/fr/FSharp.Core.resources.dll",
+        "lib/netstandard2.0/it/FSharp.Core.resources.dll",
+        "lib/netstandard2.0/ja/FSharp.Core.resources.dll",
+        "lib/netstandard2.0/ko/FSharp.Core.resources.dll",
+        "lib/netstandard2.0/pl/FSharp.Core.resources.dll",
+        "lib/netstandard2.0/pt-BR/FSharp.Core.resources.dll",
+        "lib/netstandard2.0/ru/FSharp.Core.resources.dll",
+        "lib/netstandard2.0/tr/FSharp.Core.resources.dll",
+        "lib/netstandard2.0/zh-Hans/FSharp.Core.resources.dll",
+        "lib/netstandard2.0/zh-Hant/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/FSharp.Core.dll",
+        "lib/netstandard2.1/FSharp.Core.xml",
+        "lib/netstandard2.1/cs/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/de/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/es/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/fr/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/it/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/ja/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/ko/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/pl/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/pt-BR/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/ru/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/tr/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/zh-Hans/FSharp.Core.resources.dll",
+        "lib/netstandard2.1/zh-Hant/FSharp.Core.resources.dll"
+      ]
+    },
     "log4net/2.0.17": {
       "sha512": "qnnDf/ubJzwm2i1xH7nRMjEDoD+ctse7nZDqb+p7L1PvZc6ykpMoEesWr1/9hFqlsbII2v9e8yyQHJhoDQh7ZA==",
       "type": "package",
@@ -564,6 +755,66 @@
         "log4net.2.0.17.nupkg.sha512",
         "log4net.nuspec",
         "package-icon.png"
+      ]
+    },
+    "MathNet.Numerics/6.0.0-beta1": {
+      "sha512": "GTwwNScDIL5+EvU6bN9+TP8bEbhcgR0hnVLZTriwSlXtzYU1h5EPpN58iojejeN/puC1+CVSoeuWNFhERkg71g==",
+      "type": "package",
+      "path": "mathnet.numerics/6.0.0-beta1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net48/MathNet.Numerics.dll",
+        "lib/net48/MathNet.Numerics.xml",
+        "lib/net6.0/MathNet.Numerics.dll",
+        "lib/net6.0/MathNet.Numerics.xml",
+        "lib/net8.0/MathNet.Numerics.dll",
+        "lib/net8.0/MathNet.Numerics.xml",
+        "lib/netstandard2.0/MathNet.Numerics.dll",
+        "lib/netstandard2.0/MathNet.Numerics.xml",
+        "mathnet.numerics.6.0.0-beta1.nupkg.sha512",
+        "mathnet.numerics.nuspec"
+      ]
+    },
+    "MathNet.Numerics.FSharp/6.0.0-beta1": {
+      "sha512": "BzRm+QAfmcgDWtcHGhmLCP6p4T1HIr8SefseOChcfAGmhKw1LtOH6bnHttHFfnpD72GAkPRc/jlkdHKFU+4Suw==",
+      "type": "package",
+      "path": "mathnet.numerics.fsharp/6.0.0-beta1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net48/MathNet.Numerics.FSharp.dll",
+        "lib/net48/MathNet.Numerics.FSharp.xml",
+        "lib/net6.0/MathNet.Numerics.FSharp.dll",
+        "lib/net6.0/MathNet.Numerics.FSharp.xml",
+        "lib/net8.0/MathNet.Numerics.FSharp.dll",
+        "lib/net8.0/MathNet.Numerics.FSharp.xml",
+        "lib/netstandard2.0/MathNet.Numerics.FSharp.dll",
+        "lib/netstandard2.0/MathNet.Numerics.FSharp.xml",
+        "mathnet.numerics.fsharp.6.0.0-beta1.nupkg.sha512",
+        "mathnet.numerics.fsharp.nuspec"
+      ]
+    },
+    "MathNet.Symbolics/0.25.0": {
+      "sha512": "sbeoi0wLoTY46GuOtZRSc03GhMFj/7fkgYvN0j2dDcFJVjAzGMnVWAByQOG5bgCESmd1u/c09Sbpm/N+QhL+gQ==",
+      "type": "package",
+      "path": "mathnet.symbolics/0.25.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net48/MathNet.Symbolics.dll",
+        "lib/net48/MathNet.Symbolics.xml",
+        "lib/net6.0/MathNet.Symbolics.dll",
+        "lib/net6.0/MathNet.Symbolics.xml",
+        "lib/net8.0/MathNet.Symbolics.dll",
+        "lib/net8.0/MathNet.Symbolics.xml",
+        "lib/netstandard2.0/MathNet.Symbolics.dll",
+        "lib/netstandard2.0/MathNet.Symbolics.xml",
+        "mathnet.symbolics.0.25.0.nupkg.sha512",
+        "mathnet.symbolics.nuspec"
       ]
     },
     "Microsoft.CSharp/4.7.0": {
@@ -1405,6 +1656,7 @@
     "net8.0-windows7.0": [
       "Fpi.Communication >= 1.0.0",
       "Fpi.Xml >= 1.0.0",
+      "MathNet.Symbolics >= 0.25.0",
       "Newtonsoft.Json >= 13.0.3",
       "Prism.Core >= 8.1.97",
       "System.Data.SQLite >= 1.0.118",
@@ -1469,6 +1721,10 @@
       "net8.0-windows7.0": {
         "targetAlias": "net8.0-windows",
         "dependencies": {
+          "MathNet.Symbolics": {
+            "target": "Package",
+            "version": "[0.25.0, )"
+          },
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"
@@ -1505,5 +1761,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "获取包漏洞数据时出错: 无法加载源 https://api.nuget.org/v3/index.json 的服务索引。"
+    }
+  ]
 }

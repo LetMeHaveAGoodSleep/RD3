@@ -15,7 +15,7 @@
     xmlns:shared="clr-namespace:RD3.Shared;assembly=RD3.Shared"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
-    Width="420"
+    Width="450"
     Height="560"
     d:DataContext="{d:DesignInstance Type=viewmodels:FeedViewModel}"
     rd3:DraggableUserControlAttach.IsDraggable="True"
@@ -57,10 +57,10 @@
             <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="ShowInTaskbar" Value="True" />
-            <Setter Property="AllowsTransparency" Value="True" />
-            <Setter Property="WindowStyle" Value="None" />
+            <Setter Property="AllowsTransparency" Value="False" />
+            <Setter Property="WindowStyle" Value="ThreeDBorderWindow" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
             <Setter Property="Opacity" Value="1" />
             <Setter Property="AllowDrop" Value="True" />
         </Style>
@@ -77,35 +77,19 @@
                 Grid.Row="1"
                 Panel.ZIndex="1"
                 MessageQueue="{materialDesign:MessageQueue}" />
-            <Border Background="{DynamicResource PrimaryBrush}" CornerRadius="4,4,0,0">
-                <DockPanel>
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        FontSize="{DynamicResource SubHeadFontSize}"
-                        Foreground="{DynamicResource DefaultBrush}"
-                        Text="{ex:Language Key='Feed Setting'}" />
-                    <Button
-                        Name="btnClose"
-                        HorizontalAlignment="Right"
-                        hc:IconElement.Geometry="{StaticResource CloseGeometry}"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Command="{Binding CloseCommand}"
-                        Foreground="{DynamicResource DefaultBrush}" />
-                </DockPanel>
-            </Border>
             <TabControl
                 Name="TabControl"
                 Grid.Row="1"
-                BorderThickness="0"
+                Margin="5"
                 Style="{StaticResource TabControlBaseStyle}">
                 <TabItem FontSize="{DynamicResource SubHeadFontSize}" Header="{ex:Language Key='Operation'}">
                     <DockPanel LastChildFill="True">
                         <CheckBox
                             Margin="5"
-                            Content="{ex:Language Key='Applied to all reactors'}"
+                            Content="{ex:Language Key='复制至其他反应器'}"
                             DockPanel.Dock="Top"
-                            IsChecked="{Binding AllApplied}" />
+                            IsChecked="{Binding AllApplied}"
+                            Visibility="Collapsed" />
                         <hc:UniformSpacingPanel
                             Margin="10"
                             Orientation="Vertical"
@@ -116,7 +100,6 @@
                                     Width="100"
                                     Height="30"
                                     hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
-                                    IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Constant}"
                                     Style="{StaticResource TextBoxExtendBaseStyle}"
                                     Text="{Binding RealTimeParam.FeedFlowSpeed}" />
                                 <Button
@@ -139,6 +122,7 @@
                                 <TextBox
                                     Width="100"
                                     Height="30"
+                                    hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
                                     IsEnabled="False"
                                     Style="{StaticResource TextBoxExtendBaseStyle}"
                                     Text="{Binding RealTimeParam.FeedFlowSpeed}" />
@@ -153,6 +137,27 @@
                                     HorizontalAlignment="Center"
                                     LightType="Start"
                                     Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Associated}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                                <Image Source="../Images/Feed/Loop.png" />
+                                <TextBox
+                                    Width="100"
+                                    Height="30"
+                                    hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource TextBoxExtendBaseStyle}"
+                                    Text="{Binding RealTimeParam.FeedFlowSpeed}" />
+                                <Button
+                                    Width="100"
+                                    Height="30"
+                                    Command="{Binding ExcuteCommand}"
+                                    CommandParameter="Constant"
+                                    Content="{ex:Language Key='周期'}" />
+                                <controls:IndicatorLight
+                                    Height="15"
+                                    HorizontalAlignment="Center"
+                                    LightType="Start"
+                                    Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Loop}" />
                             </hc:UniformSpacingPanel>
                             <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
                                 <Image
@@ -255,7 +260,6 @@
                             </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>
                     </DockPanel>
-
                 </TabItem>
                 <TabItem
                     FontSize="{DynamicResource SubHeadFontSize}"
@@ -270,22 +274,22 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
-                            <RowDefinition Height="15" />
+                            <RowDefinition Height="10" />
                             <RowDefinition Height="auto" />
-                            <RowDefinition Height="15" />
+                            <RowDefinition Height="10" />
                             <RowDefinition Height="auto" />
-                            <RowDefinition Height="15" />
+                            <RowDefinition Height="10" />
                             <RowDefinition Height="auto" />
-                            <RowDefinition Height="15" />
+                            <RowDefinition Height="10" />
                             <RowDefinition Height="auto" />
-                            <RowDefinition Height="15" />
+                            <RowDefinition Height="10" />
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <TextBlock
                             VerticalAlignment="Center"
                             FontSize="{DynamicResource SubHeadFontSize}"
-                            Text="{ex:Language Key='Associative Controller'}" />
+                            Text="{ex:Language Key='关联模块'}" />
                         <hc:ButtonGroup Grid.Column="2" Style="{StaticResource ButtonGroupSolid}">
                             <RadioButton
                                 Width="100"
@@ -299,8 +303,7 @@
                                 Content="{ex:Language Key='DO'}"
                                 FontSize="{DynamicResource TextFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateModule, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=DO}"
-                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}" />
+                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateModule, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=DO}" />
                             <RadioButton
                                 Width="100"
                                 Height="30"
@@ -313,113 +316,91 @@
                                 Content="{ex:Language Key='PH'}"
                                 FontSize="{DynamicResource TextFontSize}"
                                 Foreground="{DynamicResource SecondaryTextBrush}"
-                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateModule, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=PH}"
-                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}" />
+                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateModule, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=PH}" />
                         </hc:ButtonGroup>
                         <TextBlock
                             Grid.Row="2"
                             VerticalAlignment="Center"
-                            FontSize="{DynamicResource SubHeadFontSize}"
-                            Text="{ex:Language Key='Patterns added'}" />
-                        <hc:ButtonGroup
+                            Text="{ex:Language Key='设定值'}" />
+                        <hc:UniformSpacingPanel
                             Grid.Row="2"
                             Grid.Column="2"
-                            Style="{StaticResource ButtonGroupSolid}">
-                            <RadioButton
+                            Margin="10,0,0,0"
+                            Orientation="Horizontal"
+                            Spacing="10">
+                            <TextBox
                                 Width="100"
                                 Height="30"
-                                Margin="10,0,0,0"
-                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
-                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
-                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
-                                Background="{DynamicResource BorderBrush}"
-                                Content="{ex:Language Key='Speed'}"
-                                FontSize="{DynamicResource TextFontSize}"
-                                Foreground="{DynamicResource SecondaryTextBrush}"
-                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociatePattern, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Speed}"
-                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}" />
-                            <RadioButton
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                hc:InfoElement.Placeholder="{ex:Language Key='设定值'}"
+                                Style="{StaticResource TextBoxExtend}"
+                                Text="{Binding FeedStrategy.AssociateStrategy.SP}" />
+                            <TextBox
                                 Width="100"
                                 Height="30"
-                                Margin="10,0,0,0"
-                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
-                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
-                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
-                                Background="{DynamicResource BorderBrush}"
-                                Content="{ex:Language Key='Dose'}"
-                                FontSize="{DynamicResource TextFontSize}"
-                                Foreground="{DynamicResource SecondaryTextBrush}"
-                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociatePattern, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Dose}"
-                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}" />
-                        </hc:ButtonGroup>
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                hc:InfoElement.Placeholder="{ex:Language Key='死区'}"
+                                Style="{StaticResource TextBoxExtend}"
+                                Text="{Binding FeedStrategy.AssociateStrategy.DBand}" />
+                        </hc:UniformSpacingPanel>
                         <TextBlock
                             Grid.Row="4"
                             VerticalAlignment="Center"
                             FontSize="{DynamicResource SubHeadFontSize}"
-                            Text="{ex:Language Key='Threshold selection'}" />
-                        <hc:ButtonGroup
+                            Text="{ex:Language Key='速度（mL/h）'}" />
+                        <hc:UniformSpacingPanel
                             Grid.Row="4"
                             Grid.Column="2"
-                            Style="{StaticResource ButtonGroupSolid}">
-                            <RadioButton
+                            Margin="10,0,0,0"
+                            Orientation="Horizontal"
+                            Spacing="10">
+                            <TextBox
                                 Width="100"
                                 Height="30"
-                                Margin="10,0,0,0"
-                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
-                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
-                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
-                                Background="{DynamicResource BorderBrush}"
-                                Content="{ex:Language Key='Upper limit'}"
-                                FontSize="{DynamicResource TextFontSize}"
-                                Foreground="{DynamicResource SecondaryTextBrush}"
-                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateThreshold, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Upperlimit}"
-                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}" />
-                            <RadioButton
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                hc:InfoElement.Placeholder="{ex:Language Key='下行速度'}"
+                                Style="{StaticResource TextBoxExtend}"
+                                Text="{Binding FeedStrategy.AssociateStrategy.LowerSpeed}" />
+                            <TextBox
                                 Width="100"
                                 Height="30"
-                                Margin="10,0,0,0"
-                                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                hc:VisualElement.HighlightBackground="{DynamicResource PrimaryBrush}"
-                                hc:VisualElement.HighlightBorderBrush="{DynamicResource PrimaryBrush}"
-                                hc:VisualElement.HighlightForeground="{DynamicResource TextIconBrush}"
-                                Background="{DynamicResource BorderBrush}"
-                                Content="{ex:Language Key='Lower limit'}"
-                                FontSize="{DynamicResource TextFontSize}"
-                                Foreground="{DynamicResource SecondaryTextBrush}"
-                                IsChecked="{Binding FeedStrategy.AssociateStrategy.AssociateThreshold, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Lowerlimit}"
-                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}" />
-                        </hc:ButtonGroup>
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                hc:InfoElement.Placeholder="{ex:Language Key='上行速度'}"
+                                Style="{StaticResource TextBoxExtend}"
+                                Text="{Binding FeedStrategy.AssociateStrategy.UpperSpeed}" />
+                        </hc:UniformSpacingPanel>
                         <TextBlock
                             Grid.Row="6"
                             VerticalAlignment="Center"
                             FontSize="{DynamicResource SubHeadFontSize}"
-                            Text="{ex:Language Key='Speed'}" />
-                        <TextBox
+                            Text="{ex:Language Key='添加量（mL）'}" />
+                        <hc:UniformSpacingPanel
                             Grid.Row="6"
                             Grid.Column="2"
-                            Height="30"
                             Margin="10,0,0,0"
-                            hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
-                            IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}"
-                            Style="{StaticResource TextBoxExtendBaseStyle}"
-                            Text="{Binding FeedStrategy.AssociateStrategy.AssociateSpeed}" />
-                        <TextBlock
-                            Grid.Row="8"
-                            VerticalAlignment="Center"
-                            FontSize="{DynamicResource SubHeadFontSize}"
-                            Text="{ex:Language Key='Additive volume'}" />
-                        <TextBox
-                            Grid.Row="8"
-                            Grid.Column="2"
-                            Height="30"
-                            Margin="10,0,0,0"
-                            hc:InfoElement.Placeholder="{ex:Language Key='ml'}"
-                            IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Associated}"
-                            Style="{StaticResource TextBoxExtendBaseStyle}"
-                            Text="{Binding FeedStrategy.AssociateStrategy.AssociateVal}" />
+                            Orientation="Horizontal"
+                            Spacing="10">
+                            <TextBox
+                                Width="100"
+                                Height="30"
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                hc:InfoElement.Placeholder="{ex:Language Key='下行添加量'}"
+                                Style="{StaticResource TextBoxExtend}"
+                                Text="{Binding FeedStrategy.AssociateStrategy.LowerDose}" />
+                            <TextBox
+                                Width="100"
+                                Height="30"
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                hc:InfoElement.Placeholder="{ex:Language Key='上行添加量'}"
+                                Style="{StaticResource TextBoxExtend}"
+                                Text="{Binding FeedStrategy.AssociateStrategy.UpperDose}" />
+                        </hc:UniformSpacingPanel>
                         <TextBlock
                             Grid.Row="10"
                             VerticalAlignment="Center"
@@ -442,9 +423,68 @@
                         </hc:UniformSpacingPanel>
                     </Grid>
                 </TabItem>
+                <TabItem FontSize="{DynamicResource SubHeadFontSize}" Header="周期">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="10" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="10" />
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            DockPanel.Dock="Left"
+                            Text="{ex:Language Key='周期（s）'}" />
+                        <TextBox
+                            Grid.Column="2"
+                            Width="150"
+                            Height="30"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding FeedStrategy.LoopStrategy.Cycle}" />
+                        <TextBlock
+                            Grid.Row="2"
+                            VerticalAlignment="Center"
+                            DockPanel.Dock="Left"
+                            Text="{ex:Language Key='占空比（%）'}" />
+                        <TextBox
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            Width="150"
+                            Height="30"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding FeedStrategy.LoopStrategy.DutyRate}" />
+
+                        <TextBlock
+                            Grid.Row="4"
+                            VerticalAlignment="Center"
+                            DockPanel.Dock="Left"
+                            Text="{ex:Language Key='速度（mL/h）'}" />
+                        <TextBox
+                            Grid.Row="4"
+                            Grid.Column="2"
+                            Width="150"
+                            Height="30"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding FeedStrategy.LoopStrategy.Speed}" />
+                    </Grid>
+                </TabItem>
                 <TabItem
                     FontSize="{DynamicResource SubHeadFontSize}"
-                    Header="{ex:Language Key='Gradient'}"
+                    Header="{ex:Language Key='时间序列'}"
                     Tag="Gradient">
                     <Grid Margin="10">
                         <Grid.RowDefinitions>
@@ -457,7 +497,6 @@
                                 hc:InfoElement.Title="{ex:Language Key='Timer'}"
                                 DockPanel.Dock="Left"
                                 FontSize="{DynamicResource SubHeadFontSize}"
-                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                 ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                                 SelectedIndex="{Binding GradientTimeIndex}"
                                 SelectedItem="{Binding FeedStrategy.GradientStrategy.FeedTimer}"
@@ -480,7 +519,7 @@
                             <hc:UniformSpacingPanel
                                 DockPanel.Dock="Right"
                                 Spacing="5"
-                                Visibility="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Gradient}">
+                                Visibility="Collapsed">
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Top"
@@ -537,21 +576,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='01 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time1}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed1}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose1}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -562,21 +598,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='02 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time2}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed2}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose2}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -587,21 +620,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='03 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time3}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed3}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose3}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -612,21 +642,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='04 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time4}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed4}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose4}" />
 
                                         </hc:UniformSpacingPanel>
@@ -638,21 +665,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='05 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time5}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed5}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose5}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -663,21 +687,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='06 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time6}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed6}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose6}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -688,21 +709,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='07 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time7}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed7}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose7}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -713,21 +731,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='08 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time8}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed8}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose8}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -738,21 +753,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='09 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time9}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed9}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose9}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -763,21 +775,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='10 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time10}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed10}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose10}" />
                                         </hc:UniformSpacingPanel>
                                     </hc:UniformSpacingPanel>
@@ -819,21 +828,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='11 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time11}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed11}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose11}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -844,21 +850,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='12 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time12}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed12}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose12}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -869,21 +872,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='13 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time13}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed13}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose13}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -894,21 +894,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='14 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time14}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed14}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose14}" />
 
                                         </hc:UniformSpacingPanel>
@@ -920,21 +917,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='15 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time15}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed15}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose15}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -945,21 +939,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='16 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time16}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed16}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose16}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -970,21 +961,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='17 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time17}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed17}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose17}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -995,21 +983,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='18 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time18}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed18}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose18}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -1020,21 +1005,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='19 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time19}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed19}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose19}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -1045,21 +1027,18 @@
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                 hc:InfoElement.Title="{ex:Language Key='20 '}"
                                                 hc:InfoElement.TitlePlacement="Left"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Time20}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Speed20}" />
                                             <hc:TextBox
                                                 Width="55"
                                                 HorizontalAlignment="Left"
                                                 VerticalAlignment="Center"
                                                 hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Gradient}"
                                                 Text="{Binding FeedStrategy.GradientStrategy.Dose20}" />
                                         </hc:UniformSpacingPanel>
                                     </hc:UniformSpacingPanel>
@@ -1098,9 +1077,8 @@
                                 Width="260"
                                 Height="30"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
-                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Function}"
                                 Style="{StaticResource TextBoxExtendBaseStyle}"
-                                Text="{Binding Expression}" />
+                                Text="{Binding FeedStrategy.FunctionStrategy.Expression}" />
                             <Button
                                 Width="70"
                                 Height="30"
@@ -1110,8 +1088,7 @@
                                 CommandParameter="{Binding Text, ElementName=TextBoxExpression}"
                                 Content="{ex:Language Key='Check'}"
                                 FontSize="{DynamicResource NormalFontSize}"
-                                Foreground="{Binding BorderBrush, RelativeSource={RelativeSource Mode=Self}}"
-                                IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Function}" />
+                                Foreground="{Binding BorderBrush, RelativeSource={RelativeSource Mode=Self}}" />
                         </hc:UniformSpacingPanel>
                         <hc:UniformSpacingPanel
                             Grid.Row="2"
@@ -1129,9 +1106,8 @@
                                     <ComboBox
                                         Width="120"
                                         BorderBrush="{DynamicResource PrimaryBrush}"
-                                        IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Function}"
                                         ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
-                                        SelectedItem="{Binding X1}"
+                                        SelectedItem="{Binding FeedStrategy.FunctionStrategy.X1}"
                                         Style="{StaticResource ComboBoxExtend}" />
                                 </hc:UniformSpacingPanel>
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
@@ -1145,9 +1121,8 @@
                                     <ComboBox
                                         Width="120"
                                         BorderBrush="{DynamicResource PrimaryBrush}"
-                                        IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Function}"
                                         ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
-                                        SelectedItem="{Binding X2}"
+                                        SelectedItem="{Binding FeedStrategy.FunctionStrategy.X2}"
                                         Style="{StaticResource ComboBoxExtend}" />
                                 </hc:UniformSpacingPanel>
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
@@ -1161,9 +1136,8 @@
                                     <ComboBox
                                         Width="120"
                                         BorderBrush="{DynamicResource PrimaryBrush}"
-                                        IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Function}"
                                         ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
-                                        SelectedItem="{Binding X3}"
+                                        SelectedItem="{Binding FeedStrategy.FunctionStrategy.X3}"
                                         Style="{StaticResource ComboBoxExtend}" />
                                 </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
@@ -1179,9 +1153,8 @@
                                     <ComboBox
                                         Width="120"
                                         BorderBrush="{DynamicResource PrimaryBrush}"
-                                        IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Function}"
                                         ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
-                                        SelectedItem="{Binding X4}"
+                                        SelectedItem="{Binding FeedStrategy.FunctionStrategy.X4}"
                                         Style="{StaticResource ComboBoxExtend}" />
                                 </hc:UniformSpacingPanel>
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
@@ -1195,9 +1168,8 @@
                                     <ComboBox
                                         Width="120"
                                         BorderBrush="{DynamicResource PrimaryBrush}"
-                                        IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Function}"
                                         ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
-                                        SelectedItem="{Binding X5}"
+                                        SelectedItem="{Binding FeedStrategy.FunctionStrategy.X5}"
                                         Style="{StaticResource ComboBoxExtend}" />
                                 </hc:UniformSpacingPanel>
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
@@ -1211,9 +1183,8 @@
                                     <ComboBox
                                         Width="120"
                                         BorderBrush="{DynamicResource PrimaryBrush}"
-                                        IsEnabled="{Binding FeedStrategy.FeedMethod, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=Function}"
                                         ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
-                                        SelectedItem="{Binding X6}"
+                                        SelectedItem="{Binding FeedStrategy.FunctionStrategy.X6}"
                                         Style="{StaticResource ComboBoxExtend}" />
                                 </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
@@ -1253,6 +1224,14 @@
                 HorizontalAlignment="Right"
                 Orientation="Horizontal"
                 Spacing="10">
+                <Button
+                    Width="160"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                    BorderBrush="{StaticResource PrimaryBrush}"
+                    Command="{Binding CopyCommand}"
+                    Content="{ex:Language Key='复制至其他反应器...'}"
+                    FontSize="{DynamicResource NormalFontSize}"
+                    Foreground="{StaticResource PrimaryBrush}" />
                 <Button
                     Width="80"
                     Height="30"

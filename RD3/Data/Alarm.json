@@ -3,7 +3,7 @@
     "ID": "0x01",
     "Name": "MCU-1",
     "Grade": "Error",
-    "Description": "主板内部ROM异常",
+    "Description": "主板CAN芯片异常",
     "Repeat": 86400,
     "Module": "MainBoard"
   },
@@ -11,7 +11,7 @@
     "ID": "0x02",
     "Name": "MCU-2",
     "Grade": "Error",
-    "Description": "主板AD异常",
+    "Description": "主板EEPROM芯片异常",
     "Repeat": 86400,
     "Module": "MainBoard"
   },
@@ -19,33 +19,33 @@
     "ID": "0x03",
     "Name": "MCU-3",
     "Grade": "Error",
-    "Description": "环境温度异常",
+    "Description": "主板SRAM芯片异常",
     "Repeat": 86400,
-    "Module": "Environment"
+    "Module": "MainBoard"
   },
   {
     "ID": "0x04",
     "Name": "MCU-4",
     "Grade": "Error",
-    "Description": "酸泵异常",
+    "Description": "主板FLASH芯片异常",
     "Repeat": 86400,
-    "Module": "Acid_Pump"
+    "Module": "MainBoard"
   },
   {
     "ID": "0x05",
     "Name": "MCU-5",
     "Grade": "Error",
-    "Description": "碱泵异常",
+    "Description": "主板WK2124芯片异常",
     "Repeat": 86400,
-    "Module": "Base_Pump"
+    "Module": "MainBoard"
   },
   {
     "ID": "0x06",
     "Name": "MCU-6",
     "Grade": "Warning",
-    "Description": "气路1压力异常",
+    "Description": "ESP32报警",
     "Repeat": 86400,
-    "Module": "Gas"
+    "Module": "MainBoard"
   },
   {
     "ID": "0x07",
@@ -53,7 +53,7 @@
     "Grade": "Warning",
     "Description": "气路2压力异常",
     "Repeat": 86400,
-    "Module": "Gas"
+    "Module": "MainBoard"
   },
   {
     "ID": "0x08",
@@ -61,7 +61,7 @@
     "Grade": "Error",
     "Description": "外部FLASH异常",
     "Repeat": 86400,
-    "Module": "Flash"
+    "Module": "MainBoard"
   },
   {
     "ID": "0x09",

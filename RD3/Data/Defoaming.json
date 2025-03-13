@@ -1,0 +1,6 @@
+{
+  "FlowSpeed": 2.0,
+  "FlowCapacity": 2.0,
+  "AutoDefoaming": false,
+  "DefoamingThreshold": 0.9
+}

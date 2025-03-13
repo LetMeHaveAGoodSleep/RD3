@@ -35,28 +35,28 @@
             Identifier="Root">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0" />
-                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Name="colLeftMenu" MaxWidth="45" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="10" />
                 </Grid.RowDefinitions>
-                <Grid Grid.Column="1">
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0" />
                         <RowDefinition Height="auto" />
+                        <RowDefinition Height="5" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
                         <Image
-                            Width="24"
-                            Height="24"
+                            Width="28"
+                            Height="28"
                             Margin="5"
+                            MouseDown="Image_OnMouseDown"
                             Source="/Assets/logo.png" />
                         <TextBlock
-                            Margin="8,10,10,8"
+                            Margin="8"
                             FontSize="{StaticResource HeadFontSize}"
                             FontWeight="Bold"
                             Text="芯造科技"
@@ -71,7 +71,7 @@
                         CornerRadius="0,15,0,0">
                         <hc:SideMenu
                             Name="sideMenu"
-                            Width="140"
+                            Width="40"
                             hc:AutoSelect="False"
                             hc:ExpandMode="Accordion"
                             Background="Transparent"
@@ -139,7 +139,7 @@
                                 </hc:SideMenuItem.Icon>
                             </hc:SideMenuItem>
                             <hc:SideMenuItem
-                                Margin="5"
+                                Margin="3,5,5,5"
                                 Background="{DynamicResource PrimaryBrush}"
                                 FontSize="{StaticResource MediumFontSize}"
                                 Foreground="{DynamicResource DefaultBrush}"
@@ -224,19 +224,9 @@
                         CornerRadius="0,4,0,15"
                         Effect="{StaticResource EffectShadow1}"
                         MouseMove="Border_MouseMove">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="{DynamicResource HeadFontSize}"
-                                Foreground="White"
-                                Text="{ex:Language Key='Fermentation process control system--芯造科技'}" />
+                        <DockPanel LastChildFill="True">
                             <hc:UniformSpacingPanel
-                                Grid.Column="1"
+                                DockPanel.Dock="Right"
                                 Orientation="Horizontal"
                                 Spacing="50">
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
@@ -246,7 +236,8 @@
                                         HorizontalContentAlignment="Center"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Command="{Binding RegisterCommand}">
+                                        Command="{Binding RegisterCommand}"
+                                        Visibility="Collapsed">
                                         <TextBlock
                                             FontSize="{DynamicResource SubHeadFontSize}"
                                             Foreground="{DynamicResource DefaultBrush}"
@@ -259,7 +250,8 @@
                                         HorizontalContentAlignment="Center"
                                         Background="Transparent"
                                         BorderThickness="0"
-                                        Command="{Binding ChangeLanguageCommand}">
+                                        Command="{Binding ChangeLanguageCommand}"
+                                        Visibility="Collapsed">
                                         <TextBlock
                                             FontSize="{DynamicResource SubHeadFontSize}"
                                             Foreground="{DynamicResource DefaultBrush}"
@@ -363,7 +355,14 @@
                                         ToolTip="{ex:Language Key='Close'}" />
                                 </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
-                        </Grid>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="{DynamicResource HeadFontSize}"
+                                Foreground="White"
+                                Text="{ex:Language Key='Fermentation process control system--芯造科技'}"
+                                Visibility="Hidden" />
+                        </DockPanel>
                     </Border>
                     <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static ext:PrismManager.MainViewRegionName}" />
                 </Grid>

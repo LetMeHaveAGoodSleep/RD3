@@ -209,20 +209,45 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
-					<name>ReadWrite</name>
+					<id>0xaa</id>
+					<name>ReadResponse</name>
 					<parameters>
 						<param>
-							<id>ControlMode</id>
-							<name>控制模式</name>
+							<id>HasFoam</id>
+							<name>有无气泡</name>
 							<type>byte</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>Param</id>
-							<name>消泡参数</name>
+							<id>SensorEnable</id>
+							<name>传感器启用</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				
+				<commandExtend>
+					<id>0x66</id>
+					<name>Write</name>
+					<parameters>
+						<param>
+							<id>Cycle</id>
+							<name>检测周期</name>
 							<type>byte</type>
 							<length>4</length>
+						</param>
+						<param>
+							<id>TimeRatio</id>
+							<name>时间占比</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>SensorEnable</id>
+							<name>传感器启用</name>
+							<type>byte</type>
+							<length>1</length>
 						</param>
 					</parameters>
 				</commandExtend>
@@ -599,6 +624,12 @@
 							<length>1</length>
 						</param>
 						<param>
+							<id>HasFoam</id>
+							<name>有无泡沫</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
 							<id>AlarmCodes</id>
 							<name>报警码</name>
 							<type>byte</type>
@@ -656,7 +687,7 @@
 						<param>
 							<id>Version</id>
 							<name>版本号</name>
-							<type>byte</type>
+							<type>string</type>
 							<length>8</length>
 						</param>
 
@@ -803,6 +834,12 @@
 							<length>4</length>
 						</param>
 						<param>
+							<id>MainGateway</id>
+							<name>主板网关</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
 							<id>WifiIPAdress</id>
 							<name>Wifi模组IP地址</name>
 							<type>byte</type>
@@ -815,10 +852,10 @@
 							<length>4</length>
 						</param>
 						<param>
-						<id>MainGateway</id>
-						<name>主板网关</name>
-						<type>byte</type>
-						<length>4</length>
+							<id>WifiGateway</id>
+							<name>Wifi网关</name>
+							<type>byte</type>
+							<length>4</length>
 						</param>
 						<param>
 							<id>Reserve</id>
@@ -855,14 +892,6 @@
 				<commandExtend>
 					<id>0x55</id>
 					<name>Read</name>
-					<parameters>
-						<param>
-							<id>SensorKind</id>
-							<name>传感器类型</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
 				</commandExtend>
 
 				<commandExtend>
@@ -872,14 +901,14 @@
 						<param>
 							<id>SensorCoefficient</id>
 							<name>传感器系数</name>
-							<type>byte</type>
-							<length>4</length>
+							<type>float</type>
+							<length>1</length>
 						</param>
 						<param>
 							<id>SensorBias</id>
 							<name>传感器偏置</name>
-							<type>byte</type>
-							<length>4</length>
+							<type>float</type>
+							<length>1</length>
 						</param>
 					</parameters>
 				</commandExtend>
@@ -935,14 +964,6 @@
 				<commandExtend>
 					<id>0x55</id>
 					<name>Read</name>
-					<parameters>
-						<param>
-							<id>SensorKind</id>
-							<name>传感器类型</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
 				</commandExtend>
 
 				<commandExtend>
@@ -952,14 +973,14 @@
 						<param>
 							<id>SensorCoefficient</id>
 							<name>传感器系数</name>
-							<type>byte</type>
-							<length>4</length>
+							<type>float</type>
+							<length>1</length>
 						</param>
 						<param>
 							<id>SensorBias</id>
 							<name>传感器偏置</name>
-							<type>byte</type>
-							<length>4</length>
+							<type>float</type>
+							<length>1</length>
 						</param>
 					</parameters>
 				</commandExtend>
@@ -1032,14 +1053,14 @@
 						<param>
 							<id>SensorCoefficient</id>
 							<name>传感器系数</name>
-							<type>byte</type>
-							<length>4</length>
+							<type>float</type>
+							<length>1</length>
 						</param>
 						<param>
 							<id>SensorBias</id>
 							<name>传感器偏置</name>
-							<type>byte</type>
-							<length>4</length>
+							<type>float</type>
+							<length>1</length>
 						</param>
 					</parameters>
 				</commandExtend>
@@ -1101,14 +1122,6 @@
 				<commandExtend>
 					<id>0x55</id>
 					<name>Read</name>
-					<parameters>
-						<param>
-							<id>SensorKind</id>
-							<name>传感器类型</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
 				</commandExtend>
 
 				<commandExtend>
@@ -1118,14 +1131,14 @@
 						<param>
 							<id>SensorCoefficient</id>
 							<name>传感器系数</name>
-							<type>byte</type>
-							<length>4</length>
+							<type>float</type>
+							<length>1</length>
 						</param>
 						<param>
 							<id>SensorBias</id>
 							<name>传感器偏置</name>
-							<type>byte</type>
-							<length>4</length>
+							<type>float</type>
+							<length>1</length>
 						</param>
 					</parameters>
 				</commandExtend>
@@ -1381,6 +1394,65 @@
 						</param>
 					</parameters>
 				</commandExtend>
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
+			<id>RWSoundLightAlarm</id>
+			<name>读写声光报警</name>
+			<commandCode>0x16</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xff</id>
+					<name>ReadWrite</name>
+					<parameters>
+						<param>
+							<id>RedLightStatus</id>
+							<name>红灯状态</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>GreenLightStatus</id>
+							<name>绿灯状态</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>BlueLightStatus</id>
+							<name>蓝灯状态</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>BuzzerStatus</id>
+							<name>蜂鸣器状态</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
 			</commandExtends>
 		</commandDesc>
 	</commandDescs>

@@ -218,6 +218,10 @@
     <Compile Include="Communication\Exceptions\ProtocolException.cs" />
     <Compile Include="Communication\Protocols\Common\Simple\SimpleParser.cs" />
     <Compile Include="Communication\Protocols\Common\Simple\SimpleProtocol.cs" />
+    <Compile Include="Communication\Protocols\ImageProtocol\ImageParser.cs" />
+    <Compile Include="Communication\Protocols\ImageProtocol\ImagePort.cs" />
+    <Compile Include="Communication\Protocols\ImageProtocol\ImageProtocol.cs" />
+    <Compile Include="Communication\Protocols\ImageProtocol\ImageReceiver.cs" />
     <Compile Include="Communication\Protocols\Interfaces\IProtocolComponent.cs" />
     <Compile Include="Communication\Protocols\Interfaces\IRC_Informer.cs" />
     <Compile Include="Communication\Protocols\Interfaces\ISender.cs" />

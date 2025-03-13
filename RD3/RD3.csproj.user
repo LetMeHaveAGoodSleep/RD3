@@ -135,6 +135,9 @@
     <Page Update="Views\CalibrationView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\CameraImageView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\ChooseReactorView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -145,6 +148,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\DOEMainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\EditBatchIDView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\EditBatchView.xaml">

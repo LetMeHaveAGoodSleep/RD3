@@ -1,0 +1,1250 @@
+{
+    "G01": {
+      "Parameter": [
+        {
+          "PH": 1,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 2,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 3,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 4,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 5,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 6,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 7,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 8,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 9,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 10,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 11,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 12,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 13,
+          "Acid": 10,
+          "Base": 20
+        },
+        {
+          "PH": 14,
+          "Acid": 10,
+          "Base": 20
+        }
+      ],
+      "Enable": {
+        "Acid": "True",
+        "Base": "True"
+      }
+    },
+  "G02": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G03": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G04": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G05": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G06": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G07": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G08": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G09": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G10": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G11": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G12": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G13": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G14": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G15": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  },
+  "G16": {
+    "Parameter": [
+      {
+        "PH": 1,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 2,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 3,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 4,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 5,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 6,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 7,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 8,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 9,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 10,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 11,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 12,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 13,
+        "Acid": 10,
+        "Base": 20
+      },
+      {
+        "PH": 14,
+        "Acid": 10,
+        "Base": 20
+      }
+    ],
+    "Enable": {
+      "Acid": "True",
+      "Base": "True"
+    }
+  }
+}
