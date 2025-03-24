@@ -556,6 +556,7 @@
                                                     CommandParameter="Enable"
                                                     Header="手动输入"
                                                     IsChecked="False" />
+                                                <Separator />
                                                 <MenuItem
                                                     Name="mi_auto"
                                                     Click="MenuItem_Click"
@@ -569,6 +570,8 @@
                                                 Command="{Binding TimeSeriesCommand}"
                                                 CommandParameter="DO"
                                                 Header="时间序列设置" />
+                                            <Separator />
+                                            <MenuItem Command="{Binding DoAssociateCommand}" Header="级联控制通气量阶梯表" />
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
                                 </TextBox>
@@ -585,7 +588,8 @@
                                     Width="75"
                                     VerticalAlignment="Bottom"
                                     Content="自动"
-                                    IsChecked="False"
+                                    IsChecked="True"
+                                    IsEnabled="False"
                                     Style="{StaticResource ToggleButtonLoadingPrimary}" />
                                 <Button
                                     Name="DOStart"
@@ -593,17 +597,7 @@
                                     VerticalAlignment="Bottom"
                                     BorderBrush="Gray"
                                     Command="{Binding DOStartCommand}"
-                                    Content="配置">
-                                    <!--  modify by hdb  -->
-                                    <Button.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="复制" />
-                                            <MenuItem Header="粘贴" />
-                                            <Separator />
-                                            <MenuItem Header="删除" />
-                                        </ContextMenu>
-                                    </Button.ContextMenu>
-                                </Button>
+                                    Content="开始" />
                                 <StackPanel VerticalAlignment="Bottom" Orientation="Vertical">
                                     <CheckBox Content="正向(+)" IsChecked="{Binding CurrentDeviceParameter.DOParam.IsDirect}" />
                                     <CheckBox Content="反向(-)" IsChecked="{Binding CurrentDeviceParameter.DOParam.IsDirect, Converter={StaticResource InverseBooleanConverter}}" />
@@ -775,7 +769,8 @@
                                     Width="75"
                                     VerticalAlignment="Bottom"
                                     Content="自动"
-                                    IsChecked="False"
+                                    IsChecked="True"
+                                    IsEnabled="False"
                                     Style="{StaticResource ToggleButtonLoadingPrimary}" />
                                 <!--  默认不自动 modify by hdb  -->
                                 <Button
@@ -783,7 +778,7 @@
                                     Width="75"
                                     VerticalAlignment="Bottom"
                                     BorderBrush="Gray"
-                                    Content="配置">
+                                    Content="开始">
                                     <!--  modify by hdb  -->
                                     <Button.ContextMenu>
                                         <ContextMenu>
@@ -925,12 +920,13 @@
                             VerticalAlignment="Bottom"
                             Content="自动"
                             IsChecked="True"
+                            IsEnabled="False"
                             Style="{StaticResource ToggleButtonLoadingPrimary}" />
                         <Button
                             Width="75"
                             VerticalAlignment="Bottom"
                             BorderBrush="Gray"
-                            Content="配置">
+                            Content="开始">
                             <!--  modify by hdb  -->
                             <Button.ContextMenu>
                                 <ContextMenu>
@@ -974,8 +970,13 @@
                                         <Separator />
                                         <MenuItem
                                             Command="{Binding FeedSPCommand}"
-                                            CommandParameter="Function"
-                                            Header="公式" />
+                                            CommandParameter="Polynomial"
+                                            Header="多项式" />
+                                        <Separator />
+                                        <MenuItem
+                                            Command="{Binding FeedSPCommand}"
+                                            CommandParameter="Exponential"
+                                            Header="指数" />
                                         <Separator />
                                         <MenuItem
                                             Command="{Binding FeedSPCommand}"
@@ -1007,14 +1008,14 @@
                         <hc:ProgressButton
                             Width="75"
                             VerticalAlignment="Bottom"
-                            Content="自动"
-                            IsChecked="True"
+                            Content="手动"
+                            IsChecked="False"
                             Style="{StaticResource ToggleButtonLoadingPrimary}" />
                         <Button
                             Width="75"
                             VerticalAlignment="Bottom"
                             BorderBrush="Gray"
-                            Content="配置">
+                            Content="开始">
                             <!--  modify by hdb  -->
                             <Button.ContextMenu>
                                 <ContextMenu>
@@ -1048,24 +1049,14 @@
                         <hc:ProgressButton
                             Width="75"
                             VerticalAlignment="Bottom"
-                            Content="自动"
-                            IsChecked="True"
+                            Content="手动"
+                            IsChecked="False"
                             Style="{StaticResource ToggleButtonLoadingPrimary}" />
                         <Button
                             Width="75"
                             VerticalAlignment="Bottom"
                             BorderBrush="Gray"
-                            Content="配置">
-                            <!--  modify by hdb  -->
-                            <Button.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="复制" />
-                                    <MenuItem Header="粘贴" />
-                                    <Separator />
-                                    <MenuItem Header="删除" />
-                                </ContextMenu>
-                            </Button.ContextMenu>
-                        </Button>
+                            Content="开始" />
                     </StackPanel>
                     <StackPanel
                         Canvas.Left="485"
@@ -1107,6 +1098,13 @@
                             IsEnabled="True"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding CurrentDeviceParameter.AFFlowSpeed}" />
+                        <hc:ProgressButton
+                            Width="75"
+                            VerticalAlignment="Bottom"
+                            Content="自动"
+                            IsChecked="True"
+                            Style="{StaticResource ToggleButtonLoadingPrimary}"
+                            Visibility="Collapsed" />
                         <TextBox
                             Width="75"
                             VerticalAlignment="Center"

@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:RD3.ViewModels"
@@ -22,7 +23,17 @@
                 Background="{DynamicResource DefaultBrush}"
                 BorderBrush="{DynamicResource PrimaryBrush}"
                 DockPanel.Dock="Bottom"
-                Foreground="{DynamicResource PrimaryBrush}" />
+                Foreground="{DynamicResource PrimaryBrush}"
+                SelectedIndex="{Binding Index}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction
+                            Command="{Binding ChangePumpCommand}"
+                            CommandParameter="{Binding ElementName=PumpName1, Path=SelectedIndex}"
+                            PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ComboBox>
         </DockPanel>
         <DockPanel>
             <Label
@@ -55,7 +66,7 @@
                 VerticalContentAlignment="Center"
                 hc:InfoElement.Title="{ex:Language Key='Pump Speed'}"
                 BorderBrush="{DynamicResource PrimaryBrush}"
-                Text="{Binding Speed}" />
+                Text="{Binding Speed, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
             <TextBlock DockPanel.Dock="Top" Text="持续时间（min）" />
@@ -64,7 +75,7 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 BorderBrush="{DynamicResource PrimaryBrush}"
-                Text="{Binding Time}" />
+                Text="{Binding Time, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
             <!--  add by hdb  -->
@@ -75,7 +86,7 @@
                 VerticalContentAlignment="Center"
                 hc:InfoElement.Title="{ex:Language Key='Current Value'}"
                 BorderBrush="{DynamicResource PrimaryBrush}"
-                Content="{Binding TheoreticalVolume}"
+                Content="{Binding TheoreticalVolume, UpdateSourceTrigger=PropertyChanged}"
                 IsEnabled="False" />
         </DockPanel>
         <DockPanel>
@@ -98,7 +109,7 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 BorderBrush="{DynamicResource PrimaryBrush}"
-                Text="{Binding Weigh}" />
+                Text="{Binding Weigh, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
             <!--  add by hdb  -->
@@ -108,7 +119,7 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 BorderBrush="{DynamicResource PrimaryBrush}"
-                Text="{Binding Density}" />
+                Text="{Binding Density, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
             <!--  add by hdb  -->
@@ -119,7 +130,7 @@
                 VerticalContentAlignment="Center"
                 BorderBrush="{DynamicResource PrimaryBrush}"
                 IsEnabled="False"
-                Text="{Binding RealVolume}" />
+                Text="{Binding RealVolume, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
             <Button
@@ -152,7 +163,7 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 BorderBrush="{DynamicResource PrimaryBrush}"
-                Text="{Binding Coefficient}" />
+                Text="{Binding Coefficient, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
         <DockPanel>
             <Button

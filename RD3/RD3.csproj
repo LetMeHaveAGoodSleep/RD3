@@ -291,6 +291,9 @@
     <None Update="Config\GraphSetting.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Config\DOAssParam.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Defoaming.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

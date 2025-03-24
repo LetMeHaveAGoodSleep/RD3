@@ -34,6 +34,9 @@
     <Compile Update="Views\ControlView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\DOAssociateView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\DOEDesignView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -151,6 +154,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ControlView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DOAssociateView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\DOEDesignView.xaml">

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UgrZA1kMfSY=",
+  "dgSpecHash": "CBfx242YiyE=",
   "success": true,
-  "projectFilePath": "D:\\Project\\0321\\RD3\\RD3\\RD3.csproj",
+  "projectFilePath": "D:\\Project\\RD3\\RD3\\RD3.csproj",
   "expectedPackageFiles": [
     "D:\\packages\\dryioc.dll\\4.7.7\\dryioc.dll.4.7.7.nupkg.sha512",
     "D:\\packages\\fparsec\\2.0.0-beta2\\fparsec.2.0.0-beta2.nupkg.sha512",
@@ -64,12 +64,5 @@
     "D:\\packages\\system.threading.tasks\\4.3.0\\system.threading.tasks.4.3.0.nupkg.sha512",
     "D:\\packages\\yolov8\\4.1.7\\yolov8.4.1.7.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "获取包漏洞数据时出错: 无法加载源 https://api.nuget.org/v3/index.json 的服务索引。"
-    }
-  ]
+  "logs": []
 }

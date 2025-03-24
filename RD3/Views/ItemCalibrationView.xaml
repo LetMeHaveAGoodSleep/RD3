@@ -23,7 +23,7 @@
             Content="{Binding ReactorName}"
             Foreground="{DynamicResource PrimaryBrush}" />
         <ComboBox
-            Width="120"
+            Width="100"
             VerticalAlignment="Center"
             BorderBrush="{DynamicResource PrimaryBrush}"
             IsEnabled="{Binding CalibrationEnable}"
@@ -86,7 +86,7 @@
             FontSize="{DynamicResource NormalFontSize}"
             Foreground="{StaticResource PrimaryBrush}" />
         <Button
-            Width="180"
+            Width="170"
             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
             BorderBrush="{StaticResource PrimaryBrush}"
             Command="{Binding CopyCommand}"

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FbH4zPqT1zw=",
+  "dgSpecHash": "iaU9uwmzUY0=",
   "success": true,
-  "projectFilePath": "D:\\Project\\0321\\RD3\\RD3.Shared\\RD3.Shared.csproj",
+  "projectFilePath": "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj",
   "expectedPackageFiles": [
     "D:\\packages\\fparsec\\2.0.0-beta2\\fparsec.2.0.0-beta2.nupkg.sha512",
     "D:\\packages\\fsharp.core\\8.0.100\\fsharp.core.8.0.100.nupkg.sha512",
@@ -19,12 +19,5 @@
     "D:\\packages\\system.security.permissions\\4.5.0\\system.security.permissions.4.5.0.nupkg.sha512",
     "D:\\packages\\system.security.principal.windows\\4.5.0\\system.security.principal.windows.4.5.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "获取包漏洞数据时出错: 无法加载源 https://api.nuget.org/v3/index.json 的服务索引。"
-    }
-  ]
+  "logs": []
 }

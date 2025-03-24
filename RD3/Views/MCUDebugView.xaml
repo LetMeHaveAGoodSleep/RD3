@@ -17,8 +17,10 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
-    Width="1000"
-    Height="800"
+    Width="auto"
+    Height="auto"
+    MinWidth="1000"
+    MinHeight="800"
     d:DataContext="{d:DesignInstance Type=vm:MCUDebugViewModel}"
     d:DesignHeight="1800"
     d:DesignWidth="1000"
@@ -1320,12 +1322,21 @@
                             IsEnabled="False"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding RealTimeParam.BaseFlowSpeed}" />
-                        <Button
-                            Width="80"
-                            VerticalAlignment="Bottom"
-                            Command="{Binding PHPIDCommand}"
-                            Content="确定"
-                            Style="{StaticResource ButtonPrimary}" />
+                        <DockPanel LastChildFill="False">
+                            <Button
+                                Width="80"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding PHPIDCommand}"
+                                Content="开始"
+                                Style="{StaticResource ButtonPrimary}" />
+                            <Button
+                                Width="80"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding StopPHPIDCommand}"
+                                Content="停止"
+                                Style="{StaticResource ButtonPrimary}" />
+                        </DockPanel>
                     </hc:UniformSpacingPanel>
                     <wpf:WpfPlot Name="PHWpfPlot" Grid.Row="1" />
                 </Grid>
