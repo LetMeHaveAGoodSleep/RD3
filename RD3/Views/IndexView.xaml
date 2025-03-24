@@ -46,19 +46,11 @@
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="UserControl.Loaded">
             <BeginStoryboard>
-                <Storyboard>
-                    <!--<DoubleAnimation
-                        BeginTime="0:0:3"
-                        FillBehavior="HoldEnd"
-                        Storyboard.Target="{StaticResource Progress1}"
-                        Storyboard.TargetProperty="Progress"
-                        To="50"
-                        Duration="0:0:10" />-->
-                </Storyboard>
+                <Storyboard />
             </BeginStoryboard>
         </EventTrigger>
     </UserControl.Triggers>
-    <Grid Margin="10">
+    <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
@@ -78,17 +70,13 @@
             VerticalAlignment="Bottom"
             Panel.ZIndex="1"
             MessageQueue="{materialDesign:MessageQueue}" />
-        <Grid Grid.ColumnSpan="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
-            </Grid.ColumnDefinitions>
+        <DockPanel Grid.ColumnSpan="3" LastChildFill="True">
             <Border
                 Height="40"
                 Background="{DynamicResource BorderBrush}"
                 BorderThickness="0.5"
-                CornerRadius="8">
+                CornerRadius="8"
+                DockPanel.Dock="Left">
                 <hc:ButtonGroup
                     Name="ButtonGroup"
                     VerticalAlignment="Center"
@@ -130,7 +118,7 @@
                         Tag="tabOverview" />
                 </hc:ButtonGroup>
             </Border>
-            <hc:UniformSpacingPanel Grid.Column="2" Spacing="5">
+            <hc:UniformSpacingPanel DockPanel.Dock="Right" Spacing="5">
                 <Button
                     Height="30"
                     HorizontalAlignment="Left"
@@ -214,11 +202,10 @@
                     hc:IconElement.Geometry="{StaticResource GeometrySample}"
                     Background="Transparent"
                     BorderThickness="1"
-                    Command="{Binding UnScheduleCommand}"
+                    Command="{Binding TestCommand}"
                     CommandParameter="Sample"
                     Content="{ex:Language Key='Sample'}"
-                    IsEnabled="{Binding Running}"
-                    ToolTip="Sample" />
+                    ToolTip="取样" />
                 <Button
                     Height="30"
                     HorizontalAlignment="Left"
@@ -229,8 +216,7 @@
                     Command="{Binding UnScheduleCommand}"
                     CommandParameter="Inoculate"
                     Content="{ex:Language Key='Inoculate'}"
-                    IsEnabled="{Binding Running}"
-                    ToolTip="Inoculate" />
+                    ToolTip="接种" />
                 <Button
                     Width="100"
                     Height="30"
@@ -271,12 +257,61 @@
                     ToolTip="Start"
                     Visibility="{Binding Running, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
             </hc:UniformSpacingPanel>
-        </Grid>
+            <Grid Margin="5,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <hc:UniformSpacingPanel VerticalAlignment="Center" Spacing="5">
+                    <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Runnning time:'}" />
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        FontSize="{DynamicResource SubHeadFontSize}"
+                        Foreground="Green"
+                        Text="{Binding FormattedTime}" />
+                </hc:UniformSpacingPanel>
+                <Border
+                    Name="BorderDevice"
+                    Grid.Column="1"
+                    Margin="5,0,5,0"
+                    Background="White"
+                    BorderBrush="LightGray"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                    <hc:ScrollViewer
+                        hc:ScrollViewerAttach.AutoHide="True"
+                        hc:ScrollViewerAttach.Orientation="Vertical"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto">
+                        <WrapPanel
+                            Name="ChkList"
+                            Orientation="Horizontal"
+                            ScrollViewer.CanContentScroll="True">
+                            <CheckBox Name="ChkAll" Content="Select all" />
+                        </WrapPanel>
+                    </hc:ScrollViewer>
+                </Border>
+                <Button
+                    Grid.Column="2"
+                    Height="35"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    hc:BorderElement.CornerRadius="8"
+                    hc:IconElement.Geometry="{StaticResource GeometrySetting}"
+                    Background="Transparent"
+                    BorderThickness="1"
+                    Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
+                    CommandParameter="{x:Static Dock.Right}"
+                    Content="{ex:Language Key='图表设置'}"
+                    Visibility="Collapsed" />
+            </Grid>
+        </DockPanel>
         <TabControl
             Name="tabControl"
             Grid.Row="1"
             Grid.ColumnSpan="3"
-            Margin="0,20,0,0"
+            Margin="0,5,0,0"
             BorderThickness="0"
             Loaded="TabControl_Loaded"
             Style="{StaticResource TabControlBaseStyle}">
@@ -441,54 +476,6 @@
                                 <RowDefinition Height="5" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="auto" />
-                                </Grid.ColumnDefinitions>
-                                <hc:UniformSpacingPanel VerticalAlignment="Center" Spacing="5">
-                                    <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Runnning time:'}" />
-                                    <TextBlock
-                                        HorizontalAlignment="Right"
-                                        FontSize="{DynamicResource SubHeadFontSize}"
-                                        Foreground="Green"
-                                        Text="{Binding FormattedTime}" />
-                                </hc:UniformSpacingPanel>
-                                <Border
-                                    Name="BorderDevice"
-                                    Grid.Column="1"
-                                    Margin="5,0,5,0"
-                                    Background="White"
-                                    BorderBrush="LightGray"
-                                    BorderThickness="1"
-                                    CornerRadius="8">
-                                    <hc:ScrollViewer
-                                        hc:ScrollViewerAttach.AutoHide="True"
-                                        hc:ScrollViewerAttach.Orientation="Vertical"
-                                        HorizontalScrollBarVisibility="Disabled"
-                                        VerticalScrollBarVisibility="Auto">
-                                        <WrapPanel
-                                            Name="ChkList"
-                                            Orientation="Horizontal"
-                                            ScrollViewer.CanContentScroll="True">
-                                            <CheckBox Name="ChkAll" Content="Select all" />
-                                        </WrapPanel>
-                                    </hc:ScrollViewer>
-                                </Border>
-                                <Button
-                                    Grid.Column="2"
-                                    Height="35"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    hc:BorderElement.CornerRadius="8"
-                                    hc:IconElement.Geometry="{StaticResource GeometrySetting}"
-                                    Background="Transparent"
-                                    BorderThickness="1"
-                                    Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}"
-                                    CommandParameter="{x:Static Dock.Right}"
-                                    Content="{ex:Language Key='图表设置'}" />
-                            </Grid>
                             <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto" />
@@ -497,7 +484,6 @@
                                 </Grid.ColumnDefinitions>
                                 <Border
                                     Name="BorderReactor"
-                                    Width="550"
                                     Background="{StaticResource BackGroundBrush}"
                                     Style="{StaticResource BorderCard}">
                                     <Grid>
@@ -560,13 +546,17 @@
                                                     Visibility="{Binding CurrentDeviceParameter.WorkStatus, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Initializing}" />
                                             </hc:UniformSpacingPanel>
                                         </DockPanel>
-                                        <Grid Grid.Row="1" Margin="5">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition />
-                                                <RowDefinition Height="5" />
-                                                <RowDefinition />
-                                            </Grid.RowDefinitions>
-                                            <Border Style="{StaticResource BorderCard}">
+                                        <Border
+                                            Grid.Row="1"
+                                            Width="950"
+                                            Margin="5"
+                                            Style="{StaticResource BorderCard}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition Width="5" />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
                                                 <Grid>
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition
@@ -576,14 +566,12 @@
                                                         <RowDefinition Height="5" />
                                                         <RowDefinition Height="*" />
                                                     </Grid.RowDefinitions>
-                                                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                                    <ScrollViewer HorizontalScrollBarVisibility="Auto">
                                                         <WrapPanel Name="ChkGraphList1" Orientation="Horizontal" />
                                                     </ScrollViewer>
                                                     <wpf:WpfPlot Name="wpfPlot1" Grid.Row="2" />
                                                 </Grid>
-                                            </Border>
-                                            <Border Grid.Row="2" Style="{StaticResource BorderCard}">
-                                                <Grid>
+                                                <Grid Grid.Column="2">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition
                                                             Name="rowGraph2"
@@ -593,14 +581,19 @@
                                                         <RowDefinition Height="*" />
                                                     </Grid.RowDefinitions>
                                                     <Grid>
-                                                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                                        <ScrollViewer HorizontalScrollBarVisibility="Auto">
                                                             <WrapPanel Name="ChkGraphList2" Orientation="Horizontal" />
                                                         </ScrollViewer>
                                                     </Grid>
                                                     <wpf:WpfPlot Name="wpfPlot2" Grid.Row="2" />
                                                 </Grid>
-                                            </Border>
-                                        </Grid>
+                                            </Grid>
+                                        </Border>
+                                        <GridSplitter
+                                            Grid.Row="2"
+                                            Height="5"
+                                            HorizontalAlignment="Stretch"
+                                            Background="LightGray" />
                                         <Grid Grid.Row="3" Margin="5">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="auto" />
@@ -655,17 +648,23 @@
                                                     Orientation="Horizontal"
                                                     Spacing="5">
                                                     <TextBlock
+                                                        Width="45"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        Text="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}" />
+                                                        Text="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}" />
                                                     <TextBlock
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
                                                         Text="/" />
                                                     <TextBlock
+                                                        Width="45"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, StringFormat={}{0:F2}}" />
+                                                        Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, StringFormat={}{0:F2}}"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.TempParam.Temp_PV, StringFormat={}{0:F2}}" />
                                                 </hc:UniformSpacingPanel>
                                                 <ToggleButton
                                                     Grid.Column="4"
@@ -688,17 +687,23 @@
                                                     Orientation="Horizontal"
                                                     Spacing="5">
                                                     <TextBlock
+                                                        Width="45"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        Text="{Binding CurrentDeviceParameter.DO, StringFormat={}{0:F2}}" />
+                                                        Text="{Binding CurrentDeviceParameter.DO, StringFormat={}{0:F2}}"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.DO, StringFormat={}{0:F2}}" />
                                                     <TextBlock
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
                                                         Text="/" />
                                                     <TextBlock
+                                                        Width="45"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, StringFormat={}{0:F2}}" />
+                                                        Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, StringFormat={}{0:F2}}"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.DOParam.DO_PV, StringFormat={}{0:F2}}" />
                                                 </hc:UniformSpacingPanel>
                                                 <TextBlock
                                                     Grid.Row="4"
@@ -711,17 +716,23 @@
                                                     Orientation="Horizontal"
                                                     Spacing="5">
                                                     <TextBlock
-                                                        HorizontalAlignment="Center"
+                                                        Width="45"
+                                                        HorizontalAlignment="Left"
                                                         VerticalAlignment="Center"
-                                                        Text="{Binding CurrentDeviceParameter.Agit, StringFormat={}{0:F2}}" />
+                                                        Text="{Binding CurrentDeviceParameter.Agit, StringFormat={}{0:F0}}"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.Agit, StringFormat={}{0:F0}}" />
                                                     <TextBlock
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
                                                         Text="/" />
                                                     <TextBlock
+                                                        Width="45"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F2}}" />
+                                                        Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F0}}"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F0}}" />
                                                 </hc:UniformSpacingPanel>
                                                 <ToggleButton
                                                     Grid.Row="4"
@@ -745,53 +756,71 @@
                                                     Orientation="Horizontal"
                                                     Spacing="5">
                                                     <TextBlock
+                                                        Width="45"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        Text="{Binding CurrentDeviceParameter.PH, StringFormat={}{0:F2}}" />
+                                                        Text="{Binding CurrentDeviceParameter.PH, StringFormat={}{0:F2}}"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.PH, StringFormat={}{0:F2}}" />
                                                     <TextBlock
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
                                                         Text="/" />
                                                     <TextBlock
+                                                        Width="45"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, StringFormat={}{0:F2}}" />
+                                                        Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, StringFormat={}{0:F2}}"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.PHParam.PH_PV, StringFormat={}{0:F2}}" />
                                                 </hc:UniformSpacingPanel>
-                                                <TextBlock
-                                                    Grid.Row="8"
-                                                    MouseLeftButtonDown="Border_MouseLeftButtonDown"
-                                                    Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Name}"
-                                                    TextAlignment="Left" />
                                                 <hc:UniformSpacingPanel
                                                     Grid.Row="8"
-                                                    Grid.Column="2"
-                                                    Spacing="5">
-                                                    <hc:UniformSpacingPanel Spacing="1">
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="{Binding CurrentDeviceParameter.Pump1FlowSpeed, StringFormat={}{0:F2}}"
-                                                            TextAlignment="Left" />
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="mL/h"
-                                                            TextAlignment="Left" />
-                                                    </hc:UniformSpacingPanel>
+                                                    Orientation="Horizontal"
+                                                    Spacing="3">
+                                                    <TextBlock
+                                                        MouseLeftButtonDown="Border_MouseLeftButtonDown"
+                                                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Name}"
+                                                        TextAlignment="Left" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="mL/h"
+                                                        TextAlignment="Left" />
                                                     <Line
                                                         VerticalAlignment="Center"
                                                         Stroke="Black"
                                                         StrokeThickness="0.5"
                                                         Y1="0"
                                                         Y2="15" />
-                                                    <hc:UniformSpacingPanel Spacing="1">
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="{Binding CurrentDeviceParameter.Pump1FlowCapacity, StringFormat={}{0:F2}}"
-                                                            TextAlignment="Left" />
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="mL"
-                                                            TextAlignment="Left" />
-                                                    </hc:UniformSpacingPanel>
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="mL"
+                                                        TextAlignment="Left" />
+                                                </hc:UniformSpacingPanel>
+                                                <hc:UniformSpacingPanel
+                                                    Grid.Row="8"
+                                                    Grid.Column="2"
+                                                    Spacing="5">
+                                                    <TextBlock
+                                                        Width="45"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding CurrentDeviceParameter.Pump1FlowSpeed, StringFormat={}{0:F2}}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.Pump1FlowSpeed, StringFormat={}{0:F2}}" />
+                                                    <Line
+                                                        VerticalAlignment="Center"
+                                                        Stroke="Black"
+                                                        StrokeThickness="0.5"
+                                                        Y1="0"
+                                                        Y2="15" />
+                                                    <TextBlock
+                                                        Width="45"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding CurrentDeviceParameter.Pump1FlowCapacity, StringFormat={}{0:F2}}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.Pump1FlowCapacity, StringFormat={}{0:F2}}" />
                                                 </hc:UniformSpacingPanel>
                                                 <ToggleButton
                                                     Grid.Row="8"
@@ -804,41 +833,53 @@
                                                     Style="{StaticResource ToggleButtonSwitch}"
                                                     Tag="Pump1"
                                                     Unchecked="ToggleButton_CheckStateChanged" />
-                                                <TextBlock
-                                                    Grid.Row="10"
-                                                    MouseLeftButtonDown="Border_MouseLeftButtonDown"
-                                                    Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Name}"
-                                                    TextAlignment="Left" />
                                                 <hc:UniformSpacingPanel
                                                     Grid.Row="10"
-                                                    Grid.Column="2"
-                                                    Spacing="5">
-                                                    <hc:UniformSpacingPanel Spacing="1">
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="{Binding CurrentDeviceParameter.Pump2FlowSpeed, StringFormat={}{0:F2}}"
-                                                            TextAlignment="Left" />
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="mL/h"
-                                                            TextAlignment="Left" />
-                                                    </hc:UniformSpacingPanel>
+                                                    Orientation="Horizontal"
+                                                    Spacing="3">
+                                                    <TextBlock
+                                                        MouseLeftButtonDown="Border_MouseLeftButtonDown"
+                                                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Name}"
+                                                        TextAlignment="Left" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="mL/h"
+                                                        TextAlignment="Left" />
                                                     <Line
                                                         VerticalAlignment="Center"
                                                         Stroke="Black"
                                                         StrokeThickness="0.5"
                                                         Y1="0"
                                                         Y2="15" />
-                                                    <hc:UniformSpacingPanel Spacing="1">
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="{Binding CurrentDeviceParameter.Pump2FlowCapacity, StringFormat={}{0:F2}}"
-                                                            TextAlignment="Left" />
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="mL"
-                                                            TextAlignment="Left" />
-                                                    </hc:UniformSpacingPanel>
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="mL"
+                                                        TextAlignment="Left" />
+                                                </hc:UniformSpacingPanel>
+                                                <hc:UniformSpacingPanel
+                                                    Grid.Row="10"
+                                                    Grid.Column="2"
+                                                    Spacing="5">
+                                                    <TextBlock
+                                                        Width="45"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding CurrentDeviceParameter.Pump2FlowSpeed, StringFormat={}{0:F2}}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.Pump2FlowSpeed, StringFormat={}{0:F2}}" />
+                                                    <Line
+                                                        VerticalAlignment="Center"
+                                                        Stroke="Black"
+                                                        StrokeThickness="0.5"
+                                                        Y1="0"
+                                                        Y2="15" />
+                                                    <TextBlock
+                                                        Width="45"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding CurrentDeviceParameter.Pump2FlowCapacity, StringFormat={}{0:F2}}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.Pump2FlowCapacity, StringFormat={}{0:F2}}" />
                                                 </hc:UniformSpacingPanel>
                                                 <ToggleButton
                                                     Grid.Row="10"
@@ -851,40 +892,52 @@
                                                     Style="{StaticResource ToggleButtonSwitch}"
                                                     Tag="Pump2"
                                                     Unchecked="ToggleButton_CheckStateChanged" />
-                                                <TextBlock
+                                                <hc:UniformSpacingPanel
                                                     Grid.Row="12"
-                                                    MouseLeftButtonDown="Border_MouseLeftButtonDown"
-                                                    Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Name}"
-                                                    TextAlignment="Left" />
+                                                    Orientation="Horizontal"
+                                                    Spacing="3">
+                                                    <TextBlock
+                                                        MouseLeftButtonDown="Border_MouseLeftButtonDown"
+                                                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Name}"
+                                                        TextAlignment="Left" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="mL/h"
+                                                        TextAlignment="Left" />
+                                                    <Line
+                                                        VerticalAlignment="Center"
+                                                        Stroke="Black"
+                                                        StrokeThickness="0.5"
+                                                        Y1="0"
+                                                        Y2="15" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="mL"
+                                                        TextAlignment="Left" />
+                                                </hc:UniformSpacingPanel>
                                                 <hc:UniformSpacingPanel
                                                     Grid.Row="12"
                                                     Grid.Column="2"
                                                     Spacing="5">
-                                                    <hc:UniformSpacingPanel Spacing="1">
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="{Binding CurrentDeviceParameter.Pump3FlowSpeed, StringFormat={}{0:F2}}"
-                                                            TextAlignment="Left" />
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="mL/h"
-                                                            TextAlignment="Left" />
-                                                    </hc:UniformSpacingPanel>
+                                                    <TextBlock
+                                                        Width="45"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding CurrentDeviceParameter.Pump3FlowSpeed, StringFormat={}{0:F2}}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.Pump3FlowSpeed, StringFormat={}{0:F2}}" />
                                                     <Line
                                                         Stroke="Black"
                                                         StrokeThickness="0.5"
                                                         Y1="0"
                                                         Y2="15" />
-                                                    <hc:UniformSpacingPanel Spacing="1">
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="{Binding CurrentDeviceParameter.Pump3FlowCapacity, StringFormat={}{0:F2}}"
-                                                            TextAlignment="Left" />
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="mL"
-                                                            TextAlignment="Left" />
-                                                    </hc:UniformSpacingPanel>
+                                                    <TextBlock
+                                                        Width="45"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding CurrentDeviceParameter.Pump3FlowCapacity, StringFormat={}{0:F2}}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.Pump3FlowCapacity, StringFormat={}{0:F2}}" />
                                                 </hc:UniformSpacingPanel>
                                                 <ToggleButton
                                                     Grid.Row="12"
@@ -897,40 +950,52 @@
                                                     Style="{StaticResource ToggleButtonSwitch}"
                                                     Tag="Pump3"
                                                     Unchecked="ToggleButton_CheckStateChanged" />
-                                                <TextBlock
+                                                <hc:UniformSpacingPanel
                                                     Grid.Row="14"
-                                                    MouseLeftButtonDown="Border_MouseLeftButtonDown"
-                                                    Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Name}"
-                                                    TextAlignment="Left" />
+                                                    Orientation="Horizontal"
+                                                    Spacing="3">
+                                                    <TextBlock
+                                                        MouseLeftButtonDown="Border_MouseLeftButtonDown"
+                                                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Name}"
+                                                        TextAlignment="Left" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="mL/h"
+                                                        TextAlignment="Left" />
+                                                    <Line
+                                                        VerticalAlignment="Center"
+                                                        Stroke="Black"
+                                                        StrokeThickness="0.5"
+                                                        Y1="0"
+                                                        Y2="15" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="mL"
+                                                        TextAlignment="Left" />
+                                                </hc:UniformSpacingPanel>
                                                 <hc:UniformSpacingPanel
                                                     Grid.Row="14"
                                                     Grid.Column="2"
                                                     Spacing="5">
-                                                    <hc:UniformSpacingPanel Spacing="1">
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="{Binding CurrentDeviceParameter.Pump4FlowSpeed, StringFormat={}{0:F2}}"
-                                                            TextAlignment="Left" />
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="mL/h"
-                                                            TextAlignment="Left" />
-                                                    </hc:UniformSpacingPanel>
+                                                    <TextBlock
+                                                        Width="45"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding CurrentDeviceParameter.Pump4FlowSpeed, StringFormat={}{0:F2}}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.Pump4FlowSpeed, StringFormat={}{0:F2}}" />
                                                     <Line
                                                         Stroke="Black"
                                                         StrokeThickness="0.5"
                                                         Y1="0"
                                                         Y2="15" />
-                                                    <hc:UniformSpacingPanel Spacing="1">
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="{Binding CurrentDeviceParameter.Pump4FlowCapacity, StringFormat={}{0:F2}}"
-                                                            TextAlignment="Left" />
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="mL"
-                                                            TextAlignment="Left" />
-                                                    </hc:UniformSpacingPanel>
+                                                    <TextBlock
+                                                        Width="45"
+                                                        VerticalAlignment="Center"
+                                                        Text="{Binding CurrentDeviceParameter.Pump4FlowCapacity, StringFormat={}{0:F2}}"
+                                                        TextAlignment="Left"
+                                                        TextTrimming="WordEllipsis"
+                                                        ToolTip="{Binding CurrentDeviceParameter.Pump4FlowCapacity, StringFormat={}{0:F2}}" />
                                                 </hc:UniformSpacingPanel>
                                                 <ToggleButton
                                                     Grid.Row="14"
@@ -943,35 +1008,29 @@
                                                     Style="{StaticResource ToggleButtonSwitch}"
                                                     Tag="Pump4"
                                                     Unchecked="ToggleButton_CheckStateChanged" />
-                                                <TextBlock
-                                                    Grid.Row="16"
-                                                    MouseLeftButtonDown="Border_MouseLeftButtonDown"
-                                                    Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1Name}"
-                                                    TextAlignment="Left" />
                                                 <hc:UniformSpacingPanel
                                                     Grid.Row="16"
-                                                    Grid.Column="2"
-                                                    Spacing="5">
-                                                    <hc:UniformSpacingPanel Spacing="1">
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="{Binding CurrentDeviceParameter.MFC1FlowSpeed, StringFormat={}{0:F2}}"
-                                                            TextAlignment="Left" />
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="mL/h"
-                                                            TextAlignment="Left" />
-                                                    </hc:UniformSpacingPanel>
-                                                    <!--<Line
-                                                    Stroke="Black"
-                                                    StrokeThickness="0.5"
-                                                    Y1="3"
-                                                    Y2="12" />
-                                                <hc:UniformSpacingPanel Spacing="1">
-                                                    <TextBlock Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1FlowCapacity, StringFormat={}{0:F2}}" TextAlignment="Left" />
-                                                    <TextBlock Text="mL" TextAlignment="Left" />
-                                                </hc:UniformSpacingPanel>-->
+                                                    Orientation="Horizontal"
+                                                    Spacing="3">
+                                                    <TextBlock
+                                                        MouseLeftButtonDown="Border_MouseLeftButtonDown"
+                                                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1Name}"
+                                                        TextAlignment="Left" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="L/min"
+                                                        TextAlignment="Left" />
                                                 </hc:UniformSpacingPanel>
+                                                <TextBlock
+                                                    Grid.Row="16"
+                                                    Grid.Column="2"
+                                                    Width="45"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding CurrentDeviceParameter.MFC1FlowSpeed, StringFormat={}{0:F2}}"
+                                                    TextAlignment="Left"
+                                                    TextTrimming="WordEllipsis"
+                                                    ToolTip="{Binding CurrentDeviceParameter.MFC1FlowSpeed, StringFormat={}{0:F2}}" />
                                                 <ToggleButton
                                                     Grid.Row="16"
                                                     Grid.Column="4"
@@ -983,35 +1042,29 @@
                                                     Style="{StaticResource ToggleButtonSwitch}"
                                                     Tag="MFC1"
                                                     Unchecked="ToggleButton_CheckStateChanged" />
-                                                <TextBlock
-                                                    Grid.Row="18"
-                                                    MouseLeftButtonDown="Border_MouseLeftButtonDown"
-                                                    Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2Name}"
-                                                    TextAlignment="Left" />
                                                 <hc:UniformSpacingPanel
                                                     Grid.Row="18"
-                                                    Grid.Column="2"
-                                                    Spacing="5">
-                                                    <hc:UniformSpacingPanel Spacing="1">
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="{Binding CurrentDeviceParameter.MFC2FlowSpeed, StringFormat={}{0:F2}}"
-                                                            TextAlignment="Left" />
-                                                        <TextBlock
-                                                            VerticalAlignment="Center"
-                                                            Text="mL/h"
-                                                            TextAlignment="Left" />
-                                                    </hc:UniformSpacingPanel>
-                                                    <!--<Line
-                                                    Stroke="Black"
-                                                    StrokeThickness="0.5"
-                                                    Y1="3"
-                                                    Y2="12" />
-                                                <hc:UniformSpacingPanel Spacing="1">
-                                                    <TextBlock Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2FlowCapacity, StringFormat={}{0:F2}}" TextAlignment="Left" />
-                                                    <TextBlock Text="mL" TextAlignment="Left" />
-                                                </hc:UniformSpacingPanel>-->
+                                                    Orientation="Horizontal"
+                                                    Spacing="3">
+                                                    <TextBlock
+                                                        MouseLeftButtonDown="Border_MouseLeftButtonDown"
+                                                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2Name}"
+                                                        TextAlignment="Left" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        Text="L/min"
+                                                        TextAlignment="Left" />
                                                 </hc:UniformSpacingPanel>
+                                                <TextBlock
+                                                    Grid.Row="18"
+                                                    Grid.Column="2"
+                                                    Width="45"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding CurrentDeviceParameter.MFC2FlowSpeed, StringFormat={}{0:F2}}"
+                                                    TextAlignment="Left"
+                                                    TextTrimming="WordEllipsis"
+                                                    ToolTip="{Binding CurrentDeviceParameter.MFC2FlowSpeed, StringFormat={}{0:F2}}" />
                                                 <ToggleButton
                                                     Grid.Row="18"
                                                     Grid.Column="4"
@@ -1074,12 +1127,39 @@
                                                     <RowDefinition Height="8" />
                                                     <RowDefinition Height="auto" />
                                                 </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Column="2"
+                                                    DockPanel.Dock="Right"
+                                                    Orientation="Vertical"
+                                                    Visibility="Collapsed">
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        FontWeight="Bold"
+                                                        Foreground="{StaticResource FixedBrush}"
+                                                        Text="{ex:Language Key='运行中'}"
+                                                        TextAlignment="Left"
+                                                        Visibility="{Binding CurrentDeviceParameter.WorkStatus, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Running}" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        FontWeight="Bold"
+                                                        Foreground="{StaticResource WarningBrush}"
+                                                        Text="{ex:Language Key='空闲'}"
+                                                        TextAlignment="Left"
+                                                        Visibility="{Binding CurrentDeviceParameter.WorkStatus, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Idle}" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        FontWeight="Bold"
+                                                        Foreground="{StaticResource WarningBrush}"
+                                                        Text="{ex:Language Key='空闲'}"
+                                                        TextAlignment="Left"
+                                                        Visibility="{Binding CurrentDeviceParameter.WorkStatus, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Initializing}" />
+                                                </StackPanel>
                                                 <TextBlock
-                                                    Grid.Row="0"
+                                                    Grid.Row="2"
                                                     Text="{ex:Language Key='批次号'}"
                                                     TextAlignment="Left" />
                                                 <TextBlock
-                                                    Grid.Row="0"
+                                                    Grid.Row="2"
                                                     Grid.Column="2"
                                                     Text="{Binding CurrentBatch.Id}"
                                                     TextAlignment="Right" />
@@ -1093,12 +1173,12 @@
                                                     Text="{Binding FormattedTime}"
                                                     TextAlignment="Left" />-->
                                                 <TextBlock
-                                                    Grid.Row="2"
+                                                    Grid.Row="4"
                                                     VerticalAlignment="Center"
                                                     Text="连接状态"
                                                     TextAlignment="Left" />
                                                 <hc:UniformSpacingPanel
-                                                    Grid.Row="2"
+                                                    Grid.Row="4"
                                                     Grid.Column="2"
                                                     VerticalAlignment="Center"
                                                     Orientation="Horizontal"
@@ -1116,33 +1196,33 @@
                                                 </hc:UniformSpacingPanel>
 
                                                 <TextBlock
-                                                    Grid.Row="4"
+                                                    Grid.Row="6"
                                                     Text="IP地址"
                                                     TextAlignment="Left" />
                                                 <TextBlock
-                                                    Grid.Row="4"
+                                                    Grid.Row="6"
                                                     Grid.Column="2"
                                                     Text="{Binding CurrentDeviceParameter.Ip}"
                                                     TextAlignment="Left" />
                                                 <TextBlock
-                                                    Grid.Row="6"
+                                                    Grid.Row="8"
                                                     VerticalAlignment="Center"
                                                     Text="{ex:Language Key='备注'}"
                                                     TextAlignment="Left" />
                                                 <TextBlock
-                                                    Grid.Row="6"
+                                                    Grid.Row="8"
                                                     Grid.Column="2"
                                                     MaxWidth="150"
                                                     Text="{Binding Remark}"
                                                     TextAlignment="Left"
                                                     TextWrapping="Wrap" />
                                                 <TextBlock
-                                                    Grid.Row="8"
+                                                    Grid.Row="10"
                                                     VerticalAlignment="Center"
                                                     Text="{ex:Language Key='尾气冷凝'}"
                                                     TextAlignment="Left" />
                                                 <ToggleButton
-                                                    Grid.Row="8"
+                                                    Grid.Row="10"
                                                     Grid.Column="4"
                                                     HorizontalAlignment="Center"
                                                     Background="Gray"
@@ -1154,8 +1234,10 @@
                                                     Unchecked="ToggleButton_CheckStateChanged" />
                                             </Grid>
                                             <Image
-                                                Grid.Column="4"
-                                                Width="100"
+                                                Grid.Column="3"
+                                                Width="200"
+                                                Height="300"
+                                                Margin="30,0,0,-100"
                                                 MouseLeftButtonDown="Border_MouseLeftButtonDown"
                                                 Source="/Images/FermentationTank.png" />
                                         </Grid>
@@ -1182,6 +1264,12 @@
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                            <!--<hc:CheckComboBox
+                                                hc:InfoElement.ShowClearButton="True"
+                                                ItemsSource="{Binding YAxisSource}"
+                                                SelectionChanged="CheckComboBox_SelectionChanged"
+                                                SelectionMode="Multiple"
+                                                ShowSelectAllButton="True" />-->
                                             <WrapPanel Name="ChkGraphList3" Orientation="Horizontal" />
                                         </ScrollViewer>
                                         <wpf:WpfPlot Name="wpfPlot3" Grid.Row="2" />
@@ -1200,6 +1288,12 @@
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                            <!--<hc:CheckComboBox
+                                                hc:InfoElement.ShowClearButton="True"
+                                                ItemsSource="{Binding YAxisSource}"
+                                                SelectionChanged="CheckComboBox_SelectionChanged"
+                                                SelectionMode="Multiple"
+                                                ShowSelectAllButton="True" />-->
                                             <WrapPanel Name="ChkGraphList4" Orientation="Horizontal" />
                                         </ScrollViewer>
                                         <wpf:WpfPlot Name="wpfPlot4" Grid.Row="2" />

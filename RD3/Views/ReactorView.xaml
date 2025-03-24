@@ -1,0 +1,1177 @@
+﻿<UserControl
+    x:Class="RD3.Views.ReactorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="clr-namespace:RD3.Behaviors"
+    xmlns:common="clr-namespace:RD3.Common"
+    xmlns:cv="clr-namespace:RD3.Common.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:vm="clr-namespace:RD3.ViewModels"
+    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+    Width="1600"
+    Height="900"
+    d:DataContext="{d:DesignInstance Type=vm:ReactorViewModel}"
+    Background="{StaticResource BackGroundBrush}"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource TextFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="CanResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="True" />
+            <Setter Property="AllowsTransparency" Value="False" />
+            <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Icon" Value="../Assets/logo.png" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0">
+            <hc:UniformSpacingPanel
+                DockPanel.Dock="Left"
+                Orientation="Horizontal"
+                Spacing="5">
+                <Button
+                    hc:IconElement.Geometry="{StaticResource GeometryHome}"
+                    Background="{DynamicResource PrimaryBrush}"
+                    BorderThickness="0"
+                    Command="{Binding BackToIndexCommand}"
+                    Foreground="White"
+                    Style="{StaticResource ButtonIconCircular}"
+                    ToolTip="{ex:Language Key='返回主页'}" />
+                <Button
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                    hc:IconElement.Geometry="{StaticResource GeometryRelease}"
+                    Background="{DynamicResource StopBrush}"
+                    BorderThickness="0"
+                    Command="{Binding ReleaseCommand}"
+                    Foreground="White"
+                    Style="{StaticResource ButtonIconCircular}"
+                    ToolTip="{ex:Language Key='一键下罐'}" />
+            </hc:UniformSpacingPanel>
+        </DockPanel>
+        <Grid Name="GridMain" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid Width="845" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition
+                            Name="rowGraph1"
+                            Height="auto"
+                            MaxHeight="60" />
+                        <RowDefinition Height="5" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ComboBox
+                        Name="ComboBoxGraph"
+                        MinWidth="200"
+                        MaxWidth="200"
+                        HorizontalAlignment="Left"
+                        SelectionChanged="ComboBoxGraph_SelectionChanged"
+                        Visibility="Collapsed">
+                        <ComboBoxItem Content="泵" />
+                        <ComboBoxItem Content="气体" />
+                    </ComboBox>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto">
+                        <WrapPanel
+                            Name="ChkGraphList1"
+                            Orientation="Horizontal"
+                            Visibility="Collapsed" />
+                    </ScrollViewer>
+                    <wpf:WpfPlot Name="wpfPlot1" Grid.Row="3" />
+                </Grid>
+                <GridSplitter
+                    Grid.Row="1"
+                    Height="5"
+                    HorizontalAlignment="Stretch"
+                    Background="LightGray" />
+                <Canvas
+                    Grid.Row="2"
+                    Width="850"
+                    Height="600">
+                    <StackPanel
+                        Canvas.Left="10"
+                        Canvas.Top="20"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            FontSize="{StaticResource SubHeadFontSize}"
+                            Text="{Binding CurrentDeviceParameter.Name}"
+                            Visibility="Hidden" />
+                        <!--  隐藏名称，用下拉框替换  -->
+                        <hc:ComboBox
+                            Name="CmbDevice"
+                            Width="100"
+                            BorderBrush="Gray"
+                            BorderThickness="1"
+                            FontSize="{DynamicResource SubHeadFontSize}"
+                            ItemsSource="{Binding ReactorCol}"
+                            SelectedIndex="0"
+                            Style="{StaticResource ComboBoxExtend}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding ChangeDeviceCommand}"
+                                        CommandParameter="{Binding ElementName=CmbDevice, Path=SelectedItem}"
+                                        PassEventArgsToCommand="True" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </hc:ComboBox>
+                        <hc:UniformSpacingPanel
+                            Margin="20,0,0,0"
+                            VerticalAlignment="Center"
+                            Spacing="5">
+                            <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='运行状态:'}" />
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                FontSize="{DynamicResource SubHeadFontSize}"
+                                Text="{Binding CurrentDeviceParameter.ReactorStatusName}" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel
+                            Margin="20,0,0,0"
+                            VerticalAlignment="Center"
+                            Spacing="5">
+                            <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='运行时间:'}" />
+                            <TextBlock
+                                HorizontalAlignment="Right"
+                                FontSize="{DynamicResource SubHeadFontSize}"
+                                Text="{Binding FormattedTime}" />
+                        </hc:UniformSpacingPanel>
+                    </StackPanel>
+                    <Image
+                        Canvas.Left="20"
+                        Canvas.Bottom="30"
+                        Width="400"
+                        Height="500"
+                        Source="/Images/ReactorNew/罐体.png" />
+                    <TextBlock
+                        Canvas.Left="115"
+                        Canvas.Top="200"
+                        Text="总量(mL)" />
+                    <Image
+                        Name="Pump1Enable"
+                        Canvas.Left="68"
+                        Canvas.Top="229"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵使能.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="Pump1Disable"
+                        Canvas.Left="68"
+                        Canvas.Top="229"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵不使能.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="Pump1Weight"
+                        Canvas.Left="105"
+                        Canvas.Top="229"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵带底.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="Pump1NoWeight"
+                        Canvas.Left="105"
+                        Canvas.Top="229"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵不带底.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <TextBlock
+                        Canvas.Left="140"
+                        Canvas.Top="238"
+                        Text="{Binding CurrentDeviceParameter.Pump1FlowCapacity}" />
+                    <TextBlock
+                        Canvas.Left="25"
+                        Canvas.Top="238"
+                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Name}" />
+                    <Image
+                        Name="Pump2Enable"
+                        Canvas.Left="68"
+                        Canvas.Top="285"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵使能.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="Pump2Disable"
+                        Canvas.Left="68"
+                        Canvas.Top="285"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵不使能.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="Pump2Weight"
+                        Canvas.Left="105"
+                        Canvas.Top="285"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵带底.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="Pump2NoWeight"
+                        Canvas.Left="105"
+                        Canvas.Top="285"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵不带底.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <TextBlock
+                        Canvas.Left="140"
+                        Canvas.Top="295"
+                        Text="{Binding CurrentDeviceParameter.Pump2FlowCapacity}" />
+                    <TextBlock
+                        Canvas.Left="25"
+                        Canvas.Top="295"
+                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Name}" />
+                    <Image
+                        Name="Pump3Enable"
+                        Canvas.Left="68"
+                        Canvas.Top="341"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵使能.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="Pump3Disable"
+                        Canvas.Left="68"
+                        Canvas.Top="341"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵不使能.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="Pump3Weight"
+                        Canvas.Left="105"
+                        Canvas.Top="341"
+                        Width="30"
+                        Height="25"
+                        Source="/Images/ReactorNew/泵带底.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="Pump3NoWeight"
+                        Canvas.Left="105"
+                        Canvas.Top="341"
+                        Width="30"
+                        Height="25"
+                        Source="/Images/ReactorNew/泵不带底.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <TextBlock
+                        Canvas.Left="140"
+                        Canvas.Top="348"
+                        Text="{Binding CurrentDeviceParameter.Pump3FlowCapacity}" />
+                    <TextBlock
+                        Canvas.Left="25"
+                        Canvas.Top="348"
+                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Name}" />
+                    <Image
+                        Name="Pump4Enable"
+                        Canvas.Left="68"
+                        Canvas.Top="397"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵使能.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="Pump4Disable"
+                        Canvas.Left="68"
+                        Canvas.Top="397"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵不使能.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="Pump4Weight"
+                        Canvas.Left="105"
+                        Canvas.Top="397"
+                        Width="30"
+                        Height="25"
+                        Source="/Images/ReactorNew/泵带底.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="Pump4NoWeight"
+                        Canvas.Left="105"
+                        Canvas.Top="397"
+                        Width="30"
+                        Height="25"
+                        Source="/Images/ReactorNew/泵不带底.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <TextBlock
+                        Canvas.Left="140"
+                        Canvas.Top="404"
+                        Text="{Binding CurrentDeviceParameter.Pump4FlowCapacity}" />
+                    <TextBlock
+                        Canvas.Left="25"
+                        Canvas.Top="404"
+                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Name}" />
+                    <Image
+                        Name="Pump5Enable"
+                        Canvas.Left="68"
+                        Canvas.Top="453"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵使能.png"
+                        Visibility="Collapsed" />
+                    <Image
+                        Name="Pump5Disable"
+                        Canvas.Left="68"
+                        Canvas.Top="453"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵不使能.png" />
+                    <Image
+                        Name="Pump6Enable"
+                        Canvas.Left="68"
+                        Canvas.Top="509"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵使能.png"
+                        Visibility="Collapsed" />
+                    <Image
+                        Name="Pump6Disable"
+                        Canvas.Left="68"
+                        Canvas.Top="509"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/泵不使能.png" />
+                    <Image
+                        Name="CondensationEnable"
+                        Canvas.Left="217"
+                        Canvas.Top="105"
+                        Width="40"
+                        Height="50"
+                        Source="/Images/ReactorNew/尾气冷凝使能.png"
+                        Tag="Close"
+                        Visibility="{Binding CondensationEnable, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Open}">
+                        <Image.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem
+                                    Command="{Binding CondensateCommand}"
+                                    CommandParameter="Open"
+                                    Header="打开冷凝"
+                                    IsChecked="{Binding CondensationEnable, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Open}" />
+                                <MenuItem
+                                    Command="{Binding CondensateCommand}"
+                                    CommandParameter="Close"
+                                    Header="关闭冷凝"
+                                    IsChecked="{Binding CondensationEnable, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Close}" />
+                            </ContextMenu>
+                        </Image.ContextMenu>
+                    </Image>
+                    <Image
+                        Name="CondensationDisable"
+                        Canvas.Left="217"
+                        Canvas.Top="105"
+                        Width="40"
+                        Height="50"
+                        Source="/Images/ReactorNew/尾气冷凝不使能.png"
+                        Tag="Open"
+                        Visibility="{Binding CondensationEnable, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Close}">
+                        <Image.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem
+                                    Command="{Binding CondensateCommand}"
+                                    CommandParameter="Open"
+                                    Header="打开冷凝"
+                                    IsChecked="{Binding CondensationEnable, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Open}" />
+                                <MenuItem
+                                    Command="{Binding CondensateCommand}"
+                                    CommandParameter="Close"
+                                    Header="关闭冷凝"
+                                    IsChecked="{Binding CondensationEnable, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Close}" />
+                            </ContextMenu>
+                        </Image.ContextMenu>
+                    </Image>
+                    <Image
+                        Name="TECHeat"
+                        Canvas.Left="210"
+                        Canvas.Bottom="35"
+                        Width="100"
+                        Height="130"
+                        Source="/Images/ReactorNew/加热.png"
+                        Visibility="Collapsed" />
+                    <Image
+                        Name="TECCool"
+                        Canvas.Left="210"
+                        Canvas.Bottom="35"
+                        Width="100"
+                        Height="130"
+                        Source="/Images/ReactorNew/制冷.png"
+                        Visibility="Collapsed" />
+                    <Image
+                        Name="TECDisable"
+                        Canvas.Left="210"
+                        Canvas.Bottom="35"
+                        Width="100"
+                        Height="130"
+                        Source="/Images/ReactorNew/常温.png" />
+                    <Image
+                        Name="LiquidLevel"
+                        Canvas.Left="217"
+                        Canvas.Bottom="45"
+                        Width="85"
+                        Height="200"
+                        Source="/Images/ReactorNew/液面图.png" />
+                    <Image
+                        Name="MFC1Enable"
+                        Canvas.Left="360"
+                        Canvas.Bottom="233"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/MFC使能.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="MFC1No"
+                        Canvas.Left="360"
+                        Canvas.Bottom="233"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/MFC没启用.png"
+                        Visibility="Collapsed" />
+                    <Image
+                        Name="MFC1Disable"
+                        Canvas.Left="360"
+                        Canvas.Bottom="233"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/MFC不使能.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <TextBlock
+                        Canvas.Left="400"
+                        Canvas.Top="345"
+                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1Name}" />
+                    <Image
+                        Name="MFC2Enable"
+                        Canvas.Left="360"
+                        Canvas.Bottom="175"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/MFC使能.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Image
+                        Name="MFC2No"
+                        Canvas.Left="360"
+                        Canvas.Bottom="175"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/MFC没启用.png"
+                        Visibility="Collapsed" />
+                    <Image
+                        Name="MFC2Disable"
+                        Canvas.Left="360"
+                        Canvas.Bottom="176"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/MFC不使能.png"
+                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <TextBlock
+                        Canvas.Left="400"
+                        Canvas.Top="405"
+                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2Name}" />
+                    <Image
+                        Name="MFC3No"
+                        Canvas.Left="360"
+                        Canvas.Bottom="118"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/MFC没启用.png" />
+                    <Image
+                        Name="MFC4No"
+                        Canvas.Left="360"
+                        Canvas.Bottom="60"
+                        Width="30"
+                        Height="30"
+                        Source="/Images/ReactorNew/MFC没启用.png" />
+                    <hc:UniformSpacingPanel
+                        Canvas.Left="215"
+                        Canvas.Bottom="35"
+                        Orientation="Horizontal"
+                        Spacing="3">
+                        <TextBlock Text="罐体重量(g)" />
+                        <TextBlock Text="{Binding CurrentDeviceParameter.JarWeight}" />
+                    </hc:UniformSpacingPanel>
+                    <Border
+                        Canvas.Left="480"
+                        Canvas.Top="20"
+                        Padding="5"
+                        BorderThickness="0">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='溶氧(%)'}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.DOParam.DO_PV}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="选择来源">
+                                                <MenuItem
+                                                    Name="mi_hand"
+                                                    Click="MenuItem_Click"
+                                                    Command="{Binding DOSPCommand}"
+                                                    CommandParameter="Enable"
+                                                    Header="手动输入"
+                                                    IsChecked="False" />
+                                                <MenuItem
+                                                    Name="mi_auto"
+                                                    Click="MenuItem_Click"
+                                                    Command="{Binding DOSPCommand}"
+                                                    CommandParameter="TimeSeries"
+                                                    Header="时间序列"
+                                                    IsChecked="False" />
+                                            </MenuItem>
+                                            <Separator />
+                                            <MenuItem
+                                                Command="{Binding TimeSeriesCommand}"
+                                                CommandParameter="DO"
+                                                Header="时间序列设置" />
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    IsEnabled="True"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.DO}" />
+                                <hc:ProgressButton
+                                    Width="75"
+                                    VerticalAlignment="Bottom"
+                                    Content="自动"
+                                    IsChecked="False"
+                                    Style="{StaticResource ToggleButtonLoadingPrimary}" />
+                                <Button
+                                    Name="DOStart"
+                                    Width="75"
+                                    VerticalAlignment="Bottom"
+                                    BorderBrush="Gray"
+                                    Command="{Binding DOStartCommand}"
+                                    Content="配置">
+                                    <!--  modify by hdb  -->
+                                    <Button.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="复制" />
+                                            <MenuItem Header="粘贴" />
+                                            <Separator />
+                                            <MenuItem Header="删除" />
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                </Button>
+                                <StackPanel VerticalAlignment="Bottom" Orientation="Vertical">
+                                    <CheckBox Content="正向(+)" IsChecked="{Binding CurrentDeviceParameter.DOParam.IsDirect}" />
+                                    <CheckBox Content="反向(-)" IsChecked="{Binding CurrentDeviceParameter.DOParam.IsDirect, Converter={StaticResource InverseBooleanConverter}}" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='转速(rpm)'}"
+                                    LostFocus="TextBox_LostFocus"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, UpdateSourceTrigger=PropertyChanged}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="选择来源">
+                                                <MenuItem
+                                                    Command="{Binding AgitSPCommand}"
+                                                    CommandParameter="Disable"
+                                                    Header="不使能" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding AgitSPCommand}"
+                                                    CommandParameter="Enable"
+                                                    Header="恒速运行" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding AgitSPCommand}"
+                                                    CommandParameter="Associated"
+                                                    Header="关联溶氧" />
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    IsEnabled="True"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.Agit}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='空气(L/min)'}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.AirParam.FlowSpeed}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="选择来源">
+                                                <MenuItem
+                                                    Command="{Binding AirSPCommand}"
+                                                    CommandParameter="Disable"
+                                                    Header="不使能" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding AirSPCommand}"
+                                                    CommandParameter="Enable"
+                                                    Header="恒速运行" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding AirSPCommand}"
+                                                    CommandParameter="Associated"
+                                                    Header="关联溶氧" />
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    IsEnabled="True"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.AirFlowSpeed}" />
+                            </StackPanel>
+                            <StackPanel
+                                Canvas.Left="420"
+                                Canvas.Top="150"
+                                Orientation="Horizontal">
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='氧气(L/min)'}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.O2Param.FlowSpeed}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="选择来源">
+                                                <MenuItem
+                                                    Command="{Binding O2SPCommand}"
+                                                    CommandParameter="Disable"
+                                                    Header="不使能" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding O2SPCommand}"
+                                                    CommandParameter="Enable"
+                                                    Header="恒速运行" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding O2SPCommand}"
+                                                    CommandParameter="Associated"
+                                                    Header="关联溶氧" />
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    IsEnabled="True"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.O2FlowSpeed}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border
+                        Canvas.Left="480"
+                        Canvas.Top="220"
+                        Padding="5"
+                        BorderThickness="0">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='PH'}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.PHParam.PH_PV}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="选择来源">
+                                                <MenuItem
+                                                    Command="{Binding PHSPCommand}"
+                                                    CommandParameter="Enable"
+                                                    Header="手动输入" />
+                                                <MenuItem
+                                                    Command="{Binding PHSPCommand}"
+                                                    CommandParameter="TimeSeries"
+                                                    Header="时间序列" />
+                                            </MenuItem>
+                                            <Separator />
+                                            <MenuItem
+                                                Command="{Binding TimeSeriesCommand}"
+                                                CommandParameter="PH"
+                                                Header="时间序列设置" />
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    IsEnabled="True"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.PH}" />
+                                <hc:ProgressButton
+                                    Width="75"
+                                    VerticalAlignment="Bottom"
+                                    Content="自动"
+                                    IsChecked="False"
+                                    Style="{StaticResource ToggleButtonLoadingPrimary}" />
+                                <!--  默认不自动 modify by hdb  -->
+                                <Button
+                                    Name="PHStart"
+                                    Width="75"
+                                    VerticalAlignment="Bottom"
+                                    BorderBrush="Gray"
+                                    Content="配置">
+                                    <!--  modify by hdb  -->
+                                    <Button.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="复制" />
+                                            <MenuItem Header="粘贴" />
+                                            <Separator />
+                                            <MenuItem Header="删除" />
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                </Button>
+                                <StackPanel VerticalAlignment="Bottom" Orientation="Vertical">
+                                    <CheckBox Content="酸(-)" IsChecked="{Binding CurrentDeviceParameter.PHParam.AcidAssociated}" />
+                                    <CheckBox Content="碱(+)" IsChecked="{Binding CurrentDeviceParameter.PHParam.BaseAssociated}" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='酸(mL/h)'}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.AcidParam.Acid_PV}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="选择来源">
+                                                <MenuItem
+                                                    Command="{Binding AcidSPCommand}"
+                                                    CommandParameter="Disable"
+                                                    Header="不使能" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding AcidSPCommand}"
+                                                    CommandParameter="Enable"
+                                                    Header="恒速运行" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding AcidSPCommand}"
+                                                    CommandParameter="Associated"
+                                                    Header="关联PH" />
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    IsEnabled="True"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.AcidFlowSpeed}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='碱(mL/h)'}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.BaseParam.Base_PV}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="选择来源">
+                                                <MenuItem
+                                                    Command="{Binding BaseSPCommand}"
+                                                    CommandParameter="Disable"
+                                                    Header="不使能" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding BaseSPCommand}"
+                                                    CommandParameter="Enable"
+                                                    Header="恒速运行" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding BaseSPCommand}"
+                                                    CommandParameter="Associated"
+                                                    Header="关联PH" />
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    IsEnabled="True"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.BaseFlowSpeed}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <StackPanel
+                        Canvas.Left="485"
+                        Canvas.Top="370"
+                        Orientation="Horizontal">
+                        <TextBox
+                            Width="75"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='温度(℃)'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV}">
+                            <TextBox.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="选择来源">
+                                        <MenuItem
+                                            Command="{Binding TempSPCommand}"
+                                            CommandParameter="Disable"
+                                            Header="不使能" />
+                                        <MenuItem
+                                            Command="{Binding TempSPCommand}"
+                                            CommandParameter="Enable"
+                                            Header="手动输入" />
+                                        <MenuItem
+                                            Command="{Binding TempSPCommand}"
+                                            CommandParameter="TimeSeries"
+                                            Header="时间序列" />
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem
+                                        Command="{Binding TimeSeriesCommand}"
+                                        CommandParameter="Temp"
+                                        Header="时间序列设置" />
+                                </ContextMenu>
+                            </TextBox.ContextMenu>
+                        </TextBox>
+                        <TextBox
+                            Width="75"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key=' '}"
+                            Background="LightGray"
+                            BorderBrush="Gray"
+                            IsEnabled="True"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding CurrentDeviceParameter.Temp}" />
+                        <hc:ProgressButton
+                            Width="75"
+                            VerticalAlignment="Bottom"
+                            Content="自动"
+                            IsChecked="True"
+                            Style="{StaticResource ToggleButtonLoadingPrimary}" />
+                        <Button
+                            Width="75"
+                            VerticalAlignment="Bottom"
+                            BorderBrush="Gray"
+                            Content="配置">
+                            <!--  modify by hdb  -->
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="复制" />
+                                    <MenuItem Header="粘贴" />
+                                    <Separator />
+                                    <MenuItem Header="删除" />
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <StackPanel
+                            VerticalAlignment="Bottom"
+                            Orientation="Vertical"
+                            Visibility="Collapsed">
+                            <CheckBox Content="制冷(-)" IsChecked="{Binding CurrentDeviceParameter.TempParam.Cooling}" />
+                            <CheckBox Content="加热(+)" IsChecked="{Binding CurrentDeviceParameter.TempParam.Heating}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel
+                        Canvas.Left="485"
+                        Canvas.Top="420"
+                        Orientation="Horizontal">
+                        <TextBox
+                            Width="75"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='补料1(mL/h)'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding CurrentDeviceParameter.FeedStrategy.ConstantVal}">
+                            <TextBox.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="选择来源">
+                                        <MenuItem
+                                            Command="{Binding FeedSPCommand}"
+                                            CommandParameter="Disable"
+                                            Header="不使能" />
+                                        <Separator />
+                                        <MenuItem
+                                            Command="{Binding FeedSPCommand}"
+                                            CommandParameter="Enable"
+                                            Header="恒速运行" />
+                                        <Separator />
+                                        <MenuItem
+                                            Command="{Binding FeedSPCommand}"
+                                            CommandParameter="Function"
+                                            Header="公式" />
+                                        <Separator />
+                                        <MenuItem
+                                            Command="{Binding FeedSPCommand}"
+                                            CommandParameter="Gradient"
+                                            Header="时间序列" />
+                                        <Separator />
+                                        <MenuItem
+                                            Command="{Binding FeedSPCommand}"
+                                            CommandParameter="Associated"
+                                            Header="关联PH" />
+                                        <Separator />
+                                        <MenuItem
+                                            Command="{Binding FeedSPCommand}"
+                                            CommandParameter="Loop"
+                                            Header="周期" />
+                                    </MenuItem>
+                                </ContextMenu>
+                            </TextBox.ContextMenu>
+                        </TextBox>
+                        <TextBox
+                            Width="75"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key=' '}"
+                            Background="LightGray"
+                            BorderBrush="Gray"
+                            IsEnabled="True"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding CurrentDeviceParameter.FeedFlowSpeed}" />
+                        <hc:ProgressButton
+                            Width="75"
+                            VerticalAlignment="Bottom"
+                            Content="自动"
+                            IsChecked="True"
+                            Style="{StaticResource ToggleButtonLoadingPrimary}" />
+                        <Button
+                            Width="75"
+                            VerticalAlignment="Bottom"
+                            BorderBrush="Gray"
+                            Content="配置">
+                            <!--  modify by hdb  -->
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="复制" />
+                                    <MenuItem Header="粘贴" />
+                                    <Separator />
+                                    <MenuItem Header="删除" />
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel
+                        Canvas.Left="485"
+                        Canvas.Top="480"
+                        Orientation="Horizontal">
+                        <TextBox
+                            Width="75"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='补料2(mL/h)'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding CurrentDeviceParameter.FeedStrategy2.ConstantVal}" />
+                        <TextBox
+                            Width="75"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key=' '}"
+                            Background="LightGray"
+                            BorderBrush="Gray"
+                            IsEnabled="True"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding CurrentDeviceParameter.FeedFlowSpeed}" />
+                        <hc:ProgressButton
+                            Width="75"
+                            VerticalAlignment="Bottom"
+                            Content="自动"
+                            IsChecked="True"
+                            Style="{StaticResource ToggleButtonLoadingPrimary}" />
+                        <Button
+                            Width="75"
+                            VerticalAlignment="Bottom"
+                            BorderBrush="Gray"
+                            Content="配置">
+                            <!--  modify by hdb  -->
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="复制" />
+                                    <MenuItem Header="粘贴" />
+                                    <Separator />
+                                    <MenuItem Header="删除" />
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel
+                        Canvas.Left="485"
+                        Canvas.Top="530"
+                        Orientation="Horizontal">
+                        <TextBox
+                            Width="75"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='消泡(mL/h)'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding CurrentDeviceParameter.AFParam.AF_PV}">
+                            <TextBox.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="选择来源">
+                                        <MenuItem
+                                            Command="{Binding AFSPCommand}"
+                                            CommandParameter="Disable"
+                                            Header="不使能" />
+                                        <Separator />
+                                        <MenuItem
+                                            Command="{Binding AFSPCommand}"
+                                            CommandParameter="Enable"
+                                            Header="恒速运行" />
+                                        <Separator />
+                                        <MenuItem
+                                            Command="{Binding AFSPCommand}"
+                                            CommandParameter="Cycle"
+                                            Header="周期" />
+                                    </MenuItem>
+                                </ContextMenu>
+                            </TextBox.ContextMenu>
+                        </TextBox>
+                        <TextBox
+                            Width="75"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key=' '}"
+                            Background="LightGray"
+                            BorderBrush="Gray"
+                            IsEnabled="True"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding CurrentDeviceParameter.AFFlowSpeed}" />
+                        <TextBox
+                            Width="75"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='周期(s)'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding CurrentDeviceParameter.AFParam.Cycle}" />
+                        <TextBox
+                            Width="75"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='占空比(%)'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding CurrentDeviceParameter.AFParam.DutyCycle}" />
+                    </StackPanel>
+                </Canvas>
+            </Grid>
+            <GridSplitter
+                Grid.Column="1"
+                Width="5"
+                VerticalAlignment="Stretch"
+                Background="LightGray" />
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="5" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Name="rowGraph3"
+                            Height="auto"
+                            MaxHeight="60" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <WrapPanel
+                            Name="ChkGraphList3"
+                            Orientation="Horizontal"
+                            Visibility="Collapsed" />
+                    </ScrollViewer>
+                    <wpf:WpfPlot Name="wpfPlot3" Grid.Row="2" />
+                </Grid>
+                <GridSplitter
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    Background="LightGray" />
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Name="rowGraph4"
+                            Height="auto"
+                            MaxHeight="60" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <WrapPanel
+                            Name="ChkGraphList4"
+                            Orientation="Horizontal"
+                            Visibility="Collapsed" />
+                    </ScrollViewer>
+                    <wpf:WpfPlot Name="wpfPlot4" Grid.Row="2" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -2,17 +2,27 @@
     x:Class="RD3.Views.MCUDebugView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="clr-namespace:RD3.Behaviors"
+    xmlns:common="clr-namespace:RD3.Common"
+    xmlns:cv="clr-namespace:RD3.Common.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
     xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
-    d:DataContext="{d:DesignInstance Type=viewmodels:MCUDebugViewModel}"
-    d:DesignHeight="1450"
-    d:DesignWidth="1200"
+    xmlns:vm="clr-namespace:RD3.ViewModels"
+    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+    Width="1000"
+    Height="800"
+    d:DataContext="{d:DesignInstance Type=vm:MCUDebugViewModel}"
+    d:DesignHeight="1800"
+    d:DesignWidth="1000"
+    Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
     TextElement.FontWeight="Regular"
@@ -20,6 +30,24 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="CanResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="True" />
+            <Setter Property="AllowsTransparency" Value="False" />
+            <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Icon" Value="../Assets/logo.png" />
+        </Style>
+    </prism:Dialog.WindowStyle>
     <UserControl.Resources>
         <ObjectDataProvider
             x:Key="DataFromEnum"
@@ -120,6 +148,7 @@
             Orientation="Horizontal"
             Spacing="10">
             <hc:CheckComboBox
+                Name="CmbReactor"
                 Width="400"
                 hc:InfoElement.ShowClearButton="True"
                 ItemsSource="{Binding Instruments}"
@@ -1123,12 +1152,12 @@
                                 </GroupBox>
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <hc:ComboBox
-                                        Width="160"
+                                        Width="150"
                                         hc:InfoElement.Title="{ex:Language Key='MFC1'}"
                                         ItemsSource="{Binding Source={StaticResource DataFromEnum10}}"
                                         SelectedItem="{Binding MFC1}" />
                                     <hc:ComboBox
-                                        Width="160"
+                                        Width="150"
                                         hc:InfoElement.Title="{ex:Language Key='MFC2'}"
                                         ItemsSource="{Binding Source={StaticResource DataFromEnum10}}"
                                         SelectedItem="{Binding MFC2}" />
@@ -1203,10 +1232,284 @@
                                         CommandParameter="22"
                                         Content="{ex:Language Key='Set'}" />
                                 </hc:UniformSpacingPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:DateTimePicker
+                                        Width="150"
+                                        hc:InfoElement.Title="{ex:Language Key='时间'}"
+                                        SelectedDateTime="{Binding SelectedTime}" />
+                                    <Button
+                                        Width="80"
+                                        Height="30"
+                                        Margin="0,20,0,0"
+                                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                        Command="{Binding ReadCommand}"
+                                        CommandParameter="23"
+                                        Content="{ex:Language Key='Read'}" />
+                                    <Button
+                                        Width="80"
+                                        Height="30"
+                                        Margin="0,20,0,0"
+                                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                        Command="{Binding SetCommand}"
+                                        CommandParameter="23"
+                                        Content="{ex:Language Key='Set'}" />
+                                </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>
                     </hc:ScrollViewer>
                 </Border>
+            </TabItem>
+            <TabItem Header="PHPID调试">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='PH预设值'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding PH_SP}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='kp'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Kp}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='ki'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Ki}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='kd'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Kd}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='上限'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding OutputLimit}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='步幅'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding IntegralLimit}" />
+                        <TextBox
+                            Name="tbxPH"
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='PH当前值'}"
+                            BorderBrush="Gray"
+                            IsEnabled="False"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding RealTimeParam.PH}" />
+                        <TextBox
+                            Name="tbxAcid"
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='酸泵速度'}"
+                            BorderBrush="Gray"
+                            IsEnabled="False"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding RealTimeParam.AcidFlowSpeed}" />
+                        <TextBox
+                            Name="tbxBase"
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='碱泵速度'}"
+                            BorderBrush="Gray"
+                            IsEnabled="False"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding RealTimeParam.BaseFlowSpeed}" />
+                        <Button
+                            Width="80"
+                            VerticalAlignment="Bottom"
+                            Command="{Binding PHPIDCommand}"
+                            Content="确定"
+                            Style="{StaticResource ButtonPrimary}" />
+                    </hc:UniformSpacingPanel>
+                    <wpf:WpfPlot Name="PHWpfPlot" Grid.Row="1" />
+                </Grid>
+            </TabItem>
+            <TabItem Header="实时曲线">
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <hc:UniformSpacingPanel Spacing="10">
+                        <ToggleButton
+                            Checked="ToggleButtonGraphParam_CheckChanged"
+                            IsChecked="True"
+                            Style="{DynamicResource ToggleButtonCustom}"
+                            Tag="PH"
+                            Unchecked="ToggleButtonGraphParam_CheckChanged">
+                            <hc:StatusSwitchElement.CheckedElement>
+                                <Border
+                                    Width="60"
+                                    Height="30"
+                                    Background="{DynamicResource DarkPrimaryBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    BorderThickness="0.5"
+                                    CornerRadius="4">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Foreground="White"
+                                        Text="{ex:Language Key='pH'}" />
+                                </Border>
+                            </hc:StatusSwitchElement.CheckedElement>
+                            <Border
+                                Width="60"
+                                Height="30"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="0.5"
+                                CornerRadius="4">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="Gray"
+                                    Text="{ex:Language Key='PH'}" />
+                            </Border>
+                        </ToggleButton>
+                        <ToggleButton
+                            Checked="ToggleButtonGraphParam_CheckChanged"
+                            IsChecked="True"
+                            Style="{DynamicResource ToggleButtonCustom}"
+                            Tag="Temp"
+                            Unchecked="ToggleButtonGraphParam_CheckChanged">
+                            <hc:StatusSwitchElement.CheckedElement>
+                                <Border
+                                    Width="60"
+                                    Height="30"
+                                    Background="{DynamicResource DarkPrimaryBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    BorderThickness="0.5"
+                                    CornerRadius="4">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Foreground="White"
+                                        Text="{ex:Language Key='Temp'}" />
+                                </Border>
+                            </hc:StatusSwitchElement.CheckedElement>
+                            <Border
+                                Width="60"
+                                Height="30"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="0.5"
+                                CornerRadius="4">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="Gray"
+                                    Text="{ex:Language Key='Temp'}" />
+                            </Border>
+                        </ToggleButton>
+                        <ToggleButton
+                            Checked="ToggleButtonGraphParam_CheckChanged"
+                            IsChecked="True"
+                            Style="{DynamicResource ToggleButtonCustom}"
+                            Tag="Air"
+                            Unchecked="ToggleButtonGraphParam_CheckChanged">
+                            <hc:StatusSwitchElement.CheckedElement>
+                                <Border
+                                    Width="60"
+                                    Height="30"
+                                    Background="{DynamicResource DarkPrimaryBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    BorderThickness="0.5"
+                                    CornerRadius="4">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Foreground="White"
+                                        Text="{ex:Language Key='Air'}" />
+                                </Border>
+                            </hc:StatusSwitchElement.CheckedElement>
+                            <Border
+                                Width="60"
+                                Height="30"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="0.5"
+                                CornerRadius="4">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="Gray"
+                                    Text="{ex:Language Key='Air'}" />
+                            </Border>
+                        </ToggleButton>
+                        <ToggleButton
+                            Checked="ToggleButtonGraphParam_CheckChanged"
+                            IsChecked="True"
+                            Style="{DynamicResource ToggleButtonCustom}"
+                            Tag="Agit"
+                            Unchecked="ToggleButtonGraphParam_CheckChanged">
+                            <hc:StatusSwitchElement.CheckedElement>
+                                <Border
+                                    Width="60"
+                                    Height="30"
+                                    Background="{DynamicResource DarkPrimaryBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    BorderThickness="0.5"
+                                    CornerRadius="4">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Foreground="White"
+                                        Text="{ex:Language Key='Agit'}" />
+                                </Border>
+                            </hc:StatusSwitchElement.CheckedElement>
+                            <Border
+                                Width="60"
+                                Height="30"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="0.5"
+                                CornerRadius="4">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="Gray"
+                                    Text="{ex:Language Key='Agit'}" />
+                            </Border>
+                        </ToggleButton>
+                        <ToggleButton
+                            Checked="ToggleButtonGraphParam_CheckChanged"
+                            IsChecked="True"
+                            Style="{DynamicResource ToggleButtonCustom}"
+                            Tag="DO"
+                            Unchecked="ToggleButtonGraphParam_CheckChanged">
+                            <hc:StatusSwitchElement.CheckedElement>
+                                <Border
+                                    Width="60"
+                                    Height="30"
+                                    Background="{DynamicResource DarkPrimaryBrush}"
+                                    BorderBrush="{DynamicResource BorderBrush}"
+                                    BorderThickness="0.5"
+                                    CornerRadius="4">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Foreground="White"
+                                        Text="{ex:Language Key='DO'}" />
+                                </Border>
+                            </hc:StatusSwitchElement.CheckedElement>
+                            <Border
+                                Width="60"
+                                Height="30"
+                                BorderBrush="{DynamicResource BorderBrush}"
+                                BorderThickness="0.5"
+                                CornerRadius="4">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="Gray"
+                                    Text="{ex:Language Key='DO'}" />
+                            </Border>
+                        </ToggleButton>
+                    </hc:UniformSpacingPanel>
+                    <wpf:WpfPlot Name="wpfPlot" Grid.Row="1" />
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

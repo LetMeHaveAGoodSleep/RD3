@@ -14,7 +14,6 @@
     <PackageReference Include="MathNet.Symbolics" Version="0.25.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Prism.Core" Version="8.1.97" />
-    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
   </ItemGroup>
 
   <ItemGroup>

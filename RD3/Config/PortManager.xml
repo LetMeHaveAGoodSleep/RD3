@@ -174,7 +174,7 @@
 			</propertys>
 		</Fpi.Communication.Manager.Pipe>
 		<Fpi.Communication.Manager.Pipe>
-			<id>Image</id>
+			<id>G01</id>
 			<name>G01</name>
 			<valid>True</valid>
 			<autoConnect>False</autoConnect>
@@ -190,13 +190,13 @@
 						<Fpi.Xml.Property>
 							<id>host</id>
 							<name>host</name>
-							<value>172.16.0.155</value>
+							<value>172.16.0.146</value>
 						</Fpi.Xml.Property>
 
 						<Fpi.Xml.Property>
 							<id>port</id>
 							<name>port</name>
-							<value>8088</value>
+							<value>7000</value>
 						</Fpi.Xml.Property>
 
 						<Fpi.Xml.Property>

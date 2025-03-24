@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\
+D:\Project\0321\RD3\RD3\obj\Debug\net8.0-windows7.0\
 RD3
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-D:\Project\RD3\RD3\App.xaml
-471818153015
+D:\Project\0321\RD3\RD3\App.xaml
+5634064809
 3271424504
-137620944959
-2481785280157
-Controls\IndicatorLight.xaml;Themes\Brushes.xaml;Themes\Colors.xaml;Themes\Converters.xaml;Themes\Geometry.xaml;Themes\ProgressRing.xaml;Themes\Sizes.xaml;Themes\Styles\Button.xaml;Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AddSampleView.xaml;Views\AlarmView.xaml;Views\AuditView.xaml;Views\BatchView.xaml;Views\CalibrateView.xaml;Views\CalibrationView.xaml;Views\CameraImageView.xaml;Views\ChooseReactorView.xaml;Views\ControlView.xaml;Views\DOEDesignView.xaml;Views\DOEMainView.xaml;Views\EditBatchIDView.xaml;Views\EditBatchView.xaml;Views\EditExperimentParamView.xaml;Views\EditMVOptionView.xaml;Views\EditProjectView.xaml;Views\EditSampleView.xaml;Views\EditTemplateView.xaml;Views\EditUserView.xaml;Views\ErrorView.xaml;Views\FeedView.xaml;Views\IndexView.xaml;Views\ItemCalibrationView.xaml;Views\ItemPumpCalibrationView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MCUDebugView.xaml;Views\MsgView.xaml;Views\OperationView.xaml;Views\ProgressView.xaml;Views\ProjectView.xaml;Views\RegisterView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\SettingView.xaml;Views\UnscheduledView.xaml;Views\UserView.xaml;
+1561887331283
+2441765990134
+Controls\IndicatorLight.xaml;Themes\Brushes.xaml;Themes\Colors.xaml;Themes\Converters.xaml;Themes\Geometry.xaml;Themes\ProgressRing.xaml;Themes\Sizes.xaml;Themes\Styles\Button.xaml;Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AddOffLineDatasView.xaml;Views\AddOffLineDataView.xaml;Views\AddSampleView.xaml;Views\AlarmView.xaml;Views\AuditView.xaml;Views\BatchView.xaml;Views\CalibrateView.xaml;Views\CalibrationView.xaml;Views\CameraImageView.xaml;Views\ChooseReactorView.xaml;Views\CompareBatchView.xaml;Views\ControlView.xaml;Views\DataOutPutView.xaml;Views\DOEDesignView.xaml;Views\DOEMainView.xaml;Views\EditBatchIDView.xaml;Views\EditBatchView.xaml;Views\EditExperimentParamView.xaml;Views\EditMVOptionView.xaml;Views\EditProjectView.xaml;Views\EditSampleView.xaml;Views\EditTemplateView.xaml;Views\EditUserView.xaml;Views\ErrorView.xaml;Views\FeedView.xaml;Views\IndexView.xaml;Views\ItemCalibrationView.xaml;Views\ItemPumpCalibrationView.xaml;Views\LoginView.xaml;Views\MainView.xaml;Views\MCUDebugView.xaml;Views\MsgView.xaml;Views\NewBatchView.xaml;Views\NewMainView.xaml;Views\OperationView.xaml;Views\ProgressView.xaml;Views\ProjectView.xaml;Views\PumpMFCView.xaml;Views\ReactorView.xaml;Views\RegisterView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\SettingView.xaml;Views\TimeSeriesView.xaml;Views\UnscheduledView.xaml;Views\UserView.xaml;
 
 False
 

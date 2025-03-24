@@ -26,10 +26,12 @@
             Width="120"
             VerticalAlignment="Center"
             BorderBrush="{DynamicResource PrimaryBrush}"
+            IsEnabled="{Binding CalibrationEnable}"
             SelectedIndex="{Binding CalibrateIndex}"
             Style="{StaticResource ComboBoxExtend}">
-            <ComboBoxItem Content="单点" />
-            <ComboBoxItem Content="两点" />
+            <ComboBoxItem Content="系数校准" />
+            <ComboBoxItem Content="偏置校准" />
+            <ComboBoxItem Content="两点校准" />
         </ComboBox>
         <Label
             Width="100"
@@ -45,6 +47,7 @@
             VerticalContentAlignment="Center"
             hc:InfoElement.Title="{ex:Language Key='Calibration Point 1'}"
             BorderBrush="{DynamicResource PrimaryBrush}"
+            IsEnabled="{Binding CalibrationEnable}"
             Text="{Binding CaliPoint1}" />
         <Button
             Width="90"
@@ -61,7 +64,7 @@
             VerticalContentAlignment="Center"
             hc:InfoElement.Title="{ex:Language Key='Calibration Point 1'}"
             BorderBrush="{DynamicResource PrimaryBrush}"
-            IsEnabled="{Binding Calibrate2Enabled}"
+            IsEnabled="{Binding Calibrate3Enabled}"
             Text="{Binding CaliPoint2}" />
         <Button
             Width="90"

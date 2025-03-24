@@ -1,0 +1,39 @@
+[
+  {
+    "ReactorName": "G01",
+    "Pump1": "AcidPump",
+    "Pump2": "BasePump",
+    "Pump3": "AFPump",
+    "Pump4": "FeedPump",
+    "MFC1": "Air",
+    "MFC2": "O2"
+  },
+  {
+    "ReactorName": "G02",
+    "Pump1": "AcidPump",
+    "Pump2": "BasePump",
+    "Pump3": "AFPump",
+    "Pump4": "FeedPump",
+    "MFC1": "Air",
+    "MFC2": "O2"
+  },
+  {
+    "ReactorName": "G03",
+    "Pump1": "AcidPump",
+    "Pump2": "BasePump",
+    "Pump3": "AFPump",
+    "Pump4": "FeedPump",
+    "MFC1": "Air",
+    "MFC2": "O2"
+  },
+  {
+    "ReactorName": "G04",
+    "Pump1": "AcidPump",
+    "Pump2": "BasePump",
+    "Pump3": "AFPump",
+    "Pump4": "FeedPump",
+    "MFC1": "Air",
+    "MFC2": "O2"
+  }
+]
+

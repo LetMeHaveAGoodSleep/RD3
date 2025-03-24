@@ -1,0 +1,94 @@
+﻿<UserControl
+    x:Class="RD3.Views.AddOfflineDatasView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:RD3"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    Width="1200"
+    Height="600"
+    d:DataContext="{d:DesignInstance Type=viewmodels:AddOffLineDatasViewModel}"
+    d:DesignHeight="600"
+    d:DesignWidth="1200"
+    Background="{StaticResource BackGroundBrush}"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource TextFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <local:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+    </UserControl.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <hc:UniformSpacingPanel
+            Grid.Row="0"
+            Height="50"
+            Orientation="Vertical"
+            Spacing="10">
+            <Button
+                Name="AddColumn"
+                Width="100"
+                Background="Red"
+                Click="ButtonAdd_Click"
+                Content="添加列" />
+        </hc:UniformSpacingPanel>
+        <DataGrid
+            Name="dataGrid1"
+            Grid.Row="1"
+            hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+            hc:DataGridAttach.ShowSelectAllButton="False"
+            AutoGenerateColumns="False"
+            Background="Transparent"
+            CanUserAddRows="True"
+            CanUserDeleteRows="True"
+            CanUserSortColumns="False"
+            ColumnWidth="SizeToCells"
+            FontSize="{DynamicResource NormalFontSize}"
+            HeadersVisibility="Column"
+            IsReadOnly="False"
+            RowHeaderWidth="60"
+            ScrollViewer.HorizontalScrollBarVisibility="Visible"
+            ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="180"
+                    Binding="{Binding createTime}"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="采集时间"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                    IsReadOnly="False" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <hc:Pagination
+            Name="pagination"
+            Grid.Row="2"
+            Margin="0,0,0,10"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Background="Transparent"
+            DataCountPerPage="{Binding DataCountPerPage}"
+            IsJumpEnabled="True"
+            MaxPageCount="{Binding PageCount}"
+            MaxPageInterval="4"
+            PageIndex="{Binding PageIndex}">
+            <hc:Interaction.Triggers>
+                <hc:EventTrigger EventName="PageUpdated">
+                    <hc:EventToCommand Command="{Binding PageUpdatedCommand}" PassEventArgsToCommand="True" />
+                </hc:EventTrigger>
+            </hc:Interaction.Triggers>
+        </hc:Pagination>
+    </Grid>
+</UserControl>

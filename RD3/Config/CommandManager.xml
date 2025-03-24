@@ -977,10 +977,10 @@
 							<length>1</length>
 						</param>
 						<param>
-							<id>SensorBias</id>
-							<name>传感器偏置</name>
-							<type>float</type>
-							<length>1</length>
+							<id>Status</id>
+							<name>状态</name>
+							<type>byte</type>
+							<length>4</length>
 						</param>
 					</parameters>
 				</commandExtend>
@@ -1435,6 +1435,132 @@
 							<id>BuzzerStatus</id>
 							<name>蜂鸣器状态</name>
 							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+		
+		<commandDesc>
+			<id>RWTimeSync</id>
+			<name>读写时间同步</name>
+			<commandCode>0x17</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xff</id>
+					<name>ReadWrite</name>
+					<parameters>
+						<param>
+							<id>Year</id>
+							<name>年</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>Month</id>
+							<name>月</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>Day</id>
+							<name>日</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>Hour</id>
+							<name>时</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>Minute</id>
+							<name>分</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>Second</id>
+							<name>秒</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
+			<id>WSettingSync</id>
+			<name>写时间同步</name>
+			<commandCode>0x18</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+
+				<commandExtend>
+					<id>0x66</id>
+					<name>Write</name>
+					<parameters>
+						<param>
+							<id>PHAuto</id>
+							<name>PH自动控制</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>PH</id>
+							<name>PH目标值</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>DOAuto</id>
+							<name>溶氧自动控制</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>DO</id>
+							<name>溶氧目标值</name>
+							<type>float</type>
 							<length>1</length>
 						</param>
 					</parameters>

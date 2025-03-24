@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Project\\RD3\\RD3\\RD3.csproj": {}
+    "D:\\Project\\0321\\RD3\\RD3\\RD3.csproj": {}
   },
   "projects": {
-    "D:\\Project\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj": {
+    "D:\\Project\\0321\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj": {
       "restore": {
-        "projectUniqueName": "D:\\Project\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj",
+        "projectUniqueName": "D:\\Project\\0321\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj",
         "projectName": "Fpi.Assembly",
-        "projectPath": "D:\\Project\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj",
+        "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj",
         "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
             "projectReferences": {
-              "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj"
               },
-              "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
               }
             }
           }
@@ -27,23 +27,23 @@
         "net48": {}
       }
     },
-    "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
+    "D:\\Project\\0321\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
       "restore": {
-        "projectUniqueName": "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj",
+        "projectUniqueName": "D:\\Project\\0321\\RD3\\Fpi.Communication\\Fpi.Communication.csproj",
         "projectName": "Fpi.Communication",
-        "projectPath": "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj",
+        "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Communication\\Fpi.Communication.csproj",
         "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
             "projectReferences": {
-              "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj"
               },
-              "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj"
               },
-              "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
               }
             }
           }
@@ -53,20 +53,20 @@
         "net48": {}
       }
     },
-    "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj": {
+    "D:\\Project\\0321\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj": {
       "restore": {
-        "projectUniqueName": "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj",
+        "projectUniqueName": "D:\\Project\\0321\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj",
         "projectName": "Fpi.Instrument",
-        "projectPath": "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj",
+        "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj",
         "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
             "projectReferences": {
-              "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj"
               },
-              "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
               }
             }
           }
@@ -76,11 +76,11 @@
         "net48": {}
       }
     },
-    "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+    "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
       "restore": {
-        "projectUniqueName": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj",
+        "projectUniqueName": "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj",
         "projectName": "Fpi.Util",
-        "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj",
+        "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj",
         "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
@@ -92,17 +92,17 @@
         "net48": {}
       }
     },
-    "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+    "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
       "restore": {
-        "projectUniqueName": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj",
+        "projectUniqueName": "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj",
         "projectName": "Fpi.Xml",
-        "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj",
+        "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj",
         "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
             "projectReferences": {
-              "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj"
               }
             }
           }
@@ -112,14 +112,14 @@
         "net48": {}
       }
     },
-    "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj": {
+    "D:\\Project\\0321\\RD3\\RD3.Shared\\RD3.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj",
+        "projectUniqueName": "D:\\Project\\0321\\RD3\\RD3.Shared\\RD3.Shared.csproj",
         "projectName": "RD3.Shared",
-        "projectPath": "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj",
+        "projectPath": "D:\\Project\\0321\\RD3\\RD3.Shared\\RD3.Shared.csproj",
         "packagesPath": "D:\\packages",
-        "outputPath": "D:\\Project\\RD3\\RD3.Shared\\obj\\",
+        "outputPath": "D:\\Project\\0321\\RD3\\RD3.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -141,11 +141,11 @@
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows",
             "projectReferences": {
-              "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Communication\\Fpi.Communication.csproj"
               },
-              "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
               }
             }
           }
@@ -178,10 +178,6 @@
               "target": "Package",
               "version": "[8.1.97, )"
             },
-            "System.Data.SQLite": {
-              "target": "Package",
-              "version": "[1.0.118, )"
-            },
             "log4net": {
               "target": "Package",
               "version": "[2.0.17, )"
@@ -207,14 +203,14 @@
         }
       }
     },
-    "D:\\Project\\RD3\\RD3\\RD3.csproj": {
+    "D:\\Project\\0321\\RD3\\RD3\\RD3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project\\RD3\\RD3\\RD3.csproj",
+        "projectUniqueName": "D:\\Project\\0321\\RD3\\RD3\\RD3.csproj",
         "projectName": "RD3",
-        "projectPath": "D:\\Project\\RD3\\RD3\\RD3.csproj",
+        "projectPath": "D:\\Project\\0321\\RD3\\RD3\\RD3.csproj",
         "packagesPath": "D:\\packages",
-        "outputPath": "D:\\Project\\RD3\\RD3\\obj\\",
+        "outputPath": "D:\\Project\\0321\\RD3\\RD3\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -236,26 +232,29 @@
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows7.0",
             "projectReferences": {
-              "D:\\Project\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj"
               },
-              "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Communication\\Fpi.Communication.csproj"
               },
-              "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj"
               },
-              "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Util\\Fpi.Util.csproj"
               },
-              "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
-                "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
               },
-              "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj": {
-                "projectPath": "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj"
+              "D:\\Project\\0321\\RD3\\RD3.Shared\\RD3.Shared.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\RD3.Shared\\RD3.Shared.csproj"
               },
-              "D:\\Project\\RD3\\XZ.OnnxRun\\XZ.OnnxRun.csproj": {
-                "projectPath": "D:\\Project\\RD3\\XZ.OnnxRun\\XZ.OnnxRun.csproj"
+              "D:\\Project\\0321\\RD3\\XZ.OnnxRun\\XZ.OnnxRun.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\XZ.OnnxRun\\XZ.OnnxRun.csproj"
+              },
+              "D:\\Project\\0321\\RD3\\XZ.SQLite\\XZ.SQLite.csproj": {
+                "projectPath": "D:\\Project\\0321\\RD3\\XZ.SQLite\\XZ.SQLite.csproj"
               }
             }
           }
@@ -296,10 +295,6 @@
               "target": "Package",
               "version": "[8.1.97, )"
             },
-            "SQLite": {
-              "target": "Package",
-              "version": "[3.13.0, )"
-            },
             "ScottPlot.WPF": {
               "target": "Package",
               "version": "[5.0.36, )"
@@ -332,14 +327,14 @@
         }
       }
     },
-    "D:\\Project\\RD3\\XZ.OnnxRun\\XZ.OnnxRun.csproj": {
+    "D:\\Project\\0321\\RD3\\XZ.OnnxRun\\XZ.OnnxRun.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project\\RD3\\XZ.OnnxRun\\XZ.OnnxRun.csproj",
+        "projectUniqueName": "D:\\Project\\0321\\RD3\\XZ.OnnxRun\\XZ.OnnxRun.csproj",
         "projectName": "XZ.OnnxRun",
-        "projectPath": "D:\\Project\\RD3\\XZ.OnnxRun\\XZ.OnnxRun.csproj",
+        "projectPath": "D:\\Project\\0321\\RD3\\XZ.OnnxRun\\XZ.OnnxRun.csproj",
         "packagesPath": "D:\\packages",
-        "outputPath": "D:\\Project\\RD3\\XZ.OnnxRun\\obj\\",
+        "outputPath": "D:\\Project\\0321\\RD3\\XZ.OnnxRun\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -406,6 +401,22 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         }
+      }
+    },
+    "D:\\Project\\0321\\RD3\\XZ.SQLite\\XZ.SQLite.csproj": {
+      "restore": {
+        "projectUniqueName": "D:\\Project\\0321\\RD3\\XZ.SQLite\\XZ.SQLite.csproj",
+        "projectName": "XZ.SQLite",
+        "projectPath": "D:\\Project\\0321\\RD3\\XZ.SQLite\\XZ.SQLite.csproj",
+        "UsingMicrosoftNETSdk": false,
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {}
       }
     }
   }

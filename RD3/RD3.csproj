@@ -62,6 +62,30 @@
     <None Remove="Images\Main\Temp.png" />
     <None Remove="Images\Main\Temp_Primary.png" />
     <None Remove="Images\Projects.png" />
+    <None Remove="Images\ReactorNew\MFC不使能.png" />
+    <None Remove="Images\ReactorNew\MFC使能.png" />
+    <None Remove="Images\ReactorNew\制冷.png" />
+    <None Remove="Images\ReactorNew\加热.png" />
+    <None Remove="Images\ReactorNew\尾气冷凝不使能.png" />
+    <None Remove="Images\ReactorNew\尾气冷凝使能.png" />
+    <None Remove="Images\ReactorNew\常温.png" />
+    <None Remove="Images\ReactorNew\泵不使能.png" />
+    <None Remove="Images\ReactorNew\泵不带底.png" />
+    <None Remove="Images\ReactorNew\泵使能.png" />
+    <None Remove="Images\ReactorNew\泵带底.png" />
+    <None Remove="Images\ReactorNew\罐体.png" />
+    <None Remove="Images\Reactor\MFC不使能.png" />
+    <None Remove="Images\Reactor\MFC使能.png" />
+    <None Remove="Images\Reactor\MFC没启用.png" />
+    <None Remove="Images\Reactor\加热.png" />
+    <None Remove="Images\Reactor\尾气冷凝不使能.png" />
+    <None Remove="Images\Reactor\尾气冷凝使能.png" />
+    <None Remove="Images\Reactor\泵不使能.png" />
+    <None Remove="Images\Reactor\泵不带底.png" />
+    <None Remove="Images\Reactor\泵使能.png" />
+    <None Remove="Images\Reactor\泵带底.png" />
+    <None Remove="Images\Reactor\液面图.png" />
+    <None Remove="Images\Reactor\罐体.png" />
     <None Remove="Images\SideMenu\Audit.png" />
     <None Remove="Images\SideMenu\Audit_Primary.png" />
     <None Remove="Images\SideMenu\Calibrate.png" />
@@ -105,7 +129,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
     <PackageReference Include="ScottPlot.WPF" Version="5.0.36" />
-    <PackageReference Include="SQLite" Version="3.13.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fpi.Assembly\Fpi.Assembly.csproj" />
@@ -115,6 +138,7 @@
     <ProjectReference Include="..\Fpi.Xml\Fpi.Xml.csproj" />
     <ProjectReference Include="..\RD3.Shared\RD3.Shared.csproj" />
     <ProjectReference Include="..\XZ.OnnxRun\XZ.OnnxRun.csproj" />
+    <ProjectReference Include="..\XZ.SQLite\XZ.SQLite.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HandyControl">
@@ -174,6 +198,33 @@
     <Resource Include="Images\Main\Temp.png" />
     <Resource Include="Images\Main\PH_ass.png" />
     <Resource Include="Images\Main\Temp_Primary.png" />
+    <Resource Include="Images\ReactorNew\MFC不使能.png" />
+    <Resource Include="Images\ReactorNew\MFC没启用.png" />
+    <Resource Include="Images\ReactorNew\MFC使能.png" />
+    <Resource Include="Images\ReactorNew\制冷.png" />
+    <Resource Include="Images\ReactorNew\加热.png" />
+    <Resource Include="Images\ReactorNew\尾气冷凝不使能.png" />
+    <Resource Include="Images\ReactorNew\尾气冷凝使能.png" />
+    <Resource Include="Images\ReactorNew\常温.png" />
+    <Resource Include="Images\ReactorNew\泵不使能.png" />
+    <Resource Include="Images\ReactorNew\泵不带底.png" />
+    <Resource Include="Images\ReactorNew\泵使能.png" />
+    <Resource Include="Images\ReactorNew\泵带底.png" />
+    <Resource Include="Images\ReactorNew\液面图.png" />
+    <Resource Include="Images\ReactorNew\罐体.png" />
+    <Resource Include="Images\Reactor\MFC不使能.png" />
+    <Resource Include="Images\Reactor\MFC使能.png" />
+    <Resource Include="Images\Reactor\MFC没启用.png" />
+    <Resource Include="Images\Reactor\常温.png" />
+    <Resource Include="Images\Reactor\加热.png" />
+    <Resource Include="Images\Reactor\尾气冷凝不使能.png" />
+    <Resource Include="Images\Reactor\尾气冷凝使能.png" />
+    <Resource Include="Images\Reactor\泵不使能.png" />
+    <Resource Include="Images\Reactor\泵不带底.png" />
+    <Resource Include="Images\Reactor\泵使能.png" />
+    <Resource Include="Images\Reactor\泵带底.png" />
+    <Resource Include="Images\Reactor\液面图.png" />
+    <Resource Include="Images\Reactor\罐体.png" />
     <Resource Include="Images\SideMenu\Audit.png" />
     <Resource Include="Images\SideMenu\Audit_Primary.png" />
     <Resource Include="Images\SideMenu\Calibrate.png" />
@@ -193,6 +244,9 @@
     <Resource Include="Images\SideMenu\Setting_Primary.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\DataOutPutView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ProjectView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -204,7 +258,13 @@
     <None Update="Config\CommandManager.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Config\CustomGraphSetting - 复制.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
     <None Update="Config\CustomGraphSetting.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\GraphUnit.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Config\PH_MV.json">
@@ -220,6 +280,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Config\PortManager.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\ReactorSetting.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Config\PumpMFCSetting.json">
@@ -275,6 +338,9 @@
     <Page Update="Themes\WaveAnimation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\AddOffLineDatasView.xaml">
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
 </Project>

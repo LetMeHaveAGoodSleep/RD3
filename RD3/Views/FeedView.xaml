@@ -101,7 +101,7 @@
                                     Height="30"
                                     hc:InfoElement.Placeholder="{ex:Language Key='ml/h'}"
                                     Style="{StaticResource TextBoxExtendBaseStyle}"
-                                    Text="{Binding RealTimeParam.FeedFlowSpeed}" />
+                                    Text="{Binding FeedStrategy.ConstantVal}" />
                                 <Button
                                     Width="100"
                                     Height="30"

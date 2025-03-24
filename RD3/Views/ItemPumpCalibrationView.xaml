@@ -14,6 +14,17 @@
     mc:Ignorable="d">
     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
         <DockPanel>
+            <ComboBox
+                Name="PumpName1"
+                Width="80"
+                VerticalAlignment="Bottom"
+                HorizontalContentAlignment="Center"
+                Background="{DynamicResource DefaultBrush}"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                DockPanel.Dock="Bottom"
+                Foreground="{DynamicResource PrimaryBrush}" />
+        </DockPanel>
+        <DockPanel>
             <Label
                 Width="80"
                 VerticalAlignment="Bottom"
@@ -24,7 +35,8 @@
                 DockPanel.Dock="Bottom"
                 Foreground="{DynamicResource PrimaryBrush}" />
         </DockPanel>
-        <DockPanel>
+        <!--  modif by hdb  -->
+        <!--<DockPanel>
             <TextBlock DockPanel.Dock="Top" Text="当前流量" />
             <Label
                 Width="100"
@@ -34,11 +46,11 @@
                 BorderBrush="{DynamicResource PrimaryBrush}"
                 Content="{Binding CurrentValue}"
                 IsEnabled="False" />
-        </DockPanel>
+        </DockPanel>-->
         <DockPanel>
             <TextBlock DockPanel.Dock="Top" Text="速度(mL/h)" />
             <TextBox
-                Width="100"
+                Width="80"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 hc:InfoElement.Title="{ex:Language Key='Pump Speed'}"
@@ -46,13 +58,25 @@
                 Text="{Binding Speed}" />
         </DockPanel>
         <DockPanel>
-            <TextBlock DockPanel.Dock="Top" Text="持续时间（s）" />
+            <TextBlock DockPanel.Dock="Top" Text="持续时间（min）" />
             <TextBox
-                Width="100"
+                Width="80"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 BorderBrush="{DynamicResource PrimaryBrush}"
                 Text="{Binding Time}" />
+        </DockPanel>
+        <DockPanel>
+            <!--  add by hdb  -->
+            <TextBlock DockPanel.Dock="Top" Text="体积(mL)" />
+            <Label
+                Width="80"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                hc:InfoElement.Title="{ex:Language Key='Current Value'}"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                Content="{Binding TheoreticalVolume}"
+                IsEnabled="False" />
         </DockPanel>
         <DockPanel>
             <Button
@@ -67,13 +91,35 @@
                 Foreground="{StaticResource PrimaryBrush}" />
         </DockPanel>
         <DockPanel>
-            <TextBlock DockPanel.Dock="Top" Text="体积(mL)" />
+            <!--  add by hdb  -->
+            <TextBlock DockPanel.Dock="Top" Text="称重(g)" />
             <TextBox
-                Width="100"
+                Width="80"
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Center"
                 BorderBrush="{DynamicResource PrimaryBrush}"
-                Text="{Binding Flow}" />
+                Text="{Binding Weigh}" />
+        </DockPanel>
+        <DockPanel>
+            <!--  add by hdb  -->
+            <TextBlock DockPanel.Dock="Top" Text="密度(g/mL)" />
+            <TextBox
+                Width="80"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                Text="{Binding Density}" />
+        </DockPanel>
+        <DockPanel>
+            <!--  add by hdb  -->
+            <TextBlock DockPanel.Dock="Top" Text="实测体积(mL)" />
+            <TextBox
+                Width="80"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                IsEnabled="False"
+                Text="{Binding RealVolume}" />
         </DockPanel>
         <DockPanel>
             <Button
@@ -100,6 +146,28 @@
                 Foreground="{StaticResource PrimaryBrush}" />
         </DockPanel>
         <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Text="系数" />
+            <TextBox
+                Width="80"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Center"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                Text="{Binding Coefficient}" />
+        </DockPanel>
+        <DockPanel>
+            <Button
+                Width="80"
+                VerticalAlignment="Bottom"
+                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                BorderBrush="{StaticResource PrimaryBrush}"
+                Command="{Binding CalibrateCommand}"
+                CommandParameter="0"
+                Content="{ex:Language Key='写入校准'}"
+                FontSize="{DynamicResource NormalFontSize}"
+                Foreground="{StaticResource PrimaryBrush}" />
+        </DockPanel>
+        <!--  modify by hdb  -->
+        <!--<DockPanel>
             <Button
                 Width="150"
                 VerticalAlignment="Bottom"
@@ -109,6 +177,6 @@
                 Content="{ex:Language Key='Reset Flow Rate'}"
                 FontSize="{DynamicResource NormalFontSize}"
                 Foreground="{StaticResource PrimaryBrush}" />
-        </DockPanel>
+        </DockPanel>-->
     </hc:UniformSpacingPanel>
 </UserControl>

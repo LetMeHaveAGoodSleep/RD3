@@ -76,6 +76,9 @@
     <Compile Update="Views\OperationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\PumpMFCView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\RegisterView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -86,6 +89,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SettingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\TimeSeriesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\UnscheduledView.xaml.cs">
@@ -141,6 +147,9 @@
     <Page Update="Views\ChooseReactorView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\CompareBatchView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\ControlView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -151,6 +160,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\EditBatchIDView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DataOutPutView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\EditBatchView.xaml">
@@ -188,6 +200,18 @@
     <Page Update="Views\FeedView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\AddOffLineDatasView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\NewBatchView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PumpMFCView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ReactorView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\ItemCalibrationView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -219,6 +243,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SettingView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\TimeSeriesView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\UnscheduledView.xaml">

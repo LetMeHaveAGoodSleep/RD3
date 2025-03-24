@@ -21,10 +21,6 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <local:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
-        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
-    </UserControl.Resources>
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />

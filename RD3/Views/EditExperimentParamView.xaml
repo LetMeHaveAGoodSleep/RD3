@@ -17,7 +17,7 @@
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     Width="950"
-    Height="850"
+    Height="890"
     d:DataContext="{d:DesignInstance Type=vm:EditExperimentParamViewModel}"
     rd3:DraggableUserControlAttach.IsDraggable="True"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
@@ -723,7 +723,7 @@
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <Border
                         Width="300"
-                        Height="180"
+                        Height="200"
                         Style="{StaticResource BorderCard}">
                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
@@ -943,7 +943,7 @@
                     </Border>
                     <Border
                         Width="300"
-                        Height="180"
+                        Height="200"
                         Style="{StaticResource BorderCard}">
                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                             <hc:UniformSpacingPanel
@@ -1115,14 +1115,14 @@
                     </Border>
                     <Border
                         Width="300"
-                        Height="180"
+                        Height="200"
                         Style="{StaticResource BorderCard}">
                         <DockPanel LastChildFill="True">
                             <TabControl>
                                 <TabItem Header="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Name}">
                                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                         <hc:UniformSpacingPanel
-                                            Margin="5,5,0,0"
+                                            Margin="5,5,5,0"
                                             Orientation="Vertical"
                                             Spacing="10">
                                             <StackPanel Orientation="Horizontal">
@@ -1204,7 +1204,7 @@
                                                             VerticalAlignment="Center"
                                                             HorizontalContentAlignment="Center"
                                                             Style="{StaticResource TextBoxExtend}"
-                                                            Text="{Binding CurrentDeviceParameter.Pump1FlowSpeed}" />
+                                                            Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1FlowSpeed}" />
                                                     </DockPanel>
                                                     <TextBlock
                                                         Margin="5,0,0,0"
@@ -1216,6 +1216,7 @@
                                                     VerticalAlignment="Bottom"
                                                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                     Command="{Binding FeedCommand}"
+                                                    CommandParameter="{Binding CurrentDeviceParameter.Pump1FlowSpeed}"
                                                     Content="{ex:Language Key='补料策略'}"
                                                     DockPanel.Dock="Right"
                                                     Foreground="{StaticResource PrimaryBrush}"
@@ -1248,7 +1249,7 @@
                                 <TabItem Header="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Name}">
                                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                         <hc:UniformSpacingPanel
-                                            Margin="5,5,0,0"
+                                            Margin="5,5,5,0"
                                             Orientation="Vertical"
                                             Spacing="10">
                                             <StackPanel Orientation="Horizontal">
@@ -1330,7 +1331,7 @@
                                                             VerticalAlignment="Center"
                                                             HorizontalContentAlignment="Center"
                                                             Style="{StaticResource TextBoxExtend}"
-                                                            Text="{Binding CurrentDeviceParameter.Pump2FlowSpeed}" />
+                                                            Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2FlowSpeed}" />
                                                     </DockPanel>
                                                     <TextBlock
                                                         Margin="5,0,0,0"
@@ -1342,6 +1343,7 @@
                                                     VerticalAlignment="Bottom"
                                                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                     Command="{Binding FeedCommand}"
+                                                    CommandParameter="{Binding CurrentDeviceParameter.Pump2FlowSpeed}"
                                                     Content="{ex:Language Key='补料策略'}"
                                                     DockPanel.Dock="Right"
                                                     Foreground="{StaticResource PrimaryBrush}"
@@ -1374,7 +1376,7 @@
                                 <TabItem Header="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Name}">
                                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                         <hc:UniformSpacingPanel
-                                            Margin="5,5,0,0"
+                                            Margin="5,5,5,0"
                                             Orientation="Vertical"
                                             Spacing="10">
                                             <StackPanel Orientation="Horizontal">
@@ -1456,7 +1458,7 @@
                                                             VerticalAlignment="Center"
                                                             HorizontalContentAlignment="Center"
                                                             Style="{StaticResource TextBoxExtend}"
-                                                            Text="{Binding CurrentDeviceParameter.Pump3FlowSpeed}" />
+                                                            Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3FlowSpeed}" />
                                                     </DockPanel>
                                                     <TextBlock
                                                         Margin="5,0,0,0"
@@ -1468,6 +1470,7 @@
                                                     VerticalAlignment="Bottom"
                                                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                     Command="{Binding FeedCommand}"
+                                                    CommandParameter="{Binding CurrentDeviceParameter.Pump3FlowSpeed}"
                                                     Content="{ex:Language Key='补料策略'}"
                                                     DockPanel.Dock="Right"
                                                     Foreground="{StaticResource PrimaryBrush}"
@@ -1500,7 +1503,7 @@
                                 <TabItem Header="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Name}">
                                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                         <hc:UniformSpacingPanel
-                                            Margin="5,5,0,0"
+                                            Margin="5,5,5,0"
                                             Orientation="Vertical"
                                             Spacing="10">
                                             <StackPanel Orientation="Horizontal">
@@ -1582,7 +1585,7 @@
                                                             VerticalAlignment="Center"
                                                             HorizontalContentAlignment="Center"
                                                             Style="{StaticResource TextBoxExtend}"
-                                                            Text="{Binding CurrentDeviceParameter.Pump4FlowSpeed}" />
+                                                            Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4FlowSpeed}" />
                                                     </DockPanel>
                                                     <TextBlock
                                                         Margin="5,0,0,0"
@@ -1594,6 +1597,7 @@
                                                     VerticalAlignment="Bottom"
                                                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                                     Command="{Binding FeedCommand}"
+                                                    CommandParameter="{Binding CurrentDeviceParameter.Pump4FlowSpeed}"
                                                     Content="{ex:Language Key='补料策略'}"
                                                     DockPanel.Dock="Right"
                                                     Foreground="{StaticResource PrimaryBrush}"
@@ -1630,7 +1634,7 @@
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <Border
                         Width="610"
-                        Height="250"
+                        Height="270"
                         Style="{StaticResource BorderCard}">
                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
@@ -1933,7 +1937,7 @@
                     </Border>
                     <Border
                         Width="300"
-                        Height="250"
+                        Height="270"
                         HorizontalAlignment="Left"
                         Style="{StaticResource BorderCard}">
                         <DockPanel LastChildFill="True">
@@ -2025,13 +2029,13 @@
                                                             VerticalAlignment="Center"
                                                             HorizontalContentAlignment="Center"
                                                             Style="{StaticResource TextBoxExtend}"
-                                                            Text="{Binding CurrentDeviceParameter.MFC1FlowSpeed}" />
+                                                            Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1FlowSpeed}" />
                                                     </DockPanel>
                                                     <TextBlock
                                                         Margin="5,0,0,0"
                                                         HorizontalAlignment="Right"
                                                         VerticalAlignment="Bottom"
-                                                        Text="mL/h" />
+                                                        Text="L/min" />
                                                 </DockPanel>
                                             </DockPanel>
                                         </hc:UniformSpacingPanel>
@@ -2141,13 +2145,13 @@
                                                             VerticalAlignment="Center"
                                                             HorizontalContentAlignment="Center"
                                                             Style="{StaticResource TextBoxExtend}"
-                                                            Text="{Binding CurrentDeviceParameter.MFC2FlowSpeed}" />
+                                                            Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2FlowSpeed}" />
                                                     </DockPanel>
                                                     <TextBlock
                                                         Margin="5,0,0,0"
                                                         HorizontalAlignment="Right"
                                                         VerticalAlignment="Bottom"
-                                                        Text="mL/h" />
+                                                        Text="L/min" />
                                                 </DockPanel>
                                             </DockPanel>
                                         </hc:UniformSpacingPanel>

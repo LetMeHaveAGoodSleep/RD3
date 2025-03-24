@@ -1,0 +1,170 @@
+﻿<UserControl
+    x:Class="RD3.Views.PumpMFCView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="clr-namespace:RD3.Behaviors"
+    xmlns:common="clr-namespace:RD3.Common"
+    xmlns:cv="clr-namespace:RD3.Common.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:vm="clr-namespace:RD3.ViewModels"
+    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+    Width="auto"
+    Height="auto"
+    MinWidth="900"
+    MinHeight="300"
+    d:DataContext="{d:DesignInstance Type=vm:PumpMFCViewModel}"
+    d:DesignHeight="250"
+    d:DesignWidth="500"
+    Background="{StaticResource BackGroundBrush}"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource TextFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ObjectDataProvider
+            x:Key="DataFromEnum"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:PeristalticPump" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum1"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:GasType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="CanMinimize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="True" />
+            <Setter Property="AllowsTransparency" Value="False" />
+            <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Background" Value="{StaticResource DarkMaskBrush}" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Icon" Value="../Assets/logo.png" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <hc:ScrollViewer
+        hc:ScrollViewerAttach.AutoHide="True"
+        hc:ScrollViewerAttach.Orientation="Vertical"
+        HorizontalScrollBarVisibility="Auto"
+        VerticalScrollBarVisibility="Auto">
+        <DataGrid
+            Name="dataGrid"
+            hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
+            hc:DataGridAttach.ShowSelectAllButton="False"
+            AutoGenerateColumns="False"
+            Background="{StaticResource DefaultBrush}"
+            CanUserAddRows="True"
+            CanUserSortColumns="False"
+            ColumnWidth="SizeToHeader"
+            GridLinesVisibility="All"
+            HeadersVisibility="Column"
+            HorizontalGridLinesBrush="LightGray"
+            IsReadOnly="False"
+            ItemsSource="{Binding ReactorSettings}"
+            RowHeaderWidth="100"
+            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            SelectionMode="Single"
+            SelectionUnit="Cell"
+            VerticalGridLinesBrush="LightGray">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="120"
+                    Binding="{Binding ReactorName}"
+                    Header="反应器名称" />
+                <DataGridTemplateColumn Width="120" Header="泵1">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="Pump1Name"
+                                ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+                                SelectedValue="{Binding Pump1, Mode=TwoWay}"
+                                SelectedValuePath="Pump1" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="120" Header="泵2">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="Pump2Name"
+                                ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+                                SelectedValue="{Binding Pump2, Mode=TwoWay}"
+                                SelectedValuePath="Pump2" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="120" Header="泵3">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="Pump3Name"
+                                ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+                                SelectedValue="{Binding Pump3, Mode=TwoWay}"
+                                SelectedValuePath="Pump3" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="120" Header="泵4">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="Pump4Name"
+                                ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+                                SelectedValue="{Binding Pump4, Mode=TwoWay}"
+                                SelectedValuePath="Pump4" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="120" Header="MFC1">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="MFC1Name"
+                                ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
+                                SelectedValue="{Binding MFC1, Mode=TwoWay}"
+                                SelectedValuePath="MFC1" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="120" Header="MFC2">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox
+                                DisplayMemberPath="MFC2Name"
+                                ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
+                                SelectedValue="{Binding MFC2, Mode=TwoWay}"
+                                SelectedValuePath="MFC2" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </hc:ScrollViewer>
+</UserControl>
