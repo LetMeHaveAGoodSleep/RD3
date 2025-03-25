@@ -212,6 +212,24 @@
     <Page Update="Views\NewBatchView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\NewFeedView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\NewMainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\OffLineDatasView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ParameterSourceView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ParameterView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PidView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\PumpMFCView.xaml">
       <SubType>Designer</SubType>
     </Page>

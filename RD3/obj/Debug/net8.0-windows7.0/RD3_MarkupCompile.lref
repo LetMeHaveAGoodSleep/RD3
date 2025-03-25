@@ -1,4 +1,4 @@
-﻿
+﻿D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\GeneratedInternalTypeHelper.g.cs
 FD:\Project\RD3\RD3\App.xaml;;
 FD:\Project\RD3\RD3\Themes\Converters.xaml;;
 FD:\Project\RD3\RD3\Themes\ProgressRing.xaml;;
@@ -39,8 +39,13 @@ FD:\Project\RD3\RD3\Views\MainView.xaml;;
 FD:\Project\RD3\RD3\Views\MCUDebugView.xaml;;
 FD:\Project\RD3\RD3\Views\MsgView.xaml;;
 FD:\Project\RD3\RD3\Views\NewBatchView.xaml;;
+FD:\Project\RD3\RD3\Views\NewFeedView.xaml;;
 FD:\Project\RD3\RD3\Views\NewMainView.xaml;;
+FD:\Project\RD3\RD3\Views\OffLineDatasView.xaml;;
 FD:\Project\RD3\RD3\Views\OperationView.xaml;;
+FD:\Project\RD3\RD3\Views\ParameterSourceView.xaml;;
+FD:\Project\RD3\RD3\Views\ParameterView.xaml;;
+FD:\Project\RD3\RD3\Views\PidView.xaml;;
 FD:\Project\RD3\RD3\Views\ProgressView.xaml;;
 FD:\Project\RD3\RD3\Views\ProjectView.xaml;;
 FD:\Project\RD3\RD3\Views\PumpMFCView.xaml;;

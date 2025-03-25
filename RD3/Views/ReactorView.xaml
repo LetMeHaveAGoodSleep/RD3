@@ -288,7 +288,7 @@
                         Canvas.Left="105"
                         Canvas.Top="341"
                         Width="30"
-                        Height="25"
+                        Height="30"
                         Source="/Images/ReactorNew/泵带底.png"
                         Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     <Image
@@ -296,7 +296,7 @@
                         Canvas.Left="105"
                         Canvas.Top="341"
                         Width="30"
-                        Height="25"
+                        Height="30"
                         Source="/Images/ReactorNew/泵不带底.png"
                         Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                     <TextBlock
@@ -328,7 +328,7 @@
                         Canvas.Left="105"
                         Canvas.Top="397"
                         Width="30"
-                        Height="25"
+                        Height="30"
                         Source="/Images/ReactorNew/泵带底.png"
                         Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     <Image
@@ -336,7 +336,7 @@
                         Canvas.Left="105"
                         Canvas.Top="397"
                         Width="30"
-                        Height="25"
+                        Height="30"
                         Source="/Images/ReactorNew/泵不带底.png"
                         Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                     <TextBlock
@@ -510,7 +510,8 @@
                     <TextBlock
                         Canvas.Left="400"
                         Canvas.Top="405"
-                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2Name}" />
+                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2Name}"
+                        Visibility="Collapsed" />
                     <Image
                         Name="MFC3No"
                         Canvas.Left="360"
@@ -544,6 +545,7 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='溶氧(%)'}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding CurrentDeviceParameter.DOParam.DO_PV}">
                                     <TextBox.ContextMenu>
@@ -587,17 +589,22 @@
                                 <hc:ProgressButton
                                     Width="75"
                                     VerticalAlignment="Bottom"
+                                    Checked="ProgressButton_CheckStateChanged"
                                     Content="自动"
                                     IsChecked="True"
                                     IsEnabled="False"
-                                    Style="{StaticResource ToggleButtonLoadingPrimary}" />
-                                <Button
-                                    Name="DOStart"
+                                    Style="{StaticResource ToggleButtonLoadingSuccess}"
+                                    Unchecked="ProgressButton_CheckStateChanged" />
+                                <hc:ProgressButton
                                     Width="75"
                                     VerticalAlignment="Bottom"
-                                    BorderBrush="Gray"
-                                    Command="{Binding DOStartCommand}"
-                                    Content="开始" />
+                                    Checked="ProgressButton_CheckStateChanged"
+                                    Command="{Binding DORunCommand}"
+                                    Content="开始"
+                                    IsChecked="{Binding CurrentDeviceParameter.DOParam.IsControling}"
+                                    Style="{StaticResource ToggleButtonLoadingPrimary}"
+                                    Tag="True"
+                                    Unchecked="ProgressButton_CheckStateChanged" />
                                 <StackPanel VerticalAlignment="Bottom" Orientation="Vertical">
                                     <CheckBox Content="正向(+)" IsChecked="{Binding CurrentDeviceParameter.DOParam.IsDirect}" />
                                     <CheckBox Content="反向(-)" IsChecked="{Binding CurrentDeviceParameter.DOParam.IsDirect, Converter={StaticResource InverseBooleanConverter}}" />
@@ -608,7 +615,7 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='转速(rpm)'}"
-                                    LostFocus="TextBox_LostFocus"
+                                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.ContextMenu>
@@ -623,11 +630,11 @@
                                                     Command="{Binding AgitSPCommand}"
                                                     CommandParameter="Enable"
                                                     Header="恒速运行" />
-                                                <Separator />
+                                                <!--<Separator />
                                                 <MenuItem
                                                     Command="{Binding AgitSPCommand}"
                                                     CommandParameter="Associated"
-                                                    Header="关联溶氧" />
+                                                    Header="关联溶氧" />-->
                                             </MenuItem>
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
@@ -647,6 +654,7 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='空气(L/min)'}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding CurrentDeviceParameter.AirParam.FlowSpeed}">
                                     <TextBox.ContextMenu>
@@ -661,11 +669,11 @@
                                                     Command="{Binding AirSPCommand}"
                                                     CommandParameter="Enable"
                                                     Header="恒速运行" />
-                                                <Separator />
+                                                <!--<Separator />
                                                 <MenuItem
                                                     Command="{Binding AirSPCommand}"
                                                     CommandParameter="Associated"
-                                                    Header="关联溶氧" />
+                                                    Header="关联溶氧" />-->
                                             </MenuItem>
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
@@ -688,6 +696,7 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='氧气(L/min)'}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding CurrentDeviceParameter.O2Param.FlowSpeed}">
                                     <TextBox.ContextMenu>
@@ -702,11 +711,11 @@
                                                     Command="{Binding O2SPCommand}"
                                                     CommandParameter="Enable"
                                                     Header="恒速运行" />
-                                                <Separator />
+                                                <!--<Separator />
                                                 <MenuItem
                                                     Command="{Binding O2SPCommand}"
                                                     CommandParameter="Associated"
-                                                    Header="关联溶氧" />
+                                                    Header="关联溶氧" />-->
                                             </MenuItem>
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
@@ -734,6 +743,7 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='PH'}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding CurrentDeviceParameter.PHParam.PH_PV}">
                                     <TextBox.ContextMenu>
@@ -768,27 +778,22 @@
                                 <hc:ProgressButton
                                     Width="75"
                                     VerticalAlignment="Bottom"
+                                    Checked="ProgressButton_CheckStateChanged"
                                     Content="自动"
                                     IsChecked="True"
                                     IsEnabled="False"
-                                    Style="{StaticResource ToggleButtonLoadingPrimary}" />
-                                <!--  默认不自动 modify by hdb  -->
-                                <Button
-                                    Name="PHStart"
+                                    Style="{StaticResource ToggleButtonLoadingSuccess}"
+                                    Unchecked="ProgressButton_CheckStateChanged" />
+                                <hc:ProgressButton
                                     Width="75"
                                     VerticalAlignment="Bottom"
-                                    BorderBrush="Gray"
-                                    Content="开始">
-                                    <!--  modify by hdb  -->
-                                    <Button.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="复制" />
-                                            <MenuItem Header="粘贴" />
-                                            <Separator />
-                                            <MenuItem Header="删除" />
-                                        </ContextMenu>
-                                    </Button.ContextMenu>
-                                </Button>
+                                    Checked="ProgressButton_CheckStateChanged"
+                                    Command="{Binding PHRunCommand}"
+                                    Content="开始"
+                                    IsChecked="{Binding CurrentDeviceParameter.PHParam.IsControling}"
+                                    Style="{StaticResource ToggleButtonLoadingPrimary}"
+                                    Tag="True"
+                                    Unchecked="ProgressButton_CheckStateChanged" />
                                 <StackPanel VerticalAlignment="Bottom" Orientation="Vertical">
                                     <CheckBox Content="酸(-)" IsChecked="{Binding CurrentDeviceParameter.PHParam.AcidAssociated}" />
                                     <CheckBox Content="碱(+)" IsChecked="{Binding CurrentDeviceParameter.PHParam.BaseAssociated}" />
@@ -799,6 +804,7 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='酸(mL/h)'}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding CurrentDeviceParameter.AcidParam.Acid_PV}">
                                     <TextBox.ContextMenu>
@@ -813,11 +819,11 @@
                                                     Command="{Binding AcidSPCommand}"
                                                     CommandParameter="Enable"
                                                     Header="恒速运行" />
-                                                <Separator />
+                                                <!--<Separator />
                                                 <MenuItem
                                                     Command="{Binding AcidSPCommand}"
                                                     CommandParameter="Associated"
-                                                    Header="关联PH" />
+                                                    Header="关联PH" />-->
                                             </MenuItem>
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
@@ -837,6 +843,7 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='碱(mL/h)'}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding CurrentDeviceParameter.BaseParam.Base_PV}">
                                     <TextBox.ContextMenu>
@@ -851,11 +858,11 @@
                                                     Command="{Binding BaseSPCommand}"
                                                     CommandParameter="Enable"
                                                     Header="恒速运行" />
-                                                <Separator />
+                                                <!--<Separator />
                                                 <MenuItem
                                                     Command="{Binding BaseSPCommand}"
                                                     CommandParameter="Associated"
-                                                    Header="关联PH" />
+                                                    Header="关联PH" />-->
                                             </MenuItem>
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
@@ -880,6 +887,7 @@
                             Width="75"
                             VerticalAlignment="Center"
                             hc:InfoElement.Title="{ex:Language Key='温度(℃)'}"
+                            IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV}">
                             <TextBox.ContextMenu>
@@ -918,25 +926,22 @@
                         <hc:ProgressButton
                             Width="75"
                             VerticalAlignment="Bottom"
+                            Checked="ProgressButton_CheckStateChanged"
                             Content="自动"
                             IsChecked="True"
                             IsEnabled="False"
-                            Style="{StaticResource ToggleButtonLoadingPrimary}" />
-                        <Button
+                            Style="{StaticResource ToggleButtonLoadingSuccess}"
+                            Unchecked="ProgressButton_CheckStateChanged" />
+                        <hc:ProgressButton
                             Width="75"
                             VerticalAlignment="Bottom"
-                            BorderBrush="Gray"
-                            Content="开始">
-                            <!--  modify by hdb  -->
-                            <Button.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="复制" />
-                                    <MenuItem Header="粘贴" />
-                                    <Separator />
-                                    <MenuItem Header="删除" />
-                                </ContextMenu>
-                            </Button.ContextMenu>
-                        </Button>
+                            Checked="ProgressButton_CheckStateChanged"
+                            Command="{Binding TempRunCommand}"
+                            Content="开始"
+                            IsChecked="{Binding CurrentDeviceParameter.TempParam.IsControling}"
+                            Style="{StaticResource ToggleButtonLoadingPrimary}"
+                            Tag="True"
+                            Unchecked="ProgressButton_CheckStateChanged" />
                         <StackPanel
                             VerticalAlignment="Bottom"
                             Orientation="Vertical"
@@ -952,7 +957,8 @@
                         <TextBox
                             Width="75"
                             VerticalAlignment="Center"
-                            hc:InfoElement.Title="{ex:Language Key='补料1(mL/h)'}"
+                            hc:InfoElement.Title="{ex:Language Key='补料(mL/h)'}"
+                            IsEnabled="{Binding CurrentDeviceParameter.FeedStrategy.IsControling}"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding CurrentDeviceParameter.FeedStrategy.ConstantVal}">
                             <TextBox.ContextMenu>
@@ -987,11 +993,15 @@
                                             Command="{Binding FeedSPCommand}"
                                             CommandParameter="Associated"
                                             Header="关联PH" />
-                                        <Separator />
                                         <MenuItem
                                             Command="{Binding FeedSPCommand}"
+                                            CommandParameter="Associated"
+                                            Header="关联DO" />
+                                        <Separator />
+                                        <!--<MenuItem
+                                            Command="{Binding FeedSPCommand}"
                                             CommandParameter="Loop"
-                                            Header="周期" />
+                                            Header="周期" />-->
                                     </MenuItem>
                                 </ContextMenu>
                             </TextBox.ContextMenu>
@@ -1008,29 +1018,27 @@
                         <hc:ProgressButton
                             Width="75"
                             VerticalAlignment="Bottom"
+                            Checked="ProgressButton_CheckStateChanged"
                             Content="手动"
                             IsChecked="False"
-                            Style="{StaticResource ToggleButtonLoadingPrimary}" />
-                        <Button
+                            Style="{StaticResource ToggleButtonLoadingSuccess}"
+                            Unchecked="ProgressButton_CheckStateChanged" />
+                        <hc:ProgressButton
                             Width="75"
                             VerticalAlignment="Bottom"
-                            BorderBrush="Gray"
-                            Content="开始">
-                            <!--  modify by hdb  -->
-                            <Button.ContextMenu>
-                                <ContextMenu>
-                                    <MenuItem Header="复制" />
-                                    <MenuItem Header="粘贴" />
-                                    <Separator />
-                                    <MenuItem Header="删除" />
-                                </ContextMenu>
-                            </Button.ContextMenu>
-                        </Button>
+                            Checked="ProgressButton_CheckStateChanged"
+                            Command="{Binding FeedRunCommand}"
+                            Content="开始"
+                            IsChecked="{Binding CurrentDeviceParameter.FeedStrategy.IsControling}"
+                            Style="{StaticResource ToggleButtonLoadingPrimary}"
+                            Tag="True"
+                            Unchecked="ProgressButton_CheckStateChanged" />
                     </StackPanel>
                     <StackPanel
                         Canvas.Left="485"
                         Canvas.Top="480"
-                        Orientation="Horizontal">
+                        Orientation="Horizontal"
+                        Visibility="Collapsed">
                         <TextBox
                             Width="75"
                             VerticalAlignment="Center"
@@ -1049,9 +1057,11 @@
                         <hc:ProgressButton
                             Width="75"
                             VerticalAlignment="Bottom"
+                            Checked="ProgressButton_CheckStateChanged"
                             Content="手动"
                             IsChecked="False"
-                            Style="{StaticResource ToggleButtonLoadingPrimary}" />
+                            Style="{StaticResource ToggleButtonLoadingSuccess}"
+                            Unchecked="ProgressButton_CheckStateChanged" />
                         <Button
                             Width="75"
                             VerticalAlignment="Bottom"
@@ -1060,7 +1070,7 @@
                     </StackPanel>
                     <StackPanel
                         Canvas.Left="485"
-                        Canvas.Top="530"
+                        Canvas.Top="480"
                         Orientation="Horizontal">
                         <TextBox
                             Width="75"

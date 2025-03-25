@@ -1,0 +1,142 @@
+﻿<UserControl
+    x:Class="RD3.Views.OffLineDatasView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Selector="clr-namespace:RD3"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:ext="clr-namespace:RD3.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:RD3"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    Width="1400"
+    Height="880"
+    d:DataContext="{d:DesignInstance Type=viewmodels:OffLineDatasViewModel}"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Background="Transparent"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <Border Background="{StaticResource BackGroundBrush}" CornerRadius="{StaticResource DefaultCornerRadius}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <!--操作按钮-->
+                <RowDefinition Height="70" />
+                <!--数据表格-->
+                    <RowDefinition Height="*" /> 
+            </Grid.RowDefinitions>
+            <Grid Name="controlButtons">
+                <!--操作按钮-->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="120" />
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Column="0">
+                    <TextBox Width="100" Height="40" Padding="5 5 5 5" Name="colName"></TextBox>
+                    <Button Name="AddColumn"  Content="添加数据" Width="80" Height="40" Click="AddColumn_Click" Background="SkyBlue"></Button>
+                </DockPanel>
+
+                <Button Name="DeleteColumn" Grid.Column="1" Content="删除数据" Width="80" Height="40" Click="DeleteColumn_Click" Background="SkyBlue"></Button>
+                <Button Name="InputColumn" Grid.Column="1" Content="导入数据" Width="80" Height="40" Click="InputColumn_Click" Background="SkyBlue"></Button>
+                <!--Command="{Binding SaveCommand}"-->
+                <Button Name="SaveColumn" Grid.Column="4" Content="保存数据" Width="80" Height="40"  Background="SkyBlue" Click="SaveColumn_Click"></Button>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="400" />
+                    <ColumnDefinition Width="400" />
+                </Grid.ColumnDefinitions>
+                <DataGrid Grid.Column="0"
+                Name="dataGrid"
+                hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
+                hc:DataGridAttach.ShowSelectAllButton="False"
+                AutoGenerateColumns="False"
+                Background="{StaticResource DefaultBrush}"
+                CanUserAddRows="True"
+                CanUserSortColumns="False"
+                ColumnWidth="SizeToHeader"
+                GridLinesVisibility="All"
+                HeadersVisibility="Column"
+                HorizontalGridLinesBrush="LightGray"
+                IsReadOnly="False"
+                ItemsSource="{Binding DataTable}"
+                RowHeaderWidth="100"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                SelectionMode="Single"
+                SelectionUnit="Cell"
+                VerticalGridLinesBrush="LightGray" 
+                      >
+                <DataGrid.Columns>
+                    <!--设备列表-->
+                    <DataGridTextColumn Header="采样时间" Binding="{Binding sampletime}" Width="180" IsReadOnly="False" CanUserSort="True" />
+                    <DataGridTextColumn Header="样品序列号" Binding="{Binding sampleNo}" Width="100" IsReadOnly="False" CanUserSort="False"/>
+                </DataGrid.Columns>
+            </DataGrid>
+                <DockPanel Grid.Column="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70" />
+                            <RowDefinition Height="70" />
+                            <RowDefinition Height="70" />
+                            <RowDefinition Height="70" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">接种</Label>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">时间</Label>
+                            <hc:DateTimePicker Name ="vaccinateTime" Width="200" Height="40" Text="{Binding VaccinateInof.vaccinateTime}"></hc:DateTimePicker>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal">
+                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">体积</Label>
+                            <TextBox Width="200" Height="40" Name="vaccinateV" Text="{Binding VaccinateInof.vaccinateV}"></TextBox>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Orientation="Horizontal">
+                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">OD</Label>
+                            <TextBox Width="200" Height="40" Name="ODValue" Text="{Binding VaccinateInof.ODValue}"></TextBox>
+                        </StackPanel>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Grid.Column="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="70" />
+                            <RowDefinition Height="70" />
+                            <RowDefinition Height="70" />
+                            <RowDefinition Height="70" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">诱导</Label>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">时间</Label>
+                            <hc:DateTimePicker Width="200" Height="40" Name="induceTime"  Text="{Binding InduceInof.induceTime}"></hc:DateTimePicker>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal">
+                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">体积</Label>
+                            <TextBox Width="200" Height="40" Name="induceV"  Text="{Binding InduceInof.induceV}"></TextBox>
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Orientation="Horizontal">
+                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">浓度</Label>
+                            <TextBox Width="200" Height="40" Name="inducedensity" Text="{Binding InduceInof.inducedensity}"></TextBox>
+                        </StackPanel>
+                    </Grid>
+                </DockPanel>
+            </Grid>
+        </Grid>
+
+    </Border>
+</UserControl>

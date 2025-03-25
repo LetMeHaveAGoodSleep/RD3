@@ -146,8 +146,26 @@
                                 Visibility="{Binding}" />
                         </MenuItem>
                         <MenuItem Height="40" Header="参数管理">
-                            <!--<MenuItem Header="复制"/>
-                            <MenuItem Header="粘贴"/>-->
+                            <MenuItem
+                                Width="100"
+                                Click="MenuItem_Open_Click"
+                                Header="参数配置"
+                                Tag="ParameterView" />
+                            <MenuItem
+                                Width="100"
+                                Click="MenuItem_Open_Click"
+                                Header="参数整定"
+                                Tag="PIDView" />
+                            <MenuItem
+                                Width="100"
+                                Click="MenuItem_Open_Click"
+                                Header="参数来源"
+                                Tag="ParameterSourceView" />
+                            <MenuItem
+                                Width="100"
+                                Click="MenuItem_Open_Click"
+                                Header="补料函数"
+                                Tag="NewFeedView" />
                         </MenuItem>
                         <MenuItem Height="40" Header="数据管理">
                             <MenuItem

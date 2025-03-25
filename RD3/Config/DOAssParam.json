@@ -1,0 +1,7 @@
+{
+  "AgitLowerLimit": 100,
+  "AgitUpperLimit": 1500,
+  "AirCol": [
+    { "VVM": 0.1 }
+  ]
+}

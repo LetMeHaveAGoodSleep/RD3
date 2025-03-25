@@ -1341,6 +1341,81 @@
                     <wpf:WpfPlot Name="PHWpfPlot" Grid.Row="1" />
                 </Grid>
             </TabItem>
+            <TabItem Header="溶氧PID调试">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='溶氧预设值'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding DO_SP}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='kp'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding DO_Kp}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='ki'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding DO_Ki}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='kd'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding DO_Kd}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='转速上限'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding DO_OutputLimit}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='转速下限'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding DO_OutputLimit1}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='步幅'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding DO_IntegralLimit}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='溶氧当前值'}"
+                            BorderBrush="Gray"
+                            IsEnabled="False"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding RealTimeParam.DO}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='转速'}"
+                            BorderBrush="Gray"
+                            IsEnabled="False"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding RealTimeParam.Agit}" />
+                        <DockPanel LastChildFill="False">
+                            <Button
+                                Width="80"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding DOPIDCommand}"
+                                Content="开始"
+                                Style="{StaticResource ButtonPrimary}" />
+                            <Button
+                                Width="80"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding StopDOPIDCommand}"
+                                Content="停止"
+                                Style="{StaticResource ButtonPrimary}" />
+                        </DockPanel>
+                    </hc:UniformSpacingPanel>
+                    <wpf:WpfPlot Name="DOWpfPlot" Grid.Row="1" />
+                </Grid>
+            </TabItem>
             <TabItem Header="实时曲线">
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>

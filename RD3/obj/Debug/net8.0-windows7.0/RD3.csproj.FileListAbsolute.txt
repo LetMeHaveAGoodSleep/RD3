@@ -928,3 +928,13 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\NewMainView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOAssociateView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOAssociateView.baml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\DOAssParam.json
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\OffLineDatasView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ParameterSourceView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ParameterView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\PidView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\OffLineDatasView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ParameterSourceView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ParameterView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\PidView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\NewFeedView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\NewFeedView.baml
