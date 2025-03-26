@@ -61,5 +61,19 @@
   "Product2ScaleMin": "0",
   "Product2ScaleMax": "100",
   "Acetic acidScaleMin": "0",
-  "Acetic acidScaleMax": "50"
+  "Acetic acidScaleMax": "50",
+  "F1(0)": "20",
+  "μ": "0.7",
+  "p1": "5",
+  "a": "0",
+  "b": "0",
+  "c": "0",
+  "maxdo": "80",
+  "maxdospeed": "0.3",
+  "mindo": "30",
+  "mindospeed": "0.5",
+  "maxph": "80",
+  "maxphspeed": "0.3",
+  "minph": "30",
+  "minphspeed": "0.5"
 }

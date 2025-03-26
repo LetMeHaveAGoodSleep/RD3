@@ -350,10 +350,77 @@
                             </Grid>
                         </Grid>
                         <DataGrid
+                            Name="dataGrid1"
+                            Grid.Row="1"
+                            hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+                            hc:DataGridAttach.ShowSelectAllButton="False"
+                            AutoGenerateColumns="False"
+                            Background="Transparent"
+                            ColumnWidth="SizeToCells"
+                            FontSize="{DynamicResource NormalFontSize}"
+                            HeadersVisibility="Column"
+                            IsReadOnly="True"
+                            ItemsSource="{Binding DataList}"
+                            RowHeaderWidth="60"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn
+                                    Width="200"
+                                    CellStyle="{StaticResource DataGridTextLeftCellStyle}"
+                                    Header="{ex:Language Key='报警时间'}"
+                                    HeaderStyle="{StaticResource DataGridLeftColumnHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Time, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn
+                                    Width="100"
+                                    Binding="{Binding Batch}"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='批次'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                <DataGridTextColumn
+                                    Width="100"
+                                    Binding="{Binding Reactor}"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='反应器'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                <DataGridTextColumn
+                                    Width="150"
+                                    Binding="{Binding Module}"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='模块'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                <DataGridTextColumn
+                                    Width="100"
+                                    Binding="{Binding Value}"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='值'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                <DataGridTextColumn
+                                    Width="80"
+                                    Binding="{Binding Grade}"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='等级'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                <DataGridTextColumn
+                                    Width="250"
+                                    Binding="{Binding Description}"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="{ex:Language Key='描述'}"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <!--<DataGrid
                             Name="LogDetail"
                             Grid.Row="1"
                             Background="{x:Null}">
-                            <!--  设备详情  -->
+                        -->
+                        <!--  设备详情  -->
+                        <!--
                             <DataGrid.Columns>
                                 <DataGridTextColumn Width="70" Header="记录ID" />
                                 <DataGridTextColumn Width="70" Header="反应器" />
@@ -365,7 +432,7 @@
                                 <DataGridTextColumn Width="70" Header="来宾" />
                                 <DataGridTextColumn Width="70" Header="状态" />
                             </DataGrid.Columns>
-                        </DataGrid>
+                        </DataGrid>-->
                     </Grid>
                 </Grid>
 

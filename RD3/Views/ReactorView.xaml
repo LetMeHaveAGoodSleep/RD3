@@ -547,7 +547,7 @@
                                     hc:InfoElement.Title="{ex:Language Key='溶氧(%)'}"
                                     IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.DOParam.DO_PV}">
+                                    Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Header="选择来源">
@@ -629,7 +629,7 @@
                                                 <MenuItem
                                                     Command="{Binding AgitSPCommand}"
                                                     CommandParameter="Enable"
-                                                    Header="恒速运行" />
+                                                    Header="手动输入" />
                                                 <!--<Separator />
                                                 <MenuItem
                                                     Command="{Binding AgitSPCommand}"
@@ -656,7 +656,7 @@
                                     hc:InfoElement.Title="{ex:Language Key='空气(L/min)'}"
                                     IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AirParam.FlowSpeed}">
+                                    Text="{Binding CurrentDeviceParameter.AirParam.FlowSpeed, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Header="选择来源">
@@ -668,7 +668,7 @@
                                                 <MenuItem
                                                     Command="{Binding AirSPCommand}"
                                                     CommandParameter="Enable"
-                                                    Header="恒速运行" />
+                                                    Header="手动输入" />
                                                 <!--<Separator />
                                                 <MenuItem
                                                     Command="{Binding AirSPCommand}"
@@ -698,7 +698,7 @@
                                     hc:InfoElement.Title="{ex:Language Key='氧气(L/min)'}"
                                     IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.O2Param.FlowSpeed}">
+                                    Text="{Binding CurrentDeviceParameter.O2Param.FlowSpeed, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Header="选择来源">
@@ -710,7 +710,7 @@
                                                 <MenuItem
                                                     Command="{Binding O2SPCommand}"
                                                     CommandParameter="Enable"
-                                                    Header="恒速运行" />
+                                                    Header="手动输入" />
                                                 <!--<Separator />
                                                 <MenuItem
                                                     Command="{Binding O2SPCommand}"
@@ -743,9 +743,9 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='PH'}"
-                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.PHParam.PH_PV}">
+                                    Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Header="选择来源">
@@ -804,9 +804,9 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='酸(mL/h)'}"
-                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AcidParam.Acid_PV}">
+                                    Text="{Binding CurrentDeviceParameter.AcidParam.Acid_PV, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Header="选择来源">
@@ -818,7 +818,7 @@
                                                 <MenuItem
                                                     Command="{Binding AcidSPCommand}"
                                                     CommandParameter="Enable"
-                                                    Header="恒速运行" />
+                                                    Header="手动输入" />
                                                 <!--<Separator />
                                                 <MenuItem
                                                     Command="{Binding AcidSPCommand}"
@@ -843,9 +843,9 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='碱(mL/h)'}"
-                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.BaseParam.Base_PV}">
+                                    Text="{Binding CurrentDeviceParameter.BaseParam.Base_PV, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Header="选择来源">
@@ -857,7 +857,7 @@
                                                 <MenuItem
                                                     Command="{Binding BaseSPCommand}"
                                                     CommandParameter="Enable"
-                                                    Header="恒速运行" />
+                                                    Header="手动输入" />
                                                 <!--<Separator />
                                                 <MenuItem
                                                     Command="{Binding BaseSPCommand}"
@@ -889,7 +889,7 @@
                             hc:InfoElement.Title="{ex:Language Key='温度(℃)'}"
                             IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                             Style="{StaticResource TextBoxExtend}"
-                            Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV}">
+                            Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, UpdateSourceTrigger=PropertyChanged}">
                             <TextBox.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="选择来源">
@@ -900,7 +900,8 @@
                                         <MenuItem
                                             Command="{Binding TempSPCommand}"
                                             CommandParameter="Enable"
-                                            Header="手动输入" />
+                                            Header="手动输入"
+                                            Visibility="Collapsed" />
                                         <MenuItem
                                             Command="{Binding TempSPCommand}"
                                             CommandParameter="TimeSeries"
@@ -958,9 +959,9 @@
                             Width="75"
                             VerticalAlignment="Center"
                             hc:InfoElement.Title="{ex:Language Key='补料(mL/h)'}"
-                            IsEnabled="{Binding CurrentDeviceParameter.FeedStrategy.IsControling}"
+                            IsEnabled="{Binding CurrentDeviceParameter.FeedStrategy.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                             Style="{StaticResource TextBoxExtend}"
-                            Text="{Binding CurrentDeviceParameter.FeedStrategy.ConstantVal}">
+                            Text="{Binding CurrentDeviceParameter.FeedStrategy.ConstantVal, UpdateSourceTrigger=PropertyChanged}">
                             <TextBox.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="选择来源">
@@ -972,7 +973,7 @@
                                         <MenuItem
                                             Command="{Binding FeedSPCommand}"
                                             CommandParameter="Enable"
-                                            Header="恒速运行" />
+                                            Header="手动输入" />
                                         <Separator />
                                         <MenuItem
                                             Command="{Binding FeedSPCommand}"
@@ -1020,7 +1021,8 @@
                             VerticalAlignment="Bottom"
                             Checked="ProgressButton_CheckStateChanged"
                             Content="手动"
-                            IsChecked="False"
+                            IsChecked="{Binding CurrentDeviceParameter.FeedStrategy.IsAuto}"
+                            IsEnabled="False"
                             Style="{StaticResource ToggleButtonLoadingSuccess}"
                             Unchecked="ProgressButton_CheckStateChanged" />
                         <hc:ProgressButton
@@ -1077,7 +1079,7 @@
                             VerticalAlignment="Center"
                             hc:InfoElement.Title="{ex:Language Key='消泡(mL/h)'}"
                             Style="{StaticResource TextBoxExtend}"
-                            Text="{Binding CurrentDeviceParameter.AFParam.AF_PV}">
+                            Text="{Binding CurrentDeviceParameter.AFParam.AF_PV, UpdateSourceTrigger=PropertyChanged}">
                             <TextBox.ContextMenu>
                                 <ContextMenu>
                                     <MenuItem Header="选择来源">
@@ -1089,12 +1091,12 @@
                                         <MenuItem
                                             Command="{Binding AFSPCommand}"
                                             CommandParameter="Enable"
-                                            Header="恒速运行" />
+                                            Header="手动输入" />
                                         <Separator />
-                                        <MenuItem
+                                        <!--<MenuItem
                                             Command="{Binding AFSPCommand}"
                                             CommandParameter="Cycle"
-                                            Header="周期" />
+                                            Header="周期" />-->
                                     </MenuItem>
                                 </ContextMenu>
                             </TextBox.ContextMenu>
