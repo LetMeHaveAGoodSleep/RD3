@@ -12,8 +12,8 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
-    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     Width="1400"
     Height="880"
     d:DataContext="{d:DesignInstance Type=viewmodels:OffLineDatasViewModel}"
@@ -28,63 +28,113 @@
     <Border Background="{StaticResource BackGroundBrush}" CornerRadius="{StaticResource DefaultCornerRadius}">
         <Grid>
             <Grid.RowDefinitions>
-                <!--操作按钮-->
+                <!--  操作按钮  -->
                 <RowDefinition Height="70" />
-                <!--数据表格-->
-                    <RowDefinition Height="*" /> 
+                <!--  数据表格  -->
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Name="controlButtons">
-                <!--操作按钮-->
+                <!--  操作按钮  -->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="120" />
                     <ColumnDefinition Width="120" />
                     <ColumnDefinition Width="120" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="120" />
                 </Grid.ColumnDefinitions>
                 <DockPanel Grid.Column="0">
-                    <TextBox Width="100" Height="40" Padding="5 5 5 5" Name="colName"></TextBox>
-                    <Button Name="AddColumn"  Content="添加数据" Width="80" Height="40" Click="AddColumn_Click" Background="SkyBlue"></Button>
+                    <TextBox
+                        Name="colName"
+                        Width="100"
+                        Height="40"
+                        Padding="5,5,5,5" />
+                    <Button
+                        Name="AddColumn"
+                        Width="80"
+                        Height="40"
+                        Background="SkyBlue"
+                        Click="AddColumn_Click"
+                        Content="添加数据" />
                 </DockPanel>
 
-                <Button Name="DeleteColumn" Grid.Column="1" Content="删除数据" Width="80" Height="40" Click="DeleteColumn_Click" Background="SkyBlue"></Button>
-                <Button Name="InputColumn" Grid.Column="1" Content="导入数据" Width="80" Height="40" Click="InputColumn_Click" Background="SkyBlue"></Button>
-                <!--Command="{Binding SaveCommand}"-->
-                <Button Name="SaveColumn" Grid.Column="4" Content="保存数据" Width="80" Height="40"  Background="SkyBlue" Click="SaveColumn_Click"></Button>
+                <Button
+                    Name="DeleteColumn"
+                    Grid.Column="1"
+                    Width="80"
+                    Height="40"
+                    Background="SkyBlue"
+                    Click="DeleteColumn_Click"
+                    Content="删除数据" />
+                <Button
+                    Name="InputColumn"
+                    Grid.Column="2"
+                    Width="80"
+                    Height="40"
+                    Background="SkyBlue"
+                    Click="InputColumn_Click"
+                    Content="导入数据" />
+                <Button
+                    Name="DeleteRow"
+                    Grid.Column="3"
+                    Width="80"
+                    Height="40"
+                    Background="SkyBlue"
+                    Click="DeleteRow_Click"
+                    Content="删除样品" />
+                <!--  Command="{Binding SaveCommand}"  -->
+                <Button
+                    Name="SaveColumn"
+                    Grid.Column="5"
+                    Width="80"
+                    Height="40"
+                    Background="SkyBlue"
+                    Click="SaveColumn_Click"
+                    Content="保存数据" />
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="400" />
-                    <ColumnDefinition Width="400" />
+                    <ColumnDefinition Width="270" />
+                    <ColumnDefinition Width="270" />
                 </Grid.ColumnDefinitions>
-                <DataGrid Grid.Column="0"
-                Name="dataGrid"
-                hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
-                hc:DataGridAttach.ShowSelectAllButton="False"
-                AutoGenerateColumns="False"
-                Background="{StaticResource DefaultBrush}"
-                CanUserAddRows="True"
-                CanUserSortColumns="False"
-                ColumnWidth="SizeToHeader"
-                GridLinesVisibility="All"
-                HeadersVisibility="Column"
-                HorizontalGridLinesBrush="LightGray"
-                IsReadOnly="False"
-                ItemsSource="{Binding DataTable}"
-                RowHeaderWidth="100"
-                ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                SelectionMode="Single"
-                SelectionUnit="Cell"
-                VerticalGridLinesBrush="LightGray" 
-                      >
-                <DataGrid.Columns>
-                    <!--设备列表-->
-                    <DataGridTextColumn Header="采样时间" Binding="{Binding sampletime}" Width="180" IsReadOnly="False" CanUserSort="True" />
-                    <DataGridTextColumn Header="样品序列号" Binding="{Binding sampleNo}" Width="100" IsReadOnly="False" CanUserSort="False"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                <DataGrid
+                    Name="dataGrid"
+                    Grid.Column="0"
+                    hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
+                    hc:DataGridAttach.ShowSelectAllButton="False"
+                    AutoGenerateColumns="False"
+                    Background="{StaticResource DefaultBrush}"
+                    CanUserAddRows="True"
+                    CanUserSortColumns="False"
+                    ColumnWidth="SizeToHeader"
+                    GridLinesVisibility="All"
+                    HeadersVisibility="Column"
+                    HorizontalGridLinesBrush="LightGray"
+                    IsReadOnly="False"
+                    ItemsSource="{Binding DataTable}"
+                    RowHeaderWidth="100"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    SelectionMode="Single"
+                    SelectionUnit="Cell"
+                    VerticalGridLinesBrush="LightGray">
+                    <DataGrid.Columns>
+                        <!--  设备列表  -->
+                        <DataGridTextColumn
+                            Width="180"
+                            Binding="{Binding sampletime}"
+                            CanUserSort="True"
+                            Header="采样时间"
+                            IsReadOnly="False" />
+                        <DataGridTextColumn
+                            Width="100"
+                            Binding="{Binding sampleNo}"
+                            CanUserSort="False"
+                            Header="样品序列号"
+                            IsReadOnly="False" />
+                    </DataGrid.Columns>
+                </DataGrid>
                 <DockPanel Grid.Column="1">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -93,20 +143,55 @@
                             <RowDefinition Height="70" />
                             <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Orientation="Horizontal">
-                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">接种</Label>
+                        <StackPanel
+                            Grid.Row="0"
+                            Background="SkyBlue"
+                            Orientation="Horizontal">
+                            <Label
+                                Width="60"
+                                Background="Transparent"
+                                BorderBrush="Transparent">
+                                接种
+                            </Label>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">时间</Label>
-                            <hc:DateTimePicker Name ="vaccinateTime" Width="200" Height="40" Text="{Binding VaccinateInof.vaccinateTime}"></hc:DateTimePicker>
+                            <Label
+                                Width="60"
+                                Background="Transparent"
+                                BorderBrush="Transparent">
+                                时间
+                            </Label>
+                            <hc:DateTimePicker
+                                Name="vaccinateTime"
+                                Width="200"
+                                Height="40"
+                                Text="{Binding VaccinateInof.vaccinateTime}" />
                         </StackPanel>
                         <StackPanel Grid.Row="2" Orientation="Horizontal">
-                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">体积</Label>
-                            <TextBox Width="200" Height="40" Name="vaccinateV" Text="{Binding VaccinateInof.vaccinateV}"></TextBox>
+                            <Label
+                                Width="60"
+                                Background="Transparent"
+                                BorderBrush="Transparent">
+                                体积
+                            </Label>
+                            <TextBox
+                                Name="vaccinateV"
+                                Width="200"
+                                Height="40"
+                                Text="{Binding VaccinateInof.vaccinateV}" />
                         </StackPanel>
                         <StackPanel Grid.Row="3" Orientation="Horizontal">
-                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">OD</Label>
-                            <TextBox Width="200" Height="40" Name="ODValue" Text="{Binding VaccinateInof.ODValue}"></TextBox>
+                            <Label
+                                Width="60"
+                                Background="Transparent"
+                                BorderBrush="Transparent">
+                                OD
+                            </Label>
+                            <TextBox
+                                Name="ODValue"
+                                Width="200"
+                                Height="40"
+                                Text="{Binding VaccinateInof.ODValue}" />
                         </StackPanel>
                     </Grid>
                 </DockPanel>
@@ -118,20 +203,55 @@
                             <RowDefinition Height="70" />
                             <RowDefinition Height="70" />
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Orientation="Horizontal">
-                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">诱导</Label>
+                        <StackPanel
+                            Grid.Row="0"
+                            Background="Aqua"
+                            Orientation="Horizontal">
+                            <Label
+                                Width="60"
+                                Background="Transparent"
+                                BorderBrush="Transparent">
+                                诱导
+                            </Label>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">时间</Label>
-                            <hc:DateTimePicker Width="200" Height="40" Name="induceTime"  Text="{Binding InduceInof.induceTime}"></hc:DateTimePicker>
+                            <Label
+                                Width="60"
+                                Background="Transparent"
+                                BorderBrush="Transparent">
+                                时间
+                            </Label>
+                            <hc:DateTimePicker
+                                Name="induceTime"
+                                Width="200"
+                                Height="40"
+                                Text="{Binding InduceInof.induceTime}" />
                         </StackPanel>
                         <StackPanel Grid.Row="2" Orientation="Horizontal">
-                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">体积</Label>
-                            <TextBox Width="200" Height="40" Name="induceV"  Text="{Binding InduceInof.induceV}"></TextBox>
+                            <Label
+                                Width="60"
+                                Background="Transparent"
+                                BorderBrush="Transparent">
+                                体积
+                            </Label>
+                            <TextBox
+                                Name="induceV"
+                                Width="200"
+                                Height="40"
+                                Text="{Binding InduceInof.induceV}" />
                         </StackPanel>
                         <StackPanel Grid.Row="3" Orientation="Horizontal">
-                            <Label Width="60" Background="Transparent" BorderBrush="Transparent">浓度</Label>
-                            <TextBox Width="200" Height="40" Name="inducedensity" Text="{Binding InduceInof.inducedensity}"></TextBox>
+                            <Label
+                                Width="60"
+                                Background="Transparent"
+                                BorderBrush="Transparent">
+                                浓度
+                            </Label>
+                            <TextBox
+                                Name="inducedensity"
+                                Width="200"
+                                Height="40"
+                                Text="{Binding InduceInof.inducedensity}" />
                         </StackPanel>
                     </Grid>
                 </DockPanel>

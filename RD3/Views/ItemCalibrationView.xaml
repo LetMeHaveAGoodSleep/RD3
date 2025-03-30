@@ -30,7 +30,7 @@
             SelectedIndex="{Binding CalibrateIndex}"
             Style="{StaticResource ComboBoxExtend}">
             <ComboBoxItem Content="系数校准" />
-            <ComboBoxItem Content="偏置校准" />
+            <ComboBoxItem Content="单点校准" />
             <ComboBoxItem Content="两点校准" />
         </ComboBox>
         <Label

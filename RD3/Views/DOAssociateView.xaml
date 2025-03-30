@@ -55,10 +55,19 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+            <ComboBox
+                Width="100"
+                VerticalAlignment="Center"
+                hc:InfoElement.Title="{ex:Language Key='单位'}"
+                SelectedIndex="{Binding Param.Unit}"
+                Style="{StaticResource ComboBoxExtend}">
+                <ComboBoxItem Content="VVM" />
+                <ComboBoxItem Content="L/min" />
+            </ComboBox>
             <TextBox
                 Width="100"
                 VerticalAlignment="Center"
-                hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
+                hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
                 Style="{StaticResource TextBoxExtend}"
                 Text="{Binding Param.AgitLowerLimit, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox
@@ -131,7 +140,7 @@
                     Width="120"
                     Binding="{Binding VVM}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="通气量（VVM）"
+                    Header="通气量"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
             </DataGrid.Columns>
         </DataGrid>

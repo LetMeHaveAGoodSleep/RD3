@@ -17,8 +17,10 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
-    Width="1200"
-    Height="900"
+    Width="auto"
+    Height="auto"
+    MinWidth="1000"
+    MinHeight="700"
     d:DataContext="{d:DesignInstance Type=vm:CalibrateViewModel}"
     d:DesignHeight="600"
     d:DesignWidth="1200"
@@ -166,7 +168,7 @@
                             </hc:ButtonGroup>
                         </Border>
                     </DockPanel>
-                    <Border Height="340" Style="{StaticResource BorderCommon}">
+                    <Border Height="240" Style="{StaticResource BorderCommon}">
                         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                             <hc:UniformSpacingPanel
                                 Name="ReactorPanel"

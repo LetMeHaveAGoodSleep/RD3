@@ -67,7 +67,7 @@
                             Margin="5"
                             Source="/Assets/logo.png" />
                         <TextBlock
-                            Margin="8,10,10,8"
+                            Margin="8,8,10,8"
                             FontSize="{StaticResource HeadFontSize}"
                             FontWeight="Bold"
                             Text="芯造科技"
@@ -112,12 +112,12 @@
                             <MenuItem
                                 Width="100"
                                 Click="MenuItem_Open_Click"
-                                Header="用户"
+                                Header="用户管理"
                                 Tag="UserView" />
                             <MenuItem
                                 Width="100"
                                 Click="MenuItem_Open_Click"
-                                Header="设置"
+                                Header="系统设置"
                                 Tag="SettingView" />
                             <!--<MenuItem Header="项目" Width = "100" />
                             <MenuItem Header="版本" Width = "100" />-->
@@ -166,13 +166,19 @@
                                 Click="MenuItem_Open_Click"
                                 Header="补料函数"
                                 Tag="NewFeedView" />
+                            <MenuItem
+                                Width="100"
+                                Click="MenuItem_Open_Click"
+                                Header="补料阈值"
+                                Tag="AlarmThresholdView" />
                         </MenuItem>
                         <MenuItem Height="40" Header="数据管理">
                             <MenuItem
                                 Width="100"
                                 Click="MenuItem_Open_Click"
                                 Header="实验管理"
-                                Tag="NewProjectView" />
+                                Tag="NewProjectView"
+                                Visibility="Collapsed" />
                             <MenuItem
                                 Width="100"
                                 Click="MenuItem_Open_Click"

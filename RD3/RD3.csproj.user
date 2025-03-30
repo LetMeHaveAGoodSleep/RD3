@@ -135,6 +135,9 @@
     <Page Update="Views\AddSampleView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\AlarmThresholdView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\AlarmView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -216,6 +219,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\NewMainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\FeedGradientView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\OffLineDatasView.xaml">

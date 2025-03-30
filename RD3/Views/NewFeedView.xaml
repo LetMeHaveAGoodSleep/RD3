@@ -9,10 +9,11 @@
     xmlns:local="clr-namespace:RD3"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    Width="1350"
+    Height="700"
     d:DataContext="{d:DesignInstance Type=viewmodels:NewFeedViewModel}"
-    Height ="700"
-    Width ="1350"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
@@ -21,49 +22,115 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="True" />
+            <Setter Property="AllowsTransparency" Value="False" />
+            <Setter Property="WindowStyle" Value="ThreeDBorderWindow" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </prism:Dialog.WindowStyle>
     <Border Background="{StaticResource BackGroundBrush}" CornerRadius="{StaticResource DefaultCornerRadius}">
         <Grid>
             <Grid.RowDefinitions>
-                <!--操作按钮-->
+                <!--  操作按钮  -->
                 <RowDefinition Height="70" />
-                <!--数据表格-->
+                <!--  数据表格  -->
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <DockPanel Grid.Row="0" >
-                <Button Name="Save" Command="{Binding SaveCommand}" Width="80" Height="40" HorizontalAlignment="Right" Margin="10" FontSize="18">保存</Button>
+            <DockPanel Grid.Row="0">
+                <Button
+                    Name="Save"
+                    Width="80"
+                    Height="40"
+                    Margin="10"
+                    HorizontalAlignment="Right"
+                    Command="{Binding SaveCommand}"
+                    FontSize="18">
+                    保存
+                </Button>
             </DockPanel>
 
-            <DataGrid Grid.Row="1"
-                 Name="dataGrid"
-                 hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
-                 hc:DataGridAttach.ShowSelectAllButton="False"
-                 AutoGenerateColumns="False"
-                 Background="{StaticResource DefaultBrush}"
-                 CanUserAddRows="True"
-                 CanUserSortColumns="False"
-                 ColumnWidth="SizeToHeader"
-                 GridLinesVisibility="All"
-                 HeadersVisibility="Column"
-                 HorizontalGridLinesBrush="LightGray"
-                 IsReadOnly="False"
-                 ItemsSource="{Binding FeedInfos}"
-                 RowHeaderWidth="100"
-                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                 SelectionMode="Single"
-                 SelectionUnit="Cell"
-                 VerticalGridLinesBrush="LightGray" 
-                      LayoutUpdated="DataGridMain_OnLayoutUpdated"
-                       >    
+            <DataGrid
+                Name="dataGrid"
+                Grid.Row="1"
+                hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
+                hc:DataGridAttach.ShowSelectAllButton="False"
+                AutoGenerateColumns="False"
+                Background="{StaticResource DefaultBrush}"
+                CanUserAddRows="True"
+                CanUserSortColumns="False"
+                ColumnWidth="SizeToHeader"
+                GridLinesVisibility="All"
+                HeadersVisibility="Column"
+                HorizontalGridLinesBrush="LightGray"
+                IsReadOnly="False"
+                ItemsSource="{Binding FeedInfos}"
+                LayoutUpdated="DataGridMain_OnLayoutUpdated"
+                RowHeaderWidth="100"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                SelectionMode="Single"
+                SelectionUnit="Cell"
+                VerticalGridLinesBrush="LightGray">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="50" IsReadOnly="False" CanUserSort="False" />
-                    <DataGridTextColumn Header="名称" Binding="{Binding Name}" Width="200" IsReadOnly="False" CanUserSort="False"/>
-                    <DataGridTextColumn Header="表达式" Binding="{Binding Equation}" Width="200" IsReadOnly="False" CanUserSort="False" />
-                    <DataGridTextColumn Header="变量" Binding="{Binding Variable}" Width="150" IsReadOnly="False" CanUserSort="False"/>
-                    <DataGridTextColumn Header="描述" Binding="{Binding Description}" Width="*" IsReadOnly="False" CanUserSort="False" />
-                    <DataGridTextColumn Header="设定值ID" Binding="{Binding SetValueID}" Width="100" IsReadOnly="False" CanUserSort="False"/>
-                    <DataGridTextColumn Header="过程值ID" Binding="{Binding ProcessValueID}" Width="100" IsReadOnly="False" CanUserSort="False" />
-                    <DataGridTextColumn Header="类型" Binding="{Binding FeedInfoType}" Width="200" IsReadOnly="False" CanUserSort="False"/>
+                    <DataGridTextColumn
+                        Width="50"
+                        Binding="{Binding ID}"
+                        CanUserSort="False"
+                        Header="ID"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="200"
+                        Binding="{Binding Name}"
+                        CanUserSort="False"
+                        Header="名称"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="200"
+                        Binding="{Binding Equation}"
+                        CanUserSort="False"
+                        Header="表达式"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="150"
+                        Binding="{Binding Variable}"
+                        CanUserSort="False"
+                        Header="变量"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Description}"
+                        CanUserSort="False"
+                        Header="描述"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding SetValueID}"
+                        CanUserSort="False"
+                        Header="设定值ID"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding ProcessValueID}"
+                        CanUserSort="False"
+                        Header="过程值ID"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="200"
+                        Binding="{Binding FeedInfoType}"
+                        CanUserSort="False"
+                        Header="类型"
+                        IsReadOnly="False" />
                     <!--<DataGridTextColumn Header="模式" Binding="{Binding excuteType}" Width="100" IsReadOnly="True" CanUserSort="False" />-->
                 </DataGrid.Columns>
             </DataGrid>

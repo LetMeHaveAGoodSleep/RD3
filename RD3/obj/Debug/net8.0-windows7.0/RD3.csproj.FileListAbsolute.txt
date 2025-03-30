@@ -938,4 +938,8 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ParameterView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\PidView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\NewFeedView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\NewFeedView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FeedGradientView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FeedGradientView.baml
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AlarmThresholdView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AlarmThresholdView.baml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\PidInfo.json

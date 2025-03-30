@@ -348,5 +348,8 @@
     <Page Update="Views\AddOffLineDatasView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\FeedGradientView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>

@@ -1529,7 +1529,7 @@
 
 		<commandDesc>
 			<id>WSettingSync</id>
-			<name>写时间同步</name>
+			<name>写配置同步</name>
 			<commandCode>0x18</commandCode>
 			<timeOut>3000</timeOut>
 			<tryTimes>3</tryTimes>
