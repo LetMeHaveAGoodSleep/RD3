@@ -503,8 +503,7 @@
                         Canvas.Bottom="176"
                         Width="30"
                         Height="30"
-                        Source="/Images/ReactorNew/MFC不使能.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        Source="/Images/ReactorNew/MFC不使能.png" />
                     <TextBlock
                         Canvas.Left="400"
                         Canvas.Top="405"
@@ -544,7 +543,6 @@
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='溶氧(%)'}"
                                     BorderBrush="Gray"
-                                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.ContextMenu>
@@ -630,7 +628,7 @@
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
-                                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AgitParam.IsControling" />
+                                            <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AgitParam.IsControling" />-->
                                         </MultiBinding>
                                     </TextBox.IsEnabled>
                                 </TextBox>
@@ -690,7 +688,7 @@
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
-                                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AirParam.IsControling" />
+                                            <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AirParam.IsControling" />-->
                                         </MultiBinding>
                                     </TextBox.IsEnabled>
                                 </TextBox>
@@ -750,7 +748,7 @@
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
-                                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.O2Param.IsControling" />
+                                            <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.O2Param.IsControling" />-->
                                         </MultiBinding>
                                     </TextBox.IsEnabled>
                                 </TextBox>
@@ -807,7 +805,6 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='PH'}"
-                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.ContextMenu>
@@ -890,7 +887,7 @@
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.PHParam.IsControling" />
-                                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AcidParam.IsControling" />
+                                            <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AcidParam.IsControling" />-->
                                         </MultiBinding>
                                     </TextBox.IsEnabled>
                                 </TextBox>
@@ -950,7 +947,7 @@
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.PHParam.IsControling" />
-                                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.BaseParam.IsControling" />
+                                            <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.BaseParam.IsControling" />-->
                                         </MultiBinding>
                                     </TextBox.IsEnabled>
                                 </TextBox>

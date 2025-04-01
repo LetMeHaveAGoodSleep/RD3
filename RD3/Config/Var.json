@@ -75,5 +75,6 @@
   "maxph": "80",
   "maxphspeed": "0.3",
   "minph": "30",
-  "minphspeed": "0.5"
+  "minphspeed": "0.5",
+  "IsFilterWave": "True"
 }
