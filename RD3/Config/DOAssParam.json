@@ -1,8 +1,46 @@
-{
-  "AgitLowerLimit": 100,
-  "AgitUpperLimit": 1500,
-  "Unit": 0,
-  "AirCol": [
-    { "VVM": 0.1 }
-  ]
-}
+[
+  {
+    "DeviceName": "G01",
+    "DBand": 0.5,
+    "Interval": 10,
+    "AgitLowerLimit": 100,
+    "AgitUpperLimit": 1500,
+    "Unit": 0,
+    "AirCol": [
+      { "VVM": 0.1 }
+    ]
+  },
+  {
+    "DeviceName": "G02",
+    "DBand": 0.5,
+    "Interval": 10,
+    "AgitLowerLimit": 100,
+    "AgitUpperLimit": 1500,
+    "Unit": 0,
+    "AirCol": [
+      { "VVM": 0.1 }
+    ]
+  },
+  {
+    "DeviceName": "G03",
+    "DBand": 0.5,
+    "Interval": 10,
+    "AgitLowerLimit": 100,
+    "AgitUpperLimit": 1500,
+    "Unit": 0,
+    "AirCol": [
+      { "VVM": 0.1 }
+    ]
+  },
+  {
+    "DeviceName": "G04",
+    "DBand": 0.5,
+    "Interval": 10,
+    "AgitLowerLimit": 100,
+    "AgitUpperLimit": 1500,
+    "Unit": 0,
+    "AirCol": [
+      { "VVM": 0.1 }
+    ]
+  }
+]

@@ -125,6 +125,12 @@
                         Header="D"
                         IsReadOnly="False" />
                     <DataGridTextColumn
+                        Width="120"
+                        Binding="{Binding Inteval}"
+                        CanUserSort="False"
+                        Header="采样间隔（s）"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
                         Width="100"
                         Binding="{Binding deadArea}"
                         CanUserSort="False"

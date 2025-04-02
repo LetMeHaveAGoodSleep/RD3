@@ -3,8 +3,36 @@
   "WorkspaceRootPath": "D:\\Project\\RD3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\newmainview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\newmainview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\parameterviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\parameterviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\parametersourceviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\parametersourceviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\offlinedatasviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\offlinedatasviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\newfeedviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\newfeedviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\feedgradientviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\feedgradientviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\alarmthresholdviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\alarmthresholdviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\pidviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\pidviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +42,99 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NewMainView.xaml.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\NewMainView.xaml.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\NewMainView.xaml.cs",
+              "ViewState": "AgIAAKsCAAAAAAAAAAAjwL0CAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-02T01:52:52.493Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ParameterViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\ParameterViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\ParameterViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\ParameterViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\ParameterViewModel.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAnwFEAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-02T01:52:46.936Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ParameterSourceViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\ParameterSourceViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\ParameterSourceViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\ParameterSourceViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\ParameterSourceViewModel.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAEwFEAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-02T01:52:42.734Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "OffLineDatasViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\OffLineDatasViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\OffLineDatasViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\OffLineDatasViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\OffLineDatasViewModel.cs",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAEwIwAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-02T01:52:01.63Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "NewFeedViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\NewFeedViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\NewFeedViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\NewFeedViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\NewFeedViewModel.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAMwFYAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-02T01:51:39.274Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FeedGradientViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\FeedGradientViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\FeedGradientViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\FeedGradientViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\FeedGradientViewModel.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAEwGUAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-02T01:51:30.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AlarmThresholdViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\AlarmThresholdViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\AlarmThresholdViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\AlarmThresholdViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\AlarmThresholdViewModel.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAEwFsAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-02T01:50:40.252Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
@@ -46,14 +165,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ReactorView.xaml",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\ReactorView.xaml",
-              "RelativeDocumentMoniker": "RD3\\Views\\ReactorView.xaml",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\ReactorView.xaml",
-              "RelativeToolTip": "RD3\\Views\\ReactorView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-03-31T07:26:39.894Z",
+              "DocumentIndex": 7,
+              "Title": "PIDViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\PIDViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\PIDViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\PIDViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\PIDViewModel.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAIwFkAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-02T01:50:21.189Z",
               "EditorCaption": ""
             }
           ]

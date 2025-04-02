@@ -220,7 +220,7 @@
                     <TextBlock
                         Canvas.Left="140"
                         Canvas.Top="238"
-                        Text="{Binding CurrentDeviceParameter.Pump1FlowCapacity}" />
+                        Text="{Binding CurrentDeviceParameter.AcidFlowCapacity}" />
                     <TextBlock
                         Canvas.Left="25"
                         Canvas.Top="238"
@@ -260,7 +260,7 @@
                     <TextBlock
                         Canvas.Left="140"
                         Canvas.Top="295"
-                        Text="{Binding CurrentDeviceParameter.Pump2FlowCapacity}" />
+                        Text="{Binding CurrentDeviceParameter.BaseFlowCapacity}" />
                     <TextBlock
                         Canvas.Left="25"
                         Canvas.Top="295"
