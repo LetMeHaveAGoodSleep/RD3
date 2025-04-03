@@ -1,0 +1,202 @@
+{
+  "G01": [
+    {
+      "Name": null,
+      "Description": "y: Flow SP, mL/h;\r\na: 2nd order Acceleration, ml/h^3,\r\nb: 1st order Acceleration, ml/h^2,\r\nc: initial flow rate, ml/h;\r\nt: PLC Runtime, h;\r\nAt: Time offset, when t<At, y=c;\r\n 参数1为a；参数2为b；参数3为c;参数4为△t",
+      "ID": null,
+      "beginTime": 0.0,
+      "endTime": 60.0,
+      "infoType": "Polynomial",
+      "a": 10.0,
+      "b": 20.0,
+      "c": 30.0,
+      "d": 0.0
+    },
+    {
+      "Name": null,
+      "Description": "F1(t)=F1(0)*exp(μ*(t-△t))\", \\r\\nu: specific growth rate, 1/h;\\r\\nt: PLC Runtime, h;\\r\\nV(0): initial volume, L;\\r\\nX(0): initial cell density, g/L;\\r\\nY: Yield coefficient, g/g;\\r\\nS: Substrate concentration, g/L;\\r\\nAt: Time offset, when t<At, output=F1(0);\r\n参数1为F1(0)；参数2为μ；参数3为△t",
+      "ID": null,
+      "beginTime": 60.0,
+      "endTime": 120.0,
+      "infoType": "Exponential",
+      "a": 11.0,
+      "b": 12.0,
+      "c": 0.0,
+      "d": 0.0
+    },
+    {
+      "Name": null,
+      "Description": "DO反馈补料;\r\n 1: if Do pV <= Xn: Feed Flow SP = Bn;\r\n2: if Do pV >= Xp; Feed Flow Sp = Bp;\r\n参数1为Xn；参数2为Bn；参数3为Xp；参数4为Bp；",
+      "ID": null,
+      "beginTime": 120.0,
+      "endTime": 180.0,
+      "infoType": "DO_Feedback",
+      "a": 30.0,
+      "b": 13.0,
+      "c": 50.0,
+      "d": 14.0
+    },
+    {
+      "Name": null,
+      "Description": "PH反馈补料;\r\n 1: if pH pV <= Xn: Feed Flow sp = Bn:2: if pH_pv >= Xp: feed Flow sP = Bp;\r\n参数1为Xn；参数2为Bn；参数3为Xp；参数4为Bp；",
+      "ID": null,
+      "beginTime": 180.0,
+      "endTime": 240.0,
+      "infoType": "PH_Feedback",
+      "a": 7.0,
+      "b": 30.0,
+      "c": 10.0,
+      "d": 35.0
+    }
+  ],
+  "G02": [
+    {
+      "Name": null,
+      "Description": "y: Flow SP, mL/h;\r\na: 2nd order Acceleration, ml/h^3,\r\nb: 1st order Acceleration, ml/h^2,\r\nc: initial flow rate, ml/h;\r\nt: PLC Runtime, h;\r\nAt: Time offset, when t<At, y=c;\r\n 参数1为a；参数2为b；参数3为c;参数4为△t",
+      "ID": null,
+      "beginTime": 0.0,
+      "endTime": 60.0,
+      "infoType": "Polynomial",
+      "a": 10.0,
+      "b": 20.0,
+      "c": 30.0,
+      "d": 0.0
+    },
+    {
+      "Name": null,
+      "Description": "F1(t)=F1(0)*exp(μ*(t-△t))\", \\r\\nu: specific growth rate, 1/h;\\r\\nt: PLC Runtime, h;\\r\\nV(0): initial volume, L;\\r\\nX(0): initial cell density, g/L;\\r\\nY: Yield coefficient, g/g;\\r\\nS: Substrate concentration, g/L;\\r\\nAt: Time offset, when t<At, output=F1(0);\r\n参数1为F1(0)；参数2为μ；参数3为△t",
+      "ID": null,
+      "beginTime": 60.0,
+      "endTime": 120.0,
+      "infoType": "Exponential",
+      "a": 11.0,
+      "b": 12.0,
+      "c": 0.0,
+      "d": 0.0
+    },
+    {
+      "Name": null,
+      "Description": "DO反馈补料;\r\n 1: if Do pV <= Xn: Feed Flow SP = Bn;\r\n2: if Do pV >= Xp; Feed Flow Sp = Bp;\r\n参数1为Xn；参数2为Bn；参数3为Xp；参数4为Bp；",
+      "ID": null,
+      "beginTime": 120.0,
+      "endTime": 180.0,
+      "infoType": "DO_Feedback",
+      "a": 30.0,
+      "b": 13.0,
+      "c": 50.0,
+      "d": 14.0
+    },
+    {
+      "Name": null,
+      "Description": "PH反馈补料;\r\n 1: if pH pV <= Xn: Feed Flow sp = Bn:2: if pH_pv >= Xp: feed Flow sP = Bp;\r\n参数1为Xn；参数2为Bn；参数3为Xp；参数4为Bp；",
+      "ID": null,
+      "beginTime": 180.0,
+      "endTime": 240.0,
+      "infoType": "PH_Feedback",
+      "a": 7.0,
+      "b": 30.0,
+      "c": 10.0,
+      "d": 35.0
+    }
+  ],
+  "G03": [
+    {
+      "Name": null,
+      "Description": "y: Flow SP, mL/h;\r\na: 2nd order Acceleration, ml/h^3,\r\nb: 1st order Acceleration, ml/h^2,\r\nc: initial flow rate, ml/h;\r\nt: PLC Runtime, h;\r\nAt: Time offset, when t<At, y=c;\r\n 参数1为a；参数2为b；参数3为c;参数4为△t",
+      "ID": null,
+      "beginTime": 0.0,
+      "endTime": 60.0,
+      "infoType": "Polynomial",
+      "a": 10.0,
+      "b": 20.0,
+      "c": 30.0,
+      "d": 0.0
+    },
+    {
+      "Name": null,
+      "Description": "F1(t)=F1(0)*exp(μ*(t-△t))\", \\r\\nu: specific growth rate, 1/h;\\r\\nt: PLC Runtime, h;\\r\\nV(0): initial volume, L;\\r\\nX(0): initial cell density, g/L;\\r\\nY: Yield coefficient, g/g;\\r\\nS: Substrate concentration, g/L;\\r\\nAt: Time offset, when t<At, output=F1(0);\r\n参数1为F1(0)；参数2为μ；参数3为△t",
+      "ID": null,
+      "beginTime": 60.0,
+      "endTime": 120.0,
+      "infoType": "Exponential",
+      "a": 11.0,
+      "b": 12.0,
+      "c": 0.0,
+      "d": 0.0
+    },
+    {
+      "Name": null,
+      "Description": "DO反馈补料;\r\n 1: if Do pV <= Xn: Feed Flow SP = Bn;\r\n2: if Do pV >= Xp; Feed Flow Sp = Bp;\r\n参数1为Xn；参数2为Bn；参数3为Xp；参数4为Bp；",
+      "ID": null,
+      "beginTime": 120.0,
+      "endTime": 180.0,
+      "infoType": "DO_Feedback",
+      "a": 30.0,
+      "b": 13.0,
+      "c": 50.0,
+      "d": 14.0
+    },
+    {
+      "Name": null,
+      "Description": "PH反馈补料;\r\n 1: if pH pV <= Xn: Feed Flow sp = Bn:2: if pH_pv >= Xp: feed Flow sP = Bp;\r\n参数1为Xn；参数2为Bn；参数3为Xp；参数4为Bp；",
+      "ID": null,
+      "beginTime": 180.0,
+      "endTime": 240.0,
+      "infoType": "PH_Feedback",
+      "a": 7.0,
+      "b": 30.0,
+      "c": 10.0,
+      "d": 35.0
+    }
+  ],
+  "G04": [
+    {
+      "Name": null,
+      "Description": "y: Flow SP, mL/h;\r\na: 2nd order Acceleration, ml/h^3,\r\nb: 1st order Acceleration, ml/h^2,\r\nc: initial flow rate, ml/h;\r\nt: PLC Runtime, h;\r\nAt: Time offset, when t<At, y=c;\r\n 参数1为a；参数2为b；参数3为c;参数4为△t",
+      "ID": null,
+      "beginTime": 0.0,
+      "endTime": 60.0,
+      "infoType": "Polynomial",
+      "a": 10.0,
+      "b": 20.0,
+      "c": 30.0,
+      "d": 0.0
+    },
+    {
+      "Name": null,
+      "Description": "F1(t)=F1(0)*exp(μ*(t-△t))\", \\r\\nu: specific growth rate, 1/h;\\r\\nt: PLC Runtime, h;\\r\\nV(0): initial volume, L;\\r\\nX(0): initial cell density, g/L;\\r\\nY: Yield coefficient, g/g;\\r\\nS: Substrate concentration, g/L;\\r\\nAt: Time offset, when t<At, output=F1(0);\r\n参数1为F1(0)；参数2为μ；参数3为△t",
+      "ID": null,
+      "beginTime": 60.0,
+      "endTime": 120.0,
+      "infoType": "Exponential",
+      "a": 11.0,
+      "b": 12.0,
+      "c": 0.0,
+      "d": 0.0
+    },
+    {
+      "Name": null,
+      "Description": "DO反馈补料;\r\n 1: if Do pV <= Xn: Feed Flow SP = Bn;\r\n2: if Do pV >= Xp; Feed Flow Sp = Bp;\r\n参数1为Xn；参数2为Bn；参数3为Xp；参数4为Bp；",
+      "ID": null,
+      "beginTime": 120.0,
+      "endTime": 180.0,
+      "infoType": "DO_Feedback",
+      "a": 30.0,
+      "b": 13.0,
+      "c": 50.0,
+      "d": 14.0
+    },
+    {
+      "Name": null,
+      "Description": "PH反馈补料;\r\n 1: if pH pV <= Xn: Feed Flow sp = Bn:2: if pH_pv >= Xp: feed Flow sP = Bp;\r\n参数1为Xn；参数2为Bn；参数3为Xp；参数4为Bp；",
+      "ID": null,
+      "beginTime": 180.0,
+      "endTime": 240.0,
+      "infoType": "PH_Feedback",
+      "a": 7.0,
+      "b": 30.0,
+      "c": 10.0,
+      "d": 35.0
+    }
+  ]
+}

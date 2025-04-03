@@ -206,6 +206,9 @@
     <Page Update="Views\CalibrateView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\FeedStrategyView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\FeedView.xaml">
       <SubType>Designer</SubType>
     </Page>

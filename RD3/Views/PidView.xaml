@@ -125,8 +125,14 @@
                         Header="D"
                         IsReadOnly="False" />
                     <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding Threshold}"
+                        CanUserSort="False"
+                        Header="阈值"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
                         Width="120"
-                        Binding="{Binding Inteval}"
+                        Binding="{Binding Interval}"
                         CanUserSort="False"
                         Header="采样间隔（s）"
                         IsReadOnly="False" />
@@ -146,7 +152,8 @@
                         MinWidth="100"
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="模式"
-                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                        Visibility="Collapsed">
                         <!--<DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -171,7 +178,8 @@
                         MinWidth="100"
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="操作"
-                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                        Visibility="Collapsed">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">

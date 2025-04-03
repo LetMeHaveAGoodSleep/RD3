@@ -21,8 +21,7 @@
     Height="auto"
     MinWidth="1000"
     MinHeight="500"
-    d:DataContext="{d:DesignInstance Type=vm:ReactorViewModel}"
-    Background="{StaticResource BackGroundBrush}"
+    d:DataContext="{d:DesignInstance Type=vm:SettingViewModel}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
     TextElement.FontWeight="Regular"
@@ -94,7 +93,7 @@
             BorderThickness="0"
             Loaded="TabControl_Loaded">
             <TabItem Name="tabGeneral" Header="General">
-                <Border Background="#F5F7FA" Style="{StaticResource BorderCard}">
+                <Border Style="{StaticResource BorderCard}">
                     <hc:UniformSpacingPanel Orientation="Vertical" Spacing="20">
                         <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
                             <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Instruction manual'}" />
@@ -195,14 +194,16 @@
                                 <RowDefinition Height="20" />
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="20" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="20" />
                             </Grid.RowDefinitions>
                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
-                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Instrument mode'}" />
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='仪器模式'}" />
                                 <TextBlock
                                     FontSize="10"
                                     FontStyle="Oblique"
                                     Foreground="gray"
-                                    Text="{ex:Language Key='Turn on simulation mode.'}" />
+                                    Text="{ex:Language Key='打开模拟模式.'}" />
                             </hc:UniformSpacingPanel>
                             <ToggleButton
                                 Grid.Column="1"
@@ -215,13 +216,13 @@
                                 Grid.Row="2"
                                 Orientation="Vertical"
                                 Spacing="5">
-                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Log Switch'}" />
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='日志开关'}" />
                                 <TextBlock
                                     Grid.Row="2"
                                     FontSize="10"
                                     FontStyle="Oblique"
                                     Foreground="gray"
-                                    Text="{ex:Language Key='Turn on Log.'}" />
+                                    Text="{ex:Language Key='打开日志.'}" />
                             </hc:UniformSpacingPanel>
                             <ToggleButton
                                 Grid.Row="2"
@@ -235,12 +236,12 @@
                                 Grid.Row="4"
                                 Orientation="Vertical"
                                 Spacing="5">
-                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Time Interval'}" />
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='采样间隔'}" />
                                 <TextBlock
                                     FontSize="10"
                                     FontStyle="Oblique"
                                     Foreground="gray"
-                                    Text="{ex:Language Key='Read real-time data  unit:sencond.'}" />
+                                    Text="{ex:Language Key='读取实时信息  单位：秒.'}" />
                             </hc:UniformSpacingPanel>
                             <ComboBox
                                 Grid.Row="4"
@@ -253,12 +254,12 @@
                                 Grid.Row="6"
                                 Orientation="Vertical"
                                 Spacing="5">
-                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='FontFamily'}" />
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='系统字体'}" />
                                 <TextBlock
                                     FontSize="10"
                                     FontStyle="Oblique"
                                     Foreground="gray"
-                                    Text="{ex:Language Key='Choose FontFamily.'}" />
+                                    Text="{ex:Language Key='字体来源于本机.'}" />
                             </hc:UniformSpacingPanel>
                             <ComboBox
                                 Grid.Row="6"
@@ -267,6 +268,25 @@
                                 ItemsSource="{Binding FontSource}"
                                 SelectedItem="{Binding FontFamily}"
                                 Style="{StaticResource ComboBoxExtend}" />
+                            <hc:UniformSpacingPanel
+                                Grid.Row="8"
+                                Orientation="Vertical"
+                                Spacing="5">
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='滤波开关'}" />
+                                <TextBlock
+                                    FontSize="10"
+                                    FontStyle="Oblique"
+                                    Foreground="gray"
+                                    Text="{ex:Language Key='屏蔽外界干扰.'}" />
+                            </hc:UniformSpacingPanel>
+                            <ToggleButton
+                                Grid.Row="8"
+                                Grid.Column="1"
+                                Width="150"
+                                HorizontalAlignment="Center"
+                                BorderThickness="0"
+                                IsChecked="{Binding IsFilterWave}"
+                                Style="{StaticResource ToggleButtonSwitch}" />
                         </Grid>
                     </hc:UniformSpacingPanel>
                 </Border>

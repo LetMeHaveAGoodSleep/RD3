@@ -69,13 +69,15 @@
                 VerticalAlignment="Center"
                 hc:InfoElement.Title="{ex:Language Key='采样间隔(s)'}"
                 Style="{StaticResource TextBoxExtend}"
-                Text="{Binding Param.Interval, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding Param.Interval, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="Collapsed" />
             <TextBox
                 Width="100"
                 VerticalAlignment="Center"
                 hc:InfoElement.Title="{ex:Language Key='死区'}"
                 Style="{StaticResource TextBoxExtend}"
-                Text="{Binding Param.DBand, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding Param.DBand, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="Collapsed" />
             <TextBox
                 Width="100"
                 VerticalAlignment="Center"

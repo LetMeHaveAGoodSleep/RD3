@@ -1290,6 +1290,11 @@
                             Text="{Binding Kd}" />
                         <TextBox
                             Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='阈值'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Threshold}" />
+                        <TextBox
+                            Width="100"
                             hc:InfoElement.Title="{ex:Language Key='上限'}"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding OutputLimit}" />
@@ -1368,6 +1373,11 @@
                             hc:InfoElement.Title="{ex:Language Key='kd'}"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding DO_Kd}" />
+                        <TextBox
+                            Width="100"
+                            hc:InfoElement.Title="{ex:Language Key='阈值'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding DO_Threshold}" />
                         <TextBox
                             Width="100"
                             hc:InfoElement.Title="{ex:Language Key='转速上限'}"

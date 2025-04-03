@@ -76,6 +76,15 @@
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
                     ToolTip="{ex:Language Key='一键下罐'}" />
+                <Button
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                    hc:IconElement.Geometry="{StaticResource GeometryLoop}"
+                    Background="{DynamicResource DarkPrimaryBrush}"
+                    BorderThickness="0"
+                    Command="{Binding PIDCommand}"
+                    Foreground="White"
+                    Style="{StaticResource ButtonIconCircular}"
+                    ToolTip="{ex:Language Key='PID设置'}" />
             </hc:UniformSpacingPanel>
         </DockPanel>
         <Grid Name="GridMain" Grid.Row="1">
@@ -138,7 +147,7 @@
                             BorderThickness="1"
                             FontSize="{DynamicResource SubHeadFontSize}"
                             ItemsSource="{Binding ReactorCol}"
-                            SelectedIndex="0"
+                            SelectedItem="{Binding SelectedDevice}"
                             Style="{StaticResource ComboBoxExtend}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
@@ -524,11 +533,11 @@
                         Height="30"
                         Source="/Images/ReactorNew/MFC没启用.png" />
                     <hc:UniformSpacingPanel
-                        Canvas.Left="215"
+                        Canvas.Left="210"
                         Canvas.Bottom="35"
                         Orientation="Horizontal"
                         Spacing="3">
-                        <TextBlock Text="罐体重量(g)" />
+                        <TextBlock Text="重量(g)" />
                         <TextBlock Text="{Binding CurrentDeviceParameter.JarWeight}" />
                     </hc:UniformSpacingPanel>
                     <hc:UniformSpacingPanel
@@ -570,7 +579,7 @@
                                     BorderBrush="Gray"
                                     IsReadOnly="True"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.DO}" />
+                                    Text="{Binding CurrentDeviceParameter.DO, StringFormat={}{0:F2}}" />
                                 <ToggleButton
                                     Width="75"
                                     Height="28"
@@ -640,7 +649,7 @@
                                     BorderBrush="Gray"
                                     IsReadOnly="True"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.Agit}" />
+                                    Text="{Binding CurrentDeviceParameter.Agit, StringFormat={}{0:F0}}" />
                                 <ToggleButton
                                     Width="75"
                                     Height="28"
@@ -700,7 +709,7 @@
                                     BorderBrush="Gray"
                                     IsReadOnly="True"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AirFlowSpeed}" />
+                                    Text="{Binding CurrentDeviceParameter.AirFlowSpeed, StringFormat={}{0:F2}}" />
                                 <ToggleButton
                                     Width="75"
                                     Height="28"
@@ -760,7 +769,7 @@
                                     BorderBrush="Gray"
                                     IsReadOnly="True"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.O2FlowSpeed}" />
+                                    Text="{Binding CurrentDeviceParameter.O2FlowSpeed, StringFormat={}{0:F2}}" />
                                 <ToggleButton
                                     Width="75"
                                     Height="28"
@@ -830,7 +839,7 @@
                                     BorderBrush="Gray"
                                     IsReadOnly="True"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.PH}" />
+                                    Text="{Binding CurrentDeviceParameter.PH, StringFormat={}{0:F2}}" />
                                 <ToggleButton
                                     Width="75"
                                     Height="28"
@@ -899,7 +908,7 @@
                                     BorderBrush="Gray"
                                     IsReadOnly="True"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AcidFlowSpeed}" />
+                                    Text="{Binding CurrentDeviceParameter.AcidFlowSpeed, StringFormat={}{0:F2}}" />
                                 <ToggleButton
                                     Width="75"
                                     Height="28"
@@ -959,7 +968,7 @@
                                     BorderBrush="Gray"
                                     IsReadOnly="True"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.BaseFlowSpeed}" />
+                                    Text="{Binding CurrentDeviceParameter.BaseFlowSpeed, StringFormat={}{0:F2}}" />
                                 <ToggleButton
                                     Width="75"
                                     Height="28"
@@ -1029,7 +1038,7 @@
                                 BorderBrush="Gray"
                                 IsReadOnly="True"
                                 Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.Temp}" />
+                                Text="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}" />
                             <ToggleButton
                                 Width="75"
                                 Height="28"
@@ -1083,6 +1092,8 @@
                                 Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBox.ContextMenu>
                                     <ContextMenu>
+                                        <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
+                                        <Separator />
                                         <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
                                     </ContextMenu>
                                 </TextBox.ContextMenu>
@@ -1095,7 +1106,7 @@
                                 BorderBrush="Gray"
                                 IsReadOnly="True"
                                 Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.FeedFlowSpeed}" />
+                                Text="{Binding CurrentDeviceParameter.FeedFlowSpeed, StringFormat={}{0:F2}}" />
                             <ComboBox
                                 Width="90"
                                 hc:InfoElement.Title="{ex:Language Key=' '}"
@@ -1241,7 +1252,7 @@
                                 BorderBrush="Gray"
                                 IsReadOnly="True"
                                 Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.AFFlowSpeed}" />
+                                Text="{Binding CurrentDeviceParameter.AFFlowSpeed, StringFormat={}{0:F2}}" />
                             <ToggleButton
                                 Width="75"
                                 Height="28"
@@ -1277,25 +1288,77 @@
                                         Text="关闭" />
                                 </Border>
                             </ToggleButton>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
                             <TextBox
                                 Name="txtCycle"
                                 Width="75"
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='周期(s)'}"
-                                LostFocus="AF_LostFocus"
                                 Style="{StaticResource TextBoxExtend}"
                                 Text="{Binding CurrentDeviceParameter.AFParam.Cycle}" />
                             <TextBox
                                 Name="txtDutyCycle"
-                                Width="75"
+                                Width="70"
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='占空比(%)'}"
-                                LostFocus="AF_LostFocus"
                                 Style="{StaticResource TextBoxExtend}"
                                 Text="{Binding CurrentDeviceParameter.AFParam.DutyCycle}" />
+                            <ToggleButton
+                                Width="75"
+                                Height="28"
+                                VerticalAlignment="Bottom"
+                                hc:StatusSwitchElement.HideUncheckedElement="True"
+                                Command="{Binding AFRunCommand}"
+                                IsChecked="{Binding CurrentDeviceParameter.AFParam.AutoDefoaming}"
+                                Style="{StaticResource ToggleButtonCustom}">
+                                <hc:StatusSwitchElement.CheckedElement>
+                                    <Border
+                                        Width="75"
+                                        Height="28"
+                                        Background="{DynamicResource SuccessBrush}"
+                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                        CornerRadius="{StaticResource DefaultCornerRadius}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Foreground="White"
+                                            Text="自动消泡" />
+                                    </Border>
+                                </hc:StatusSwitchElement.CheckedElement>
+                                <Border
+                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                    BorderBrush="{DynamicResource SuccessBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="{StaticResource DefaultCornerRadius}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Foreground="{DynamicResource SuccessBrush}"
+                                        Text="手动消泡" />
+                                </Border>
+                            </ToggleButton>
+                            <hc:SplitButton
+                                Width="75"
+                                Height="28"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Bottom"
+                                Command="{Binding AFSettingCommand}"
+                                CommandParameter="Set"
+                                Content="设置"
+                                Style="{StaticResource SplitButtonPrimary}">
+                                <hc:SplitButton.DropDownContent>
+                                    <StackPanel>
+                                        <MenuItem
+                                            Command="{Binding AFSettingCommand}"
+                                            CommandParameter="Read"
+                                            Header="读取" />
+                                    </StackPanel>
+                                </hc:SplitButton.DropDownContent>
+                            </hc:SplitButton>
                         </StackPanel>
                     </hc:UniformSpacingPanel>
-
                 </Canvas>
             </Grid>
             <GridSplitter

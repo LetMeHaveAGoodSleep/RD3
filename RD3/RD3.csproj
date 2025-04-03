@@ -103,6 +103,7 @@
     <None Remove="Images\SideMenu\Project_Primary.png" />
     <None Remove="Images\SideMenu\Setting.png" />
     <None Remove="Images\SideMenu\Setting_Primary.png" />
+    <None Remove="Views\yefkiliw.oaj~" />
   </ItemGroup>
   <ItemGroup>
     <Page Remove="Lang\Lang.en-US.xaml" />
@@ -298,6 +299,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\Defoaming.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\FeedStrategy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\feedGradientInfo.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\Operation.json">

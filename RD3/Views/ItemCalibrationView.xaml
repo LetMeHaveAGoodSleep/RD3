@@ -65,7 +65,7 @@
             hc:InfoElement.Title="{ex:Language Key='Calibration Point 1'}"
             BorderBrush="{DynamicResource PrimaryBrush}"
             IsEnabled="{Binding Calibrate3Enabled}"
-            Text="{Binding CaliPoint2}" />
+            Text="{Binding CaliPoint2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
         <Button
             Width="90"
             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"

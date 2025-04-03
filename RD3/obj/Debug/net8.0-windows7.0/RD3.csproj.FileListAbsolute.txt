@@ -943,3 +943,7 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FeedGradientView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AlarmThresholdView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AlarmThresholdView.baml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\PidInfo.json
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\feedGradientInfo.json
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\FeedStrategy.json
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FeedStrategyView.g.cs
+D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FeedStrategyView.baml
