@@ -32,6 +32,7 @@ FD:\Project\RD3\RD3\Views\EditTemplateView.xaml;;
 FD:\Project\RD3\RD3\Views\EditUserView.xaml;;
 FD:\Project\RD3\RD3\Views\ErrorView.xaml;;
 FD:\Project\RD3\RD3\Views\FeedGradientView.xaml;;
+FD:\Project\RD3\RD3\Views\FeedStrategyView.xaml;;
 FD:\Project\RD3\RD3\Views\FeedView.xaml;;
 FD:\Project\RD3\RD3\Views\IndexView.xaml;;
 FD:\Project\RD3\RD3\Views\ItemCalibrationView.xaml;;
@@ -59,5 +60,4 @@ FD:\Project\RD3\RD3\Views\SettingView.xaml;;
 FD:\Project\RD3\RD3\Views\TimeSeriesView.xaml;;
 FD:\Project\RD3\RD3\Views\UnscheduledView.xaml;;
 FD:\Project\RD3\RD3\Views\UserView.xaml;;
-FD:\Project\RD3\RD3\Views\FeedStrategyView.xaml;;
 

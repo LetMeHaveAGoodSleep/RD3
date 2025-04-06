@@ -633,7 +633,7 @@
                                     hc:InfoElement.Title="{ex:Language Key='转速(rpm)'}"
                                     BorderBrush="Gray"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, UpdateSourceTrigger=PropertyChanged}">
+                                    Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F0}, UpdateSourceTrigger=PropertyChanged}">
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
@@ -1309,7 +1309,7 @@
                                 Height="28"
                                 VerticalAlignment="Bottom"
                                 hc:StatusSwitchElement.HideUncheckedElement="True"
-                                Command="{Binding AFRunCommand}"
+                                Command="{Binding AFSettingCommand}"
                                 IsChecked="{Binding CurrentDeviceParameter.AFParam.AutoDefoaming}"
                                 Style="{StaticResource ToggleButtonCustom}">
                                 <hc:StatusSwitchElement.CheckedElement>
@@ -1339,7 +1339,7 @@
                                         Text="手动消泡" />
                                 </Border>
                             </ToggleButton>
-                            <hc:SplitButton
+                            <!--<hc:SplitButton
                                 Width="75"
                                 Height="28"
                                 HorizontalAlignment="Stretch"
@@ -1356,7 +1356,7 @@
                                             Header="读取" />
                                     </StackPanel>
                                 </hc:SplitButton.DropDownContent>
-                            </hc:SplitButton>
+                            </hc:SplitButton>-->
                         </StackPanel>
                     </hc:UniformSpacingPanel>
                 </Canvas>

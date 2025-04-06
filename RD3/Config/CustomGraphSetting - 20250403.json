@@ -24,7 +24,20 @@
     "Pump1FlowCapacity": "False",
     "Pump2FlowCapacity": "False",
     "Pump3FlowCapacity": "False",
-    "Pump4FlowCapacity": "False"
+    "Pump4FlowCapacity": "False",
+    "OD600": "False",
+    "OUR": "True",
+    "CER": "True",
+    "RQ": "True",
+    "EO2": "True",
+    "ECO2": "True",
+    "OD": "True",
+    "μ": "True",
+    "Glu": "False",
+    "Basic": "False",
+    "Product1": "False",
+    "Product2": "False",
+    "Acetic acid": "False"
   },
   "Plot4": {
     "Temp": "False",
@@ -40,6 +53,19 @@
     "Pump1FlowCapacity": "False",
     "Pump2FlowCapacity": "False",
     "Pump3FlowCapacity": "False",
-    "Pump4FlowCapacity": "False"
+    "Pump4FlowCapacity": "False",
+    "OD600": "False",
+    "OUR": "False",
+    "CER": "False",
+    "RQ": "False",
+    "EO2": "False",
+    "ECO2": "False",
+    "OD": "False",
+    "μ": "False",
+    "Glu": "False",
+    "Basic": "True",
+    "Product1": "True",
+    "Product2": "True",
+    "Acetic acid": "True"
   }
 }

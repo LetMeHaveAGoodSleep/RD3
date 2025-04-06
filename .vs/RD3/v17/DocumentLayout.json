@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "D:\\Project\\RD3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\command\\realcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\command\\realcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\pid\\qpidcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\pid\\qpidcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -51,27 +55,39 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "QPIDController.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\PID\\QPIDController.cs",
-              "RelativeDocumentMoniker": "RD3\\PID\\QPIDController.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\PID\\QPIDController.cs",
-              "RelativeToolTip": "RD3\\PID\\QPIDController.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAASwGcAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T08:39:05.278Z",
+              "Title": "ReactorView.xaml",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\ReactorView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\ReactorView.xaml",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\ReactorView.xaml",
+              "RelativeToolTip": "RD3\\Views\\ReactorView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-06T06:20:55.053Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "RealCommandWrapper.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
+              "RelativeDocumentMoniker": "RD3\\Command\\RealCommandWrapper.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
+              "RelativeToolTip": "RD3\\Command\\RealCommandWrapper.cs",
+              "ViewState": "AgIAAKIBAAAAAAAAAAAWwMYBAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-03T10:35:58.028Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "ReactorViewModel.cs",
               "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\ReactorViewModel.cs",
               "RelativeDocumentMoniker": "RD3\\ViewModels\\ReactorViewModel.cs",
               "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\ReactorViewModel.cs",
               "RelativeToolTip": "RD3\\ViewModels\\ReactorViewModel.cs",
-              "ViewState": "AgIAAC4DAAAAAAAAAAAewEwDAABaAAAAAAAAAA==",
+              "ViewState": "AgIAAFIMAAAAAAAAAAAWwGYMAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-02T03:04:20.65Z",
+              "WhenOpened": "2025-04-03T10:26:49.281Z",
               "EditorCaption": ""
             }
           ]
