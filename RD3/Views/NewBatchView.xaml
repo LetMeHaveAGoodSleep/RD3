@@ -64,7 +64,8 @@
                     hc:InfoElement.ShowClearButton="True"
                     DockPanel.Dock="Left"
                     IsRealTime="True"
-                    SearchStarted="TxtSearch_SearchStarted" />
+                    SearchStarted="TxtSearch_SearchStarted"
+                    Visibility="Collapsed" />
                 <hc:UniformSpacingPanel DockPanel.Dock="Right" Spacing="10">
                     <Button
                         Name="ButtonCompare"
@@ -74,7 +75,8 @@
                         hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                         hc:IconElement.Geometry="{StaticResource GeometryCompare}"
                         Content="{ex:Language Key='Compare'}"
-                        FontSize="{DynamicResource NormalFontSize}" />
+                        FontSize="{DynamicResource NormalFontSize}"
+                        Visibility="Collapsed" />
                     <Button
                         Height="35"
                         HorizontalContentAlignment="Center"
@@ -83,7 +85,8 @@
                         hc:IconElement.Geometry="{StaticResource GeometryExport}"
                         Click="ButtonExport_Click"
                         Content="{ex:Language Key='Export'}"
-                        FontSize="{DynamicResource NormalFontSize}" />
+                        FontSize="{DynamicResource NormalFontSize}"
+                        Visibility="Collapsed" />
                     <Button
                         Height="35"
                         HorizontalContentAlignment="Center"
@@ -167,14 +170,16 @@
                                     Background="Transparent"
                                     BorderThickness="0"
                                     Click="ButtonUseTemplate_Click"
-                                    ToolTip="{ex:Language Key='Use Template'}" />
+                                    ToolTip="{ex:Language Key='Use Template'}"
+                                    Visibility="Collapsed" />
                                 <Button
                                     HorizontalAlignment="Left"
                                     hc:IconElement.Geometry="{StaticResource GeometryEdit}"
                                     Background="Transparent"
                                     BorderThickness="0"
                                     Click="ButtonEdit_Click"
-                                    ToolTip="{ex:Language Key='Edit'}" />
+                                    ToolTip="{ex:Language Key='Edit'}"
+                                    Visibility="Collapsed" />
                                 <Button
                                     HorizontalAlignment="Left"
                                     hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
@@ -189,7 +194,8 @@
                                     BorderThickness="0"
                                     Click="ButtonDelete_Click"
                                     Foreground="Red"
-                                    ToolTip="{ex:Language Key='Delete'}" />
+                                    ToolTip="{ex:Language Key='Delete'}"
+                                    Visibility="Collapsed" />
                             </hc:UniformSpacingPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

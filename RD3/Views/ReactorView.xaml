@@ -945,6 +945,12 @@
                                             Text="关闭" />
                                     </Border>
                                 </ToggleButton>
+                                <Button
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding ResetFlowCommand}"
+                                    CommandParameter="Acid"
+                                    Content="总量清零"
+                                    Style="{StaticResource ButtonPrimary}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox
@@ -1005,6 +1011,12 @@
                                             Text="关闭" />
                                     </Border>
                                 </ToggleButton>
+                                <Button
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding ResetFlowCommand}"
+                                    CommandParameter="Base"
+                                    Content="总量清零"
+                                    Style="{StaticResource ButtonPrimary}" />
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
@@ -1087,7 +1099,6 @@
                                 Width="75"
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='补料(mL/h)'}"
-                                IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                 Style="{StaticResource TextBoxExtend}"
                                 Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=PropertyChanged}">
                                 <TextBox.ContextMenu>
@@ -1108,7 +1119,7 @@
                                 Style="{StaticResource TextBoxExtend}"
                                 Text="{Binding CurrentDeviceParameter.FeedFlowSpeed, StringFormat={}{0:F2}}" />
                             <ComboBox
-                                Width="90"
+                                Width="110"
                                 hc:InfoElement.Title="{ex:Language Key=' '}"
                                 BorderBrush="{DynamicResource PrimaryBrush}"
                                 IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}"
@@ -1118,8 +1129,10 @@
                                 <ComboBoxItem Content="多项式" />
                                 <ComboBoxItem Content="指数" />
                                 <ComboBoxItem Content="时间序列" />
-                                <ComboBoxItem Content="关联DO" />
-                                <ComboBoxItem Content="关联PH" />
+                                <ComboBoxItem Content="关联DO_流速" />
+                                <ComboBoxItem Content="关联PH_流速" />
+                                <ComboBoxItem Content="关联DO_总量" />
+                                <ComboBoxItem Content="关联PH_总量" />
                             </ComboBox>
                             <ToggleButton
                                 Width="75"
@@ -1156,6 +1169,12 @@
                                         Text="关闭" />
                                 </Border>
                             </ToggleButton>
+                            <Button
+                                VerticalAlignment="Bottom"
+                                Command="{Binding ResetFlowCommand}"
+                                CommandParameter="Feed"
+                                Content="总量清零"
+                                Style="{StaticResource ButtonPrimary}" />
                             <StackPanel
                                 VerticalAlignment="Bottom"
                                 Orientation="Vertical"
@@ -1241,7 +1260,6 @@
                                 Width="75"
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='消泡(mL/h)'}"
-                                IsEnabled="{Binding CurrentDeviceParameter.AFParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                 Style="{StaticResource TextBoxExtend}"
                                 Text="{Binding CurrentDeviceParameter.AFParam.AF_PV, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBox
@@ -1288,6 +1306,12 @@
                                         Text="关闭" />
                                 </Border>
                             </ToggleButton>
+                            <Button
+                                VerticalAlignment="Bottom"
+                                Command="{Binding ResetFlowCommand}"
+                                CommandParameter="AF"
+                                Content="总量清零"
+                                Style="{StaticResource ButtonPrimary}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBox

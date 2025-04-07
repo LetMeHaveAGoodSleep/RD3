@@ -91,13 +91,13 @@
                             Width="120"
                             Binding="{Binding beginTime}"
                             CanUserSort="True"
-                            Header="开始时间"
+                            Header="开始时间(分钟)"
                             IsReadOnly="False" />
                         <DataGridTextColumn
                             Width="120"
                             Binding="{Binding endTime}"
                             CanUserSort="False"
-                            Header="结束时间"
+                            Header="结束时间(分钟)"
                             IsReadOnly="False" />
                         <!--  Binding="{Binding infoType}"  -->
                         <DataGridComboBoxColumn

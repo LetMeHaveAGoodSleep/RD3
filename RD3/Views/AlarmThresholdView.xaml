@@ -71,19 +71,20 @@
                     Background="{StaticResource DefaultBrush}"
                     CanUserAddRows="True"
                     CanUserSortColumns="False"
+                    CellEditEnding="dataGrid_CellEditEnding"
                     ColumnWidth="SizeToHeader"
                     GridLinesVisibility="All"
                     HeadersVisibility="Column"
                     HorizontalGridLinesBrush="LightGray"
                     IsReadOnly="False"
                     ItemsSource="{Binding FeeddAlarmThresholds}"
+                    LayoutUpdated="DataGridMain_OnLayoutUpdated"
                     RowHeaderWidth="100"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     SelectionMode="Single"
                     SelectionUnit="Cell"
-                    LayoutUpdated="DataGridMain_OnLayoutUpdated"
-                    VerticalGridLinesBrush="LightGray" CellEditEnding="dataGrid_CellEditEnding">
+                    VerticalGridLinesBrush="LightGray">
                     <DataGrid.Columns>
                         <!--  设备列表  -->
                         <DataGridTextColumn
@@ -123,7 +124,7 @@
                             CanUserSort="False"
                             Header="描述"
                             IsReadOnly="False" />
-                        </DataGrid.Columns>
+                    </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </Grid>

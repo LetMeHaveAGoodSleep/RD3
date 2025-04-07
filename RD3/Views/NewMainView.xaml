@@ -142,8 +142,7 @@
                                 Width="100"
                                 Click="MenuItem_Open_Click"
                                 Header="工程调试"
-                                Tag="MCUDebugView"
-                                Visibility="{Binding}" />
+                                Tag="MCUDebugView" />
                         </MenuItem>
                         <MenuItem Height="40" Header="参数管理">
                             <MenuItem
@@ -161,16 +160,16 @@
                                 Click="MenuItem_Open_Click"
                                 Header="参数来源"
                                 Tag="ParameterSourceView" />
-                            <MenuItem
+                            <!--<MenuItem
                                 Width="100"
                                 Click="MenuItem_Open_Click"
                                 Header="补料函数"
-                                Tag="NewFeedView" />
-                            <MenuItem
+                                Tag="NewFeedView" />-->
+                            <!--<MenuItem
                                 Width="100"
                                 Click="MenuItem_Open_Click"
                                 Header="补料阈值"
-                                Tag="AlarmThresholdView" />
+                                Tag="AlarmThresholdView" />-->
                         </MenuItem>
                         <MenuItem Height="40" Header="数据管理">
                             <MenuItem
@@ -229,19 +228,25 @@
                                     Width="80"
                                     Binding="{Binding Name}"
                                     CanUserSort="False"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="反应器"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                     IsReadOnly="True" />
                                 <DataGridTextColumn
                                     Width="*"
                                     Binding="{Binding statue}"
                                     CanUserSort="False"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="运行状态"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                     IsReadOnly="True" />
                                 <DataGridTextColumn
                                     Width="*"
                                     Binding="{Binding ConnectStatus}"
                                     CanUserSort="False"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="连接状态"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                     IsReadOnly="True" />
                             </DataGrid.Columns>
 
@@ -260,13 +265,17 @@
                                     Width="*"
                                     Binding="{Binding DescriptionName}"
                                     CanUserSort="False"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="名称"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                     IsReadOnly="True" />
                                 <DataGridTextColumn
                                     Width="*"
                                     Binding="{Binding DescriptionValue}"
                                     CanUserSort="False"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="R01"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                     IsReadOnly="True" />
                             </DataGrid.Columns>
                         </DataGrid>
