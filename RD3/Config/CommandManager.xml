@@ -240,13 +240,19 @@
 						<param>
 							<id>TimeRatio</id>
 							<name>时间占比</name>
-							<type>byte</type>
-							<length>4</length>
+							<type>float</type>
+							<length>1</length>
 						</param>
 						<param>
 							<id>SensorEnable</id>
 							<name>传感器启用</name>
 							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>FlowSpeed</id>
+							<name>消泡速度</name>
+							<type>float</type>
 							<length>1</length>
 						</param>
 					</parameters>

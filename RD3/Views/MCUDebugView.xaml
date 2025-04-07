@@ -390,6 +390,11 @@
                                             <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                                 <TextBox
                                                     Width="120"
+                                                    hc:InfoElement.Title="{ex:Language Key='消泡速度'}"
+                                                    Style="{StaticResource TextBoxExtend}"
+                                                    Text="{Binding DefoamingParam.FlowSpeed}" />
+                                                <TextBox
+                                                    Width="120"
                                                     hc:InfoElement.Title="{ex:Language Key='检测周期'}"
                                                     Style="{StaticResource TextBoxExtend}"
                                                     Text="{Binding DefoamingParam.Cycle}" />

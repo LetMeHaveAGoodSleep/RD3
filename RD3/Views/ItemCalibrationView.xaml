@@ -94,7 +94,7 @@
             FontSize="{DynamicResource NormalFontSize}"
             Foreground="{StaticResource PrimaryBrush}" />
         <Label
-            Width="100"
+            Width="120"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             hc:InfoElement.Title="{ex:Language Key='Slope'}"
@@ -102,7 +102,7 @@
             Content="{Binding StrSlope}"
             IsEnabled="False" />
         <Label
-            Width="100"
+            Width="120"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             hc:InfoElement.Title="{ex:Language Key='Intercept'}"
