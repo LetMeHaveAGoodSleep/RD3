@@ -3,20 +3,76 @@
   "WorkspaceRootPath": "D:\\Project\\RD3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\newmainview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\newmainview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\config\\pidinfo.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\pidinfo.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\pid\\qpidcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\pid\\qpidcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\cameraimageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\cameraimageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|d:\\project\\rd3\\fpi.communication\\communication\\protocols\\imageprotocol\\imagereceiver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|solutionrelative:fpi.communication\\communication\\protocols\\imageprotocol\\imagereceiver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|d:\\project\\rd3\\fpi.communication\\communication\\protocols\\imageprotocol\\imageprotocol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|solutionrelative:fpi.communication\\communication\\protocols\\imageprotocol\\imageprotocol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|d:\\project\\rd3\\fpi.communication\\communication\\protocols\\receiver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|solutionrelative:fpi.communication\\communication\\protocols\\receiver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|D:\\Project\\RD3\\fpi.communication\\communication\\xz\\xzport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D95F58B1-2E07-4D52-BA26-3F9B6EEACF29}|Fpi.Communication\\Fpi.Communication.csproj|solutionrelative:fpi.communication\\communication\\xz\\xzport.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\newmainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\newmainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\mcudebugviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\mcudebugviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\command\\realcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\command\\realcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\newmainview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\newmainview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\cameraimageview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\cameraimageview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\itemcalibrationview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\itemcalibrationview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|d:\\project\\rd3\\rd3.shared\\device\\parameter\\afparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|solutionrelative:rd3.shared\\device\\parameter\\afparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\config\\commandmanager.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\commandmanager.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +82,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,33 +114,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "NewMainViewModel.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
-              "RelativeDocumentMoniker": "RD3\\ViewModels\\NewMainViewModel.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
-              "RelativeToolTip": "RD3\\ViewModels\\NewMainViewModel.cs",
-              "ViewState": "AgIAABQBAAAAAAAAAAAAAOkAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T06:31:43.156Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "NewMainView.xaml.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
-              "RelativeDocumentMoniker": "RD3\\Views\\NewMainView.xaml.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
-              "RelativeToolTip": "RD3\\Views\\NewMainView.xaml.cs",
-              "ViewState": "AgIAAJsAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T06:31:17.632Z",
+              "Title": "PidInfo.json",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Config\\PidInfo.json",
+              "RelativeDocumentMoniker": "RD3\\Config\\PidInfo.json",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Config\\PidInfo.json",
+              "RelativeToolTip": "RD3\\Config\\PidInfo.json",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAAAIMAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-07T13:50:31.226Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "QPIDController.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\PID\\QPIDController.cs",
+              "RelativeDocumentMoniker": "RD3\\PID\\QPIDController.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\PID\\QPIDController.cs",
+              "RelativeToolTip": "RD3\\PID\\QPIDController.cs",
+              "ViewState": "AgIAAIMAAAAAAAAAAAArwKUAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T13:48:05.177Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ImageProtocol.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\Protocols\\ImageProtocol\\ImageProtocol.cs",
+              "RelativeDocumentMoniker": "Fpi.Communication\\Communication\\Protocols\\ImageProtocol\\ImageProtocol.cs",
+              "ToolTip": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\Protocols\\ImageProtocol\\ImageProtocol.cs",
+              "RelativeToolTip": "Fpi.Communication\\Communication\\Protocols\\ImageProtocol\\ImageProtocol.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAB0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T13:40:18.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ImageReceiver.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\Protocols\\ImageProtocol\\ImageReceiver.cs",
+              "RelativeDocumentMoniker": "Fpi.Communication\\Communication\\Protocols\\ImageProtocol\\ImageReceiver.cs",
+              "ToolTip": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\Protocols\\ImageProtocol\\ImageReceiver.cs",
+              "RelativeToolTip": "Fpi.Communication\\Communication\\Protocols\\ImageProtocol\\ImageReceiver.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAwB8AAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T12:19:42.183Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ReactorViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\ReactorViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\ReactorViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\ReactorViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\ReactorViewModel.cs",
+              "ViewState": "AgIAAJUDAAAAAAAAAAAWwKQDAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T07:12:18.797Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "ReactorView.xaml",
               "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\ReactorView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\ReactorView.xaml",
@@ -96,16 +191,153 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ReactorViewModel.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\ReactorViewModel.cs",
-              "RelativeDocumentMoniker": "RD3\\ViewModels\\ReactorViewModel.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\ReactorViewModel.cs",
-              "RelativeToolTip": "RD3\\ViewModels\\ReactorViewModel.cs",
-              "ViewState": "AgIAAMIOAAAAAAAAAAD4vxsPAAApAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "RealCommandWrapper.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
+              "RelativeDocumentMoniker": "RD3\\Command\\RealCommandWrapper.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
+              "RelativeToolTip": "RD3\\Command\\RealCommandWrapper.cs",
+              "ViewState": "AgIAAJEDAAAAAAAAAAASwKQDAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-03T10:26:49.281Z",
+              "WhenOpened": "2025-04-07T06:53:41.214Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CameraImageViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\CameraImageViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\CameraImageViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\CameraImageViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\CameraImageViewModel.cs",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAAAFYAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T12:00:06.179Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Receiver.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\Protocols\\Receiver.cs",
+              "RelativeDocumentMoniker": "Fpi.Communication\\Communication\\Protocols\\Receiver.cs",
+              "ToolTip": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\Protocols\\Receiver.cs",
+              "RelativeToolTip": "Fpi.Communication\\Communication\\Protocols\\Receiver.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAcwGoAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T13:33:03.014Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "XZPort.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\XZ\\XZPort.cs",
+              "RelativeDocumentMoniker": "Fpi.Communication\\Communication\\XZ\\XZPort.cs",
+              "ToolTip": "D:\\Project\\RD3\\Fpi.Communication\\Communication\\XZ\\XZPort.cs",
+              "RelativeToolTip": "Fpi.Communication\\Communication\\XZ\\XZPort.cs",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAQwEkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T08:54:32.499Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "NewMainViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\NewMainViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\NewMainViewModel.cs",
+              "ViewState": "AgIAAMQBAAAAAAAAAAAuwNoBAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T12:52:05.898Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "NewMainView.xaml.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\NewMainView.xaml.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\NewMainView.xaml.cs",
+              "ViewState": "AgIAAAcCAAAAAAAAAADwvxYCAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T09:52:25.403Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MCUDebugViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\MCUDebugViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\MCUDebugViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\MCUDebugViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\MCUDebugViewModel.cs",
+              "ViewState": "AgIAAGEBAAAAAAAAAAAEwHEBAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T11:12:49.577Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "CameraImageView.xaml",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\CameraImageView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\CameraImageView.xaml",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\CameraImageView.xaml",
+              "RelativeToolTip": "RD3\\Views\\CameraImageView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-07T11:59:34.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CommandManager.xml",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Config\\CommandManager.xml",
+              "RelativeDocumentMoniker": "RD3\\Config\\CommandManager.xml",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Config\\CommandManager.xml",
+              "RelativeToolTip": "RD3\\Config\\CommandManager.xml",
+              "ViewState": "AgIAAOEAAAAAAAAAAAAAACUAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2025-04-07T08:44:16.803Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ItemCalibrationView.xaml",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\ItemCalibrationView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\ItemCalibrationView.xaml",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\ItemCalibrationView.xaml",
+              "RelativeToolTip": "RD3\\Views\\ItemCalibrationView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-07T11:42:32.835Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AFParam.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3.Shared\\Device\\Parameter\\AFParam.cs",
+              "RelativeDocumentMoniker": "RD3.Shared\\Device\\Parameter\\AFParam.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3.Shared\\Device\\Parameter\\AFParam.cs",
+              "RelativeToolTip": "RD3.Shared\\Device\\Parameter\\AFParam.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAWwEsAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T11:15:20.467Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\App.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\App.xaml.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\App.xaml.cs",
+              "RelativeToolTip": "RD3\\App.xaml.cs",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAUwGcAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-07T09:48:30.488Z"
             }
           ]
         }
