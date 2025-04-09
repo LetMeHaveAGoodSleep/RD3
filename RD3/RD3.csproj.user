@@ -22,9 +22,6 @@
     <Compile Update="Views\BatchView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CalibrateView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\CalibrationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -201,9 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\AboutView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\CalibrateView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\FeedStrategyView.xaml">

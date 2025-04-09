@@ -1,0 +1,44 @@
+﻿<UserControl
+    x:Class="RD3.Views.OutputBatchDataView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:RD3"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:OutputBatchDataViewModel}"
+    d:DesignHeight="320"
+    d:DesignWidth="1350"
+    Background="{StaticResource BackGroundBrush}"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource TextFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <WrapPanel Grid.Row="0">
+            <RadioButton Height="50" Name="OneMinute" FontSize="30" IsChecked="True">1分钟</RadioButton>
+            <RadioButton Height="50" Name="FiveMinute" FontSize="30">5分钟</RadioButton>
+        </WrapPanel>
+        <WrapPanel Grid.Row="1">
+            <TextBlock Height="50" FontSize="30">导出路径</TextBlock>
+            <TextBox Height="50" FontSize="30" Name="filePath" Width="1100"></TextBox>
+            <Button FontSize="30" Name="btnSelected" Height="50" Click="btnSelected_Click">选择</Button>
+        </WrapPanel>
+        <DockPanel Grid.Row="2" DockPanel.Dock="Right">
+            <Button FontSize="30" Height="50" Name="btnOK" Click="btnOK_Click" >确定</Button>
+        </DockPanel>
+    </Grid>
+
+</UserControl>

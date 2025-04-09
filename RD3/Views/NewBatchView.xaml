@@ -121,7 +121,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="80"
-                    Binding="{Binding idRemark}"
+                    Binding="{Binding ID}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="ID"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
@@ -151,13 +151,13 @@
                     Header="状态"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
-                    Width="220"
+                    Width="*"
                     Binding="{Binding description}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="说明"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTemplateColumn
-                    Width="200"
+                    Width="50"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="操作"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">

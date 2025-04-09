@@ -48,7 +48,7 @@
             <Setter Property="Icon" Value="../Assets/logo.png" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Grid Margin="5">
+    <Grid Margin="5" Name="Grid1">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition />
@@ -553,7 +553,7 @@
                                     hc:InfoElement.Title="{ex:Language Key='溶氧(%)'}"
                                     BorderBrush="Gray"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, UpdateSourceTrigger=PropertyChanged}">
+                                    Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem
@@ -633,7 +633,7 @@
                                     hc:InfoElement.Title="{ex:Language Key='转速(rpm)'}"
                                     BorderBrush="Gray"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F0}, UpdateSourceTrigger=PropertyChanged}">
+                                    Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F0}, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
@@ -693,7 +693,7 @@
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='空气(L/min)'}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AirParam.FlowSpeed, UpdateSourceTrigger=PropertyChanged}">
+                                    Text="{Binding CurrentDeviceParameter.AirParam.FlowSpeed, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
@@ -753,7 +753,7 @@
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='氧气(L/min)'}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.O2Param.FlowSpeed, UpdateSourceTrigger=PropertyChanged}">
+                                    Text="{Binding CurrentDeviceParameter.O2Param.FlowSpeed, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
@@ -815,7 +815,7 @@
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='PH'}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, UpdateSourceTrigger=PropertyChanged}">
+                                         Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem
@@ -892,7 +892,7 @@
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='酸(mL/h)'}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AcidParam.Acid_PV, UpdateSourceTrigger=PropertyChanged}">
+                                         Text="{Binding CurrentDeviceParameter.AcidParam.Acid_PV, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.PHParam.IsControling" />
@@ -958,7 +958,7 @@
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='碱(mL/h)'}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.BaseParam.Base_PV, UpdateSourceTrigger=PropertyChanged}">
+                                         Text="{Binding CurrentDeviceParameter.BaseParam.Base_PV, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.PHParam.IsControling" />
@@ -1026,7 +1026,7 @@
                                 hc:InfoElement.Title="{ex:Language Key='温度(℃)'}"
                                 IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                 Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, UpdateSourceTrigger=PropertyChanged}">
+                                     Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, UpdateSourceTrigger=LostFocus}">
                                 <TextBox.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem
@@ -1100,7 +1100,7 @@
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='补料(mL/h)'}"
                                 Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=PropertyChanged}">
+                                     Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=LostFocus}">
                                 <TextBox.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
@@ -1261,7 +1261,7 @@
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='消泡(mL/h)'}"
                                 Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.AFParam.AF_PV, UpdateSourceTrigger=PropertyChanged}" />
+                                     Text="{Binding CurrentDeviceParameter.AFParam.AF_PV, UpdateSourceTrigger=LostFocus}" />
                             <TextBox
                                 Width="70"
                                 VerticalAlignment="Center"

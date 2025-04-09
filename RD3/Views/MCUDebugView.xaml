@@ -1266,7 +1266,7 @@
                     </hc:ScrollViewer>
                 </Border>
             </TabItem>
-            <TabItem Header="PHPID调试">
+            <!--<TabItem Header="PHPID调试">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -1430,8 +1430,8 @@
                     </hc:UniformSpacingPanel>
                     <wpf:WpfPlot Name="DOWpfPlot" Grid.Row="1" />
                 </Grid>
-            </TabItem>
-            <TabItem Header="实时曲线">
+            </TabItem>-->
+            <!--<TabItem Header="实时曲线">
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -1611,7 +1611,7 @@
                     </hc:UniformSpacingPanel>
                     <wpf:WpfPlot Name="wpfPlot" Grid.Row="1" />
                 </Grid>
-            </TabItem>
+            </TabItem>-->
         </TabControl>
     </Grid>
 
