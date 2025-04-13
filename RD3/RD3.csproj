@@ -259,6 +259,9 @@
     <None Update="Config\CommandManager.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Config\CurveColor.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Config\CustomGraphSetting - 复制.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

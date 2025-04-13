@@ -318,10 +318,29 @@
                                     <RowDefinition Height="40" />
                                     <RowDefinition Height="40" />
                                     <RowDefinition Height="40" />
+
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
                                 </Grid.RowDefinitions>
                                 <CheckBox
-                                    Name="Air"
+                                    Name="Temp"
                                     Grid.Row="0"
+                                    IsChecked="True"
+                                    Tag="0"
+                                    Unchecked="cb_checkChanged">
+                                    Temp
+                                </CheckBox>
+
+                                <CheckBox
+                                    Name="Air"
+                                    Grid.Row="1"
                                     IsChecked="True"
                                     Tag="0"
                                     Unchecked="cb_checkChanged">
@@ -329,27 +348,20 @@
                                 </CheckBox>
                                 <CheckBox
                                     Name="DO"
-                                    Grid.Row="1"
+                                    Grid.Row="2"
                                     IsChecked="True"
                                     Tag="1"
                                     Unchecked="cb_checkChanged">
                                     DO
                                 </CheckBox>
+
                                 <CheckBox
-                                    Name="Temp"
-                                    Grid.Row="2"
-                                    IsChecked="True"
-                                    Tag="0"
-                                    Unchecked="cb_checkChanged">
-                                    Temp
-                                </CheckBox>
-                                <CheckBox
-                                    Name="PH"
+                                    Name="pH"
                                     Grid.Row="3"
                                     IsChecked="True"
                                     Tag="1"
                                     Unchecked="cb_checkChanged">
-                                    PH
+                                    pH
                                 </CheckBox>
                                 <CheckBox
                                     Name="Agit"
@@ -359,8 +371,72 @@
                                     Unchecked="cb_checkChanged">
                                     Agit
                                 </CheckBox>
-                                <CheckBox Grid.Row="5" Visibility="Hidden">
-                                    pH
+
+
+                                <CheckBox
+                                    Name="AcidPump"
+                                    Grid.Row="5"
+                                    IsChecked="False"
+                                    Tag="0"
+                                    Unchecked="cb_checkChanged">
+                                    AcidPump
+                                </CheckBox>
+                                <CheckBox
+                                    Name="BasePump"
+                                    Grid.Row="6"
+                                    IsChecked="False"
+                                    Tag="0"
+                                    Unchecked="cb_checkChanged">
+                                    BasePump
+                                </CheckBox>
+                                <CheckBox
+                                    Name="AFPump"
+                                    Grid.Row="7"
+                                    IsChecked="False"
+                                    Tag="0"
+                                    Unchecked="cb_checkChanged">
+                                    AFPump
+                                </CheckBox>
+                                <CheckBox
+                                    Name="FeedPump"
+                                    Grid.Row="8"
+                                    IsChecked="False"
+                                    Tag="0"
+                                    Unchecked="cb_checkChanged">
+                                    FeedPump
+                                </CheckBox>
+
+                                <CheckBox
+                                    Name="AcidFlowCapacity"
+                                    Grid.Row="9"
+                                    IsChecked="False"
+                                    Tag="0"
+                                    Unchecked="cb_checkChanged">
+                                    AcidFlowCapacity
+                                </CheckBox>
+                                <CheckBox
+                                    Name="BaseFlowCapacity"
+                                    Grid.Row="10"
+                                    IsChecked="False"
+                                    Tag="0"
+                                    Unchecked="cb_checkChanged">
+                                    BaseFlowCapacity
+                                </CheckBox>
+                                <CheckBox
+                                    Name="FeedFlowCapacity"
+                                    Grid.Row="11"
+                                    IsChecked="False"
+                                    Tag="0"
+                                    Unchecked="cb_checkChanged">
+                                    FeedFlowCapacity
+                                </CheckBox>
+                                <CheckBox
+                                    Name="AFFlowCapacity"
+                                    Grid.Row="12"
+                                    IsChecked="False"
+                                    Tag="0"
+                                    Unchecked="cb_checkChanged">
+                                    AFFlowCapacity
                                 </CheckBox>
                             </Grid>
                         </Grid>
@@ -383,47 +459,47 @@
                                 <DataGridTemplateColumn
                                     Width="200"
                                     CellStyle="{StaticResource DataGridTextLeftCellStyle}"
-                                    Header="{ex:Language Key='报警时间'}"
+                                    Header="{ex:Language Key='发生时间'}"
                                     HeaderStyle="{StaticResource DataGridLeftColumnHeaderStyle}">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Time, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
+                                            <TextBlock Text="{Binding Datetime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn
                                     Width="100"
-                                    Binding="{Binding Batch}"
+                                    Binding="{Binding BatchID}"
                                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="{ex:Language Key='批次'}"
                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                                 <DataGridTextColumn
                                     Width="100"
-                                    Binding="{Binding Reactor}"
+                                    Binding="{Binding DeviceID}"
                                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="{ex:Language Key='反应器'}"
                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                                <DataGridTextColumn
+                                <!--<DataGridTextColumn
                                     Width="150"
                                     Binding="{Binding Module}"
                                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="{ex:Language Key='模块'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                                <DataGridTextColumn
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />-->
+                                <!--<DataGridTextColumn
                                     Width="100"
                                     Binding="{Binding Value}"
                                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="{ex:Language Key='值'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                                <DataGridTextColumn
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />-->
+                                <!--<DataGridTextColumn
                                     Width="80"
                                     Binding="{Binding Grade}"
                                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="{ex:Language Key='等级'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />-->
                                 <DataGridTextColumn
                                     Width="250"
-                                    Binding="{Binding Description}"
+                                    Binding="{Binding Remark}"
                                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="{ex:Language Key='描述'}"
                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />

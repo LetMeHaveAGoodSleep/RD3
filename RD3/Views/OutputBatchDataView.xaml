@@ -28,8 +28,11 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <WrapPanel Grid.Row="0">
-            <RadioButton Height="50" Name="OneMinute" FontSize="30" IsChecked="True">1分钟</RadioButton>
-            <RadioButton Height="50" Name="FiveMinute" FontSize="30">5分钟</RadioButton>
+            <RadioButton Height="50" Name="OneSecond" FontSize="30" IsChecked="True">1秒</RadioButton>
+            <RadioButton Height="50" Name="TenSecond" FontSize="30" IsChecked="False">10秒</RadioButton>
+            <RadioButton Height="50" Name="ThirtySecond" FontSize="30" IsChecked="False">30秒</RadioButton>
+            <RadioButton Height="50" Name="OneMinute" FontSize="30" IsChecked="False">1分钟</RadioButton>
+            <RadioButton Height="50" Name="FiveMinute" FontSize="30" IsChecked="False">5分钟</RadioButton>
         </WrapPanel>
         <WrapPanel Grid.Row="1">
             <TextBlock Height="50" FontSize="30">导出路径</TextBlock>

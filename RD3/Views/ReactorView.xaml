@@ -48,7 +48,7 @@
             <Setter Property="Icon" Value="../Assets/logo.png" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Grid Margin="5" Name="Grid1">
+    <Grid Name="Grid1" Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition />
@@ -815,7 +815,7 @@
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='PH'}"
                                     Style="{StaticResource TextBoxExtend}"
-                                         Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, UpdateSourceTrigger=LostFocus}">
+                                    Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem
@@ -892,7 +892,7 @@
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='酸(mL/h)'}"
                                     Style="{StaticResource TextBoxExtend}"
-                                         Text="{Binding CurrentDeviceParameter.AcidParam.Acid_PV, UpdateSourceTrigger=LostFocus}">
+                                    Text="{Binding CurrentDeviceParameter.AcidParam.Acid_PV, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.PHParam.IsControling" />
@@ -958,7 +958,7 @@
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='碱(mL/h)'}"
                                     Style="{StaticResource TextBoxExtend}"
-                                         Text="{Binding CurrentDeviceParameter.BaseParam.Base_PV, UpdateSourceTrigger=LostFocus}">
+                                    Text="{Binding CurrentDeviceParameter.BaseParam.Base_PV, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.IsEnabled>
                                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.PHParam.IsControling" />
@@ -1026,7 +1026,7 @@
                                 hc:InfoElement.Title="{ex:Language Key='温度(℃)'}"
                                 IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                 Style="{StaticResource TextBoxExtend}"
-                                     Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, UpdateSourceTrigger=LostFocus}">
+                                Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, UpdateSourceTrigger=LostFocus}">
                                 <TextBox.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem
@@ -1100,7 +1100,7 @@
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='补料(mL/h)'}"
                                 Style="{StaticResource TextBoxExtend}"
-                                     Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=LostFocus}">
+                                Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=LostFocus}">
                                 <TextBox.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
@@ -1261,7 +1261,7 @@
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='消泡(mL/h)'}"
                                 Style="{StaticResource TextBoxExtend}"
-                                     Text="{Binding CurrentDeviceParameter.AFParam.AF_PV, UpdateSourceTrigger=LostFocus}" />
+                                Text="{Binding CurrentDeviceParameter.AFParam.AF_PV, UpdateSourceTrigger=LostFocus}" />
                             <TextBox
                                 Width="70"
                                 VerticalAlignment="Center"

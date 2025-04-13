@@ -20,7 +20,7 @@
     Width="auto"
     Height="auto"
     MinWidth="1000"
-    MinHeight="700"
+    MinHeight="300"
     d:DataContext="{d:DesignInstance Type=vm:CalibrateViewModel}"
     d:DesignHeight="600"
     d:DesignWidth="1200"
@@ -177,7 +177,7 @@
                         </ScrollViewer>
                     </Border>
                 </hc:UniformSpacingPanel>
-                <Border
+                <!--<Border
                     Grid.Row="1"
                     Margin="0,10,0,10"
                     Style="{StaticResource BorderCommon}">
@@ -192,7 +192,7 @@
                         </hc:UniformSpacingPanel>
                         <wpf:WpfPlot Name="wpfPlot1" Grid.Row="1" />
                     </Grid>
-                </Border>
+                </Border>-->
             </Grid>
         </TabItem>
         <TabItem Header="蠕动泵校准">
