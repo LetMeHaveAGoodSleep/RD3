@@ -1,0 +1,16 @@
+{
+  "Temp": "Temp",
+  "Agit": "Agit",
+  "DO": "DO",
+  "PH": "PH",
+  "MFC1FlowRate": "AirFlowSpeed",
+  "Pump1Flow": "AcidFlowSpeed",
+  "Pump2Flow": "BaseFlowSpeed",
+  "Pump3Flow": "FeedFlowSpeed",
+  "Pump4Flow": "AFFlowSpeed",
+  "Pump1FlowCapacity": "AcidFlowCapacity",
+  "Pump2FlowCapacity": "BaseFlowCapacity",
+  "Pump3FlowCapacity": "FeedFlowCapacity",
+  "Pump4FlowCapacity": "AFFlowCapacity"
+
+}

@@ -262,6 +262,9 @@
     <None Update="Config\CurveColor.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Config\ParameterMapperConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Config\CustomGraphSetting - 复制.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

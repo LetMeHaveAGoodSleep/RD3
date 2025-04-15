@@ -948,3 +948,4 @@ D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FeedStrategyView.baml
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\OutputBatchDataView.g.cs
 D:\Project\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\OutputBatchDataView.baml
 D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\CurveColor.json
+D:\Project\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\ParameterMapperConfig.json

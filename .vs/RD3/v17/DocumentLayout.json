@@ -7,56 +7,52 @@
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\config\\parametermapperconfig.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\parametermapperconfig.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EFB11CAA-32DA-4436-B05C-FFFA0F111ABF}|XZ.SQLite\\XZ.SQLite.csproj|d:\\project\\rd3\\xz.sqlite\\sqlitehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EFB11CAA-32DA-4436-B05C-FFFA0F111ABF}|XZ.SQLite\\XZ.SQLite.csproj|solutionrelative:xz.sqlite\\sqlitehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\newmainview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\newmainview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\newmainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\newmainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\newmainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\newmainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|d:\\project\\rd3\\rd3.shared\\alarm\\auditrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|solutionrelative:rd3.shared\\alarm\\auditrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\reactorview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\reactorview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\monitor\\clocksupervisor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\monitor\\clocksupervisor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\command\\virtualcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\command\\virtualcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\config\\graphsetting.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\graphsetting.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\command\\realcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\command\\realcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|d:\\project\\rd3\\rd3.shared\\device\\realtimeparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|solutionrelative:rd3.shared\\device\\realtimeparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\mcudebugview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\mcudebugview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\config\\var.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\var.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\mcudebugviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\mcudebugviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\command\\virtualcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\command\\virtualcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\monitor\\clocksupervisor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\monitor\\clocksupervisor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\reactorview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\reactorview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\viewmodels\\newmainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\newmainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\config\\curvecolor.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\curvecolor.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\project\\rd3\\rd3\\views\\comparebatchview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\comparebatchview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,7 +62,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -98,79 +94,38 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "NewMainViewModel.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
-              "RelativeDocumentMoniker": "RD3\\ViewModels\\NewMainViewModel.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
-              "RelativeToolTip": "RD3\\ViewModels\\NewMainViewModel.cs",
-              "ViewState": "AgIAAJkBAAAAAAAAAAAAAKsBAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T08:08:53.896Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "NewMainView.xaml.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
-              "RelativeDocumentMoniker": "RD3\\Views\\NewMainView.xaml.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
-              "RelativeToolTip": "RD3\\Views\\NewMainView.xaml.cs",
-              "ViewState": "AgIAACcBAAAAAAAAAAAgwJABAABDAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T09:36:04.998Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "NewMainView.xaml",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\NewMainView.xaml",
-              "RelativeDocumentMoniker": "RD3\\Views\\NewMainView.xaml",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\NewMainView.xaml",
-              "RelativeToolTip": "RD3\\Views\\NewMainView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-13T07:30:25.795Z",
-              "EditorCaption": ""
+              "DocumentIndex": 2,
+              "Title": "GraphSetting.json",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Config\\GraphSetting.json",
+              "RelativeDocumentMoniker": "RD3\\Config\\GraphSetting.json",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Config\\GraphSetting.json",
+              "RelativeToolTip": "RD3\\Config\\GraphSetting.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-14T10:00:03.454Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ReactorView.xaml",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\ReactorView.xaml",
-              "RelativeDocumentMoniker": "RD3\\Views\\ReactorView.xaml",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\ReactorView.xaml",
-              "RelativeToolTip": "RD3\\Views\\ReactorView.xaml",
+              "Title": "ParameterMapperConfig.json",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Config\\ParameterMapperConfig.json",
+              "RelativeDocumentMoniker": "RD3\\Config\\ParameterMapperConfig.json",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Config\\ParameterMapperConfig.json",
+              "RelativeToolTip": "RD3\\Config\\ParameterMapperConfig.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwMAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-14T09:59:20.411Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MCUDebugView.xaml",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\MCUDebugView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\MCUDebugView.xaml",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\MCUDebugView.xaml",
+              "RelativeToolTip": "RD3\\Views\\MCUDebugView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-11T12:30:02.151Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SQLiteHelper.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\XZ.SQLite\\SQLiteHelper.cs",
-              "RelativeDocumentMoniker": "XZ.SQLite\\SQLiteHelper.cs",
-              "ToolTip": "D:\\Project\\RD3\\XZ.SQLite\\SQLiteHelper.cs",
-              "RelativeToolTip": "XZ.SQLite\\SQLiteHelper.cs",
-              "ViewState": "AgIAAPgCAAAAAAAAAAAswAMDAABSAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T07:31:07.257Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "RealCommandWrapper.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
-              "RelativeDocumentMoniker": "RD3\\Command\\RealCommandWrapper.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
-              "RelativeToolTip": "RD3\\Command\\RealCommandWrapper.cs",
-              "ViewState": "AgIAAIQBAAAAAAAAAAASwKUBAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-12T03:09:33.595Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T09:04:31.008Z"
             },
             {
               "$type": "Document",
@@ -180,23 +135,22 @@
               "RelativeDocumentMoniker": "RD3\\ViewModels\\ReactorViewModel.cs",
               "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\ReactorViewModel.cs",
               "RelativeToolTip": "RD3\\ViewModels\\ReactorViewModel.cs",
-              "ViewState": "AgIAAA8DAAAAAAAAAAAIwCIDAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAANgJAAAAAAAAAAAiwOAKAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T11:53:25.973Z",
+              "WhenOpened": "2025-04-14T01:21:56.628Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "App.xaml.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\App.xaml.cs",
-              "RelativeDocumentMoniker": "RD3\\App.xaml.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\App.xaml.cs",
-              "RelativeToolTip": "RD3\\App.xaml.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAiwFYAAAAYAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "ClockSupervisor.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Monitor\\ClockSupervisor.cs",
+              "RelativeDocumentMoniker": "RD3\\Monitor\\ClockSupervisor.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Monitor\\ClockSupervisor.cs",
+              "RelativeToolTip": "RD3\\Monitor\\ClockSupervisor.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAYwFIAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T08:25:59.866Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T01:16:00.231Z"
             },
             {
               "$type": "Document",
@@ -206,75 +160,92 @@
               "RelativeDocumentMoniker": "RD3\\Views\\ReactorView.xaml.cs",
               "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\ReactorView.xaml.cs",
               "RelativeToolTip": "RD3\\Views\\ReactorView.xaml.cs",
-              "ViewState": "AgIAADYBAAAAAAAAAAASwEIBAABRAAAAAAAAAA==",
+              "ViewState": "AgIAAPIAAAAAAAAAAAAAwAoBAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T12:17:57.486Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T12:17:57.486Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AuditRecord.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3.Shared\\Alarm\\AuditRecord.cs",
-              "RelativeDocumentMoniker": "RD3.Shared\\Alarm\\AuditRecord.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3.Shared\\Alarm\\AuditRecord.cs",
-              "RelativeToolTip": "RD3.Shared\\Alarm\\AuditRecord.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAqAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "MCUDebugViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\MCUDebugViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\MCUDebugViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\MCUDebugViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\MCUDebugViewModel.cs",
+              "ViewState": "AgIAAKADAAAAAAAAAAAiwMUDAABaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T08:10:11.488Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T02:51:30.275Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "RealTimeParam.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3.Shared\\Device\\RealTimeParam.cs",
-              "RelativeDocumentMoniker": "RD3.Shared\\Device\\RealTimeParam.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3.Shared\\Device\\RealTimeParam.cs",
-              "RelativeToolTip": "RD3.Shared\\Device\\RealTimeParam.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAADgvxgAAAAXAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "RealCommandWrapper.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
+              "RelativeDocumentMoniker": "RD3\\Command\\RealCommandWrapper.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
+              "RelativeToolTip": "RD3\\Command\\RealCommandWrapper.cs",
+              "ViewState": "AgIAALgCAAAAAAAAAAAAwL0DAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-12T03:08:27.219Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T08:53:28.2Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 6,
               "Title": "VirtualCommandWrapper.cs",
               "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Command\\VirtualCommandWrapper.cs",
               "RelativeDocumentMoniker": "RD3\\Command\\VirtualCommandWrapper.cs",
               "ToolTip": "D:\\Project\\RD3\\RD3\\Command\\VirtualCommandWrapper.cs",
               "RelativeToolTip": "RD3\\Command\\VirtualCommandWrapper.cs",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAqwGsAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAE4AAAAAAAAAAADwv2sAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-12T03:11:21.873Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T08:53:38.116Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
-              "Title": "ClockSupervisor.cs",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Monitor\\ClockSupervisor.cs",
-              "RelativeDocumentMoniker": "RD3\\Monitor\\ClockSupervisor.cs",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Monitor\\ClockSupervisor.cs",
-              "RelativeToolTip": "RD3\\Monitor\\ClockSupervisor.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAD4vy4AAAA4AAAAAAAAAA==",
+              "Title": "NewMainViewModel.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\NewMainViewModel.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\NewMainViewModel.cs",
+              "ViewState": "AgIAAMEBAAAAAAAAAAAAwMwBAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T09:38:00.604Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T08:08:53.896Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Var.json",
-              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Config\\Var.json",
-              "RelativeDocumentMoniker": "RD3\\Config\\Var.json",
-              "ToolTip": "D:\\Project\\RD3\\RD3\\Config\\Var.json",
-              "RelativeToolTip": "RD3\\Config\\Var.json",
-              "ViewState": "AgIAADAAAAAAAAAAAADwvwYAAAAUAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "CurveColor.json",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Config\\CurveColor.json",
+              "RelativeDocumentMoniker": "RD3\\Config\\CurveColor.json",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Config\\CurveColor.json",
+              "RelativeToolTip": "RD3\\Config\\CurveColor.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-12T02:45:06.345Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-14T07:44:04.227Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ReactorView.xaml",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\ReactorView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\ReactorView.xaml",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\ReactorView.xaml",
+              "RelativeToolTip": "RD3\\Views\\ReactorView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-14T02:30:09.841Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "CompareBatchView.xaml.cs",
+              "DocumentMoniker": "D:\\Project\\RD3\\RD3\\Views\\CompareBatchView.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\CompareBatchView.xaml.cs",
+              "ToolTip": "D:\\Project\\RD3\\RD3\\Views\\CompareBatchView.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\CompareBatchView.xaml.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAwI4AAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-14T01:22:05.709Z"
             }
           ]
         }

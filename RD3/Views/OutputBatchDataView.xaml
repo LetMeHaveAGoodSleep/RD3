@@ -28,19 +28,65 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <WrapPanel Grid.Row="0">
-            <RadioButton Height="50" Name="OneSecond" FontSize="30" IsChecked="True">1秒</RadioButton>
-            <RadioButton Height="50" Name="TenSecond" FontSize="30" IsChecked="False">10秒</RadioButton>
-            <RadioButton Height="50" Name="ThirtySecond" FontSize="30" IsChecked="False">30秒</RadioButton>
-            <RadioButton Height="50" Name="OneMinute" FontSize="30" IsChecked="False">1分钟</RadioButton>
-            <RadioButton Height="50" Name="FiveMinute" FontSize="30" IsChecked="False">5分钟</RadioButton>
+            <RadioButton
+                Name="OneSecond"
+                Height="50"
+                FontSize="30"
+                IsChecked="True">
+                1秒
+            </RadioButton>
+            <RadioButton
+                Name="TenSecond"
+                Height="50"
+                FontSize="30"
+                IsChecked="False">
+                10秒
+            </RadioButton>
+            <RadioButton
+                Name="ThirtySecond"
+                Height="50"
+                FontSize="30"
+                IsChecked="False">
+                30秒
+            </RadioButton>
+            <RadioButton
+                Name="OneMinute"
+                Height="50"
+                FontSize="30"
+                IsChecked="False">
+                1分钟
+            </RadioButton>
+            <RadioButton
+                Name="FiveMinute"
+                Height="50"
+                FontSize="30"
+                IsChecked="False">
+                5分钟
+            </RadioButton>
         </WrapPanel>
         <WrapPanel Grid.Row="1">
             <TextBlock Height="50" FontSize="30">导出路径</TextBlock>
-            <TextBox Height="50" FontSize="30" Name="filePath" Width="1100"></TextBox>
-            <Button FontSize="30" Name="btnSelected" Height="50" Click="btnSelected_Click">选择</Button>
+            <TextBox
+                Name="filePath"
+                Width="1100"
+                Height="50"
+                FontSize="30" />
+            <Button
+                Name="btnSelected"
+                Height="50"
+                Click="btnSelected_Click"
+                FontSize="30">
+                选择
+            </Button>
         </WrapPanel>
         <DockPanel Grid.Row="2" DockPanel.Dock="Right">
-            <Button FontSize="30" Height="50" Name="btnOK" Click="btnOK_Click" >确定</Button>
+            <Button
+                Name="btnOK"
+                Height="50"
+                Click="btnOK_Click"
+                FontSize="30">
+                确定
+            </Button>
         </DockPanel>
     </Grid>
 

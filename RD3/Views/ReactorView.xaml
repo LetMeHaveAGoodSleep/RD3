@@ -85,6 +85,16 @@
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
                     ToolTip="{ex:Language Key='PID设置'}" />
+                <Button
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                    hc:IconElement.Geometry="{StaticResource SaveGeometry}"
+                    Background="{DynamicResource FixedBrush}"
+                    BorderThickness="0"
+                    Command="{Binding SaveInfoCommand}"
+                    Foreground="White"
+                    Style="{StaticResource ButtonIconCircular}"
+                    ToolTip="{ex:Language Key='保存过程信息'}"
+                    Visibility="Collapsed" />
             </hc:UniformSpacingPanel>
         </DockPanel>
         <Grid Name="GridMain" Grid.Row="1">

@@ -19,10 +19,11 @@
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     Width="auto"
     Height="auto"
-    MinWidth="1000"
-    MinHeight="800"
+    MinWidth="1200"
+    MinHeight="500"
+    MaxHeight="700"
     d:DataContext="{d:DesignInstance Type=vm:MCUDebugViewModel}"
-    d:DesignHeight="1800"
+    d:DesignHeight="2000"
     d:DesignWidth="1000"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
@@ -35,8 +36,8 @@
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
             <Setter Property="SizeToContent" Value="WidthAndHeight" />
-            <Setter Property="ResizeMode" Value="CanResize" />
-            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
             <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -158,7 +159,6 @@
                 SelectionMode="Multiple"
                 ShowSelectAllButton="True" />
         </hc:UniformSpacingPanel>
-
         <TabControl Grid.Row="1">
             <TabItem Header="{ex:Language Key='Parameter Setting'}">
                 <Border Effect="{StaticResource EffectShadow1}">
@@ -1259,6 +1259,32 @@
                                         hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                         Command="{Binding SetCommand}"
                                         CommandParameter="23"
+                                        Content="{ex:Language Key='Set'}" />
+                                </hc:UniformSpacingPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:TextBox
+                                        Width="160"
+                                        hc:InfoElement.Title="{ex:Language Key='DO设定值'}"
+                                        Text="{Binding DO_SP}" />
+                                    <CheckBox
+                                        VerticalAlignment="Bottom"
+                                        Content="自动控制"
+                                        IsChecked="{Binding DOAuto}" />
+                                    <hc:TextBox
+                                        Width="160"
+                                        hc:InfoElement.Title="{ex:Language Key='PH设定值'}"
+                                        Text="{Binding PH_SP}" />
+                                    <CheckBox
+                                        VerticalAlignment="Bottom"
+                                        Content="自动控制"
+                                        IsChecked="{Binding PHAuto}" />
+                                    <Button
+                                        Width="80"
+                                        Height="30"
+                                        Margin="0,20,0,0"
+                                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                        Command="{Binding SetCommand}"
+                                        CommandParameter="24"
                                         Content="{ex:Language Key='Set'}" />
                                 </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>

@@ -2,7 +2,7 @@
   "G01": [
     {
       "Name": null,
-      "Description": "y: Flow SP, mL/h;\r\na: 2nd order Acceleration, ml/h^3,\r\nb: 1st order Acceleration, ml/h^2,\r\nc: initial flow rate, ml/h;\r\nt: PLC Runtime, h;\r\nAt: Time offset, when t<At, y=c;\r\n 参数1为a；参数2为b；参数3为c;参数4为△t",
+      "Description": "y: Flow SP, mL/h;\r\na: 2nd order Acceleration, ml/h^3,\r\nb: 1st order Acceleration, ml/h^2,\r\nc: initial flow rate, ml/h;\r\nt: PLC Runtime, h;\r\nAt: Time offset, when t<At, y=c;ps:时间序列中Δt不起作用;\r\n 参数1为a；参数2为b；参数3为c;参数4为△t",
       "ID": null,
       "beginTime": 0.0,
       "endTime": 60.0,
@@ -14,7 +14,7 @@
     },
     {
       "Name": null,
-      "Description": "F1(t)=F1(0)*exp(μ*(t-△t))\", \\r\\nu: specific growth rate, 1/h;\\r\\nt: PLC Runtime, h;\\r\\nV(0): initial volume, L;\\r\\nX(0): initial cell density, g/L;\\r\\nY: Yield coefficient, g/g;\\r\\nS: Substrate concentration, g/L;\\r\\nAt: Time offset, when t<At, output=F1(0);\r\n参数1为F1(0)；参数2为μ；参数3为△t",
+      "Description": "F1(t)=F1(0)*exp(μ*(t-△t))\", \r\nμ: specific growth rate, 1/h;\r\nt: PLC Runtime, h;\r\nV(0): initial volume, L;\r\nX(0): initial cell density, g/L;\r\nY: Yield coefficient, g/g;\r\nS: Substrate concentration, g/L;\r\n△t: Time offset, when t<△t, output=F1(0);ps:时间序列中Δt不起作用;\r\n参数1为F1(0)；参数2为μ；参数3为△t",
       "ID": null,
       "beginTime": 60.0,
       "endTime": 120.0,
