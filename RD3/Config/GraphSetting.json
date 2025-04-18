@@ -2,7 +2,7 @@
   "温度": "Temp",
   "转速": "Agit",
   "溶氧": "DO",
-  "pH": "PH",
+  "pH": "pH",
   "Air": "MFC1FlowRate",
   "酸泵流量": "Pump1Flow",
   "碱泵流量": "Pump2Flow",

@@ -887,7 +887,7 @@
         },
         "runtime": {
           "Fpi.Assembly.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         },
@@ -905,7 +905,7 @@
         },
         "runtime": {
           "Fpi.Communication.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
           }
         },
@@ -922,7 +922,7 @@
         },
         "runtime": {
           "Fpi.Instrument.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         },
@@ -935,7 +935,7 @@
       "Fpi.Util/1.0.0": {
         "runtime": {
           "Fpi.Util.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
           }
         },
@@ -951,7 +951,7 @@
         },
         "runtime": {
           "Fpi.Xml.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "0.0.0.0",
             "fileVersion": "0.0.0.0"
           }
         },
@@ -972,7 +972,7 @@
         },
         "runtime": {
           "RD3.Shared.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -984,7 +984,7 @@
         },
         "runtime": {
           "XZ.OnnxRun.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -992,7 +992,7 @@
       "XZ.SQLite/1.0.0": {
         "runtime": {
           "XZ.SQLite.dll": {
-            "assemblyVersion": "1.0.0",
+            "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
@@ -1002,14 +1002,6 @@
           "HandyControl.dll": {
             "assemblyVersion": "3.5.2.0",
             "fileVersion": "3.5.2.0"
-          }
-        }
-      },
-      "AxInterop.ShockwaveFlashObjects/1.0.0.0": {
-        "runtime": {
-          "AxInterop.ShockwaveFlashObjects.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -1483,11 +1475,6 @@
       "sha512": ""
     },
     "HandyControl/3.5.2.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "AxInterop.ShockwaveFlashObjects/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

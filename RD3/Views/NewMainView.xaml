@@ -119,6 +119,11 @@
                                 Click="MenuItem_Open_Click"
                                 Header="系统设置"
                                 Tag="SettingView" />
+                            <MenuItem
+                                Width="100"
+                                Click="MenuItem_Open_Click"
+                                Header="曲线设置"
+                                Tag="DeviceNodesView" />
                             <!--<MenuItem Header="项目" Width = "100" />
                             <MenuItem Header="版本" Width = "100" />-->
                         </MenuItem>

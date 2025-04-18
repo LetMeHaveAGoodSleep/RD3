@@ -10,25 +10,10 @@
     <Compile Update="Controls\IndicatorLight.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\AddSampleView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\AlarmView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\AuditView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\BatchView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\CalibrationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\ChooseReactorView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\ControlView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\DOAssociateView.xaml.cs">
@@ -40,28 +25,7 @@
     <Compile Update="Views\DOEMainView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\EditBatchView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\EditExperimentParamView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\EditMVOptionView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\EditProjectView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\EditSampleView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\EditTemplateView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\EditUserView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\FeedView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\ItemCalibrationView.xaml.cs">
@@ -92,9 +56,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\TimeSeriesView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\UnscheduledView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\UserView.xaml.cs">
@@ -129,16 +90,7 @@
     <Page Update="Themes\WaveAnimation.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\AddSampleView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\AlarmThresholdView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AlarmView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\AuditView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CalibrationView.xaml">
@@ -153,9 +105,6 @@
     <Page Update="Views\CompareBatchView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ControlView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\DOAssociateView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -166,27 +115,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\EditBatchIDView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\DataOutPutView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\EditBatchView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\EditExperimentParamView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\EditMVOptionView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\EditProjectView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\EditSampleView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\EditTemplateView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\EditUserView.xaml">
@@ -201,9 +129,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\FeedStrategyView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\FeedView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AddOffLineDatasView.xaml">
@@ -251,12 +176,6 @@
     <Page Update="Views\OperationView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ProjectView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\BatchView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\ProgressView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -273,9 +192,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\TimeSeriesView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\UnscheduledView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\UserView.xaml">

@@ -751,11 +751,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj",
+      "projectUniqueName": "D:\\20250415-001\\RD3\\RD3.Shared\\RD3.Shared.csproj",
       "projectName": "RD3.Shared",
-      "projectPath": "D:\\Project\\RD3\\RD3.Shared\\RD3.Shared.csproj",
+      "projectPath": "D:\\20250415-001\\RD3\\RD3.Shared\\RD3.Shared.csproj",
       "packagesPath": "D:\\packages",
-      "outputPath": "D:\\Project\\RD3\\RD3.Shared\\obj\\",
+      "outputPath": "D:\\20250415-001\\RD3\\RD3.Shared\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -777,11 +777,11 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "projectReferences": {
-            "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
-              "projectPath": "D:\\Project\\RD3\\Fpi.Communication\\Fpi.Communication.csproj"
+            "D:\\20250415-001\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
+              "projectPath": "D:\\20250415-001\\RD3\\Fpi.Communication\\Fpi.Communication.csproj"
             },
-            "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
-              "projectPath": "D:\\Project\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+            "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+              "projectPath": "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
             }
           }
         }
@@ -796,7 +796,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net8.0-windows7.0": {
@@ -835,7 +835,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

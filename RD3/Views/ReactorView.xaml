@@ -19,8 +19,8 @@
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     Width="auto"
     Height="auto"
-    MinWidth="1600"
-    MinHeight="900"
+    MinWidth="1400"
+    MinHeight="600"
     d:DataContext="{d:DesignInstance Type=vm:ReactorViewModel}"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
@@ -106,1305 +106,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="5" />
                     <RowDefinition Height="auto" />
-                </Grid.RowDefinitions>
-                <Grid Width="845" Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition
-                            Name="rowGraph1"
-                            Height="auto"
-                            MaxHeight="60" />
-                        <RowDefinition Height="5" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <ComboBox
-                        Name="ComboBoxGraph"
-                        MinWidth="200"
-                        MaxWidth="200"
-                        HorizontalAlignment="Left"
-                        SelectionChanged="ComboBoxGraph_SelectionChanged"
-                        Visibility="Collapsed">
-                        <ComboBoxItem Content="泵" />
-                        <ComboBoxItem Content="气体" />
-                    </ComboBox>
-                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto">
-                        <WrapPanel
-                            Name="ChkGraphList1"
-                            Orientation="Horizontal"
-                            Visibility="Collapsed" />
-                    </ScrollViewer>
-                    <wpf:WpfPlot Name="wpfPlot1" Grid.Row="3" />
-                </Grid>
-                <GridSplitter
-                    Grid.Row="1"
-                    Height="5"
-                    HorizontalAlignment="Stretch"
-                    Background="LightGray" />
-                <Canvas
-                    Grid.Row="2"
-                    Width="850"
-                    Height="600">
-                    <StackPanel
-                        Canvas.Left="10"
-                        Canvas.Top="20"
-                        Orientation="Horizontal">
-                        <hc:ComboBox
-                            Name="CmbDevice"
-                            Width="100"
-                            BorderBrush="Gray"
-                            BorderThickness="1"
-                            FontSize="{DynamicResource SubHeadFontSize}"
-                            ItemsSource="{Binding ReactorCol}"
-                            SelectedItem="{Binding SelectedDevice}"
-                            Style="{StaticResource ComboBoxExtend}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <i:InvokeCommandAction
-                                        Command="{Binding ChangeDeviceCommand}"
-                                        CommandParameter="{Binding ElementName=CmbDevice, Path=SelectedItem}"
-                                        PassEventArgsToCommand="True" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </hc:ComboBox>
-                        <hc:UniformSpacingPanel
-                            Margin="20,0,0,0"
-                            VerticalAlignment="Center"
-                            Spacing="5">
-                            <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='运行状态:'}" />
-                            <TextBlock
-                                HorizontalAlignment="Left"
-                                FontSize="{DynamicResource SubHeadFontSize}"
-                                Text="{Binding CurrentDeviceParameter.ReactorStatusName}" />
-                        </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel
-                            Margin="20,0,0,0"
-                            VerticalAlignment="Center"
-                            Spacing="5">
-                            <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='运行时间:'}" />
-                            <TextBlock
-                                HorizontalAlignment="Right"
-                                FontSize="{DynamicResource SubHeadFontSize}"
-                                Text="{Binding FormattedTime}" />
-                        </hc:UniformSpacingPanel>
-                    </StackPanel>
-                    <Image
-                        Canvas.Left="20"
-                        Canvas.Bottom="30"
-                        Width="400"
-                        Height="500"
-                        Source="/Images/ReactorNew/罐体.png" />
-                    <TextBlock
-                        Canvas.Left="115"
-                        Canvas.Top="200"
-                        Text="总量(mL)" />
-                    <Image
-                        Name="Pump1Enable"
-                        Canvas.Left="68"
-                        Canvas.Top="229"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵使能.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="Pump1Disable"
-                        Canvas.Left="68"
-                        Canvas.Top="229"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵不使能.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="Pump1Weight"
-                        Canvas.Left="105"
-                        Canvas.Top="229"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵带底.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="Pump1NoWeight"
-                        Canvas.Left="105"
-                        Canvas.Top="229"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵不带底.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                    <TextBlock
-                        Canvas.Left="140"
-                        Canvas.Top="238"
-                        Text="{Binding CurrentDeviceParameter.AcidFlowCapacity}" />
-                    <TextBlock
-                        Canvas.Left="25"
-                        Canvas.Top="238"
-                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Name}" />
-                    <Image
-                        Name="Pump2Enable"
-                        Canvas.Left="68"
-                        Canvas.Top="285"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵使能.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="Pump2Disable"
-                        Canvas.Left="68"
-                        Canvas.Top="285"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵不使能.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="Pump2Weight"
-                        Canvas.Left="105"
-                        Canvas.Top="285"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵带底.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="Pump2NoWeight"
-                        Canvas.Left="105"
-                        Canvas.Top="285"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵不带底.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                    <TextBlock
-                        Canvas.Left="140"
-                        Canvas.Top="295"
-                        Text="{Binding CurrentDeviceParameter.BaseFlowCapacity}" />
-                    <TextBlock
-                        Canvas.Left="25"
-                        Canvas.Top="295"
-                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Name}" />
-                    <Image
-                        Name="Pump3Enable"
-                        Canvas.Left="68"
-                        Canvas.Top="341"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵使能.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="Pump3Disable"
-                        Canvas.Left="68"
-                        Canvas.Top="341"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵不使能.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="Pump3Weight"
-                        Canvas.Left="105"
-                        Canvas.Top="341"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵带底.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="Pump3NoWeight"
-                        Canvas.Left="105"
-                        Canvas.Top="341"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵不带底.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                    <TextBlock
-                        Canvas.Left="140"
-                        Canvas.Top="348"
-                        Text="{Binding CurrentDeviceParameter.Pump3FlowCapacity}" />
-                    <TextBlock
-                        Canvas.Left="25"
-                        Canvas.Top="348"
-                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Name}" />
-                    <Image
-                        Name="Pump4Enable"
-                        Canvas.Left="68"
-                        Canvas.Top="397"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵使能.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="Pump4Disable"
-                        Canvas.Left="68"
-                        Canvas.Top="397"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵不使能.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="Pump4Weight"
-                        Canvas.Left="105"
-                        Canvas.Top="397"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵带底.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="Pump4NoWeight"
-                        Canvas.Left="105"
-                        Canvas.Top="397"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵不带底.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                    <TextBlock
-                        Canvas.Left="140"
-                        Canvas.Top="404"
-                        Text="{Binding CurrentDeviceParameter.Pump4FlowCapacity}" />
-                    <TextBlock
-                        Canvas.Left="25"
-                        Canvas.Top="404"
-                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Name}" />
-                    <Image
-                        Name="Pump5Enable"
-                        Canvas.Left="68"
-                        Canvas.Top="453"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵使能.png"
-                        Visibility="Collapsed" />
-                    <Image
-                        Name="Pump5Disable"
-                        Canvas.Left="68"
-                        Canvas.Top="453"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵不使能.png" />
-                    <Image
-                        Name="Pump6Enable"
-                        Canvas.Left="68"
-                        Canvas.Top="509"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵使能.png"
-                        Visibility="Collapsed" />
-                    <Image
-                        Name="Pump6Disable"
-                        Canvas.Left="68"
-                        Canvas.Top="509"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/泵不使能.png" />
-                    <Image
-                        Name="CondensationEnable"
-                        Canvas.Left="217"
-                        Canvas.Top="105"
-                        Width="40"
-                        Height="50"
-                        Source="/Images/ReactorNew/尾气冷凝使能.png"
-                        Tag="Close"
-                        Visibility="{Binding CondensationEnable, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Open}">
-                        <Image.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem
-                                    Command="{Binding CondensateCommand}"
-                                    CommandParameter="Open"
-                                    Header="打开冷凝"
-                                    IsChecked="{Binding CondensationEnable, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Open}" />
-                                <MenuItem
-                                    Command="{Binding CondensateCommand}"
-                                    CommandParameter="Close"
-                                    Header="关闭冷凝"
-                                    IsChecked="{Binding CondensationEnable, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Close}" />
-                            </ContextMenu>
-                        </Image.ContextMenu>
-                    </Image>
-                    <Image
-                        Name="CondensationDisable"
-                        Canvas.Left="217"
-                        Canvas.Top="105"
-                        Width="40"
-                        Height="50"
-                        Source="/Images/ReactorNew/尾气冷凝不使能.png"
-                        Tag="Open"
-                        Visibility="{Binding CondensationEnable, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Close}">
-                        <Image.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem
-                                    Command="{Binding CondensateCommand}"
-                                    CommandParameter="Open"
-                                    Header="打开冷凝"
-                                    IsChecked="{Binding CondensationEnable, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Open}" />
-                                <MenuItem
-                                    Command="{Binding CondensateCommand}"
-                                    CommandParameter="Close"
-                                    Header="关闭冷凝"
-                                    IsChecked="{Binding CondensationEnable, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Close}" />
-                            </ContextMenu>
-                        </Image.ContextMenu>
-                    </Image>
-                    <Image
-                        Name="TECHeat"
-                        Canvas.Left="210"
-                        Canvas.Bottom="35"
-                        Width="100"
-                        Height="130"
-                        Source="/Images/ReactorNew/加热.png"
-                        Visibility="Collapsed" />
-                    <Image
-                        Name="TECCool"
-                        Canvas.Left="210"
-                        Canvas.Bottom="35"
-                        Width="100"
-                        Height="130"
-                        Source="/Images/ReactorNew/制冷.png"
-                        Visibility="Collapsed" />
-                    <Image
-                        Name="TECDisable"
-                        Canvas.Left="210"
-                        Canvas.Bottom="35"
-                        Width="100"
-                        Height="130"
-                        Source="/Images/ReactorNew/常温.png" />
-                    <Image
-                        Name="LiquidLevel"
-                        Canvas.Left="217"
-                        Canvas.Bottom="45"
-                        Width="85"
-                        Height="200"
-                        Source="/Images/ReactorNew/液面图.png" />
-                    <Image
-                        Name="MFC1Enable"
-                        Canvas.Left="360"
-                        Canvas.Bottom="233"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/MFC使能.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="MFC1No"
-                        Canvas.Left="360"
-                        Canvas.Bottom="233"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/MFC没启用.png"
-                        Visibility="Collapsed" />
-                    <Image
-                        Name="MFC1Disable"
-                        Canvas.Left="360"
-                        Canvas.Bottom="233"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/MFC不使能.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                    <TextBlock
-                        Canvas.Left="400"
-                        Canvas.Top="345"
-                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1Name}" />
-                    <Image
-                        Name="MFC2Enable"
-                        Canvas.Left="360"
-                        Canvas.Bottom="175"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/MFC使能.png"
-                        Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                    <Image
-                        Name="MFC2No"
-                        Canvas.Left="360"
-                        Canvas.Bottom="175"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/MFC没启用.png"
-                        Visibility="Collapsed" />
-                    <Image
-                        Name="MFC2Disable"
-                        Canvas.Left="360"
-                        Canvas.Bottom="176"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/MFC不使能.png" />
-                    <TextBlock
-                        Canvas.Left="400"
-                        Canvas.Top="405"
-                        Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2Name}"
-                        Visibility="Collapsed" />
-                    <Image
-                        Name="MFC3No"
-                        Canvas.Left="360"
-                        Canvas.Bottom="118"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/MFC没启用.png" />
-                    <Image
-                        Name="MFC4No"
-                        Canvas.Left="360"
-                        Canvas.Bottom="60"
-                        Width="30"
-                        Height="30"
-                        Source="/Images/ReactorNew/MFC没启用.png" />
-                    <hc:UniformSpacingPanel
-                        Canvas.Left="210"
-                        Canvas.Bottom="35"
-                        Orientation="Horizontal"
-                        Spacing="3">
-                        <TextBlock Text="重量(g)" />
-                        <TextBlock Text="{Binding CurrentDeviceParameter.JarWeight}" />
-                    </hc:UniformSpacingPanel>
-                    <hc:UniformSpacingPanel
-                        Canvas.Left="440"
-                        Canvas.Top="60"
-                        Orientation="Vertical"
-                        Spacing="3">
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Width="75"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key='溶氧(%)'}"
-                                    BorderBrush="Gray"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, UpdateSourceTrigger=LostFocus}">
-                                    <TextBox.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem
-                                                Command="{Binding DOSPCommand}"
-                                                CommandParameter="TimeSeries"
-                                                Header="时间序列"
-                                                IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=TimeSeries, UpdateSourceTrigger=PropertyChanged}" />
-                                            <Separator />
-                                            <MenuItem
-                                                Command="{Binding TimeSeriesCommand}"
-                                                CommandParameter="DO"
-                                                Header="时间序列设置" />
-                                            <Separator />
-                                            <MenuItem Command="{Binding DoAssociateCommand}" Header="级联控制通气量阶梯表" />
-                                        </ContextMenu>
-                                    </TextBox.ContextMenu>
-                                </TextBox>
-                                <TextBox
-                                    Width="70"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key=' '}"
-                                    Background="LightGray"
-                                    BorderBrush="Gray"
-                                    IsReadOnly="True"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.DO, StringFormat={}{0:F2}}" />
-                                <ToggleButton
-                                    Width="75"
-                                    Height="28"
-                                    VerticalAlignment="Bottom"
-                                    hc:StatusSwitchElement.HideUncheckedElement="True"
-                                    Command="{Binding DORunCommand}"
-                                    IsChecked="{Binding CurrentDeviceParameter.DOParam.IsControling}"
-                                    Style="{StaticResource ToggleButtonCustom}">
-                                    <hc:StatusSwitchElement.CheckedElement>
-                                        <Border
-                                            Width="75"
-                                            Height="28"
-                                            Background="{DynamicResource PrimaryBrush}"
-                                            BorderBrush="{DynamicResource PrimaryBrush}"
-                                            CornerRadius="{StaticResource DefaultCornerRadius}">
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Foreground="White"
-                                                Text="打开" />
-                                        </Border>
-                                    </hc:StatusSwitchElement.CheckedElement>
-                                    <Border
-                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Foreground="{DynamicResource PrimaryBrush}"
-                                            Text="关闭" />
-                                    </Border>
-                                </ToggleButton>
-                                <StackPanel VerticalAlignment="Bottom" Orientation="Vertical">
-                                    <CheckBox
-                                        Content="正向(+)"
-                                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsDirect, UpdateSourceTrigger=PropertyChanged}"
-                                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
-                                    <CheckBox
-                                        Content="反向(-)"
-                                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsReverse, UpdateSourceTrigger=PropertyChanged}"
-                                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Width="75"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key='转速(rpm)'}"
-                                    BorderBrush="Gray"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F0}, UpdateSourceTrigger=LostFocus}">
-                                    <TextBox.IsEnabled>
-                                        <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
-                                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
-                                            <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AgitParam.IsControling" />-->
-                                        </MultiBinding>
-                                    </TextBox.IsEnabled>
-                                </TextBox>
-                                <TextBox
-                                    Width="70"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key=' '}"
-                                    Background="LightGray"
-                                    BorderBrush="Gray"
-                                    IsReadOnly="True"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.Agit, StringFormat={}{0:F0}}" />
-                                <ToggleButton
-                                    Width="75"
-                                    Height="28"
-                                    VerticalAlignment="Bottom"
-                                    hc:StatusSwitchElement.HideUncheckedElement="True"
-                                    Command="{Binding AgitRunCommand}"
-                                    IsChecked="{Binding CurrentDeviceParameter.AgitParam.IsControling}"
-                                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                                    Style="{StaticResource ToggleButtonCustom}">
-                                    <hc:StatusSwitchElement.CheckedElement>
-                                        <Border
-                                            Width="75"
-                                            Height="28"
-                                            Background="{DynamicResource PrimaryBrush}"
-                                            BorderBrush="{DynamicResource PrimaryBrush}"
-                                            CornerRadius="{StaticResource DefaultCornerRadius}">
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Foreground="White"
-                                                Text="打开" />
-                                        </Border>
-                                    </hc:StatusSwitchElement.CheckedElement>
-                                    <Border
-                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Foreground="{DynamicResource PrimaryBrush}"
-                                            Text="关闭" />
-                                    </Border>
-                                </ToggleButton>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Width="75"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key='空气(L/min)'}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AirParam.FlowSpeed, UpdateSourceTrigger=LostFocus}">
-                                    <TextBox.IsEnabled>
-                                        <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
-                                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
-                                            <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AirParam.IsControling" />-->
-                                        </MultiBinding>
-                                    </TextBox.IsEnabled>
-                                </TextBox>
-                                <TextBox
-                                    Width="70"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key=' '}"
-                                    Background="LightGray"
-                                    BorderBrush="Gray"
-                                    IsReadOnly="True"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AirFlowSpeed, StringFormat={}{0:F2}}" />
-                                <ToggleButton
-                                    Width="75"
-                                    Height="28"
-                                    VerticalAlignment="Bottom"
-                                    hc:StatusSwitchElement.HideUncheckedElement="True"
-                                    Command="{Binding AirRunCommand}"
-                                    IsChecked="{Binding CurrentDeviceParameter.AirParam.IsControling}"
-                                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                                    Style="{StaticResource ToggleButtonCustom}">
-                                    <hc:StatusSwitchElement.CheckedElement>
-                                        <Border
-                                            Width="75"
-                                            Height="28"
-                                            Background="{DynamicResource PrimaryBrush}"
-                                            BorderBrush="{DynamicResource PrimaryBrush}"
-                                            CornerRadius="{StaticResource DefaultCornerRadius}">
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Foreground="White"
-                                                Text="打开" />
-                                        </Border>
-                                    </hc:StatusSwitchElement.CheckedElement>
-                                    <Border
-                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Foreground="{DynamicResource PrimaryBrush}"
-                                            Text="关闭" />
-                                    </Border>
-                                </ToggleButton>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Width="75"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key='氧气(L/min)'}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.O2Param.FlowSpeed, UpdateSourceTrigger=LostFocus}">
-                                    <TextBox.IsEnabled>
-                                        <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
-                                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
-                                            <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.O2Param.IsControling" />-->
-                                        </MultiBinding>
-                                    </TextBox.IsEnabled>
-                                </TextBox>
-                                <TextBox
-                                    Width="70"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key=' '}"
-                                    Background="LightGray"
-                                    BorderBrush="Gray"
-                                    IsReadOnly="True"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.O2FlowSpeed, StringFormat={}{0:F2}}" />
-                                <ToggleButton
-                                    Width="75"
-                                    Height="28"
-                                    VerticalAlignment="Bottom"
-                                    hc:StatusSwitchElement.HideUncheckedElement="True"
-                                    Command="{Binding O2RunCommand}"
-                                    IsChecked="{Binding CurrentDeviceParameter.O2Param.IsControling}"
-                                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                                    Style="{StaticResource ToggleButtonCustom}">
-                                    <hc:StatusSwitchElement.CheckedElement>
-                                        <Border
-                                            Width="75"
-                                            Height="28"
-                                            Background="{DynamicResource PrimaryBrush}"
-                                            BorderBrush="{DynamicResource PrimaryBrush}"
-                                            CornerRadius="{StaticResource DefaultCornerRadius}">
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Foreground="White"
-                                                Text="打开" />
-                                        </Border>
-                                    </hc:StatusSwitchElement.CheckedElement>
-                                    <Border
-                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Foreground="{DynamicResource PrimaryBrush}"
-                                            Text="关闭" />
-                                    </Border>
-                                </ToggleButton>
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Orientation="Vertical">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Width="75"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key='PH'}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, UpdateSourceTrigger=LostFocus}">
-                                    <TextBox.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem
-                                                Command="{Binding PHSPCommand}"
-                                                CommandParameter="TimeSeries"
-                                                Header="时间序列"
-                                                IsChecked="{Binding CurrentDeviceParameter.PHParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=TimeSeries, UpdateSourceTrigger=PropertyChanged}" />
-                                            <Separator />
-                                            <MenuItem
-                                                Command="{Binding TimeSeriesCommand}"
-                                                CommandParameter="PH"
-                                                Header="时间序列设置" />
-                                        </ContextMenu>
-                                    </TextBox.ContextMenu>
-                                </TextBox>
-                                <TextBox
-                                    Width="70"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key=' '}"
-                                    Background="LightGray"
-                                    BorderBrush="Gray"
-                                    IsReadOnly="True"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.PH, StringFormat={}{0:F2}}" />
-                                <ToggleButton
-                                    Width="75"
-                                    Height="28"
-                                    VerticalAlignment="Bottom"
-                                    hc:StatusSwitchElement.HideUncheckedElement="True"
-                                    Command="{Binding PHRunCommand}"
-                                    IsChecked="{Binding CurrentDeviceParameter.PHParam.IsControling}"
-                                    Style="{StaticResource ToggleButtonCustom}">
-                                    <hc:StatusSwitchElement.CheckedElement>
-                                        <Border
-                                            Width="75"
-                                            Height="28"
-                                            Background="{DynamicResource PrimaryBrush}"
-                                            BorderBrush="{DynamicResource PrimaryBrush}"
-                                            CornerRadius="{StaticResource DefaultCornerRadius}">
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Foreground="White"
-                                                Text="打开" />
-                                        </Border>
-                                    </hc:StatusSwitchElement.CheckedElement>
-                                    <Border
-                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Foreground="{DynamicResource PrimaryBrush}"
-                                            Text="关闭" />
-                                    </Border>
-                                </ToggleButton>
-                                <StackPanel VerticalAlignment="Bottom" Orientation="Vertical">
-                                    <CheckBox
-                                        Content="酸(-)"
-                                        IsChecked="{Binding CurrentDeviceParameter.PHParam.AcidAssociated}"
-                                        IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
-                                    <CheckBox
-                                        Content="碱(+)"
-                                        IsChecked="{Binding CurrentDeviceParameter.PHParam.BaseAssociated}"
-                                        IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
-                                </StackPanel>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Width="75"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key='酸(mL/h)'}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AcidParam.Acid_PV, UpdateSourceTrigger=LostFocus}">
-                                    <TextBox.IsEnabled>
-                                        <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
-                                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.PHParam.IsControling" />
-                                            <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AcidParam.IsControling" />-->
-                                        </MultiBinding>
-                                    </TextBox.IsEnabled>
-                                </TextBox>
-                                <TextBox
-                                    Width="70"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key=' '}"
-                                    Background="LightGray"
-                                    BorderBrush="Gray"
-                                    IsReadOnly="True"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AcidFlowSpeed, StringFormat={}{0:F2}}" />
-                                <ToggleButton
-                                    Width="75"
-                                    Height="28"
-                                    VerticalAlignment="Bottom"
-                                    hc:StatusSwitchElement.HideUncheckedElement="True"
-                                    Command="{Binding AcidRunCommand}"
-                                    IsChecked="{Binding CurrentDeviceParameter.AcidParam.IsControling}"
-                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                                    Style="{StaticResource ToggleButtonCustom}">
-                                    <hc:StatusSwitchElement.CheckedElement>
-                                        <Border
-                                            Width="75"
-                                            Height="28"
-                                            Background="{DynamicResource PrimaryBrush}"
-                                            BorderBrush="{DynamicResource PrimaryBrush}"
-                                            CornerRadius="{StaticResource DefaultCornerRadius}">
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Foreground="White"
-                                                Text="打开" />
-                                        </Border>
-                                    </hc:StatusSwitchElement.CheckedElement>
-                                    <Border
-                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Foreground="{DynamicResource PrimaryBrush}"
-                                            Text="关闭" />
-                                    </Border>
-                                </ToggleButton>
-                                <Button
-                                    VerticalAlignment="Bottom"
-                                    Command="{Binding ResetFlowCommand}"
-                                    CommandParameter="Acid"
-                                    Content="总量清零"
-                                    Style="{StaticResource ButtonPrimary}" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Width="75"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key='碱(mL/h)'}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.BaseParam.Base_PV, UpdateSourceTrigger=LostFocus}">
-                                    <TextBox.IsEnabled>
-                                        <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
-                                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.PHParam.IsControling" />
-                                            <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.BaseParam.IsControling" />-->
-                                        </MultiBinding>
-                                    </TextBox.IsEnabled>
-                                </TextBox>
-                                <TextBox
-                                    Width="70"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key=' '}"
-                                    Background="LightGray"
-                                    BorderBrush="Gray"
-                                    IsReadOnly="True"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.BaseFlowSpeed, StringFormat={}{0:F2}}" />
-                                <ToggleButton
-                                    Width="75"
-                                    Height="28"
-                                    VerticalAlignment="Bottom"
-                                    hc:StatusSwitchElement.HideUncheckedElement="True"
-                                    Command="{Binding BaseRunCommand}"
-                                    IsChecked="{Binding CurrentDeviceParameter.BaseParam.IsControling}"
-                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                                    Style="{StaticResource ToggleButtonCustom}">
-                                    <hc:StatusSwitchElement.CheckedElement>
-                                        <Border
-                                            Width="75"
-                                            Height="28"
-                                            Background="{DynamicResource PrimaryBrush}"
-                                            BorderBrush="{DynamicResource PrimaryBrush}"
-                                            CornerRadius="{StaticResource DefaultCornerRadius}">
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Foreground="White"
-                                                Text="打开" />
-                                        </Border>
-                                    </hc:StatusSwitchElement.CheckedElement>
-                                    <Border
-                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Foreground="{DynamicResource PrimaryBrush}"
-                                            Text="关闭" />
-                                    </Border>
-                                </ToggleButton>
-                                <Button
-                                    VerticalAlignment="Bottom"
-                                    Command="{Binding ResetFlowCommand}"
-                                    CommandParameter="Base"
-                                    Content="总量清零"
-                                    Style="{StaticResource ButtonPrimary}" />
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox
-                                Width="75"
-                                VerticalAlignment="Center"
-                                hc:InfoElement.Title="{ex:Language Key='温度(℃)'}"
-                                IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, UpdateSourceTrigger=LostFocus}">
-                                <TextBox.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem
-                                            Command="{Binding TempSPCommand}"
-                                            CommandParameter="TimeSeries"
-                                            Header="时间序列"
-                                            IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=TimeSeries, UpdateSourceTrigger=PropertyChanged}" />
-                                        <Separator />
-                                        <MenuItem
-                                            Command="{Binding TimeSeriesCommand}"
-                                            CommandParameter="Temp"
-                                            Header="时间序列设置" />
-                                    </ContextMenu>
-                                </TextBox.ContextMenu>
-                            </TextBox>
-                            <TextBox
-                                Width="70"
-                                VerticalAlignment="Center"
-                                hc:InfoElement.Title="{ex:Language Key=' '}"
-                                Background="LightGray"
-                                BorderBrush="Gray"
-                                IsReadOnly="True"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}" />
-                            <ToggleButton
-                                Width="75"
-                                Height="28"
-                                VerticalAlignment="Bottom"
-                                hc:StatusSwitchElement.HideUncheckedElement="True"
-                                Command="{Binding TempRunCommand}"
-                                IsChecked="{Binding CurrentDeviceParameter.TempParam.IsControling}"
-                                Style="{StaticResource ToggleButtonCustom}">
-                                <hc:StatusSwitchElement.CheckedElement>
-                                    <Border
-                                        Width="75"
-                                        Height="28"
-                                        Background="{DynamicResource PrimaryBrush}"
-                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Foreground="White"
-                                            Text="打开" />
-                                    </Border>
-                                </hc:StatusSwitchElement.CheckedElement>
-                                <Border
-                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                    BorderBrush="{DynamicResource PrimaryBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="{StaticResource DefaultCornerRadius}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource PrimaryBrush}"
-                                        Text="关闭" />
-                                </Border>
-                            </ToggleButton>
-                            <StackPanel
-                                VerticalAlignment="Bottom"
-                                Orientation="Vertical"
-                                Visibility="Collapsed">
-                                <CheckBox Content="制冷(-)" IsChecked="{Binding CurrentDeviceParameter.TempParam.Cooling}" />
-                                <CheckBox Content="加热(+)" IsChecked="{Binding CurrentDeviceParameter.TempParam.Heating}" />
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox
-                                Width="75"
-                                VerticalAlignment="Center"
-                                hc:InfoElement.Title="{ex:Language Key='补料(mL/h)'}"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=LostFocus}">
-                                <TextBox.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
-                                        <Separator />
-                                        <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
-                                    </ContextMenu>
-                                </TextBox.ContextMenu>
-                            </TextBox>
-                            <TextBox
-                                Width="70"
-                                VerticalAlignment="Center"
-                                hc:InfoElement.Title="{ex:Language Key=' '}"
-                                Background="LightGray"
-                                BorderBrush="Gray"
-                                IsReadOnly="True"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.FeedFlowSpeed, StringFormat={}{0:F2}}" />
-                            <ComboBox
-                                Width="110"
-                                hc:InfoElement.Title="{ex:Language Key=' '}"
-                                BorderBrush="{DynamicResource PrimaryBrush}"
-                                IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                                SelectedIndex="{Binding CurrentDeviceParameter.FeedParam1.FeedIndex}"
-                                Style="{StaticResource ComboBoxExtend}">
-                                <ComboBoxItem Content="常量" />
-                                <ComboBoxItem Content="多项式" />
-                                <ComboBoxItem Content="指数" />
-                                <ComboBoxItem Content="时间序列" />
-                                <ComboBoxItem Content="关联DO_流速" />
-                                <ComboBoxItem Content="关联PH_流速" />
-                                <ComboBoxItem Content="关联DO_总量" />
-                                <ComboBoxItem Content="关联PH_总量" />
-                            </ComboBox>
-                            <ToggleButton
-                                Width="75"
-                                Height="28"
-                                VerticalAlignment="Bottom"
-                                hc:StatusSwitchElement.HideUncheckedElement="True"
-                                Command="{Binding Feed1RunCommand}"
-                                IsChecked="{Binding CurrentDeviceParameter.FeedParam1.IsControling}"
-                                Style="{StaticResource ToggleButtonCustom}">
-                                <hc:StatusSwitchElement.CheckedElement>
-                                    <Border
-                                        Width="75"
-                                        Height="28"
-                                        Background="{DynamicResource PrimaryBrush}"
-                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Foreground="White"
-                                            Text="打开" />
-                                    </Border>
-                                </hc:StatusSwitchElement.CheckedElement>
-                                <Border
-                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                    BorderBrush="{DynamicResource PrimaryBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="{StaticResource DefaultCornerRadius}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource PrimaryBrush}"
-                                        Text="关闭" />
-                                </Border>
-                            </ToggleButton>
-                            <Button
-                                VerticalAlignment="Bottom"
-                                Command="{Binding ResetFlowCommand}"
-                                CommandParameter="Feed"
-                                Content="总量清零"
-                                Style="{StaticResource ButtonPrimary}" />
-                            <StackPanel
-                                VerticalAlignment="Bottom"
-                                Orientation="Vertical"
-                                Visibility="Collapsed">
-                                <CheckBox
-                                    Content="DO异常关联"
-                                    IsChecked="{Binding CurrentDeviceParameter.DOParam.IsEmergency}"
-                                    IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
-                                <CheckBox
-                                    Content="PH异常关联"
-                                    IsChecked="{Binding CurrentDeviceParameter.PHParam.IsEmergency}"
-                                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Visibility="Collapsed">
-                            <TextBox
-                                Width="85"
-                                VerticalAlignment="Center"
-                                hc:InfoElement.Title="{ex:Language Key='补料2(mL/h)'}"
-                                IsEnabled="{Binding CurrentDeviceParameter.FeedParam2.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.FeedParam2.Feed_PV, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBox
-                                Width="75"
-                                VerticalAlignment="Center"
-                                hc:InfoElement.Title="{ex:Language Key=' '}"
-                                Background="LightGray"
-                                BorderBrush="Gray"
-                                IsReadOnly="True"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.Feed2FlowSpeed}" />
-                            <ComboBox
-                                Width="75"
-                                hc:InfoElement.Title="{ex:Language Key=' '}"
-                                BorderBrush="{DynamicResource PrimaryBrush}"
-                                SelectedIndex="{Binding CurrentDeviceParameter.FeedParam2.FeedIndex}"
-                                Style="{StaticResource ComboBoxExtend}">
-                                <ComboBoxItem Content="常量" />
-                                <ComboBoxItem Content="多项式" />
-                                <ComboBoxItem Content="指数" />
-                                <ComboBoxItem Content="时间序列" />
-                                <ComboBoxItem Content="关联DO" />
-                                <ComboBoxItem Content="关联PH" />
-                            </ComboBox>
-                            <ToggleButton
-                                Width="75"
-                                Height="28"
-                                VerticalAlignment="Bottom"
-                                hc:StatusSwitchElement.HideUncheckedElement="True"
-                                Command="{Binding Feed2RunCommand}"
-                                IsChecked="{Binding CurrentDeviceParameter.FeedParam2.IsControling}"
-                                Style="{StaticResource ToggleButtonCustom}">
-                                <hc:StatusSwitchElement.CheckedElement>
-                                    <Border
-                                        Width="75"
-                                        Height="28"
-                                        Background="{DynamicResource PrimaryBrush}"
-                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Foreground="White"
-                                            Text="打开" />
-                                    </Border>
-                                </hc:StatusSwitchElement.CheckedElement>
-                                <Border
-                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                    BorderBrush="{DynamicResource PrimaryBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="{StaticResource DefaultCornerRadius}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource PrimaryBrush}"
-                                        Text="关闭" />
-                                </Border>
-                            </ToggleButton>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox
-                                Width="75"
-                                VerticalAlignment="Center"
-                                hc:InfoElement.Title="{ex:Language Key='消泡(mL/h)'}"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.AFParam.AF_PV, UpdateSourceTrigger=LostFocus}" />
-                            <TextBox
-                                Width="70"
-                                VerticalAlignment="Center"
-                                hc:InfoElement.Title="{ex:Language Key=' '}"
-                                Background="LightGray"
-                                BorderBrush="Gray"
-                                IsReadOnly="True"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.AFFlowSpeed, StringFormat={}{0:F2}}" />
-                            <ToggleButton
-                                Width="75"
-                                Height="28"
-                                VerticalAlignment="Bottom"
-                                hc:StatusSwitchElement.HideUncheckedElement="True"
-                                Command="{Binding AFRunCommand}"
-                                IsChecked="{Binding CurrentDeviceParameter.AFParam.IsControling}"
-                                Style="{StaticResource ToggleButtonCustom}">
-                                <hc:StatusSwitchElement.CheckedElement>
-                                    <Border
-                                        Width="75"
-                                        Height="28"
-                                        Background="{DynamicResource PrimaryBrush}"
-                                        BorderBrush="{DynamicResource PrimaryBrush}"
-                                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Foreground="White"
-                                            Text="打开" />
-                                    </Border>
-                                </hc:StatusSwitchElement.CheckedElement>
-                                <Border
-                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                    BorderBrush="{DynamicResource PrimaryBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="{StaticResource DefaultCornerRadius}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource PrimaryBrush}"
-                                        Text="关闭" />
-                                </Border>
-                            </ToggleButton>
-                            <Button
-                                VerticalAlignment="Bottom"
-                                Command="{Binding ResetFlowCommand}"
-                                CommandParameter="AF"
-                                Content="总量清零"
-                                Style="{StaticResource ButtonPrimary}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox
-                                Name="txtCycle"
-                                Width="75"
-                                VerticalAlignment="Center"
-                                hc:InfoElement.Title="{ex:Language Key='周期(s)'}"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.AFParam.Cycle}" />
-                            <TextBox
-                                Name="txtDutyCycle"
-                                Width="70"
-                                VerticalAlignment="Center"
-                                hc:InfoElement.Title="{ex:Language Key='占空比(%)'}"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.AFParam.DutyCycle}" />
-                            <ToggleButton
-                                Width="75"
-                                Height="28"
-                                VerticalAlignment="Bottom"
-                                hc:StatusSwitchElement.HideUncheckedElement="True"
-                                Command="{Binding AFSettingCommand}"
-                                IsChecked="{Binding CurrentDeviceParameter.AFParam.AutoDefoaming}"
-                                Style="{StaticResource ToggleButtonCustom}">
-                                <hc:StatusSwitchElement.CheckedElement>
-                                    <Border
-                                        Width="75"
-                                        Height="28"
-                                        Background="{DynamicResource SuccessBrush}"
-                                        BorderBrush="{DynamicResource SuccessBrush}"
-                                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Foreground="White"
-                                            Text="自动消泡" />
-                                    </Border>
-                                </hc:StatusSwitchElement.CheckedElement>
-                                <Border
-                                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                                    BorderBrush="{DynamicResource SuccessBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="{StaticResource DefaultCornerRadius}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource SuccessBrush}"
-                                        Text="手动消泡" />
-                                </Border>
-                            </ToggleButton>
-                            <!--<hc:SplitButton
-                                Width="75"
-                                Height="28"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Bottom"
-                                Command="{Binding AFSettingCommand}"
-                                CommandParameter="Set"
-                                Content="设置"
-                                Style="{StaticResource SplitButtonPrimary}">
-                                <hc:SplitButton.DropDownContent>
-                                    <StackPanel>
-                                        <MenuItem
-                                            Command="{Binding AFSettingCommand}"
-                                            CommandParameter="Read"
-                                            Header="读取" />
-                                    </StackPanel>
-                                </hc:SplitButton.DropDownContent>
-                            </hc:SplitButton>-->
-                        </StackPanel>
-                    </hc:UniformSpacingPanel>
-                </Canvas>
-            </Grid>
-            <GridSplitter
-                Grid.Column="1"
-                Width="5"
-                VerticalAlignment="Stretch"
-                Background="LightGray" />
-            <Grid Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition Height="5" />
-                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -1423,27 +125,1264 @@
                     </ScrollViewer>
                     <wpf:WpfPlot Name="wpfPlot3" Grid.Row="2" />
                 </Grid>
-                <GridSplitter
-                    Grid.Row="1"
-                    HorizontalAlignment="Stretch"
-                    Background="LightGray" />
-                <Grid Grid.Row="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition
-                            Name="rowGraph4"
-                            Height="auto"
-                            MaxHeight="60" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <WrapPanel
-                            Name="ChkGraphList4"
-                            Orientation="Horizontal"
+                <DockPanel Grid.Row="1" LastChildFill="False">
+                    <Canvas
+                        Width="850"
+                        Height="600"
+                        DockPanel.Dock="Bottom">
+                        <StackPanel
+                            Canvas.Left="10"
+                            Canvas.Top="20"
+                            Orientation="Horizontal">
+                            <hc:ComboBox
+                                Name="CmbDevice"
+                                Width="100"
+                                BorderBrush="Gray"
+                                BorderThickness="1"
+                                FontSize="{DynamicResource SubHeadFontSize}"
+                                ItemsSource="{Binding ReactorCol}"
+                                SelectedItem="{Binding SelectedDevice}"
+                                Style="{StaticResource ComboBoxExtend}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction
+                                            Command="{Binding ChangeDeviceCommand}"
+                                            CommandParameter="{Binding ElementName=CmbDevice, Path=SelectedItem}"
+                                            PassEventArgsToCommand="True" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </hc:ComboBox>
+                            <hc:UniformSpacingPanel
+                                Margin="20,0,0,0"
+                                VerticalAlignment="Center"
+                                Spacing="5">
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='运行状态:'}" />
+                                <TextBlock
+                                    HorizontalAlignment="Left"
+                                    FontSize="{DynamicResource SubHeadFontSize}"
+                                    Text="{Binding CurrentDeviceParameter.ReactorStatusName}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel
+                                Margin="20,0,0,0"
+                                VerticalAlignment="Center"
+                                Spacing="5">
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='运行时间:'}" />
+                                <TextBlock
+                                    HorizontalAlignment="Right"
+                                    FontSize="{DynamicResource SubHeadFontSize}"
+                                    Text="{Binding FormattedTime}" />
+                            </hc:UniformSpacingPanel>
+                        </StackPanel>
+                        <Image
+                            Canvas.Left="20"
+                            Canvas.Bottom="30"
+                            Width="400"
+                            Height="500"
+                            Source="/Images/ReactorNew/罐体.png" />
+                        <TextBlock
+                            Canvas.Left="115"
+                            Canvas.Top="200"
+                            Text="总量(mL)" />
+                        <Image
+                            Name="Pump1Enable"
+                            Canvas.Left="68"
+                            Canvas.Top="229"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵使能.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="Pump1Disable"
+                            Canvas.Left="68"
+                            Canvas.Top="229"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵不使能.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="Pump1Weight"
+                            Canvas.Left="105"
+                            Canvas.Top="229"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵带底.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="Pump1NoWeight"
+                            Canvas.Left="105"
+                            Canvas.Top="229"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵不带底.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        <TextBlock
+                            Canvas.Left="140"
+                            Canvas.Top="238"
+                            Text="{Binding CurrentDeviceParameter.AcidFlowCapacity}" />
+                        <TextBlock
+                            Canvas.Left="25"
+                            Canvas.Top="238"
+                            Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Name}" />
+                        <Image
+                            Name="Pump2Enable"
+                            Canvas.Left="68"
+                            Canvas.Top="285"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵使能.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="Pump2Disable"
+                            Canvas.Left="68"
+                            Canvas.Top="285"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵不使能.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="Pump2Weight"
+                            Canvas.Left="105"
+                            Canvas.Top="285"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵带底.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="Pump2NoWeight"
+                            Canvas.Left="105"
+                            Canvas.Top="285"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵不带底.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        <TextBlock
+                            Canvas.Left="140"
+                            Canvas.Top="295"
+                            Text="{Binding CurrentDeviceParameter.BaseFlowCapacity}" />
+                        <TextBlock
+                            Canvas.Left="25"
+                            Canvas.Top="295"
+                            Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Name}" />
+                        <Image
+                            Name="Pump3Enable"
+                            Canvas.Left="68"
+                            Canvas.Top="341"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵使能.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="Pump3Disable"
+                            Canvas.Left="68"
+                            Canvas.Top="341"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵不使能.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="Pump3Weight"
+                            Canvas.Left="105"
+                            Canvas.Top="341"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵带底.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="Pump3NoWeight"
+                            Canvas.Left="105"
+                            Canvas.Top="341"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵不带底.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        <TextBlock
+                            Canvas.Left="140"
+                            Canvas.Top="348"
+                            Text="{Binding CurrentDeviceParameter.Pump3FlowCapacity}" />
+                        <TextBlock
+                            Canvas.Left="25"
+                            Canvas.Top="348"
+                            Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Name}" />
+                        <Image
+                            Name="Pump4Enable"
+                            Canvas.Left="68"
+                            Canvas.Top="397"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵使能.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="Pump4Disable"
+                            Canvas.Left="68"
+                            Canvas.Top="397"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵不使能.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="Pump4Weight"
+                            Canvas.Left="105"
+                            Canvas.Top="397"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵带底.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Weight, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="Pump4NoWeight"
+                            Canvas.Left="105"
+                            Canvas.Top="397"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵不带底.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Weight, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        <TextBlock
+                            Canvas.Left="140"
+                            Canvas.Top="404"
+                            Text="{Binding CurrentDeviceParameter.Pump4FlowCapacity}" />
+                        <TextBlock
+                            Canvas.Left="25"
+                            Canvas.Top="404"
+                            Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Name}" />
+                        <Image
+                            Name="Pump5Enable"
+                            Canvas.Left="68"
+                            Canvas.Top="453"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵使能.png"
                             Visibility="Collapsed" />
-                    </ScrollViewer>
-                    <wpf:WpfPlot Name="wpfPlot4" Grid.Row="2" />
-                </Grid>
+                        <Image
+                            Name="Pump5Disable"
+                            Canvas.Left="68"
+                            Canvas.Top="453"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵不使能.png" />
+                        <Image
+                            Name="Pump6Enable"
+                            Canvas.Left="68"
+                            Canvas.Top="509"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵使能.png"
+                            Visibility="Collapsed" />
+                        <Image
+                            Name="Pump6Disable"
+                            Canvas.Left="68"
+                            Canvas.Top="509"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/泵不使能.png" />
+                        <Image
+                            Name="CondensationEnable"
+                            Canvas.Left="217"
+                            Canvas.Top="105"
+                            Width="40"
+                            Height="50"
+                            Source="/Images/ReactorNew/尾气冷凝使能.png"
+                            Tag="Close"
+                            Visibility="{Binding CondensationEnable, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Open}">
+                            <Image.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem
+                                        Command="{Binding CondensateCommand}"
+                                        CommandParameter="Open"
+                                        Header="打开冷凝"
+                                        IsChecked="{Binding CondensationEnable, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Open}" />
+                                    <MenuItem
+                                        Command="{Binding CondensateCommand}"
+                                        CommandParameter="Close"
+                                        Header="关闭冷凝"
+                                        IsChecked="{Binding CondensationEnable, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Close}" />
+                                </ContextMenu>
+                            </Image.ContextMenu>
+                        </Image>
+                        <Image
+                            Name="CondensationDisable"
+                            Canvas.Left="217"
+                            Canvas.Top="105"
+                            Width="40"
+                            Height="50"
+                            Source="/Images/ReactorNew/尾气冷凝不使能.png"
+                            Tag="Open"
+                            Visibility="{Binding CondensationEnable, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Close}">
+                            <Image.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem
+                                        Command="{Binding CondensateCommand}"
+                                        CommandParameter="Open"
+                                        Header="打开冷凝"
+                                        IsChecked="{Binding CondensationEnable, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Open}" />
+                                    <MenuItem
+                                        Command="{Binding CondensateCommand}"
+                                        CommandParameter="Close"
+                                        Header="关闭冷凝"
+                                        IsChecked="{Binding CondensationEnable, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Close}" />
+                                </ContextMenu>
+                            </Image.ContextMenu>
+                        </Image>
+                        <Image
+                            Name="TECHeat"
+                            Canvas.Left="210"
+                            Canvas.Bottom="35"
+                            Width="100"
+                            Height="130"
+                            Source="/Images/ReactorNew/加热.png"
+                            Visibility="Collapsed" />
+                        <Image
+                            Name="TECCool"
+                            Canvas.Left="210"
+                            Canvas.Bottom="35"
+                            Width="100"
+                            Height="130"
+                            Source="/Images/ReactorNew/制冷.png"
+                            Visibility="Collapsed" />
+                        <Image
+                            Name="TECDisable"
+                            Canvas.Left="210"
+                            Canvas.Bottom="35"
+                            Width="100"
+                            Height="130"
+                            Source="/Images/ReactorNew/常温.png" />
+                        <Image
+                            Name="LiquidLevel"
+                            Canvas.Left="217"
+                            Canvas.Bottom="45"
+                            Width="85"
+                            Height="200"
+                            Source="/Images/ReactorNew/液面图.png" />
+                        <Image
+                            Name="MFC1Enable"
+                            Canvas.Left="360"
+                            Canvas.Bottom="233"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/MFC使能.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="MFC1No"
+                            Canvas.Left="360"
+                            Canvas.Bottom="233"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/MFC没启用.png"
+                            Visibility="Collapsed" />
+                        <Image
+                            Name="MFC1Disable"
+                            Canvas.Left="360"
+                            Canvas.Bottom="233"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/MFC不使能.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1Enable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        <TextBlock
+                            Canvas.Left="400"
+                            Canvas.Top="345"
+                            Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC1Name}" />
+                        <Image
+                            Name="MFC2Enable"
+                            Canvas.Left="360"
+                            Canvas.Bottom="175"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/MFC使能.png"
+                            Visibility="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Image
+                            Name="MFC2No"
+                            Canvas.Left="360"
+                            Canvas.Bottom="175"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/MFC没启用.png"
+                            Visibility="Collapsed" />
+                        <Image
+                            Name="MFC2Disable"
+                            Canvas.Left="360"
+                            Canvas.Bottom="176"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/MFC不使能.png" />
+                        <TextBlock
+                            Canvas.Left="400"
+                            Canvas.Top="405"
+                            Text="{Binding CurrentDeviceParameter.PumpMFCSetting.MFC2Name}"
+                            Visibility="Collapsed" />
+                        <Image
+                            Name="MFC3No"
+                            Canvas.Left="360"
+                            Canvas.Bottom="118"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/MFC没启用.png" />
+                        <Image
+                            Name="MFC4No"
+                            Canvas.Left="360"
+                            Canvas.Bottom="60"
+                            Width="30"
+                            Height="30"
+                            Source="/Images/ReactorNew/MFC没启用.png" />
+                        <hc:UniformSpacingPanel
+                            Canvas.Left="210"
+                            Canvas.Bottom="35"
+                            Orientation="Horizontal"
+                            Spacing="3">
+                            <TextBlock Text="重量(g)" />
+                            <TextBlock Text="{Binding CurrentDeviceParameter.JarWeight}" />
+                        </hc:UniformSpacingPanel>
+                        <hc:UniformSpacingPanel
+                            Canvas.Left="440"
+                            Canvas.Top="50"
+                            Orientation="Vertical"
+                            Spacing="3">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox
+                                        Width="75"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key='溶氧(%)'}"
+                                        BorderBrush="Gray"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, UpdateSourceTrigger=LostFocus}">
+                                        <TextBox.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem
+                                                    Command="{Binding DOSPCommand}"
+                                                    CommandParameter="TimeSeries"
+                                                    Header="时间序列"
+                                                    IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=TimeSeries, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding TimeSeriesCommand}"
+                                                    CommandParameter="DO"
+                                                    Header="时间序列设置" />
+                                                <Separator />
+                                                <MenuItem Command="{Binding DoAssociateCommand}" Header="级联控制通气量阶梯表" />
+                                            </ContextMenu>
+                                        </TextBox.ContextMenu>
+                                    </TextBox>
+                                    <TextBox
+                                        Width="70"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key=' '}"
+                                        Background="LightGray"
+                                        BorderBrush="Gray"
+                                        IsReadOnly="True"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.DO, StringFormat={}{0:F2}}" />
+                                    <ToggleButton
+                                        Width="75"
+                                        Height="28"
+                                        VerticalAlignment="Bottom"
+                                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                                        Command="{Binding DORunCommand}"
+                                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsControling}"
+                                        Style="{StaticResource ToggleButtonCustom}">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Border
+                                                Width="75"
+                                                Height="28"
+                                                Background="{DynamicResource PrimaryBrush}"
+                                                BorderBrush="{DynamicResource PrimaryBrush}"
+                                                CornerRadius="{StaticResource DefaultCornerRadius}">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="White"
+                                                    Text="打开" />
+                                            </Border>
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="{DynamicResource PrimaryBrush}"
+                                                Text="关闭" />
+                                        </Border>
+                                    </ToggleButton>
+                                    <StackPanel VerticalAlignment="Bottom" Orientation="Vertical">
+                                        <CheckBox
+                                            Content="正向(+)"
+                                            IsChecked="{Binding CurrentDeviceParameter.DOParam.IsDirect, UpdateSourceTrigger=PropertyChanged}"
+                                            IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+                                        <CheckBox
+                                            Content="反向(-)"
+                                            IsChecked="{Binding CurrentDeviceParameter.DOParam.IsReverse, UpdateSourceTrigger=PropertyChanged}"
+                                            IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox
+                                        Width="75"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key='转速(rpm)'}"
+                                        BorderBrush="Gray"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F0}, UpdateSourceTrigger=LostFocus}">
+                                        <TextBox.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
+                                                <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
+                                                <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AgitParam.IsControling" />-->
+                                            </MultiBinding>
+                                        </TextBox.IsEnabled>
+                                    </TextBox>
+                                    <TextBox
+                                        Width="70"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key=' '}"
+                                        Background="LightGray"
+                                        BorderBrush="Gray"
+                                        IsReadOnly="True"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.Agit, StringFormat={}{0:F0}}" />
+                                    <ToggleButton
+                                        Width="75"
+                                        Height="28"
+                                        VerticalAlignment="Bottom"
+                                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                                        Command="{Binding AgitRunCommand}"
+                                        IsChecked="{Binding CurrentDeviceParameter.AgitParam.IsControling}"
+                                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                        Style="{StaticResource ToggleButtonCustom}">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Border
+                                                Width="75"
+                                                Height="28"
+                                                Background="{DynamicResource PrimaryBrush}"
+                                                BorderBrush="{DynamicResource PrimaryBrush}"
+                                                CornerRadius="{StaticResource DefaultCornerRadius}">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="White"
+                                                    Text="打开" />
+                                            </Border>
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="{DynamicResource PrimaryBrush}"
+                                                Text="关闭" />
+                                        </Border>
+                                    </ToggleButton>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox
+                                        Width="75"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key='空气(L/min)'}"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.AirParam.FlowSpeed, UpdateSourceTrigger=LostFocus}">
+                                        <TextBox.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
+                                                <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
+                                                <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AirParam.IsControling" />-->
+                                            </MultiBinding>
+                                        </TextBox.IsEnabled>
+                                    </TextBox>
+                                    <TextBox
+                                        Width="70"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key=' '}"
+                                        Background="LightGray"
+                                        BorderBrush="Gray"
+                                        IsReadOnly="True"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.AirFlowSpeed, StringFormat={}{0:F2}}" />
+                                    <ToggleButton
+                                        Width="75"
+                                        Height="28"
+                                        VerticalAlignment="Bottom"
+                                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                                        Command="{Binding AirRunCommand}"
+                                        IsChecked="{Binding CurrentDeviceParameter.AirParam.IsControling}"
+                                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                        Style="{StaticResource ToggleButtonCustom}">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Border
+                                                Width="75"
+                                                Height="28"
+                                                Background="{DynamicResource PrimaryBrush}"
+                                                BorderBrush="{DynamicResource PrimaryBrush}"
+                                                CornerRadius="{StaticResource DefaultCornerRadius}">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="White"
+                                                    Text="打开" />
+                                            </Border>
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="{DynamicResource PrimaryBrush}"
+                                                Text="关闭" />
+                                        </Border>
+                                    </ToggleButton>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox
+                                        Width="75"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key='氧气(L/min)'}"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.O2Param.FlowSpeed, UpdateSourceTrigger=LostFocus}">
+                                        <TextBox.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
+                                                <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
+                                                <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.O2Param.IsControling" />-->
+                                            </MultiBinding>
+                                        </TextBox.IsEnabled>
+                                    </TextBox>
+                                    <TextBox
+                                        Width="70"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key=' '}"
+                                        Background="LightGray"
+                                        BorderBrush="Gray"
+                                        IsReadOnly="True"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.O2FlowSpeed, StringFormat={}{0:F2}}" />
+                                    <ToggleButton
+                                        Width="75"
+                                        Height="28"
+                                        VerticalAlignment="Bottom"
+                                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                                        Command="{Binding O2RunCommand}"
+                                        IsChecked="{Binding CurrentDeviceParameter.O2Param.IsControling}"
+                                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                        Style="{StaticResource ToggleButtonCustom}">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Border
+                                                Width="75"
+                                                Height="28"
+                                                Background="{DynamicResource PrimaryBrush}"
+                                                BorderBrush="{DynamicResource PrimaryBrush}"
+                                                CornerRadius="{StaticResource DefaultCornerRadius}">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="White"
+                                                    Text="打开" />
+                                            </Border>
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="{DynamicResource PrimaryBrush}"
+                                                Text="关闭" />
+                                        </Border>
+                                    </ToggleButton>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox
+                                        Width="75"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key='PH'}"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, UpdateSourceTrigger=LostFocus}">
+                                        <TextBox.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem
+                                                    Command="{Binding PHSPCommand}"
+                                                    CommandParameter="TimeSeries"
+                                                    Header="时间序列"
+                                                    IsChecked="{Binding CurrentDeviceParameter.PHParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=TimeSeries, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding TimeSeriesCommand}"
+                                                    CommandParameter="PH"
+                                                    Header="时间序列设置" />
+                                            </ContextMenu>
+                                        </TextBox.ContextMenu>
+                                    </TextBox>
+                                    <TextBox
+                                        Width="70"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key=' '}"
+                                        Background="LightGray"
+                                        BorderBrush="Gray"
+                                        IsReadOnly="True"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.PH, StringFormat={}{0:F2}}" />
+                                    <ToggleButton
+                                        Width="75"
+                                        Height="28"
+                                        VerticalAlignment="Bottom"
+                                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                                        Command="{Binding PHRunCommand}"
+                                        IsChecked="{Binding CurrentDeviceParameter.PHParam.IsControling}"
+                                        Style="{StaticResource ToggleButtonCustom}">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Border
+                                                Width="75"
+                                                Height="28"
+                                                Background="{DynamicResource PrimaryBrush}"
+                                                BorderBrush="{DynamicResource PrimaryBrush}"
+                                                CornerRadius="{StaticResource DefaultCornerRadius}">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="White"
+                                                    Text="打开" />
+                                            </Border>
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="{DynamicResource PrimaryBrush}"
+                                                Text="关闭" />
+                                        </Border>
+                                    </ToggleButton>
+                                    <StackPanel VerticalAlignment="Bottom" Orientation="Vertical">
+                                        <CheckBox
+                                            Content="酸(-)"
+                                            IsChecked="{Binding CurrentDeviceParameter.PHParam.AcidAssociated}"
+                                            IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+                                        <CheckBox
+                                            Content="碱(+)"
+                                            IsChecked="{Binding CurrentDeviceParameter.PHParam.BaseAssociated}"
+                                            IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox
+                                        Width="75"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key='酸(mL/h)'}"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.AcidParam.Acid_PV, UpdateSourceTrigger=LostFocus}">
+                                        <TextBox.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
+                                                <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.PHParam.IsControling" />
+                                                <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AcidParam.IsControling" />-->
+                                            </MultiBinding>
+                                        </TextBox.IsEnabled>
+                                    </TextBox>
+                                    <TextBox
+                                        Width="70"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key=' '}"
+                                        Background="LightGray"
+                                        BorderBrush="Gray"
+                                        IsReadOnly="True"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.AcidFlowSpeed, StringFormat={}{0:F2}}" />
+                                    <ToggleButton
+                                        Width="75"
+                                        Height="28"
+                                        VerticalAlignment="Bottom"
+                                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                                        Command="{Binding AcidRunCommand}"
+                                        IsChecked="{Binding CurrentDeviceParameter.AcidParam.IsControling}"
+                                        IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                        Style="{StaticResource ToggleButtonCustom}">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Border
+                                                Width="75"
+                                                Height="28"
+                                                Background="{DynamicResource PrimaryBrush}"
+                                                BorderBrush="{DynamicResource PrimaryBrush}"
+                                                CornerRadius="{StaticResource DefaultCornerRadius}">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="White"
+                                                    Text="打开" />
+                                            </Border>
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="{DynamicResource PrimaryBrush}"
+                                                Text="关闭" />
+                                        </Border>
+                                    </ToggleButton>
+                                    <Button
+                                        VerticalAlignment="Bottom"
+                                        Command="{Binding ResetFlowCommand}"
+                                        CommandParameter="Acid"
+                                        Content="总量清零"
+                                        Style="{StaticResource ButtonPrimary}" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox
+                                        Width="75"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key='碱(mL/h)'}"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.BaseParam.Base_PV, UpdateSourceTrigger=LostFocus}">
+                                        <TextBox.IsEnabled>
+                                            <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
+                                                <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.PHParam.IsControling" />
+                                                <!--<Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.BaseParam.IsControling" />-->
+                                            </MultiBinding>
+                                        </TextBox.IsEnabled>
+                                    </TextBox>
+                                    <TextBox
+                                        Width="70"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key=' '}"
+                                        Background="LightGray"
+                                        BorderBrush="Gray"
+                                        IsReadOnly="True"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding CurrentDeviceParameter.BaseFlowSpeed, StringFormat={}{0:F2}}" />
+                                    <ToggleButton
+                                        Width="75"
+                                        Height="28"
+                                        VerticalAlignment="Bottom"
+                                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                                        Command="{Binding BaseRunCommand}"
+                                        IsChecked="{Binding CurrentDeviceParameter.BaseParam.IsControling}"
+                                        IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                        Style="{StaticResource ToggleButtonCustom}">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <Border
+                                                Width="75"
+                                                Height="28"
+                                                Background="{DynamicResource PrimaryBrush}"
+                                                BorderBrush="{DynamicResource PrimaryBrush}"
+                                                CornerRadius="{StaticResource DefaultCornerRadius}">
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="White"
+                                                    Text="打开" />
+                                            </Border>
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                            BorderThickness="1"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="{DynamicResource PrimaryBrush}"
+                                                Text="关闭" />
+                                        </Border>
+                                    </ToggleButton>
+                                    <Button
+                                        VerticalAlignment="Bottom"
+                                        Command="{Binding ResetFlowCommand}"
+                                        CommandParameter="Base"
+                                        Content="总量清零"
+                                        Style="{StaticResource ButtonPrimary}" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='温度(℃)'}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, UpdateSourceTrigger=LostFocus}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem
+                                                Command="{Binding TempSPCommand}"
+                                                CommandParameter="TimeSeries"
+                                                Header="时间序列"
+                                                IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=TimeSeries, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Separator />
+                                            <MenuItem
+                                                Command="{Binding TimeSeriesCommand}"
+                                                CommandParameter="Temp"
+                                                Header="时间序列设置" />
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
+                                <TextBox
+                                    Width="70"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    IsReadOnly="True"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}" />
+                                <ToggleButton
+                                    Width="75"
+                                    Height="28"
+                                    VerticalAlignment="Bottom"
+                                    hc:StatusSwitchElement.HideUncheckedElement="True"
+                                    Command="{Binding TempRunCommand}"
+                                    IsChecked="{Binding CurrentDeviceParameter.TempParam.IsControling}"
+                                    Style="{StaticResource ToggleButtonCustom}">
+                                    <hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="75"
+                                            Height="28"
+                                            Background="{DynamicResource PrimaryBrush}"
+                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="White"
+                                                Text="打开" />
+                                        </Border>
+                                    </hc:StatusSwitchElement.CheckedElement>
+                                    <Border
+                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="{StaticResource DefaultCornerRadius}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource PrimaryBrush}"
+                                            Text="关闭" />
+                                    </Border>
+                                </ToggleButton>
+                                <StackPanel
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Vertical"
+                                    Visibility="Collapsed">
+                                    <CheckBox Content="制冷(-)" IsChecked="{Binding CurrentDeviceParameter.TempParam.Cooling}" />
+                                    <CheckBox Content="加热(+)" IsChecked="{Binding CurrentDeviceParameter.TempParam.Heating}" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='补料(mL/h)'}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=LostFocus}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
+                                            <Separator />
+                                            <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
+                                <TextBox
+                                    Width="70"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    IsReadOnly="True"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.FeedFlowSpeed, StringFormat={}{0:F2}}" />
+                                <ComboBox
+                                    Width="110"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    BorderBrush="{DynamicResource PrimaryBrush}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                    SelectedIndex="{Binding CurrentDeviceParameter.FeedParam1.FeedIndex}"
+                                    Style="{StaticResource ComboBoxExtend}">
+                                    <ComboBoxItem Content="常量" />
+                                    <ComboBoxItem Content="多项式" />
+                                    <ComboBoxItem Content="指数" />
+                                    <ComboBoxItem Content="时间序列" />
+                                    <ComboBoxItem Content="关联DO_流速" />
+                                    <ComboBoxItem Content="关联PH_流速" />
+                                    <ComboBoxItem Content="关联DO_总量" />
+                                    <ComboBoxItem Content="关联PH_总量" />
+                                </ComboBox>
+                                <ToggleButton
+                                    Width="75"
+                                    Height="28"
+                                    VerticalAlignment="Bottom"
+                                    hc:StatusSwitchElement.HideUncheckedElement="True"
+                                    Command="{Binding Feed1RunCommand}"
+                                    IsChecked="{Binding CurrentDeviceParameter.FeedParam1.IsControling}"
+                                    Style="{StaticResource ToggleButtonCustom}">
+                                    <hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="75"
+                                            Height="28"
+                                            Background="{DynamicResource PrimaryBrush}"
+                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="White"
+                                                Text="打开" />
+                                        </Border>
+                                    </hc:StatusSwitchElement.CheckedElement>
+                                    <Border
+                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="{StaticResource DefaultCornerRadius}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource PrimaryBrush}"
+                                            Text="关闭" />
+                                    </Border>
+                                </ToggleButton>
+                                <Button
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding ResetFlowCommand}"
+                                    CommandParameter="Feed"
+                                    Content="总量清零"
+                                    Style="{StaticResource ButtonPrimary}" />
+                                <StackPanel
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Vertical"
+                                    Visibility="Collapsed">
+                                    <CheckBox
+                                        Content="DO异常关联"
+                                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsEmergency}"
+                                        IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+                                    <CheckBox
+                                        Content="PH异常关联"
+                                        IsChecked="{Binding CurrentDeviceParameter.PHParam.IsEmergency}"
+                                        IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+                                <TextBox
+                                    Width="85"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='补料2(mL/h)'}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.FeedParam2.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.FeedParam2.Feed_PV, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    IsReadOnly="True"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.Feed2FlowSpeed}" />
+                                <ComboBox
+                                    Width="75"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    BorderBrush="{DynamicResource PrimaryBrush}"
+                                    SelectedIndex="{Binding CurrentDeviceParameter.FeedParam2.FeedIndex}"
+                                    Style="{StaticResource ComboBoxExtend}">
+                                    <ComboBoxItem Content="常量" />
+                                    <ComboBoxItem Content="多项式" />
+                                    <ComboBoxItem Content="指数" />
+                                    <ComboBoxItem Content="时间序列" />
+                                    <ComboBoxItem Content="关联DO" />
+                                    <ComboBoxItem Content="关联PH" />
+                                </ComboBox>
+                                <ToggleButton
+                                    Width="75"
+                                    Height="28"
+                                    VerticalAlignment="Bottom"
+                                    hc:StatusSwitchElement.HideUncheckedElement="True"
+                                    Command="{Binding Feed2RunCommand}"
+                                    IsChecked="{Binding CurrentDeviceParameter.FeedParam2.IsControling}"
+                                    Style="{StaticResource ToggleButtonCustom}">
+                                    <hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="75"
+                                            Height="28"
+                                            Background="{DynamicResource PrimaryBrush}"
+                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="White"
+                                                Text="打开" />
+                                        </Border>
+                                    </hc:StatusSwitchElement.CheckedElement>
+                                    <Border
+                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="{StaticResource DefaultCornerRadius}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource PrimaryBrush}"
+                                            Text="关闭" />
+                                    </Border>
+                                </ToggleButton>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='消泡(mL/h)'}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.AFParam.AF_PV, UpdateSourceTrigger=LostFocus}" />
+                                <TextBox
+                                    Width="70"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    IsReadOnly="True"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.AFFlowSpeed, StringFormat={}{0:F2}}" />
+                                <ToggleButton
+                                    Width="75"
+                                    Height="28"
+                                    VerticalAlignment="Bottom"
+                                    hc:StatusSwitchElement.HideUncheckedElement="True"
+                                    Command="{Binding AFRunCommand}"
+                                    IsChecked="{Binding CurrentDeviceParameter.AFParam.IsControling}"
+                                    Style="{StaticResource ToggleButtonCustom}">
+                                    <hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="75"
+                                            Height="28"
+                                            Background="{DynamicResource PrimaryBrush}"
+                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="White"
+                                                Text="打开" />
+                                        </Border>
+                                    </hc:StatusSwitchElement.CheckedElement>
+                                    <Border
+                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="{StaticResource DefaultCornerRadius}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource PrimaryBrush}"
+                                            Text="关闭" />
+                                    </Border>
+                                </ToggleButton>
+                                <Button
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding ResetFlowCommand}"
+                                    CommandParameter="AF"
+                                    Content="总量清零"
+                                    Style="{StaticResource ButtonPrimary}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Name="txtCycle"
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='周期(s)'}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.AFParam.Cycle}" />
+                                <TextBox
+                                    Name="txtDutyCycle"
+                                    Width="70"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key='占空比(%)'}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.AFParam.DutyCycle}" />
+                                <ToggleButton
+                                    Width="75"
+                                    Height="28"
+                                    VerticalAlignment="Bottom"
+                                    hc:StatusSwitchElement.HideUncheckedElement="True"
+                                    Command="{Binding AFSettingCommand}"
+                                    IsChecked="{Binding CurrentDeviceParameter.AFParam.AutoDefoaming}"
+                                    Style="{StaticResource ToggleButtonCustom}">
+                                    <hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="75"
+                                            Height="28"
+                                            Background="{DynamicResource SuccessBrush}"
+                                            BorderBrush="{DynamicResource SuccessBrush}"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="White"
+                                                Text="自动消泡" />
+                                        </Border>
+                                    </hc:StatusSwitchElement.CheckedElement>
+                                    <Border
+                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                        BorderBrush="{DynamicResource SuccessBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="{StaticResource DefaultCornerRadius}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource SuccessBrush}"
+                                            Text="手动消泡" />
+                                    </Border>
+                                </ToggleButton>
+                            </StackPanel>
+                        </hc:UniformSpacingPanel>
+                    </Canvas>
+                </DockPanel>
+            </Grid>
+            <GridSplitter
+                Grid.Column="1"
+                Width="5"
+                VerticalAlignment="Stretch"
+                Background="LightGray" />
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Name="rowGraph4"
+                        Height="auto"
+                        MaxHeight="60" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <WrapPanel
+                        Name="ChkGraphList4"
+                        Orientation="Horizontal"
+                        Visibility="Collapsed" />
+                </ScrollViewer>
+                <wpf:WpfPlot Name="wpfPlot4" Grid.Row="2" />
             </Grid>
         </Grid>
     </Grid>

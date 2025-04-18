@@ -126,13 +126,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Util\EnumRelated\EnumOperate.cs" />
-    <Compile Include="Util\Flash\ExternalInterfaceProxy\ExternalInterfaceCall.cs" />
-    <Compile Include="Util\Flash\ExternalInterfaceProxy\ExternalInterfaceCallEventArgs.cs" />
-    <Compile Include="Util\Flash\ExternalInterfaceProxy\ExternalInterfaceProxy.cs" />
-    <Compile Include="Util\Flash\ExternalInterfaceProxy\ExternalInterfaceSerializer.cs" />
-    <Compile Include="Util\Flash\FlashShieldRightKey\FlashShieldKey.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Util\JsonUtil\JsonHelper.cs" />
     <Compile Include="Util\LogHelper.cs" />
     <Compile Include="Util\MathUtil\FpiMatrix.cs" />

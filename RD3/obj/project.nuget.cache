@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CBfx242YiyE=",
+  "dgSpecHash": "sY3BF8MO6mY=",
   "success": true,
-  "projectFilePath": "D:\\Project\\RD3\\RD3\\RD3.csproj",
+  "projectFilePath": "D:\\20250415-001\\RD3\\RD3\\RD3.csproj",
   "expectedPackageFiles": [
     "D:\\packages\\dryioc.dll\\4.7.7\\dryioc.dll.4.7.7.nupkg.sha512",
     "D:\\packages\\fparsec\\2.0.0-beta2\\fparsec.2.0.0-beta2.nupkg.sha512",

@@ -18,4 +18,5 @@
     <rd3:NumericToBoolConverter x:Key="NumericToBoolConverter" />
     <rd3:EnumToInverseBoolConverter x:Key="EnumToInverseBoolConverter" />
     <rd3:MultiBoolToBoolConverter x:Key="MultiBoolToBoolConverter" />
+    <rd3:RowToIndexConverter x:Key="RowToIndexConverter" />
 </ResourceDictionary>
