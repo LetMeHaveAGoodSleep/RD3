@@ -1,0 +1,20 @@
+{
+  "acidbufferName": "\u78F7\u9178\u4E8C\u6C22",
+  "acidbufferValue": 0.613,
+  "alkalibufferName": "--",
+  "alkalibufferValue": 1,
+  "saltbufferName": "\u78F7\u9178\u6C22",
+  "saltbufferValue": 0.387,
+  "workTemp": 35,
+  "V": 0.5,
+  "pka0": 7.2,
+  "pka0_temp": 25,
+  "tempCoefficient": 0,
+  "acidValue": 7,
+  "alkaliValue": 7,
+  "ph0": 7,
+  "aslope": 29.03593915419191,
+  "bslope": 29.03593915419191,
+  "d_buffer": -0.11572243902439036,
+  "T90": 3
+}

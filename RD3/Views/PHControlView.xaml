@@ -1,0 +1,217 @@
+﻿<UserControl
+    x:Class="RD3.Views.PHControlView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:rd3="clr-namespace:RD3"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    Width="340"
+    Height="455"
+    d:DataContext="{d:DesignInstance Type=viewmodels:PHControlViewModel}"
+    rd3:DraggableUserControlAttach.IsDraggable="True"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource SubHeadFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="False" />
+            <Setter Property="AllowsTransparency" Value="True" />
+            <Setter Property="WindowStyle" Value="None" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <Border Background="{StaticResource CloudDrawingBrush}" Style="{StaticResource BorderForm}">
+        <Grid Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Grid  Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Width="90">酸</Label>
+                <TextBox Margin="1" Width="80" Grid.Column="1" Name="acidbufferName" Text="{Binding phInfo.acidbufferName}"></TextBox>
+                <TextBox Margin="1" Width="80" Grid.Column="2" Name="acidbufferValue" Text="{Binding phInfo.acidbufferValue}"></TextBox>
+                <Label Grid.Column="3">mol/L</Label>
+
+            </Grid>
+
+
+            <Grid  Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Width="90">盐</Label>
+                <TextBox Margin="1" Width="80" Grid.Column="1" Name="saltbufferName" Text="{Binding phInfo.saltbufferName}"></TextBox>
+                <TextBox Margin="1" Width="80" Grid.Column="2" Name="saltbufferValue" Text="{Binding phInfo.saltbufferValue}"></TextBox>
+                <Label Grid.Column="3">mol/L</Label>
+
+            </Grid>
+            <Grid  Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">工作温度</Label>
+                <TextBox Margin="1" Width="80" Grid.Column="1" Name="workTemp" Text="{Binding phInfo.workTemp}"></TextBox>
+                <Label Grid.Column="3" Width="70">℃</Label>
+
+            </Grid>
+            <Grid  Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0">发酵体积</Label>
+                <TextBox Margin="1" Width="80" Grid.Column="1" Name="V" Text="{Binding phInfo.V}"></TextBox>
+                <Label Grid.Column="3" Width="70">L</Label>
+
+            </Grid>
+            <Grid  Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Width="90">pka0</Label>
+                <TextBox Margin="1" Width="80" Grid.Column="1" Name="pka0" Text="{Binding phInfo.pka0}"></TextBox>
+            </Grid>
+            <Grid  Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Width="90">pka0温度</Label>
+                <TextBox Margin="1" Width="80" Grid.Column="1" Name="pka0_temp" Text="{Binding phInfo.pka0_temp}"></TextBox>
+                <Label Grid.Column="3" Width="70">℃</Label>
+            </Grid>
+            <Grid  Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Width="90">温度系数</Label>
+                <TextBox Margin="1" Width="80" Grid.Column="1" Name="tempCoefficient" Text="{Binding phInfo.tempCoefficient}"></TextBox>
+                <Label Grid.Column="2" Width="70">每度</Label>
+            </Grid>
+            <Grid  Grid.Row="7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Width="90">酸浓度</Label>
+                <TextBox Margin="1" Width="80" Grid.Column="1" Name="acidValue" Text="{Binding phInfo.acidValue}"></TextBox>
+                <Label Grid.Column="2" Width="70">mol/L</Label>
+            </Grid>
+            <Grid  Grid.Row="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Width="90">碱浓度</Label>
+                <TextBox Margin="1" Width="80" Grid.Column="1" Name="alkaliValue" Text="{Binding phInfo.alkaliValue}"></TextBox>
+                <Label Grid.Column="2" Width="70">mol/L</Label>
+            </Grid>
+            <Grid  Grid.Row="9">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="80" />
+                </Grid.ColumnDefinitions>
+                <Label Width="90">工作pH</Label>
+                <TextBox Margin="1,1,1,1" Width="80" Grid.Column="1" Grid.ColumnSpan="2" Name="ph0" Text="{Binding phInfo.ph0}"></TextBox>
+
+            </Grid>
+            <Grid  Grid.Row="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="240" />
+                </Grid.ColumnDefinitions>
+                <Label Width="90">修订buffer</Label>
+                <TextBox Margin="1" Width="230" Grid.Column="1" Grid.ColumnSpan="2" Name="d_buffer" Text="{Binding phInfo.d_buffer}"></TextBox>
+
+            </Grid>
+            <Grid  Grid.Row="11">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="240" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Width="90" >aslope</Label>
+                <TextBox Margin="1" Width="230" Grid.Column="1" Name="aslope" Text="{Binding phInfo.aslope}"></TextBox>
+            </Grid>
+            <Grid  Grid.Row="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="240" />
+                </Grid.ColumnDefinitions>
+                <Label Width="90">bslope</Label>
+                <TextBox Margin="1" Width="230" Grid.Column="1" Name="bslope" Text="{Binding phInfo.bslope}" Grid.ColumnSpan="2"></TextBox>
+            </Grid>
+            <Grid  Grid.Row="13">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="70" />
+                </Grid.ColumnDefinitions>
+                <Label Width="90" Grid.Column="0">T90</Label>
+                <TextBox Margin="1" Width="80" Grid.Column="1" Name="T90" Text="{Binding phInfo.T90}" Grid.ColumnSpan="1"></TextBox>
+                <Label Margin="1" Width="70" Grid.Column="2" Grid.ColumnSpan="2">分</Label>
+            </Grid>
+            <Grid  Grid.Row="14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Width="90" Name="btnCalculate" Click="btnCalculate_Click">计算</Button>
+                <Button Grid.Column="2" Width="90" Name="btnSave" Click="btnSave_Click">保存</Button>
+                <Button Grid.Column="3" Width="90" Name="btnCancel" Command="{Binding CancelCommand}">关闭</Button>
+            </Grid>
+        </Grid>
+
+    </Border>
+</UserControl>

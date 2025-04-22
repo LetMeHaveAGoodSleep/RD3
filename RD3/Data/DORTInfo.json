@@ -1,0 +1,38 @@
+[
+  {
+    "createUser": null,
+    "deviceID": null,
+    "startTime": 0.0,
+    "endTime": 60.0,
+    "rnOP": 100.0,
+    "expectation": 80.0,
+    "describe": null
+  },
+  {
+    "createUser": null,
+    "deviceID": null,
+    "startTime": 60.0,
+    "endTime": 120.0,
+    "rnOP": 100.0,
+    "expectation": 100.0,
+    "describe": null
+  },
+  {
+    "createUser": null,
+    "deviceID": null,
+    "startTime": 120.0,
+    "endTime": 180.0,
+    "rnOP": 100.0,
+    "expectation": 70.0,
+    "describe": null
+  },
+  {
+    "createUser": null,
+    "deviceID": null,
+    "startTime": 180.0,
+    "endTime": 240.0,
+    "rnOP": 100.0,
+    "expectation": 85.0,
+    "describe": null
+  }
+]

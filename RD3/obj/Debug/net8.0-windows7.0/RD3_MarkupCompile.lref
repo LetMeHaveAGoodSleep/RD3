@@ -1,4 +1,4 @@
-﻿
+﻿D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\GeneratedInternalTypeHelper.g.cs
 FD:\20250415-001\RD3\RD3\App.xaml;;
 FD:\20250415-001\RD3\RD3\Themes\Converters.xaml;;
 FD:\20250415-001\RD3\RD3\Themes\ProgressRing.xaml;;
@@ -16,6 +16,7 @@ FD:\20250415-001\RD3\RD3\Views\DeviceNodesView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\DOAssociateView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\DOEDesignView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\DOEMainView.xaml;;
+FD:\20250415-001\RD3\RD3\Views\DOTimeSeriesView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\EditBatchIDView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\EditUserView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\ErrorView.xaml;;
@@ -34,6 +35,7 @@ FD:\20250415-001\RD3\RD3\Views\OperationView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\OutputBatchDataView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\ParameterSourceView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\ParameterView.xaml;;
+FD:\20250415-001\RD3\RD3\Views\PHControlView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\PidView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\ProgressView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\PumpMFCView.xaml;;

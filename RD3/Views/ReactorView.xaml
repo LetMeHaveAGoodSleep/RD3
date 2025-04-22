@@ -34,7 +34,7 @@
         <Style TargetType="Window">
             <Setter Property="SizeToContent" Value="WidthAndHeight" />
             <Setter Property="ResizeMode" Value="CanResize" />
-            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
             <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -87,6 +87,15 @@
                     ToolTip="{ex:Language Key='PID设置'}" />
                 <Button
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                    hc:IconElement.Geometry="{StaticResource GeometryCopy}"
+                    Background="{DynamicResource FixedGradientBrush}"
+                    BorderThickness="0"
+                    Command="{Binding CopyCommand}"
+                    Foreground="White"
+                    Style="{StaticResource ButtonIconCircular}"
+                    ToolTip="{ex:Language Key='参数同步'}" />
+                <Button
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource SaveGeometry}"
                     Background="{DynamicResource FixedBrush}"
                     BorderThickness="0"
@@ -108,7 +117,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                <Grid>
+                <!--<Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition
                             Name="rowGraph3"
@@ -124,7 +133,7 @@
                             Visibility="Collapsed" />
                     </ScrollViewer>
                     <wpf:WpfPlot Name="wpfPlot3" Grid.Row="2" />
-                </Grid>
+                </Grid>-->
                 <DockPanel Grid.Row="1" LastChildFill="False">
                     <Canvas
                         Width="850"
@@ -562,6 +571,8 @@
                                                     Header="时间序列设置" />
                                                 <Separator />
                                                 <MenuItem Command="{Binding DoAssociateCommand}" Header="级联控制通气量阶梯表" />
+                                                <Separator />
+                                                <MenuItem Command="{Binding DOOPCommand}" Header="功率设置" />
                                             </ContextMenu>
                                         </TextBox.ContextMenu>
                                     </TextBox>
@@ -822,6 +833,18 @@
                                                     Command="{Binding TimeSeriesCommand}"
                                                     CommandParameter="PH"
                                                     Header="时间序列设置" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding PHModeCommand}"
+                                                    CommandParameter="PID"
+                                                    Header="PID调控"
+                                                    IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=PID, UpdateSourceTrigger=PropertyChanged}" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Command="{Binding PHModeCommand}"
+                                                    CommandParameter="Buffer"
+                                                    Header="动态缓冲调控"
+                                                    IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Buffer, UpdateSourceTrigger=PropertyChanged}" />
                                             </ContextMenu>
                                         </TextBox.ContextMenu>
                                     </TextBox>
@@ -1365,24 +1388,53 @@
             <GridSplitter
                 Grid.Column="1"
                 Width="5"
-                VerticalAlignment="Stretch"
-                Background="LightGray" />
+                Background="LightGray"
+                Foreground="LightGray"
+                Style="{StaticResource MaterialDesignGridSplitter}" />
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition
-                        Name="rowGraph4"
-                        Height="auto"
-                        MaxHeight="60" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition />
+                    <RowDefinition Height="5" />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <WrapPanel
-                        Name="ChkGraphList4"
-                        Orientation="Horizontal"
-                        Visibility="Collapsed" />
-                </ScrollViewer>
-                <wpf:WpfPlot Name="wpfPlot4" Grid.Row="2" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Name="rowGraph3"
+                            Height="auto"
+                            MaxHeight="60" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <WrapPanel
+                            Name="ChkGraphList3"
+                            Orientation="Horizontal"
+                            Visibility="Collapsed" />
+                    </ScrollViewer>
+                    <wpf:WpfPlot Name="wpfPlot3" Grid.Row="2" />
+                </Grid>
+                <GridSplitter
+                    Grid.Row="1"
+                    HorizontalAlignment="Stretch"
+                    Background="LightGray" />
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Name="rowGraph4"
+                            Height="auto"
+                            MaxHeight="60" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <WrapPanel
+                            Name="ChkGraphList4"
+                            Orientation="Horizontal"
+                            Visibility="Collapsed" />
+                    </ScrollViewer>
+                    <wpf:WpfPlot Name="wpfPlot4" Grid.Row="2" />
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

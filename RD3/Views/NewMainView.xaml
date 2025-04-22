@@ -45,63 +45,65 @@
                     <RowDefinition Name="Content" Height="*" />
                     <!--  内容区  -->
                 </Grid.RowDefinitions>
-                <Grid
-                    Name="TitleGrid"
+                <Border
                     Grid.Row="0"
-                    Background="{DynamicResource PrimaryBrush}">
-                    <!--  标题栏  -->
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="160" />
-                        <!--  log  -->
-                        <ColumnDefinition Width="*" />
-                        <!--  标题  -->
-                        <ColumnDefinition Width="260" />
-                        <!--  用户  -->
-                        <ColumnDefinition Width="100" />
-                        <!--  最大最小  -->
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" Orientation="Horizontal">
-                        <Image
-                            Width="24"
-                            Height="24"
-                            Margin="5"
-                            Source="/Assets/logo.png" />
-                        <TextBlock
-                            Margin="8,8,10,8"
-                            FontSize="{StaticResource HeadFontSize}"
-                            FontWeight="Bold"
-                            Text="芯造科技"
-                            TextAlignment="Left"
-                            TextWrapping="Wrap" />
-                    </StackPanel>
+                    Background="{DynamicResource PrimaryBrush}"
+                    CornerRadius="4,4,0,0">
+                    <Grid Name="TitleGrid">
+                        <!--  标题栏  -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160" />
+                            <!--  log  -->
+                            <ColumnDefinition Width="*" />
+                            <!--  标题  -->
+                            <ColumnDefinition Width="260" />
+                            <!--  用户  -->
+                            <ColumnDefinition Width="100" />
+                            <!--  最大最小  -->
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <Image
+                                Width="24"
+                                Height="24"
+                                Margin="5"
+                                Source="/Assets/logo.png" />
+                            <TextBlock
+                                Margin="8,8,10,8"
+                                FontSize="{StaticResource HeadFontSize}"
+                                FontWeight="Bold"
+                                Text="芯造科技"
+                                TextAlignment="Left"
+                                TextWrapping="Wrap" />
+                        </StackPanel>
 
-                    <StackPanel Grid.Column="3" Orientation="Horizontal">
-                        <Button
-                            Name="btnMin"
-                            hc:IconElement.Geometry="{StaticResource WindowMinGeometry}"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Foreground="White"
-                            ToolTip="{ex:Language Key='Minimize'}" />
-                        <Button
-                            Name="btnMax"
-                            Background="Transparent"
-                            BorderThickness="0">
-                            <materialDesign:PackIcon
-                                Name="PackIconWindowState"
+                        <StackPanel Grid.Column="3" Orientation="Horizontal">
+                            <Button
+                                Name="btnMin"
+                                hc:IconElement.Geometry="{StaticResource WindowMinGeometry}"
+                                Background="Transparent"
+                                BorderThickness="0"
                                 Foreground="White"
-                                Kind="WindowMaximize"
-                                ToolTip="{ex:Language Key='Maximize'}" />
-                        </Button>
-                        <Button
-                            Name="btnClose"
-                            hc:IconElement.Geometry="{StaticResource CloseGeometry}"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Foreground="White"
-                            ToolTip="{ex:Language Key='Close'}" />
-                    </StackPanel>
-                </Grid>
+                                ToolTip="{ex:Language Key='Minimize'}" />
+                            <Button
+                                Name="btnMax"
+                                Background="Transparent"
+                                BorderThickness="0">
+                                <materialDesign:PackIcon
+                                    Name="PackIconWindowState"
+                                    Foreground="White"
+                                    Kind="WindowMaximize"
+                                    ToolTip="{ex:Language Key='Maximize'}" />
+                            </Button>
+                            <Button
+                                Name="btnClose"
+                                hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Foreground="White"
+                                ToolTip="{ex:Language Key='Close'}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
                 <Grid
                     Name="MenuGrid"
                     Grid.Row="1"
@@ -175,6 +177,16 @@
                                 Click="MenuItem_Open_Click"
                                 Header="补料阈值"
                                 Tag="AlarmThresholdView" />-->
+                            <MenuItem
+                                Width="100"
+                                Click="MenuItem_Open_Click"
+                                Header="PH控制"
+                                Tag="PHControlView" />
+                            <!--<MenuItem
+                                Width="100"
+                                Click="MenuItem_Open_Click"
+                                Header="DO序列"
+                                Tag="DOTimeSeriesView" />-->
                         </MenuItem>
                         <MenuItem Height="40" Header="数据管理">
                             <MenuItem
@@ -199,6 +211,16 @@
                             Header="视频监测" />
                     </Menu>
                 </Grid>
+                <!--<hc:UniformSpacingPanel
+                    Margin="20,0,0,0"
+                    VerticalAlignment="Center"
+                    Spacing="5">
+                    <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='运行时间:'}" />
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        FontSize="{DynamicResource SubHeadFontSize}"
+                        Text="{Binding FormattedTime}" />
+                </hc:UniformSpacingPanel>-->
                 <Grid Name="ContentGrid" Grid.Row="2">
                     <!--  内容区  -->
                     <Grid.ColumnDefinitions>
@@ -531,7 +553,6 @@
                         </DataGrid>-->
                     </Grid>
                 </Grid>
-
             </Grid>
         </materialDesign:DialogHost>
     </Border>

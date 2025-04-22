@@ -972,3 +972,9 @@ D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DeviceNodesView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DeviceNodesView.baml
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\ParameterNode.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\ParameterNode - 复制.json
+D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\DORTInfo.json
+D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\phcontrol.json
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOTimeSeriesView.g.cs
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\PHControlView.g.cs
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOTimeSeriesView.baml
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\PHControlView.baml
