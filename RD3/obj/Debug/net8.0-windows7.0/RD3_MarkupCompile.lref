@@ -1,4 +1,4 @@
-﻿D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\GeneratedInternalTypeHelper.g.cs
+﻿
 FD:\20250415-001\RD3\RD3\App.xaml;;
 FD:\20250415-001\RD3\RD3\Themes\Converters.xaml;;
 FD:\20250415-001\RD3\RD3\Themes\ProgressRing.xaml;;
@@ -8,6 +8,7 @@ FD:\20250415-001\RD3\RD3\Views\AboutView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\AddOffLineDatasView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\AddOffLineDataView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\AlarmThresholdView.xaml;;
+FD:\20250415-001\RD3\RD3\Views\AuditView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\CalibrationView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\CameraImageView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\ChooseReactorView.xaml;;
@@ -31,7 +32,6 @@ FD:\20250415-001\RD3\RD3\Views\NewBatchView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\NewFeedView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\NewMainView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\OffLineDatasView.xaml;;
-FD:\20250415-001\RD3\RD3\Views\OperationView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\OutputBatchDataView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\ParameterSourceView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\ParameterView.xaml;;

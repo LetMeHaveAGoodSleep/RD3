@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Language\LanguageExtension.cs" />
+    <Compile Remove="Util\AuditUtil.cs" />
     <Compile Remove="Views\EditBatchView.xaml.cs" />
     <Compile Remove="Views\EditScaleView.xaml.cs" />
     <Compile Remove="Views\UserControl1.xaml.cs" />
@@ -316,7 +317,7 @@
     <None Update="Data\Operation.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Data\Alarm.json">
+    <None Update="Config\Alarm.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Data\ParameterNode - 复制.json">

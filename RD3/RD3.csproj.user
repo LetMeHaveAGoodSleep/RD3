@@ -28,6 +28,9 @@
     <Compile Update="Views\EditUserView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\FlashOverlayWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ItemCalibrationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -35,9 +38,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\MCUDebugView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\OperationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\PumpMFCView.xaml.cs">
@@ -171,9 +171,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MCUDebugView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\OperationView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ProgressView.xaml">

@@ -721,7 +721,6 @@ D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\NewBatchView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\NewFeedView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\NewMainView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\OffLineDatasView.g.cs
-D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\OperationView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\OutputBatchDataView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ParameterSourceView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ParameterView.g.cs
@@ -760,7 +759,6 @@ D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\PortManager.xml
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\PumpMFCSetting.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\ReactorSetting.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Var.json
-D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Alarm.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Batch.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Defoaming.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Device.json
@@ -942,7 +940,6 @@ D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\NewBatchView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\NewFeedView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\NewMainView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\OffLineDatasView.baml
-D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\OperationView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\OutputBatchDataView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ParameterSourceView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ParameterView.baml
@@ -978,3 +975,8 @@ D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOTimeSeriesView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\PHControlView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOTimeSeriesView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\PHControlView.baml
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FlashOverlayWindow.baml
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FlashOverlayWindow.g.cs
+D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Alarm.json
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AuditView.g.cs
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AuditView.baml
