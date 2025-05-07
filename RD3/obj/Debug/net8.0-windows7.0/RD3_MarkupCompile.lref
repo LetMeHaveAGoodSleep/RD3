@@ -11,6 +11,7 @@ FD:\20250415-001\RD3\RD3\Views\AlarmThresholdView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\AuditView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\CalibrationView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\CameraImageView.xaml;;
+FD:\20250415-001\RD3\RD3\Views\CameraView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\ChooseReactorView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\CompareBatchView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\DeviceNodesView.xaml;;
@@ -46,4 +47,5 @@ FD:\20250415-001\RD3\RD3\Views\SelfCheckView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\SettingView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\TimeSeriesView.xaml;;
 FD:\20250415-001\RD3\RD3\Views\UserView.xaml;;
+FD:\20250415-001\RD3\RD3\Views\WarnParamView.xaml;;
 

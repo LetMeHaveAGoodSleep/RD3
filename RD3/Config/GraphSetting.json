@@ -4,12 +4,12 @@
   "溶氧": "DO",
   "pH": "pH",
   "Air": "MFC1FlowRate",
-  "酸泵流量": "Pump1Flow",
-  "碱泵流量": "Pump2Flow",
-  "补料泵流量": "Pump3Flow",
-  "消泡泵流量": "Pump4Flow",
-  "酸泵累积量": "Pump1FlowCapacity",
-  "碱累积量": "Pump2FlowCapacity",
-  "补料累积量": "Pump3FlowCapacity",
-  "消泡泵累积量": "Pump4FlowCapacity"
+  "酸泵流量": "Pump1FlowRate",
+  "碱泵流量": "Pump2FlowRate",
+  "补料泵流量": "Pump3FlowRate",
+  "消泡泵流量": "Pump4FlowRate",
+  "酸泵累积量": "Pump1Flow",
+  "碱泵累积量": "Pump2Flow",
+  "补料泵累积量": "Pump3Flow",
+  "消泡泵累积量": "Pump4Flow"
 }

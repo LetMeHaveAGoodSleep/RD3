@@ -748,12 +748,10 @@ D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Const.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\CurveColor.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\CustomGraphSetting.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\DOAssParam.json
-D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\DO_MV.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\GraphSetting.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\GraphUnit.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\InstrumentManager.xml
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\ParameterMapperConfig.json
-D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\PH_MV.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\PidInfo.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\PortManager.xml
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\PumpMFCSetting.json
@@ -968,7 +966,6 @@ D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\ref\RD3.dll
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DeviceNodesView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DeviceNodesView.baml
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\ParameterNode.json
-D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\ParameterNode - 复制.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\DORTInfo.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\phcontrol.json
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOTimeSeriesView.g.cs
@@ -980,3 +977,9 @@ D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FlashOverlayWindow.g.c
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\Alarm.json
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AuditView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AuditView.baml
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CameraView.g.cs
+D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\CameraAlarm.json
+D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\CameraSetting.json
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CameraView.baml
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\WarnParamView.g.cs
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\WarnParamView.baml

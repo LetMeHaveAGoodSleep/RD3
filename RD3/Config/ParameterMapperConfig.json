@@ -2,15 +2,15 @@
   "Temp": "Temp",
   "Agit": "Agit",
   "DO": "DO",
-  "PH": "PH",
+  "pH": "PH",
   "MFC1FlowRate": "AirFlowSpeed",
-  "Pump1Flow": "AcidFlowSpeed",
-  "Pump2Flow": "BaseFlowSpeed",
-  "Pump3Flow": "FeedFlowSpeed",
-  "Pump4Flow": "AFFlowSpeed",
-  "Pump1FlowCapacity": "AcidFlowCapacity",
-  "Pump2FlowCapacity": "BaseFlowCapacity",
-  "Pump3FlowCapacity": "FeedFlowCapacity",
-  "Pump4FlowCapacity": "AFFlowCapacity"
+  "Pump1FlowRate": "AcidFlowSpeed",
+  "Pump2FlowRate": "BaseFlowSpeed",
+  "Pump3FlowRate": "FeedFlowSpeed",
+  "Pump4FlowRate": "AFFlowSpeed",
+  "Pump1Flow": "AcidFlowCapacity",
+  "Pump2Flow": "BaseFlowCapacity",
+  "Pump3Flow": "FeedFlowCapacity",
+  "Pump4Flow": "AFFlowCapacity"
 
 }

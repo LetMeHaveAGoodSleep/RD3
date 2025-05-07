@@ -13,6 +13,9 @@
     <Compile Update="Views\CalibrationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\CameraView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\ChooseReactorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -59,6 +62,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\UserView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\WarnParamView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

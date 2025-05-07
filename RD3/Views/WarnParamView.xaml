@@ -1,0 +1,231 @@
+﻿<UserControl
+    x:Class="RD3.Views.WarnParamView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="clr-namespace:RD3.Behaviors"
+    xmlns:common="clr-namespace:RD3.Common"
+    xmlns:cv="clr-namespace:RD3.Common.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:vm="clr-namespace:RD3.ViewModels"
+    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+    Width="auto"
+    Height="auto"
+    d:DataContext="{d:DesignInstance Type=vm:WarnParamViewModel}"
+    Background="{StaticResource BackGroundBrush}"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource TextFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="True" />
+            <Setter Property="AllowsTransparency" Value="False" />
+            <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Icon" Value="../Assets/logo.png" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <hc:UniformSpacingPanel
+        Margin="10"
+        Orientation="Vertical"
+        Spacing="20">
+        <CheckBox Content="阈值预警" IsChecked="{Binding ThresholdAlarm}" />
+        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="30">
+            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                <TextBox
+                    Width="100"
+                    VerticalAlignment="Center"
+                    hc:InfoElement.Title="{ex:Language Key='温度警报下限'}"
+                    BorderBrush="Gray"
+                    Style="{StaticResource TextBoxExtend}"
+                    Text="{Binding TempLowerLimit, UpdateSourceTrigger=LostFocus}" />
+                <TextBox
+                    Width="100"
+                    VerticalAlignment="Center"
+                    hc:InfoElement.Title="{ex:Language Key='温度警报上限'}"
+                    BorderBrush="Gray"
+                    Style="{StaticResource TextBoxExtend}"
+                    Text="{Binding TempUpperLimit, UpdateSourceTrigger=LostFocus}" />
+            </hc:UniformSpacingPanel>
+            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                <TextBox
+                    Width="100"
+                    VerticalAlignment="Center"
+                    hc:InfoElement.Title="{ex:Language Key='溶氧警报下限'}"
+                    BorderBrush="Gray"
+                    Style="{StaticResource TextBoxExtend}"
+                    Text="{Binding DOLowerLimit, UpdateSourceTrigger=LostFocus}" />
+                <TextBox
+                    Width="100"
+                    VerticalAlignment="Center"
+                    hc:InfoElement.Title="{ex:Language Key='溶氧警报上限'}"
+                    BorderBrush="Gray"
+                    Style="{StaticResource TextBoxExtend}"
+                    Text="{Binding DOUpperLimit, UpdateSourceTrigger=LostFocus}" />
+            </hc:UniformSpacingPanel>
+            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                <TextBox
+                    Width="100"
+                    VerticalAlignment="Center"
+                    hc:InfoElement.Title="{ex:Language Key='pH警报下限'}"
+                    BorderBrush="Gray"
+                    Style="{StaticResource TextBoxExtend}"
+                    Text="{Binding PHLowerLimit, UpdateSourceTrigger=LostFocus}" />
+                <TextBox
+                    Width="100"
+                    VerticalAlignment="Center"
+                    hc:InfoElement.Title="{ex:Language Key='pH警报上限'}"
+                    BorderBrush="Gray"
+                    Style="{StaticResource TextBoxExtend}"
+                    Text="{Binding PHUpperLimit, UpdateSourceTrigger=LostFocus}" />
+            </hc:UniformSpacingPanel>
+            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                <TextBox
+                    Width="100"
+                    VerticalAlignment="Center"
+                    hc:InfoElement.Title="{ex:Language Key='消泡累积量阈值'}"
+                    BorderBrush="Gray"
+                    Style="{StaticResource TextBoxExtend}"
+                    Text="{Binding AFThreshold, UpdateSourceTrigger=LostFocus}" />
+                <!--<CheckBox VerticalAlignment="Bottom"
+                          Content="超出阈值，是否报警"
+                          IsChecked="{Binding IsAFAlarm, UpdateSourceTrigger=PropertyChanged}" />-->
+            </hc:UniformSpacingPanel>
+        </hc:UniformSpacingPanel>
+        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="30">
+            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="30">
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='泵1总量'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Pump1Total, UpdateSourceTrigger=LostFocus}" />
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='泵1警报阈值'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Pump1Threshold, UpdateSourceTrigger=LostFocus}" />
+                    </hc:UniformSpacingPanel>
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='泵2总量'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Pump2Total, UpdateSourceTrigger=LostFocus}" />
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='泵2警报阈值'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Pump2Threshold, UpdateSourceTrigger=LostFocus}" />
+                    </hc:UniformSpacingPanel>
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='泵3总量'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Pump3Total, UpdateSourceTrigger=LostFocus}" />
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='泵3警报阈值'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Pump3Threshold, UpdateSourceTrigger=LostFocus}" />
+                    </hc:UniformSpacingPanel>
+                </hc:UniformSpacingPanel>
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="30">
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='泵4总量'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Pump4Total, UpdateSourceTrigger=LostFocus}" />
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='泵4警报阈值'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Pump4Threshold, UpdateSourceTrigger=LostFocus}" />
+                    </hc:UniformSpacingPanel>
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='泵5总量'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Pump5Total, UpdateSourceTrigger=LostFocus}" />
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='泵5警报阈值'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Pump5Threshold, UpdateSourceTrigger=LostFocus}" />
+                    </hc:UniformSpacingPanel>
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='泵6总量'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Pump6Total, UpdateSourceTrigger=LostFocus}" />
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='泵6警报阈值'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding Pump6Threshold, UpdateSourceTrigger=LostFocus}" />
+                    </hc:UniformSpacingPanel>
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='蠕动泵误差阈值'}"
+                            BorderBrush="Gray"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding PumpTotalThreshold, UpdateSourceTrigger=LostFocus}" />
+
+                    </hc:UniformSpacingPanel>
+                </hc:UniformSpacingPanel>
+            </hc:UniformSpacingPanel>
+        </hc:UniformSpacingPanel>
+    </hc:UniformSpacingPanel>
+</UserControl>

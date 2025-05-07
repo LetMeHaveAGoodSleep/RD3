@@ -68,7 +68,7 @@
                                 Margin="5"
                                 Source="/Assets/logo.png" />
                             <TextBlock
-                                Margin="4,4,0,8"
+                                Margin="5"
                                 FontSize="{StaticResource LargeFontSize}"
                                 FontWeight="Bold"
                                 Foreground="White"
@@ -128,6 +128,11 @@
                                 Click="MenuItem_Open_Click"
                                 Header="曲线设置"
                                 Tag="DeviceNodesView" />
+                            <MenuItem
+                                Width="100"
+                                Click="MenuItem_Open_Click"
+                                Header="阈值设置"
+                                Tag="WarnParamView" />
                             <!--<MenuItem Header="项目" Width = "100" />
                             <MenuItem Header="版本" Width = "100" />-->
                         </MenuItem>
@@ -335,7 +340,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <!--  图表  -->
-                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="auto" />
                                 <!--  图表菜单  -->
                             </Grid.ColumnDefinitions>
                             <Grid Name="chartGrid" Grid.Column="0">
@@ -349,7 +354,10 @@
                                 </Grid>
                             </Grid>
 
-                            <Grid Name="chartFlag" Grid.Column="1">
+                            <Grid
+                                Name="chartFlag"
+                                Grid.Column="1"
+                                Margin="10,0,10,0">
                                 <!--  图表选项  -->
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="40" />
@@ -372,112 +380,98 @@
                                 <CheckBox
                                     Name="Temp"
                                     Grid.Row="0"
+                                    Content="温度"
                                     IsChecked="True"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged">
-                                    Temp
-                                </CheckBox>
+                                    Unchecked="cb_checkChanged" />
 
                                 <CheckBox
                                     Name="Air"
                                     Grid.Row="1"
+                                    Content="Air"
                                     IsChecked="True"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged">
-                                    Air
-                                </CheckBox>
+                                    Unchecked="cb_checkChanged" />
                                 <CheckBox
                                     Name="DO"
                                     Grid.Row="2"
+                                    Content="溶氧"
                                     IsChecked="True"
                                     Tag="1"
-                                    Unchecked="cb_checkChanged">
-                                    DO
-                                </CheckBox>
+                                    Unchecked="cb_checkChanged" />
 
                                 <CheckBox
                                     Name="pH"
                                     Grid.Row="3"
+                                    Content="pH"
                                     IsChecked="True"
                                     Tag="1"
-                                    Unchecked="cb_checkChanged">
-                                    pH
-                                </CheckBox>
+                                    Unchecked="cb_checkChanged" />
                                 <CheckBox
                                     Name="Agit"
                                     Grid.Row="4"
+                                    Content="转速"
                                     IsChecked="True"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged">
-                                    Agit
-                                </CheckBox>
+                                    Unchecked="cb_checkChanged" />
 
 
                                 <CheckBox
-                                    Name="AcidPump"
+                                    Name="AcidPumpFlowRate"
                                     Grid.Row="5"
+                                    Content="酸泵流速"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged">
-                                    AcidPump
-                                </CheckBox>
+                                    Unchecked="cb_checkChanged" />
                                 <CheckBox
-                                    Name="BasePump"
+                                    Name="BasePumpFlowRate"
                                     Grid.Row="6"
+                                    Content="碱泵流速"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged">
-                                    BasePump
-                                </CheckBox>
+                                    Unchecked="cb_checkChanged" />
                                 <CheckBox
-                                    Name="AFPump"
+                                    Name="FeedPumpFlowRate"
                                     Grid.Row="7"
+                                    Content="补料泵流速"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged">
-                                    AFPump
-                                </CheckBox>
+                                    Unchecked="cb_checkChanged" />
                                 <CheckBox
-                                    Name="FeedPump"
+                                    Name="AFPumpFlowRate"
                                     Grid.Row="8"
+                                    Content="消泡泵流速"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged">
-                                    FeedPump
-                                </CheckBox>
-
+                                    Unchecked="cb_checkChanged" />
                                 <CheckBox
-                                    Name="AcidFlowCapacity"
+                                    Name="AcidPumpFlow"
                                     Grid.Row="9"
+                                    Content="酸泵累积量"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged">
-                                    AcidFlowCapacity
-                                </CheckBox>
+                                    Unchecked="cb_checkChanged" />
                                 <CheckBox
-                                    Name="BaseFlowCapacity"
+                                    Name="BasePumpFlow"
                                     Grid.Row="10"
+                                    Content="碱泵累积量"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged">
-                                    BaseFlowCapacity
-                                </CheckBox>
+                                    Unchecked="cb_checkChanged" />
                                 <CheckBox
-                                    Name="FeedFlowCapacity"
+                                    Name="FeedPumpFlow"
                                     Grid.Row="11"
+                                    Content="补料泵累积量"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged">
-                                    FeedFlowCapacity
-                                </CheckBox>
+                                    Unchecked="cb_checkChanged" />
                                 <CheckBox
-                                    Name="AFFlowCapacity"
+                                    Name="AFPumpFlow"
                                     Grid.Row="12"
+                                    Content="消泡泵累积量"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged">
-                                    AFFlowCapacity
-                                </CheckBox>
+                                    Unchecked="cb_checkChanged" />
                             </Grid>
                         </Grid>
                         <DataGrid
