@@ -983,3 +983,5 @@ D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\CameraSetting.json
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\CameraView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\WarnParamView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\WarnParamView.baml
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AddBatchInfoView.g.cs
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AddBatchInfoView.baml

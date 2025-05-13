@@ -242,7 +242,7 @@
                 <Grid Name="ContentGrid" Grid.Row="2">
                     <!--  内容区  -->
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="280" />
+                        <ColumnDefinition Width="320" />
                         <!--  左侧设备预览  -->
                         <ColumnDefinition Width="*" />
                         <!--  右侧图表+Log日志显示区  -->
@@ -255,7 +255,6 @@
                             <RowDefinition Height="*" />
                             <!--  设备详情  -->
                         </Grid.RowDefinitions>
-
                         <DataGrid
                             x:Name="devieceGrid"
                             Grid.Row="0"
@@ -268,6 +267,17 @@
                             SelectionChanged="DataGrid_SelectionChanged">
 
                             <DataGrid.Columns>
+                                <DataGridTemplateColumn
+                                    Width="60"
+                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                    Header="曲线"
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding CurveDisplay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <!--  设备列表  -->
                                 <DataGridTextColumn
                                     Width="80"
@@ -279,7 +289,7 @@
                                     IsReadOnly="True" />
                                 <DataGridTextColumn
                                     Width="*"
-                                    Binding="{Binding statue}"
+                                    Binding="{Binding Status}"
                                     CanUserSort="False"
                                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="运行状态"
@@ -302,26 +312,32 @@
                             Grid.Row="1"
                             AutoGenerateColumns="False"
                             Background="{x:Null}"
+                            CanUserSortColumns="False"
+                            IsReadOnly="True"
                             ItemsSource="{Binding DevieceInfo}"
-                            RowHeight="30">
+                            MinRowHeight="30">
                             <!--  设备详情  -->
                             <DataGrid.Columns>
                                 <DataGridTextColumn
-                                    Width="*"
+                                    Width="auto"
                                     Binding="{Binding DescriptionName}"
-                                    CanUserSort="False"
                                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="名称"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                                    IsReadOnly="True" />
-                                <DataGridTextColumn
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                <DataGridTemplateColumn
                                     Width="*"
-                                    Binding="{Binding DescriptionValue}"
-                                    CanUserSort="False"
                                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="R01"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                                    IsReadOnly="True" />
+                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Text="{Binding DescriptionValue}"
+                                                TextWrapping="Wrap" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
@@ -330,7 +346,7 @@
                         <!--  图表和日志  -->
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="660" />
+                            <RowDefinition Height="3*" />
                             <!--  图表  -->
                             <RowDefinition Height="*" />
                             <!--  日志  -->
@@ -353,11 +369,10 @@
                                     <wpf:WpfPlot Name="wpfPlot" />
                                 </Grid>
                             </Grid>
-
                             <Grid
                                 Name="chartFlag"
                                 Grid.Column="1"
-                                Margin="10,0,10,0">
+                                Margin="20,0,20,0">
                                 <!--  图表选项  -->
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="40" />
@@ -384,13 +399,12 @@
                                     IsChecked="True"
                                     Tag="0"
                                     Unchecked="cb_checkChanged" />
-
                                 <CheckBox
-                                    Name="Air"
+                                    Name="pH"
                                     Grid.Row="1"
-                                    Content="Air"
+                                    Content="pH"
                                     IsChecked="True"
-                                    Tag="0"
+                                    Tag="1"
                                     Unchecked="cb_checkChanged" />
                                 <CheckBox
                                     Name="DO"
@@ -399,79 +413,84 @@
                                     IsChecked="True"
                                     Tag="1"
                                     Unchecked="cb_checkChanged" />
-
-                                <CheckBox
-                                    Name="pH"
-                                    Grid.Row="3"
-                                    Content="pH"
-                                    IsChecked="True"
-                                    Tag="1"
-                                    Unchecked="cb_checkChanged" />
                                 <CheckBox
                                     Name="Agit"
-                                    Grid.Row="4"
+                                    Grid.Row="3"
                                     Content="转速"
                                     IsChecked="True"
                                     Tag="0"
                                     Unchecked="cb_checkChanged" />
-
-
+                                <CheckBox
+                                    Name="Air"
+                                    Grid.Row="4"
+                                    Content="Air"
+                                    IsChecked="True"
+                                    Tag="0"
+                                    Unchecked="cb_checkChanged" />
                                 <CheckBox
                                     Name="AcidPumpFlowRate"
                                     Grid.Row="5"
                                     Content="酸泵流速"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged" />
+                                    Unchecked="cb_checkChanged"
+                                    Visibility="Collapsed" />
                                 <CheckBox
                                     Name="BasePumpFlowRate"
                                     Grid.Row="6"
                                     Content="碱泵流速"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged" />
+                                    Unchecked="cb_checkChanged"
+                                    Visibility="Collapsed" />
                                 <CheckBox
                                     Name="FeedPumpFlowRate"
                                     Grid.Row="7"
                                     Content="补料泵流速"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged" />
+                                    Unchecked="cb_checkChanged"
+                                    Visibility="Collapsed" />
                                 <CheckBox
                                     Name="AFPumpFlowRate"
                                     Grid.Row="8"
                                     Content="消泡泵流速"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged" />
+                                    Unchecked="cb_checkChanged"
+                                    Visibility="Collapsed" />
                                 <CheckBox
                                     Name="AcidPumpFlow"
                                     Grid.Row="9"
                                     Content="酸泵累积量"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged" />
+                                    Unchecked="cb_checkChanged"
+                                    Visibility="Collapsed" />
                                 <CheckBox
                                     Name="BasePumpFlow"
                                     Grid.Row="10"
                                     Content="碱泵累积量"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged" />
+                                    Unchecked="cb_checkChanged"
+                                    Visibility="Collapsed" />
                                 <CheckBox
                                     Name="FeedPumpFlow"
                                     Grid.Row="11"
                                     Content="补料泵累积量"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged" />
+                                    Unchecked="cb_checkChanged"
+                                    Visibility="Collapsed" />
                                 <CheckBox
                                     Name="AFPumpFlow"
                                     Grid.Row="12"
                                     Content="消泡泵累积量"
                                     IsChecked="False"
                                     Tag="0"
-                                    Unchecked="cb_checkChanged" />
+                                    Unchecked="cb_checkChanged"
+                                    Visibility="Collapsed" />
                             </Grid>
                         </Grid>
                         <DataGrid
@@ -539,25 +558,6 @@
                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <!--<DataGrid
-                            Name="LogDetail"
-                            Grid.Row="1"
-                            Background="{x:Null}">
-                        -->
-                        <!--  设备详情  -->
-                        <!--
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Width="70" Header="记录ID" />
-                                <DataGridTextColumn Width="70" Header="反应器" />
-                                <DataGridTextColumn Width="70" Header="批次ID" />
-                                <DataGridTextColumn Width="100" Header="日期和时间" />
-                                <DataGridTextColumn Width="*" Header="事件和评论" />
-                                <DataGridTextColumn Width="80" Header="记录类型" />
-                                <DataGridTextColumn Width="70" Header="操作员" />
-                                <DataGridTextColumn Width="70" Header="来宾" />
-                                <DataGridTextColumn Width="70" Header="状态" />
-                            </DataGrid.Columns>
-                        </DataGrid>-->
                     </Grid>
                 </Grid>
             </Grid>

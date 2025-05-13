@@ -11,7 +11,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
-    MinWidth="1000"
+    MinWidth="900"
     MinHeight="600"
     d:DataContext="{d:DesignInstance Type=viewmodels:NewBatchViewModel}"
     d:DesignHeight="600"
@@ -150,18 +150,29 @@
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="创建者"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-
                 <DataGridTextColumn
                     Width="60"
-                    Binding="{Binding statue}"
+                    Binding="{Binding Status}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="状态"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                <DataGridTextColumn
+                    Width="120"
+                    Binding="{Binding Strain}"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="菌种信息"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                <DataGridTextColumn
+                    Width="120"
+                    Binding="{Binding Tester}"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="测试人员"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="300"
                     Binding="{Binding description}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="说明"
+                    Header="备注"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTemplateColumn
                     Width="50"

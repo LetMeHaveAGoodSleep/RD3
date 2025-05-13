@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\20250415-001\RD3\RD3\App.xaml
-541977556985
+55885116352
 3271424504
-156341210030
+158-2092951400
 2521617594105
-Controls\IndicatorLight.xaml;Themes\Brushes.xaml;Themes\Colors.xaml;Themes\Converters.xaml;Themes\Geometry.xaml;Themes\ProgressRing.xaml;Themes\Sizes.xaml;Themes\Styles\Button.xaml;Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AddOffLineDatasView.xaml;Views\AddOffLineDataView.xaml;Views\AlarmThresholdView.xaml;Views\AuditView.xaml;Views\CalibrationView.xaml;Views\CameraImageView.xaml;Views\CameraView.xaml;Views\ChooseReactorView.xaml;Views\CompareBatchView.xaml;Views\DeviceNodesView.xaml;Views\DOAssociateView.xaml;Views\DOEDesignView.xaml;Views\DOEMainView.xaml;Views\DOTimeSeriesView.xaml;Views\EditBatchIDView.xaml;Views\EditUserView.xaml;Views\ErrorView.xaml;Views\FeedGradientView.xaml;Views\FeedStrategyView.xaml;Views\FlashOverlayWindow.xaml;Views\ItemCalibrationView.xaml;Views\ItemPumpCalibrationView.xaml;Views\LoginView.xaml;Views\MCUDebugView.xaml;Views\MsgView.xaml;Views\NewBatchView.xaml;Views\NewFeedView.xaml;Views\NewMainView.xaml;Views\OffLineDatasView.xaml;Views\OutputBatchDataView.xaml;Views\ParameterSourceView.xaml;Views\ParameterView.xaml;Views\PHControlView.xaml;Views\PidView.xaml;Views\ProgressView.xaml;Views\PumpMFCView.xaml;Views\ReactorView.xaml;Views\RegisterView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\SettingView.xaml;Views\TimeSeriesView.xaml;Views\UserView.xaml;Views\WarnParamView.xaml;
+Controls\IndicatorLight.xaml;Themes\Brushes.xaml;Themes\Colors.xaml;Themes\Converters.xaml;Themes\Geometry.xaml;Themes\ProgressRing.xaml;Themes\Sizes.xaml;Themes\Styles\Button.xaml;Themes\WaveAnimation.xaml;Views\AboutView.xaml;Views\AddBatchInfoView.xaml;Views\AddOffLineDatasView.xaml;Views\AddOffLineDataView.xaml;Views\AlarmThresholdView.xaml;Views\AuditView.xaml;Views\CalibrationView.xaml;Views\CameraImageView.xaml;Views\CameraView.xaml;Views\ChooseReactorView.xaml;Views\CompareBatchView.xaml;Views\DeviceNodesView.xaml;Views\DOAssociateView.xaml;Views\DOEDesignView.xaml;Views\DOEMainView.xaml;Views\DOTimeSeriesView.xaml;Views\EditBatchIDView.xaml;Views\EditUserView.xaml;Views\ErrorView.xaml;Views\FeedGradientView.xaml;Views\FeedStrategyView.xaml;Views\FlashOverlayWindow.xaml;Views\ItemCalibrationView.xaml;Views\ItemPumpCalibrationView.xaml;Views\LoginView.xaml;Views\MCUDebugView.xaml;Views\MsgView.xaml;Views\NewBatchView.xaml;Views\NewFeedView.xaml;Views\NewMainView.xaml;Views\OffLineDatasView.xaml;Views\OutputBatchDataView.xaml;Views\ParameterSourceView.xaml;Views\ParameterView.xaml;Views\PHControlView.xaml;Views\PidView.xaml;Views\ProgressView.xaml;Views\PumpMFCView.xaml;Views\ReactorView.xaml;Views\RegisterView.xaml;Views\SampleView.xaml;Views\SelfCheckView.xaml;Views\SettingView.xaml;Views\TimeSeriesView.xaml;Views\UserView.xaml;Views\WarnParamView.xaml;
 
 False
 
