@@ -29,120 +29,153 @@
         <Grid>
             <Grid.RowDefinitions>
                 <!--  操作按钮  -->
-                <RowDefinition Height="70" />
+                <RowDefinition Height="auto" />
                 <!--  数据表格  -->
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Grid Name="controlButtons">
-                <!--  操作按钮  -->
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="120" />
-                    <ColumnDefinition Width="120" />
-                </Grid.ColumnDefinitions>
-                <Button
-                    Name="DeleteRow"
-                    Grid.Column="1"
-                    Width="80"
-                    Height="40"
-                    Background="SkyBlue"
-                    Click="DeleteRow_Click"
-                    Content="删除数据" />
-                <!--  Command="{Binding SaveCommand}"  -->
-                <Button
-                    Name="SaveColumn"
-                    Grid.Column="2"
-                    Width="80"
-                    Height="40"
-                    Background="SkyBlue"
-                    Click="SaveColumn_Click"
-                    Content="保存数据" />
-            </Grid>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <DataGrid
-                    Name="dataGrid"
-                    Grid.Column="0"
-                    hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
-                    hc:DataGridAttach.ShowSelectAllButton="False"
-                    AutoGenerateColumns="False"
-                    Background="{StaticResource DefaultBrush}"
-                    CanUserAddRows="True"
-                    CanUserSortColumns="False"
-                    CellEditEnding="dataGrid_CellEditEnding"
-                    ColumnWidth="SizeToHeader"
-                    GridLinesVisibility="All"
-                    HeadersVisibility="Column"
-                    HorizontalGridLinesBrush="LightGray"
-                    IsReadOnly="False"
-                    ItemsSource="{Binding FeedGradientInfos}"
-                    LayoutUpdated="DataGridMain_OnLayoutUpdated"
-                    RowHeaderWidth="100"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    SelectionMode="Single"
-                    SelectionUnit="Cell"
-                    VerticalGridLinesBrush="LightGray">
-                    <DataGrid.Columns>
-                        <!--  设备列表  -->
-                        <DataGridTextColumn
-                            Width="120"
-                            Binding="{Binding beginTime}"
-                            CanUserSort="True"
-                            Header="开始时间"
-                            IsReadOnly="False"
-                            Visibility="Collapsed" />
-                        <DataGridTextColumn
-                            Width="120"
-                            Binding="{Binding endTime}"
-                            CanUserSort="False"
-                            Header="结束时间"
-                            IsReadOnly="False"
-                            Visibility="Collapsed" />
-                        <!--  Binding="{Binding infoType}"  -->
-                        <DataGridComboBoxColumn
-                            x:Name="colType"
-                            Width="180"
-                            CanUserSort="False"
-                            Header="类型"
-                            IsReadOnly="False"
-                            SelectedValueBinding="{Binding infoType, UpdateSourceTrigger=PropertyChanged}" />
-
-                        <DataGridTextColumn
-                            Width="120"
-                            Binding="{Binding a}"
-                            CanUserSort="False"
-                            Header="参数1"
-                            IsReadOnly="False" />
-                        <DataGridTextColumn
-                            Width="120"
-                            Binding="{Binding b}"
-                            CanUserSort="False"
-                            Header="参数2"
-                            IsReadOnly="False" />
-                        <DataGridTextColumn
-                            Width="120"
-                            Binding="{Binding c}"
-                            CanUserSort="False"
-                            Header="参数3"
-                            IsReadOnly="False" />
-                        <DataGridTextColumn
-                            Width="120"
-                            Binding="{Binding d}"
-                            CanUserSort="False"
-                            Header="参数4"
-                            IsReadOnly="False" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding Description}"
-                            CanUserSort="False"
-                            Header="描述"
-                            IsReadOnly="False" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
+            <DockPanel
+                Margin="5"
+                LastChildFill="False"
+                Visibility="Collapsed">
+                <hc:UniformSpacingPanel
+                    DockPanel.Dock="Right"
+                    Orientation="Horizontal"
+                    Spacing="10">
+                    <Button
+                        Name="DeleteRow"
+                        Grid.Column="1"
+                        Width="80"
+                        Height="30"
+                        Click="DeleteRow_Click"
+                        Content="删除数据"
+                        Style="{StaticResource ButtonPrimary}" />
+                    <Button
+                        Name="SaveColumn"
+                        Grid.Column="2"
+                        Width="80"
+                        Height="30"
+                        Click="SaveColumn_Click"
+                        Content="保存数据"
+                        Style="{StaticResource ButtonPrimary}" />
+                </hc:UniformSpacingPanel>
+            </DockPanel>
+            <DataGrid
+                Name="dataGrid"
+                Grid.Row="1"
+                hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
+                hc:DataGridAttach.ShowSelectAllButton="False"
+                AutoGenerateColumns="False"
+                Background="{StaticResource DefaultBrush}"
+                CanUserAddRows="False"
+                CanUserSortColumns="False"
+                CellEditEnding="dataGrid_CellEditEnding"
+                ColumnWidth="SizeToHeader"
+                GridLinesVisibility="All"
+                HeadersVisibility="Column"
+                HorizontalGridLinesBrush="LightGray"
+                IsReadOnly="False"
+                ItemsSource="{Binding FeedStrategyInfos}"
+                LayoutUpdated="DataGridMain_OnLayoutUpdated"
+                RowHeaderWidth="100"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                SelectionMode="Single"
+                SelectionUnit="Cell"
+                VerticalGridLinesBrush="LightGray">
+                <DataGrid.Columns>
+                    <DataGridComboBoxColumn
+                        x:Name="colType"
+                        Width="180"
+                        CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="策略类型"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                        IsReadOnly="False"
+                        SelectedValueBinding="{Binding InfoType, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTemplateColumn
+                        Width="auto"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="Stat参数"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                    <RadioButton
+                                        Content="常量"
+                                        IsChecked="{Binding IsConstant, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{Binding IsEnabled}" />
+                                    <RadioButton
+                                        Content="多项式"
+                                        IsChecked="{Binding IsPolynomial, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{Binding IsEnabled}" />
+                                    <RadioButton
+                                        Content="指数"
+                                        IsChecked="{Binding IsExp, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{Binding IsEnabled}" />
+                                </hc:ButtonGroup>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                    <RadioButton
+                                        Content="常量"
+                                        IsChecked="{Binding IsConstant, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{Binding IsEnabled}" />
+                                    <RadioButton
+                                        Content="多项式"
+                                        IsChecked="{Binding IsPolynomial, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{Binding IsEnabled}" />
+                                    <RadioButton
+                                        Content="指数"
+                                        IsChecked="{Binding IsExp, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{Binding IsEnabled}" />
+                                </hc:ButtonGroup>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn
+                        Width="120"
+                        Binding="{Binding A}"
+                        CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="参数1"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                        IsReadOnly="True" />
+                    <DataGridTextColumn
+                        Width="120"
+                        Binding="{Binding B}"
+                        CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="参数2"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="120"
+                        Binding="{Binding C}"
+                        CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="参数3"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="120"
+                        Binding="{Binding D}"
+                        CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="参数4"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                        IsReadOnly="False" />
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Description}"
+                        CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextLeftCellStyle}"
+                        Header="描述"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                        IsReadOnly="True" />
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
 
     </Border>

@@ -570,9 +570,14 @@
                                                     CommandParameter="DO"
                                                     Header="时间序列设置" />
                                                 <Separator />
-                                                <MenuItem Command="{Binding DoAssociateCommand}" Header="级联控制通气量阶梯表" />
+                                                <MenuItem Command="{Binding DoAssociateCommand}" Header="策略设置" />
                                                 <Separator />
                                                 <MenuItem Command="{Binding DOOPCommand}" Header="功率设置" />
+                                                <Separator />
+                                                <MenuItem
+                                                    Header="启用mid-ranging策略"
+                                                    IsCheckable="True"
+                                                    IsChecked="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                             </ContextMenu>
                                         </TextBox.ContextMenu>
                                     </TextBox>
@@ -818,7 +823,7 @@
                                     <TextBox
                                         Width="75"
                                         VerticalAlignment="Center"
-                                        hc:InfoElement.Title="{ex:Language Key='PH'}"
+                                        hc:InfoElement.Title="{ex:Language Key='pH'}"
                                         Style="{StaticResource TextBoxExtend}"
                                         Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, UpdateSourceTrigger=LostFocus}">
                                         <TextBox.ContextMenu>
@@ -1123,6 +1128,16 @@
                                             <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
                                             <Separator />
                                             <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
+                                            <!--<Separator />
+                                            <MenuItem
+                                                Header="启用DO-stat"
+                                                IsCheckable="True"
+                                                IsChecked="{Binding CurrentDeviceParameter.FeedParam1.IsDOStat, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Separator />
+                                            <MenuItem
+                                                Header="启用pH-stat"
+                                                IsCheckable="True"
+                                                IsChecked="{Binding CurrentDeviceParameter.FeedParam1.IspHStat, UpdateSourceTrigger=PropertyChanged}" />-->
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
                                 </TextBox>
@@ -1146,10 +1161,10 @@
                                     <ComboBoxItem Content="多项式" />
                                     <ComboBoxItem Content="指数" />
                                     <ComboBoxItem Content="时间序列" />
-                                    <ComboBoxItem Content="关联DO_流速" />
-                                    <ComboBoxItem Content="关联PH_流速" />
-                                    <ComboBoxItem Content="关联DO_总量" />
-                                    <ComboBoxItem Content="关联PH_总量" />
+                                    <ComboBoxItem Content="DO_stat(速度)" />
+                                    <ComboBoxItem Content="pH_stat(速度)" />
+                                    <ComboBoxItem Content="DO_stat(总量)" />
+                                    <ComboBoxItem Content="pH_stat(总量)" />
                                 </ComboBox>
                                 <ToggleButton
                                     Width="75"

@@ -1,0 +1,46 @@
+[
+  {
+    "DeviceName": "G01",
+    "AgitLowerLimit": 100,
+    "AgitUpperLimit": 1500,
+    "AgitHigh": 1200,
+    "Unit": 1,
+    "InitialAir": 0.5,
+    "AirUpperLimit": 2,
+    "InitialTemp": 37,
+    "TempLowerLimit": 25
+  },
+  {
+    "DeviceName": "G02",
+    "AgitLowerLimit": 100,
+    "AgitUpperLimit": 1500,
+    "AgitHigh": 1200,
+    "Unit": 1,
+    "InitialAir": 0.5,
+    "AirUpperLimit": 2,
+    "InitialTemp": 37,
+    "TempLowerLimit": 25
+  },
+  {
+    "DeviceName": "G03",
+    "AgitLowerLimit": 100,
+    "AgitUpperLimit": 1500,
+    "AgitHigh": 1200,
+    "Unit": 1,
+    "InitialAir": 0.5,
+    "AirUpperLimit": 2,
+    "InitialTemp": 37,
+    "TempLowerLimit": 25
+  },
+  {
+    "DeviceName": "G04",
+    "AgitLowerLimit": 100,
+    "AgitUpperLimit": 1500,
+    "AgitHigh": 1200,
+    "Unit": 1,
+    "InitialAir": 0.5,
+    "AirUpperLimit": 2,
+    "InitialTemp": 37,
+    "TempLowerLimit": 25
+  }
+]
