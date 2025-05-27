@@ -4,31 +4,47 @@
     "Pump2": "BasePump",
     "Pump3": "FeedPump",
     "Pump4": "AFPump",
+    "Pump5": "None",
+    "Pump6": "None",
     "MFC1": "Air",
-    "MFC2": "O2"
+    "MFC2": "O2",
+    "MFC3": "CO2",
+    "MFC4": "N2"
   },
   "G02": {
     "Pump1": "AcidPump",
     "Pump2": "BasePump",
     "Pump3": "FeedPump",
     "Pump4": "AFPump",
+    "Pump5": "None",
+    "Pump6": "None",
     "MFC1": "Air",
-    "MFC2": "O2"
+    "MFC2": "O2",
+    "MFC3": "CO2",
+    "MFC4": "N2"
   },
   "G03": {
     "Pump1": "AcidPump",
     "Pump2": "BasePump",
     "Pump3": "FeedPump",
     "Pump4": "AFPump",
+    "Pump5": "None",
+    "Pump6": "None",
     "MFC1": "Air",
-    "MFC2": "O2"
+    "MFC2": "O2",
+    "MFC3": "CO2",
+    "MFC4": "N2"
   },
   "G04": {
     "Pump1": "AcidPump",
     "Pump2": "BasePump",
     "Pump3": "FeedPump",
     "Pump4": "AFPump",
+    "Pump5": "None",
+    "Pump6": "None",
     "MFC1": "Air",
-    "MFC2": "O2"
+    "MFC2": "O2",
+    "MFC3": "CO2",
+    "MFC4": "N2"
   }
 }

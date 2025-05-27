@@ -21,20 +21,14 @@
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
+							<id>Enable</id>
+							<name>使能</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
 							<id>Temp</id>
 							<name>温度</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>TempLower</id>
-							<name>温度下限</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>TempUpper</id>
-							<name>温度上限</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
@@ -76,8 +70,8 @@
 						<param>
 							<id>Agit</id>
 							<name>转速</name>
-							<type>float</type>
-							<length>1</length>
+							<type>byte</type>
+							<length>4</length>
 						</param>
 					</parameters>
 				</commandExtend>
@@ -100,7 +94,7 @@
 
 		<commandDesc>
 			<id>RWPeristalticPumpControl</id>
-			<name>读写蠕动泵</name>
+			<name>读写蠕动泵控制</name>
 			<commandCode>0x03</commandCode>
 			<timeOut>3000</timeOut>
 			<tryTimes>3</tryTimes>
@@ -119,39 +113,8 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xaa</id>
-					<name>ReadResponse</name>
-					<parameters>
-						<param>
-							<id>SerialNo</id>
-							<name>泵编号</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>ControlMode</id>
-							<name>控制模式</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>FlowSpeed</id>
-							<name>流速</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>FlowCapacity</id>
-							<name>流量</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0x66</id>
-					<name>Write</name>
+					<id>0xff</id>
+					<name>ReadWrite</name>
 					<parameters>
 						<param>
 							<id>SerialNo</id>
@@ -209,55 +172,41 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xaa</id>
-					<name>ReadResponse</name>
+					<id>0xff</id>
+					<name>ReadWrite</name>
 					<parameters>
 						<param>
-							<id>HasFoam</id>
-							<name>有无气泡</name>
+							<id>Enable</id>
+							<name>使能</name>
 							<type>byte</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>SensorEnable</id>
-							<name>传感器启用</name>
+							<id>PumpNo</id>
+							<name>泵编号</name>
 							<type>byte</type>
 							<length>1</length>
 						</param>
-					</parameters>
-				</commandExtend>
-				
-				<commandExtend>
-					<id>0x66</id>
-					<name>Write</name>
-					<parameters>
 						<param>
-							<id>Cycle</id>
+							<id>FlowRate</id>
+							<name>泵流速</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>CheckCycle</id>
 							<name>检测周期</name>
 							<type>byte</type>
 							<length>4</length>
 						</param>
 						<param>
-							<id>TimeRatio</id>
-							<name>时间占比</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>SensorEnable</id>
-							<name>传感器启用</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>FlowSpeed</id>
-							<name>消泡速度</name>
+							<id>DutyCycle</id>
+							<name>占空比</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 					</parameters>
 				</commandExtend>
-
 				<commandExtend>
 					<id>0x88</id>
 					<name>WriteResponse</name>
@@ -295,27 +244,8 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xaa</id>
-					<name>ReadResponse</name>
-					<parameters>
-						<param>
-							<id>SerialNo</id>
-							<name>MFC编号</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>FlowSpeed</id>
-							<name>流速</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0x66</id>
-					<name>Write</name>
+					<id>0xff</id>
+					<name>ReadWrite</name>
 					<parameters>
 						<param>
 							<id>SerialNo</id>
@@ -376,80 +306,6 @@
 							<type>byte</type>
 							<length>4</length>
 						</param>
-						<param>
-							<id>Reserve</id>
-							<name>预留字段</name>
-							<type>byte</type>
-							<length>4</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0x88</id>
-					<name>WriteResponse</name>
-					<parameters>
-						<param>
-							<id>ResponseValue</id>
-							<name>写回应</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-			</commandExtends>
-		</commandDesc>
-
-		<commandDesc>
-			<id>RWFunctionControl</id>
-			<name>读写功能控制</name>
-			<commandCode>0x08</commandCode>
-			<timeOut>3000</timeOut>
-			<tryTimes>3</tryTimes>
-			<commandExtends>
-				<commandExtend>
-					<id>0x55</id>
-					<name>Read</name>
-					<parameters>
-						<param>
-							<id>Object</id>
-							<name>控制对象</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0xaa</id>
-					<name>ReadResponse</name>
-					<parameters>
-						<param>
-							<id>Mode</id>
-							<name>控制模式</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0x66</id>
-					<name>Write</name>
-					<parameters>
-						<param>
-							<id>Object</id>
-							<name>控制对象</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>Mode</id>
-							<name>控制模式</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
 					</parameters>
 				</commandExtend>
 
@@ -506,102 +362,144 @@
 						<param>
 							<id>Agit</id>
 							<name>转速</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>Pump1FlowRate</id>
+							<name>泵1流量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>AcidFlowSpeed</id>
-							<name>酸泵流速</name>
+							<id>Pump1Flow</id>
+							<name>泵1流量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>AcidFlowCapacity</id>
-							<name>酸泵流量</name>
+							<id>Pump1FlowTotal</id>
+							<name>泵1总量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>BaseFlowSpeed</id>
-							<name>碱泵流速</name>
+							<id>Pump2FlowRate</id>
+							<name>泵2流量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>BaseFlowCapacity</id>
-							<name>碱泵流量</name>
+							<id>Pump2Flow</id>
+							<name>泵2流量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>FeedFlowSpeed</id>
-							<name>补料泵流速</name>
+							<id>Pump2FlowTotal</id>
+							<name>泵2总量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>FeedFlowCapacity</id>
-							<name>补料泵流量</name>
+							<id>Pump3FlowRate</id>
+							<name>泵3流量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>AFFlowSpeed</id>
-							<name>消泡泵流速</name>
+							<id>Pump3Flow</id>
+							<name>泵3流量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>AFFlowCapacity</id>
-							<name>消泡泵流量</name>
+							<id>Pump3FlowTotal</id>
+							<name>泵3总量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>AirFlowSpeed</id>
-							<name>空气流速</name>
+							<id>Pump4FlowRate</id>
+							<name>泵4流量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>AirFlowCapacity</id>
-							<name>空气流量</name>
+							<id>Pump4Flow</id>
+							<name>泵4流量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>O2FlowSpeed</id>
-							<name>氧气流速</name>
+							<id>Pump4FlowTotal</id>
+							<name>泵4总量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>O2FlowCapacity</id>
-							<name>氧气流量</name>
+							<id>Pump5FlowRate</id>
+							<name>泵5流量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>CO2FlowSpeed</id>
-							<name>二氧化碳流速</name>
+							<id>Pump5Flow</id>
+							<name>泵5流量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>CO2FlowCapacity</id>
-							<name>二氧化碳流量</name>
+							<id>Pump5FlowTotal</id>
+							<name>泵5总量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>N2FlowSpeed</id>
-							<name>氮气流速</name>
+							<id>MFC1FlowRate</id>
+							<name>MFC1流量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
-							<id>N2FlowCapacity</id>
-							<name>氮气流量</name>
+							<id>MFC1FlowCapacity</id>
+							<name>MFC1总量</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>MFC2FlowRate</id>
+							<name>MFC2流量</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>MFC2FlowCapacity</id>
+							<name>MFC2总量</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>MFC3FlowRate</id>
+							<name>MFC3流量</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>MFC3FlowCapacity</id>
+							<name>MFC3总量</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>MFC4FlowRate</id>
+							<name>MFC4流量</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>MFC4FlowCapacity</id>
+							<name>MFC4总量</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
@@ -624,9 +522,45 @@
 							<length>1</length>
 						</param>
 						<param>
-							<id>WorkStatus</id>
-							<name>工作状态</name>
-							<type>byte</type>
+							<id>pHSensorTemp</id>
+							<name>pH传感器温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>DOSensorTemp</id>
+							<name>DO传感器温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>HeatingBaseCoolingNTCTemp</id>
+							<name>加热座冷面NTC温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>HeatingBaseHeatingNTCTemp</id>
+							<name>加热座热面NTC温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>CoolingModuleCoolingNTCTemp</id>
+							<name>冷凝模块冷面NTC温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>CoolingModuleHeatingNTCTemp</id>
+							<name>冷凝模块热面NTC温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>CoolingModuleRoomNTCTemp</id>
+							<name>冷凝模块室内NTC温度</name>
+							<type>float</type>
 							<length>1</length>
 						</param>
 						<param>
@@ -639,7 +573,7 @@
 							<id>AlarmCodes</id>
 							<name>报警码</name>
 							<type>byte</type>
-							<length>60</length>
+							<length>100</length>
 						</param>
 					</parameters>
 				</commandExtend>
@@ -717,48 +651,6 @@
 		</commandDesc>
 
 		<commandDesc>
-			<id>WMotorDebug</id>
-			<name>写电机调试</name>
-			<commandCode>0x0b</commandCode>
-			<timeOut>3000</timeOut>
-			<tryTimes>3</tryTimes>
-			<commandExtends>
-				<commandExtend>
-					<id>0x66</id>
-					<name>Write</name>
-					<parameters>
-						<param>
-							<id>MotorNo</id>
-							<name>电机编号</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>Mode</id>
-							<name>电机序号</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-				
-				<commandExtend>
-					<id>0x88</id>
-					<name>WriteResponse</name>
-					<parameters>
-						<param>
-							<id>ResponseValue</id>
-							<name>写回应</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-			</commandExtends>
-		</commandDesc>
-
-		<commandDesc>
 			<id>RWTempControlDebug</id>
 			<name>读写温控调试</name>
 			<commandCode>0x0c</commandCode>
@@ -789,6 +681,12 @@
 						<param>
 							<id>D</id>
 							<name>D参数</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>K</id>
+							<name>系数</name>
 							<type>float</type>
 							<length>1</length>
 						</param>
@@ -863,12 +761,6 @@
 							<type>byte</type>
 							<length>4</length>
 						</param>
-						<param>
-							<id>Reserve</id>
-							<name>预留字段</name>
-							<type>byte</type>
-							<length>8</length>
-						</param>
 					</parameters>
 				</commandExtend>
 
@@ -889,8 +781,8 @@
 		</commandDesc>
 
 		<commandDesc>
-			<id>RWPHSensorCorrect</id>
-			<name>读写PH传感器校准</name>
+			<id>RWSensorCorrect</id>
+			<name>读写传感器校准</name>
 			<commandCode>0x0e</commandCode>
 			<timeOut>3000</timeOut>
 			<tryTimes>3</tryTimes>
@@ -898,12 +790,26 @@
 				<commandExtend>
 					<id>0x55</id>
 					<name>Read</name>
+					<parameters>
+						<param>
+							<id>SensorType</id>
+							<name>传感器种类</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
 				</commandExtend>
 
 				<commandExtend>
 					<id>0xaa</id>
 					<name>ReadResponse</name>
 					<parameters>
+						<param>
+							<id>SensorType</id>
+							<name>传感器种类</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
 						<param>
 							<id>SensorCoefficient</id>
 							<name>传感器系数</name>
@@ -916,75 +822,9 @@
 							<type>float</type>
 							<length>1</length>
 						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0x66</id>
-					<name>Write</name>
-					<parameters>
 						<param>
-							<id>CorrectMode</id>
-							<name>校准模式</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>CorrectParam</id>
-							<name>校准参数</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>CorrectValue</id>
-							<name>校准数据</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0x88</id>
-					<name>WriteResponse</name>
-					<parameters>
-						<param>
-							<id>ResponseValue</id>
-							<name>写回应</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-			</commandExtends>
-		</commandDesc>
-
-		<commandDesc>
-			<id>RWDOSensorCorrect</id>
-			<name>读写DO传感器校准</name>
-			<commandCode>0x0f</commandCode>
-			<timeOut>3000</timeOut>
-			<tryTimes>3</tryTimes>
-			<commandExtends>
-				<commandExtend>
-					<id>0x55</id>
-					<name>Read</name>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0xaa</id>
-					<name>ReadResponse</name>
-					<parameters>
-						<param>
-							<id>SensorCoefficient</id>
-							<name>传感器系数</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>Status</id>
-							<name>状态</name>
+							<id>StatusCode</id>
+							<name>状态码</name>
 							<type>byte</type>
 							<length>4</length>
 						</param>
@@ -996,172 +836,14 @@
 					<name>Write</name>
 					<parameters>
 						<param>
-							<id>CorrectMode</id>
-							<name>校准模式</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>CorrectParam</id>
-							<name>校准参数</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>CorrectValue</id>
-							<name>校准数据</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0x88</id>
-					<name>WriteResponse</name>
-					<parameters>
-						<param>
-							<id>ResponseValue</id>
-							<name>写回应</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-			</commandExtends>
-		</commandDesc>
-
-		<commandDesc>
-			<id>RWWeightSensorCorrect</id>
-			<name>读写称重传感器校准</name>
-			<commandCode>0x10</commandCode>
-			<timeOut>3000</timeOut>
-			<tryTimes>3</tryTimes>
-			<commandExtends>
-				<commandExtend>
-					<id>0x55</id>
-					<name>Read</name>
-					<parameters>
-						<param>
-							<id>SensorKind</id>
-							<name>传感器类型</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0xaa</id>
-					<name>ReadResponse</name>
-					<parameters>
-						<param>
-							<id>SensorCoefficient</id>
-							<name>传感器系数</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>SensorBias</id>
-							<name>传感器偏置</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0x66</id>
-					<name>Write</name>
-					<parameters>
-						<param>
-							<id>SensorNo</id>
-							<name>传感器编号</name>
+							<id>SensorType</id>
+							<name>传感器种类</name>
 							<type>byte</type>
 							<length>1</length>
 						</param>
 						<param>
 							<id>CorrectMode</id>
 							<name>校准模式</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>CorrectParam</id>
-							<name>校准参数</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>CorrectValue</id>
-							<name>校准数据</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0x88</id>
-					<name>WriteResponse</name>
-					<parameters>
-						<param>
-							<id>ResponseValue</id>
-							<name>写回应</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-			</commandExtends>
-		</commandDesc>
-
-		<commandDesc>
-			<id>RWPT100SensorCorrect</id>
-			<name>读写PT100传感器校准</name>
-			<commandCode>0x11</commandCode>
-			<timeOut>3000</timeOut>
-			<tryTimes>3</tryTimes>
-			<commandExtends>
-				<commandExtend>
-					<id>0x55</id>
-					<name>Read</name>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0xaa</id>
-					<name>ReadResponse</name>
-					<parameters>
-						<param>
-							<id>SensorCoefficient</id>
-							<name>传感器系数</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>SensorBias</id>
-							<name>传感器偏置</name>
-							<type>float</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0x66</id>
-					<name>Write</name>
-					<parameters>
-						<param>
-							<id>CorrectMode</id>
-							<name>校准模式</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>CorrectParam</id>
-							<name>校准参数</name>
 							<type>byte</type>
 							<length>1</length>
 						</param>
@@ -1215,6 +897,12 @@
 					<name>ReadResponse</name>
 					<parameters>
 						<param>
+							<id>PeristalticPumpNo</id>
+							<name>蠕动泵编号</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
 							<id>PeristalticPumpCoefficient</id>
 							<name>蠕动泵系数</name>
 							<type>float</type>
@@ -1265,110 +953,6 @@
 		</commandDesc>
 
 		<commandDesc>
-			<id>RWPeristalticPumpSetting</id>
-			<name>读写蠕动泵配置</name>
-			<commandCode>0x13</commandCode>
-			<timeOut>3000</timeOut>
-			<tryTimes>3</tryTimes>
-			<commandExtends>
-				<commandExtend>
-					<id>0x55</id>
-					<name>Read</name>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0xff</id>
-					<name>ReadWrite</name>
-					<parameters>
-						<param>
-							<id>Pump1Setting</id>
-							<name>蠕动泵1配置</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>Pump2Setting</id>
-							<name>蠕动泵2配置</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>Pump3Setting</id>
-							<name>蠕动泵3配置</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>Pump4Setting</id>
-							<name>蠕动泵4配置</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0x88</id>
-					<name>WriteResponse</name>
-					<parameters>
-						<param>
-							<id>ResponseValue</id>
-							<name>写回应</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-			</commandExtends>
-		</commandDesc>
-
-		<commandDesc>
-			<id>RWMFCSetting</id>
-			<name>读写MFC配置</name>
-			<commandCode>0x14</commandCode>
-			<timeOut>3000</timeOut>
-			<tryTimes>3</tryTimes>
-			<commandExtends>
-				<commandExtend>
-					<id>0x55</id>
-					<name>Read</name>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0xff</id>
-					<name>ReadWrite</name>
-					<parameters>
-						<param>
-							<id>MFC1Setting</id>
-							<name>MFC1配置</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-						<param>
-							<id>MFC2Setting</id>
-							<name>MFC2配置</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-
-				<commandExtend>
-					<id>0x88</id>
-					<name>WriteResponse</name>
-					<parameters>
-						<param>
-							<id>ResponseValue</id>
-							<name>写回应</name>
-							<type>byte</type>
-							<length>1</length>
-						</param>
-					</parameters>
-				</commandExtend>
-			</commandExtends>
-		</commandDesc>
-
-		<commandDesc>
 			<id>WCleanFlowCapacity</id>
 			<name>写流量清零</name>
 			<commandCode>0x15</commandCode>
@@ -1382,6 +966,12 @@
 						<param>
 							<id>Type</id>
 							<name>流量类型</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>No</id>
+							<name>编号</name>
 							<type>byte</type>
 							<length>1</length>
 						</param>
@@ -1514,6 +1104,24 @@
 							<type>byte</type>
 							<length>4</length>
 						</param>
+						<param>
+							<id>RunningHour</id>
+							<name>时</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>RunningMinute</id>
+							<name>分</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>RunningSecond</id>
+							<name>秒</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
 					</parameters>
 				</commandExtend>
 
@@ -1568,6 +1176,246 @@
 							<name>溶氧目标值</name>
 							<type>float</type>
 							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
+			<id>RWCondensationControl</id>
+			<name>读写冷凝控制</name>
+			<commandCode>0x19</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xff</id>
+					<name>ReadWrite</name>
+					<parameters>
+						<param>
+							<id>Enable</id>
+							<name>使能</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>Temp</id>
+							<name>设定温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
+			<id>ROffgas</id>
+			<name>读尾气信息</name>
+			<commandCode>0x1a</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xaa</id>
+					<name>ReadResponse</name>
+					<parameters>
+						<param>
+							<id>O2</id>
+							<name>氧气浓度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>CO2</id>
+							<name>二氧化碳浓度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
+			<id>RWMCUDownload</id>
+			<name>读写MCU程序下载</name>
+			<commandCode>0x1b</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xaa</id>
+					<name>ReadResponse</name>
+					<parameters>
+						<param>
+							<id>Status</id>
+							<name>下载程序状态</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x66</id>
+					<name>Write</name>
+					<parameters>
+						<param>
+							<id>No</id>
+							<name>板子编号</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
+			<id>WResetDefaultSetting</id>
+			<name>写部件恢复默认设置</name>
+			<commandCode>0x1c</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x66</id>
+					<name>Write</name>
+					<parameters>
+						<param>
+							<id>Type</id>
+							<name>部件类型</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>No</id>
+							<name>编号</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
+			<id>RWMCUDownloadAdress</id>
+			<name>读写MCU程序下载地址</name>
+			<commandCode>0x1d</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xff</id>
+					<name>ReadWrite</name>
+					<parameters>
+						<param>
+							<id>IPAdress</id>
+							<name>主板IP地址</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+						<param>
+							<id>Port</id>
+							<name>主板端口号</name>
+							<type>byte</type>
+							<length>4</length>
 						</param>
 					</parameters>
 				</commandExtend>

@@ -53,6 +53,30 @@
             <WindowsFormsHost>
                 <wf:PictureBox x:Name="winFormsPictureBox" />
             </WindowsFormsHost>
+            <DockPanel Grid.Row="1" LastChildFill="False">
+                <hc:UniformSpacingPanel
+                    DockPanel.Dock="Right"
+                    Orientation="Horizontal"
+                    Spacing="10">
+                    <Button
+                        Width="80"
+                        Command="{Binding SnapCommand}"
+                        Content="截图"
+                        Style="{StaticResource ButtonInfo}" />
+                    <Button
+                        Width="80"
+                        Command="{Binding VideoCommand}"
+                        Content="录像"
+                        Style="{StaticResource ButtonPrimary}"
+                        Visibility="{Binding Recording, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <Button
+                        Width="80"
+                        Command="{Binding StopVideoCommand}"
+                        Content="停止"
+                        Style="{StaticResource ButtonDanger}"
+                        Visibility="{Binding Recording, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </hc:UniformSpacingPanel>
+            </DockPanel>
             <!--<Button
                 Name="btnDefoaming"
                 Grid.Row="2"

@@ -712,8 +712,6 @@ D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditUserView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ErrorView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FeedGradientView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FeedStrategyView.g.cs
-D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ItemCalibrationView.g.cs
-D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ItemPumpCalibrationView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\LoginView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MCUDebugView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MsgView.g.cs
@@ -929,8 +927,6 @@ D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\EditUserView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ErrorView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FeedGradientView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\FeedStrategyView.baml
-D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ItemCalibrationView.baml
-D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\ItemPumpCalibrationView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\LoginView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MCUDebugView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\MsgView.baml
@@ -986,3 +982,5 @@ D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\WarnParamView.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AddBatchInfoView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AddBatchInfoView.baml
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\MidRangingParam.json
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DialogWindowBase.g.cs
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DialogWindowBase.baml

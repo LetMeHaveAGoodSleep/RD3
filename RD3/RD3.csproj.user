@@ -10,13 +10,13 @@
     <Compile Update="Controls\IndicatorLight.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CalibrationView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\CameraView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\ChooseReactorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\DialogWindowBase.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\DOAssociateView.xaml.cs">
@@ -32,12 +32,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\FlashOverlayWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\ItemCalibrationView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\ItemPumpCalibrationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\MCUDebugView.xaml.cs">
@@ -97,9 +91,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AlarmThresholdView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\CalibrationView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CameraImageView.xaml">
@@ -168,12 +159,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ReactorView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\ItemCalibrationView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\ItemPumpCalibrationView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MCUDebugView.xaml">

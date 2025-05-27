@@ -3,16 +3,104 @@
   "WorkspaceRootPath": "D:\\20250415-001\\RD3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\comparebatchview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\comparebatchview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\choosereactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\choosereactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\comparebatchview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\comparebatchview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\feedstrategyviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\feedstrategyviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\newmainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\newmainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\choosereactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\choosereactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\command\\realcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\command\\realcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\calibrationview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\calibrationview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\calibrateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\calibrateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|d:\\20250415-001\\rd3\\rd3.shared\\correct\\pumpcorrectparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|solutionrelative:rd3.shared\\correct\\pumpcorrectparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\feedgradientviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\feedgradientviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\feedgradientview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\feedgradientview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\feedstrategyview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\feedstrategyview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\loginview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\loginview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\command\\commanddefine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\command\\commanddefine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\command\\icommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\command\\icommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\config\\commandmanager.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\commandmanager.xml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\dialogwindowbase.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\dialogwindowbase.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\command\\virtualcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\command\\virtualcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\common\\appsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\common\\appsession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\newmainview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\newmainview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFB11CAA-32DA-4436-B05C-FFFA0F111ABF}|XZ.SQLite\\XZ.SQLite.csproj|D:\\20250415-001\\RD3\\xz.sqlite\\sqlitehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFB11CAA-32DA-4436-B05C-FFFA0F111ABF}|XZ.SQLite\\XZ.SQLite.csproj|solutionrelative:xz.sqlite\\sqlitehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\reactorview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\reactorview.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -55,26 +143,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CompareBatchView.xaml.cs",
-              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\CompareBatchView.xaml.cs",
-              "RelativeDocumentMoniker": "RD3\\Views\\CompareBatchView.xaml.cs",
-              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\CompareBatchView.xaml.cs",
-              "RelativeToolTip": "RD3\\Views\\CompareBatchView.xaml.cs",
-              "ViewState": "AgIAAGcAAAAAAAAAAAAAwHsAAABbAAAAAAAAAA==",
+              "Title": "ChooseReactorViewModel.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\ChooseReactorViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\ChooseReactorViewModel.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\ChooseReactorViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\ChooseReactorViewModel.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAABwAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-16T07:56:48.395Z",
+              "WhenOpened": "2025-05-27T07:04:04.227Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "CompareBatchView.xaml",
-              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\CompareBatchView.xaml",
-              "RelativeDocumentMoniker": "RD3\\Views\\CompareBatchView.xaml",
-              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\CompareBatchView.xaml",
-              "RelativeToolTip": "RD3\\Views\\CompareBatchView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-05-16T07:05:49.245Z",
+              "Title": "FeedStrategyViewModel.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\FeedStrategyViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\FeedStrategyViewModel.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\FeedStrategyViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\FeedStrategyViewModel.cs",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAmwKMAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:47:18.296Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FeedGradientViewModel.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\FeedGradientViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\FeedGradientViewModel.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\FeedGradientViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\FeedGradientViewModel.cs",
+              "ViewState": "AgIAAOgAAAAAAAAAAAAqwNYAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:46:57.121Z",
               "EditorCaption": ""
             },
             {
@@ -85,10 +187,276 @@
               "RelativeDocumentMoniker": "RD3\\ViewModels\\ReactorViewModel.cs",
               "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\ReactorViewModel.cs",
               "RelativeToolTip": "RD3\\ViewModels\\ReactorViewModel.cs",
-              "ViewState": "AgIAAN8PAAAAAAAAAAAnwOYPAABbAAAAAAAAAA==",
+              "ViewState": "AgIAAJghAAAAAAAAAAAhwLchAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T09:47:49.073Z",
+              "WhenOpened": "2025-05-27T06:10:51.036Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "CalibrationView.xaml",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\CalibrationView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\CalibrationView.xaml",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\CalibrationView.xaml",
+              "RelativeToolTip": "RD3\\Views\\CalibrationView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-27T02:08:34.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NewMainViewModel.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\NewMainViewModel.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\NewMainViewModel.cs",
+              "ViewState": "AgIAAH8BAAAAAAAAAAAewJkBAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T02:21:29.295Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ChooseReactorView.xaml",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\ChooseReactorView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\ChooseReactorView.xaml",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\ChooseReactorView.xaml",
+              "RelativeToolTip": "RD3\\Views\\ChooseReactorView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-27T07:07:18.774Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ReactorView.xaml",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\ReactorView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\ReactorView.xaml",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\ReactorView.xaml",
+              "RelativeToolTip": "RD3\\Views\\ReactorView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-25T07:57:44.4Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PumpCorrectParam.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3.Shared\\Correct\\PumpCorrectParam.cs",
+              "RelativeDocumentMoniker": "RD3.Shared\\Correct\\PumpCorrectParam.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3.Shared\\Correct\\PumpCorrectParam.cs",
+              "RelativeToolTip": "RD3.Shared\\Correct\\PumpCorrectParam.cs",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAawHUAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:51:01.277Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "RealCommandWrapper.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
+              "RelativeDocumentMoniker": "RD3\\Command\\RealCommandWrapper.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
+              "RelativeToolTip": "RD3\\Command\\RealCommandWrapper.cs",
+              "ViewState": "AgIAAI4AAAAAAAAAAAAvwKIAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T09:39:43.023Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CalibrateViewModel.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\CalibrateViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\CalibrateViewModel.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\CalibrateViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\CalibrateViewModel.cs",
+              "ViewState": "AgIAAKsBAAAAAAAAAAAawPIBAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:52:19.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "FeedGradientView.xaml.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\FeedGradientView.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\FeedGradientView.xaml.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\FeedGradientView.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\FeedGradientView.xaml.cs",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAQwJQAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:46:45.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "FeedStrategyView.xaml.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\FeedStrategyView.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\FeedStrategyView.xaml.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\FeedStrategyView.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\FeedStrategyView.xaml.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAUwJAAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:46:30.467Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\App.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\App.xaml.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\App.xaml.cs",
+              "RelativeToolTip": "RD3\\App.xaml.cs",
+              "ViewState": "AgIAAK8AAAAAAAAAAAAjwMUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T02:29:44.288Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CommandManager.xml",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Config\\CommandManager.xml",
+              "RelativeDocumentMoniker": "RD3\\Config\\CommandManager.xml",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Config\\CommandManager.xml",
+              "RelativeToolTip": "RD3\\Config\\CommandManager.xml",
+              "ViewState": "AgIAAKkAAAAAAAAAAAAEwL8AAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2025-05-26T01:32:12.527Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "LoginView.xaml",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\LoginView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\LoginView.xaml",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\LoginView.xaml",
+              "RelativeToolTip": "RD3\\Views\\LoginView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-27T06:08:50.894Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "CommandDefine.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\CommandDefine.cs",
+              "RelativeDocumentMoniker": "RD3\\Command\\CommandDefine.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Command\\CommandDefine.cs",
+              "RelativeToolTip": "RD3\\Command\\CommandDefine.cs",
+              "ViewState": "AgIAAPkCAAAAAAAAAAAqwBsDAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T02:11:12.029Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ICommandWrapper.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\ICommandWrapper.cs",
+              "RelativeDocumentMoniker": "RD3\\Command\\ICommandWrapper.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Command\\ICommandWrapper.cs",
+              "RelativeToolTip": "RD3\\Command\\ICommandWrapper.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAvwDQAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:19:35.447Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "App.xaml",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\App.xaml",
+              "RelativeDocumentMoniker": "RD3\\App.xaml",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\App.xaml",
+              "RelativeToolTip": "RD3\\App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-27T06:09:52.534Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "DialogWindowBase.xaml.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\DialogWindowBase.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\DialogWindowBase.xaml.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\DialogWindowBase.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\DialogWindowBase.xaml.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAABoAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T05:48:09.433Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "VirtualCommandWrapper.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\VirtualCommandWrapper.cs",
+              "RelativeDocumentMoniker": "RD3\\Command\\VirtualCommandWrapper.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Command\\VirtualCommandWrapper.cs",
+              "RelativeToolTip": "RD3\\Command\\VirtualCommandWrapper.cs",
+              "ViewState": "AgIAALcAAAAAAAAAAAArwMQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T01:07:28.52Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "AppSession.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Common\\AppSession.cs",
+              "RelativeDocumentMoniker": "RD3\\Common\\AppSession.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Common\\AppSession.cs",
+              "RelativeToolTip": "RD3\\Common\\AppSession.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAowF4AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T02:28:53.703Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "NewMainView.xaml.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\NewMainView.xaml.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\NewMainView.xaml.cs",
+              "ViewState": "AgIAABEDAAAAAAAAAAAQwB8DAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T02:26:03.772Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "SQLiteHelper.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\XZ.SQLite\\SQLiteHelper.cs",
+              "RelativeDocumentMoniker": "XZ.SQLite\\SQLiteHelper.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\XZ.SQLite\\SQLiteHelper.cs",
+              "RelativeToolTip": "XZ.SQLite\\SQLiteHelper.cs",
+              "ViewState": "AgIAAD8DAAAAAAAAAIA3wGQDAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-26T02:20:31.091Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "ReactorView.xaml.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\ReactorView.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\ReactorView.xaml.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\ReactorView.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\ReactorView.xaml.cs",
+              "ViewState": "AgIAAJABAAAAAAAAAAAAAJsBAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-25T08:01:05.353Z"
             }
           ]
         }

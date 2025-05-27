@@ -232,7 +232,7 @@
                         <TextBlock
                             Canvas.Left="140"
                             Canvas.Top="238"
-                            Text="{Binding CurrentDeviceParameter.AcidFlowCapacity}" />
+                            Text="{Binding CurrentDeviceParameter.Pump1FlowCapacity, StringFormat={}{0:F2}}" />
                         <TextBlock
                             Canvas.Left="25"
                             Canvas.Top="238"
@@ -272,7 +272,7 @@
                         <TextBlock
                             Canvas.Left="140"
                             Canvas.Top="295"
-                            Text="{Binding CurrentDeviceParameter.BaseFlowCapacity}" />
+                            Text="{Binding CurrentDeviceParameter.Pump2FlowCapacity, StringFormat={}{0:F2}}" />
                         <TextBlock
                             Canvas.Left="25"
                             Canvas.Top="295"
@@ -312,7 +312,7 @@
                         <TextBlock
                             Canvas.Left="140"
                             Canvas.Top="348"
-                            Text="{Binding CurrentDeviceParameter.Pump3FlowCapacity}" />
+                            Text="{Binding CurrentDeviceParameter.Pump3FlowCapacity, StringFormat={}{0:F2}}" />
                         <TextBlock
                             Canvas.Left="25"
                             Canvas.Top="348"
@@ -352,7 +352,7 @@
                         <TextBlock
                             Canvas.Left="140"
                             Canvas.Top="404"
-                            Text="{Binding CurrentDeviceParameter.Pump4FlowCapacity}" />
+                            Text="{Binding CurrentDeviceParameter.Pump4FlowCapacity, StringFormat={}{0:F2}}" />
                         <TextBlock
                             Canvas.Left="25"
                             Canvas.Top="404"
@@ -541,7 +541,7 @@
                             Orientation="Horizontal"
                             Spacing="3">
                             <TextBlock Text="重量(g)" />
-                            <TextBlock Text="{Binding CurrentDeviceParameter.JarWeight}" />
+                            <TextBlock Text="{Binding CurrentDeviceParameter.JarWeight, StringFormat={}{0:F2}}" />
                         </hc:UniformSpacingPanel>
                         <hc:UniformSpacingPanel
                             Canvas.Left="440"
@@ -577,7 +577,8 @@
                                                 <MenuItem
                                                     Header="启用mid-ranging策略"
                                                     IsCheckable="True"
-                                                    IsChecked="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                    IsChecked="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                                    Visibility="Collapsed" />
                                             </ContextMenu>
                                         </TextBox.ContextMenu>
                                     </TextBox>
@@ -719,7 +720,7 @@
                                         BorderBrush="Gray"
                                         IsReadOnly="True"
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding CurrentDeviceParameter.AirFlowSpeed, StringFormat={}{0:F2}}" />
+                                        Text="{Binding CurrentDeviceParameter.MFC1FlowSpeed, StringFormat={}{0:F2}}" />
                                     <ToggleButton
                                         Width="75"
                                         Height="28"
@@ -779,7 +780,7 @@
                                         BorderBrush="Gray"
                                         IsReadOnly="True"
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding CurrentDeviceParameter.O2FlowSpeed, StringFormat={}{0:F2}}" />
+                                        Text="{Binding CurrentDeviceParameter.MFC2FlowSpeed, StringFormat={}{0:F2}}" />
                                     <ToggleButton
                                         Width="75"
                                         Height="28"
@@ -970,7 +971,7 @@
                                     <Button
                                         VerticalAlignment="Bottom"
                                         Command="{Binding ResetFlowCommand}"
-                                        CommandParameter="Acid"
+                                        CommandParameter="AcidPump"
                                         Content="总量清零"
                                         Style="{StaticResource ButtonPrimary}" />
                                 </StackPanel>
@@ -1036,7 +1037,7 @@
                                     <Button
                                         VerticalAlignment="Bottom"
                                         Command="{Binding ResetFlowCommand}"
-                                        CommandParameter="Base"
+                                        CommandParameter="BasePump"
                                         Content="总量清零"
                                         Style="{StaticResource ButtonPrimary}" />
                                 </StackPanel>
@@ -1163,8 +1164,8 @@
                                     <ComboBoxItem Content="时间序列" />
                                     <ComboBoxItem Content="DO_stat(速度)" />
                                     <ComboBoxItem Content="pH_stat(速度)" />
-                                    <ComboBoxItem Content="DO_stat(总量)" />
-                                    <ComboBoxItem Content="pH_stat(总量)" />
+                                    <ComboBoxItem Content="DO_stat(体积)" />
+                                    <ComboBoxItem Content="pH_stat(体积)" />
                                 </ComboBox>
                                 <ToggleButton
                                     Width="75"
@@ -1204,7 +1205,7 @@
                                 <Button
                                     VerticalAlignment="Bottom"
                                     Command="{Binding ResetFlowCommand}"
-                                    CommandParameter="Feed"
+                                    CommandParameter="FeedPump"
                                     Content="总量清零"
                                     Style="{StaticResource ButtonPrimary}" />
                                 <StackPanel
@@ -1341,7 +1342,7 @@
                                 <Button
                                     VerticalAlignment="Bottom"
                                     Command="{Binding ResetFlowCommand}"
-                                    CommandParameter="AF"
+                                    CommandParameter="AFPump"
                                     Content="总量清零"
                                     Style="{StaticResource ButtonPrimary}" />
                             </StackPanel>
