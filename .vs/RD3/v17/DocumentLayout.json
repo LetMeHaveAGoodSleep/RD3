@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "D:\\20250415-001\\RD3\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\choosereactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\choosereactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\docontrolstrategyview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\docontrolstrategyview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\calibrateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\calibrateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\calibrationview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\calibrationview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\choosereactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\choosereactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\feedstrategyviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,14 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\reactorview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\calibrationview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\calibrationview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\calibrateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\calibrateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|d:\\20250415-001\\rd3\\rd3.shared\\correct\\pumpcorrectparam.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -143,32 +147,31 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "DOControlStrategyView.xaml",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\DOControlStrategyView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\DOControlStrategyView.xaml",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\DOControlStrategyView.xaml",
+              "RelativeToolTip": "RD3\\Views\\DOControlStrategyView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-27T08:07:56.491Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ChooseReactorViewModel.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\ChooseReactorViewModel.cs",
               "RelativeDocumentMoniker": "RD3\\ViewModels\\ChooseReactorViewModel.cs",
               "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\ChooseReactorViewModel.cs",
               "RelativeToolTip": "RD3\\ViewModels\\ChooseReactorViewModel.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAAABwAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACUAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-27T07:04:04.227Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "FeedStrategyViewModel.cs",
-              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\FeedStrategyViewModel.cs",
-              "RelativeDocumentMoniker": "RD3\\ViewModels\\FeedStrategyViewModel.cs",
-              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\FeedStrategyViewModel.cs",
-              "RelativeToolTip": "RD3\\ViewModels\\FeedStrategyViewModel.cs",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAmwKMAAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T06:47:18.296Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "FeedGradientViewModel.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\FeedGradientViewModel.cs",
               "RelativeDocumentMoniker": "RD3\\ViewModels\\FeedGradientViewModel.cs",
@@ -181,7 +184,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "ReactorViewModel.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\ReactorViewModel.cs",
               "RelativeDocumentMoniker": "RD3\\ViewModels\\ReactorViewModel.cs",
@@ -194,7 +197,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "CalibrationView.xaml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\CalibrationView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\CalibrationView.xaml",
@@ -206,7 +209,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "NewMainViewModel.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
               "RelativeDocumentMoniker": "RD3\\ViewModels\\NewMainViewModel.cs",
@@ -219,7 +222,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
+              "Title": "CalibrateViewModel.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\CalibrateViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\CalibrateViewModel.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\CalibrateViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\CalibrateViewModel.cs",
+              "ViewState": "AgIAACYBAAAAAAAAAIA+wCkBAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:52:19.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FeedStrategyViewModel.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\FeedStrategyViewModel.cs",
+              "RelativeDocumentMoniker": "RD3\\ViewModels\\FeedStrategyViewModel.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\FeedStrategyViewModel.cs",
+              "RelativeToolTip": "RD3\\ViewModels\\FeedStrategyViewModel.cs",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAmwKMAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T06:47:18.296Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "ChooseReactorView.xaml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\ChooseReactorView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\ChooseReactorView.xaml",
@@ -231,7 +260,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "ReactorView.xaml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\ReactorView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\ReactorView.xaml",
@@ -243,7 +272,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "PumpCorrectParam.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3.Shared\\Correct\\PumpCorrectParam.cs",
               "RelativeDocumentMoniker": "RD3.Shared\\Correct\\PumpCorrectParam.cs",
@@ -256,7 +285,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "RealCommandWrapper.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
               "RelativeDocumentMoniker": "RD3\\Command\\RealCommandWrapper.cs",
@@ -269,20 +298,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "CalibrateViewModel.cs",
-              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\CalibrateViewModel.cs",
-              "RelativeDocumentMoniker": "RD3\\ViewModels\\CalibrateViewModel.cs",
-              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\CalibrateViewModel.cs",
-              "RelativeToolTip": "RD3\\ViewModels\\CalibrateViewModel.cs",
-              "ViewState": "AgIAAKsBAAAAAAAAAAAawPIBAABDAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-27T06:52:19.652Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "FeedGradientView.xaml.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\FeedGradientView.xaml.cs",
               "RelativeDocumentMoniker": "RD3\\Views\\FeedGradientView.xaml.cs",
@@ -295,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "FeedStrategyView.xaml.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\FeedStrategyView.xaml.cs",
               "RelativeDocumentMoniker": "RD3\\Views\\FeedStrategyView.xaml.cs",
@@ -308,7 +324,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\App.xaml.cs",
               "RelativeDocumentMoniker": "RD3\\App.xaml.cs",
@@ -321,7 +337,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "CommandManager.xml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Config\\CommandManager.xml",
               "RelativeDocumentMoniker": "RD3\\Config\\CommandManager.xml",
@@ -334,7 +350,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "LoginView.xaml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\LoginView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\LoginView.xaml",
@@ -346,7 +362,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "CommandDefine.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\CommandDefine.cs",
               "RelativeDocumentMoniker": "RD3\\Command\\CommandDefine.cs",
@@ -359,7 +375,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "ICommandWrapper.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\ICommandWrapper.cs",
               "RelativeDocumentMoniker": "RD3\\Command\\ICommandWrapper.cs",
@@ -372,7 +388,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "App.xaml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\App.xaml",
               "RelativeDocumentMoniker": "RD3\\App.xaml",
@@ -384,7 +400,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "DialogWindowBase.xaml.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\DialogWindowBase.xaml.cs",
               "RelativeDocumentMoniker": "RD3\\Views\\DialogWindowBase.xaml.cs",
@@ -397,7 +413,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "VirtualCommandWrapper.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\VirtualCommandWrapper.cs",
               "RelativeDocumentMoniker": "RD3\\Command\\VirtualCommandWrapper.cs",
@@ -410,7 +426,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "AppSession.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Common\\AppSession.cs",
               "RelativeDocumentMoniker": "RD3\\Common\\AppSession.cs",
@@ -423,7 +439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "NewMainView.xaml.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
               "RelativeDocumentMoniker": "RD3\\Views\\NewMainView.xaml.cs",
@@ -436,7 +452,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "SQLiteHelper.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\XZ.SQLite\\SQLiteHelper.cs",
               "RelativeDocumentMoniker": "XZ.SQLite\\SQLiteHelper.cs",
@@ -448,7 +464,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "ReactorView.xaml.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\ReactorView.xaml.cs",
               "RelativeDocumentMoniker": "RD3\\Views\\ReactorView.xaml.cs",

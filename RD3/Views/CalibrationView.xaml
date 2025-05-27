@@ -411,7 +411,6 @@
                             Width="80"
                             hc:InfoElement.Title="更正系数"
                             BorderBrush="{DynamicResource PrimaryBrush}"
-                            IsEnabled="False"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding Pump1Param.Coefficient, UpdateSourceTrigger=LostFocus}" />
                         <DockPanel>
@@ -524,7 +523,6 @@
                             Width="80"
                             hc:InfoElement.Title="更正系数"
                             BorderBrush="{DynamicResource PrimaryBrush}"
-                            IsEnabled="False"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding Pump2Param.Coefficient, UpdateSourceTrigger=LostFocus}" />
                         <DockPanel>
@@ -637,7 +635,6 @@
                             Width="80"
                             hc:InfoElement.Title="更正系数"
                             BorderBrush="{DynamicResource PrimaryBrush}"
-                            IsEnabled="False"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding Pump3Param.Coefficient, UpdateSourceTrigger=LostFocus}" />
                         <DockPanel>
@@ -750,7 +747,6 @@
                             Width="80"
                             hc:InfoElement.Title="更正系数"
                             BorderBrush="{DynamicResource PrimaryBrush}"
-                            IsEnabled="False"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding Pump4Param.Coefficient, UpdateSourceTrigger=LostFocus}" />
                         <DockPanel>
@@ -866,7 +862,6 @@
                             Width="80"
                             hc:InfoElement.Title="更正系数"
                             BorderBrush="{DynamicResource PrimaryBrush}"
-                            IsEnabled="False"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding Pump5Param.Coefficient, UpdateSourceTrigger=LostFocus}" />
                         <DockPanel>
@@ -982,7 +977,6 @@
                             Width="80"
                             hc:InfoElement.Title="更正系数"
                             BorderBrush="{DynamicResource PrimaryBrush}"
-                            IsEnabled="False"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding Pump6Param.Coefficient, UpdateSourceTrigger=LostFocus}" />
                         <DockPanel>
