@@ -9,10 +9,10 @@
     "Pump2FlowRate": "False",
     "Pump3FlowRate": "False",
     "Pump4FlowRate": "False",
-    "Pump1Flow": "False",
-    "Pump2Flow": "False",
-    "Pump3Flow": "False",
-    "Pump4Flow": "False"
+    "Pump1FlowCapacity": "False",
+    "Pump2FlowCapacity": "False",
+    "Pump3FlowCapacity": "False",
+    "Pump4FlowCapacity": "False"
   },
   "Plot3": {
     "Temp": "False",
@@ -24,10 +24,10 @@
     "Pump2FlowRate": "False",
     "Pump3FlowRate": "False",
     "Pump4FlowRate": "False",
-    "Pump1Flow": "False",
-    "Pump2Flow": "False",
-    "Pump3Flow": "False",
-    "Pump4Flow": "False"
+    "Pump1FlowCapacity": "False",
+    "Pump2FlowCapacity": "False",
+    "Pump3FlowCapacity": "False",
+    "Pump4FlowCapacity": "False"
   },
   "Plot4": {
     "Temp": "False",
@@ -39,9 +39,9 @@
     "Pump2FlowRate": "False",
     "Pump3FlowRate": "False",
     "Pump4FlowRate": "False",
-    "Pump1Flow": "False",
-    "Pump2Flow": "False",
-    "Pump3Flow": "False",
-    "Pump4Flow": "False"
+    "Pump1FlowCapacity": "False",
+    "Pump2FlowCapacity": "False",
+    "Pump3FlowCapacity": "False",
+    "Pump4FlowCapacity": "False"
   }
 }

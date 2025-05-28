@@ -8,9 +8,9 @@
   "Pump2FlowRate": "BaseFlowSpeed",
   "Pump3FlowRate": "FeedFlowSpeed",
   "Pump4FlowRate": "AFFlowSpeed",
-  "Pump1Flow": "AcidFlowCapacity",
-  "Pump2Flow": "BaseFlowCapacity",
-  "Pump3Flow": "FeedFlowCapacity",
-  "Pump4Flow": "AFFlowCapacity"
+  "Pump1FlowCapacity": "AcidFlowCapacity",
+  "Pump2FlowCapacity": "BaseFlowCapacity",
+  "Pump3FlowCapacity": "FeedFlowCapacity",
+  "Pump4FlowCapacity": "AFFlowCapacity"
 
 }
