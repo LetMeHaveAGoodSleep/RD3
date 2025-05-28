@@ -984,3 +984,5 @@ D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\AddBatchInfoView.baml
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Config\MidRangingParam.json
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DialogWindowBase.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DialogWindowBase.baml
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOControlStrategyView.g.cs
+D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOControlStrategyView.baml

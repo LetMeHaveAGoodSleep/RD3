@@ -561,7 +561,6 @@
                                             <ContextMenu>
                                                 <MenuItem
                                                     Command="{Binding DOSPCommand}"
-                                                    CommandParameter="TimeSeries"
                                                     Header="时间序列"
                                                     IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=TimeSeries, UpdateSourceTrigger=PropertyChanged}" />
                                                 <Separator />
@@ -831,7 +830,6 @@
                                             <ContextMenu>
                                                 <MenuItem
                                                     Command="{Binding PHSPCommand}"
-                                                    CommandParameter="TimeSeries"
                                                     Header="时间序列"
                                                     IsChecked="{Binding CurrentDeviceParameter.PHParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=TimeSeries, UpdateSourceTrigger=PropertyChanged}" />
                                                 <Separator />
@@ -1047,14 +1045,12 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='温度(℃)'}"
-                                    IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem
                                                 Command="{Binding TempSPCommand}"
-                                                CommandParameter="TimeSeries"
                                                 Header="时间序列"
                                                 IsChecked="{Binding CurrentDeviceParameter.TempParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=TimeSeries, UpdateSourceTrigger=PropertyChanged}" />
                                             <Separator />

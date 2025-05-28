@@ -21,17 +21,12 @@
             <GradientStop Offset="1" Color="#A5BCF3" />
             <GradientStop Offset="0" Color="White" />
         </LinearGradientBrush>
-
-        <!--  字体  -->
-        <FontFamily x:Key="TitleFontFamily">/WPF_PrismCustomDialogStyle_Demo;component/Assets/Fonts/#庞门正道标题体3.0</FontFamily>
-
         <!--  对话框标题样式  -->
         <Style x:Key="SystemTitleStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="TextAlignment" Value="Center" />
             <Setter Property="FontSize" Value="15" />
-            <Setter Property="FontFamily" Value="{StaticResource TitleFontFamily}" />
             <Setter Property="FontSize" Value="30" />
             <Setter Property="Foreground" Value="{StaticResource TitleTextGradientColor}" />
         </Style>

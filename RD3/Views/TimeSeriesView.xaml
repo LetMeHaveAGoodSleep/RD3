@@ -18,10 +18,8 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
-    Width="auto"
-    Height="auto"
-    MinWidth="1000"
-    MinHeight="600"
+    Width="800"
+    Height="500"
     d:DataContext="{d:DesignInstance Type=vm:TimeSeriesViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="600"
@@ -36,7 +34,7 @@
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
             <Setter Property="SizeToContent" Value="WidthAndHeight" />
-            <Setter Property="ResizeMode" Value="CanResize" />
+            <Setter Property="ResizeMode" Value="CanMinimize" />
             <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
             <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -67,14 +65,47 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <DockPanel Margin="5" LastChildFill="False">
-            <ComboBox
-                Width="100"
-                hc:InfoElement.Title="{ex:Language Key='Timer'}"
-                DockPanel.Dock="Left"
-                FontSize="{DynamicResource SubHeadFontSize}"
-                ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
-                SelectedItem="{Binding TimeSeries.Timer}"
-                Style="{StaticResource ComboBoxExtend}" />
+            <hc:UniformSpacingPanel Spacing="10">
+                <ComboBox
+                    Width="100"
+                    hc:InfoElement.Title="{ex:Language Key='Timer'}"
+                    DockPanel.Dock="Left"
+                    FontSize="{DynamicResource SubHeadFontSize}"
+                    ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+                    SelectedItem="{Binding TimeSeries.Timer}"
+                    Style="{StaticResource ComboBoxExtend}" />
+                <DockPanel LastChildFill="False">
+                    <Button
+                        Name="BtnAddRow"
+                        Height="30"
+                        VerticalAlignment="Bottom"
+                        hc:IconElement.Geometry="{StaticResource GeometryAdd}"
+                        Command="{Binding AddCommand}"
+                        Content="新增"
+                        Foreground="{StaticResource PrimaryBrush}" />
+                </DockPanel>
+                <DockPanel LastChildFill="False">
+                    <Button
+                        Name="BtnDeleteRow"
+                        Height="30"
+                        VerticalAlignment="Bottom"
+                        hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"
+                        Command="{Binding DeleteCommand}"
+                        CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
+                        Content="删除"
+                        Foreground="{StaticResource PrimaryBrush}" />
+                </DockPanel>
+                <DockPanel LastChildFill="False">
+                    <Button
+                        Height="30"
+                        VerticalAlignment="Bottom"
+                        hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"
+                        Command="{Binding DeleteAllCommand}"
+                        Content="清空序列"
+                        Foreground="{StaticResource PrimaryBrush}" />
+                </DockPanel>
+            </hc:UniformSpacingPanel>
+
             <DockPanel DockPanel.Dock="Right">
                 <Button
                     Width="80"
@@ -92,7 +123,8 @@
                     BorderBrush="{StaticResource PrimaryBrush}"
                     Command="{Binding SaveCommand}"
                     Content="保存"
-                    Foreground="White" />
+                    Foreground="White"
+                    Visibility="Collapsed" />
                 <Button
                     Width="120"
                     Margin="5,0,0,0"
@@ -116,7 +148,7 @@
                 hc:DataGridAttach.ShowSelectAllButton="False"
                 AutoGenerateColumns="False"
                 Background="{StaticResource DefaultBrush}"
-                CanUserAddRows="True"
+                CanUserAddRows="False"
                 CanUserSortColumns="False"
                 ColumnWidth="SizeToHeader"
                 GridLinesVisibility="All"
@@ -129,10 +161,14 @@
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 SelectionMode="Single"
-                SelectionUnit="Cell"
+                SelectionUnit="FullRow"
                 VerticalGridLinesBrush="LightGray">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="60" Header="序号">
+                    <DataGridTemplateColumn
+                        Width="60"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="序号"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=Header}" />
