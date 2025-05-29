@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "D:\\20250415-001\\RD3\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\newmainview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\newmainview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\newmainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\newmainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\command\\virtualcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\command\\virtualcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\monitor\\clocksupervisor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\monitor\\clocksupervisor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\command\\realcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\command\\realcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\viewmodels\\reactorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\command\\virtualcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\command\\virtualcommandwrapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}|RD3.Shared\\RD3.Shared.csproj|d:\\20250415-001\\rd3\\rd3.shared\\util\\objectcloner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -37,10 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\reactorview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
       "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\reactorview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\views\\newmainview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\newmainview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3\\rd3\\config\\pumpmfcsetting.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -118,7 +122,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -150,46 +154,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "VirtualCommandWrapper.cs",
-              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\VirtualCommandWrapper.cs",
-              "RelativeDocumentMoniker": "RD3\\Command\\VirtualCommandWrapper.cs",
-              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Command\\VirtualCommandWrapper.cs",
-              "RelativeToolTip": "RD3\\Command\\VirtualCommandWrapper.cs",
-              "ViewState": "AgIAAGYAAAAAAAAAAAAqwIABAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-28T10:56:25.364Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ICommandWrapper.cs",
-              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\ICommandWrapper.cs",
-              "RelativeDocumentMoniker": "RD3\\Command\\ICommandWrapper.cs",
-              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Command\\ICommandWrapper.cs",
-              "RelativeToolTip": "RD3\\Command\\ICommandWrapper.cs",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAnwMAAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-29T02:46:15.642Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "ClockSupervisor.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Monitor\\ClockSupervisor.cs",
+              "RelativeDocumentMoniker": "RD3\\Monitor\\ClockSupervisor.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Monitor\\ClockSupervisor.cs",
+              "RelativeToolTip": "RD3\\Monitor\\ClockSupervisor.cs",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAtwHkAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T05:36:12.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "ReactorViewModel.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\ReactorViewModel.cs",
               "RelativeDocumentMoniker": "RD3\\ViewModels\\ReactorViewModel.cs",
               "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\ReactorViewModel.cs",
               "RelativeToolTip": "RD3\\ViewModels\\ReactorViewModel.cs",
-              "ViewState": "AgIAAFoDAAAAAAAAAAAtwDgDAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAPsBAAAAAAAAAAAtwL4BAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-28T08:13:08.961Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "App.xaml.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\App.xaml.cs",
               "RelativeDocumentMoniker": "RD3\\App.xaml.cs",
@@ -202,7 +193,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "ObjectCloner.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3.Shared\\Util\\ObjectCloner.cs",
               "RelativeDocumentMoniker": "RD3.Shared\\Util\\ObjectCloner.cs",
@@ -215,33 +206,72 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "RealCommandWrapper.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
               "RelativeDocumentMoniker": "RD3\\Command\\RealCommandWrapper.cs",
               "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Command\\RealCommandWrapper.cs",
               "RelativeToolTip": "RD3\\Command\\RealCommandWrapper.cs",
-              "ViewState": "AgIAAK8BAAAAAAAAAAAqwFcCAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAH8BAAAAAAAAAAAowNICAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-28T05:32:03.597Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "NewMainViewModel.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
               "RelativeDocumentMoniker": "RD3\\ViewModels\\NewMainViewModel.cs",
               "ToolTip": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\NewMainViewModel.cs",
               "RelativeToolTip": "RD3\\ViewModels\\NewMainViewModel.cs",
-              "ViewState": "AgIAAGYBAAAAAAAAAADgv28BAAAlAAAAAAAAAA==",
+              "ViewState": "AgIAAI4BAAAAAAAAAADgv60BAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-29T02:59:42.888Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
+              "Title": "NewMainView.xaml.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\Views\\NewMainView.xaml.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
+              "RelativeToolTip": "RD3\\Views\\NewMainView.xaml.cs",
+              "ViewState": "AgIAAFsDAAAAAAAAAAAvwGoDAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T11:09:27.509Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "VirtualCommandWrapper.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\VirtualCommandWrapper.cs",
+              "RelativeDocumentMoniker": "RD3\\Command\\VirtualCommandWrapper.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Command\\VirtualCommandWrapper.cs",
+              "RelativeToolTip": "RD3\\Command\\VirtualCommandWrapper.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAA5wDkAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T10:56:25.364Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ICommandWrapper.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Command\\ICommandWrapper.cs",
+              "RelativeDocumentMoniker": "RD3\\Command\\ICommandWrapper.cs",
+              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Command\\ICommandWrapper.cs",
+              "RelativeToolTip": "RD3\\Command\\ICommandWrapper.cs",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAnwMAAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T02:46:15.642Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "CalibrateViewModel.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\CalibrateViewModel.cs",
               "RelativeDocumentMoniker": "RD3\\ViewModels\\CalibrateViewModel.cs",
@@ -254,7 +284,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "ReactorView.xaml.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\ReactorView.xaml.cs",
               "RelativeDocumentMoniker": "RD3\\Views\\ReactorView.xaml.cs",
@@ -267,7 +297,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "CompareBatchView.xaml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\CompareBatchView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\CompareBatchView.xaml",
@@ -279,7 +309,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "PumpMFCSetting.json",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Config\\PumpMFCSetting.json",
               "RelativeDocumentMoniker": "RD3\\Config\\PumpMFCSetting.json",
@@ -292,20 +322,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "NewMainView.xaml.cs",
-              "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
-              "RelativeDocumentMoniker": "RD3\\Views\\NewMainView.xaml.cs",
-              "ToolTip": "D:\\20250415-001\\RD3\\RD3\\Views\\NewMainView.xaml.cs",
-              "RelativeToolTip": "RD3\\Views\\NewMainView.xaml.cs",
-              "ViewState": "AgIAAKQAAAAAAAAAAAAawLQAAABRAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-28T11:09:27.509Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "PortManager.xml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Config\\PortManager.xml",
               "RelativeDocumentMoniker": "RD3\\Config\\PortManager.xml",
@@ -318,7 +335,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "ParameterMapperConfig.json",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Config\\ParameterMapperConfig.json",
               "RelativeDocumentMoniker": "RD3\\Config\\ParameterMapperConfig.json",
@@ -331,7 +348,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "CameraSetting.json",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Config\\CameraSetting.json",
               "RelativeDocumentMoniker": "RD3\\Config\\CameraSetting.json",
@@ -344,7 +361,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "ReactorView.xaml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\ReactorView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\ReactorView.xaml",
@@ -356,7 +373,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "CommandManager.xml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Config\\CommandManager.xml",
               "RelativeDocumentMoniker": "RD3\\Config\\CommandManager.xml",
@@ -369,7 +386,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Const.json",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Config\\Const.json",
               "RelativeDocumentMoniker": "RD3\\Config\\Const.json",
@@ -382,7 +399,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "ReactorSetting.json",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Config\\ReactorSetting.json",
               "RelativeDocumentMoniker": "RD3\\Config\\ReactorSetting.json",
@@ -395,7 +412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "GraphUnit.json",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Config\\GraphUnit.json",
               "RelativeDocumentMoniker": "RD3\\Config\\GraphUnit.json",
@@ -408,7 +425,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "GraphSetting.json",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Config\\GraphSetting.json",
               "RelativeDocumentMoniker": "RD3\\Config\\GraphSetting.json",
@@ -421,7 +438,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "CustomGraphSetting.json",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Config\\CustomGraphSetting.json",
               "RelativeDocumentMoniker": "RD3\\Config\\CustomGraphSetting.json",
@@ -434,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "DeviceParameter.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3.Shared\\Device\\DeviceParameter.cs",
               "RelativeDocumentMoniker": "RD3.Shared\\Device\\DeviceParameter.cs",
@@ -447,7 +464,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "CalibrationView.xaml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\CalibrationView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\CalibrationView.xaml",
@@ -458,7 +475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "TimeSeriesView.xaml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\TimeSeriesView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\TimeSeriesView.xaml",
@@ -469,7 +486,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "TimeSeriesViewModel.cs",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\ViewModels\\TimeSeriesViewModel.cs",
               "RelativeDocumentMoniker": "RD3\\ViewModels\\TimeSeriesViewModel.cs",
@@ -481,7 +498,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "DOAssociateView.xaml",
               "DocumentMoniker": "D:\\20250415-001\\RD3\\RD3\\Views\\DOAssociateView.xaml",
               "RelativeDocumentMoniker": "RD3\\Views\\DOAssociateView.xaml",
