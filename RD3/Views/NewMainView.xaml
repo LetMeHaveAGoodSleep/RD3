@@ -14,7 +14,7 @@
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
-    Title="{ex:Language Key='MainWindow'}"
+    Title="主界面"
     MinWidth="1600"
     MinHeight="900"
     d:DataContext="{d:DesignInstance Type=viewmodels:NewMainViewModel}"
@@ -126,15 +126,8 @@
                             <MenuItem
                                 Width="100"
                                 Click="MenuItem_Open_Click"
-                                Header="曲线设置"
+                                Header="因子设置"
                                 Tag="DeviceNodesView" />
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="阈值设置"
-                                Tag="WarnParamView" />
-                            <!--<MenuItem Header="项目" Width = "100" />
-                            <MenuItem Header="版本" Width = "100" />-->
                         </MenuItem>
                         <MenuItem Height="40" Header="设备管理">
                             <MenuItem
@@ -174,26 +167,16 @@
                                 Click="MenuItem_Open_Click"
                                 Header="参数来源"
                                 Tag="ParameterSourceView" />
-                            <!--<MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="补料函数"
-                                Tag="NewFeedView" />-->
-                            <!--<MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="补料阈值"
-                                Tag="AlarmThresholdView" />-->
                             <MenuItem
                                 Width="100"
                                 Click="MenuItem_Open_Click"
-                                Header="PH控制"
-                                Tag="PHControlView" />
-                            <!--<MenuItem
-                                Width="100"
+                                Header="阈值设置"
+                                Tag="WarnParamView" />
+                            <MenuItem
+                                Width="150"
                                 Click="MenuItem_Open_Click"
-                                Header="DO序列"
-                                Tag="DOTimeSeriesView" />-->
+                                Header="PH动态调控设置"
+                                Tag="PHControlView" />
                         </MenuItem>
                         <MenuItem Height="40" Header="数据管理">
                             <MenuItem
