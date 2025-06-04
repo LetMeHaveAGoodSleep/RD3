@@ -7,7 +7,6 @@
     "Unit": 1,
     "InitialAir": 0.5,
     "AirUpperLimit": 2,
-    "InitialTemp": 37,
     "TempLowerLimit": 25
   },
   {
@@ -18,7 +17,6 @@
     "Unit": 1,
     "InitialAir": 0.5,
     "AirUpperLimit": 2,
-    "InitialTemp": 37,
     "TempLowerLimit": 25
   },
   {
@@ -29,7 +27,6 @@
     "Unit": 1,
     "InitialAir": 0.5,
     "AirUpperLimit": 2,
-    "InitialTemp": 37,
     "TempLowerLimit": 25
   },
   {
@@ -40,7 +37,6 @@
     "Unit": 1,
     "InitialAir": 0.5,
     "AirUpperLimit": 2,
-    "InitialTemp": 37,
     "TempLowerLimit": 25
   }
 ]

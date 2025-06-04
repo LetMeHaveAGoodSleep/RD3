@@ -768,7 +768,6 @@ D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\Sample.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Data\xp.onnx
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\Instruction\video.mp4
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.exe
-D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.dll.config
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.deps.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.runtimeconfig.json
 D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.dll
@@ -986,3 +985,4 @@ D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DialogWindowBase.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DialogWindowBase.baml
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOControlStrategyView.g.cs
 D:\20250415-001\RD3\RD3\obj\Debug\net8.0-windows7.0\Views\DOControlStrategyView.baml
+D:\20250415-001\RD3\RD3\bin\Debug\net8.0-windows7.0\RD3.dll.config
