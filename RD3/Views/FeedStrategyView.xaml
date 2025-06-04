@@ -141,7 +141,7 @@
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="参数1"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                        IsReadOnly="True" />
+                        IsReadOnly="False" />
                     <DataGridTextColumn
                         Width="120"
                         Binding="{Binding B}"

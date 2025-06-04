@@ -1149,7 +1149,7 @@
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding CurrentDeviceParameter.FeedFlowSpeed, StringFormat={}{0:F2}}" />
                                 <ComboBox
-                                    Width="110"
+                                    Width="120"
                                     hc:InfoElement.Title="{ex:Language Key=' '}"
                                     BorderBrush="{DynamicResource PrimaryBrush}"
                                     IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}"
@@ -1165,7 +1165,7 @@
                                     <ComboBoxItem Content="pH_stat(体积)" />
                                 </ComboBox>
                                 <ToggleButton
-                                    Width="75"
+                                    Width="70"
                                     Height="28"
                                     VerticalAlignment="Bottom"
                                     hc:StatusSwitchElement.HideUncheckedElement="True"
@@ -1174,7 +1174,7 @@
                                     Style="{StaticResource ToggleButtonCustom}">
                                     <hc:StatusSwitchElement.CheckedElement>
                                         <Border
-                                            Width="75"
+                                            Width="70"
                                             Height="28"
                                             Background="{DynamicResource PrimaryBrush}"
                                             BorderBrush="{DynamicResource PrimaryBrush}"
