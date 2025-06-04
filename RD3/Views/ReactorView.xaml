@@ -20,7 +20,7 @@
     Width="auto"
     Height="auto"
     MinWidth="1400"
-    MinHeight="600"
+    MinHeight="700"
     d:DataContext="{d:DesignInstance Type=vm:ReactorViewModel}"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"

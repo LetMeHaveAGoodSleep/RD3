@@ -42,6 +42,11 @@
             <Setter Property="Topmost" Value="True" />
         </Style>
     </prism:Dialog.WindowStyle>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding ClosingCommand}" PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Border Style="{StaticResource BorderForm}">
         <Grid>
             <Grid.ColumnDefinitions>
