@@ -18,7 +18,8 @@
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     Width="550"
-    Height="700"
+    Height="auto"
+    MaxHeight="700"
     d:DataContext="{d:DesignInstance Type=vm:DOControlStrategyViewModel}"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
@@ -74,7 +75,7 @@
             </hc:ButtonGroup>
             <Button
                 Width="100"
-                Height="28"
+                Height="35"
                 VerticalAlignment="Top"
                 Command="{Binding OKCommand}"
                 Content="确定"
@@ -108,171 +109,186 @@
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>
-        <GroupBox Header="阶梯通气策略参数" Style="{StaticResource MaterialDesignGroupBox}">
-            <DockPanel>
-                <Grid Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="5" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
-                        <DockPanel LastChildFill="False">
-                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                                <TextBox
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <GroupBox
+                MaxHeight="350"
+                Header="阶梯通气策略参数"
+                Style="{StaticResource MaterialDesignGroupBox}"
+                Visibility="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                <DockPanel>
+                    <Grid Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="5" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                            <DockPanel LastChildFill="False">
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBox
+                                        Width="100"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding Param.AgitLowerLimit, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox
+                                        Width="100"
+                                        VerticalAlignment="Center"
+                                        hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding Param.AgitUpperLimit, UpdateSourceTrigger=PropertyChanged}" />
+                                </hc:UniformSpacingPanel>
+                            </DockPanel>
+                            <DockPanel LastChildFill="False">
+                                <ComboBox
                                     Width="100"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding Param.AgitLowerLimit, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBox
-                                    Width="100"
-                                    VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding Param.AgitUpperLimit, UpdateSourceTrigger=PropertyChanged}" />
-                            </hc:UniformSpacingPanel>
-                        </DockPanel>
-                        <DockPanel LastChildFill="False">
-                            <ComboBox
-                                Width="100"
-                                hc:InfoElement.Title="{ex:Language Key='气体单位'}"
-                                DockPanel.Dock="Left"
-                                SelectedIndex="{Binding Param.Unit}"
-                                Style="{StaticResource ComboBoxExtend}">
-                                <ComboBoxItem Content="VVM" />
-                                <ComboBoxItem Content="L/min" />
-                            </ComboBox>
-                            <hc:UniformSpacingPanel
-                                DockPanel.Dock="Right"
-                                Orientation="Horizontal"
-                                Spacing="5">
-                                <DockPanel LastChildFill="False">
-                                    <Button
-                                        Name="BtnAddRow"
-                                        Height="30"
-                                        VerticalAlignment="Bottom"
-                                        hc:IconElement.Geometry="{StaticResource GeometryAdd}"
-                                        Command="{Binding AddCommand}"
-                                        Content="新增"
-                                        Foreground="{StaticResource PrimaryBrush}" />
-                                </DockPanel>
-                                <DockPanel LastChildFill="False">
-                                    <Button
-                                        Name="BtnDeleteRow"
-                                        Height="30"
-                                        VerticalAlignment="Bottom"
-                                        hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"
-                                        Command="{Binding DeleteCommand}"
-                                        CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
-                                        Content="删除"
-                                        Foreground="{StaticResource PrimaryBrush}" />
-                                </DockPanel>
-                                <DockPanel LastChildFill="False">
-                                    <Button
-                                        Name="BtnConfirm"
-                                        Width="75"
-                                        Height="30"
-                                        VerticalAlignment="Bottom"
-                                        Command="{Binding OKCommand}"
-                                        Content="确定"
-                                        Foreground="{StaticResource PrimaryBrush}" />
-                                </DockPanel>
-                            </hc:UniformSpacingPanel>
-                        </DockPanel>
-                    </hc:UniformSpacingPanel>
-                    <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="5" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <DataGrid
-                            hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
-                            hc:DataGridAttach.ShowSelectAllButton="False"
-                            AutoGenerateColumns="False"
-                            Background="{StaticResource DefaultBrush}"
-                            CanUserAddRows="False"
-                            CanUserSortColumns="False"
-                            ColumnWidth="SizeToHeader"
-                            GridLinesVisibility="All"
-                            HeadersVisibility="Column"
-                            HorizontalGridLinesBrush="LightGray"
-                            IsReadOnly="False"
-                            ItemsSource="{Binding Param.AirCol}"
-                            LoadingRow="DataGrid_LoadingRow"
-                            RowHeaderWidth="0"
-                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                            ScrollViewer.VerticalScrollBarVisibility="Auto"
-                            SelectionMode="Single"
-                            SelectionUnit="FullRow"
-                            VerticalGridLinesBrush="LightGray">
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn
-                                    Width="60"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="序号"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=Header}" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn
-                                    Width="120"
-                                    Binding="{Binding VVM}"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="通气量"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <DataGrid
-                            Grid.Column="2"
-                            hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
-                            hc:DataGridAttach.ShowSelectAllButton="False"
-                            AutoGenerateColumns="False"
-                            Background="{StaticResource DefaultBrush}"
-                            CanUserAddRows="False"
-                            CanUserSortColumns="False"
-                            ColumnWidth="SizeToHeader"
-                            GridLinesVisibility="All"
-                            HeadersVisibility="Column"
-                            HorizontalGridLinesBrush="LightGray"
-                            IsReadOnly="False"
-                            ItemsSource="{Binding Param.AirCol}"
-                            LoadingRow="DataGrid_LoadingRow"
-                            RowHeaderWidth="0"
-                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                            ScrollViewer.VerticalScrollBarVisibility="Auto"
-                            SelectionMode="Single"
-                            SelectionUnit="FullRow"
-                            VerticalGridLinesBrush="LightGray">
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn
-                                    Width="60"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="序号"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=Header}" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn
-                                    Width="120"
-                                    Binding="{Binding VVM}"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="氧气量"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
+                                    hc:InfoElement.Title="{ex:Language Key='气体单位'}"
+                                    DockPanel.Dock="Left"
+                                    SelectedIndex="{Binding Param.Unit}"
+                                    Style="{StaticResource ComboBoxExtend}">
+                                    <ComboBoxItem Content="VVM" />
+                                    <ComboBoxItem Content="L/min" />
+                                </ComboBox>
+                                <hc:UniformSpacingPanel
+                                    DockPanel.Dock="Right"
+                                    Orientation="Horizontal"
+                                    Spacing="5">
+                                    <DockPanel LastChildFill="False">
+                                        <Button
+                                            Name="BtnAddRow"
+                                            Height="30"
+                                            VerticalAlignment="Bottom"
+                                            hc:IconElement.Geometry="{StaticResource GeometryAdd}"
+                                            Command="{Binding AddCommand}"
+                                            Content="新增"
+                                            Foreground="{StaticResource PrimaryBrush}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <Button
+                                            Name="BtnDeleteRow"
+                                            Height="30"
+                                            VerticalAlignment="Bottom"
+                                            hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"
+                                            Command="{Binding DeleteCommand}"
+                                            CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
+                                            Content="删除"
+                                            Foreground="{StaticResource PrimaryBrush}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <Button
+                                            Name="BtnConfirm"
+                                            Width="75"
+                                            Height="30"
+                                            VerticalAlignment="Bottom"
+                                            Command="{Binding OKCommand}"
+                                            Content="确定"
+                                            Foreground="{StaticResource PrimaryBrush}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
+                            </DockPanel>
+                        </hc:UniformSpacingPanel>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="5" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <hc:ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <DataGrid
+                                    hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
+                                    hc:DataGridAttach.ShowSelectAllButton="False"
+                                    AutoGenerateColumns="False"
+                                    Background="{StaticResource DefaultBrush}"
+                                    CanUserAddRows="False"
+                                    CanUserSortColumns="False"
+                                    ColumnWidth="SizeToHeader"
+                                    GridLinesVisibility="All"
+                                    HeadersVisibility="Column"
+                                    HorizontalGridLinesBrush="LightGray"
+                                    IsReadOnly="False"
+                                    ItemsSource="{Binding Param.AirCol}"
+                                    LoadingRow="DataGrid_LoadingRow"
+                                    RowHeaderWidth="0"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                    SelectionMode="Single"
+                                    SelectionUnit="FullRow"
+                                    VerticalGridLinesBrush="LightGray">
+                                    <DataGrid.Columns>
+                                        <DataGridTemplateColumn
+                                            Width="60"
+                                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                            Header="序号"
+                                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=Header}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTextColumn
+                                            Width="120"
+                                            Binding="{Binding VVM}"
+                                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                            Header="通气量"
+                                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </hc:ScrollViewer>
+                            <hc:ScrollViewer
+                                Grid.Column="2"
+                                HorizontalScrollBarVisibility="Auto"
+                                VerticalScrollBarVisibility="Auto">
+                                <DataGrid
+                                    hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
+                                    hc:DataGridAttach.ShowSelectAllButton="False"
+                                    AutoGenerateColumns="False"
+                                    Background="{StaticResource DefaultBrush}"
+                                    CanUserAddRows="False"
+                                    CanUserSortColumns="False"
+                                    ColumnWidth="SizeToHeader"
+                                    GridLinesVisibility="All"
+                                    HeadersVisibility="Column"
+                                    HorizontalGridLinesBrush="LightGray"
+                                    IsReadOnly="False"
+                                    ItemsSource="{Binding Param.AirCol}"
+                                    LoadingRow="DataGrid_LoadingRow"
+                                    RowHeaderWidth="0"
+                                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                    SelectionMode="Single"
+                                    SelectionUnit="FullRow"
+                                    VerticalGridLinesBrush="LightGray">
+                                    <DataGrid.Columns>
+                                        <DataGridTemplateColumn
+                                            Width="60"
+                                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                            Header="序号"
+                                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=Header}" />
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTextColumn
+                                            Width="120"
+                                            Binding="{Binding VVM}"
+                                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                            Header="氧气量"
+                                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </hc:ScrollViewer>
+                        </Grid>
                     </Grid>
-                </Grid>
-            </DockPanel>
-        </GroupBox>
-        <GroupBox Header="mid-ranging策略参数" Style="{StaticResource MaterialDesignGroupBox}">
+                </DockPanel>
+            </GroupBox>
+        </ScrollViewer>
+        <GroupBox
+            Header="mid-ranging策略参数"
+            Style="{StaticResource MaterialDesignGroupBox}"
+            Visibility="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                 <DockPanel LastChildFill="False">
                     <TextBox
