@@ -57,7 +57,7 @@
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
-            <Grid  Grid.Row="0">
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="80" />
@@ -65,14 +65,24 @@
                     <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Width="90">酸</Label>
-                <TextBox Margin="1" Width="80" Grid.Column="1" Name="acidbufferName" Text="{Binding phInfo.acidbufferName}"></TextBox>
-                <TextBox Margin="1" Width="80" Grid.Column="2" Name="acidbufferValue" Text="{Binding phInfo.acidbufferValue}"></TextBox>
+                <TextBox
+                    Name="acidbufferName"
+                    Grid.Column="1"
+                    Width="80"
+                    Margin="1"
+                    Text="{Binding phInfo.acidbufferName}" />
+                <TextBox
+                    Name="acidbufferValue"
+                    Grid.Column="2"
+                    Width="80"
+                    Margin="1"
+                    Text="{Binding phInfo.acidbufferValue}" />
                 <Label Grid.Column="3">mol/L</Label>
 
             </Grid>
 
 
-            <Grid  Grid.Row="1">
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="80" />
@@ -80,136 +90,234 @@
                     <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Width="90">盐</Label>
-                <TextBox Margin="1" Width="80" Grid.Column="1" Name="saltbufferName" Text="{Binding phInfo.saltbufferName}"></TextBox>
-                <TextBox Margin="1" Width="80" Grid.Column="2" Name="saltbufferValue" Text="{Binding phInfo.saltbufferValue}"></TextBox>
+                <TextBox
+                    Name="saltbufferName"
+                    Grid.Column="1"
+                    Width="80"
+                    Margin="1"
+                    Text="{Binding phInfo.saltbufferName}" />
+                <TextBox
+                    Name="saltbufferValue"
+                    Grid.Column="2"
+                    Width="80"
+                    Margin="1"
+                    Text="{Binding phInfo.saltbufferValue}" />
                 <Label Grid.Column="3">mol/L</Label>
 
             </Grid>
-            <Grid  Grid.Row="2">
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">工作温度</Label>
-                <TextBox Margin="1" Width="80" Grid.Column="1" Name="workTemp" Text="{Binding phInfo.workTemp}"></TextBox>
+                <TextBox
+                    Name="workTemp"
+                    Grid.Column="1"
+                    Width="80"
+                    Margin="1"
+                    Text="{Binding phInfo.workTemp}" />
                 <Label Grid.Column="3" Width="70">℃</Label>
 
             </Grid>
-            <Grid  Grid.Row="3">
+            <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0">发酵体积</Label>
-                <TextBox Margin="1" Width="80" Grid.Column="1" Name="V" Text="{Binding phInfo.V}"></TextBox>
+                <TextBox
+                    Name="V"
+                    Grid.Column="1"
+                    Width="80"
+                    Margin="1"
+                    Text="{Binding phInfo.V}" />
                 <Label Grid.Column="3" Width="70">L</Label>
 
             </Grid>
-            <Grid  Grid.Row="4">
+            <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Width="90">pka0</Label>
-                <TextBox Margin="1" Width="80" Grid.Column="1" Name="pka0" Text="{Binding phInfo.pka0}"></TextBox>
+                <TextBox
+                    Name="pka0"
+                    Grid.Column="1"
+                    Width="80"
+                    Margin="1"
+                    Text="{Binding phInfo.pka0}" />
             </Grid>
-            <Grid  Grid.Row="5">
+            <Grid Grid.Row="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Width="90">pka0温度</Label>
-                <TextBox Margin="1" Width="80" Grid.Column="1" Name="pka0_temp" Text="{Binding phInfo.pka0_temp}"></TextBox>
+                <TextBox
+                    Name="pka0_temp"
+                    Grid.Column="1"
+                    Width="80"
+                    Margin="1"
+                    Text="{Binding phInfo.pka0_temp}" />
                 <Label Grid.Column="3" Width="70">℃</Label>
             </Grid>
-            <Grid  Grid.Row="6">
+            <Grid Grid.Row="6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Width="90">温度系数</Label>
-                <TextBox Margin="1" Width="80" Grid.Column="1" Name="tempCoefficient" Text="{Binding phInfo.tempCoefficient}"></TextBox>
+                <TextBox
+                    Name="tempCoefficient"
+                    Grid.Column="1"
+                    Width="80"
+                    Margin="1"
+                    Text="{Binding phInfo.tempCoefficient}" />
                 <Label Grid.Column="2" Width="70">每度</Label>
             </Grid>
-            <Grid  Grid.Row="7">
+            <Grid Grid.Row="7">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Width="90">酸浓度</Label>
-                <TextBox Margin="1" Width="80" Grid.Column="1" Name="acidValue" Text="{Binding phInfo.acidValue}"></TextBox>
+                <TextBox
+                    Name="acidValue"
+                    Grid.Column="1"
+                    Width="80"
+                    Margin="1"
+                    Text="{Binding phInfo.acidValue}" />
                 <Label Grid.Column="2" Width="70">mol/L</Label>
             </Grid>
-            <Grid  Grid.Row="8">
+            <Grid Grid.Row="8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Column="0" Width="90">碱浓度</Label>
-                <TextBox Margin="1" Width="80" Grid.Column="1" Name="alkaliValue" Text="{Binding phInfo.alkaliValue}"></TextBox>
+                <TextBox
+                    Name="alkaliValue"
+                    Grid.Column="1"
+                    Width="80"
+                    Margin="1"
+                    Text="{Binding phInfo.alkaliValue}" />
                 <Label Grid.Column="2" Width="70">mol/L</Label>
             </Grid>
-            <Grid  Grid.Row="9">
+            <Grid Grid.Row="9">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="80" />
                 </Grid.ColumnDefinitions>
                 <Label Width="90">工作pH</Label>
-                <TextBox Margin="1,1,1,1" Width="80" Grid.Column="1" Grid.ColumnSpan="2" Name="ph0" Text="{Binding phInfo.ph0}"></TextBox>
+                <TextBox
+                    Name="ph0"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Width="80"
+                    Margin="1,1,1,1"
+                    Text="{Binding phInfo.ph0}" />
 
             </Grid>
-            <Grid  Grid.Row="10">
+            <Grid Grid.Row="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="240" />
                 </Grid.ColumnDefinitions>
                 <Label Width="90">修订buffer</Label>
-                <TextBox Margin="1" Width="230" Grid.Column="1" Grid.ColumnSpan="2" Name="d_buffer" Text="{Binding phInfo.d_buffer}"></TextBox>
+                <TextBox
+                    Name="d_buffer"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Width="230"
+                    Margin="1"
+                    Text="{Binding phInfo.d_buffer}" />
 
             </Grid>
-            <Grid  Grid.Row="11">
+            <Grid Grid.Row="11">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="240" />
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Width="90" >aslope</Label>
-                <TextBox Margin="1" Width="230" Grid.Column="1" Name="aslope" Text="{Binding phInfo.aslope}"></TextBox>
+                <Label Grid.Column="0" Width="90">aslope</Label>
+                <TextBox
+                    Name="aslope"
+                    Grid.Column="1"
+                    Width="230"
+                    Margin="1"
+                    Text="{Binding phInfo.aslope}" />
             </Grid>
-            <Grid  Grid.Row="12">
+            <Grid Grid.Row="12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="240" />
                 </Grid.ColumnDefinitions>
                 <Label Width="90">bslope</Label>
-                <TextBox Margin="1" Width="230" Grid.Column="1" Name="bslope" Text="{Binding phInfo.bslope}" Grid.ColumnSpan="2"></TextBox>
+                <TextBox
+                    Name="bslope"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Width="230"
+                    Margin="1"
+                    Text="{Binding phInfo.bslope}" />
             </Grid>
-            <Grid  Grid.Row="13">
+            <Grid Grid.Row="13">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="90" />
                     <ColumnDefinition Width="80" />
                     <ColumnDefinition Width="70" />
                 </Grid.ColumnDefinitions>
-                <Label Width="90" Grid.Column="0">T90</Label>
-                <TextBox Margin="1" Width="80" Grid.Column="1" Name="T90" Text="{Binding phInfo.T90}" Grid.ColumnSpan="1"></TextBox>
-                <Label Margin="1" Width="70" Grid.Column="2" Grid.ColumnSpan="2">分</Label>
+                <Label Grid.Column="0" Width="90">T90</Label>
+                <TextBox
+                    Name="T90"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="1"
+                    Width="80"
+                    Margin="1"
+                    Text="{Binding phInfo.T90}" />
+                <Label
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Width="70"
+                    Margin="1">
+                    分
+                </Label>
             </Grid>
-            <Grid  Grid.Row="14">
+            <Grid Grid.Row="14">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40" />
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Width="90" Name="btnCalculate" Click="btnCalculate_Click">计算</Button>
-                <Button Grid.Column="2" Width="90" Name="btnSave" Click="btnSave_Click">保存</Button>
-                <Button Grid.Column="3" Width="90" Name="btnCancel" Command="{Binding CancelCommand}">关闭</Button>
+                <Button
+                    Name="btnCalculate"
+                    Grid.Column="1"
+                    Width="90"
+                    Click="btnCalculate_Click">
+                    计算
+                </Button>
+                <Button
+                    Name="btnSave"
+                    Grid.Column="2"
+                    Width="90"
+                    Click="btnSave_Click">
+                    保存
+                </Button>
+                <Button
+                    Name="btnCancel"
+                    Grid.Column="3"
+                    Width="90"
+                    Command="{Binding CancelCommand}">
+                    关闭
+                </Button>
             </Grid>
         </Grid>
 

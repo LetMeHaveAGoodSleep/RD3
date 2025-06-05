@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EO5mRJjbg+U=",
+  "dgSpecHash": "r7QyN6iVJvc=",
   "success": true,
-  "projectFilePath": "D:\\20250415-001\\RD3\\RD3.Shared\\RD3.Shared.csproj",
+  "projectFilePath": "D:\\20250415-001\\RD3 - 新版本\\RD3.Shared\\RD3.Shared.csproj",
   "expectedPackageFiles": [
     "D:\\packages\\fparsec\\2.0.0-beta2\\fparsec.2.0.0-beta2.nupkg.sha512",
     "D:\\packages\\fsharp.core\\8.0.100\\fsharp.core.8.0.100.nupkg.sha512",

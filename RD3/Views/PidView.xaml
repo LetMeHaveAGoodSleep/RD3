@@ -10,6 +10,8 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
+    xmlns:sys="clr-namespace:System;assembly=netstandard"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="1350"
     Height="700"
@@ -39,30 +41,39 @@
             <Setter Property="Opacity" Value="1" />
         </Style>
     </prism:Dialog.WindowStyle>
+    <UserControl.Resources>
+        <ObjectDataProvider
+            x:Key="DataFromEnum"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:PIDFactor" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
     <Border Background="{StaticResource BackGroundBrush}" CornerRadius="{StaticResource DefaultCornerRadius}">
-        <Grid>
+        <Grid Margin="5">
             <Grid.RowDefinitions>
                 <!--  操作按钮  -->
-                <RowDefinition Height="70" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="5" />
                 <!--  数据表格  -->
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <DockPanel Grid.Row="0">
+            <DockPanel LastChildFill="False">
                 <Button
                     Name="Save"
                     Width="80"
-                    Height="40"
-                    Margin="10"
-                    HorizontalAlignment="Right"
+                    Height="35"
                     Command="{Binding SaveCommand}"
-                    FontSize="18">
+                    DockPanel.Dock="Right"
+                    Style="{StaticResource ButtonPrimary}">
                     保存
                 </Button>
             </DockPanel>
-
             <DataGrid
                 Name="dataGrid"
-                Grid.Row="1"
+                Grid.Row="2"
                 hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
                 hc:DataGridAttach.ShowSelectAllButton="False"
                 AutoGenerateColumns="False"
@@ -83,72 +94,95 @@
                 VerticalGridLinesBrush="LightGray">
                 <DataGrid.Columns>
                     <DataGridTextColumn
-                        Width="100"
+                        Width="80"
                         Binding="{Binding deviceID}"
                         CanUserSort="False"
-                        Header="设备"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="反应器"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
+                    <DataGridComboBoxColumn
+                        Width="120"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="作用对象"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                        ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+                        SelectedItemBinding="{Binding Factor}">
+                        <DataGridComboBoxColumn.ElementStyle>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="ItemTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridComboBoxColumn.ElementStyle>
+                    </DataGridComboBoxColumn>
                     <DataGridTextColumn
                         Width="100"
-                        Binding="{Binding pidName}"
+                        Binding="{Binding PidName}"
                         CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="名称"
-                        IsReadOnly="False" />
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding startTime}"
-                        CanUserSort="False"
-                        Header="起始时间(分钟)"
-                        IsReadOnly="False"
-                        Visibility="Collapsed" />
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding endTime}"
-                        CanUserSort="False"
-                        Header="结束时间(分钟)"
-                        IsReadOnly="False"
-                        Visibility="Collapsed" />
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                        IsReadOnly="True" />
                     <DataGridTextColumn
                         Width="100"
                         Binding="{Binding P}"
                         CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="P"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
                     <DataGridTextColumn
                         Width="100"
                         Binding="{Binding I}"
                         CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="I"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
                     <DataGridTextColumn
                         Width="100"
                         Binding="{Binding D}"
                         CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="D"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
                     <DataGridTextColumn
                         Width="100"
                         Binding="{Binding Threshold}"
                         CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="阈值"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
                     <DataGridTextColumn
                         Width="120"
                         Binding="{Binding Interval}"
                         CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="采样间隔（s）"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
                     <DataGridTextColumn
                         Width="100"
                         Binding="{Binding deadArea}"
                         CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="死区"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
                     <DataGridTextColumn
                         Width="100"
                         Binding="{Binding maxSpeed}"
                         CanUserSort="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="上限"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
                     <DataGridTemplateColumn
                         MinWidth="100"

@@ -3152,11 +3152,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\20250415-001\\RD3\\RD3\\RD3.csproj",
+      "projectUniqueName": "D:\\20250415-001\\RD3 - 新版本\\RD3\\RD3.csproj",
       "projectName": "RD3",
-      "projectPath": "D:\\20250415-001\\RD3\\RD3\\RD3.csproj",
+      "projectPath": "D:\\20250415-001\\RD3 - 新版本\\RD3\\RD3.csproj",
       "packagesPath": "D:\\packages",
-      "outputPath": "D:\\20250415-001\\RD3\\RD3\\obj\\",
+      "outputPath": "D:\\20250415-001\\RD3 - 新版本\\RD3\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3178,29 +3178,29 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows7.0",
           "projectReferences": {
-            "D:\\20250415-001\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj": {
-              "projectPath": "D:\\20250415-001\\RD3\\Fpi.Assembly\\Fpi.Assembly.csproj"
+            "D:\\20250415-001\\RD3 - 新版本\\Fpi.Assembly\\Fpi.Assembly.csproj": {
+              "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Assembly\\Fpi.Assembly.csproj"
             },
-            "D:\\20250415-001\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
-              "projectPath": "D:\\20250415-001\\RD3\\Fpi.Communication\\Fpi.Communication.csproj"
+            "D:\\20250415-001\\RD3 - 新版本\\Fpi.Communication\\Fpi.Communication.csproj": {
+              "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Communication\\Fpi.Communication.csproj"
             },
-            "D:\\20250415-001\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj": {
-              "projectPath": "D:\\20250415-001\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj"
+            "D:\\20250415-001\\RD3 - 新版本\\Fpi.Instrument\\Fpi.Instrument.csproj": {
+              "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Instrument\\Fpi.Instrument.csproj"
             },
-            "D:\\20250415-001\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
-              "projectPath": "D:\\20250415-001\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+            "D:\\20250415-001\\RD3 - 新版本\\Fpi.Util\\Fpi.Util.csproj": {
+              "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Util\\Fpi.Util.csproj"
             },
-            "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
-              "projectPath": "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+            "D:\\20250415-001\\RD3 - 新版本\\Fpi.Xml\\Fpi.Xml.csproj": {
+              "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Xml\\Fpi.Xml.csproj"
             },
-            "D:\\20250415-001\\RD3\\RD3.Shared\\RD3.Shared.csproj": {
-              "projectPath": "D:\\20250415-001\\RD3\\RD3.Shared\\RD3.Shared.csproj"
+            "D:\\20250415-001\\RD3 - 新版本\\RD3.Shared\\RD3.Shared.csproj": {
+              "projectPath": "D:\\20250415-001\\RD3 - 新版本\\RD3.Shared\\RD3.Shared.csproj"
             },
-            "D:\\20250415-001\\RD3\\XZ.OnnxRun\\XZ.OnnxRun.csproj": {
-              "projectPath": "D:\\20250415-001\\RD3\\XZ.OnnxRun\\XZ.OnnxRun.csproj"
+            "D:\\20250415-001\\RD3 - 新版本\\XZ.OnnxRun\\XZ.OnnxRun.csproj": {
+              "projectPath": "D:\\20250415-001\\RD3 - 新版本\\XZ.OnnxRun\\XZ.OnnxRun.csproj"
             },
-            "D:\\20250415-001\\RD3\\XZ.SQLite\\XZ.SQLite.csproj": {
-              "projectPath": "D:\\20250415-001\\RD3\\XZ.SQLite\\XZ.SQLite.csproj"
+            "D:\\20250415-001\\RD3 - 新版本\\XZ.SQLite\\XZ.SQLite.csproj": {
+              "projectPath": "D:\\20250415-001\\RD3 - 新版本\\XZ.SQLite\\XZ.SQLite.csproj"
             }
           }
         }

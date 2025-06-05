@@ -1,26 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "D:\\20250415-001\\RD3\\RD3.Shared\\RD3.Shared.csproj": {}
+    "D:\\20250415-001\\RD3 - 新版本\\RD3.Shared\\RD3.Shared.csproj": {}
   },
   "projects": {
-    "D:\\20250415-001\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
+    "D:\\20250415-001\\RD3 - 新版本\\Fpi.Communication\\Fpi.Communication.csproj": {
       "restore": {
-        "projectUniqueName": "D:\\20250415-001\\RD3\\Fpi.Communication\\Fpi.Communication.csproj",
+        "projectUniqueName": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Communication\\Fpi.Communication.csproj",
         "projectName": "Fpi.Communication",
-        "projectPath": "D:\\20250415-001\\RD3\\Fpi.Communication\\Fpi.Communication.csproj",
+        "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Communication\\Fpi.Communication.csproj",
         "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
             "projectReferences": {
-              "D:\\20250415-001\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj": {
-                "projectPath": "D:\\20250415-001\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj"
+              "D:\\20250415-001\\RD3 - 新版本\\Fpi.Instrument\\Fpi.Instrument.csproj": {
+                "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Instrument\\Fpi.Instrument.csproj"
               },
-              "D:\\20250415-001\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
-                "projectPath": "D:\\20250415-001\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              "D:\\20250415-001\\RD3 - 新版本\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Util\\Fpi.Util.csproj"
               },
-              "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
-                "projectPath": "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              "D:\\20250415-001\\RD3 - 新版本\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Xml\\Fpi.Xml.csproj"
               }
             }
           }
@@ -30,20 +30,20 @@
         "net48": {}
       }
     },
-    "D:\\20250415-001\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj": {
+    "D:\\20250415-001\\RD3 - 新版本\\Fpi.Instrument\\Fpi.Instrument.csproj": {
       "restore": {
-        "projectUniqueName": "D:\\20250415-001\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj",
+        "projectUniqueName": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Instrument\\Fpi.Instrument.csproj",
         "projectName": "Fpi.Instrument",
-        "projectPath": "D:\\20250415-001\\RD3\\Fpi.Instrument\\Fpi.Instrument.csproj",
+        "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Instrument\\Fpi.Instrument.csproj",
         "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
             "projectReferences": {
-              "D:\\20250415-001\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
-                "projectPath": "D:\\20250415-001\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              "D:\\20250415-001\\RD3 - 新版本\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Util\\Fpi.Util.csproj"
               },
-              "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
-                "projectPath": "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              "D:\\20250415-001\\RD3 - 新版本\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Xml\\Fpi.Xml.csproj"
               }
             }
           }
@@ -53,11 +53,11 @@
         "net48": {}
       }
     },
-    "D:\\20250415-001\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
+    "D:\\20250415-001\\RD3 - 新版本\\Fpi.Util\\Fpi.Util.csproj": {
       "restore": {
-        "projectUniqueName": "D:\\20250415-001\\RD3\\Fpi.Util\\Fpi.Util.csproj",
+        "projectUniqueName": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Util\\Fpi.Util.csproj",
         "projectName": "Fpi.Util",
-        "projectPath": "D:\\20250415-001\\RD3\\Fpi.Util\\Fpi.Util.csproj",
+        "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Util\\Fpi.Util.csproj",
         "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
@@ -69,17 +69,17 @@
         "net48": {}
       }
     },
-    "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
+    "D:\\20250415-001\\RD3 - 新版本\\Fpi.Xml\\Fpi.Xml.csproj": {
       "restore": {
-        "projectUniqueName": "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj",
+        "projectUniqueName": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Xml\\Fpi.Xml.csproj",
         "projectName": "Fpi.Xml",
-        "projectPath": "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj",
+        "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Xml\\Fpi.Xml.csproj",
         "UsingMicrosoftNETSdk": false,
         "frameworks": {
           "net48": {
             "projectReferences": {
-              "D:\\20250415-001\\RD3\\Fpi.Util\\Fpi.Util.csproj": {
-                "projectPath": "D:\\20250415-001\\RD3\\Fpi.Util\\Fpi.Util.csproj"
+              "D:\\20250415-001\\RD3 - 新版本\\Fpi.Util\\Fpi.Util.csproj": {
+                "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Util\\Fpi.Util.csproj"
               }
             }
           }
@@ -89,14 +89,14 @@
         "net48": {}
       }
     },
-    "D:\\20250415-001\\RD3\\RD3.Shared\\RD3.Shared.csproj": {
+    "D:\\20250415-001\\RD3 - 新版本\\RD3.Shared\\RD3.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\20250415-001\\RD3\\RD3.Shared\\RD3.Shared.csproj",
+        "projectUniqueName": "D:\\20250415-001\\RD3 - 新版本\\RD3.Shared\\RD3.Shared.csproj",
         "projectName": "RD3.Shared",
-        "projectPath": "D:\\20250415-001\\RD3\\RD3.Shared\\RD3.Shared.csproj",
+        "projectPath": "D:\\20250415-001\\RD3 - 新版本\\RD3.Shared\\RD3.Shared.csproj",
         "packagesPath": "D:\\packages",
-        "outputPath": "D:\\20250415-001\\RD3\\RD3.Shared\\obj\\",
+        "outputPath": "D:\\20250415-001\\RD3 - 新版本\\RD3.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -118,11 +118,11 @@
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows",
             "projectReferences": {
-              "D:\\20250415-001\\RD3\\Fpi.Communication\\Fpi.Communication.csproj": {
-                "projectPath": "D:\\20250415-001\\RD3\\Fpi.Communication\\Fpi.Communication.csproj"
+              "D:\\20250415-001\\RD3 - 新版本\\Fpi.Communication\\Fpi.Communication.csproj": {
+                "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Communication\\Fpi.Communication.csproj"
               },
-              "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj": {
-                "projectPath": "D:\\20250415-001\\RD3\\Fpi.Xml\\Fpi.Xml.csproj"
+              "D:\\20250415-001\\RD3 - 新版本\\Fpi.Xml\\Fpi.Xml.csproj": {
+                "projectPath": "D:\\20250415-001\\RD3 - 新版本\\Fpi.Xml\\Fpi.Xml.csproj"
               }
             }
           }

@@ -18,7 +18,7 @@
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     Width="550"
-    Height="auto"
+    Height="650"
     MaxHeight="700"
     d:DataContext="{d:DesignInstance Type=vm:DOControlStrategyViewModel}"
     Background="{StaticResource BackGroundBrush}"
@@ -55,7 +55,7 @@
             <hc:ButtonGroup HorizontalAlignment="Left" Style="{StaticResource ButtonGroupSolid}">
                 <RadioButton
                     Width="auto"
-                    Height="35"
+                    Height="40"
                     hc:BorderElement.CornerRadius="8"
                     Background="{DynamicResource BorderBrush}"
                     Content="{ex:Language Key='阶梯通气策略'}"
@@ -64,7 +64,7 @@
                     IsChecked="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled, Converter={StaticResource InverseBooleanConverter}}" />
                 <RadioButton
                     Width="auto"
-                    Height="35"
+                    Height="40"
                     Margin="15,0,0,0"
                     hc:BorderElement.CornerRadius="8"
                     Background="{DynamicResource BorderBrush}"
@@ -75,7 +75,7 @@
             </hc:ButtonGroup>
             <Button
                 Width="100"
-                Height="35"
+                Height="40"
                 VerticalAlignment="Top"
                 Command="{Binding OKCommand}"
                 Content="确定"
@@ -84,6 +84,24 @@
         </DockPanel>
         <GroupBox Header="通用参数" Style="{StaticResource MaterialDesignGroupBox}">
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <TextBox
+                        Width="100"
+                        hc:InfoElement.Title="{ex:Language Key='采样周期'}"
+                        Style="{StaticResource TextBoxExtend}"
+                        Text="{Binding CurrentDeviceParameter.AgitSampleCycle, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox
+                        Width="100"
+                        hc:InfoElement.Title="{ex:Language Key='截止频率'}"
+                        Style="{StaticResource TextBoxExtend}"
+                        Text="{Binding CurrentDeviceParameter.AgitSampleFrequency, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox
+                        Width="100"
+                        hc:InfoElement.Title="{ex:Language Key='时间常数'}"
+                        IsReadOnly="True"
+                        Style="{StaticResource TextBoxExtend}"
+                        Text="{Binding CurrentDeviceParameter.AgitTimeConstant, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
                     <DockPanel LastChildFill="False">
                         <CheckBox
@@ -111,7 +129,7 @@
         </GroupBox>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <GroupBox
-                MaxHeight="350"
+                MaxHeight="400"
                 Header="阶梯通气策略参数"
                 Style="{StaticResource MaterialDesignGroupBox}"
                 Visibility="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
@@ -149,39 +167,54 @@
                                     <ComboBoxItem Content="VVM" />
                                     <ComboBoxItem Content="L/min" />
                                 </ComboBox>
+                            </DockPanel>
+
+                            <DockPanel LastChildFill="False">
+                                <hc:UniformSpacingPanel
+                                    DockPanel.Dock="Left"
+                                    Orientation="Horizontal"
+                                    Spacing="5">
+                                    <DockPanel LastChildFill="False">
+                                        <Button
+                                            Height="30"
+                                            VerticalAlignment="Bottom"
+                                            hc:IconElement.Geometry="{StaticResource GeometryAdd}"
+                                            Command="{Binding AddAirCommand}"
+                                            Content="新增"
+                                            Foreground="{StaticResource PrimaryBrush}" />
+                                    </DockPanel>
+                                    <DockPanel LastChildFill="False">
+                                        <Button
+                                            Height="30"
+                                            VerticalAlignment="Bottom"
+                                            hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"
+                                            Command="{Binding DeleteAirCommand}"
+                                            CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
+                                            Content="删除"
+                                            Foreground="{StaticResource PrimaryBrush}" />
+                                    </DockPanel>
+                                </hc:UniformSpacingPanel>
                                 <hc:UniformSpacingPanel
                                     DockPanel.Dock="Right"
                                     Orientation="Horizontal"
                                     Spacing="5">
                                     <DockPanel LastChildFill="False">
                                         <Button
-                                            Name="BtnAddRow"
                                             Height="30"
                                             VerticalAlignment="Bottom"
                                             hc:IconElement.Geometry="{StaticResource GeometryAdd}"
-                                            Command="{Binding AddCommand}"
+                                            Command="{Binding AddO2Command}"
                                             Content="新增"
                                             Foreground="{StaticResource PrimaryBrush}" />
                                     </DockPanel>
                                     <DockPanel LastChildFill="False">
                                         <Button
-                                            Name="BtnDeleteRow"
                                             Height="30"
                                             VerticalAlignment="Bottom"
                                             hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"
-                                            Command="{Binding DeleteCommand}"
+                                            Command="{Binding DeleteO2Command}"
                                             CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
                                             Content="删除"
-                                            Foreground="{StaticResource PrimaryBrush}" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="False">
-                                        <Button
-                                            Name="BtnConfirm"
-                                            Width="75"
-                                            Height="30"
-                                            VerticalAlignment="Bottom"
-                                            Command="{Binding OKCommand}"
-                                            Content="确定"
                                             Foreground="{StaticResource PrimaryBrush}" />
                                     </DockPanel>
                                 </hc:UniformSpacingPanel>
@@ -251,7 +284,7 @@
                                     HeadersVisibility="Column"
                                     HorizontalGridLinesBrush="LightGray"
                                     IsReadOnly="False"
-                                    ItemsSource="{Binding Param.AirCol}"
+                                    ItemsSource="{Binding Param.O2Col}"
                                     LoadingRow="DataGrid_LoadingRow"
                                     RowHeaderWidth="0"
                                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -290,13 +323,6 @@
             Style="{StaticResource MaterialDesignGroupBox}"
             Visibility="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
-                <DockPanel LastChildFill="False">
-                    <TextBox
-                        Width="100"
-                        hc:InfoElement.Title="{ex:Language Key='时间常数'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter, UpdateSourceTrigger=PropertyChanged}" />
-                </DockPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <TextBox
                         Width="100"
@@ -341,19 +367,26 @@
                         Text="{Binding MidRanging.AirUpperLimit, UpdateSourceTrigger=PropertyChanged}" />
                 </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <CheckBox Content="氧气关联" Style="{StaticResource MaterialDesignCheckBox}" />
+                    <DockPanel LastChildFill="False">
+                        <CheckBox
+                            Width="100"
+                            Content="氧气关联"
+                            DockPanel.Dock="Bottom"
+                            IsChecked="{Binding MidRanging.O2Associated}"
+                            Style="{StaticResource MaterialDesignCheckBox}" />
+                    </DockPanel>
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='氧气下限'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.InitialAir, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding MidRanging.InitialO2, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='氧气上限'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AirUpperLimit, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding MidRanging.O2UpperLimit, UpdateSourceTrigger=PropertyChanged}" />
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>
