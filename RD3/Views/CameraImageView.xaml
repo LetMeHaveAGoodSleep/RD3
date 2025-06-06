@@ -44,132 +44,158 @@
             <Setter Property="Opacity" Value="1" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Border Style="{StaticResource BorderCard}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <DockPanel LastChildFill="True">
+            <StackPanel
+                Margin="30,0,0,0"
+                DockPanel.Dock="Top"
+                Orientation="Horizontal">
+                <Ellipse
+                    x:Name="RedLight"
+                    Width="30"
+                    Height="30"
+                    Margin="5"
+                    Fill="#E64B35"
+                    Visibility="{Binding Connected, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                <Ellipse
+                    x:Name="GreenLight"
+                    Width="30"
+                    Height="30"
+                    Margin="5"
+                    Fill="#00FF00"
+                    Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </StackPanel>
             <WindowsFormsHost>
-                <wf:PictureBox x:Name="winFormsPictureBox" />
+                <wf:PictureBox x:Name="winFormsPictureBox" BorderStyle="Fixed3D" />
             </WindowsFormsHost>
-            <DockPanel Grid.Row="1" LastChildFill="False">
-                <hc:UniformSpacingPanel
-                    DockPanel.Dock="Right"
-                    Orientation="Horizontal"
-                    Spacing="10">
-                    <Button
-                        Width="80"
-                        Command="{Binding SnapCommand}"
-                        Content="截图"
-                        Style="{StaticResource ButtonInfo}" />
-                    <Button
-                        Width="80"
-                        Command="{Binding VideoCommand}"
-                        Content="录像"
-                        Style="{StaticResource ButtonPrimary}"
-                        Visibility="{Binding Recording, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                    <Button
-                        Width="80"
-                        Command="{Binding StopVideoCommand}"
-                        Content="停止"
-                        Style="{StaticResource ButtonDanger}"
-                        Visibility="{Binding Recording, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                </hc:UniformSpacingPanel>
-            </DockPanel>
-            <!--<Button
-                Name="btnDefoaming"
-                Grid.Row="2"
-                Width="94"
-                Height="30"
-                Margin="538,0,0,0"
-                HorizontalAlignment="Left"
-                HorizontalContentAlignment="Center"
-                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                Background="{StaticResource PrimaryBrush}"
-                BorderBrush="{StaticResource PrimaryBrush}"
-                Command="{Binding AFCommand}"
-                Content="{ex:Language Key=手动消泡}"
-                FontSize="{DynamicResource NormalFontSize}"
-                Foreground="White"
-                Visibility="{Binding Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
-            <Button
-                Name="btnClose"
-                Grid.Row="2"
-                Width="48"
-                Height="30"
-                Margin="637,0,0,0"
-                HorizontalAlignment="Left"
-                HorizontalContentAlignment="Center"
-                hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                BorderBrush="{StaticResource PrimaryBrush}"
-                Command="{Binding CancelCommand}"
-                Content="{ex:Language Key=关闭}"
-                FontSize="{DynamicResource NormalFontSize}"
-                Foreground="{StaticResource PrimaryBrush}"
-                RenderTransformOrigin="1.896,0.4" />
-            <Label
-                x:Name="label"
-                Grid.Row="2"
-                Margin="344,0,0,0"
-                HorizontalAlignment="Left"
-                Content="消泡阈值" />
-            <TextBox x:Name="txtDefoamingThreshold"
-                     Grid.Row="2"
-                     Width="44"
-                     Margin="412,0,0,0"
-                     HorizontalAlignment="Left"
-                     VerticalAlignment="Center"
-                     Text="{Binding CurrentDeviceParameter.DefoamingSetting.DefoamingThreshold}"
-                     TextWrapping="Wrap" />
-            <Label
-                x:Name="label2"
-                Grid.Row="2"
-                Margin="-3,0,0,0"
-                HorizontalAlignment="Left"
-                Content="消泡液流速" />
-            <TextBox
-                x:Name="txtDefoamingSpeed"
-                Grid.Row="2"
-                Width="44"
-                Margin="80,0,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Text="{Binding CurrentDeviceParameter.DefoamingSetting.FlowSpeed}"
-                TextWrapping="Wrap" />
-            <Label x:Name="label3"
-                   Grid.Row="2"
-                   Margin="127,0,0,0"
-                   HorizontalAlignment="Left"
-                   Content="ml/min" />
-            <Label
-                x:Name="label4"
-                Grid.Row="2"
-                Margin="192,0,0,0"
-                HorizontalAlignment="Left"
-                Content="消泡液" />
-            <TextBox
-                x:Name="txtDefoamingValue"
-                Grid.Row="2"
-                Width="44"
-                Margin="250,0,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Center"
-                Text="{Binding CurrentDeviceParameter.DefoamingSetting.FlowCapacity}"
-                TextWrapping="Wrap" />
-            <Label
-                x:Name="label5"
-                Grid.Row="2"
-                Margin="297,0,0,0"
-                HorizontalAlignment="Left"
-                Content="ml" />
-            <CheckBox
-                x:Name="cbAutoDefoaming"
-                Grid.Row="2"
-                Margin="458,0,0,0"
-                HorizontalAlignment="Left"
-                Content="自动消泡"
-                IsChecked="{Binding CurrentDeviceParameter.DefoamingSetting.AutoDefoaming}" />-->
-        </Grid>
-    </Border>
+        </DockPanel>
+
+        <DockPanel Grid.Row="2" LastChildFill="False">
+            <hc:UniformSpacingPanel
+                DockPanel.Dock="Right"
+                Orientation="Horizontal"
+                Spacing="10">
+                <Button
+                    Width="80"
+                    Command="{Binding PauseCommand}"
+                    Content="暂停"
+                    Style="{StaticResource ButtonSuccess}" />
+                <Button
+                    Width="80"
+                    Command="{Binding SnapCommand}"
+                    Content="截图"
+                    Style="{StaticResource ButtonInfo}" />
+                <Button
+                    Width="80"
+                    Command="{Binding VideoCommand}"
+                    Content="录像"
+                    Style="{StaticResource ButtonPrimary}"
+                    Visibility="{Binding Recording, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                <Button
+                    Width="80"
+                    Command="{Binding StopVideoCommand}"
+                    Content="停止"
+                    Style="{StaticResource ButtonDanger}"
+                    Visibility="{Binding Recording, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </hc:UniformSpacingPanel>
+        </DockPanel>
+        <!--<Button
+        Name="btnDefoaming"
+        Grid.Row="2"
+        Width="94"
+        Height="30"
+        Margin="538,0,0,0"
+        HorizontalAlignment="Left"
+        HorizontalContentAlignment="Center"
+        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+        Background="{StaticResource PrimaryBrush}"
+        BorderBrush="{StaticResource PrimaryBrush}"
+        Command="{Binding AFCommand}"
+        Content="{ex:Language Key=手动消泡}"
+        FontSize="{DynamicResource NormalFontSize}"
+        Foreground="White"
+        Visibility="{Binding Enable, Converter={StaticResource BooleanToVisibilityConverter}}" />
+    <Button
+        Name="btnClose"
+        Grid.Row="2"
+        Width="48"
+        Height="30"
+        Margin="637,0,0,0"
+        HorizontalAlignment="Left"
+        HorizontalContentAlignment="Center"
+        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+        BorderBrush="{StaticResource PrimaryBrush}"
+        Command="{Binding CancelCommand}"
+        Content="{ex:Language Key=关闭}"
+        FontSize="{DynamicResource NormalFontSize}"
+        Foreground="{StaticResource PrimaryBrush}"
+        RenderTransformOrigin="1.896,0.4" />
+    <Label
+        x:Name="label"
+        Grid.Row="2"
+        Margin="344,0,0,0"
+        HorizontalAlignment="Left"
+        Content="消泡阈值" />
+    <TextBox x:Name="txtDefoamingThreshold"
+             Grid.Row="2"
+             Width="44"
+             Margin="412,0,0,0"
+             HorizontalAlignment="Left"
+             VerticalAlignment="Center"
+             Text="{Binding CurrentDeviceParameter.DefoamingSetting.DefoamingThreshold}"
+             TextWrapping="Wrap" />
+    <Label
+        x:Name="label2"
+        Grid.Row="2"
+        Margin="-3,0,0,0"
+        HorizontalAlignment="Left"
+        Content="消泡液流速" />
+    <TextBox
+        x:Name="txtDefoamingSpeed"
+        Grid.Row="2"
+        Width="44"
+        Margin="80,0,0,0"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Center"
+        Text="{Binding CurrentDeviceParameter.DefoamingSetting.FlowSpeed}"
+        TextWrapping="Wrap" />
+    <Label x:Name="label3"
+           Grid.Row="2"
+           Margin="127,0,0,0"
+           HorizontalAlignment="Left"
+           Content="ml/min" />
+    <Label
+        x:Name="label4"
+        Grid.Row="2"
+        Margin="192,0,0,0"
+        HorizontalAlignment="Left"
+        Content="消泡液" />
+    <TextBox
+        x:Name="txtDefoamingValue"
+        Grid.Row="2"
+        Width="44"
+        Margin="250,0,0,0"
+        HorizontalAlignment="Left"
+        VerticalAlignment="Center"
+        Text="{Binding CurrentDeviceParameter.DefoamingSetting.FlowCapacity}"
+        TextWrapping="Wrap" />
+    <Label
+        x:Name="label5"
+        Grid.Row="2"
+        Margin="297,0,0,0"
+        HorizontalAlignment="Left"
+        Content="ml" />
+    <CheckBox
+        x:Name="cbAutoDefoaming"
+        Grid.Row="2"
+        Margin="458,0,0,0"
+        HorizontalAlignment="Left"
+        Content="自动消泡"
+        IsChecked="{Binding CurrentDeviceParameter.DefoamingSetting.AutoDefoaming}" />-->
+    </Grid>
 </UserControl>
