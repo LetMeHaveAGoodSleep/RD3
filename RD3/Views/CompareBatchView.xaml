@@ -31,14 +31,34 @@
         <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
     </UserControl.Resources>
     <Grid Margin="20">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="200" />
-        </Grid.ColumnDefinitions>
-        <wpf:WpfPlot Name="wpfPlot" Grid.Column="0" />
-        <WrapPanel
-            Name="flagPanel"
-            Grid.Column="1"
-            MouseRightButtonDown="FlagPanel_MouseRightButtonDown" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <hc:ComboBox
+            Name="CmbTimeInterval"
+            Width="200"
+            HorizontalAlignment="Left"
+            hc:InfoElement.Title="时间间隔"
+            BorderBrush="{DynamicResource PrimaryBrush}"
+            BorderThickness="1"
+            FontSize="{DynamicResource SubHeadFontSize}"
+            Style="{StaticResource ComboBoxExtend}">
+            <ComboBoxItem Content="时" />
+            <ComboBoxItem Content="分" IsSelected="True" />
+            <ComboBoxItem Content="秒" />
+        </hc:ComboBox>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="200" />
+            </Grid.ColumnDefinitions>
+            <wpf:WpfPlot Name="wpfPlot" Grid.Column="0" />
+            <WrapPanel
+                Name="flagPanel"
+                Grid.Column="1"
+                MouseRightButtonDown="FlagPanel_MouseRightButtonDown" />
+        </Grid>
     </Grid>
 </UserControl>

@@ -39,8 +39,13 @@
                     Orientation="Horizontal"
                     Spacing="10">
                     <Button
+                        Width="80"
+                        Height="30"
+                        Command="{Binding AddCommand}"
+                        Content="新增数据"
+                        Style="{StaticResource ButtonPrimary}" />
+                    <Button
                         Name="DeleteRow"
-                        Grid.Column="1"
                         Width="80"
                         Height="30"
                         Click="DeleteRow_Click"
@@ -48,7 +53,6 @@
                         Style="{StaticResource ButtonPrimary}" />
                     <Button
                         Name="SaveColumn"
-                        Grid.Column="2"
                         Width="80"
                         Height="30"
                         Click="SaveColumn_Click"
@@ -67,7 +71,7 @@
                     hc:DataGridAttach.ShowSelectAllButton="False"
                     AutoGenerateColumns="False"
                     Background="{StaticResource DefaultBrush}"
-                    CanUserAddRows="True"
+                    CanUserAddRows="False"
                     CanUserSortColumns="False"
                     CellEditEnding="dataGrid_CellEditEnding"
                     ColumnWidth="SizeToHeader"
