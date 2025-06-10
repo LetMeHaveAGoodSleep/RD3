@@ -1117,14 +1117,17 @@
                                 <TextBox
                                     Width="75"
                                     VerticalAlignment="Center"
-                                    hc:InfoElement.Title="{ex:Language Key='补料(mL/h)'}"
+                                    hc:InfoElement.Title="{Binding CurrentDeviceParameter.FeedParam1.FeedName}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=LostFocus}">
+                                    Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=LostFocus}"
+                                    Visibility="{Binding CurrentDeviceParameter.FeedParam1.IsTotal, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
                                             <Separator />
                                             <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
+                                            <Separator />
+                                            <MenuItem Command="{Binding FeedCycleCommand}" Header="周期设置" />
                                             <!--<Separator />
                                             <MenuItem
                                                 Header="启用DO-stat"
@@ -1135,6 +1138,33 @@
                                                 Header="启用pH-stat"
                                                 IsCheckable="True"
                                                 IsChecked="{Binding CurrentDeviceParameter.FeedParam1.IspHStat, UpdateSourceTrigger=PropertyChanged}" />-->
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{Binding CurrentDeviceParameter.FeedParam1.FeedTotalName}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_Total, UpdateSourceTrigger=LostFocus}"
+                                    Visibility="{Binding CurrentDeviceParameter.FeedParam1.IsTotal, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
+                                            <Separator />
+                                            <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
+                                            <Separator />
+                                            <MenuItem Command="{Binding FeedCycleCommand}" Header="周期设置" />
+                                            <!--<Separator />
+            <MenuItem
+                Header="启用DO-stat"
+                IsCheckable="True"
+                IsChecked="{Binding CurrentDeviceParameter.FeedParam1.IsDOStat, UpdateSourceTrigger=PropertyChanged}" />
+            <Separator />
+            <MenuItem
+                Header="启用pH-stat"
+                IsCheckable="True"
+                IsChecked="{Binding CurrentDeviceParameter.FeedParam1.IspHStat, UpdateSourceTrigger=PropertyChanged}" />-->
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
                                 </TextBox>
@@ -1154,7 +1184,7 @@
                                     IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     SelectedIndex="{Binding CurrentDeviceParameter.FeedParam1.FeedIndex}"
                                     Style="{StaticResource ComboBoxExtend}">
-                                    <ComboBoxItem Content="常量" />
+                                    <ComboBoxItem Content="恒速" />
                                     <ComboBoxItem Content="多项式" />
                                     <ComboBoxItem Content="指数" />
                                     <ComboBoxItem Content="时间序列" />
@@ -1162,6 +1192,8 @@
                                     <ComboBoxItem Content="pH_stat(速度)" />
                                     <ComboBoxItem Content="DO_stat(体积)" />
                                     <ComboBoxItem Content="pH_stat(体积)" />
+                                    <ComboBoxItem Content="定量" />
+                                    <ComboBoxItem Content="周期" />
                                 </ComboBox>
                                 <ToggleButton
                                     Width="70"
