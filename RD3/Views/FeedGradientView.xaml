@@ -25,6 +25,24 @@
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="True" />
+            <Setter Property="AllowsTransparency" Value="False" />
+            <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Icon" Value="../Assets/logo.png" />
+        </Style>
+    </prism:Dialog.WindowStyle>
     <Border Background="{StaticResource BackGroundBrush}" CornerRadius="{StaticResource DefaultCornerRadius}">
         <Grid>
             <Grid.RowDefinitions>
@@ -107,7 +125,7 @@
                             IsReadOnly="False" />
                         <DataGridComboBoxColumn
                             x:Name="colType"
-                            Width="180"
+                            Width="160"
                             CanUserSort="False"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="策略类型"
@@ -157,7 +175,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn
-                            Width="120"
+                            Width="90"
                             Binding="{Binding A}"
                             CanUserSort="False"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
@@ -173,7 +191,7 @@
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                             IsReadOnly="False" />
                         <DataGridTextColumn
-                            Width="120"
+                            Width="90"
                             Binding="{Binding C}"
                             CanUserSort="False"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"

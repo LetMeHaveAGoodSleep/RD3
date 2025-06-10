@@ -141,7 +141,7 @@
                         DockPanel.Dock="Bottom">
                         <StackPanel
                             Canvas.Left="10"
-                            Canvas.Top="20"
+                            Canvas.Top="-20"
                             Orientation="Horizontal">
                             <hc:ComboBox
                                 Name="CmbDevice"
@@ -234,7 +234,7 @@
                             Canvas.Top="238"
                             Text="{Binding CurrentDeviceParameter.Pump1FlowCapacity, StringFormat={}{0:F2}}" />
                         <TextBlock
-                            Canvas.Left="25"
+                            Canvas.Left="15"
                             Canvas.Top="238"
                             Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump1Name}" />
                         <Image
@@ -274,7 +274,7 @@
                             Canvas.Top="295"
                             Text="{Binding CurrentDeviceParameter.Pump2FlowCapacity, StringFormat={}{0:F2}}" />
                         <TextBlock
-                            Canvas.Left="25"
+                            Canvas.Left="15"
                             Canvas.Top="295"
                             Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump2Name}" />
                         <Image
@@ -314,7 +314,7 @@
                             Canvas.Top="348"
                             Text="{Binding CurrentDeviceParameter.Pump3FlowCapacity, StringFormat={}{0:F2}}" />
                         <TextBlock
-                            Canvas.Left="25"
+                            Canvas.Left="15"
                             Canvas.Top="348"
                             Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump3Name}" />
                         <Image
@@ -354,7 +354,7 @@
                             Canvas.Top="404"
                             Text="{Binding CurrentDeviceParameter.Pump4FlowCapacity, StringFormat={}{0:F2}}" />
                         <TextBlock
-                            Canvas.Left="25"
+                            Canvas.Left="15"
                             Canvas.Top="404"
                             Text="{Binding CurrentDeviceParameter.PumpMFCSetting.Pump4Name}" />
                         <Image
@@ -545,7 +545,7 @@
                         </hc:UniformSpacingPanel>
                         <hc:UniformSpacingPanel
                             Canvas.Left="440"
-                            Canvas.Top="50"
+                            Canvas.Top="20"
                             Orientation="Vertical"
                             Spacing="3">
                             <StackPanel Orientation="Vertical">
@@ -1126,8 +1126,6 @@
                                             <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
                                             <Separator />
                                             <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
-                                            <Separator />
-                                            <MenuItem Command="{Binding FeedCycleCommand}" Header="周期设置" />
                                             <!--<Separator />
                                             <MenuItem
                                                 Header="启用DO-stat"
@@ -1145,6 +1143,7 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{Binding CurrentDeviceParameter.FeedParam1.FeedTotalName}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
                                     Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_Total, UpdateSourceTrigger=LostFocus}"
                                     Visibility="{Binding CurrentDeviceParameter.FeedParam1.IsTotal, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -1153,8 +1152,6 @@
                                             <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
                                             <Separator />
                                             <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
-                                            <Separator />
-                                            <MenuItem Command="{Binding FeedCycleCommand}" Header="周期设置" />
                                             <!--<Separator />
             <MenuItem
                 Header="启用DO-stat"
@@ -1244,6 +1241,140 @@
                                         Content="DO异常关联"
                                         IsChecked="{Binding CurrentDeviceParameter.DOParam.IsEmergency}"
                                         IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+                                    <CheckBox
+                                        Content="PH异常关联"
+                                        IsChecked="{Binding CurrentDeviceParameter.PHParam.IsEmergency}"
+                                        IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{Binding CurrentDeviceParameter.FeedParam2.FeedName}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.FeedParam2.Feed_PV, UpdateSourceTrigger=LostFocus}"
+                                    Visibility="{Binding CurrentDeviceParameter.FeedParam2.IsTotal, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
+                                            <Separator />
+                                            <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
+                                            <!--<Separator />
+                                <MenuItem
+                                    Header="启用DO-stat"
+                                    IsCheckable="True"
+                                    IsChecked="{Binding CurrentDeviceParameter.FeedParam2.IsDOStat, UpdateSourceTrigger=PropertyChanged}" />
+                                <Separator />
+                                <MenuItem
+                                    Header="启用pH-stat"
+                                    IsCheckable="True"
+                                    IsChecked="{Binding CurrentDeviceParameter.FeedParam2.IspHStat, UpdateSourceTrigger=PropertyChanged}" />-->
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
+                                <TextBox
+                                    Width="75"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{Binding CurrentDeviceParameter.FeedParam2.FeedTotalName}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.FeedParam2.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.FeedParam2.Feed_Total, UpdateSourceTrigger=LostFocus}"
+                                    Visibility="{Binding CurrentDeviceParameter.FeedParam2.IsTotal, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <TextBox.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
+                                            <Separator />
+                                            <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
+                                            <!--<Separator />
+<MenuItem
+    Header="启用DO-stat"
+    IsCheckable="True"
+    IsChecked="{Binding CurrentDeviceParameter.FeedParam2.IsDOStat, UpdateSourceTrigger=PropertyChanged}" />
+<Separator />
+<MenuItem
+    Header="启用pH-stat"
+    IsCheckable="True"
+    IsChecked="{Binding CurrentDeviceParameter.FeedParam2.IspHStat, UpdateSourceTrigger=PropertyChanged}" />-->
+                                        </ContextMenu>
+                                    </TextBox.ContextMenu>
+                                </TextBox>
+                                <TextBox
+                                    Width="70"
+                                    VerticalAlignment="Center"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    Background="LightGray"
+                                    BorderBrush="Gray"
+                                    IsReadOnly="True"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding CurrentDeviceParameter.Feed2FlowSpeed, StringFormat={}{0:F2}}" />
+                                <ComboBox
+                                    Width="120"
+                                    hc:InfoElement.Title="{ex:Language Key=' '}"
+                                    BorderBrush="{DynamicResource PrimaryBrush}"
+                                    IsEnabled="{Binding CurrentDeviceParameter.FeedParam2.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                    SelectedIndex="{Binding CurrentDeviceParameter.FeedParam2.FeedIndex}"
+                                    Style="{StaticResource ComboBoxExtend}">
+                                    <ComboBoxItem Content="恒速" />
+                                    <ComboBoxItem Content="多项式" />
+                                    <ComboBoxItem Content="指数" />
+                                    <ComboBoxItem Content="时间序列" />
+                                    <ComboBoxItem Content="DO_stat(速度)" />
+                                    <ComboBoxItem Content="pH_stat(速度)" />
+                                    <ComboBoxItem Content="DO_stat(体积)" />
+                                    <ComboBoxItem Content="pH_stat(体积)" />
+                                    <ComboBoxItem Content="定量" />
+                                    <ComboBoxItem Content="周期" />
+                                </ComboBox>
+                                <ToggleButton
+                                    Width="70"
+                                    Height="28"
+                                    VerticalAlignment="Bottom"
+                                    hc:StatusSwitchElement.HideUncheckedElement="True"
+                                    Command="{Binding Feed2RunCommand}"
+                                    IsChecked="{Binding CurrentDeviceParameter.FeedParam2.IsControling}"
+                                    Style="{StaticResource ToggleButtonCustom}">
+                                    <hc:StatusSwitchElement.CheckedElement>
+                                        <Border
+                                            Width="70"
+                                            Height="28"
+                                            Background="{DynamicResource PrimaryBrush}"
+                                            BorderBrush="{DynamicResource PrimaryBrush}"
+                                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Foreground="White"
+                                                Text="打开" />
+                                        </Border>
+                                    </hc:StatusSwitchElement.CheckedElement>
+                                    <Border
+                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                                        BorderBrush="{DynamicResource PrimaryBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="{StaticResource DefaultCornerRadius}">
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Foreground="{DynamicResource PrimaryBrush}"
+                                            Text="关闭" />
+                                    </Border>
+                                </ToggleButton>
+                                <Button
+                                    VerticalAlignment="Bottom"
+                                    Command="{Binding ResetFlowCommand}"
+                                    CommandParameter="Feed2Pump"
+                                    Content="总量清零"
+                                    Style="{StaticResource ButtonPrimary}" />
+                                <StackPanel
+                                    VerticalAlignment="Bottom"
+                                    Orientation="Vertical"
+                                    Visibility="Collapsed">
+                                    <CheckBox
+                                        Content="DO异常关联"
+                                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsEmergency}"
+                                        IsEnabled="{Binding CurrentDeviceParameter.FeedParam2.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
                                     <CheckBox
                                         Content="PH异常关联"
                                         IsChecked="{Binding CurrentDeviceParameter.PHParam.IsEmergency}"
