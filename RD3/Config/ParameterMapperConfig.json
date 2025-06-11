@@ -3,14 +3,14 @@
   "Agit": "Agit",
   "DO": "DO",
   "pH": "PH",
-  "MFC1FlowRate": "AirFlowSpeed",
-  "Pump1FlowRate": "AcidFlowSpeed",
-  "Pump2FlowRate": "BaseFlowSpeed",
-  "Pump3FlowRate": "FeedFlowSpeed",
-  "Pump4FlowRate": "AFFlowSpeed",
-  "Pump1FlowCapacity": "AcidFlowCapacity",
-  "Pump2FlowCapacity": "BaseFlowCapacity",
-  "Pump3FlowCapacity": "FeedFlowCapacity",
-  "Pump4FlowCapacity": "AFFlowCapacity"
+  "MFC1FlowRate": "MFC1FlowRate",
+  "Pump1FlowRate": "Pump1FlowRate",
+  "Pump2FlowRate": "Pump2FlowRate",
+  "Pump3FlowRate": "Pump3FlowRate",
+  "Pump4FlowRate": "Pump4FlowRate",
+  "Pump1FlowCapacity": "Pump1FlowCapacity",
+  "Pump2FlowCapacity": "Pump2FlowCapacity",
+  "Pump3FlowCapacity": "Pump3FlowCapacity",
+  "Pump4FlowCapacity": "Pump4FlowCapacity"
 
 }
