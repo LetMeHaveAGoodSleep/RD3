@@ -1283,3 +1283,5 @@ D:\20250415-001\RD3 - 新版本\RD3\obj\Debug\net8.0-windows7.0\RD3.sourcelink.j
 D:\20250415-001\RD3 - 新版本\RD3\obj\Debug\net8.0-windows7.0\RD3.csproj.Up2Date
 D:\20250415-001\RD3 - 新版本\RD3\obj\Debug\net8.0-windows7.0\RD3.genruntimeconfig.cache
 D:\20250415-001\RD3 - 新版本\RD3\obj\Debug\net8.0-windows7.0\ref\RD3.dll
+D:\20250415-001\RD3 - 新版本\RD3\obj\Debug\net8.0-windows7.0\Views\FeedCycleView.g.cs
+D:\20250415-001\RD3 - 新版本\RD3\obj\Debug\net8.0-windows7.0\Views\FeedCycleView.baml

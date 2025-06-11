@@ -36,6 +36,9 @@
     <Compile Update="Views\EditUserView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\FeedCycleView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\FlashOverlayWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
