@@ -718,7 +718,7 @@
                                         BorderBrush="Gray"
                                         IsReadOnly="True"
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding CurrentDeviceParameter.MFC1FlowSpeed, StringFormat={}{0:F2}}" />
+                                        Text="{Binding CurrentDeviceParameter.AirFlowSpeed, StringFormat={}{0:F2}}" />
                                     <ToggleButton
                                         Width="75"
                                         Height="28"
@@ -778,7 +778,7 @@
                                         BorderBrush="Gray"
                                         IsReadOnly="True"
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding CurrentDeviceParameter.MFC2FlowSpeed, StringFormat={}{0:F2}}" />
+                                        Text="{Binding CurrentDeviceParameter.O2FlowSpeed, StringFormat={}{0:F2}}" />
                                     <ToggleButton
                                         Width="75"
                                         Height="28"

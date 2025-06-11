@@ -152,6 +152,49 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="auto"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="启用stat"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                        Visibility="Collapsed">
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                    <RadioButton
+                                        Content="常量"
+                                        IsChecked="{Binding IsConstant, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{Binding IsEnabled}" />
+                                    <RadioButton
+                                        Content="多项式"
+                                        IsChecked="{Binding IsPolynomial, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{Binding IsEnabled}" />
+                                    <RadioButton
+                                        Content="指数"
+                                        IsChecked="{Binding IsExp, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{Binding IsEnabled}" />
+                                </hc:ButtonGroup>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                    <RadioButton
+                                        Content="常量"
+                                        IsChecked="{Binding IsConstant, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{Binding IsEnabled}" />
+                                    <RadioButton
+                                        Content="多项式"
+                                        IsChecked="{Binding IsPolynomial, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{Binding IsEnabled}" />
+                                    <RadioButton
+                                        Content="指数"
+                                        IsChecked="{Binding IsExp, UpdateSourceTrigger=PropertyChanged}"
+                                        IsEnabled="{Binding IsEnabled}" />
+                                </hc:ButtonGroup>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn
                         Width="120"
                         Binding="{Binding A}"
