@@ -89,12 +89,12 @@
                         Width="100"
                         hc:InfoElement.Title="{ex:Language Key='采样周期'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.AgitSampleCycle, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding CurrentDeviceParameter.AgitSampleCycle, UpdateSourceTrigger=LostFocus}" />
                     <TextBox
                         Width="100"
                         hc:InfoElement.Title="{ex:Language Key='截止频率'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.AgitSampleFrequency, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding CurrentDeviceParameter.AgitSampleFrequency, UpdateSourceTrigger=LostFocus}" />
                     <TextBox
                         Width="100"
                         hc:InfoElement.Title="{ex:Language Key='时间常数'}"
@@ -123,7 +123,7 @@
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='温度下限(℃)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.TempDOLowerLimit, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding CurrentDeviceParameter.TempDOLowerLimit, UpdateSourceTrigger=LostFocus}" />
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>
@@ -148,13 +148,13 @@
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding Param.AgitLowerLimit, UpdateSourceTrigger=PropertyChanged}" />
+                                        Text="{Binding Param.AgitLowerLimit, UpdateSourceTrigger=LostFocus}" />
                                     <TextBox
                                         Width="100"
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding Param.AgitUpperLimit, UpdateSourceTrigger=PropertyChanged}" />
+                                        Text="{Binding Param.AgitUpperLimit, UpdateSourceTrigger=LostFocus}" />
                                 </hc:UniformSpacingPanel>
                             </DockPanel>
                             <DockPanel LastChildFill="False">
@@ -329,19 +329,19 @@
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AgitLowerLimit, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding MidRanging.AgitLowerLimit, UpdateSourceTrigger=LostFocus}" />
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AgitUpperLimit, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding MidRanging.AgitUpperLimit, UpdateSourceTrigger=LostFocus}" />
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='转速高限(rpm)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AgitHigh, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding MidRanging.AgitHigh, UpdateSourceTrigger=LostFocus}" />
                 </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <ComboBox
@@ -358,13 +358,13 @@
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='通气下限'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.InitialAir, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding MidRanging.InitialAir, UpdateSourceTrigger=LostFocus}" />
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='通气上限'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AirUpperLimit, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding MidRanging.AirUpperLimit, UpdateSourceTrigger=LostFocus}" />
                 </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <DockPanel LastChildFill="False">
@@ -380,13 +380,13 @@
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='氧气下限'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.InitialO2, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding MidRanging.InitialO2, UpdateSourceTrigger=LostFocus}" />
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='氧气上限'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.O2UpperLimit, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding MidRanging.O2UpperLimit, UpdateSourceTrigger=LostFocus}" />
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>
