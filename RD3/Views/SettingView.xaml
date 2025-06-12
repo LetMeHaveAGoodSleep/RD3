@@ -290,12 +290,11 @@
                                 BorderThickness="0"
                                 IsChecked="{Binding IsFilterWave}"
                                 Style="{StaticResource ToggleButtonSwitch}" />
-
                             <hc:UniformSpacingPanel
                                 Grid.Row="10"
                                 Orientation="Vertical"
                                 Spacing="5">
-                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='蠕动泵最大速度'}" />
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='蠕动泵默认速度'}" />
                                 <TextBlock
                                     FontSize="10"
                                     FontStyle="Oblique"

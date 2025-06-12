@@ -51,10 +51,7 @@
                 <!--  数据表格  -->
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <DockPanel
-                Margin="5"
-                LastChildFill="False"
-                Visibility="Collapsed">
+            <DockPanel Margin="5" LastChildFill="False">
                 <hc:UniformSpacingPanel
                     DockPanel.Dock="Right"
                     Orientation="Horizontal"
@@ -66,7 +63,8 @@
                         Height="30"
                         Click="DeleteRow_Click"
                         Content="删除数据"
-                        Style="{StaticResource ButtonPrimary}" />
+                        Style="{StaticResource ButtonPrimary}"
+                        Visibility="Collapsed" />
                     <Button
                         Name="SaveColumn"
                         Grid.Column="2"

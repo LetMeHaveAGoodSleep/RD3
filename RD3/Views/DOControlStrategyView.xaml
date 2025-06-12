@@ -19,8 +19,8 @@
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     Width="550"
     Height="650"
-    MaxHeight="700"
     d:DataContext="{d:DesignInstance Type=vm:DOControlStrategyViewModel}"
+    d:DesignHeight="2000"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
@@ -58,20 +58,30 @@
                     Height="40"
                     hc:BorderElement.CornerRadius="8"
                     Background="{DynamicResource BorderBrush}"
-                    Content="{ex:Language Key='阶梯通气策略'}"
+                    Content="{ex:Language Key='阶梯通气'}"
                     FontSize="{DynamicResource MediumFontSize}"
                     Foreground="{DynamicResource SecondaryTextBrush}"
-                    IsChecked="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled, Converter={StaticResource InverseBooleanConverter}}" />
+                    IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Step}" />
                 <RadioButton
                     Width="auto"
                     Height="40"
                     Margin="15,0,0,0"
                     hc:BorderElement.CornerRadius="8"
                     Background="{DynamicResource BorderBrush}"
-                    Content="{ex:Language Key='mid-ranging策略'}"
+                    Content="{ex:Language Key='中位控制'}"
                     FontSize="{DynamicResource MediumFontSize}"
                     Foreground="{DynamicResource SecondaryTextBrush}"
-                    IsChecked="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled}" />
+                    IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Midranging}" />
+                <RadioButton
+                    Width="auto"
+                    Height="40"
+                    Margin="15,0,0,0"
+                    hc:BorderElement.CornerRadius="8"
+                    Background="{DynamicResource BorderBrush}"
+                    Content="{ex:Language Key='周期控制'}"
+                    FontSize="{DynamicResource MediumFontSize}"
+                    Foreground="{DynamicResource SecondaryTextBrush}"
+                    IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Cycle}" />
             </hc:ButtonGroup>
             <Button
                 Width="100"
@@ -82,7 +92,10 @@
                 DockPanel.Dock="Right"
                 Style="{StaticResource ButtonPrimary}" />
         </DockPanel>
-        <GroupBox Header="通用参数" Style="{StaticResource MaterialDesignGroupBox}">
+        <GroupBox
+            Header="通用参数"
+            Style="{StaticResource MaterialDesignGroupBox}"
+            Visibility="{Binding CurrentDeviceParameter.DOParam.IsCycle, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <TextBox
@@ -132,7 +145,7 @@
                 MaxHeight="400"
                 Header="阶梯通气策略参数"
                 Style="{StaticResource MaterialDesignGroupBox}"
-                Visibility="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Step}">
                 <DockPanel>
                     <Grid Margin="5">
                         <Grid.RowDefinitions>
@@ -323,7 +336,7 @@
         <GroupBox
             Header="mid-ranging策略参数"
             Style="{StaticResource MaterialDesignGroupBox}"
-            Visibility="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled, Converter={StaticResource BooleanToVisibilityConverter}}">
+            Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Midranging}">
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <TextBox
@@ -389,6 +402,67 @@
                         hc:InfoElement.Title="{ex:Language Key='氧气上限'}"
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding MidRanging.O2UpperLimit, UpdateSourceTrigger=LostFocus}" />
+                </hc:UniformSpacingPanel>
+            </hc:UniformSpacingPanel>
+        </GroupBox>
+        <GroupBox
+            Header="周期参数"
+            Style="{StaticResource MaterialDesignGroupBox}"
+            Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Cycle}">
+            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <TextBox
+                        Width="100"
+                        VerticalAlignment="Center"
+                        hc:InfoElement.Title="{ex:Language Key='时间间隔(秒)'}"
+                        Style="{StaticResource TextBoxExtend}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.Interval, UpdateSourceTrigger=LostFocus}" />
+                    <TextBox
+                        Width="100"
+                        VerticalAlignment="Center"
+                        hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
+                        Style="{StaticResource TextBoxExtend}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit, UpdateSourceTrigger=LostFocus}" />
+                    <TextBox
+                        Width="100"
+                        VerticalAlignment="Center"
+                        hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
+                        Style="{StaticResource TextBoxExtend}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit, UpdateSourceTrigger=LostFocus}" />
+                </hc:UniformSpacingPanel>
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <ComboBox
+                        Width="100"
+                        VerticalAlignment="Center"
+                        hc:InfoElement.Title="{ex:Language Key='动作'}"
+                        SelectedIndex="{Binding CurrentDeviceParameter.DOParam.AgitCycle.Action}"
+                        Style="{StaticResource ComboBoxExtend}">
+                        <ComboBoxItem Content="升" />
+                        <ComboBoxItem Content="降" />
+                    </ComboBox>
+                    <TextBox
+                        Width="100"
+                        VerticalAlignment="Center"
+                        hc:InfoElement.Title="{ex:Language Key='转速步长(rpm)'}"
+                        Style="{StaticResource TextBoxExtend}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.Value, UpdateSourceTrigger=LostFocus}" />
+                </hc:UniformSpacingPanel>
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <ComboBox
+                        Width="100"
+                        VerticalAlignment="Center"
+                        hc:InfoElement.Title="{ex:Language Key='判断符号'}"
+                        SelectedIndex="{Binding CurrentDeviceParameter.DOParam.AgitCycle.Symbol}"
+                        Style="{StaticResource ComboBoxExtend}">
+                        <ComboBoxItem Content="小于" />
+                        <ComboBoxItem Content="大于" />
+                    </ComboBox>
+                    <TextBox
+                        Width="100"
+                        VerticalAlignment="Center"
+                        hc:InfoElement.Title="{ex:Language Key='溶氧值'}"
+                        Style="{StaticResource TextBoxExtend}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.DO, UpdateSourceTrigger=LostFocus}" />
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>

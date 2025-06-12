@@ -576,7 +576,7 @@
                                                 <MenuItem
                                                     Header="启用mid-ranging策略"
                                                     IsCheckable="True"
-                                                    IsChecked="{Binding CurrentDeviceParameter.DOParam.MidRangingEnabled, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                                                    IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Midranging}" />
                                             </ContextMenu>
                                         </TextBox.ContextMenu>
                                     </TextBox>
