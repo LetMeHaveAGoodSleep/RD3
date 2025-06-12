@@ -136,7 +136,7 @@
                 </Grid>-->
                 <DockPanel Grid.Row="1" LastChildFill="False">
                     <Canvas
-                        Width="850"
+                        Width="925"
                         Height="600"
                         DockPanel.Dock="Bottom">
                         <StackPanel
@@ -832,6 +832,8 @@
                                                     Header="时间序列"
                                                     IsChecked="{Binding CurrentDeviceParameter.PHParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=TimeSeries, UpdateSourceTrigger=PropertyChanged}" />
                                                 <Separator />
+                                                <MenuItem Command="{Binding PHOPCommand}" Header="功率设置" />
+                                                <Separator />
                                                 <MenuItem
                                                     Command="{Binding TimeSeriesCommand}"
                                                     CommandParameter="PH"
@@ -1119,8 +1121,7 @@
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{Binding CurrentDeviceParameter.FeedParam1.FeedName}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=LostFocus}"
-                                    Visibility="{Binding CurrentDeviceParameter.FeedParam1.IsTotal, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                                    Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
@@ -1253,8 +1254,7 @@
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{Binding CurrentDeviceParameter.FeedParam2.FeedName}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.FeedParam2.Feed_PV, UpdateSourceTrigger=LostFocus}"
-                                    Visibility="{Binding CurrentDeviceParameter.FeedParam2.IsTotal, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                                    Text="{Binding CurrentDeviceParameter.FeedParam2.Feed_PV, UpdateSourceTrigger=LostFocus}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />

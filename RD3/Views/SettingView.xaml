@@ -82,8 +82,7 @@
                         Background="{DynamicResource BorderBrush}"
                         Content="{ex:Language Key='Other'}"
                         FontSize="{DynamicResource SubHeadFontSize}"
-                        Foreground="{DynamicResource SecondaryTextBrush}"
-                        Tag="tabAlarm" />
+                        Foreground="{DynamicResource SecondaryTextBrush}" />
                 </hc:ButtonGroup>
             </Border>
         </DockPanel>
@@ -196,6 +195,10 @@
                                 <RowDefinition Height="20" />
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="20" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="20" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="20" />
                             </Grid.RowDefinitions>
                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
                                 <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='仪器模式'}" />
@@ -287,6 +290,24 @@
                                 BorderThickness="0"
                                 IsChecked="{Binding IsFilterWave}"
                                 Style="{StaticResource ToggleButtonSwitch}" />
+
+                            <hc:UniformSpacingPanel
+                                Grid.Row="10"
+                                Orientation="Vertical"
+                                Spacing="5">
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='蠕动泵最大速度'}" />
+                                <TextBlock
+                                    FontSize="10"
+                                    FontStyle="Oblique"
+                                    Foreground="gray"
+                                    Text="{ex:Language Key='默认泵速  单位：ml/h.'}" />
+                            </hc:UniformSpacingPanel>
+                            <TextBox
+                                Grid.Row="10"
+                                Grid.Column="1"
+                                Width="150"
+                                Style="{StaticResource TextBoxExtend}"
+                                Text="{Binding DefaultPumpFlowRate, UpdateSourceTrigger=LostFocus}" />
                         </Grid>
                     </hc:UniformSpacingPanel>
                 </Border>

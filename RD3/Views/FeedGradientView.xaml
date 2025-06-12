@@ -108,7 +108,7 @@
                     <DataGrid.Columns>
                         <!--  设备列表  -->
                         <DataGridTextColumn
-                            Width="120"
+                            Width="auto"
                             Binding="{Binding BeginTime}"
                             CanUserSort="True"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
@@ -116,7 +116,7 @@
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                             IsReadOnly="False" />
                         <DataGridTextColumn
-                            Width="120"
+                            Width="auto"
                             Binding="{Binding EndTime}"
                             CanUserSort="False"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
@@ -125,7 +125,7 @@
                             IsReadOnly="False" />
                         <DataGridComboBoxColumn
                             x:Name="colType"
-                            Width="160"
+                            Width="auto"
                             CanUserSort="False"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="策略类型"
@@ -175,7 +175,14 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn
-                            Width="90"
+                            Width="auto"
+                            Binding="{Binding TriggerInterval, UpdateSourceTrigger=LostFocus}"
+                            CanUserSort="False"
+                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                            Header="触发间隔(秒)"
+                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                        <DataGridTextColumn
+                            Width="auto"
                             Binding="{Binding A}"
                             CanUserSort="False"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
@@ -183,7 +190,7 @@
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                             IsReadOnly="False" />
                         <DataGridTextColumn
-                            Width="120"
+                            Width="auto"
                             Binding="{Binding B}"
                             CanUserSort="False"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
@@ -191,7 +198,7 @@
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                             IsReadOnly="False" />
                         <DataGridTextColumn
-                            Width="90"
+                            Width="auto"
                             Binding="{Binding C}"
                             CanUserSort="False"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
@@ -199,7 +206,7 @@
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                             IsReadOnly="False" />
                         <DataGridTextColumn
-                            Width="120"
+                            Width="auto"
                             Binding="{Binding D}"
                             CanUserSort="False"
                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"

@@ -213,7 +213,7 @@
                                             VerticalAlignment="Bottom"
                                             hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"
                                             Command="{Binding DeleteO2Command}"
-                                            CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
+                                            CommandParameter="{Binding ElementName=dataGrid1, Path=SelectedItem}"
                                             Content="删除"
                                             Foreground="{StaticResource PrimaryBrush}" />
                                     </DockPanel>
@@ -228,6 +228,7 @@
                             </Grid.ColumnDefinitions>
                             <hc:ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                                 <DataGrid
+                                    Name="dataGrid"
                                     hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
                                     hc:DataGridAttach.ShowSelectAllButton="False"
                                     AutoGenerateColumns="False"
@@ -273,6 +274,7 @@
                                 HorizontalScrollBarVisibility="Auto"
                                 VerticalScrollBarVisibility="Auto">
                                 <DataGrid
+                                    Name="dataGrid1"
                                     hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
                                     hc:DataGridAttach.ShowSelectAllButton="False"
                                     AutoGenerateColumns="False"
