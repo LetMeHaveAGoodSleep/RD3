@@ -14,8 +14,8 @@
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
-    Width="1400"
-    Height="880"
+    Width="1150"
+    Height="750"
     d:DataContext="{d:DesignInstance Type=viewmodels:FeedGradientViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="Transparent"
@@ -43,188 +43,278 @@
             <Setter Property="Icon" Value="../Assets/logo.png" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Border Background="{StaticResource BackGroundBrush}" CornerRadius="{StaticResource DefaultCornerRadius}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <!--  操作按钮  -->
-                <RowDefinition Height="auto" />
-                <!--  数据表格  -->
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <DockPanel Margin="5" LastChildFill="False">
-                <hc:UniformSpacingPanel
-                    DockPanel.Dock="Right"
-                    Orientation="Horizontal"
-                    Spacing="10">
-                    <Button
-                        Width="80"
-                        Height="30"
-                        Command="{Binding AddCommand}"
-                        Content="新增数据"
-                        Style="{StaticResource ButtonPrimary}" />
-                    <Button
-                        Name="DeleteRow"
-                        Width="80"
-                        Height="30"
-                        Click="DeleteRow_Click"
-                        Content="删除数据"
-                        Style="{StaticResource ButtonPrimary}" />
-                    <Button
-                        Name="SaveColumn"
-                        Width="80"
-                        Height="30"
-                        Click="SaveColumn_Click"
-                        Content="保存数据"
-                        Style="{StaticResource ButtonPrimary}" />
-                </hc:UniformSpacingPanel>
-            </DockPanel>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <DataGrid
-                    Name="dataGrid"
-                    Grid.Column="0"
-                    hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
-                    hc:DataGridAttach.ShowSelectAllButton="False"
-                    AutoGenerateColumns="False"
-                    Background="{StaticResource DefaultBrush}"
-                    CanUserAddRows="False"
-                    CanUserSortColumns="False"
-                    CellEditEnding="dataGrid_CellEditEnding"
-                    ColumnWidth="SizeToHeader"
-                    GridLinesVisibility="All"
-                    HeadersVisibility="Column"
-                    HorizontalGridLinesBrush="LightGray"
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <DockPanel LastChildFill="False">
+            <TextBlock
+                DockPanel.Dock="Left"
+                Foreground="Red"
+                Text="{Binding SelectedFeedGradientInfo.Description}"
+                ToolTip="{Binding SelectedFeedGradientInfo.Description}" />
+            <hc:UniformSpacingPanel
+                DockPanel.Dock="Right"
+                Orientation="Horizontal"
+                Spacing="10">
+                <Button
+                    Width="80"
+                    Height="30"
+                    Command="{Binding AddCommand}"
+                    Content="新增数据"
+                    Style="{StaticResource ButtonPrimary}" />
+                <Button
+                    Width="80"
+                    Height="30"
+                    Command="{Binding DeleteCommand}"
+                    Content="删除数据"
+                    Style="{StaticResource ButtonPrimary}" />
+                <Button
+                    Width="80"
+                    Height="30"
+                    Command="{Binding SaveCommand}"
+                    Content="保存数据"
+                    Style="{StaticResource ButtonPrimary}" />
+            </hc:UniformSpacingPanel>
+        </DockPanel>
+        <DataGrid
+            Name="dataGrid"
+            Grid.Row="2"
+            hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
+            hc:DataGridAttach.ShowSelectAllButton="False"
+            AutoGenerateColumns="False"
+            Background="{StaticResource DefaultBrush}"
+            CanUserAddRows="False"
+            CanUserSortColumns="False"
+            ColumnWidth="SizeToHeader"
+            GridLinesVisibility="All"
+            HeadersVisibility="Column"
+            HorizontalGridLinesBrush="LightGray"
+            ItemsSource="{Binding FeedGradientInfos}"
+            LayoutUpdated="DataGridMain_OnLayoutUpdated"
+            RowHeaderWidth="100"
+            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            SelectedItem="{Binding SelectedFeedGradientInfo}"
+            SelectionMode="Single"
+            SelectionUnit="FullRow"
+            VerticalGridLinesBrush="LightGray">
+            <DataGrid.Columns>
+                <!--  设备列表  -->
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding BeginTime}"
+                    CanUserSort="True"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="开始时间(分钟)"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                    IsReadOnly="False" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding EndTime}"
+                    CanUserSort="False"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="结束时间(分钟)"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                    IsReadOnly="False" />
+                <DataGridComboBoxColumn
+                    x:Name="colType"
+                    Width="auto"
+                    CanUserSort="False"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="策略类型"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False"
-                    ItemsSource="{Binding FeedGradientInfos}"
-                    LayoutUpdated="DataGridMain_OnLayoutUpdated"
-                    RowHeaderWidth="100"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    SelectionMode="Single"
-                    SelectionUnit="Cell"
-                    VerticalGridLinesBrush="LightGray">
-                    <DataGrid.Columns>
-                        <!--  设备列表  -->
-                        <DataGridTextColumn
-                            Width="auto"
-                            Binding="{Binding BeginTime}"
-                            CanUserSort="True"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="开始时间(分钟)"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                            IsReadOnly="False" />
-                        <DataGridTextColumn
-                            Width="auto"
-                            Binding="{Binding EndTime}"
-                            CanUserSort="False"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="结束时间(分钟)"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                            IsReadOnly="False" />
-                        <DataGridComboBoxColumn
-                            x:Name="colType"
-                            Width="auto"
-                            CanUserSort="False"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="策略类型"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                            IsReadOnly="False"
-                            SelectedValueBinding="{Binding InfoType, UpdateSourceTrigger=PropertyChanged}" />
-                        <DataGridTemplateColumn
-                            Width="auto"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="Stat参数"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                            <DataGridTemplateColumn.CellEditingTemplate>
-                                <DataTemplate>
-                                    <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
-                                        <RadioButton
-                                            Content="常量"
-                                            IsChecked="{Binding IsConstant, UpdateSourceTrigger=PropertyChanged}"
-                                            IsEnabled="{Binding IsEnabled}" />
-                                        <RadioButton
-                                            Content="多项式"
-                                            IsChecked="{Binding IsPolynomial, UpdateSourceTrigger=PropertyChanged}"
-                                            IsEnabled="{Binding IsEnabled}" />
-                                        <RadioButton
-                                            Content="指数"
-                                            IsChecked="{Binding IsExp, UpdateSourceTrigger=PropertyChanged}"
-                                            IsEnabled="{Binding IsEnabled}" />
-                                    </hc:ButtonGroup>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellEditingTemplate>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
-                                        <RadioButton
-                                            Content="常量"
-                                            IsChecked="{Binding IsConstant, UpdateSourceTrigger=PropertyChanged}"
-                                            IsEnabled="{Binding IsEnabled}" />
-                                        <RadioButton
-                                            Content="多项式"
-                                            IsChecked="{Binding IsPolynomial, UpdateSourceTrigger=PropertyChanged}"
-                                            IsEnabled="{Binding IsEnabled}" />
-                                        <RadioButton
-                                            Content="指数"
-                                            IsChecked="{Binding IsExp, UpdateSourceTrigger=PropertyChanged}"
-                                            IsEnabled="{Binding IsEnabled}" />
-                                    </hc:ButtonGroup>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn
-                            Width="auto"
-                            Binding="{Binding TriggerInterval, UpdateSourceTrigger=LostFocus}"
-                            CanUserSort="False"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="触发间隔(秒)"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                        <DataGridTextColumn
-                            Width="auto"
-                            Binding="{Binding A}"
-                            CanUserSort="False"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="参数1"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                            IsReadOnly="False" />
-                        <DataGridTextColumn
-                            Width="auto"
-                            Binding="{Binding B}"
-                            CanUserSort="False"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="参数2"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                            IsReadOnly="False" />
-                        <DataGridTextColumn
-                            Width="auto"
-                            Binding="{Binding C}"
-                            CanUserSort="False"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="参数3"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                            IsReadOnly="False" />
-                        <DataGridTextColumn
-                            Width="auto"
-                            Binding="{Binding D}"
-                            CanUserSort="False"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                            Header="参数4"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                            IsReadOnly="False" />
-                        <DataGridTextColumn
-                            Width="*"
-                            Binding="{Binding Description}"
-                            CanUserSort="False"
-                            CellStyle="{StaticResource DataGridTextLeftCellStyle}"
-                            Header="描述"
-                            HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                            IsReadOnly="True" />
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
-        </Grid>
-
-    </Border>
+                    SelectedValueBinding="{Binding InfoType, UpdateSourceTrigger=PropertyChanged}" />
+                <DataGridTemplateColumn
+                    Width="auto"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="策略参数"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                <RadioButton
+                                    Content="常量"
+                                    IsChecked="{Binding IsConstant, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding IsEnabled}" />
+                                <RadioButton
+                                    Content="多项式"
+                                    IsChecked="{Binding IsPolynomial, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding IsEnabled}" />
+                                <RadioButton
+                                    Content="指数"
+                                    IsChecked="{Binding IsExp, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding IsEnabled}" />
+                            </hc:ButtonGroup>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                <RadioButton
+                                    Content="常量"
+                                    IsChecked="{Binding IsConstant, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding IsEnabled}" />
+                                <RadioButton
+                                    Content="多项式"
+                                    IsChecked="{Binding IsPolynomial, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding IsEnabled}" />
+                                <RadioButton
+                                    Content="指数"
+                                    IsChecked="{Binding IsExp, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding IsEnabled}" />
+                            </hc:ButtonGroup>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn
+                    Width="auto"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="Stat"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                <RadioButton
+                                    Content="不启用"
+                                    IsChecked="{Binding StatDisable, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding CurvePlusStat}" />
+                                <RadioButton
+                                    Content="DO-Stat"
+                                    IsChecked="{Binding CurveDOStat, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding CurvePlusStat}" />
+                                <RadioButton
+                                    Content="pH-Stat"
+                                    IsChecked="{Binding CurvepHStat, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding CurvePlusStat}" />
+                            </hc:ButtonGroup>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
+                                <RadioButton
+                                    Content="不启用"
+                                    IsChecked="{Binding StatDisable, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding CurvePlusStat}" />
+                                <RadioButton
+                                    Content="DO-Stat"
+                                    IsChecked="{Binding CurveDOStat, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding CurvePlusStat}" />
+                                <RadioButton
+                                    Content="pH-Stat"
+                                    IsChecked="{Binding CurvepHStat, UpdateSourceTrigger=PropertyChanged}"
+                                    IsEnabled="{Binding CurvePlusStat}" />
+                            </hc:ButtonGroup>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding TriggerInterval, UpdateSourceTrigger=LostFocus}"
+                    CanUserSort="False"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="触发间隔(秒)"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding A}"
+                    CanUserSort="False"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="参数1"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                    IsReadOnly="False" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding B}"
+                    CanUserSort="False"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="参数2"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                    IsReadOnly="False" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding C}"
+                    CanUserSort="False"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="参数3"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                    IsReadOnly="False" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding D}"
+                    CanUserSort="False"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="参数4"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                    IsReadOnly="False" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <GroupBox
+            Name="gbStatParam"
+            Grid.Row="4"
+            Header="Stat参数"
+            Style="{StaticResource MaterialDesignGroupBox}"
+            Visibility="{Binding SelectedFeedGradientInfo.CurvePlusStat, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                <DockPanel LastChildFill="False">
+                    <hc:ButtonGroup DockPanel.Dock="Left" Style="{StaticResource ButtonGroupSolid}">
+                        <RadioButton
+                            Content="不启用"
+                            IsChecked="{Binding SelectedFeedGradientInfo.StatDisable, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="{Binding SelectedFeedGradientInfo.CurvePlusStat}" />
+                        <RadioButton
+                            Content="DO-Stat"
+                            IsChecked="{Binding SelectedFeedGradientInfo.CurveDOStat, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="{Binding SelectedFeedGradientInfo.CurvePlusStat}" />
+                        <RadioButton
+                            Content="pH-Stat"
+                            IsChecked="{Binding SelectedFeedGradientInfo.CurvepHStat, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="{Binding SelectedFeedGradientInfo.CurvePlusStat}" />
+                    </hc:ButtonGroup>
+                </DockPanel>
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <DockPanel LastChildFill="False">
+                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                            <TextBox
+                                Width="100"
+                                VerticalAlignment="Center"
+                                hc:InfoElement.Title="{ex:Language Key='Stat周期(秒)'}"
+                                Style="{StaticResource TextBoxExtend}"
+                                Text="{Binding SelectedFeedGradientInfo.StatCycle, UpdateSourceTrigger=LostFocus}"
+                                Visibility="Collapsed" />
+                            <TextBox
+                                Width="100"
+                                VerticalAlignment="Center"
+                                hc:InfoElement.Title="{ex:Language Key='Stat间隔(秒)'}"
+                                Style="{StaticResource TextBoxExtend}"
+                                Text="{Binding SelectedFeedGradientInfo.StatInterval, UpdateSourceTrigger=LostFocus}" />
+                        </hc:UniformSpacingPanel>
+                    </DockPanel>
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                        <ComboBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='判断符号'}"
+                            SelectedIndex="{Binding SelectedFeedGradientInfo.StatSymbol}"
+                            Style="{StaticResource ComboBoxExtend}">
+                            <ComboBoxItem Content="小于" />
+                            <ComboBoxItem Content="大于" />
+                        </ComboBox>
+                        <TextBox
+                            Width="100"
+                            VerticalAlignment="Center"
+                            hc:InfoElement.Title="{ex:Language Key='判定值'}"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding SelectedFeedGradientInfo.StatValue, UpdateSourceTrigger=LostFocus}" />
+                    </hc:UniformSpacingPanel>
+                </hc:UniformSpacingPanel>
+            </hc:UniformSpacingPanel>
+        </GroupBox>
+    </Grid>
 </UserControl>
