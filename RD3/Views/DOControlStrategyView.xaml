@@ -413,12 +413,6 @@
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <TextBox
                         Width="100"
-                        hc:InfoElement.Title="{ex:Language Key='溶氧值'}"
-                        DockPanel.Dock="Left"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.DO, UpdateSourceTrigger=LostFocus}" />
-                    <TextBox
-                        Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
                         Style="{StaticResource TextBoxExtend}"
