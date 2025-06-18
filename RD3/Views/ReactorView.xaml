@@ -78,8 +78,8 @@
                     ToolTip="{ex:Language Key='返回主页'}"
                     Visibility="Collapsed" />
                 <Button
-                    Width="48"
-                    Height="48"
+                    Width="36"
+                    Height="36"
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryRelease}"
                     Background="{DynamicResource StopBrush}"
@@ -89,8 +89,8 @@
                     Style="{StaticResource ButtonIconCircular}"
                     ToolTip="{ex:Language Key='一键下罐'}" />
                 <Button
-                    Width="48"
-                    Height="48"
+                    Width="36"
+                    Height="36"
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryLoop}"
                     Background="{DynamicResource DarkPrimaryBrush}"
@@ -100,8 +100,8 @@
                     Style="{StaticResource ButtonIconCircular}"
                     ToolTip="{ex:Language Key='PID设置'}" />
                 <Button
-                    Width="48"
-                    Height="48"
+                    Width="36"
+                    Height="36"
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryCopy}"
                     Background="{DynamicResource FixedGradientBrush}"
@@ -111,8 +111,8 @@
                     Style="{StaticResource ButtonIconCircular}"
                     ToolTip="{ex:Language Key='参数同步'}" />
                 <Button
-                    Width="48"
-                    Height="48"
+                    Width="36"
+                    Height="36"
                     hc:IconElement.Geometry="{StaticResource GeometryProbe}"
                     Background="#994499"
                     BorderThickness="0"
@@ -120,7 +120,50 @@
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
                     ToolTip="{ex:Language Key='Probe补料策略'}" />
-
+                <Button
+                    Width="36"
+                    Height="36"
+                    hc:IconElement.Geometry="{StaticResource GeometryProbe}"
+                    Background="#80796B"
+                    BorderThickness="0"
+                    Command="{Binding TestCommand}"
+                    CommandParameter="1,0"
+                    Foreground="White"
+                    Style="{StaticResource ButtonIconCircular}"
+                    ToolTip="{ex:Language Key='Probe补料策略'}" />
+                <Button
+                    Width="36"
+                    Height="36"
+                    hc:IconElement.Geometry="{StaticResource GeometryProbe}"
+                    Background="#80796B"
+                    BorderThickness="0"
+                    Command="{Binding TestCommand}"
+                    CommandParameter="1,100"
+                    Foreground="White"
+                    Style="{StaticResource ButtonIconCircular}"
+                    ToolTip="{ex:Language Key='Probe补料策略'}" />
+                <Button
+                    Width="36"
+                    Height="36"
+                    hc:IconElement.Geometry="{StaticResource GeometryProbe}"
+                    Background="#4DBBD5"
+                    BorderThickness="0,0"
+                    Command="{Binding TestCommand}"
+                    CommandParameter="0,0"
+                    Foreground="White"
+                    Style="{StaticResource ButtonIconCircular}"
+                    ToolTip="{ex:Language Key='Probe补料策略'}" />
+                <Button
+                    Width="36"
+                    Height="36"
+                    hc:IconElement.Geometry="{StaticResource GeometryProbe}"
+                    Background="#4DBBD5"
+                    BorderThickness="0,0"
+                    Command="{Binding TestCommand}"
+                    CommandParameter="0,14"
+                    Foreground="White"
+                    Style="{StaticResource ButtonIconCircular}"
+                    ToolTip="{ex:Language Key='Probe补料策略'}" />
                 <Button
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource SaveGeometry}"

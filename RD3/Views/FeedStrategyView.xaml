@@ -163,40 +163,23 @@
                     Width="auto"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="Stat"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                    IsReadOnly="True">
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
                             <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
-                                <RadioButton
-                                    Content="不启用"
-                                    IsChecked="{Binding StatDisable, UpdateSourceTrigger=PropertyChanged}"
-                                    IsEnabled="{Binding CurvePlusStat}" />
-                                <RadioButton
-                                    Content="DO-Stat"
-                                    IsChecked="{Binding CurveDOStat, UpdateSourceTrigger=PropertyChanged}"
-                                    IsEnabled="{Binding CurvePlusStat}" />
-                                <RadioButton
-                                    Content="pH-Stat"
-                                    IsChecked="{Binding CurvepHStat, UpdateSourceTrigger=PropertyChanged}"
-                                    IsEnabled="{Binding CurvePlusStat}" />
+                                <RadioButton Content="不启用" IsChecked="{Binding StatDisable, UpdateSourceTrigger=PropertyChanged}" />
+                                <RadioButton Content="DO-Stat" IsChecked="{Binding CurveDOStat, UpdateSourceTrigger=PropertyChanged}" />
+                                <RadioButton Content="pH-Stat" IsChecked="{Binding CurvepHStat, UpdateSourceTrigger=PropertyChanged}" />
                             </hc:ButtonGroup>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <hc:ButtonGroup Style="{StaticResource ButtonGroupSolid}">
-                                <RadioButton
-                                    Content="不启用"
-                                    IsChecked="{Binding StatDisable, UpdateSourceTrigger=PropertyChanged}"
-                                    IsEnabled="{Binding CurvePlusStat}" />
-                                <RadioButton
-                                    Content="DO-Stat"
-                                    IsChecked="{Binding CurveDOStat, UpdateSourceTrigger=PropertyChanged}"
-                                    IsEnabled="{Binding CurvePlusStat}" />
-                                <RadioButton
-                                    Content="pH-Stat"
-                                    IsChecked="{Binding CurvepHStat, UpdateSourceTrigger=PropertyChanged}"
-                                    IsEnabled="{Binding CurvePlusStat}" />
+                                <RadioButton Content="不启用" IsChecked="{Binding StatDisable, UpdateSourceTrigger=PropertyChanged}" />
+                                <RadioButton Content="DO-Stat" IsChecked="{Binding CurveDOStat, UpdateSourceTrigger=PropertyChanged}" />
+                                <RadioButton Content="pH-Stat" IsChecked="{Binding CurvepHStat, UpdateSourceTrigger=PropertyChanged}" />
                             </hc:ButtonGroup>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -246,23 +229,13 @@
             Name="gbStatParam"
             Grid.Row="4"
             Header="Stat参数"
-            Style="{StaticResource MaterialDesignGroupBox}"
-            Visibility="{Binding SelectedFeedStrategy.CurvePlusStat, Converter={StaticResource BooleanToVisibilityConverter}}">
+            Style="{StaticResource MaterialDesignGroupBox}">
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                 <DockPanel LastChildFill="False">
                     <hc:ButtonGroup DockPanel.Dock="Left" Style="{StaticResource ButtonGroupSolid}">
-                        <RadioButton
-                            Content="不启用"
-                            IsChecked="{Binding SelectedFeedStrategy.StatDisable, UpdateSourceTrigger=PropertyChanged}"
-                            IsEnabled="{Binding SelectedFeedStrategy.CurvePlusStat}" />
-                        <RadioButton
-                            Content="DO-Stat"
-                            IsChecked="{Binding SelectedFeedStrategy.CurveDOStat, UpdateSourceTrigger=PropertyChanged}"
-                            IsEnabled="{Binding SelectedFeedStrategy.CurvePlusStat}" />
-                        <RadioButton
-                            Content="pH-Stat"
-                            IsChecked="{Binding SelectedFeedStrategy.CurvepHStat, UpdateSourceTrigger=PropertyChanged}"
-                            IsEnabled="{Binding SelectedFeedStrategy.CurvePlusStat}" />
+                        <RadioButton Content="不启用" IsChecked="{Binding SelectedFeedStrategy.StatDisable, UpdateSourceTrigger=PropertyChanged}" />
+                        <RadioButton Content="DO-Stat" IsChecked="{Binding SelectedFeedStrategy.CurveDOStat, UpdateSourceTrigger=PropertyChanged}" />
+                        <RadioButton Content="pH-Stat" IsChecked="{Binding SelectedFeedStrategy.CurvepHStat, UpdateSourceTrigger=PropertyChanged}" />
                     </hc:ButtonGroup>
                 </DockPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">

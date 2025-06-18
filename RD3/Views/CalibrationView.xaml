@@ -328,6 +328,11 @@
                             ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                             SelectedItem="{Binding Pump1Param.Pump}"
                             Style="{StaticResource ComboBoxExtend}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding ChangePumpCommand}" PassEventArgsToCommand="True" />
@@ -440,6 +445,11 @@
                             ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                             SelectedItem="{Binding Pump2Param.Pump}"
                             Style="{StaticResource ComboBoxExtend}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding ChangePumpCommand}" PassEventArgsToCommand="True" />
@@ -552,6 +562,11 @@
                             ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                             SelectedItem="{Binding Pump3Param.Pump}"
                             Style="{StaticResource ComboBoxExtend}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding ChangePumpCommand}" PassEventArgsToCommand="True" />
@@ -664,6 +679,11 @@
                             ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                             SelectedItem="{Binding Pump4Param.Pump}"
                             Style="{StaticResource ComboBoxExtend}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding ChangePumpCommand}" PassEventArgsToCommand="True" />
@@ -779,6 +799,11 @@
                             ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                             SelectedItem="{Binding Pump5Param.Pump}"
                             Style="{StaticResource ComboBoxExtend}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding ChangePumpCommand}" PassEventArgsToCommand="True" />
@@ -894,6 +919,11 @@
                             ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                             SelectedItem="{Binding Pump6Param.Pump}"
                             Style="{StaticResource ComboBoxExtend}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectionChanged">
                                     <i:InvokeCommandAction Command="{Binding ChangePumpCommand}" PassEventArgsToCommand="True" />
