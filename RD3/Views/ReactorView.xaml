@@ -48,6 +48,16 @@
             <Setter Property="Icon" Value="../Assets/logo.png" />
         </Style>
     </prism:Dialog.WindowStyle>
+    <UserControl.Resources>
+        <ObjectDataProvider
+            x:Key="DataFromEnum"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:FeedControlMode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
     <Grid Name="Grid1" Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -57,7 +67,7 @@
             <hc:UniformSpacingPanel
                 DockPanel.Dock="Left"
                 Orientation="Horizontal"
-                Spacing="5">
+                Spacing="10">
                 <Button
                     hc:IconElement.Geometry="{StaticResource GeometryHome}"
                     Background="{DynamicResource PrimaryBrush}"
@@ -68,6 +78,8 @@
                     ToolTip="{ex:Language Key='返回主页'}"
                     Visibility="Collapsed" />
                 <Button
+                    Width="48"
+                    Height="48"
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryRelease}"
                     Background="{DynamicResource StopBrush}"
@@ -77,6 +89,8 @@
                     Style="{StaticResource ButtonIconCircular}"
                     ToolTip="{ex:Language Key='一键下罐'}" />
                 <Button
+                    Width="48"
+                    Height="48"
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryLoop}"
                     Background="{DynamicResource DarkPrimaryBrush}"
@@ -86,6 +100,8 @@
                     Style="{StaticResource ButtonIconCircular}"
                     ToolTip="{ex:Language Key='PID设置'}" />
                 <Button
+                    Width="48"
+                    Height="48"
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryCopy}"
                     Background="{DynamicResource FixedGradientBrush}"
@@ -94,6 +110,17 @@
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
                     ToolTip="{ex:Language Key='参数同步'}" />
+                <Button
+                    Width="48"
+                    Height="48"
+                    hc:IconElement.Geometry="{StaticResource GeometryProbe}"
+                    Background="#994499"
+                    BorderThickness="0"
+                    Command="{Binding ProbeCommand}"
+                    Foreground="White"
+                    Style="{StaticResource ButtonIconCircular}"
+                    ToolTip="{ex:Language Key='Probe补料策略'}" />
+
                 <Button
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource SaveGeometry}"
@@ -1180,18 +1207,15 @@
                                     hc:InfoElement.Title="{ex:Language Key=' '}"
                                     BorderBrush="{DynamicResource PrimaryBrush}"
                                     IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                    ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                                     SelectedIndex="{Binding CurrentDeviceParameter.FeedParam1.FeedIndex}"
+                                    SelectedItem="{Binding CurrentDeviceParameter.FeedParam1.FeedMode}"
                                     Style="{StaticResource ComboBoxExtend}">
-                                    <ComboBoxItem Content="恒速" />
-                                    <ComboBoxItem Content="多项式" />
-                                    <ComboBoxItem Content="指数" />
-                                    <ComboBoxItem Content="时间序列" />
-                                    <ComboBoxItem Content="DO_stat(速度)" />
-                                    <ComboBoxItem Content="pH_stat(速度)" />
-                                    <ComboBoxItem Content="DO_stat(体积)" />
-                                    <ComboBoxItem Content="pH_stat(体积)" />
-                                    <ComboBoxItem Content="定量" />
-                                    <ComboBoxItem Content="周期" />
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
                                 </ComboBox>
                                 <ToggleButton
                                     Width="70"
@@ -1313,18 +1337,15 @@
                                     hc:InfoElement.Title="{ex:Language Key=' '}"
                                     BorderBrush="{DynamicResource PrimaryBrush}"
                                     IsEnabled="{Binding CurrentDeviceParameter.FeedParam2.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                    ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                                     SelectedIndex="{Binding CurrentDeviceParameter.FeedParam2.FeedIndex}"
+                                    SelectedItem="{Binding CurrentDeviceParameter.FeedParam2.FeedMode}"
                                     Style="{StaticResource ComboBoxExtend}">
-                                    <ComboBoxItem Content="恒速" />
-                                    <ComboBoxItem Content="多项式" />
-                                    <ComboBoxItem Content="指数" />
-                                    <ComboBoxItem Content="时间序列" />
-                                    <ComboBoxItem Content="DO_stat(速度)" />
-                                    <ComboBoxItem Content="pH_stat(速度)" />
-                                    <ComboBoxItem Content="DO_stat(体积)" />
-                                    <ComboBoxItem Content="pH_stat(体积)" />
-                                    <ComboBoxItem Content="定量" />
-                                    <ComboBoxItem Content="周期" />
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
                                 </ComboBox>
                                 <ToggleButton
                                     Width="70"
