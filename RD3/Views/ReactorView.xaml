@@ -902,25 +902,32 @@
                                                     Header="时间序列"
                                                     IsChecked="{Binding CurrentDeviceParameter.PHParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=TimeSeries, UpdateSourceTrigger=PropertyChanged}" />
                                                 <Separator />
-                                                <MenuItem Command="{Binding PHOPCommand}" Header="功率设置" />
-                                                <Separator />
                                                 <MenuItem
                                                     Command="{Binding TimeSeriesCommand}"
                                                     CommandParameter="PH"
                                                     Header="时间序列设置" />
                                                 <Separator />
-                                                <MenuItem
-                                                    Command="{Binding PHModeCommand}"
-                                                    CommandParameter="PID"
-                                                    Header="PID调控"
-                                                    IsCheckable="True"
-                                                    IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=PID, UpdateSourceTrigger=PropertyChanged}" />
+                                                <MenuItem Command="{Binding AdaptpHCommand}" Header="自适应调控参数" />
                                                 <Separator />
-                                                <MenuItem
-                                                    Command="{Binding PHModeCommand}"
-                                                    CommandParameter="Buffer"
-                                                    Header="动态缓冲调控"
-                                                    IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Buffer, UpdateSourceTrigger=PropertyChanged}" />
+                                                <MenuItem Header="控制策略">
+                                                    <MenuItem
+                                                        Command="{Binding PHModeCommand}"
+                                                        CommandParameter="PID"
+                                                        Header="PID调控"
+                                                        IsCheckable="True"
+                                                        IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=PID, UpdateSourceTrigger=PropertyChanged}" />
+                                                    <Separator />
+                                                    <MenuItem
+                                                        Header="自适应调节"
+                                                        IsCheckable="True"
+                                                        IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Adaptive, UpdateSourceTrigger=PropertyChanged}" />
+                                                    <Separator />
+                                                    <MenuItem
+                                                        Command="{Binding PHModeCommand}"
+                                                        CommandParameter="Buffer"
+                                                        Header="动态缓冲调控"
+                                                        IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Buffer, UpdateSourceTrigger=PropertyChanged}" />
+                                                </MenuItem>
                                             </ContextMenu>
                                         </TextBox.ContextMenu>
                                     </TextBox>

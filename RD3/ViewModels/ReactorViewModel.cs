@@ -3675,14 +3675,6 @@ namespace RD3.ViewModels
             dicPHWorker[currentDeviceParameter.Name].RunWorkerAsync();
         });
 
-        public DelegateCommand PHOPCommand => new(() =>
-        {
-            DialogHostService.ShowOnce(nameof(DOTimeSeriesView), callBack =>
-            {
-
-            });
-        });
-
         public DelegateCommand<DeviceParameter> AcidRunCommand => new((DeviceParameter device) =>
         {
             var currentDeviceParameter = CurrentDeviceParameter;
@@ -3918,6 +3910,15 @@ namespace RD3.ViewModels
                 });
 
             }
+        });
+
+        public DelegateCommand AdaptpHCommand => new(() => 
+        {
+            DialogParameters keyValuePairs = new DialogParameters() { { nameof(AdaptivepHParameter), CurrentDeviceParameter.AdaptivepHParameter } };
+            DialogHostService.Show(nameof(AdaptpHView), keyValuePairs, callback => 
+            {
+
+            });
         });
 
         public DelegateCommand<DeviceParameter> TempRunCommand => new((DeviceParameter device) =>
@@ -12163,7 +12164,6 @@ namespace RD3.ViewModels
                     break;
             }
         });
-
 
         public DelegateCommand FeedCycleCommand => new(() =>
         {
