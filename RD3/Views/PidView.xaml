@@ -108,6 +108,7 @@
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                         SelectedItemBinding="{Binding Factor}">
+                        <!--  显示 Description 而非枚举值  -->
                         <DataGridComboBoxColumn.ElementStyle>
                             <Style TargetType="ComboBox">
                                 <Setter Property="ItemTemplate">
@@ -119,6 +120,18 @@
                                 </Setter>
                             </Style>
                         </DataGridComboBoxColumn.ElementStyle>
+
+                        <DataGridComboBoxColumn.EditingElementStyle>
+                            <Style TargetType="ComboBox">
+                                <Setter Property="ItemTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridComboBoxColumn.EditingElementStyle>
                     </DataGridComboBoxColumn>
                     <DataGridTextColumn
                         Width="100"
