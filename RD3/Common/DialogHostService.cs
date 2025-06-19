@@ -1,4 +1,6 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using DryIoc;
+using Fpi.Communication.Protocols;
+using MaterialDesignThemes.Wpf;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
@@ -8,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace RD3.Common
 {
@@ -21,6 +24,29 @@ namespace RD3.Common
         public DialogHostService(IContainerExtension containerExtension) : base(containerExtension)
         {
             this.containerExtension = containerExtension;
+        }
+
+        public void ShowOnce(string name, IDialogParameters parameters, Action<IDialogResult> callback, string windowName = "")
+        {
+            foreach (Window item in Application.Current.Windows)
+            {
+                if (item.Content == null) continue;
+                string formName = item.Content?.ToString().Substring(item.Content.ToString().LastIndexOf(".") + 1);
+                if (formName == name?.ToString())
+                {
+                    item.Activate();
+                    item.WindowState = WindowState.Normal;
+                    return;
+                }
+            }
+            if (string.IsNullOrWhiteSpace(windowName))
+            {
+                base.Show(name, parameters, callback);
+            }
+            else
+            {
+                base.Show(name, parameters, callback,windowName);
+            }
         }
 
         public async Task<IDialogResult> ShowDialog(string name, IDialogParameters parameters, string dialogHostName = "Root")
@@ -53,6 +79,32 @@ namespace RD3.Common
             };
 
             return (IDialogResult)await DialogHost.Show(dialogContent, viewModel.DialogHostName, eventHandler);
+        }
+
+        public void ShowOnce(string name, Action<IDialogResult> callback, string windowName = "")
+        {
+            foreach (Window item in Application.Current.Windows)
+            {
+                if (item.Content == null) continue;
+                string formName = item.Content?.ToString().Substring(item.Content.ToString().LastIndexOf(".") + 1);
+                if (formName == name?.ToString())
+                {
+                    item.WindowState = WindowState.Normal;
+                    item.Show();
+                    item.Activate();
+                    return;
+                }
+            }
+
+            var parameters = new DialogParameters();
+            if (string.IsNullOrWhiteSpace(windowName))
+            {
+                base.Show(name, parameters, callback);
+            }
+            else
+            {
+                base.Show(name, parameters, callback, windowName);
+            }
         }
     }
 }

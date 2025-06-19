@@ -112,7 +112,7 @@ namespace RD3.ViewModels
                 { "Factors", SelectedFactors }
             };
 
-            DialogService.ShowDialog(nameof(DOEDesignView), keyValuePairs, callback =>
+            DialogHostService.ShowDialog(nameof(DOEDesignView), keyValuePairs, callback =>
             {
                 if (callback.Result != ButtonResult.OK)
                 {
@@ -270,7 +270,7 @@ namespace RD3.ViewModels
             {
                 { "SelectedDevices", SelectedDevices }
             };
-            DialogService.ShowDialog(nameof(ChooseReactorView), keyValuePairs, callback =>
+            DialogHostService.ShowDialog(nameof(ChooseReactorView), keyValuePairs, callback =>
             {
                 if (callback.Result != ButtonResult.OK) return;
                 SelectedDevices = callback.Parameters.GetValue<List<Device>>("Reactors");
