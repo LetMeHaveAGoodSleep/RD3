@@ -3618,7 +3618,7 @@ namespace RD3.ViewModels
 
                         var realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                         var (isAlkali, volume) = dicPHController[deviceParameter.Name].CalculateDosing(currentPH: realTimeParam.PH, currentRPM: realTimeParam.Agit, currentVolume_L: realTimeParam.JarWeight / 1000);
-                        if (volume >= 0)
+                        if (volume > 0)
                         {
                             if (isAlkali)//加碱
                             {
