@@ -20,7 +20,6 @@
     Width="550"
     Height="250"
     d:DataContext="{d:DesignInstance Type=vm:AdaptpHViewModel}"
-    Background="Wheat"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
     TextElement.FontWeight="Regular"
