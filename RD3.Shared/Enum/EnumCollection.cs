@@ -54,8 +54,11 @@ namespace RD3.Shared
 
     public enum PHControlMode
     {
+        [Description("PID")]
         PID,
+        [Description("动态缓冲")]
         Buffer,
+        [Description("自适应调节")]
         Adaptive
     }
 
@@ -87,9 +90,13 @@ namespace RD3.Shared
 
     public enum GasType
     {
+        [Description("空气")]
         Air = 1,
+        [Description("氧气")]
         O2,
+        [Description("二氧化碳")]
         CO2,
+        [Description("氮气")]
         N2
     }
 
@@ -127,9 +134,13 @@ namespace RD3.Shared
 
     public enum SensorCorrectMode
     {
+        [Description("系数校准")]
         CoefficientCalibration = 1,
+        [Description("偏置校准")]
         OffsetCalibration,
+        [Description("两点校准_A")]
         TwoPointCalibration_A,
+        [Description("两点校准_B")]
         TwoPointCalibration_B,
     }
 

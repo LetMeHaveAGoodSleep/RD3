@@ -82,7 +82,7 @@
                     Height="36"
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryRelease}"
-                    Background="{DynamicResource StopBrush}"
+                    Background="#E64B35"
                     BorderThickness="0"
                     Command="{Binding ReleaseCommand}"
                     Foreground="White"
@@ -130,7 +130,8 @@
                     CommandParameter="1,0"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='Probe补料策略'}" />
+                    ToolTip="{ex:Language Key='Probe补料策略'}"
+                    Visibility="Collapsed" />
                 <Button
                     Width="36"
                     Height="36"
@@ -141,7 +142,8 @@
                     CommandParameter="1,100"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='Probe补料策略'}" />
+                    ToolTip="{ex:Language Key='Probe补料策略'}"
+                    Visibility="Collapsed" />
                 <Button
                     Width="36"
                     Height="36"
@@ -152,7 +154,8 @@
                     CommandParameter="0,0"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='Probe补料策略'}" />
+                    ToolTip="{ex:Language Key='Probe补料策略'}"
+                    Visibility="Collapsed" />
                 <Button
                     Width="36"
                     Height="36"
@@ -163,7 +166,8 @@
                     CommandParameter="0,14"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='Probe补料策略'}" />
+                    ToolTip="{ex:Language Key='Probe补料策略'}"
+                    Visibility="Collapsed" />
                 <Button
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource SaveGeometry}"
@@ -643,10 +647,36 @@
                                                 <Separator />
                                                 <MenuItem Command="{Binding DOOPCommand}" Header="功率设置" />
                                                 <Separator />
-                                                <MenuItem
-                                                    Header="启用mid-ranging策略"
-                                                    IsCheckable="True"
-                                                    IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Midranging}" />
+                                                <MenuItem>
+                                                    <MenuItem.Header>
+                                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                                            <TextBlock VerticalAlignment="Center" Text="控制策略:" />
+                                                            <TextBlock Text="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToStringConverter}}" />
+                                                            <Path
+                                                                Width="14"
+                                                                Height="14"
+                                                                Margin="4,0,6,0"
+                                                                Data="M0,5.5 L3.5,9.5 L12,0"
+                                                                Stroke="{DynamicResource FixedGradientBrush}"
+                                                                StrokeThickness="2" />
+                                                        </hc:UniformSpacingPanel>
+                                                    </MenuItem.Header>
+                                                    <MenuItem
+                                                        Header="阶梯通气"
+                                                        IsCheckable="True"
+                                                        IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Step}" />
+                                                    <Separator />
+                                                    <MenuItem
+                                                        Header="中位控制"
+                                                        IsCheckable="True"
+                                                        IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Midranging}" />
+                                                    <Separator />
+                                                    <MenuItem
+                                                        Header="周期"
+                                                        IsCheckable="True"
+                                                        IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Cycle}" />
+                                                    <Separator />
+                                                </MenuItem>
                                             </ContextMenu>
                                         </TextBox.ContextMenu>
                                     </TextBox>
@@ -909,11 +939,23 @@
                                                 <Separator />
                                                 <MenuItem Command="{Binding AdaptpHCommand}" Header="自适应调控参数" />
                                                 <Separator />
-                                                <MenuItem Header="控制策略">
+                                                <MenuItem>
+                                                    <MenuItem.Header>
+                                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                                            <TextBlock VerticalAlignment="Center" Text="控制策略:" />
+                                                            <TextBlock Text="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToStringConverter}}" />
+                                                            <Path
+                                                                Width="14"
+                                                                Height="14"
+                                                                Margin="4,0,6,0"
+                                                                Data="M0,5.5 L3.5,9.5 L12,0"
+                                                                Stroke="{DynamicResource FixedGradientBrush}"
+                                                                StrokeThickness="2" />
+                                                        </hc:UniformSpacingPanel>
+                                                    </MenuItem.Header>
                                                     <MenuItem
-                                                        Command="{Binding PHModeCommand}"
                                                         CommandParameter="PID"
-                                                        Header="PID调控"
+                                                        Header="PID"
                                                         IsCheckable="True"
                                                         IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=PID, UpdateSourceTrigger=PropertyChanged}" />
                                                     <Separator />
@@ -923,9 +965,9 @@
                                                         IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Adaptive, UpdateSourceTrigger=PropertyChanged}" />
                                                     <Separator />
                                                     <MenuItem
-                                                        Command="{Binding PHModeCommand}"
                                                         CommandParameter="Buffer"
                                                         Header="动态缓冲调控"
+                                                        IsCheckable="True"
                                                         IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Buffer, UpdateSourceTrigger=PropertyChanged}" />
                                                 </MenuItem>
                                             </ContextMenu>

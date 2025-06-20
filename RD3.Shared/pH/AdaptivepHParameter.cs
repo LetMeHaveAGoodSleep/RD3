@@ -61,7 +61,7 @@ namespace RD3.Shared
             set => SetProperty(ref _minDosingVolume, value);
         }
 
-        private double _baseAdjustmentFactor = 2.0;
+        private double _baseAdjustmentFactor = 1.0;
         /// <summary>
         /// 基础调节系数（mL/pH）
         /// 表示每偏离目标pH 1.0时需要添加的试剂体积
@@ -74,11 +74,11 @@ namespace RD3.Shared
         }
 
         // ========== 自适应参数 ==========
-        private double _initialDecayFactor = 0.6;
+        private double _initialDecayFactor = 0.3;
         /// <summary>
         /// 初始衰减系数（0.1-1.0）
         /// 值越小调节越保守，防过冲能力越强
-        /// 建议启动时设为0.5-0.7
+        /// 建议启动时设为0.3-0.5
         /// </summary>
         public double InitialDecayFactor
         {
@@ -86,7 +86,7 @@ namespace RD3.Shared
             set => SetProperty(ref _initialDecayFactor, value);
         }
 
-        private double _learningRate = 0.03;
+        private double _learningRate = 0.01;
         /// <summary>
         /// 参数学习速率（0.01-0.1）
         /// 影响自适应参数的调整速度

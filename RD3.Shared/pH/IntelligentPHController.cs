@@ -25,7 +25,6 @@ namespace RD3.Shared
                 {
                     _targetPH = value;
                     ResetControllerState();
-                    Console.WriteLine($"目标pH已更新为: {value:F2}");
                 }
             }
         }
@@ -119,12 +118,12 @@ namespace RD3.Shared
             // 2. 检查死区范围
             if (Math.Abs(error) < DeadZone)
             {
-                Console.WriteLine("[控制] 处于死区范围内，不调节");
+                ResetControllerState();
                 return (false, 0);
             }
 
-            // 3. 计算混合效率（0~1范围）
-            double mixingEfficiency = CalculateMixingEfficiency(currentRPM, currentVolume_L);
+        // 3. 计算混合效率（0~1范围）
+        double mixingEfficiency = CalculateMixingEfficiency(currentRPM, currentVolume_L);
 
             // 4. 计算基础添加量（考虑混合效率）
             double baseVolume = Math.Abs(error) * BaseAdjustmentFactor * (1.2 - mixingEfficiency);
@@ -179,14 +178,12 @@ namespace RD3.Shared
             if (IsOvershootTrend(error))
             {
                 adjustedVolume *= 0.6; // 大幅减少本次添加量
-                Console.WriteLine("[控制] 检测到过冲趋势，减少添加量");
             }
 
             // 3. 误差持续减小时适当增加步长
             if (IsConsistentImprovement())
             {
                 adjustedVolume *= 1.2; // 适当增加添加量
-                Console.WriteLine("[控制] 持续改善，增加调节步长");
             }
 
             return adjustedVolume;
@@ -253,8 +250,6 @@ namespace RD3.Shared
                 > 0.7 => Math.Max(0.3, _currentDecayFactor - LearningRate), // 误差大时保守
                 _ => _currentDecayFactor
             };
-
-            Console.WriteLine($"[自适应] 更新衰减系数: {_currentDecayFactor:F2}");
         }
 
         /// <summary>
@@ -265,7 +260,6 @@ namespace RD3.Shared
             _errorHistory.Clear();
             _currentDecayFactor = InitialDecayFactor;
             _isFirstMeasurement = true;
-            Console.WriteLine("[控制] 控制器状态已重置");
         }
     }
 }

@@ -118,6 +118,7 @@ namespace RD3.ViewModels
         private Dictionary<string, BackgroundWorker> dicPHWorker = new Dictionary<string, BackgroundWorker>();
         private Dictionary<string, float> dicPHDelta = new Dictionary<string, float>();
         private Dictionary<string, QPIDController> dicPHPid = new Dictionary<string, QPIDController>();
+        private Dictionary<string, IntelligentPHController> dicPHController = new Dictionary<string, IntelligentPHController>();
 
         private Dictionary<string, BackgroundWorker> dicAcidWorker = new Dictionary<string, BackgroundWorker>();
         private Dictionary<string, float> dicAcidSP = new Dictionary<string, float>();
@@ -737,15 +738,6 @@ namespace RD3.ViewModels
                     });
                     dicPHTimeWorker[currentDeviceParameter.Name].RunWorkerAsync();
                     break;
-            }
-        });
-
-        public DelegateCommand<string> PHModeCommand => new((string mode) =>
-        {
-            Enum.TryParse(typeof(PHControlMode), mode, out var result);
-            if (CurrentDeviceParameter.PHParam.PHControlMode != (PHControlMode)result)
-            {
-                CurrentDeviceParameter.PHParam.PHControlMode = (PHControlMode)result;
             }
         });
 
@@ -3151,8 +3143,11 @@ namespace RD3.ViewModels
                 });
                 return;
             }
+
             dicPHPid[currentDeviceParameter.Name].Reset();
             dicPHDelta[currentDeviceParameter.Name] = 0;
+
+
             dicPHWorker[currentDeviceParameter.Name] = new BackgroundWorker();
             dicPHWorker[currentDeviceParameter.Name].WorkerReportsProgress = true;      // 允许报告进度
             dicPHWorker[currentDeviceParameter.Name].WorkerSupportsCancellation = true; // 允许取消操作
@@ -3160,6 +3155,7 @@ namespace RD3.ViewModels
             dicPHWorker[currentDeviceParameter.Name].DoWork += ((s, e) =>
             {
                 var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == currentDeviceParameter.Name);
+                e.Result = deviceParameter.Name;
                 if (deviceParameter.PHParam.PHControlMode == PHControlMode.PID)
                 {
                     //dicPHPid[currentDeviceParameter.Name].SetTarget(currentDeviceParameter.PHParam.PH_PV);//PH的预设值可能会自动控制途中更改 方成
@@ -3602,6 +3598,157 @@ namespace RD3.ViewModels
                     }
                     catch (Exception ex)
                     {
+                    }
+                }
+                else if (deviceParameter.PHParam.PHControlMode == PHControlMode.Adaptive)
+                {
+                    PeristalticPumpControlParam param = new PeristalticPumpControlParam();
+
+                    while (true)
+                    {
+                        if (dicPHWorker[deviceParameter.Name].CancellationPending)
+                        {
+                            return;
+                        }
+                        dicPHController[deviceParameter.Name] = new IntelligentPHController()
+                        {
+                            TargetPH = deviceParameter.PHParam.PH_PV
+                        };
+                        PropertyMapper.Map(deviceParameter.AdaptivepHParameter, dicPHController[deviceParameter.Name]);
+
+                        var realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                        var (isAlkali, volume) = dicPHController[deviceParameter.Name].CalculateDosing(currentPH: realTimeParam.PH, currentRPM: realTimeParam.Agit, currentVolume_L: realTimeParam.JarWeight / 1000);
+                        if (volume >= 0)
+                        {
+                            if (isAlkali)//加碱
+                            {
+                                deviceParameter.AcidParam.Acid_PV = 0;
+                                int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.AcidPump);
+                                if (pumpNo >= 0)
+                                {
+                                    param = new PeristalticPumpControlParam()
+                                    {
+                                        PumpNo = pumpNo,
+                                        Pump = PeristalticPump.AcidPump,
+                                        ControlMode = PumpControlMode.Direct,
+                                        FlowSpeed = deviceParameter.AcidParam.Acid_PV,
+                                        FlowCapacity = 0
+                                    };
+                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                }
+
+                                if (deviceParameter.PHParam.BaseAssociated)
+                                {
+                                    pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.BasePump);
+                                    if (pumpNo >= 0)
+                                    {
+                                        deviceParameter.BaseParam.Base_PV = AppSession.DefaultPumpFlowRate;
+                                        param = new PeristalticPumpControlParam()
+                                        {
+                                            PumpNo = pumpNo,
+                                            Pump = PeristalticPump.BasePump,
+                                            ControlMode = PumpControlMode.Direct,
+                                            FlowSpeed = deviceParameter.BaseParam.Base_PV,
+                                            FlowCapacity = (float)volume
+                                        };
+                                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+
+                                        int count = Convert.ToInt32(Math.Ceiling(volume * 3600 / deviceParameter.BaseParam.Base_PV));
+                                        while (count > 0)
+                                        {
+                                            if (dicPHWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            Thread.Sleep(1000);
+                                            count--;
+                                        }
+                                    }
+                                }
+                            }
+                            else//加酸
+                            {
+                                deviceParameter.BaseParam.Base_PV = 0;
+                                int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.BasePump);
+                                if (pumpNo >= 0)
+                                {
+                                    param = new PeristalticPumpControlParam()
+                                    {
+                                        PumpNo = pumpNo,
+                                        Pump = PeristalticPump.BasePump,
+                                        ControlMode = PumpControlMode.Direct,
+                                        FlowSpeed = deviceParameter.BaseParam.Base_PV,
+                                        FlowCapacity = 0
+                                    };
+                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                }
+
+                                if (deviceParameter.PHParam.AcidAssociated)
+                                {
+                                    deviceParameter.AcidParam.Acid_PV = AppSession.DefaultPumpFlowRate;
+                                    pumpNo = PumpMFCUtil.GetPumpIndex(CurrentDeviceParameter.Name, PeristalticPump.AcidPump);
+                                    if (pumpNo >= 0)
+                                    {
+                                        param = new PeristalticPumpControlParam()
+                                        {
+                                            PumpNo = pumpNo,
+                                            Pump = PeristalticPump.AcidPump,
+                                            ControlMode = PumpControlMode.Direct,
+                                            FlowSpeed = deviceParameter.AcidParam.Acid_PV,
+                                            FlowCapacity = (float)volume
+                                        };
+                                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+
+                                        int count = Convert.ToInt32(Math.Ceiling(volume * 3600 / deviceParameter.AcidParam.Acid_PV));
+                                        while (count > 0)
+                                        {
+                                            if (dicPHWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            Thread.Sleep(1000);
+                                            count--;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            deviceParameter.AcidParam.Acid_PV = 0;
+                            deviceParameter.AcidParam.IsControling = false;
+                            int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.AcidPump);
+                            if (pumpNo >= 0)
+                            {
+                                param = new PeristalticPumpControlParam()
+                                {
+                                    PumpNo = pumpNo,
+                                    Pump = PeristalticPump.AcidPump,
+                                    ControlMode = PumpControlMode.Direct,
+                                    FlowSpeed = deviceParameter.AcidParam.Acid_PV,
+                                    FlowCapacity = 0
+                                };
+                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                            }
+
+                            deviceParameter.BaseParam.Base_PV = 0;
+                            deviceParameter.BaseParam.IsControling = false;
+                            pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.BasePump);
+                            if (pumpNo >= 0)
+                            {
+                                param = new PeristalticPumpControlParam()
+                                {
+                                    PumpNo = pumpNo,
+                                    Pump = PeristalticPump.BasePump,
+                                    ControlMode = PumpControlMode.Direct,
+                                    FlowSpeed = deviceParameter.BaseParam.Base_PV,
+                                    FlowCapacity = 0
+                                };
+                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                            }
+
+                            Thread.Sleep(1000);
+                        }
                     }
                 }
             });
