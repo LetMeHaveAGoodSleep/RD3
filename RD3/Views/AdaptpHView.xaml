@@ -20,6 +20,7 @@
     Width="550"
     Height="250"
     d:DataContext="{d:DesignInstance Type=vm:AdaptpHViewModel}"
+    Background="Wheat"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
     TextElement.FontWeight="Regular"
@@ -66,7 +67,7 @@
                 <TextBox
                     Width="120"
                     VerticalAlignment="Center"
-                    hc:InfoElement.Title="{ex:Language Key='单次最大添加量(mL)'}"
+                    hc:InfoElement.Title="{ex:Language Key='单次最小添加量(mL)'}"
                     Style="{StaticResource TextBoxExtend}"
                     Text="{Binding AdaptivepHParameter.MinDosingVolume, UpdateSourceTrigger=LostFocus}" />
                 <TextBox
@@ -74,7 +75,8 @@
                     VerticalAlignment="Center"
                     hc:InfoElement.Title="{ex:Language Key='基础添加量(mL)'}"
                     Style="{StaticResource TextBoxExtend}"
-                    Text="{Binding AdaptivepHParameter.BaseAdjustmentFactor, UpdateSourceTrigger=LostFocus}" />
+                    Text="{Binding AdaptivepHParameter.BaseAdjustmentFactor, UpdateSourceTrigger=LostFocus}"
+                    ToolTip="基础调节系数 表示每偏离目标pH 1.0时需要添加的试剂体积" />
             </hc:UniformSpacingPanel>
             <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                 <TextBox
