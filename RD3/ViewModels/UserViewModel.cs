@@ -67,7 +67,7 @@ namespace RD3.ViewModels
                 { "User", user },
                 {"Mode", "Add"  }
             };
-            dialogService?.ShowDialog("EditUserView", pairs, callback =>
+            DialogHostService.ShowOnce(nameof(EditUserView), pairs, callback =>
             {
                 if (callback.Result != ButtonResult.OK)
                 {
@@ -87,7 +87,7 @@ namespace RD3.ViewModels
                 { "User", user },
                 {"Mode", "Edit"  }
             };
-            dialogService?.ShowDialog(nameof(EditUserView), pairs, callback =>
+            DialogHostService.ShowOnce(nameof(EditUserView), pairs, callback =>
             {
                 if (callback.Result != ButtonResult.OK)
                 {

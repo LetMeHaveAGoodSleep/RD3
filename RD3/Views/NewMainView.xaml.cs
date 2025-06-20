@@ -833,7 +833,7 @@ namespace RD3.Views
                 { "OffLineData", offLineData },
             };
             //弹窗，输入离线数据
-            dialogHostService?.ShowDialog(nameof(AddOffLineDataView), parameters, callback =>
+            dialogHostService?.ShowOnce(nameof(AddOffLineDataView), parameters, callback =>
             {
                 if (callback.Result != ButtonResult.OK)
                 {
@@ -922,7 +922,7 @@ namespace RD3.Views
             {
                 { "DeviceName",string.Join("|",list)}
             };
-            dialogHostService?.ShowDialog(nameof(AddBatchInfoView), dialogParameters,callback =>
+            dialogHostService?.ShowOnce(nameof(AddBatchInfoView), dialogParameters,callback =>
             {
                 if (callback.Result != ButtonResult.OK)
                 {

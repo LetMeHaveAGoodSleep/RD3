@@ -126,7 +126,7 @@ namespace RD3.ViewModels
         public DelegateCommand LoginOutCommand => new(() => { App.LoginOut(ContainerProvider); });
         public DelegateCommand ManageUserCommand => new(() =>
         {
-            dialogService.ShowDialog(nameof(UserView), callback =>
+            DialogHostService.ShowOnce(nameof(UserView), callback =>
             {
             });
         });
@@ -143,7 +143,7 @@ namespace RD3.ViewModels
         });
         public DelegateCommand AboutCommand => new(() =>
         {
-            dialogService.ShowDialog(nameof(AboutView), callback =>
+            DialogHostService.ShowOnce(nameof(AboutView), callback =>
             {
             });
         }); 
@@ -175,7 +175,7 @@ namespace RD3.ViewModels
         {
             DialogParameters keyValuePairs = new DialogParameters();
             keyValuePairs.Add("RegistrationCode",RegisterManager.GetRegistrationCode());
-            dialogService.ShowDialog(nameof(RegisterView), keyValuePairs, callback =>
+            DialogHostService.ShowOnce(nameof(RegisterView), keyValuePairs, callback =>
             {
                 if (callback.Result != ButtonResult.OK)
                 {
