@@ -3604,16 +3604,18 @@ namespace RD3.ViewModels
                 {
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
 
+                    dicPHController[deviceParameter.Name] = new IntelligentPHController()
+                    {
+                        TargetPH = deviceParameter.PHParam.PH_PV
+                    };
+
                     while (true)
                     {
                         if (dicPHWorker[deviceParameter.Name].CancellationPending)
                         {
                             return;
                         }
-                        dicPHController[deviceParameter.Name] = new IntelligentPHController()
-                        {
-                            TargetPH = deviceParameter.PHParam.PH_PV
-                        };
+                        dicPHController[deviceParameter.Name].TargetPH = deviceParameter.PHParam.PH_PV;
                         PropertyMapper.Map(deviceParameter.AdaptivepHParameter, dicPHController[deviceParameter.Name]);
 
                         var realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -3654,7 +3656,7 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
 
                                         int count = Convert.ToInt32(Math.Ceiling(volume * 3600 / deviceParameter.BaseParam.Base_PV));
-                                        while (count > 0)
+                                        while (count > 0 && !InstrumentSolution.GetInstance().IsSimulation)
                                         {
                                             if (dicPHWorker[deviceParameter.Name].CancellationPending)
                                             {
@@ -3700,7 +3702,7 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
 
                                         int count = Convert.ToInt32(Math.Ceiling(volume * 3600 / deviceParameter.AcidParam.Acid_PV));
-                                        while (count > 0)
+                                        while (count > 0 && !InstrumentSolution.GetInstance().IsSimulation)
                                         {
                                             if (dicPHWorker[deviceParameter.Name].CancellationPending)
                                             {

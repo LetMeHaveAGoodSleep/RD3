@@ -12,19 +12,6 @@ namespace RD3.Shared
     public class AdaptivepHParameter : BindableBase
     {
         // ========== 基础控制参数 ==========
-        private double _targetPH = 7.0;
-        /// <summary>
-        /// 目标pH设定值
-        /// 范围建议：0-14 pH
-        /// 精度：0.01 pH
-        /// 修改此值会自动重置控制器状态
-        /// </summary>
-        public double TargetPH
-        {
-            get => _targetPH;
-            set => SetProperty(ref _targetPH, value);
-        }
-
         private double _deadZone = 0.05;
         /// <summary>
         /// 死区范围（pH单位）
