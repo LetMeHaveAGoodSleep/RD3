@@ -92,7 +92,7 @@
                 hc:DataGridAttach.ShowSelectAllButton="False"
                 AutoGenerateColumns="False"
                 Background="{StaticResource DefaultBrush}"
-                CanUserAddRows="True"
+                CanUserAddRows="False"
                 CanUserSortColumns="False"
                 ColumnWidth="SizeToHeader"
                 GridLinesVisibility="All"
