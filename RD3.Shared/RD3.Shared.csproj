@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Behavior\" />
-    <Folder Include="Rule\" />
   </ItemGroup>
 
   <ItemGroup>

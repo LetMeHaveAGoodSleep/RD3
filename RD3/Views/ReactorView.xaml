@@ -629,8 +629,14 @@
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='溶氧(%)'}"
                                         BorderBrush="Gray"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, UpdateSourceTrigger=LostFocus}">
+                                        Style="{StaticResource TextBoxExtend}">
+                                        <TextBox.Text>
+                                            <Binding Path="CurrentDeviceParameter.DOParam.DO_PV" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <hc:RegexRule Type="PDouble" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
                                         <TextBox.ContextMenu>
                                             <ContextMenu>
                                                 <MenuItem
@@ -741,8 +747,17 @@
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='转速(rpm)'}"
                                         BorderBrush="Gray"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F0}, UpdateSourceTrigger=LostFocus}">
+                                        Style="{StaticResource TextBoxExtend}">
+                                        <TextBox.Text>
+                                            <Binding
+                                                Path="CurrentDeviceParameter.AgitParam.Agit_PV"
+                                                StringFormat="{}{0:F0}"
+                                                UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <hc:RegexRule Type="PInt" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
                                         <TextBox.IsEnabled>
                                             <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                                 <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
@@ -801,8 +816,14 @@
                                         Width="75"
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='空气(L/min)'}"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding CurrentDeviceParameter.AirParam.FlowSpeed, UpdateSourceTrigger=LostFocus}">
+                                        Style="{StaticResource TextBoxExtend}">
+                                        <TextBox.Text>
+                                            <Binding Path="CurrentDeviceParameter.AirParam.FlowSpeed" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <hc:RegexRule Type="PDouble" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
                                         <TextBox.IsEnabled>
                                             <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                                 <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
@@ -861,8 +882,14 @@
                                         Width="75"
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='氧气(L/min)'}"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding CurrentDeviceParameter.O2Param.FlowSpeed, UpdateSourceTrigger=LostFocus}">
+                                        Style="{StaticResource TextBoxExtend}">
+                                        <TextBox.Text>
+                                            <Binding Path="CurrentDeviceParameter.O2Param.FlowSpeed" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <hc:RegexRule Type="PDouble" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
                                         <TextBox.IsEnabled>
                                             <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                                 <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
@@ -923,8 +950,14 @@
                                         Width="75"
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='pH'}"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, UpdateSourceTrigger=LostFocus}">
+                                        Style="{StaticResource TextBoxExtend}">
+                                        <TextBox.Text>
+                                            <Binding Path="CurrentDeviceParameter.PHParam.PH_PV" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <hc:RegexRule Type="PDouble" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
                                         <TextBox.ContextMenu>
                                             <ContextMenu>
                                                 <MenuItem
@@ -1033,8 +1066,14 @@
                                         Width="75"
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='酸(mL/h)'}"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding CurrentDeviceParameter.AcidParam.Acid_PV, UpdateSourceTrigger=LostFocus}">
+                                        Style="{StaticResource TextBoxExtend}">
+                                        <TextBox.Text>
+                                            <Binding Path="CurrentDeviceParameter.AcidParam.Acid_PV" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <hc:RegexRule Type="PDouble" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
                                         <TextBox.IsEnabled>
                                             <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                                 <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.PHParam.IsControling" />
@@ -1099,8 +1138,14 @@
                                         Width="75"
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='碱(mL/h)'}"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding CurrentDeviceParameter.BaseParam.Base_PV, UpdateSourceTrigger=LostFocus}">
+                                        Style="{StaticResource TextBoxExtend}">
+                                        <TextBox.Text>
+                                            <Binding Path="CurrentDeviceParameter.BaseParam.Base_PV" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <hc:RegexRule Type="PDouble" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
                                         <TextBox.IsEnabled>
                                             <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                                                 <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.PHParam.IsControling" />
@@ -1166,8 +1211,7 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='温度(℃)'}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, UpdateSourceTrigger=LostFocus}">
+                                    Style="{StaticResource TextBoxExtend}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem
@@ -1181,6 +1225,13 @@
                                                 Header="时间序列设置" />
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
+                                    <TextBox.Text>
+                                        <Binding Path="CurrentDeviceParameter.TempParam.Temp_PV" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <hc:RegexRule Type="PDouble" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
                                 </TextBox>
                                 <TextBox
                                     Width="70"
@@ -1239,8 +1290,7 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{Binding CurrentDeviceParameter.FeedParam1.FeedName}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_PV, UpdateSourceTrigger=LostFocus}">
+                                    Style="{StaticResource TextBoxExtend}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
@@ -1258,6 +1308,13 @@
                                                 IsChecked="{Binding CurrentDeviceParameter.FeedParam1.IspHStat, UpdateSourceTrigger=PropertyChanged}" />-->
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
+                                    <TextBox.Text>
+                                        <Binding Path="CurrentDeviceParameter.FeedParam1.Feed_PV" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <hc:RegexRule Type="PDouble" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
                                 </TextBox>
                                 <TextBox
                                     Width="75"
@@ -1265,25 +1322,21 @@
                                     hc:InfoElement.Title="{Binding CurrentDeviceParameter.FeedParam1.FeedTotalName}"
                                     IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.FeedParam1.Feed_Total, UpdateSourceTrigger=LostFocus}"
                                     Visibility="{Binding CurrentDeviceParameter.FeedParam1.IsTotal, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
                                             <Separator />
                                             <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
-                                            <!--<Separator />
-            <MenuItem
-                Header="启用DO-stat"
-                IsCheckable="True"
-                IsChecked="{Binding CurrentDeviceParameter.FeedParam1.IsDOStat, UpdateSourceTrigger=PropertyChanged}" />
-            <Separator />
-            <MenuItem
-                Header="启用pH-stat"
-                IsCheckable="True"
-                IsChecked="{Binding CurrentDeviceParameter.FeedParam1.IspHStat, UpdateSourceTrigger=PropertyChanged}" />-->
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
+                                    <TextBox.Text>
+                                        <Binding Path="CurrentDeviceParameter.FeedParam1.Feed_Total" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <hc:RegexRule Type="PDouble" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
                                 </TextBox>
                                 <TextBox
                                     Width="70"
@@ -1369,25 +1422,21 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{Binding CurrentDeviceParameter.FeedParam2.FeedName}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.FeedParam2.Feed_PV, UpdateSourceTrigger=LostFocus}">
+                                    Style="{StaticResource TextBoxExtend}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
                                             <Separator />
                                             <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
-                                            <!--<Separator />
-                                <MenuItem
-                                    Header="启用DO-stat"
-                                    IsCheckable="True"
-                                    IsChecked="{Binding CurrentDeviceParameter.FeedParam2.IsDOStat, UpdateSourceTrigger=PropertyChanged}" />
-                                <Separator />
-                                <MenuItem
-                                    Header="启用pH-stat"
-                                    IsCheckable="True"
-                                    IsChecked="{Binding CurrentDeviceParameter.FeedParam2.IspHStat, UpdateSourceTrigger=PropertyChanged}" />-->
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
+                                    <TextBox.Text>
+                                        <Binding Path="CurrentDeviceParameter.FeedParam2.Feed_PV" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <hc:RegexRule Type="PDouble" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
                                 </TextBox>
                                 <TextBox
                                     Width="75"
@@ -1395,25 +1444,21 @@
                                     hc:InfoElement.Title="{Binding CurrentDeviceParameter.FeedParam2.FeedTotalName}"
                                     IsEnabled="{Binding CurrentDeviceParameter.FeedParam2.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                     Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.FeedParam2.Feed_Total, UpdateSourceTrigger=LostFocus}"
                                     Visibility="{Binding CurrentDeviceParameter.FeedParam2.IsTotal, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
                                             <Separator />
                                             <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
-                                            <!--<Separator />
-<MenuItem
-    Header="启用DO-stat"
-    IsCheckable="True"
-    IsChecked="{Binding CurrentDeviceParameter.FeedParam2.IsDOStat, UpdateSourceTrigger=PropertyChanged}" />
-<Separator />
-<MenuItem
-    Header="启用pH-stat"
-    IsCheckable="True"
-    IsChecked="{Binding CurrentDeviceParameter.FeedParam2.IspHStat, UpdateSourceTrigger=PropertyChanged}" />-->
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
+                                    <TextBox.Text>
+                                        <Binding Path="CurrentDeviceParameter.FeedParam2.Feed_Total" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <hc:RegexRule Type="PDouble" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
                                 </TextBox>
                                 <TextBox
                                     Width="70"
@@ -1499,8 +1544,15 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='消泡(mL/h)'}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AFParam.AF_PV, UpdateSourceTrigger=LostFocus}" />
+                                    Style="{StaticResource TextBoxExtend}">
+                                    <TextBox.Text>
+                                        <Binding Path="CurrentDeviceParameter.AFParam.AF_PV" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <hc:RegexRule Type="PDouble" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                                 <TextBox
                                     Width="70"
                                     VerticalAlignment="Center"
@@ -1558,15 +1610,29 @@
                                     Width="75"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='周期(s)'}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AFParam.Cycle}" />
+                                    Style="{StaticResource TextBoxExtend}">
+                                    <TextBox.Text>
+                                        <Binding Path="CurrentDeviceParameter.AFParam.Cycle" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <hc:RegexRule Type="PInt" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                                 <TextBox
                                     Name="txtDutyCycle"
                                     Width="70"
                                     VerticalAlignment="Center"
                                     hc:InfoElement.Title="{ex:Language Key='占空比(%)'}"
-                                    Style="{StaticResource TextBoxExtend}"
-                                    Text="{Binding CurrentDeviceParameter.AFParam.DutyCycle}" />
+                                    Style="{StaticResource TextBoxExtend}">
+                                    <TextBox.Text>
+                                        <Binding Path="CurrentDeviceParameter.AFParam.DutyCycle" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <hc:RegexRule Type="PDouble" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
                                 <ToggleButton
                                     Width="75"
                                     Height="28"

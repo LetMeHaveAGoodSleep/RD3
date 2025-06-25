@@ -4215,6 +4215,7 @@ namespace RD3.ViewModels
                 dicFeed1Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
+                    e.Result = deviceParameter.Name;
                     var allDeviceInfos = FeedStrategyManager.GetInstance().FeedStrategyCol;
                     FeedStrategyInfo f = null;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
@@ -4250,7 +4251,6 @@ namespace RD3.ViewModels
                             var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
                             {
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper());
@@ -4308,7 +4308,6 @@ namespace RD3.ViewModels
                                     {
                                         if (worker.CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
                                         RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -4365,7 +4364,6 @@ namespace RD3.ViewModels
                                     {
                                         if (worker.CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
                                         RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -4474,6 +4472,7 @@ namespace RD3.ViewModels
                 dicFeed1Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
+                    e.Result = deviceParameter.Name;
                     DateTime startTime = DateTime.Now;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
 
@@ -4486,7 +4485,6 @@ namespace RD3.ViewModels
                             var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
                             {
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -4495,7 +4493,6 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -4503,7 +4500,6 @@ namespace RD3.ViewModels
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在多项式策略", deviceParameter.Name));
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -4530,22 +4526,15 @@ namespace RD3.ViewModels
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                             }
 
-                            int count = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                            int index = 0;
-                            while (index < count)
+                            int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                            while (count > 0)
                             {
                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                 {
-                                    e.Result = deviceParameter.Name;
                                     return;
                                 }
 
-                                index += 1;
-                                Thread.Sleep(1000);
-                            }
-
-                            if (count < 1)
-                            {
+                                count--;
                                 Thread.Sleep(1000);
                             }
 
@@ -4583,7 +4572,6 @@ namespace RD3.ViewModels
                                     {
                                         if (worker.CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
                                         RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -4617,7 +4605,6 @@ namespace RD3.ViewModels
                                     {
                                         if (worker.CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
                                         RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -4699,7 +4686,9 @@ namespace RD3.ViewModels
                 dicFeed1Worker[CurrentDeviceParameter.Name].WorkerReportsProgress = true;
                 dicFeed1Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
+                    var worker = (BackgroundWorker)s;
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
+                    e.Result = deviceParameter.Name;
                     DateTime startTime = DateTime.Now;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
                     int totalSecond = 0;
@@ -4707,11 +4696,8 @@ namespace RD3.ViewModels
                     {
                         try
                         {
-                            var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
-                            { // 检查取消请求
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                            {
                                 return;
                             }
 
@@ -4720,16 +4706,12 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Exponential".ToUpper());
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在指数策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -4755,22 +4737,16 @@ namespace RD3.ViewModels
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                             }
 
-                            int count = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
+                            int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                             int index = 0;
-                            while (index < count)
+                            while (count>0)
                             {
                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                 {
-                                    e.Result = deviceParameter.Name;
                                     return;
                                 }
 
-                                index += 1;
-                                Thread.Sleep(1000);
-                            }
-
-                            if (count < 1)
-                            {
+                                count--;
                                 Thread.Sleep(1000);
                             }
 
@@ -4808,7 +4784,6 @@ namespace RD3.ViewModels
                                     {
                                         if (worker.CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
                                         RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -4842,7 +4817,6 @@ namespace RD3.ViewModels
                                     {
                                         if (worker.CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
                                         RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -4925,6 +4899,7 @@ namespace RD3.ViewModels
                 dicFeed1Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
+                    e.Result = deviceParameter.Name;
                     BackgroundWorker worker = s as BackgroundWorker;
 
                     bool QuantitativeFinish = false;//指示时间序列中定量补是否已经完成
@@ -4934,8 +4909,6 @@ namespace RD3.ViewModels
                     if (!flag || feedGradientInfos == null)
                     {
                         MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                        //e.Cancel = true;
-                        e.Result = deviceParameter.Name;
                         return;
                     }
                     DateTime calcTime, beginTime;
@@ -4945,13 +4918,14 @@ namespace RD3.ViewModels
 
                     int totalSecond = 0;//用于stat的停顿计时
 
+                    int statTotalSeconds = 0;//用于stat多项式|指数的时间计算
+
                     string lastInfoType = "";
 
                     while (timeOffset < endTime)
                     {
                         if (worker.CancellationPending)
                         {
-                            e.Result = deviceParameter.Name;
                             return;
                         }
 
@@ -4960,7 +4934,6 @@ namespace RD3.ViewModels
                         if (!flag || feedGradientInfos == null)
                         {
                             MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                            e.Result = deviceParameter.Name;
                             return;
                         }
 
@@ -4983,6 +4956,7 @@ namespace RD3.ViewModels
                             {
                                 totalSecond = 0;
                                 calcTime = DateTime.Now;
+                                statTotalSeconds = 0;
                             }
 
                             switch (f.InfoType)
@@ -5003,22 +4977,15 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                     }
 
-                                    int count = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                    int index = 0;
-                                    while (index < count)
+                                    int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
 
-                                        index += 1;
-                                        Thread.Sleep(1000);
-                                    }
-
-                                    if (count < 1)
-                                    {
+                                        count--;
                                         Thread.Sleep(1000);
                                     }
 
@@ -5054,7 +5021,6 @@ namespace RD3.ViewModels
                                             {
                                                 if (worker.CancellationPending)
                                                 {
-                                                    e.Result = deviceParameter.Name;
                                                     return;
                                                 }
                                                 RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -5081,7 +5047,6 @@ namespace RD3.ViewModels
                                             {
                                                 if (worker.CancellationPending)
                                                 {
-                                                    e.Result = deviceParameter.Name;
                                                     return;
                                                 }
                                                 RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -5125,22 +5090,15 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                     }
 
-                                    int count1 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                    int index1 = 0;
-                                    while (index1 < count1)
+                                    count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
 
-                                        index1 += 1;
-                                        Thread.Sleep(1000);
-                                    }
-
-                                    if (count1 < 1)
-                                    {
+                                        count--;
                                         Thread.Sleep(1000);
                                     }
 
@@ -5177,7 +5135,6 @@ namespace RD3.ViewModels
                                             {
                                                 if (worker.CancellationPending)
                                                 {
-                                                    e.Result = deviceParameter.Name;
                                                     return;
                                                 }
                                                 RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -5204,7 +5161,6 @@ namespace RD3.ViewModels
                                             {
                                                 if (worker.CancellationPending)
                                                 {
-                                                    e.Result = deviceParameter.Name;
                                                     return;
                                                 }
                                                 RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -5251,22 +5207,15 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                     }
 
-                                    int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                    int index2 = 0;
-                                    while (index2 < count2)
+                                    count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
 
-                                        index2 += 1;
-                                        Thread.Sleep(1000);
-                                    }
-
-                                    if (count2 < 1)
-                                    {
+                                        count--;
                                         Thread.Sleep(1000);
                                     }
 
@@ -5303,7 +5252,6 @@ namespace RD3.ViewModels
                                             {
                                                 if (worker.CancellationPending)
                                                 {
-                                                    e.Result = deviceParameter.Name;
                                                     return;
                                                 }
                                                 RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -5330,7 +5278,6 @@ namespace RD3.ViewModels
                                             {
                                                 if (worker.CancellationPending)
                                                 {
-                                                    e.Result = deviceParameter.Name;
                                                     return;
                                                 }
                                                 RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -5384,7 +5331,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
@@ -5410,7 +5357,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
@@ -5430,17 +5377,15 @@ namespace RD3.ViewModels
                                             }
                                         }
 
-                                        int count3 = f.TriggerInterval / 1;
-                                        int index3 = 0;
-                                        while (index3 < count3)
+                                        count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count > 0)
                                         {
                                             if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                             {
-                                                e.Result = deviceParameter.Name;
                                                 return;
                                             }
 
-                                            index3 += 1;
+                                            count--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -5471,7 +5416,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
@@ -5498,7 +5443,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
@@ -5518,17 +5463,15 @@ namespace RD3.ViewModels
                                             }
                                         }
 
-                                        int count3 = f.TriggerInterval / 1;
-                                        int index3 = 0;
-                                        while (index3 < count3)
+                                        count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count > 0)
                                         {
                                             if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                             {
-                                                e.Result = deviceParameter.Name;
                                                 return;
                                             }
 
-                                            index3 += 1;
+                                            count--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -5548,7 +5491,10 @@ namespace RD3.ViewModels
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
+                                        Thread.Sleep(1000);
                                     }
+
+                                    statTotalSeconds += 1;
                                     break;
                                 case "PH_Feedback"://根据PH反馈控制，执行业务逻辑
                                     if (deviceParameter.PH <= f.A)
@@ -5578,7 +5524,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
@@ -5605,7 +5551,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
@@ -5625,17 +5571,15 @@ namespace RD3.ViewModels
                                             }
                                         }
 
-                                        int count4 = f.TriggerInterval / 1;
-                                        int index4 = 0;
-                                        while (index4 < count4)
+                                        count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count > 0)
                                         {
                                             if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                             {
-                                                e.Result = deviceParameter.Name;
                                                 return;
                                             }
 
-                                            index4 += 1;
+                                            count--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -5666,7 +5610,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
@@ -5693,7 +5637,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
@@ -5713,17 +5657,15 @@ namespace RD3.ViewModels
                                             }
                                         }
 
-                                        int count4 = f.TriggerInterval / 1;
-                                        int index4 = 0;
-                                        while (index4 < count4)
+                                        count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count > 0)
                                         {
                                             if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                             {
-                                                e.Result = deviceParameter.Name;
                                                 return;
                                             }
 
-                                            index4 += 1;
+                                            count--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -5744,6 +5686,8 @@ namespace RD3.ViewModels
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
                                     }
+
+                                    statTotalSeconds += 1;
                                     break;
                                 case "DO_Feedback_Total":
                                     if (deviceParameter.DO <= f.A)
@@ -5773,25 +5717,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -5803,7 +5745,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                             if (flow > 0)
@@ -5828,25 +5770,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -5858,7 +5798,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                             if (flow > 0)
@@ -5883,40 +5823,36 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
 
-                                        int count5 = f.TriggerInterval / 1;
-                                        int index5 = 0;
-                                        while (index5 < count5)
+                                        int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count5 > 0)
                                         {
                                             if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                             {
-                                                e.Result = deviceParameter.Name;
                                                 return;
                                             }
 
-                                            index5 += 1;
+                                            count5--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -5947,25 +5883,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -5977,7 +5911,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                             if (flow > 0)
@@ -6002,30 +5936,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int feedInterval = 300;
-                                            if (!int.TryParse(VarConfig.GetValue("FeedInterval")?.ToString(), out feedInterval))
-                                            {
-                                                feedInterval = 300;
-                                            }
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -6037,7 +5964,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                             if (flow > 0)
@@ -6062,40 +5989,36 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
 
-                                        int count5 = f.TriggerInterval / 1;
-                                        int index5 = 0;
-                                        while (index5 < count5)
+                                        int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count5 > 0)
                                         {
                                             if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                             {
-                                                e.Result = deviceParameter.Name;
                                                 return;
                                             }
 
-                                            index5 += 1;
+                                            count5--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -6115,6 +6038,8 @@ namespace RD3.ViewModels
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
+                                        Thread.Sleep(1000);
+                                        statTotalSeconds += 1;
                                     }
                                     break;
                                 case "PH_Feedback_Total"://根据PH反馈控制，执行业务逻辑
@@ -6145,25 +6070,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -6175,7 +6098,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                             if (flow > 0)
@@ -6200,25 +6123,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -6230,7 +6151,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                             if (flow > 0)
@@ -6255,40 +6176,36 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
 
-                                        int count6 = f.TriggerInterval / 1;
-                                        int index6 = 0;
-                                        while (index6 < count6)
+                                        int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count5 > 0)
                                         {
                                             if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                             {
-                                                e.Result = deviceParameter.Name;
                                                 return;
                                             }
 
-                                            index6 += 1;
+                                            count5--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -6319,25 +6236,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -6349,7 +6264,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                             if (flow > 0)
@@ -6374,25 +6289,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -6404,7 +6317,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                             if (flow > 0)
@@ -6429,40 +6342,36 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
 
-                                        int count6 = f.TriggerInterval / 1;
-                                        int index6 = 0;
-                                        while (index6 < count6)
+                                        int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count5 > 0)
                                         {
                                             if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                             {
-                                                e.Result = deviceParameter.Name;
                                                 return;
                                             }
 
-                                            index6 += 1;
+                                            count5--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -6482,6 +6391,8 @@ namespace RD3.ViewModels
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
+                                        Thread.Sleep(1000);
+                                        statTotalSeconds += 1;
                                     }
                                     break;
                                 case "Quantitative":
@@ -6511,7 +6422,6 @@ namespace RD3.ViewModels
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
                                         index10 += 1;
@@ -6550,15 +6460,14 @@ namespace RD3.ViewModels
                                         }
 
                                         int count11 = Convert.ToInt32(Math.Ceiling(paramD / deviceParameter.FeedParam1.Feed_PV * 3600));
-                                        int index11 = 0;
-                                        while (index11 < count11)
+                                        while (count11>0)
                                         {
                                             if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                             {
                                                 e.Result = deviceParameter.Name;
                                                 return;
                                             }
-                                            index11 += 1;
+                                            count11--;
                                             Thread.Sleep(1000);
                                         }
                                         totalMinutes = (DateTime.Now - startTime).TotalMinutes;
@@ -6574,7 +6483,6 @@ namespace RD3.ViewModels
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                                 {
-                                                    e.Result = deviceParameter.Name;
                                                     return;
                                                 }
                                                 index12 += 1;
@@ -6582,13 +6490,12 @@ namespace RD3.ViewModels
                                             }
                                         }
 
-                                        int count7 = f.TriggerInterval / 1;
+                                        int count7 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         int index7 = 0;
                                         while (index7 < count7)
                                         {
                                             if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                             {
-                                                e.Result = deviceParameter.Name;
                                                 return;
                                             }
 
@@ -6622,7 +6529,6 @@ namespace RD3.ViewModels
                             }
 
                             lastInfoType = f.InfoType;
-                            //LogHelper.Debug(f.InfoType + " " + deviceParameter.FeedParam1.Feed_PV);
                         }
 
                         endTime = feedGradientInfos[feedGradientInfos.Count - 1].EndTime;
@@ -6677,16 +6583,15 @@ namespace RD3.ViewModels
                 dicFeed1Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
-                    DateTime startTime = DateTime.Now;
+                    e.Result = deviceParameter.Name;
+                    int totalSeconds = 0;
                     while (true)
                     {
                         try
                         {
                             var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
-                            { // 检查取消请求
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                            {
                                 return;
                             }
 
@@ -6695,16 +6600,12 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "DO_Feedback".ToUpper());
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在DO_stat(速度)策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -6735,7 +6636,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
@@ -6762,7 +6663,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
@@ -6782,18 +6683,15 @@ namespace RD3.ViewModels
                                     }
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count > 0)
                                 {
                                     if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
 
-                                    index2 += 1;
+                                    count--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -6824,7 +6722,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
@@ -6851,7 +6749,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
@@ -6871,18 +6769,15 @@ namespace RD3.ViewModels
                                     }
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count > 0)
                                 {
                                     if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
 
-                                    index2 += 1;
+                                    count--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -6902,15 +6797,16 @@ namespace RD3.ViewModels
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                 }
+                                Thread.Sleep(1000);
                             }
+
+                            totalSeconds += 1;
                         }
                         catch (Exception ex)
                         {
                             LogHelper.Debug(string.Format("补料DO反馈调整失败，错误信息：{0}", ex.Message));
-                            Thread.Sleep(AppSession.Interval * 1000);
                         }
                     }
-
                 };
                 dicFeed1Worker[CurrentDeviceParameter.Name].RunWorkerCompleted += (s, e) =>
                 {
@@ -6961,16 +6857,15 @@ namespace RD3.ViewModels
                 dicFeed1Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
-                    DateTime startTime = DateTime.Now;
+                    e.Result = deviceParameter.Name;
+                    int totalSeconds = 0;
                     while (true)
                     {
                         try
                         {
                             var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
-                            { // 检查取消请求
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                            {
                                 return;
                             }
 
@@ -6979,16 +6874,12 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "PH_Feedback".ToUpper());
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在PH反馈策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -7019,7 +6910,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
@@ -7046,7 +6937,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
@@ -7066,18 +6957,14 @@ namespace RD3.ViewModels
                                     }
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count > 0)
                                 {
                                     if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
-
-                                    index2 += 1;
+                                    count--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -7108,7 +6995,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
@@ -7135,7 +7022,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
@@ -7155,18 +7042,14 @@ namespace RD3.ViewModels
                                     }
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count > 0)
                                 {
                                     if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
-
-                                    index2 += 1;
+                                    count--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -7186,12 +7069,18 @@ namespace RD3.ViewModels
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                 }
+                                Thread.Sleep(1000);
                             }
+
+                            totalSeconds += 1;
                         }
                         catch (Exception ex)
                         {
                             LogHelper.Debug(string.Format("补料PH反馈调整失败，错误信息：{0}", ex.Message));
-                            Thread.Sleep(AppSession.Interval * 1000);
+                        }
+                        finally
+                        {
+                            Thread.Sleep(1000);
                         }
                     }
                 };
@@ -7244,17 +7133,15 @@ namespace RD3.ViewModels
                 dicFeed1Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
-                    DateTime startTime = DateTime.Now;
-
+                    e.Result = deviceParameter.Name;
+                    int totalSeconds = 0;
                     while (true)
                     {
                         try
                         {
                             var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
-                            { // 检查取消请求
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                            {
                                 return;
                             }
 
@@ -7263,16 +7150,12 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "DO_Feedback_Total".ToUpper());
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在DO反馈总量策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -7303,25 +7186,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam1.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7333,7 +7214,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                     if (flow > 0)
@@ -7358,25 +7239,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam1.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7388,7 +7267,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                     if (flow > 0)
@@ -7413,41 +7292,36 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam1.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count1 > 0)
                                 {
                                     if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
 
-                                    index2 += 1;
+                                    count1--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -7478,25 +7352,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam1.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7508,7 +7380,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                     if (flow > 0)
@@ -7533,25 +7405,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam1.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7563,7 +7433,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                     if (flow > 0)
@@ -7588,41 +7458,36 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam1.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count1 > 0)
                                 {
                                     if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
 
-                                    index2 += 1;
+                                    count1--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -7642,6 +7507,8 @@ namespace RD3.ViewModels
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                 }
+                                Thread.Sleep(1000);
+                                totalSeconds += 1;
                             }
                         }
                         catch (Exception ex)
@@ -7701,17 +7568,15 @@ namespace RD3.ViewModels
                 dicFeed1Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
-                    DateTime startTime = DateTime.Now;
-
+                    e.Result = deviceParameter.Name;
+                    int totalSeconds = 0;
                     while (true)
                     {
                         try
                         {
                             var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
-                            { // 检查取消请求
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                            {
                                 return;
                             }
 
@@ -7720,16 +7585,12 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "PH_Feedback_Total".ToUpper());
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在PH反馈总量策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -7760,25 +7621,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam1.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7790,7 +7649,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                     if (flow > 0)
@@ -7815,25 +7674,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam1.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7845,7 +7702,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                     if (flow > 0)
@@ -7870,41 +7727,36 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam1.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count1 > 0)
                                 {
                                     if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
 
-                                    index2 += 1;
+                                    count1--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -7935,25 +7787,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam1.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7965,7 +7815,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                     if (flow > 0)
@@ -7990,25 +7840,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam1.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -8020,7 +7868,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                     if (flow > 0)
@@ -8045,41 +7893,36 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam1.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count1 > 0)
                                 {
                                     if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
 
-                                    index2 += 1;
+                                    count1--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -8099,6 +7942,8 @@ namespace RD3.ViewModels
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                 }
+                                Thread.Sleep(1000);
+                                totalSeconds += 1;
                             }
                         }
                         catch (Exception ex)
@@ -8186,7 +8031,6 @@ namespace RD3.ViewModels
                     {
                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                         {
-                            e.Result = deviceParameter.Name;
                             return;
                         }
                         index2 += 1;
@@ -8241,7 +8085,7 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-
+                    var worker = (BackgroundWorker)s;
                     while (true)
                     {
                         try
@@ -8249,10 +8093,8 @@ namespace RD3.ViewModels
                             DateTime startTime = DateTime.Now;
                             double totalMinutes = 0;
 
-                            var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
                             {
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -8261,14 +8103,12 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Cycle".ToUpper());
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在周期补料策略", deviceParameter.Name));
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             if (f.A <= 0 || !float.TryParse(f.B, out var b) || b <= 0 || f.C <= 0 || !float.TryParse(f.D, out var d) || d <= 0)
@@ -8296,20 +8136,19 @@ namespace RD3.ViewModels
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param11);
                             }
 
-                            int count11 = 0;
+                            int count11 = 1;
                             if (deviceParameter.FeedParam1.Feed_PV > 0)
                             {
                                 count11 = Convert.ToInt32(Math.Ceiling(d / deviceParameter.FeedParam1.Feed_PV * 3600));
                             }
-                            int index11 = 0;
-                            while (index11 < count11)
+                            while (count11 > 0)
                             {
                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                 {
                                     e.Result = deviceParameter.Name;
                                     return;
                                 }
-                                index11 += 1;
+                                count11--;
                                 Thread.Sleep(1000);
                             }
                             totalMinutes = (DateTime.Now - startTime).TotalMinutes;
@@ -8318,31 +8157,27 @@ namespace RD3.ViewModels
                             if (diff > 0)
                             {
                                 int count12 = Convert.ToInt32(diff * 60);
-                                int index12 = 0;
-                                while (index12 < count12)
+                                while (count12>0)
                                 {
                                     if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                     {
                                         e.Result = deviceParameter.Name;
                                         return;
                                     }
-                                    index12 += 1;
+                                    count12--;
                                     Thread.Sleep(1000);
                                 }
                             }
 
-                            int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                            int index2 = 0;
-                            while (index2 < count2)
+                            int count2 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                            while (count2 > 0)
                             {
                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
-                                { // 检查取消请求
-                                  //e.Cancel = true;
-                                    e.Result = deviceParameter.Name;
+                                {
                                     return;
                                 }
 
-                                index2 += 1;
+                                count2--;
                                 Thread.Sleep(1000);
                             }
                         }
@@ -8448,6 +8283,7 @@ namespace RD3.ViewModels
                 dicFeed2Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
+                    e.Result = deviceParameter.Name;
                     var allDeviceInfos = FeedStrategyManager.GetInstance().FeedStrategyCol;
                     FeedStrategyInfo f = null;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
@@ -8474,7 +8310,7 @@ namespace RD3.ViewModels
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, param);
                         dicFeed2SP[CurrentDeviceParameter.Name] = CurrentDeviceParameter.FeedParam2.Feed_PV;
                     }
-                    DateTime startTime = DateTime.Now;
+
                     int totalSecond = 0;
                     while (true)
                     {
@@ -8483,9 +8319,9 @@ namespace RD3.ViewModels
                             var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
                             {
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
+                            f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper());
 
                             if (dicFeed2SP[deviceParameter.Name] != deviceParameter.FeedParam2.Feed_PV)
                             {
@@ -8497,13 +8333,13 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)deviceParameter.FeedParam2.Feed_PV,
+                                        FlowSpeed = dicFeed2SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed2SP[CurrentDeviceParameter.Name],
                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-
-                                    dicFeed2SP[CurrentDeviceParameter.Name] = deviceParameter.FeedParam2.Feed_PV;
                                 }
+
+                                dicFeed2SP[CurrentDeviceParameter.Name] = deviceParameter.FeedParam2.Feed_PV;
                             }
 
                             Thread.Sleep(1000);
@@ -8517,7 +8353,7 @@ namespace RD3.ViewModels
                                 totalSecond += 1;
                             }
 
-                            if (totalSecond > 0 && totalSecond % f.StatInterval == 0)
+                            if (totalSecond > 0 && f.StatInterval > 0 && totalSecond % f.StatInterval == 0)
                             {
                                 pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                 if (pumpNo >= 0)
@@ -8540,7 +8376,6 @@ namespace RD3.ViewModels
                                     {
                                         if (worker.CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
                                         RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -8551,17 +8386,18 @@ namespace RD3.ViewModels
                                                 pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                                 if (pumpNo >= 0)
                                                 {
-                                                    deviceParameter.FeedParam2.Feed_PV = dicFeed1SP[CurrentDeviceParameter.Name];
+                                                    deviceParameter.FeedParam2.Feed_PV = dicFeed2SP[CurrentDeviceParameter.Name];
                                                     param = new PeristalticPumpControlParam()
                                                     {
                                                         PumpNo = pumpNo,
                                                         Pump = pump,
                                                         ControlMode = PumpControlMode.Direct,
-                                                        FlowSpeed = dicFeed1SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed1SP[CurrentDeviceParameter.Name],
+                                                        FlowSpeed = dicFeed2SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed2SP[CurrentDeviceParameter.Name],
                                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                                     };
                                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                                 }
+                                                totalSecond = 0;
                                                 break;
                                             }
                                         }
@@ -8572,17 +8408,18 @@ namespace RD3.ViewModels
                                                 pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                                 if (pumpNo >= 0)
                                                 {
-                                                    deviceParameter.FeedParam2.Feed_PV = dicFeed1SP[CurrentDeviceParameter.Name];
+                                                    deviceParameter.FeedParam2.Feed_PV = dicFeed2SP[CurrentDeviceParameter.Name];
                                                     param = new PeristalticPumpControlParam()
                                                     {
                                                         PumpNo = pumpNo,
                                                         Pump = pump,
                                                         ControlMode = PumpControlMode.Direct,
-                                                        FlowSpeed = dicFeed1SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed1SP[CurrentDeviceParameter.Name],
+                                                        FlowSpeed = dicFeed2SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed2SP[CurrentDeviceParameter.Name],
                                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                                     };
                                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                                 }
+                                                totalSecond = 0;
                                                 break;
                                             }
                                         }
@@ -8595,7 +8432,6 @@ namespace RD3.ViewModels
                                     {
                                         if (worker.CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
                                         RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -8606,17 +8442,18 @@ namespace RD3.ViewModels
                                                 pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                                 if (pumpNo >= 0)
                                                 {
-                                                    deviceParameter.FeedParam2.Feed_PV = dicFeed1SP[CurrentDeviceParameter.Name];
+                                                    deviceParameter.FeedParam2.Feed_PV = dicFeed2SP[CurrentDeviceParameter.Name];
                                                     param = new PeristalticPumpControlParam()
                                                     {
                                                         PumpNo = pumpNo,
                                                         Pump = pump,
                                                         ControlMode = PumpControlMode.Direct,
-                                                        FlowSpeed = dicFeed1SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed1SP[CurrentDeviceParameter.Name],
+                                                        FlowSpeed = dicFeed2SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed2SP[CurrentDeviceParameter.Name],
                                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                                     };
                                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                                 }
+                                                totalSecond = 0;
                                                 break;
                                             }
                                         }
@@ -8627,17 +8464,18 @@ namespace RD3.ViewModels
                                                 pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                                 if (pumpNo >= 0)
                                                 {
-                                                    deviceParameter.FeedParam2.Feed_PV = dicFeed1SP[CurrentDeviceParameter.Name];
+                                                    deviceParameter.FeedParam2.Feed_PV = dicFeed2SP[CurrentDeviceParameter.Name];
                                                     param = new PeristalticPumpControlParam()
                                                     {
                                                         PumpNo = pumpNo,
                                                         Pump = pump,
                                                         ControlMode = PumpControlMode.Direct,
-                                                        FlowSpeed = dicFeed1SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed1SP[CurrentDeviceParameter.Name],
+                                                        FlowSpeed = dicFeed2SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed2SP[CurrentDeviceParameter.Name],
                                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                                     };
                                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                                 }
+                                                totalSecond = 0;
                                                 break;
                                             }
                                         }
@@ -8702,16 +8540,19 @@ namespace RD3.ViewModels
                 dicFeed2Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
+                    e.Result = deviceParameter.Name;
                     DateTime startTime = DateTime.Now;
+                    PeristalticPumpControlParam param = new PeristalticPumpControlParam();
+
+                    int totalSecond = 0;
+
                     while (true)
                     {
                         try
                         {
                             var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
-                            { // 检查取消请求
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                            {
                                 return;
                             }
 
@@ -8720,8 +8561,6 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -8729,8 +8568,6 @@ namespace RD3.ViewModels
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在多项式策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -8743,10 +8580,10 @@ namespace RD3.ViewModels
                             double feed = Math.Round(a * Math.Pow(diff / 60, 2) + b * diff / 60 + c, 2);
 
                             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
+                            deviceParameter.FeedParam2.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
                             if (pumpNo >= 0)
                             {
-                                deviceParameter.FeedParam2.Feed_PV = (float)feed >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)feed;
-                                PeristalticPumpControlParam param2 = new PeristalticPumpControlParam()
+                                param = new PeristalticPumpControlParam()
                                 {
                                     PumpNo = pumpNo,
                                     Pump = pump,
@@ -8754,22 +8591,113 @@ namespace RD3.ViewModels
                                     FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                 };
-                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param2);
+                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                             }
 
-                            int count = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                            int index = 0;
-                            while (index < count)
+                            int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                            while (count > 0)
                             {
                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                { // 检查取消请求
-                                    //e.Cancel = true;
-                                    e.Result = deviceParameter.Name;
+                                {
                                     return;
                                 }
 
-                                index += 1;
+                                count--;
                                 Thread.Sleep(1000);
+                            }
+
+                            if (f.StatDisable)
+                            {
+                                totalSecond = 0;
+                            }
+                            else
+                            {
+                                totalSecond += 1;
+                            }
+
+                            if (totalSecond > 0 && f.StatInterval > 0 && totalSecond % f.StatInterval == 0)
+                            {
+                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
+                                if (pumpNo >= 0)
+                                {
+                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    param = new PeristalticPumpControlParam()
+                                    {
+                                        PumpNo = pumpNo,
+                                        Pump = pump,
+                                        ControlMode = PumpControlMode.Direct,
+                                        FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                        FlowCapacity = 0
+                                    };
+                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                }
+
+                                if (f.CurveDOStat)
+                                {
+                                    int pauseSecond = 0;
+
+                                    while (true)
+                                    {
+                                        if (worker.CancellationPending)
+                                        {
+                                            return;
+                                        }
+                                        RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                        if (f.StatSymbol == 0)//小于
+                                        {
+                                            if (realTime.DO < f.StatValue)
+                                            {
+                                                startTime = startTime.AddSeconds(pauseSecond);
+                                                totalSecond = 0;
+                                                break;
+                                            }
+                                        }
+                                        else if (f.StatSymbol == 1)//大于
+                                        {
+                                            if (realTime.DO > f.StatValue)
+                                            {
+                                                startTime = startTime.AddSeconds(pauseSecond);
+                                                totalSecond = 0;
+                                                break;
+                                            }
+                                        }
+                                        Thread.Sleep(1000);
+                                        pauseSecond += 1;
+                                    }
+                                }
+                                else if (f.CurvepHStat)
+                                {
+                                    int pauseSecond = 0;
+
+                                    while (true)
+                                    {
+                                        if (worker.CancellationPending)
+                                        {
+                                            return;
+                                        }
+                                        RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                        if (f.StatSymbol == 0)//小于
+                                        {
+                                            if (realTime.PH < f.StatValue)
+                                            {
+                                                startTime = startTime.AddSeconds(pauseSecond);
+                                                totalSecond = 0;
+                                                break;
+                                            }
+                                        }
+                                        else if (f.StatSymbol == 1)//大于
+                                        {
+                                            if (realTime.PH > f.StatValue)
+                                            {
+                                                startTime = startTime.AddSeconds(pauseSecond);
+                                                totalSecond = 0;
+                                                break;
+                                            }
+                                        }
+                                        Thread.Sleep(1000);
+                                        pauseSecond += 1;
+                                    }
+                                }
                             }
                         }
                         catch (Exception ex)
@@ -8826,17 +8754,18 @@ namespace RD3.ViewModels
                 dicFeed2Worker[CurrentDeviceParameter.Name].WorkerReportsProgress = true;
                 dicFeed2Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
+                    var worker = (BackgroundWorker)s;
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
+                    e.Result = deviceParameter.Name;
                     DateTime startTime = DateTime.Now;
+                    PeristalticPumpControlParam param = new PeristalticPumpControlParam();
+                    int totalSecond = 0;
                     while (true)
                     {
                         try
                         {
-                            var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
-                            { // 检查取消请求
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                            {
                                 return;
                             }
 
@@ -8845,16 +8774,12 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Exponential".ToUpper());
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在指数策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -8868,8 +8793,8 @@ namespace RD3.ViewModels
                             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                             if (pumpNo >= 0)
                             {
-                                deviceParameter.FeedParam2.Feed_PV = (float)feed >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)feed;
-                                PeristalticPumpControlParam param2 = new PeristalticPumpControlParam()
+                                deviceParameter.FeedParam2.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
+                                param = new PeristalticPumpControlParam()
                                 {
                                     PumpNo = pumpNo,
                                     Pump = pump,
@@ -8877,22 +8802,114 @@ namespace RD3.ViewModels
                                     FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                 };
-                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param2);
+                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                             }
 
-                            int count = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                            int index1 = 0;
-                            while (index1 < count)
+                            int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                            int index = 0;
+                            while (count > 0)
                             {
                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                { // 检查取消请求
-                                    //e.Cancel = true;
-                                    e.Result = deviceParameter.Name;
+                                {
                                     return;
                                 }
 
-                                index1 += 1;
+                                count--;
                                 Thread.Sleep(1000);
+                            }
+
+                            if (f.StatDisable)
+                            {
+                                totalSecond = 0;
+                            }
+                            else
+                            {
+                                totalSecond += 1;
+                            }
+
+                            if (totalSecond > 0 && f.StatInterval > 0 && totalSecond % f.StatInterval == 0)
+                            {
+                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
+                                if (pumpNo >= 0)
+                                {
+                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    param = new PeristalticPumpControlParam()
+                                    {
+                                        PumpNo = pumpNo,
+                                        Pump = pump,
+                                        ControlMode = PumpControlMode.Direct,
+                                        FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                        FlowCapacity = 0
+                                    };
+                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                }
+
+                                if (f.CurveDOStat)
+                                {
+                                    int pauseSecond = 0;
+
+                                    while (true)
+                                    {
+                                        if (worker.CancellationPending)
+                                        {
+                                            return;
+                                        }
+                                        RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                        if (f.StatSymbol == 0)//小于
+                                        {
+                                            if (realTime.DO < f.StatValue)
+                                            {
+                                                startTime = startTime.AddSeconds(pauseSecond);
+                                                totalSecond = 0;
+                                                break;
+                                            }
+                                        }
+                                        else if (f.StatSymbol == 1)//大于
+                                        {
+                                            if (realTime.DO > f.StatValue)
+                                            {
+                                                startTime = startTime.AddSeconds(pauseSecond);
+                                                totalSecond = 0;
+                                                break;
+                                            }
+                                        }
+                                        Thread.Sleep(1000);
+                                        pauseSecond += 1;
+                                    }
+                                }
+                                else if (f.CurvepHStat)
+                                {
+                                    int pauseSecond = 0;
+
+                                    while (true)
+                                    {
+                                        if (worker.CancellationPending)
+                                        {
+                                            return;
+                                        }
+                                        RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                        if (f.StatSymbol == 0)//小于
+                                        {
+                                            if (realTime.PH < f.StatValue)
+                                            {
+                                                startTime = startTime.AddSeconds(pauseSecond);
+                                                totalSecond = 0;
+                                                break;
+                                            }
+                                        }
+                                        else if (f.StatSymbol == 1)//大于
+                                        {
+                                            if (realTime.PH > f.StatValue)
+                                            {
+                                                startTime = startTime.AddSeconds(pauseSecond);
+                                                totalSecond = 0;
+                                                break;
+                                            }
+                                        }
+                                        Thread.Sleep(1000);
+                                        pauseSecond += 1;
+                                    }
+                                }
                             }
                         }
                         catch (Exception ex)
@@ -8950,6 +8967,7 @@ namespace RD3.ViewModels
                 dicFeed2Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
+                    e.Result = deviceParameter.Name;
                     BackgroundWorker worker = s as BackgroundWorker;
 
                     bool QuantitativeFinish = false;//指示时间序列中定量补是否已经完成
@@ -8959,19 +8977,23 @@ namespace RD3.ViewModels
                     if (!flag || feedGradientInfos == null)
                     {
                         MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                        //e.Cancel = true;
-                        e.Result = deviceParameter.Name;
                         return;
                     }
-                    DateTime beginTime = DateTime.Now;//开始时间
+                    DateTime calcTime, beginTime;
+                    beginTime = calcTime = DateTime.Now;//开始时间
                     double endTime = feedGradientInfos[feedGradientInfos.Count - 1].EndTime;
                     double timeOffset = Math.Round((DateTime.Now - beginTime).TotalMinutes, 2);//时间差
+
+                    int totalSecond = 0;//用于stat的停顿计时
+
+                    int statTotalSeconds = 0;//用于stat多项式|指数的时间计算
+
+                    string lastInfoType = "";
+
                     while (timeOffset < endTime)
                     {
                         if (worker.CancellationPending)
-                        { // 检查取消请求
-                            //e.Cancel = true;
-                            e.Result = deviceParameter.Name;
+                        {
                             return;
                         }
 
@@ -8980,12 +9002,14 @@ namespace RD3.ViewModels
                         if (!flag || feedGradientInfos == null)
                         {
                             MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                            //e.Cancel = true;
-                            e.Result = deviceParameter.Name;
                             return;
                         }
 
+                        //找到当前时间点需要执行哪段
+                        //var f = feedGradientInfos.FindFirst(c => c.BeginTime <= timeOffset && c.EndTime > timeOffset);
                         FeedGradientInfo f = null;
+                        PeristalticPumpControlParam param = new PeristalticPumpControlParam();
+
                         foreach (var feedGradientInfo in feedGradientInfos)
                         {
                             if (feedGradientInfo.BeginTime <= timeOffset && feedGradientInfo.EndTime > timeOffset)
@@ -8996,14 +9020,21 @@ namespace RD3.ViewModels
                         }
                         if (f != null)
                         {
+                            if (lastInfoType != f.InfoType)
+                            {
+                                totalSecond = 0;
+                                calcTime = DateTime.Now;
+                                statTotalSeconds = 0;
+                            }
+
                             switch (f.InfoType)
                             {
                                 case "Constant":
-                                    deviceParameter.FeedParam2.Feed_PV = f.A >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : f.A;
+                                    deviceParameter.FeedParam2.Feed_PV = f.A >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : f.A;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        PeristalticPumpControlParam param = new PeristalticPumpControlParam()
+                                        param = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
@@ -9014,66 +9045,226 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                     }
 
-                                    int count0 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                    int index0 = 0;
-                                    while (index0 < count0)
+                                    int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index0 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                    }
+
+                                    if (f.StatDisable)
+                                    {
+                                        totalSecond = 0;
+                                    }
+                                    else
+                                    {
+                                        totalSecond += 1;
+                                    }
+
+                                    if (totalSecond > 0 && f.StatInterval > 0 && totalSecond % f.StatInterval == 0)
+                                    {
+                                        pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
+                                        if (pumpNo >= 0)
+                                        {
+                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            param = new PeristalticPumpControlParam()
+                                            {
+                                                PumpNo = pumpNo,
+                                                Pump = pump,
+                                                ControlMode = PumpControlMode.Direct,
+                                                FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                                FlowCapacity = 0
+                                            };
+                                            InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                        }
+
+                                        if (f.CurveDOStat)
+                                        {
+                                            while (true)
+                                            {
+                                                if (worker.CancellationPending)
+                                                {
+                                                    return;
+                                                }
+                                                RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                                if (f.StatSymbol == 0)//小于
+                                                {
+                                                    if (realTime.DO < f.StatValue)
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                else if (f.StatSymbol == 1)//大于
+                                                {
+                                                    if (realTime.DO > f.StatValue)
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                Thread.Sleep(1000);
+                                            }
+                                        }
+                                        else if (f.CurvepHStat)
+                                        {
+                                            while (true)
+                                            {
+                                                if (worker.CancellationPending)
+                                                {
+                                                    return;
+                                                }
+                                                RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                                if (f.StatSymbol == 0)//小于
+                                                {
+                                                    if (realTime.PH < f.StatValue)
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                else if (f.StatSymbol == 1)//大于
+                                                {
+                                                    if (realTime.PH > f.StatValue)
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                Thread.Sleep(1000);
+                                            }
+                                        }
                                     }
                                     break;
                                 case "Polynomial"://多项式，执行业务逻辑
                                     double a = f.A;//20
                                     double b = double.Parse(f.B);//0.7
                                     double c = f.C;//40
-                                    double feed = Math.Round(a * Math.Pow((timeOffset - f.BeginTime) / 60, 2) + b * (timeOffset - f.BeginTime) / 60 + c, 2);
+                                    double calcTimeOffset = Math.Round((DateTime.Now - calcTime).TotalMinutes, 2);
+                                    double feed = Math.Round(a * Math.Pow(calcTimeOffset / 60, 2) + b * calcTimeOffset / 60 + c, 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)feed >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)feed;
+                                    deviceParameter.FeedParam2.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
                                     int pumpNo1 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo1 >= 0)
                                     {
-                                        PeristalticPumpControlParam param2 = new PeristalticPumpControlParam()
+                                        param = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo1,
                                             ControlMode = PumpControlMode.Direct,
                                             FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
-                                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param2);
+                                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                     }
 
-                                    int count = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                    int index = 0;
-                                    while (index < count)
+                                    count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index += 1;
+                                        count--;
                                         Thread.Sleep(1000);
                                     }
+
+                                    DateTime dateTime = DateTime.Now;
+                                    if (f.StatDisable)
+                                    {
+                                        totalSecond = 0;
+                                    }
+                                    else
+                                    {
+                                        totalSecond += 1;
+                                    }
+
+                                    if (totalSecond > 0 && f.StatInterval > 0 && totalSecond % f.StatInterval == 0)
+                                    {
+                                        pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
+                                        if (pumpNo >= 0)
+                                        {
+                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            param = new PeristalticPumpControlParam()
+                                            {
+                                                PumpNo = pumpNo,
+                                                Pump = pump,
+                                                ControlMode = PumpControlMode.Direct,
+                                                FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                                FlowCapacity = 0
+                                            };
+                                            InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                        }
+
+                                        if (f.CurveDOStat)
+                                        {
+                                            while (true)
+                                            {
+                                                if (worker.CancellationPending)
+                                                {
+                                                    return;
+                                                }
+                                                RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                                if (f.StatSymbol == 0)//小于
+                                                {
+                                                    if (realTime.DO < f.StatValue)
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                else if (f.StatSymbol == 1)//大于
+                                                {
+                                                    if (realTime.DO > f.StatValue)
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                Thread.Sleep(1000);
+                                            }
+                                        }
+                                        else if (f.CurvepHStat)
+                                        {
+                                            while (true)
+                                            {
+                                                if (worker.CancellationPending)
+                                                {
+                                                    return;
+                                                }
+                                                RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                                if (f.StatSymbol == 0)//小于
+                                                {
+                                                    if (realTime.PH < f.StatValue)
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                else if (f.StatSymbol == 1)//大于
+                                                {
+                                                    if (realTime.PH > f.StatValue)
+                                                    {
+
+                                                        break;
+                                                    }
+                                                }
+                                                Thread.Sleep(1000);
+                                            }
+                                        }
+                                    }
+
+                                    calcTime = calcTime.AddSeconds((DateTime.Now - dateTime).TotalSeconds);
                                     break;
                                 case "Exponential"://指数，执行业务逻辑
                                     double f1 = f.A;//20
                                     double μ = double.Parse(f.B);//0.7
-                                    double feed1 = Math.Round(f1 * Math.Exp(μ * (timeOffset - f.BeginTime)), 2);
+                                    double calcTimeOffset1 = Math.Round((DateTime.Now - calcTime).TotalMinutes, 2);
+                                    double feed1 = Math.Round(f1 * Math.Exp(μ * calcTimeOffset1), 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)feed1 >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)feed1;
                                     int pumpNo2 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo2 >= 0)
                                     {
-                                        PeristalticPumpControlParam param3 = new PeristalticPumpControlParam()
+                                        param = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo2,
                                             Pump = pump,
@@ -9081,34 +9272,115 @@ namespace RD3.ViewModels
                                             FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
-                                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param3);
+                                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                     }
 
-                                    int count1 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                    int index1 = 0;
-                                    while (index1 < count1)
+                                    count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index1 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
                                     }
+
+                                    DateTime dateTime1 = DateTime.Now;
+                                    if (f.StatDisable)
+                                    {
+                                        totalSecond = 0;
+                                    }
+                                    else
+                                    {
+                                        totalSecond += 1;
+                                    }
+
+                                    if (totalSecond > 0 && f.StatInterval > 0 && totalSecond % f.StatInterval == 0)
+                                    {
+                                        pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
+                                        if (pumpNo >= 0)
+                                        {
+                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            param = new PeristalticPumpControlParam()
+                                            {
+                                                PumpNo = pumpNo,
+                                                Pump = pump,
+                                                ControlMode = PumpControlMode.Direct,
+                                                FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                                FlowCapacity = 0
+                                            };
+                                            InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                        }
+
+                                        if (f.CurveDOStat)
+                                        {
+                                            while (true)
+                                            {
+                                                if (worker.CancellationPending)
+                                                {
+                                                    return;
+                                                }
+                                                RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                                if (f.StatSymbol == 0)//小于
+                                                {
+                                                    if (realTime.DO < f.StatValue)
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                else if (f.StatSymbol == 1)//大于
+                                                {
+                                                    if (realTime.DO > f.StatValue)
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                Thread.Sleep(1000);
+                                            }
+                                        }
+                                        else if (f.CurvepHStat)
+                                        {
+                                            while (true)
+                                            {
+                                                if (worker.CancellationPending)
+                                                {
+                                                    return;
+                                                }
+                                                RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                                if (f.StatSymbol == 0)//小于
+                                                {
+                                                    if (realTime.PH < f.StatValue)
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                else if (f.StatSymbol == 1)//大于
+                                                {
+                                                    if (realTime.PH > f.StatValue)
+                                                    {
+
+                                                        break;
+                                                    }
+                                                }
+                                                Thread.Sleep(1000);
+                                            }
+                                        }
+                                    }
+
+                                    calcTime = calcTime.AddSeconds((DateTime.Now - dateTime1).TotalSeconds);
                                     break;
                                 case "DO_Feedback"://DO-stat(速度)
                                     if (deviceParameter.DO <= f.A)
                                     {
                                         if (f.IsConstant)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = float.Parse(f.B) >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : float.Parse(f.B);
+                                            deviceParameter.FeedParam2.Feed_PV = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
-                                                PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
+                                                param = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
@@ -9116,7 +9388,7 @@ namespace RD3.ViewModels
                                                     FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
-                                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
+                                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                             }
                                         }
                                         else if (f.IsPolynomial)
@@ -9127,22 +9399,22 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
-                                                PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
+                                                param = new PeristalticPumpControlParam()
                                                 {
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
                                                     FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
-                                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
+                                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                             }
                                         }
                                         else if (f.IsExp)
@@ -9153,15 +9425,15 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
-                                                PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
+                                                param = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
@@ -9169,22 +9441,19 @@ namespace RD3.ViewModels
                                                     FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
-                                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
+                                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                             }
                                         }
 
-                                        int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                        int index2 = 0;
-                                        while (index2 < count2)
+                                        count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count > 0)
                                         {
                                             if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                            { // 检查取消请求
-                                              //e.Cancel = true;
-                                                e.Result = deviceParameter.Name;
+                                            {
                                                 return;
                                             }
 
-                                            index2 += 1;
+                                            count--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -9192,11 +9461,11 @@ namespace RD3.ViewModels
                                     {
                                         if (f.IsConstant)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = float.Parse(f.D) >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : float.Parse(f.D);
+                                            deviceParameter.FeedParam2.Feed_PV = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
-                                                PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
+                                                param = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
@@ -9204,7 +9473,7 @@ namespace RD3.ViewModels
                                                     FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
-                                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
+                                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                             }
                                         }
                                         else if (f.IsPolynomial)
@@ -9215,15 +9484,15 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
-                                                PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
+                                                param = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
@@ -9231,7 +9500,7 @@ namespace RD3.ViewModels
                                                     FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
-                                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
+                                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                             }
                                         }
                                         else if (f.IsExp)
@@ -9242,11 +9511,11 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -9262,18 +9531,15 @@ namespace RD3.ViewModels
                                             }
                                         }
 
-                                        int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                        int index2 = 0;
-                                        while (index2 < count2)
+                                        count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count > 0)
                                         {
                                             if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                            { // 检查取消请求
-                                              //e.Cancel = true;
-                                                e.Result = deviceParameter.Name;
+                                            {
                                                 return;
                                             }
 
-                                            index2 += 1;
+                                            count--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -9293,14 +9559,17 @@ namespace RD3.ViewModels
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
+                                        Thread.Sleep(1000);
                                     }
+
+                                    statTotalSeconds += 1;
                                     break;
                                 case "PH_Feedback"://根据PH反馈控制，执行业务逻辑
                                     if (deviceParameter.PH <= f.A)
                                     {
                                         if (f.IsConstant)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = float.Parse(f.B) >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : float.Parse(f.B);
+                                            deviceParameter.FeedParam2.Feed_PV = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -9323,11 +9592,11 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -9350,11 +9619,11 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -9370,18 +9639,15 @@ namespace RD3.ViewModels
                                             }
                                         }
 
-                                        int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                        int index2 = 0;
-                                        while (index2 < count2)
+                                        count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count > 0)
                                         {
                                             if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                            { // 检查取消请求
-                                              //e.Cancel = true;
-                                                e.Result = deviceParameter.Name;
+                                            {
                                                 return;
                                             }
 
-                                            index2 += 1;
+                                            count--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -9389,7 +9655,7 @@ namespace RD3.ViewModels
                                     {
                                         if (f.IsConstant)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = float.Parse(f.D) >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : float.Parse(f.D);
+                                            deviceParameter.FeedParam2.Feed_PV = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -9412,11 +9678,11 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -9439,11 +9705,11 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -9459,18 +9725,15 @@ namespace RD3.ViewModels
                                             }
                                         }
 
-                                        int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                        int index2 = 0;
-                                        while (index2 < count2)
+                                        count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count > 0)
                                         {
                                             if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                            { // 检查取消请求
-                                              //e.Cancel = true;
-                                                e.Result = deviceParameter.Name;
+                                            {
                                                 return;
                                             }
 
-                                            index2 += 1;
+                                            count--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -9491,6 +9754,8 @@ namespace RD3.ViewModels
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
                                     }
+
+                                    statTotalSeconds += 1;
                                     break;
                                 case "DO_Feedback_Total":
                                     if (deviceParameter.DO <= f.A)
@@ -9520,25 +9785,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -9550,7 +9813,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                             if (flow > 0)
@@ -9575,25 +9838,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -9605,7 +9866,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                             if (flow > 0)
@@ -9630,41 +9891,36 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
 
-                                        int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                        int index2 = 0;
-                                        while (index2 < count2)
+                                        int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count5 > 0)
                                         {
                                             if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                            { // 检查取消请求
-                                              //e.Cancel = true;
-                                                e.Result = deviceParameter.Name;
+                                            {
                                                 return;
                                             }
 
-                                            index2 += 1;
+                                            count5--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -9695,25 +9951,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -9725,7 +9979,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                             if (flow > 0)
@@ -9750,25 +10004,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -9780,7 +10032,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                             if (flow > 0)
@@ -9805,41 +10057,36 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
 
-                                        int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                        int index2 = 0;
-                                        while (index2 < count2)
+                                        int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count5 > 0)
                                         {
                                             if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                            { // 检查取消请求
-                                              //e.Cancel = true;
-                                                e.Result = deviceParameter.Name;
+                                            {
                                                 return;
                                             }
 
-                                            index2 += 1;
+                                            count5--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -9859,6 +10106,8 @@ namespace RD3.ViewModels
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
+                                        Thread.Sleep(1000);
+                                        statTotalSeconds += 1;
                                     }
                                     break;
                                 case "PH_Feedback_Total"://根据PH反馈控制，执行业务逻辑
@@ -9889,25 +10138,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -9919,7 +10166,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                             if (flow > 0)
@@ -9944,25 +10191,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -9974,7 +10219,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                             if (flow > 0)
@@ -9999,41 +10244,36 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
 
-                                        int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                        int index2 = 0;
-                                        while (index2 < count2)
+                                        int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count5 > 0)
                                         {
                                             if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                            { // 检查取消请求
-                                              //e.Cancel = true;
-                                                e.Result = deviceParameter.Name;
+                                            {
                                                 return;
                                             }
 
-                                            index2 += 1;
+                                            count5--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -10064,25 +10304,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -10094,7 +10332,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                             if (flow > 0)
@@ -10119,25 +10357,23 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -10149,7 +10385,7 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = timeOffset - f.BeginTime;
+                                            double offset = statTotalSeconds / 60;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                             if (flow > 0)
@@ -10174,41 +10410,36 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
-                                            int temp = 0;
+                                            int temp = 1;
                                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                                             {
                                                 temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                            int count3 = flag2 == true ? 0 : temp;
-                                            int index3 = 0;
-                                            while (index3 < count3)
+                                            int count2 = flag2 == true ? 1 : temp;
+                                            while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                                { // 检查取消请求
-                                                    //e.Cancel = true;
-                                                    e.Result = deviceParameter.Name;
+                                                {
                                                     return;
                                                 }
 
-                                                index3 += 1;
+                                                count2--;
                                                 Thread.Sleep(1000);
+                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
 
-                                        int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                        int index2 = 0;
-                                        while (index2 < count2)
+                                        int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        while (count5 > 0)
                                         {
                                             if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                            { // 检查取消请求
-                                              //e.Cancel = true;
-                                                e.Result = deviceParameter.Name;
+                                            {
                                                 return;
                                             }
 
-                                            index2 += 1;
+                                            count5--;
                                             Thread.Sleep(1000);
                                         }
                                     }
@@ -10228,6 +10459,8 @@ namespace RD3.ViewModels
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
+                                        Thread.Sleep(1000);
+                                        statTotalSeconds += 1;
                                     }
                                     break;
                                 case "Quantitative":
@@ -10257,13 +10490,11 @@ namespace RD3.ViewModels
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
                                         index10 += 1;
                                         Thread.Sleep(1000);
                                     }
-
                                     break;
                                 case "Cycle":
                                     try
@@ -10296,24 +10527,20 @@ namespace RD3.ViewModels
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param11);
                                         }
 
-                                        int count11 = 0;
-                                        if (deviceParameter.FeedParam2.Feed_PV > 0)
-                                        {
-                                            count11 = Convert.ToInt32(Math.Ceiling(paramD / deviceParameter.FeedParam2.Feed_PV * 3600));
-                                        }
-                                        int index11 = 0;
-                                        while (index11 < count11)
+                                        int count11 = Convert.ToInt32(Math.Ceiling(paramD / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        while (count11 > 0)
                                         {
                                             if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
                                             {
                                                 e.Result = deviceParameter.Name;
                                                 return;
                                             }
-                                            index11 += 1;
+                                            count11--;
                                             Thread.Sleep(1000);
                                         }
-
                                         totalMinutes = (DateTime.Now - startTime).TotalMinutes;
+
+                                        deviceParameter.FeedParam2.Feed_PV = 0;
 
                                         double diff = f.A - totalMinutes;
                                         if (diff > 0)
@@ -10324,12 +10551,24 @@ namespace RD3.ViewModels
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
                                                 {
-                                                    e.Result = deviceParameter.Name;
                                                     return;
                                                 }
                                                 index12 += 1;
                                                 Thread.Sleep(1000);
                                             }
+                                        }
+
+                                        int count7 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                        int index7 = 0;
+                                        while (index7 < count7)
+                                        {
+                                            if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+
+                                            index7 += 1;
+                                            Thread.Sleep(1000);
                                         }
                                     }
                                     catch (Exception ex)
@@ -10356,8 +10595,10 @@ namespace RD3.ViewModels
                                     Thread.Sleep(1000);
                                     break;
                             }
-                            LogHelper.Debug(f.InfoType + " " + deviceParameter.FeedParam2.Feed_PV);
+
+                            lastInfoType = f.InfoType;
                         }
+
                         endTime = feedGradientInfos[feedGradientInfos.Count - 1].EndTime;
                         timeOffset = Math.Round((DateTime.Now - beginTime).TotalMinutes, 2);
                     }
@@ -10410,16 +10651,15 @@ namespace RD3.ViewModels
                 dicFeed2Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
-                    DateTime startTime = DateTime.Now;
+                    e.Result = deviceParameter.Name;
+                    int totalSeconds = 0;
                     while (true)
                     {
                         try
                         {
                             var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
-                            { // 检查取消请求
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                            {
                                 return;
                             }
 
@@ -10428,16 +10668,12 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "DO_Feedback".ToUpper());
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在DO_stat(速度)策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -10445,7 +10681,7 @@ namespace RD3.ViewModels
                             {
                                 if (f.IsConstant)
                                 {
-                                    deviceParameter.FeedParam2.Feed_PV = float.Parse(f.B) >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : float.Parse(f.B);
+                                    deviceParameter.FeedParam2.Feed_PV = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10468,11 +10704,11 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10495,11 +10731,11 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10515,18 +10751,15 @@ namespace RD3.ViewModels
                                     }
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count > 0)
                                 {
                                     if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
 
-                                    index2 += 1;
+                                    count--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -10534,7 +10767,7 @@ namespace RD3.ViewModels
                             {
                                 if (f.IsConstant)
                                 {
-                                    deviceParameter.FeedParam2.Feed_PV = float.Parse(f.D) >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : float.Parse(f.D);
+                                    deviceParameter.FeedParam2.Feed_PV = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10557,11 +10790,11 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10584,11 +10817,11 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10604,18 +10837,15 @@ namespace RD3.ViewModels
                                     }
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count > 0)
                                 {
                                     if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
 
-                                    index2 += 1;
+                                    count--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -10635,15 +10865,16 @@ namespace RD3.ViewModels
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                 }
+                                Thread.Sleep(1000);
                             }
+
+                            totalSeconds += 1;
                         }
                         catch (Exception ex)
                         {
                             LogHelper.Debug(string.Format("补料DO反馈调整失败，错误信息：{0}", ex.Message));
-                            Thread.Sleep(AppSession.Interval * 1000);
                         }
                     }
-
                 };
                 dicFeed2Worker[CurrentDeviceParameter.Name].RunWorkerCompleted += (s, e) =>
                 {
@@ -10694,16 +10925,15 @@ namespace RD3.ViewModels
                 dicFeed2Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
-                    DateTime startTime = DateTime.Now;
+                    e.Result = deviceParameter.Name;
+                    int totalSeconds = 0;
                     while (true)
                     {
                         try
                         {
                             var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
-                            { // 检查取消请求
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                            {
                                 return;
                             }
 
@@ -10712,16 +10942,12 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "PH_Feedback".ToUpper());
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在PH反馈策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -10729,7 +10955,7 @@ namespace RD3.ViewModels
                             {
                                 if (f.IsConstant)
                                 {
-                                    deviceParameter.FeedParam2.Feed_PV = float.Parse(f.B) >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : float.Parse(f.B);
+                                    deviceParameter.FeedParam2.Feed_PV = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10752,11 +10978,11 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10779,11 +11005,11 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10799,18 +11025,14 @@ namespace RD3.ViewModels
                                     }
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count > 0)
                                 {
                                     if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
-
-                                    index2 += 1;
+                                    count--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -10818,7 +11040,7 @@ namespace RD3.ViewModels
                             {
                                 if (f.IsConstant)
                                 {
-                                    deviceParameter.FeedParam2.Feed_PV = float.Parse(f.D) >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : float.Parse(f.D);
+                                    deviceParameter.FeedParam2.Feed_PV = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10841,11 +11063,11 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10868,11 +11090,11 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10888,18 +11110,14 @@ namespace RD3.ViewModels
                                     }
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count > 0)
                                 {
                                     if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
-
-                                    index2 += 1;
+                                    count--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -10919,12 +11137,18 @@ namespace RD3.ViewModels
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                 }
+                                Thread.Sleep(1000);
                             }
+
+                            totalSeconds += 1;
                         }
                         catch (Exception ex)
                         {
                             LogHelper.Debug(string.Format("补料PH反馈调整失败，错误信息：{0}", ex.Message));
-                            Thread.Sleep(AppSession.Interval * 1000);
+                        }
+                        finally
+                        {
+                            Thread.Sleep(1000);
                         }
                     }
                 };
@@ -10977,17 +11201,15 @@ namespace RD3.ViewModels
                 dicFeed2Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
-                    DateTime startTime = DateTime.Now;
-
+                    e.Result = deviceParameter.Name;
+                    int totalSeconds = 0;
                     while (true)
                     {
                         try
                         {
                             var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
-                            { // 检查取消请求
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                            {
                                 return;
                             }
 
@@ -10996,16 +11218,12 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "DO_Feedback_Total".ToUpper());
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在DO反馈总量策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -11036,25 +11254,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam2.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11066,7 +11282,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                     if (flow > 0)
@@ -11091,25 +11307,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam2.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11121,7 +11335,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                     if (flow > 0)
@@ -11146,41 +11360,36 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam2.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count1 > 0)
                                 {
                                     if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
 
-                                    index2 += 1;
+                                    count1--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -11211,25 +11420,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam2.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11241,7 +11448,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                     if (flow > 0)
@@ -11266,25 +11473,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam2.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11296,7 +11501,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                     if (flow > 0)
@@ -11321,41 +11526,36 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam2.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count1 > 0)
                                 {
                                     if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
 
-                                    index2 += 1;
+                                    count1--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -11375,6 +11575,8 @@ namespace RD3.ViewModels
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                 }
+                                Thread.Sleep(1000);
+                                totalSeconds += 1;
                             }
                         }
                         catch (Exception ex)
@@ -11399,7 +11601,6 @@ namespace RD3.ViewModels
                         try
                         {
                             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-
                             if (pumpNo >= 0)
                             {
                                 PeristalticPumpControlParam param = new PeristalticPumpControlParam()
@@ -11435,17 +11636,15 @@ namespace RD3.ViewModels
                 dicFeed2Worker[CurrentDeviceParameter.Name].DoWork += (s, e) =>
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
-                    DateTime startTime = DateTime.Now;
-
+                    e.Result = deviceParameter.Name;
+                    int totalSeconds = 0;
                     while (true)
                     {
                         try
                         {
                             var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
-                            { // 检查取消请求
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                            {
                                 return;
                             }
 
@@ -11454,16 +11653,12 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "PH_Feedback_Total".ToUpper());
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在PH反馈总量策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -11493,25 +11688,24 @@ namespace RD3.ViewModels
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
-                                    int temp = 0;
+
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam2.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11523,7 +11717,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                     if (flow > 0)
@@ -11548,25 +11742,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam2.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11578,7 +11770,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                     if (flow > 0)
@@ -11603,41 +11795,36 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam2.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count1 > 0)
                                 {
                                     if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
 
-                                    index2 += 1;
+                                    count1--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -11668,25 +11855,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam2.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11698,7 +11883,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
                                     if (flow > 0)
@@ -11723,25 +11908,23 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam2.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11753,7 +11936,7 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = (DateTime.Now - startTime).TotalMinutes;
+                                    double offset = totalSeconds / 60;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
                                     if (flow > 0)
@@ -11778,41 +11961,36 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
-                                    int temp = 0;
+                                    int temp = 1;
                                     if (deviceParameter.FeedParam2.Feed_PV > 0)
                                     {
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count3 = flag2 == true ? 0 : temp;
-                                    int index3 = 0;
-                                    while (index3 < count3)
+                                    int count = flag2 == true ? 1 : temp;
+                                    while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                          //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
                                             return;
                                         }
 
-                                        index3 += 1;
+                                        count--;
                                         Thread.Sleep(1000);
+                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
 
-                                int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                                int index2 = 0;
-                                while (index2 < count2)
+                                int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                                while (count1 > 0)
                                 {
                                     if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                      //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
                                         return;
                                     }
 
-                                    index2 += 1;
+                                    count1--;
                                     Thread.Sleep(1000);
                                 }
                             }
@@ -11832,6 +12010,8 @@ namespace RD3.ViewModels
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                 }
+                                Thread.Sleep(1000);
+                                totalSeconds += 1;
                             }
                         }
                         catch (Exception ex)
@@ -11919,7 +12099,6 @@ namespace RD3.ViewModels
                     {
                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
                         {
-                            e.Result = deviceParameter.Name;
                             return;
                         }
                         index2 += 1;
@@ -11974,7 +12153,7 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-
+                    var worker = (BackgroundWorker)s;
                     while (true)
                     {
                         try
@@ -11982,10 +12161,8 @@ namespace RD3.ViewModels
                             DateTime startTime = DateTime.Now;
                             double totalMinutes = 0;
 
-                            var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
                             {
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -11994,14 +12171,12 @@ namespace RD3.ViewModels
                             if (!flag || feedGradientInfos == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Cycle".ToUpper());
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在周期补料策略", deviceParameter.Name));
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             if (f.A <= 0 || !float.TryParse(f.B, out var b) || b <= 0 || f.C <= 0 || !float.TryParse(f.D, out var d) || d <= 0)
@@ -12016,64 +12191,61 @@ namespace RD3.ViewModels
                                 continue;
                             }
                             deviceParameter.FeedParam2.Feed_PV = f.C;
-                            PeristalticPumpControlParam param11 = new PeristalticPumpControlParam()
+                            if (pumpNo11 >= 0)
                             {
-                                PumpNo = pumpNo11,
-                                Pump = pump,
-                                ControlMode = PumpControlMode.Direct,
-                                FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
-                                FlowCapacity = d
-                            };
-                            InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param11);
+                                PeristalticPumpControlParam param11 = new PeristalticPumpControlParam()
+                                {
+                                    PumpNo = pumpNo11,
+                                    Pump = pump,
+                                    ControlMode = PumpControlMode.Direct,
+                                    FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                    FlowCapacity = d
+                                };
+                                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param11);
+                            }
 
-                            int count11 = 0;
+                            int count11 = 1;
                             if (deviceParameter.FeedParam2.Feed_PV > 0)
                             {
                                 count11 = Convert.ToInt32(Math.Ceiling(d / deviceParameter.FeedParam2.Feed_PV * 3600));
                             }
-                            int index11 = 0;
-                            while (index11 < count11)
+                            while (count11 > 0)
                             {
                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
                                 {
                                     e.Result = deviceParameter.Name;
                                     return;
                                 }
-                                index11 += 1;
+                                count11--;
                                 Thread.Sleep(1000);
                             }
                             totalMinutes = (DateTime.Now - startTime).TotalMinutes;
-
                             double diff = f.A - totalMinutes;
                             deviceParameter.FeedParam2.Feed_PV = 0;
                             if (diff > 0)
                             {
                                 int count12 = Convert.ToInt32(diff * 60);
-                                int index12 = 0;
-                                while (index12 < count12)
+                                while (count12 > 0)
                                 {
                                     if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
                                     {
                                         e.Result = deviceParameter.Name;
                                         return;
                                     }
-                                    index12 += 1;
+                                    count12--;
                                     Thread.Sleep(1000);
                                 }
                             }
 
-                            int count2 = f.TriggerInterval < 0 ? 0 : f.TriggerInterval / 1;
-                            int index2 = 0;
-                            while (index2 < count2)
+                            int count2 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
+                            while (count2 > 0)
                             {
                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
-                                { // 检查取消请求
-                                  //e.Cancel = true;
-                                    e.Result = deviceParameter.Name;
+                                {
                                     return;
                                 }
 
-                                index2 += 1;
+                                count2--;
                                 Thread.Sleep(1000);
                             }
                         }
@@ -12122,6 +12294,11 @@ namespace RD3.ViewModels
                     backgroundWorker = null;
                 };
                 dicFeed2Worker[CurrentDeviceParameter.Name].RunWorkerAsync();
+            }
+
+            else if (feedMode == FeedControlMode.Probe)
+            {
+                dicFeed1Probe[CurrentDeviceParameter.Name].StartCtrl();
             }
         });
 
