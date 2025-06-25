@@ -4483,11 +4483,11 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    DateTime startTime = DateTime.Now;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
 
                     double totalSecond = 0;
 
+                    double secondCount = 0;
                     while (true)
                     {
                         try
@@ -4513,7 +4513,7 @@ namespace RD3.ViewModels
                                 return;
                             }
 
-                            double interval = (DateTime.Now - startTime).TotalMinutes;
+                            double interval = secondCount / 60;
                             double a = f.A;//20
                             double b = double.Parse(f.B);//0.7
                             double c = f.C;//40
@@ -4548,6 +4548,8 @@ namespace RD3.ViewModels
                                 Thread.Sleep(1000);
                             }
 
+                            secondCount += 1;
+
                             if (f.StatDisable)
                             {
                                 totalSecond = 0;
@@ -4576,8 +4578,6 @@ namespace RD3.ViewModels
 
                                 if (f.CurveDOStat)
                                 {
-                                    int pauseSecond = 0;
-
                                     while (true)
                                     {
                                         if (worker.CancellationPending)
@@ -4589,7 +4589,6 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.DO < f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
@@ -4598,13 +4597,11 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.DO > f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
                                         }
                                         Thread.Sleep(1000);
-                                        pauseSecond += 1;
                                     }
                                 }
                                 else if (f.CurvepHStat)
@@ -4622,7 +4619,6 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.PH < f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
@@ -4631,7 +4627,6 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.PH > f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
@@ -4699,9 +4694,9 @@ namespace RD3.ViewModels
                     var worker = (BackgroundWorker)s;
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    DateTime startTime = DateTime.Now;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
                     double totalSecond = 0;
+                    double secondCount = 0;
                     while (true)
                     {
                         try
@@ -4725,7 +4720,7 @@ namespace RD3.ViewModels
                                 return;
                             }
 
-                            double interval = (DateTime.Now - startTime).TotalMinutes;
+                            double interval = secondCount / 60;
                             double f1 = f.A;//20
                             double μ = double.Parse(f.B);//0.7
                             double deltaT = f.C;//Δt
@@ -4748,8 +4743,7 @@ namespace RD3.ViewModels
                             }
 
                             int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
-                            int index = 0;
-                            while (count>0)
+                            while (count > 0)
                             {
                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                 {
@@ -4759,6 +4753,7 @@ namespace RD3.ViewModels
                                 count--;
                                 Thread.Sleep(1000);
                             }
+                            secondCount += 1;
 
                             if (f.StatDisable)
                             {
@@ -4788,8 +4783,6 @@ namespace RD3.ViewModels
 
                                 if (f.CurveDOStat)
                                 {
-                                    int pauseSecond = 0;
-
                                     while (true)
                                     {
                                         if (worker.CancellationPending)
@@ -4801,7 +4794,6 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.DO < f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
@@ -4810,13 +4802,11 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.DO > f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
                                         }
                                         Thread.Sleep(1000);
-                                        pauseSecond += 1;
                                     }
                                 }
                                 else if (f.CurvepHStat)
@@ -4834,7 +4824,6 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.PH < f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
@@ -4843,7 +4832,6 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.PH > f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
@@ -4921,14 +4909,16 @@ namespace RD3.ViewModels
                         MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                         return;
                     }
-                    DateTime calcTime, beginTime;
-                    beginTime = calcTime = DateTime.Now;//开始时间
+                    DateTime beginTime;
+                    beginTime = DateTime.Now;//开始时间
                     double endTime = feedGradientInfos[feedGradientInfos.Count - 1].EndTime;
                     double timeOffset = Math.Round((DateTime.Now - beginTime).TotalMinutes, 2);//时间差
 
                     double totalSecond = 0;//用于stat的停顿计时
 
                     double statTotalSeconds = 0;//用于stat多项式|指数的时间计算
+
+                    double calcTotalSeconds = 0;
 
                     string lastInfoType = "";
 
@@ -4965,7 +4955,7 @@ namespace RD3.ViewModels
                             if (lastInfoType != f.InfoType)
                             {
                                 totalSecond = 0;
-                                calcTime = DateTime.Now;
+                                calcTotalSeconds = 0;
                                 statTotalSeconds = 0;
                             }
 
@@ -5083,7 +5073,7 @@ namespace RD3.ViewModels
                                     double a = f.A;//20
                                     double b = double.Parse(f.B);//0.7
                                     double c = f.C;//40
-                                    double calcTimeOffset = Math.Round((DateTime.Now - calcTime).TotalMinutes, 2);
+                                    double calcTimeOffset = Math.Round(calcTotalSeconds / 60, 2);
                                     double feed = Math.Round(a * Math.Pow(calcTimeOffset / 60, 2) + b * calcTimeOffset / 60 + c, 2);
 
                                     deviceParameter.FeedParam1.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
@@ -5112,7 +5102,8 @@ namespace RD3.ViewModels
                                         Thread.Sleep(1000);
                                     }
 
-                                    DateTime dateTime = DateTime.Now;
+                                    calcTotalSeconds += 1;
+
                                     if (f.StatDisable)
                                     {
                                         totalSecond = 0;
@@ -5193,13 +5184,11 @@ namespace RD3.ViewModels
                                             }
                                         }
                                     }
-
-                                    calcTime = calcTime.AddSeconds((DateTime.Now - dateTime).TotalSeconds);
                                     break;
                                 case "Exponential"://指数，执行业务逻辑
                                     double f1 = f.A;//20
                                     double μ = double.Parse(f.B);//0.7
-                                    double calcTimeOffset1 = Math.Round((DateTime.Now - calcTime).TotalMinutes, 2);
+                                    double calcTimeOffset1 = Math.Round(calcTotalSeconds / 60, 2);
                                     double feed1 = Math.Round(f1 * Math.Exp(μ * calcTimeOffset1), 2);
 
                                     deviceParameter.FeedParam1.Feed_PV = (float)feed1 >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)feed1;
@@ -5229,7 +5218,8 @@ namespace RD3.ViewModels
                                         Thread.Sleep(1000);
                                     }
 
-                                    DateTime dateTime1 = DateTime.Now;
+                                    calcTotalSeconds += 1;
+
                                     if (f.StatDisable)
                                     {
                                         totalSecond = 0;
@@ -5310,8 +5300,6 @@ namespace RD3.ViewModels
                                             }
                                         }
                                     }
-
-                                    calcTime = calcTime.AddSeconds((DateTime.Now - dateTime1).TotalSeconds);
                                     break;
                                 case "DO_Feedback"://DO-stat(速度)
                                     if (deviceParameter.DO <= f.A)
@@ -8555,11 +8543,11 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    DateTime startTime = DateTime.Now;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
 
                     double totalSecond = 0;
 
+                    double secondCount = 0;
                     while (true)
                     {
                         try
@@ -8585,7 +8573,7 @@ namespace RD3.ViewModels
                                 return;
                             }
 
-                            double interval = (DateTime.Now - startTime).TotalMinutes;
+                            double interval = secondCount / 60;
                             double a = f.A;//20
                             double b = double.Parse(f.B);//0.7
                             double c = f.C;//40
@@ -8620,6 +8608,8 @@ namespace RD3.ViewModels
                                 Thread.Sleep(1000);
                             }
 
+                            secondCount += 1;
+
                             if (f.StatDisable)
                             {
                                 totalSecond = 0;
@@ -8648,8 +8638,6 @@ namespace RD3.ViewModels
 
                                 if (f.CurveDOStat)
                                 {
-                                    int pauseSecond = 0;
-
                                     while (true)
                                     {
                                         if (worker.CancellationPending)
@@ -8661,7 +8649,6 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.DO < f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
@@ -8670,13 +8657,11 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.DO > f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
                                         }
                                         Thread.Sleep(1000);
-                                        pauseSecond += 1;
                                     }
                                 }
                                 else if (f.CurvepHStat)
@@ -8694,7 +8679,6 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.PH < f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
@@ -8703,7 +8687,6 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.PH > f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
@@ -8771,9 +8754,9 @@ namespace RD3.ViewModels
                     var worker = (BackgroundWorker)s;
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    DateTime startTime = DateTime.Now;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
                     double totalSecond = 0;
+                    double secondCount = 0;
                     while (true)
                     {
                         try
@@ -8797,7 +8780,7 @@ namespace RD3.ViewModels
                                 return;
                             }
 
-                            double interval = (DateTime.Now - startTime).TotalMinutes;
+                            double interval = secondCount / 60;
                             double f1 = f.A;//20
                             double μ = double.Parse(f.B);//0.7
                             double deltaT = f.C;//Δt
@@ -8820,7 +8803,6 @@ namespace RD3.ViewModels
                             }
 
                             int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
-                            int index = 0;
                             while (count > 0)
                             {
                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -8831,6 +8813,7 @@ namespace RD3.ViewModels
                                 count--;
                                 Thread.Sleep(1000);
                             }
+                            secondCount += 1;
 
                             if (f.StatDisable)
                             {
@@ -8860,8 +8843,6 @@ namespace RD3.ViewModels
 
                                 if (f.CurveDOStat)
                                 {
-                                    int pauseSecond = 0;
-
                                     while (true)
                                     {
                                         if (worker.CancellationPending)
@@ -8873,7 +8854,6 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.DO < f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
@@ -8882,13 +8862,11 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.DO > f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
                                         }
                                         Thread.Sleep(1000);
-                                        pauseSecond += 1;
                                     }
                                 }
                                 else if (f.CurvepHStat)
@@ -8906,7 +8884,6 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.PH < f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
@@ -8915,7 +8892,6 @@ namespace RD3.ViewModels
                                         {
                                             if (realTime.PH > f.StatValue)
                                             {
-                                                startTime = startTime.AddSeconds(pauseSecond);
                                                 totalSecond = 0;
                                                 break;
                                             }
@@ -8993,14 +8969,16 @@ namespace RD3.ViewModels
                         MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                         return;
                     }
-                    DateTime calcTime, beginTime;
-                    beginTime = calcTime = DateTime.Now;//开始时间
+                    DateTime beginTime;
+                    beginTime = DateTime.Now;//开始时间
                     double endTime = feedGradientInfos[feedGradientInfos.Count - 1].EndTime;
                     double timeOffset = Math.Round((DateTime.Now - beginTime).TotalMinutes, 2);//时间差
 
                     double totalSecond = 0;//用于stat的停顿计时
 
                     double statTotalSeconds = 0;//用于stat多项式|指数的时间计算
+
+                    double calcTotalSeconds = 0;
 
                     string lastInfoType = "";
 
@@ -9037,7 +9015,7 @@ namespace RD3.ViewModels
                             if (lastInfoType != f.InfoType)
                             {
                                 totalSecond = 0;
-                                calcTime = DateTime.Now;
+                                calcTotalSeconds = 0;
                                 statTotalSeconds = 0;
                             }
 
@@ -9155,7 +9133,7 @@ namespace RD3.ViewModels
                                     double a = f.A;//20
                                     double b = double.Parse(f.B);//0.7
                                     double c = f.C;//40
-                                    double calcTimeOffset = Math.Round((DateTime.Now - calcTime).TotalMinutes, 2);
+                                    double calcTimeOffset = Math.Round(calcTotalSeconds / 60, 2);
                                     double feed = Math.Round(a * Math.Pow(calcTimeOffset / 60, 2) + b * calcTimeOffset / 60 + c, 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
@@ -9184,7 +9162,8 @@ namespace RD3.ViewModels
                                         Thread.Sleep(1000);
                                     }
 
-                                    DateTime dateTime = DateTime.Now;
+                                    calcTotalSeconds += 1;
+
                                     if (f.StatDisable)
                                     {
                                         totalSecond = 0;
@@ -9265,13 +9244,11 @@ namespace RD3.ViewModels
                                             }
                                         }
                                     }
-
-                                    calcTime = calcTime.AddSeconds((DateTime.Now - dateTime).TotalSeconds);
                                     break;
                                 case "Exponential"://指数，执行业务逻辑
                                     double f1 = f.A;//20
                                     double μ = double.Parse(f.B);//0.7
-                                    double calcTimeOffset1 = Math.Round((DateTime.Now - calcTime).TotalMinutes, 2);
+                                    double calcTimeOffset1 = Math.Round(calcTotalSeconds / 60, 2);
                                     double feed1 = Math.Round(f1 * Math.Exp(μ * calcTimeOffset1), 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)feed1 >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)feed1;
@@ -9301,7 +9278,8 @@ namespace RD3.ViewModels
                                         Thread.Sleep(1000);
                                     }
 
-                                    DateTime dateTime1 = DateTime.Now;
+                                    calcTotalSeconds += 1;
+
                                     if (f.StatDisable)
                                     {
                                         totalSecond = 0;
@@ -9382,8 +9360,6 @@ namespace RD3.ViewModels
                                             }
                                         }
                                     }
-
-                                    calcTime = calcTime.AddSeconds((DateTime.Now - dateTime1).TotalSeconds);
                                     break;
                                 case "DO_Feedback"://DO-stat(速度)
                                     if (deviceParameter.DO <= f.A)
