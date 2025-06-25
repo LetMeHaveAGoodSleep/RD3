@@ -4253,7 +4253,7 @@ namespace RD3.ViewModels
                         dicFeed1SP[CurrentDeviceParameter.Name] = CurrentDeviceParameter.FeedParam1.Feed_PV;
                     }
 
-                    int totalSecond = 0;
+                    double totalSecond = 0;
                     while (true)
                     {
                         try
@@ -4486,7 +4486,7 @@ namespace RD3.ViewModels
                     DateTime startTime = DateTime.Now;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
 
-                    int totalSecond = 0;
+                    double totalSecond = 0;
 
                     while (true)
                     {
@@ -4701,7 +4701,7 @@ namespace RD3.ViewModels
                     e.Result = deviceParameter.Name;
                     DateTime startTime = DateTime.Now;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
-                    int totalSecond = 0;
+                    double totalSecond = 0;
                     while (true)
                     {
                         try
@@ -4926,9 +4926,9 @@ namespace RD3.ViewModels
                     double endTime = feedGradientInfos[feedGradientInfos.Count - 1].EndTime;
                     double timeOffset = Math.Round((DateTime.Now - beginTime).TotalMinutes, 2);//时间差
 
-                    int totalSecond = 0;//用于stat的停顿计时
+                    double totalSecond = 0;//用于stat的停顿计时
 
-                    int statTotalSeconds = 0;//用于stat多项式|指数的时间计算
+                    double statTotalSeconds = 0;//用于stat多项式|指数的时间计算
 
                     string lastInfoType = "";
 
@@ -6594,7 +6594,7 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    int totalSeconds = 0;
+                    double totalSeconds = 0;
                     while (true)
                     {
                         try
@@ -6868,7 +6868,7 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    int totalSeconds = 0;
+                    double totalSeconds = 0;
                     while (true)
                     {
                         try
@@ -7144,7 +7144,7 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    int totalSeconds = 0;
+                    double totalSeconds = 0;
                     while (true)
                     {
                         try
@@ -7579,7 +7579,7 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    int totalSeconds = 0;
+                    double totalSeconds = 0;
                     while (true)
                     {
                         try
@@ -8321,7 +8321,7 @@ namespace RD3.ViewModels
                         dicFeed2SP[CurrentDeviceParameter.Name] = CurrentDeviceParameter.FeedParam2.Feed_PV;
                     }
 
-                    int totalSecond = 0;
+                    double totalSecond = 0;
                     while (true)
                     {
                         try
@@ -8554,7 +8554,7 @@ namespace RD3.ViewModels
                     DateTime startTime = DateTime.Now;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
 
-                    int totalSecond = 0;
+                    double totalSecond = 0;
 
                     while (true)
                     {
@@ -8769,7 +8769,7 @@ namespace RD3.ViewModels
                     e.Result = deviceParameter.Name;
                     DateTime startTime = DateTime.Now;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
-                    int totalSecond = 0;
+                    double totalSecond = 0;
                     while (true)
                     {
                         try
@@ -8994,9 +8994,9 @@ namespace RD3.ViewModels
                     double endTime = feedGradientInfos[feedGradientInfos.Count - 1].EndTime;
                     double timeOffset = Math.Round((DateTime.Now - beginTime).TotalMinutes, 2);//时间差
 
-                    int totalSecond = 0;//用于stat的停顿计时
+                    double totalSecond = 0;//用于stat的停顿计时
 
-                    int statTotalSeconds = 0;//用于stat多项式|指数的时间计算
+                    double statTotalSeconds = 0;//用于stat多项式|指数的时间计算
 
                     string lastInfoType = "";
 
@@ -10662,7 +10662,7 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    int totalSeconds = 0;
+                    double totalSeconds = 0;
                     while (true)
                     {
                         try
@@ -10936,7 +10936,7 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    int totalSeconds = 0;
+                    double totalSeconds = 0;
                     while (true)
                     {
                         try
@@ -11212,7 +11212,7 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    int totalSeconds = 0;
+                    double totalSeconds = 0;
                     while (true)
                     {
                         try
@@ -11647,7 +11647,7 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    int totalSeconds = 0;
+                    double totalSeconds = 0;
                     while (true)
                     {
                         try
