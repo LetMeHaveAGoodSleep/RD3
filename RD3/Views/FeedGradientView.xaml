@@ -291,6 +291,7 @@
                                 Width="100"
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='Stat间隔(秒)'}"
+                                IsEnabled="{Binding SelectedFeedGradientInfo.IsStatEnabled}"
                                 Style="{StaticResource TextBoxExtend}"
                                 Text="{Binding SelectedFeedGradientInfo.StatInterval, UpdateSourceTrigger=LostFocus}" />
                         </hc:UniformSpacingPanel>
@@ -300,6 +301,7 @@
                             Width="100"
                             VerticalAlignment="Center"
                             hc:InfoElement.Title="{ex:Language Key='判断符号'}"
+                            IsEnabled="{Binding SelectedFeedGradientInfo.IsStatEnabled}"
                             SelectedIndex="{Binding SelectedFeedGradientInfo.StatSymbol}"
                             Style="{StaticResource ComboBoxExtend}">
                             <ComboBoxItem Content="小于" />
@@ -309,6 +311,7 @@
                             Width="100"
                             VerticalAlignment="Center"
                             hc:InfoElement.Title="{ex:Language Key='判定值'}"
+                            IsEnabled="{Binding SelectedFeedGradientInfo.IsStatEnabled}"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding SelectedFeedGradientInfo.StatValue, UpdateSourceTrigger=LostFocus}" />
                     </hc:UniformSpacingPanel>

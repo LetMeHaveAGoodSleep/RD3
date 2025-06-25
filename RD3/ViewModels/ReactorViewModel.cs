@@ -12517,11 +12517,12 @@ namespace RD3.ViewModels
             });
         });
 
-        public DelegateCommand FeedSeriesCommand => new(() =>
+        public DelegateCommand<string> FeedSeriesCommand => new((string feedPump) =>
         {
             DialogParameters keyValuePairs = new DialogParameters()
             {
-                {"deviceID",CurrentDeviceParameter.Name }
+                {"deviceID",CurrentDeviceParameter.Name },
+                 {nameof(PeristalticPump), feedPump}
             };
 
             DialogHostService.ShowOnce(nameof(FeedGradientView), keyValuePairs, callback =>
@@ -12544,11 +12545,12 @@ namespace RD3.ViewModels
             });
         });
 
-        public DelegateCommand FeedStrategyCommand => new(() =>
+        public DelegateCommand<string> FeedStrategyCommand => new((string feedPump) =>
         {
             DialogParameters keyValuePairs = new DialogParameters()
             {
-                {"deviceID",CurrentDeviceParameter.Name }
+                {"deviceID",CurrentDeviceParameter.Name },
+                {nameof(PeristalticPump), feedPump}
             };
 
             DialogHostService.ShowOnce(nameof(FeedStrategyView), keyValuePairs, callback =>
@@ -13897,11 +13899,34 @@ namespace RD3.ViewModels
             backgroundWorker.RunWorkerAsync();
             #endregion
 
-            //关闭前的控制状态恢复
-            foreach (var item in DeviceParameterCol)
+            //关闭前的控制状态恢复,等待仪器连接上再恢复
+            var worker1  = new BackgroundWorker();
+            worker1.DoWork += (s, e) => 
             {
-                ControlReactor(item);
-            }
+                Dictionary<string, bool> keyValuePairs = new Dictionary<string, bool>();
+                foreach (var item in DeviceParameterCol)
+                {
+                    keyValuePairs.Add(item.Name, false);
+                }
+                while (InstrumentSolution.GetInstance().IsSimulation)
+                {
+                    Thread.Sleep(1000);
+                }
+
+                while (keyValuePairs.Values.Count(t => t) < DeviceParameterCol.Count)
+                {
+                    foreach (var item in DeviceParameterCol)
+                    {
+                        if (!keyValuePairs[item.Name] && item.ReactorStatus == ReactorStatus.Connected)
+                        {
+                            ControlReactor(item);
+                            keyValuePairs[item.Name] = true;
+                        }
+                    }
+                    Thread.Sleep(1000);
+                }
+            };
+            worker1.RunWorkerAsync();
         }
 
         private void EventPublisher_TimeSeriesSended(object sender, (ExperimentParameter, TimeSeries) e)

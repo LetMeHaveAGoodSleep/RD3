@@ -23,6 +23,13 @@ namespace RD3.Shared
             set { SetProperty(ref _id, value); }
         }
 
+        private PeristalticPump _pump = PeristalticPump.FeedPump;
+        public PeristalticPump Pump
+        {
+            get => _pump;
+            set { SetProperty(ref _pump, value); }
+        }
+
         private string _description;
         public string Description
         {

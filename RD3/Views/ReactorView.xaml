@@ -1298,19 +1298,15 @@
                                     Style="{StaticResource TextBoxExtend}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
-                                            <Separator />
-                                            <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
-                                            <!--<Separator />
                                             <MenuItem
-                                                Header="启用DO-stat"
-                                                IsCheckable="True"
-                                                IsChecked="{Binding CurrentDeviceParameter.FeedParam1.IsDOStat, UpdateSourceTrigger=PropertyChanged}" />
+                                                Command="{Binding FeedStrategyCommand}"
+                                                CommandParameter="FeedPump"
+                                                Header="补料策略设置" />
                                             <Separator />
                                             <MenuItem
-                                                Header="启用pH-stat"
-                                                IsCheckable="True"
-                                                IsChecked="{Binding CurrentDeviceParameter.FeedParam1.IspHStat, UpdateSourceTrigger=PropertyChanged}" />-->
+                                                Command="{Binding FeedSeriesCommand}"
+                                                CommandParameter="FeedPump"
+                                                Header="时间序列设置" />
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
                                     <TextBox.Text>
@@ -1330,9 +1326,15 @@
                                     Visibility="{Binding CurrentDeviceParameter.FeedParam1.IsTotal, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
+                                            <MenuItem
+                                                Command="{Binding FeedStrategyCommand}"
+                                                CommandParameter="FeedPump"
+                                                Header="补料策略设置" />
                                             <Separator />
-                                            <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
+                                            <MenuItem
+                                                Command="{Binding FeedSeriesCommand}"
+                                                CommandParameter="FeedPump"
+                                                Header="时间序列设置" />
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
                                     <TextBox.Text>
@@ -1430,9 +1432,15 @@
                                     Style="{StaticResource TextBoxExtend}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
+                                            <MenuItem
+                                                Command="{Binding FeedStrategyCommand}"
+                                                CommandParameter="Feed2Pump"
+                                                Header="补料策略设置" />
                                             <Separator />
-                                            <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
+                                            <MenuItem
+                                                Command="{Binding FeedSeriesCommand}"
+                                                CommandParameter="Feed2Pump"
+                                                Header="时间序列设置" />
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
                                     <TextBox.Text>
@@ -1452,9 +1460,15 @@
                                     Visibility="{Binding CurrentDeviceParameter.FeedParam2.IsTotal, Converter={StaticResource BooleanToVisibilityConverter}}">
                                     <TextBox.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Command="{Binding FeedStrategyCommand}" Header="补料策略设置" />
+                                            <MenuItem
+                                                Command="{Binding FeedStrategyCommand}"
+                                                CommandParameter="Feed2Pump"
+                                                Header="补料策略设置" />
                                             <Separator />
-                                            <MenuItem Command="{Binding FeedSeriesCommand}" Header="时间序列设置" />
+                                            <MenuItem
+                                                Command="{Binding FeedSeriesCommand}"
+                                                CommandParameter="Feed2Pump"
+                                                Header="时间序列设置" />
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
                                     <TextBox.Text>
