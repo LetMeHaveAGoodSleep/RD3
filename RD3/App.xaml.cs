@@ -104,11 +104,6 @@ namespace RD3
             PropertyInfo[] propertyInfos = typeof(RealTimeParam).GetProperties().Where(c => c.CanWrite && c.CanRead && (c.PropertyType == typeof(double) || c.PropertyType == typeof(float) || c.PropertyType == typeof(int) || c.PropertyType == typeof(string))).ToArray();
             RD3SQLHelper.CreateRealTimeParamTable1(propertyInfos);
 
-            // 创建索引以提高查询效率
-            SQLiteHelper.CreateIndex("realTimeParamTable1", "deviceID");
-            SQLiteHelper.CreateIndex("realTimeParamTable1", "batchID");
-            SQLiteHelper.CreateIndex("realTimeParamTable1", "dateTime");
-
             UserManager.GetInstance();
             var dialog = Container.Resolve<IDialogService>();
             dialog.ShowDialog(nameof(LoginView),callback =>

@@ -918,7 +918,7 @@ namespace RD3.ViewModels
 
                 float maxMFCFlow = 0;//用于通气量的总和
                 //mid-ranging控制 只有启用了mid-ranging且目标DO大于当前DO
-                if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging && deviceParameter.DOParam.DO_PV > deviceParameter.DO)
+                if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
                 {
                     var agit = -1;
                     var airFlow = 0f;
@@ -1065,16 +1065,18 @@ namespace RD3.ViewModels
                             LogHelper.Debug(string.Format("反应器{6} Mid-Ranging DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", deviceParameter.DOParam.DO_PV, realTimeParam1.DO, info.P, info.I, info.D, info.Interval, deviceParameter.Name));
 
                             float temp = dicDOPid[deviceParameter.Name].CalculatePositional_DO((float)realTimeParam1.DO);
-                            deviceParameter.AgitParam.Agit_PV = Convert.ToInt32(agit + temp);
+
+                            int tempAgit = Convert.ToInt32(agit + temp);
                             LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2}", deviceParameter.Name, agit, temp));
-                            if (deviceParameter.AgitParam.Agit_PV >= param.AgitUpperLimit)
+                            if (tempAgit >= param.AgitUpperLimit)
                             {
-                                deviceParameter.AgitParam.Agit_PV = param.AgitUpperLimit;
+                                tempAgit = param.AgitUpperLimit;
                             }
-                            else if (deviceParameter.AgitParam.Agit_PV <= param.AgitLowerLimit)
+                            else if (tempAgit <= param.AgitLowerLimit)
                             {
-                                deviceParameter.AgitParam.Agit_PV = param.AgitLowerLimit;
+                                tempAgit = param.AgitLowerLimit;
                             }
+                            deviceParameter.AgitParam.Agit_PV = tempAgit;
                             Thread.Sleep(3000);
 
                             realTimeParam1 = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -1161,11 +1163,12 @@ namespace RD3.ViewModels
                                         return;
                                     }
 
+                                    realTimeParam1 = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                                     dicDOAgitPid[deviceParameter.Name].Reset();
                                     dicDOAgitPid[deviceParameter.Name].SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
                                     dicDOAgitPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
                                     dicDOAgitPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
-                                    dicDOAgitPid[deviceParameter.Name].SetTarget(deviceParameter.Agit);
+                                    dicDOAgitPid[deviceParameter.Name].SetTarget(realTimeParam1.Agit);
 
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
@@ -2934,12 +2937,17 @@ namespace RD3.ViewModels
                 {
                     try
                     {
-                        GasParam gasParam = new GasParam()
+                        int mfcNo = PumpMFCUtil.GetMFCIndex(currentDeviceParameter.Name, GasType.O2);
+                        if (mfcNo >= 0)
                         {
-                            GasType = GasType.O2,
-                            FlowSpeed = 0
-                        };
-                        InstrumentSolution.GetInstance().CommandWrapper.SetGasSpeed(currentDeviceParameter.Name, gasParam);
+                            GasParam gasParam = new GasParam()
+                            {
+                                MFCNo = mfcNo,
+                                GasType = GasType.O2,
+                                FlowSpeed = 0
+                            };
+                            InstrumentSolution.GetInstance().CommandWrapper.SetGasSpeed(currentDeviceParameter.Name, gasParam);
+                        }
                     }
                     catch (Exception ex)
                     {

@@ -131,6 +131,39 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <ControlTemplate x:Key="ValidationErrorTemplate">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="0,0,20,0"
+                        Foreground="Red"
+                        Text="{Binding [0].ErrorContent}" />
+                    <!--  显示控件本身  -->
+                    <AdornedElementPlaceholder />
+                </StackPanel>
+            </ControlTemplate>
+
+            <!--  自定义错误模板（红色 × + 悬停提示）  -->
+            <ControlTemplate x:Key="InlineErrorTemplate">
+                <DockPanel LastChildFill="True">
+                    <!--  错误图标（红色 ×）  -->
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        DockPanel.Dock="Left"
+                        Foreground="Red"
+                        Text="✖"
+                        Visibility="{Binding ElementName=adornedElement, Path=AdornedElement.(Validation.HasError), Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <!--  悬停时显示错误信息  -->
+                        <TextBlock.ToolTip>
+                            <ToolTip
+                                Content="{Binding [0].ErrorContent}"
+                                Foreground="Red"
+                                Placement="Right" />
+                        </TextBlock.ToolTip>
+                    </TextBlock>
+                    <!--  原控件  -->
+                    <AdornedElementPlaceholder Name="adornedElement" />
+                </DockPanel>
+            </ControlTemplate>
 
             <!--<Style TargetType="{x:Type views:DialogWindowBase}">
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />

@@ -13,6 +13,7 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:rd3="clr-namespace:RD3"
     xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:RD3.ViewModels"
@@ -86,6 +87,7 @@
                     BorderThickness="0"
                     Command="{Binding ReleaseCommand}"
                     Foreground="White"
+                    IsEnabled="{Binding CurrentDeviceParameter.ReactorStatus, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=DisConnected}"
                     Style="{StaticResource ButtonIconCircular}"
                     ToolTip="{ex:Language Key='一键下罐'}" />
                 <Button
@@ -620,6 +622,7 @@
                         <hc:UniformSpacingPanel
                             Canvas.Left="440"
                             Canvas.Top="20"
+                            IsEnabled="{Binding CurrentDeviceParameter.ReactorStatus, Converter={StaticResource EnumToInverseBoolConverter}, ConverterParameter=DisConnected}"
                             Orientation="Vertical"
                             Spacing="3">
                             <StackPanel Orientation="Vertical">
@@ -633,7 +636,7 @@
                                         <TextBox.Text>
                                             <Binding Path="CurrentDeviceParameter.DOParam.DO_PV" UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
-                                                    <hc:RegexRule Type="PDouble" />
+                                                    <!--<rd3:NumericRangeRule Max="{x:Static share:Const.MaxDO}" ValidatesOnTargetUpdated="True" />-->
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
@@ -747,14 +750,16 @@
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='转速(rpm)'}"
                                         BorderBrush="Gray"
-                                        Style="{StaticResource TextBoxExtend}">
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
                                         <TextBox.Text>
                                             <Binding
                                                 Path="CurrentDeviceParameter.AgitParam.Agit_PV"
                                                 StringFormat="{}{0:F0}"
                                                 UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
-                                                    <hc:RegexRule Type="PInt" />
+                                                    <!--<hc:RegexRule Type="PInt" />-->
+                                                    <rd3:NumericRangeRule />
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
@@ -820,7 +825,7 @@
                                         <TextBox.Text>
                                             <Binding Path="CurrentDeviceParameter.AirParam.FlowSpeed" UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
-                                                    <hc:RegexRule Type="PDouble" />
+                                                    <!--<hc:RegexRule Type="PDouble" />-->
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
@@ -886,7 +891,7 @@
                                         <TextBox.Text>
                                             <Binding Path="CurrentDeviceParameter.O2Param.FlowSpeed" UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
-                                                    <hc:RegexRule Type="PDouble" />
+                                                    <!--<hc:RegexRule Type="PDouble" />-->
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
@@ -954,7 +959,7 @@
                                         <TextBox.Text>
                                             <Binding Path="CurrentDeviceParameter.PHParam.PH_PV" UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
-                                                    <hc:RegexRule Type="PDouble" />
+                                                    <!--<hc:RegexRule Type="PDouble" />-->
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
@@ -1070,7 +1075,7 @@
                                         <TextBox.Text>
                                             <Binding Path="CurrentDeviceParameter.AcidParam.Acid_PV" UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
-                                                    <hc:RegexRule Type="PDouble" />
+                                                    <!--<hc:RegexRule Type="PDouble" />-->
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
@@ -1142,7 +1147,7 @@
                                         <TextBox.Text>
                                             <Binding Path="CurrentDeviceParameter.BaseParam.Base_PV" UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
-                                                    <hc:RegexRule Type="PDouble" />
+                                                    <!--<hc:RegexRule Type="PDouble" />-->
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
@@ -1228,7 +1233,7 @@
                                     <TextBox.Text>
                                         <Binding Path="CurrentDeviceParameter.TempParam.Temp_PV" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
-                                                <hc:RegexRule Type="PDouble" />
+                                                <!--<hc:RegexRule Type="PDouble" />-->
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -1311,7 +1316,7 @@
                                     <TextBox.Text>
                                         <Binding Path="CurrentDeviceParameter.FeedParam1.Feed_PV" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
-                                                <hc:RegexRule Type="PDouble" />
+                                                <!--<hc:RegexRule Type="PDouble" />-->
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -1333,7 +1338,7 @@
                                     <TextBox.Text>
                                         <Binding Path="CurrentDeviceParameter.FeedParam1.Feed_Total" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
-                                                <hc:RegexRule Type="PDouble" />
+                                                <!--<hc:RegexRule Type="PDouble" />-->
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -1433,7 +1438,7 @@
                                     <TextBox.Text>
                                         <Binding Path="CurrentDeviceParameter.FeedParam2.Feed_PV" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
-                                                <hc:RegexRule Type="PDouble" />
+                                                <!--<hc:RegexRule Type="PDouble" />-->
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -1455,7 +1460,7 @@
                                     <TextBox.Text>
                                         <Binding Path="CurrentDeviceParameter.FeedParam2.Feed_Total" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
-                                                <hc:RegexRule Type="PDouble" />
+                                                <!--<hc:RegexRule Type="PDouble" />-->
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -1548,7 +1553,7 @@
                                     <TextBox.Text>
                                         <Binding Path="CurrentDeviceParameter.AFParam.AF_PV" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
-                                                <hc:RegexRule Type="PDouble" />
+                                                <!--<hc:RegexRule Type="PDouble" />-->
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -1614,7 +1619,7 @@
                                     <TextBox.Text>
                                         <Binding Path="CurrentDeviceParameter.AFParam.Cycle" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
-                                                <hc:RegexRule Type="PInt" />
+                                                <!--<hc:RegexRule Type="PInt" />-->
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -1628,7 +1633,7 @@
                                     <TextBox.Text>
                                         <Binding Path="CurrentDeviceParameter.AFParam.DutyCycle" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
-                                                <hc:RegexRule Type="PDouble" />
+                                                <!--<rd3:NumericRangeRule />-->
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>

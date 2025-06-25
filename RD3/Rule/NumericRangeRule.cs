@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace RD3.Shared
+namespace RD3
 {
     public class NumericRangeRule : ValidationRule
     {
-        public double Min { get; set; }
-        public double Max { get; set; }
+        public double Min { get; set; } = 0;
+        public double Max { get; set; } = 100;
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

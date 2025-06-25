@@ -56,20 +56,30 @@
             <Grid.RowDefinitions>
                 <!--  操作按钮  -->
                 <RowDefinition Height="auto" />
-                <RowDefinition Height="5" />
+                <RowDefinition Height="10" />
                 <!--  数据表格  -->
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <DockPanel LastChildFill="False">
-                <Button
-                    Name="Save"
-                    Width="80"
-                    Height="35"
-                    Command="{Binding SaveCommand}"
+                <hc:UniformSpacingPanel
                     DockPanel.Dock="Right"
-                    Style="{StaticResource ButtonPrimary}">
-                    保存
-                </Button>
+                    Orientation="Horizontal"
+                    Spacing="10">
+                    <Button
+                        Width="80"
+                        Height="30"
+                        Command="{Binding AddCommand}"
+                        Content="新增"
+                        Style="{StaticResource ButtonPrimary}"
+                        Visibility="Collapsed" />
+                    <Button
+                        Width="80"
+                        Height="30"
+                        Command="{Binding SaveCommand}"
+                        Content="保存"
+                        Style="{StaticResource ButtonPrimary}" />
+                </hc:UniformSpacingPanel>
+
             </DockPanel>
             <DataGrid
                 Name="dataGrid"
@@ -100,7 +110,7 @@
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="反应器"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                        IsReadOnly="False" />
+                        IsReadOnly="True" />
                     <DataGridComboBoxColumn
                         Width="120"
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"

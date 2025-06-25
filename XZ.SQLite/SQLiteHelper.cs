@@ -199,11 +199,12 @@ namespace XZ.SQLite
 
         /// <summary>
         /// 创建索引以提高查询效率，在创建表之后使用
+        /// 索引名不能重复，增加表名
         /// </summary>
         /// <param name="columnName">要创建索引的列名。</param>
         public static void CreateIndex(string tableName,string columnName)
         {
-            string sql = $"CREATE INDEX IF NOT EXISTS {columnName} ON {tableName} ({columnName});";
+            string sql = $"CREATE INDEX IF NOT EXISTS {columnName}_{tableName} ON {tableName} ({columnName});";
             ExecuteNonQuery(sql);
         }
 
@@ -636,7 +637,7 @@ namespace XZ.SQLite
             SQLiteHelper.CreateConnection();//创建数据库链接
             CreateProjectTable();
             CreateBatchTable();
-            CreateRealTimeParamTable();
+            //CreateRealTimeParamTable();
 
             CreateAuditTable();//创建操作日志表
             CreateAlarmRecordTable();
