@@ -70,8 +70,13 @@
                         Height="30"
                         Command="{Binding AddCommand}"
                         Content="新增"
-                        Style="{StaticResource ButtonPrimary}"
-                        Visibility="Collapsed" />
+                        Style="{StaticResource ButtonPrimary}" />
+                    <Button
+                        Width="80"
+                        Height="30"
+                        Command="{Binding DeleteCommand}"
+                        Content="删除数据"
+                        Style="{StaticResource ButtonPrimary}" />
                     <Button
                         Width="80"
                         Height="30"
@@ -79,7 +84,6 @@
                         Content="保存"
                         Style="{StaticResource ButtonPrimary}" />
                 </hc:UniformSpacingPanel>
-
             </DockPanel>
             <DataGrid
                 Name="dataGrid"
@@ -99,8 +103,9 @@
                 RowHeaderWidth="100"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                SelectedItem="{Binding SelectedPIDInfo}"
                 SelectionMode="Single"
-                SelectionUnit="Cell"
+                SelectionUnit="FullRow"
                 VerticalGridLinesBrush="LightGray">
                 <DataGrid.Columns>
                     <DataGridTextColumn
@@ -109,8 +114,7 @@
                         CanUserSort="False"
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="反应器"
-                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                        IsReadOnly="True" />
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                     <DataGridComboBoxColumn
                         Width="120"
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"

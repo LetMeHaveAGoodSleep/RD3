@@ -4231,7 +4231,7 @@ namespace RD3.ViewModels
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
                     if (allDeviceInfos.TryGetValue(deviceParameter.Name, out var feedGradientInfos) && feedGradientInfos != null)
                     {
-                        f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper());
+                        f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper() && t.Pump == pump);
                         if (f != null && f.A > 0)
                         {
                             CurrentDeviceParameter.FeedParam1.Feed_PV = f.A;
@@ -4263,7 +4263,7 @@ namespace RD3.ViewModels
                             {
                                 return;
                             }
-                            f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper());
+                            f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper() && t.Pump == pump);
 
                             if (dicFeed1SP[deviceParameter.Name] != deviceParameter.FeedParam1.Feed_PV)
                             {
@@ -4506,7 +4506,7 @@ namespace RD3.ViewModels
                                 return;
                             }
 
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Polynomial".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Polynomial".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在多项式策略", deviceParameter.Name));
@@ -4718,7 +4718,7 @@ namespace RD3.ViewModels
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                                 return;
                             }
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Exponential".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Exponential".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在指数策略", deviceParameter.Name));
@@ -5387,6 +5387,8 @@ namespace RD3.ViewModels
                                             }
                                         }
 
+                                        statTotalSeconds += 1;
+
                                         count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count > 0)
                                         {
@@ -5473,6 +5475,8 @@ namespace RD3.ViewModels
                                             }
                                         }
 
+                                        statTotalSeconds += 1;
+
                                         count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count > 0)
                                         {
@@ -5503,8 +5507,6 @@ namespace RD3.ViewModels
                                         }
                                         Thread.Sleep(1000);
                                     }
-
-                                    statTotalSeconds += 1;
                                     break;
                                 case "PH_Feedback"://根据PH反馈控制，执行业务逻辑
                                     if (deviceParameter.PH <= f.A)
@@ -5580,6 +5582,8 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
                                         }
+
+                                        statTotalSeconds += 1;
 
                                         count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count > 0)
@@ -5667,6 +5671,8 @@ namespace RD3.ViewModels
                                             }
                                         }
 
+                                        statTotalSeconds += 1;
+
                                         count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count > 0)
                                         {
@@ -5696,8 +5702,6 @@ namespace RD3.ViewModels
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
                                     }
-
-                                    statTotalSeconds += 1;
                                     break;
                                 case "DO_Feedback_Total":
                                     if (deviceParameter.DO <= f.A)
@@ -6049,7 +6053,6 @@ namespace RD3.ViewModels
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
                                         Thread.Sleep(1000);
-                                        statTotalSeconds += 1;
                                     }
                                     break;
                                 case "PH_Feedback_Total"://根据PH反馈控制，执行业务逻辑
@@ -6402,7 +6405,6 @@ namespace RD3.ViewModels
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
                                         Thread.Sleep(1000);
-                                        statTotalSeconds += 1;
                                     }
                                     break;
                                 case "Quantitative":
@@ -6612,7 +6614,7 @@ namespace RD3.ViewModels
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                                 return;
                             }
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "DO_Feedback".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "DO_Feedback".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在DO_stat(速度)策略", deviceParameter.Name));
@@ -6692,6 +6694,8 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
                                 }
+
+                                totalSeconds += 1;
 
                                 int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count > 0)
@@ -6779,6 +6783,8 @@ namespace RD3.ViewModels
                                     }
                                 }
 
+                                totalSeconds += 1;
+
                                 int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count > 0)
                                 {
@@ -6809,8 +6815,6 @@ namespace RD3.ViewModels
                                 }
                                 Thread.Sleep(1000);
                             }
-
-                            totalSeconds += 1;
                         }
                         catch (Exception ex)
                         {
@@ -6886,7 +6890,7 @@ namespace RD3.ViewModels
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                                 return;
                             }
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "PH_Feedback".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "PH_Feedback".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在PH反馈策略", deviceParameter.Name));
@@ -6966,6 +6970,8 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
                                 }
+
+                                totalSeconds += 1;
 
                                 int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count > 0)
@@ -7052,6 +7058,8 @@ namespace RD3.ViewModels
                                     }
                                 }
 
+                                totalSeconds += 1;
+
                                 int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count > 0)
                                 {
@@ -7081,8 +7089,6 @@ namespace RD3.ViewModels
                                 }
                                 Thread.Sleep(1000);
                             }
-
-                            totalSeconds += 1;
                         }
                         catch (Exception ex)
                         {
@@ -7162,7 +7168,7 @@ namespace RD3.ViewModels
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                                 return;
                             }
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "DO_Feedback_Total".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "DO_Feedback_Total".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在DO反馈总量策略", deviceParameter.Name));
@@ -7518,7 +7524,6 @@ namespace RD3.ViewModels
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                 }
                                 Thread.Sleep(1000);
-                                totalSeconds += 1;
                             }
                         }
                         catch (Exception ex)
@@ -7597,7 +7602,7 @@ namespace RD3.ViewModels
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                                 return;
                             }
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "PH_Feedback_Total".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "PH_Feedback_Total".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在PH反馈总量策略", deviceParameter.Name));
@@ -7953,7 +7958,6 @@ namespace RD3.ViewModels
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                 }
                                 Thread.Sleep(1000);
-                                totalSeconds += 1;
                             }
                         }
                         catch (Exception ex)
@@ -8115,7 +8119,7 @@ namespace RD3.ViewModels
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                                 return;
                             }
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Cycle".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Cycle".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在周期补料策略", deviceParameter.Name));
@@ -8299,7 +8303,7 @@ namespace RD3.ViewModels
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
                     if (allDeviceInfos.TryGetValue(deviceParameter.Name, out var feedGradientInfos) && feedGradientInfos != null)
                     {
-                        f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper());
+                        f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper() && t.Pump == pump);
                         if (f != null && f.A > 0)
                         {
                             CurrentDeviceParameter.FeedParam2.Feed_PV = f.A;
@@ -8331,7 +8335,7 @@ namespace RD3.ViewModels
                             {
                                 return;
                             }
-                            f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper());
+                            f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper() && t.Pump == pump);
 
                             if (dicFeed2SP[deviceParameter.Name] != deviceParameter.FeedParam2.Feed_PV)
                             {
@@ -8574,7 +8578,7 @@ namespace RD3.ViewModels
                                 return;
                             }
 
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Polynomial".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Polynomial".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在多项式策略", deviceParameter.Name));
@@ -8786,7 +8790,7 @@ namespace RD3.ViewModels
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                                 return;
                             }
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Exponential".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Exponential".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在指数策略", deviceParameter.Name));
@@ -9455,6 +9459,8 @@ namespace RD3.ViewModels
                                             }
                                         }
 
+                                        statTotalSeconds += 1;
+
                                         count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count > 0)
                                         {
@@ -9541,6 +9547,8 @@ namespace RD3.ViewModels
                                             }
                                         }
 
+                                        statTotalSeconds += 1;
+
                                         count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count > 0)
                                         {
@@ -9571,8 +9579,6 @@ namespace RD3.ViewModels
                                         }
                                         Thread.Sleep(1000);
                                     }
-
-                                    statTotalSeconds += 1;
                                     break;
                                 case "PH_Feedback"://根据PH反馈控制，执行业务逻辑
                                     if (deviceParameter.PH <= f.A)
@@ -9648,6 +9654,8 @@ namespace RD3.ViewModels
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
                                         }
+
+                                        statTotalSeconds += 1;
 
                                         count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count > 0)
@@ -9735,6 +9743,8 @@ namespace RD3.ViewModels
                                             }
                                         }
 
+                                        statTotalSeconds += 1;
+
                                         count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count > 0)
                                         {
@@ -9764,8 +9774,6 @@ namespace RD3.ViewModels
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
                                     }
-
-                                    statTotalSeconds += 1;
                                     break;
                                 case "DO_Feedback_Total":
                                     if (deviceParameter.DO <= f.A)
@@ -10117,7 +10125,6 @@ namespace RD3.ViewModels
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
                                         Thread.Sleep(1000);
-                                        statTotalSeconds += 1;
                                     }
                                     break;
                                 case "PH_Feedback_Total"://根据PH反馈控制，执行业务逻辑
@@ -10470,7 +10477,6 @@ namespace RD3.ViewModels
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                         }
                                         Thread.Sleep(1000);
-                                        statTotalSeconds += 1;
                                     }
                                     break;
                                 case "Quantitative":
@@ -10680,7 +10686,7 @@ namespace RD3.ViewModels
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                                 return;
                             }
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "DO_Feedback".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "DO_Feedback".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在DO_stat(速度)策略", deviceParameter.Name));
@@ -10760,6 +10766,8 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
                                 }
+
+                                totalSeconds += 1;
 
                                 int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count > 0)
@@ -10847,6 +10855,8 @@ namespace RD3.ViewModels
                                     }
                                 }
 
+                                totalSeconds += 1;
+
                                 int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count > 0)
                                 {
@@ -10877,8 +10887,6 @@ namespace RD3.ViewModels
                                 }
                                 Thread.Sleep(1000);
                             }
-
-                            totalSeconds += 1;
                         }
                         catch (Exception ex)
                         {
@@ -10954,7 +10962,7 @@ namespace RD3.ViewModels
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                                 return;
                             }
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "PH_Feedback".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "PH_Feedback".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在PH反馈策略", deviceParameter.Name));
@@ -11034,6 +11042,8 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
                                 }
+
+                                totalSeconds += 1;
 
                                 int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count > 0)
@@ -11120,6 +11130,8 @@ namespace RD3.ViewModels
                                     }
                                 }
 
+                                totalSeconds += 1;
+
                                 int count = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count > 0)
                                 {
@@ -11149,8 +11161,6 @@ namespace RD3.ViewModels
                                 }
                                 Thread.Sleep(1000);
                             }
-
-                            totalSeconds += 1;
                         }
                         catch (Exception ex)
                         {
@@ -11230,7 +11240,7 @@ namespace RD3.ViewModels
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                                 return;
                             }
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "DO_Feedback_Total".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "DO_Feedback_Total".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在DO反馈总量策略", deviceParameter.Name));
@@ -11586,7 +11596,6 @@ namespace RD3.ViewModels
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                 }
                                 Thread.Sleep(1000);
-                                totalSeconds += 1;
                             }
                         }
                         catch (Exception ex)
@@ -11665,7 +11674,7 @@ namespace RD3.ViewModels
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                                 return;
                             }
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "PH_Feedback_Total".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "PH_Feedback_Total".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在PH反馈总量策略", deviceParameter.Name));
@@ -12021,7 +12030,6 @@ namespace RD3.ViewModels
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
                                 }
                                 Thread.Sleep(1000);
-                                totalSeconds += 1;
                             }
                         }
                         catch (Exception ex)
@@ -12183,7 +12191,7 @@ namespace RD3.ViewModels
                                 MessageBox.Show(string.Format("反应器{0}不存在补料策略", deviceParameter.Name));
                                 return;
                             }
-                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Cycle".ToUpper());
+                            var f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Cycle".ToUpper() && t.Pump == pump);
                             if (f == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在周期补料策略", deviceParameter.Name));

@@ -45,6 +45,13 @@ namespace RD3.ViewModels
 {
     public class PIDViewModel : BaseViewModel, IDialogAware
     {
+        PIDInfo _selectedPIDInfo;
+        public PIDInfo SelectedPIDInfo
+        {
+            get { return _selectedPIDInfo; }
+            set { SetProperty(ref _selectedPIDInfo, value); }
+        }
+
         private ObservableCollection<PIDInfo> _pidInfos = [];
         public ObservableCollection<PIDInfo> PidInfos { get { return _pidInfos; } set { SetProperty(ref _pidInfos, value); } }
         private string _languageName;
@@ -79,6 +86,17 @@ namespace RD3.ViewModels
         public DelegateCommand<PIDInfo> StopPIDCommand => new((pidInfo) =>
         {
 
+        });
+
+        public DelegateCommand AddCommand => new(() =>
+        {
+            PidInfos.Add(new PIDInfo());
+        });
+
+        public DelegateCommand DeleteCommand => new(() =>
+        {
+            if (SelectedPIDInfo != null)
+                PidInfos.Remove(SelectedPIDInfo);
         });
 
         /// <summary>
