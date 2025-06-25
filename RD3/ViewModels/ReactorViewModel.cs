@@ -3662,6 +3662,7 @@ namespace RD3.ViewModels
                                             FlowCapacity = (float)volume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                        LogHelper.Debug(string.Format("反应器{0},PH预设值：{1}，PH当前值：{2}，体积：{3}", deviceParameter.Name, deviceParameter.PHParam.PH_PV, realTimeParam.PH, volume));
 
                                         int count = Convert.ToInt32(Math.Ceiling(volume * 3600 / deviceParameter.BaseParam.Base_PV));
                                         while (count > 0 && !InstrumentSolution.GetInstance().IsSimulation)
@@ -3708,6 +3709,7 @@ namespace RD3.ViewModels
                                             FlowCapacity = (float)volume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                        LogHelper.Debug(string.Format("反应器{0},PH预设值：{1}，PH当前值：{2}，体积：{3}", deviceParameter.Name, deviceParameter.PHParam.PH_PV, realTimeParam.PH, volume));
 
                                         int count = Convert.ToInt32(Math.Ceiling(volume * 3600 / deviceParameter.AcidParam.Acid_PV));
                                         while (count > 0 && !InstrumentSolution.GetInstance().IsSimulation)

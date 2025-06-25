@@ -759,7 +759,7 @@
                                                 UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
                                                     <!--<hc:RegexRule Type="PInt" />-->
-                                                    <rd3:NumericRangeRule />
+                                                    <!--<rd3:NumericRangeRule />-->
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
