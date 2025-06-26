@@ -564,6 +564,72 @@
 							<length>1</length>
 						</param>
 						<param>
+							<id>IntakeModuleCO2Concentration</id>
+							<name>进气模块CO2浓度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>IntakeModuleO2Concentration</id>
+							<name>进气模块O2浓度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>IntakeModuleGasTemp</id>
+							<name>进气模块气体温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>IntakeModuleGasHumidity</id>
+							<name>进气模块气体湿度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>IntakeModuleGasPressure</id>
+							<name>进气模块气体压力</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>OffgasModuleCO2Concentration</id>
+							<name>尾气模块CO2浓度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>OffgasModuleO2Concentration</id>
+							<name>尾气模块O2浓度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>OffgasModuleGasTemp</id>
+							<name>尾气模块气体温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>OffgasModuleGasHumidity</id>
+							<name>尾气模块气体湿度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>OffgasModuleGasPressure</id>
+							<name>尾气模块气体压力</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>StirringMotorTemp</id>
+							<name>搅拌电机温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
 							<id>HasFoam</id>
 							<name>有无泡沫</name>
 							<type>byte</type>
@@ -1414,6 +1480,47 @@
 						<param>
 							<id>Port</id>
 							<name>主板端口号</name>
+							<type>byte</type>
+							<length>4</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+			</commandExtends>
+		</commandDesc>
+
+		<commandDesc>
+			<id>RWStirringMotorType</id>
+			<name>读写搅拌电机型号</name>
+			<commandCode>0x1e</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xff</id>
+					<name>ReadWrite</name>
+					<parameters>
+						<param>
+							<id>MotorType</id>
+							<name>电机型号</name>
 							<type>byte</type>
 							<length>4</length>
 						</param>

@@ -433,7 +433,21 @@ namespace RD3.Shared
                     realTimeParam.CoolingModuleCoolingNTCTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_CoolingModuleCoolingNTCTemp), Const.NumericalPrecision);
                     realTimeParam.CoolingModuleHeatingNTCTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_CoolingModuleHeatingNTCTemp), Const.NumericalPrecision);
                     realTimeParam.CoolingModuleRoomNTCTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_CoolingModuleRoomNTCTemp), Const.NumericalPrecision);
-                    
+
+                    realTimeParam.IntakeModuleCO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_IntakeModuleCO2Concentration), Const.NumericalPrecision);
+                    realTimeParam.IntakeModuleO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_IntakeModuleO2Concentration), Const.NumericalPrecision);
+                    realTimeParam.IntakeModuleGasTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_IntakeModuleGasTemp), Const.NumericalPrecision);
+                    realTimeParam.IntakeModuleGasHumidity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_IntakeModuleGasHumidity), Const.NumericalPrecision);
+                    realTimeParam.IntakeModuleGasPressure = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_IntakeModuleGasPressure), Const.NumericalPrecision);
+
+                    realTimeParam.OffgasModuleCO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_OffgasModuleCO2Concentration), Const.NumericalPrecision);
+                    realTimeParam.OffgasModuleO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_OffgasModuleO2Concentration), Const.NumericalPrecision);
+                    realTimeParam.OffgasModuleGasTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_OffgasModuleGasTemp), Const.NumericalPrecision);
+                    realTimeParam.OffgasModuleGasHumidity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_OffgasModuleGasHumidity), Const.NumericalPrecision);
+                    realTimeParam.OffgasModuleGasPressure = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_OffgasModuleGasPressure), Const.NumericalPrecision);
+
+                    realTimeParam.StirringMotorTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_StirringMotorTemp), Const.NumericalPrecision);
+
                     realTimeParam.HasFoam = recvCommand.GetByte(ParamId.RRealtimeParam_ReadResponse_HasFoam) == 0x01;
                     realTimeParam.SampleTime = DateTime.Now;
                     #region 丢弃滑动窗口滤波 
@@ -474,6 +488,7 @@ namespace RD3.Shared
                             kalman.SetParameter(0.03, 0.1, 1.5, realTimeParam.DO);
                             dicDOFilter[insID] = kalman;
                         }
+                        realTimeParam.RawDO = realTimeParam.DO;
                         realTimeParam.DO = Convert.ToSingle(dicDOFilter[insID].Update(realTimeParam.DO));
                         realTimeParam.DOPredict = Convert.ToSingle(dicDOFilter[insID].Predict());
                     }
@@ -1678,6 +1693,51 @@ namespace RD3.Shared
                 deviceParam.MainIpAdress = bytes;
                 sendCommand.SetValue(ParamId.RWMCUDownloadAdress_ReadWrite_IPAdress, deviceParam.MainIpAdress);
                 sendCommand.SetValue(ParamId.RWMCUDownloadAdress_ReadWrite_Port, BitConverter.GetBytes(deviceParam.MainPort));
+                RecvCommand recvCommand = Send(insID, sendCommand);
+                if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
+                {
+                    throw new Exception("设置失败");
+                }
+            }
+            catch (Exception ex)
+            {
+                // 获取当前方法名并记录日志
+                var methodName = new StackTrace().GetFrame(0).GetMethod().Name;
+                LogHelper.Debug($"Error in method {methodName}: {ex}");
+
+            }
+        }
+        #endregion
+
+        #region 0x1e 读写搅拌电机型号
+        public int GetStirringMotorType(string insID)
+        {
+            int index = -1;
+            SendCommand sendCommand = new SendCommand(CommandId.RWStirringMotorType, CommandExtendId.Read);
+            try
+            {
+                RecvCommand recvCommand = Send(insID, sendCommand);
+                if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
+                {
+                    index = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWStirringMotorType_ReadWrite_MotorType));
+                }
+            }
+            catch (Exception ex)
+            {
+                // 获取当前方法名并记录日志
+                var methodName = new StackTrace().GetFrame(0).GetMethod().Name;
+                LogHelper.Debug($"Error in method {methodName}: {ex}");
+
+            }
+            return index;
+        }
+
+        public void SetStirringMotorType(string insID, int index)
+        {
+            SendCommand sendCommand = new SendCommand(CommandId.RWStirringMotorType, CommandExtendId.Write);
+            try
+            {
+                sendCommand.SetValue(ParamId.RWStirringMotorType_ReadWrite_MotorType, BitConverter.GetBytes(index));
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
