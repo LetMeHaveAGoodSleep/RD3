@@ -123,6 +123,7 @@ namespace RD3.Shared
             realTime.OffgasModuleGasPressure = RandomNumberUtil.GetRandomSingle();
 
             realTime.StirringMotorTemp = RandomNumberUtil.GetRandomSingle();
+            realTime.StirringMotorPower = RandomNumberUtil.GetRandomSingle();
 
             realTime.AlarmBytes = [(byte)RandomNumberUtil.GetRandomInt(1,4)];
             realTime.WorkStatus = WorkStatus.Idle;

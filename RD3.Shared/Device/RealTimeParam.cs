@@ -673,6 +673,16 @@ namespace RD3.Shared
             set { SetProperty(ref _stirringMotorTemp, value); }
         }
 
+        private float _stirringMotorPower = 0f;
+        /// <summary>
+        /// 搅拌电机功率
+        /// </summary>
+        [JsonIgnore]
+        public float StirringMotorPower
+        {
+            get { return _stirringMotorPower; }
+            set { SetProperty(ref _stirringMotorPower, value); }
+        }
 
         private bool _hasFoam = false;
         [JsonIgnore]

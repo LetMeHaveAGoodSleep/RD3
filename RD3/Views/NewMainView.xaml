@@ -151,6 +151,13 @@
                                 Click="MenuItem_Open_Click"
                                 Header="工程调试"
                                 Tag="MCUDebugView" />
+                            <MenuItem Width="100" Header="功能测试">
+                                <MenuItem
+                                    Width="100"
+                                    Click="MenuItem_Open_Click"
+                                    Header="滤波测试"
+                                    Tag="FilterWaveView" />
+                            </MenuItem>
                         </MenuItem>
                         <MenuItem Height="40" Header="参数管理">
                             <MenuItem

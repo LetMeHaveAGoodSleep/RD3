@@ -630,6 +630,29 @@
                                     </hc:UniformSpacingPanel>
                                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                         <hc:ComboBox
+                                            Width="200"
+                                            hc:InfoElement.Title="{ex:Language Key='搅拌电机类型'}"
+                                            ItemsSource="{Binding StirringMotorSource}"
+                                            SelectedIndex="{Binding SelectedStirringMotorType}" />
+                                        <Button
+                                            Width="80"
+                                            Height="30"
+                                            Margin="0,20,0,0"
+                                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                            Command="{Binding ReadCommand}"
+                                            CommandParameter="30"
+                                            Content="{ex:Language Key='Read'}" />
+                                        <Button
+                                            Width="80"
+                                            Height="30"
+                                            Margin="0,20,0,0"
+                                            hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                            Command="{Binding SetCommand}"
+                                            CommandParameter="30"
+                                            Content="{ex:Language Key='Set'}" />
+                                    </hc:UniformSpacingPanel>
+                                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                        <hc:ComboBox
                                             Width="150"
                                             hc:InfoElement.Title="{ex:Language Key='Board Type'}"
                                             ItemsSource="{Binding Source={StaticResource DataFromEnum3}}"
@@ -674,6 +697,24 @@
                                                 IsReadOnly="True"
                                                 Style="{StaticResource TextBoxExtend}"
                                                 Text="{Binding RealTimeParam.PH}" />
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='搅拌电机温度'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.StirringMotorTemp}" />
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='搅拌电机功率'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.StirringMotorPower}" />
+                                            <DockPanel LastChildFill="False">
+                                                <CheckBox
+                                                    Content="有无泡沫"
+                                                    DockPanel.Dock="Bottom"
+                                                    IsChecked="{Binding RealTimeParam.HasFoam}" />
+                                            </DockPanel>
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                             <TextBox
@@ -916,7 +957,73 @@
                                                 IsReadOnly="True"
                                                 Style="{StaticResource TextBoxExtend}"
                                                 Text="{Binding RealTimeParam.CoolingModuleRoomNTCTemp}" />
-                                            <CheckBox Content="有无泡沫" IsChecked="{Binding RealTimeParam.HasFoam}" />
+
+                                        </hc:UniformSpacingPanel>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='进气模块CO2浓度'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.IntakeModuleCO2Concentration}" />
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='进气模块O2浓度'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.IntakeModuleO2Concentration}" />
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='进气模块气体温度'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.IntakeModuleGasTemp}" />
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='进气模块气体湿度'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.IntakeModuleGasHumidity}" />
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='进气模块气体压力'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.IntakeModuleGasPressure}" />
+
+                                        </hc:UniformSpacingPanel>
+                                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='尾气模块CO2浓度'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.OffgasModuleCO2Concentration}" />
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='尾气模块O2浓度'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.OffgasModuleO2Concentration}" />
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='尾气模块气体温度'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.OffgasModuleGasTemp}" />
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='尾气模块气体湿度'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.OffgasModuleGasHumidity}" />
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='尾气模块气体压力'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.OffgasModuleGasPressure}" />
+
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                             <TextBox

@@ -447,6 +447,7 @@ namespace RD3.Shared
                     realTimeParam.OffgasModuleGasPressure = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_OffgasModuleGasPressure), Const.NumericalPrecision);
 
                     realTimeParam.StirringMotorTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_StirringMotorTemp), Const.NumericalPrecision);
+                    realTimeParam.StirringMotorPower = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_StirringMotorPower), Const.NumericalPrecision);
 
                     realTimeParam.HasFoam = recvCommand.GetByte(ParamId.RRealtimeParam_ReadResponse_HasFoam) == 0x01;
                     realTimeParam.SampleTime = DateTime.Now;

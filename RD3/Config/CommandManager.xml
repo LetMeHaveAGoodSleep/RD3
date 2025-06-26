@@ -630,6 +630,12 @@
 							<length>1</length>
 						</param>
 						<param>
+							<id>StirringMotorPower</id>
+							<name>搅拌电机功率</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
 							<id>HasFoam</id>
 							<name>有无泡沫</name>
 							<type>byte</type>

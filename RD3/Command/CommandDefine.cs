@@ -489,14 +489,19 @@ namespace RD3
         public const int RRealtimeParam_ReadResponse_StirringMotorTemp = 0x6AA2F;
 
         /// <summary>
+        /// 搅拌电机功率
+        /// </summary>
+        public const int RRealtimeParam_ReadResponse_StirringMotorPower = 0x6AA30;
+
+        /// <summary>
         /// 有无泡沫
         /// </summary>
-        public const int RRealtimeParam_ReadResponse_HasFoam = 0x6AA30;
+        public const int RRealtimeParam_ReadResponse_HasFoam = 0x6AA31;
 
         /// <summary>
         /// 报警码
         /// </summary>
-        public const int RRealtimeParam_ReadResponse_AlarmCodes = 0x6AA31;
+        public const int RRealtimeParam_ReadResponse_AlarmCodes = 0x6AA32;
 
         /// <summary>
         /// 写回应
