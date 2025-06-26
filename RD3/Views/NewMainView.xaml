@@ -129,6 +129,11 @@
                                 Click="MenuItem_Open_Click"
                                 Header="因子设置"
                                 Tag="DeviceNodesView" />
+                            <MenuItem
+                                Width="100"
+                                Click="MenuItem_Open_Click"
+                                Header="软件注册"
+                                Tag="RegisterView" />
                         </MenuItem>
                         <MenuItem Height="40" Header="设备管理">
                             <MenuItem

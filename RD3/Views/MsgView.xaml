@@ -72,7 +72,7 @@
                     HorizontalContentAlignment="Center"
                     BorderBrush="{StaticResource PrimaryBrush}"
                     Command="{Binding CancelCommand}"
-                    Content="{ex:Language Key='Cancel'}"
+                    Content="{ex:Language Key='取消'}"
                     FontSize="{DynamicResource NormalFontSize}"
                     Foreground="{StaticResource PrimaryBrush}" />
                 <Button
@@ -82,7 +82,7 @@
                     Background="{StaticResource PrimaryBrush}"
                     BorderBrush="{StaticResource PrimaryBrush}"
                     Command="{Binding SaveCommand}"
-                    Content="{ex:Language Key='OK'}"
+                    Content="{ex:Language Key='确认'}"
                     Foreground="White" />
             </StackPanel>
         </Grid>

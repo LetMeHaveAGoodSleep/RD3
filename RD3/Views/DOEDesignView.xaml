@@ -184,7 +184,7 @@
                                             Background="Transparent"
                                             BorderThickness="1"
                                             Command="{Binding OKCommand}"
-                                            Content="{ex:Language Key='OK'}"
+                                            Content="{ex:Language Key='确认'}"
                                             ToolTip="OK" />
                                         <Button
                                             Width="70"
@@ -193,7 +193,7 @@
                                             Background="Transparent"
                                             BorderThickness="1"
                                             Command="{Binding CloseCommand}"
-                                            Content="{ex:Language Key='Cancel'}"
+                                            Content="{ex:Language Key='取消'}"
                                             ToolTip="Cancel" />
                                     </hc:UniformSpacingPanel>
                                 </DockPanel>

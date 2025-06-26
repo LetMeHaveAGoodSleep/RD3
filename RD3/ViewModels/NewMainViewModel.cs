@@ -577,6 +577,8 @@ namespace RD3.ViewModels
                 }
             };
             backgroundWorker.RunWorkerAsync();
+
+            RegUtils.StartChecked();
         }
 
         private ObservableCollection<RD3Device> GetReactorCol()

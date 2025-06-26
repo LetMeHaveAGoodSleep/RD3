@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using DialogResult = Prism.Services.Dialogs.DialogResult;
 
 namespace RD3.ViewModels
 {
@@ -25,42 +27,45 @@ namespace RD3.ViewModels
 
         public DelegateCommand RegisterCommand => new(async () => 
         {
-            if (string.IsNullOrEmpty(_registrationCode)) 
+            if (string.IsNullOrEmpty(_registrationCode))
             {
-                await DialogHostService.Info("温馨提示", "请输入注册码!", "Register");
+                await DialogHostService.Info("温馨提示", "请输入注册码!");
                 return;
             }
-            if (!AESEncryption.IsEncrypt(_registrationCode))
-            {
-                await DialogHostService.Info("温馨提示", "请输入正确的注册码!", "Register");
-                return;
-            }
-            string code = AESEncryption.Decrypt(_registrationCode);
-            //Todo 仪器码验证，时间验证
-            try
-            {
-                var array = code.Split('_');
-                if (array.Length < 4) 
-                {
-                    await DialogExtensions.Info("温馨提示", "请输入正确的注册码!", "Register");
-                    return;
-                }
-                string insId = array[0];
-                DateTime dateTime = Convert.ToDateTime(array[3]);
-                if (dateTime < DateTime.Now)
-                {
-                    await DialogExtensions.Info("温馨提示", "注册码已过期!", "Register");
-                    return;
-                }
-            }
-            catch (Exception ex) 
-            {
-                await DialogExtensions.Info("温馨提示", "请输入正确的注册码!", "Register");
-                LogHelper.Error(ex);
-                return;
-            }
-            RegisterManager.SetRegistry(_registrationCode);
-            RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
+            string info = RegUtils.ReReg(_registrationCode);
+            await DialogHostService.Info("温馨提示", info);
+
+            //if (!AESEncryption.IsEncrypt(_registrationCode))
+            //{
+            //    await DialogHostService.Info("温馨提示", "请输入正确的注册码!");
+            //    return;
+            //}
+            //string code = AESEncryption.Decrypt(_registrationCode);
+            ////Todo 仪器码验证，时间验证
+            //try
+            //{
+            //    var array = code.Split('_');
+            //    if (array.Length < 4) 
+            //    {
+            //        await DialogExtensions.Info("温馨提示", "请输入正确的注册码!", "Register");
+            //        return;
+            //    }
+            //    string insId = array[0];
+            //    DateTime dateTime = Convert.ToDateTime(array[3]);
+            //    if (dateTime < DateTime.Now)
+            //    {
+            //        await DialogExtensions.Info("温馨提示", "注册码已过期!", "Register");
+            //        return;
+            //    }
+            //}
+            //catch (Exception ex) 
+            //{
+            //    await DialogExtensions.Info("温馨提示", "请输入正确的注册码!", "Register");
+            //    LogHelper.Error(ex);
+            //    return;
+            //}
+            //RegisterManager.SetRegistry(_registrationCode);
+            //RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
         });
 
         public DelegateCommand CloseCommand => new(() => 
@@ -72,7 +77,7 @@ namespace RD3.ViewModels
         {
         }
 
-        public string Title => AppSession.CompanyName;
+        public string Title => "软件注册";
 
         public event Action<IDialogResult> RequestClose;
 
@@ -88,7 +93,7 @@ namespace RD3.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            RegistrationCode = parameters.GetValue<string>("RegistrationCode");
+            //RegistrationCode = parameters.GetValue<string>("RegistrationCode");
         }
     }
 }
