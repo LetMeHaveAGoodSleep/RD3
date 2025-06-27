@@ -4484,15 +4484,15 @@ namespace RD3.ViewModels
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
+                    var worker = (BackgroundWorker)s;
 
                     double totalSecond = 0;
-
                     double secondCount = 0;
                     while (true)
                     {
                         try
                         {
-                            var worker = (BackgroundWorker)s;
+
                             if (worker.CancellationPending)
                             {
                                 return;
@@ -4513,13 +4513,13 @@ namespace RD3.ViewModels
                                 return;
                             }
 
-                            double interval = secondCount / 60;
+                            double interval = secondCount / 3600;
                             double a = f.A;//20
                             double b = double.Parse(f.B);//0.7
                             double c = f.C;//40
                             double deltaT = double.Parse(f.D);
                             double diff = interval - deltaT > 0 ? interval - deltaT : 0;
-                            double feed = Math.Round(a * Math.Pow(diff / 60, 2) + b * diff / 60 + c, 2);
+                            double feed = Math.Round(a * Math.Pow(diff, 2) + b * diff + c, 2);
 
                             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                             deviceParameter.FeedParam1.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
@@ -4561,19 +4561,22 @@ namespace RD3.ViewModels
 
                             if (totalSecond > 0 && f.StatInterval > 0 && totalSecond % f.StatInterval == 0)
                             {
-                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                if (pumpNo >= 0)
+                                if (f.CurveDOStat || f.CurvepHStat)
                                 {
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
-                                    param = new PeristalticPumpControlParam()
+                                    pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
+                                    if (pumpNo >= 0)
                                     {
-                                        PumpNo = pumpNo,
-                                        Pump = pump,
-                                        ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
-                                        FlowCapacity = 0
-                                    };
-                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        param = new PeristalticPumpControlParam()
+                                        {
+                                            PumpNo = pumpNo,
+                                            Pump = pump,
+                                            ControlMode = PumpControlMode.Direct,
+                                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                            FlowCapacity = 0
+                                        };
+                                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                    }
                                 }
 
                                 if (f.CurveDOStat)
@@ -4720,7 +4723,7 @@ namespace RD3.ViewModels
                                 return;
                             }
 
-                            double interval = secondCount / 60;
+                            double interval = secondCount / 3600;
                             double f1 = f.A;//20
                             double μ = double.Parse(f.B);//0.7
                             double deltaT = f.C;//Δt
@@ -4766,19 +4769,22 @@ namespace RD3.ViewModels
 
                             if (totalSecond > 0 && f.StatInterval > 0 && totalSecond % f.StatInterval == 0)
                             {
-                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                if (pumpNo >= 0)
+                                if (f.CurveDOStat || f.CurvepHStat)
                                 {
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
-                                    param = new PeristalticPumpControlParam()
+                                    pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
+                                    if (pumpNo >= 0)
                                     {
-                                        PumpNo = pumpNo,
-                                        Pump = pump,
-                                        ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
-                                        FlowCapacity = 0
-                                    };
-                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        param = new PeristalticPumpControlParam()
+                                        {
+                                            PumpNo = pumpNo,
+                                            Pump = pump,
+                                            ControlMode = PumpControlMode.Direct,
+                                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                            FlowCapacity = 0
+                                        };
+                                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                    }
                                 }
 
                                 if (f.CurveDOStat)
@@ -5073,8 +5079,8 @@ namespace RD3.ViewModels
                                     double a = f.A;//20
                                     double b = double.Parse(f.B);//0.7
                                     double c = f.C;//40
-                                    double calcTimeOffset = Math.Round(calcTotalSeconds / 60, 2);
-                                    double feed = Math.Round(a * Math.Pow(calcTimeOffset / 60, 2) + b * calcTimeOffset / 60 + c, 2);
+                                    double calcTimeOffset = Math.Round(calcTotalSeconds / 3600, 2);
+                                    double feed = Math.Round(a * Math.Pow(calcTimeOffset, 2) + b * calcTimeOffset + c, 2);
 
                                     deviceParameter.FeedParam1.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
                                     int pumpNo1 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -5188,7 +5194,7 @@ namespace RD3.ViewModels
                                 case "Exponential"://指数，执行业务逻辑
                                     double f1 = f.A;//20
                                     double μ = double.Parse(f.B);//0.7
-                                    double calcTimeOffset1 = Math.Round(calcTotalSeconds / 60, 2);
+                                    double calcTimeOffset1 = Math.Round(calcTotalSeconds / 3600, 2);
                                     double feed1 = Math.Round(f1 * Math.Exp(μ * calcTimeOffset1), 2);
 
                                     deviceParameter.FeedParam1.Feed_PV = (float)feed1 >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)feed1;
@@ -5329,9 +5335,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                             deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -5355,9 +5361,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                             deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -5416,9 +5422,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                             deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -5443,9 +5449,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                             deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -5524,9 +5530,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                             deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -5551,9 +5557,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                             deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -5612,9 +5618,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                             deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -5639,9 +5645,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                             deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -5735,7 +5741,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -5747,9 +5752,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -5788,7 +5793,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -5800,9 +5804,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -5841,10 +5845,11 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
+
+                                        statTotalSeconds += 1;
 
                                         int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count5 > 0)
@@ -5901,7 +5906,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -5913,9 +5917,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -5954,7 +5958,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -5966,9 +5969,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -6007,7 +6010,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -6087,7 +6089,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -6099,9 +6100,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -6140,7 +6141,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -6152,9 +6152,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -6193,10 +6193,11 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
+
+                                        statTotalSeconds += 1;
 
                                         int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count5 > 0)
@@ -6253,7 +6254,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -6265,9 +6265,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -6306,7 +6306,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
@@ -6318,9 +6317,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -6359,10 +6358,11 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam1.Feed_PV = 0;
                                         }
+
+                                        statTotalSeconds += 1;
 
                                         int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count5 > 0)
@@ -6460,7 +6460,7 @@ namespace RD3.ViewModels
                                         }
 
                                         int count11 = Convert.ToInt32(Math.Ceiling(paramD / deviceParameter.FeedParam1.Feed_PV * 3600));
-                                        while (count11>0)
+                                        while (count11 > 0)
                                         {
                                             if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
                                             {
@@ -6585,11 +6585,11 @@ namespace RD3.ViewModels
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
                     double totalSeconds = 0;
+                    var worker = (BackgroundWorker)s;
                     while (true)
                     {
                         try
                         {
-                            var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
                             {
                                 return;
@@ -6636,9 +6636,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                     deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -6663,9 +6663,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                     deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -6724,9 +6724,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                     deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -6751,9 +6751,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                     deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -6912,9 +6912,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                     deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -6939,9 +6939,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                     deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -6999,9 +6999,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                     deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -7026,9 +7026,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                     deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -7206,7 +7206,6 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7218,9 +7217,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -7259,7 +7258,6 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7271,9 +7269,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -7316,6 +7314,8 @@ namespace RD3.ViewModels
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
+
+                                totalSeconds += 1;
 
                                 int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count1 > 0)
@@ -7372,7 +7372,6 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7384,9 +7383,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -7425,7 +7424,6 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7437,9 +7435,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -7478,10 +7476,11 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
+
+                                totalSeconds += 1;
 
                                 int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count1 > 0)
@@ -7573,11 +7572,11 @@ namespace RD3.ViewModels
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
                     double totalSeconds = 0;
+                    var worker = (BackgroundWorker)s;
                     while (true)
                     {
                         try
                         {
-                            var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
                             {
                                 return;
@@ -7640,7 +7639,6 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7652,9 +7650,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -7705,9 +7703,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -7746,10 +7744,11 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
+
+                                totalSeconds += 1;
 
                                 int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count1 > 0)
@@ -7818,9 +7817,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -7859,7 +7858,6 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
@@ -7871,9 +7869,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -7912,10 +7910,11 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam1.Feed_PV = 0;
                                 }
+
+                                totalSeconds += 1;
 
                                 int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count1 > 0)
@@ -8544,15 +8543,15 @@ namespace RD3.ViewModels
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
+                    var worker = (BackgroundWorker)s;
 
                     double totalSecond = 0;
-
                     double secondCount = 0;
                     while (true)
                     {
                         try
                         {
-                            var worker = (BackgroundWorker)s;
+                            
                             if (worker.CancellationPending)
                             {
                                 return;
@@ -8573,13 +8572,13 @@ namespace RD3.ViewModels
                                 return;
                             }
 
-                            double interval = secondCount / 60;
+                            double interval = secondCount / 3600;
                             double a = f.A;//20
                             double b = double.Parse(f.B);//0.7
                             double c = f.C;//40
                             double deltaT = double.Parse(f.D);
                             double diff = interval - deltaT > 0 ? interval - deltaT : 0;
-                            double feed = Math.Round(a * Math.Pow(diff / 60, 2) + b * diff / 60 + c, 2);
+                            double feed = Math.Round(a * Math.Pow(diff, 2) + b * diff + c, 2);
 
                             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                             deviceParameter.FeedParam2.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
@@ -8621,19 +8620,22 @@ namespace RD3.ViewModels
 
                             if (totalSecond > 0 && f.StatInterval > 0 && totalSecond % f.StatInterval == 0)
                             {
-                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                if (pumpNo >= 0)
+                                if (f.CurveDOStat || f.CurvepHStat)
                                 {
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
-                                    param = new PeristalticPumpControlParam()
+                                    pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
+                                    if (pumpNo >= 0)
                                     {
-                                        PumpNo = pumpNo,
-                                        Pump = pump,
-                                        ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
-                                        FlowCapacity = 0
-                                    };
-                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        param = new PeristalticPumpControlParam()
+                                        {
+                                            PumpNo = pumpNo,
+                                            Pump = pump,
+                                            ControlMode = PumpControlMode.Direct,
+                                            FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                            FlowCapacity = 0
+                                        };
+                                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                    }
                                 }
 
                                 if (f.CurveDOStat)
@@ -8780,7 +8782,7 @@ namespace RD3.ViewModels
                                 return;
                             }
 
-                            double interval = secondCount / 60;
+                            double interval = secondCount / 3600;
                             double f1 = f.A;//20
                             double μ = double.Parse(f.B);//0.7
                             double deltaT = f.C;//Δt
@@ -8826,19 +8828,22 @@ namespace RD3.ViewModels
 
                             if (totalSecond > 0 && f.StatInterval > 0 && totalSecond % f.StatInterval == 0)
                             {
-                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                if (pumpNo >= 0)
+                                if (f.CurveDOStat || f.CurvepHStat)
                                 {
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
-                                    param = new PeristalticPumpControlParam()
+                                    pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
+                                    if (pumpNo >= 0)
                                     {
-                                        PumpNo = pumpNo,
-                                        Pump = pump,
-                                        ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
-                                        FlowCapacity = 0
-                                    };
-                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        param = new PeristalticPumpControlParam()
+                                        {
+                                            PumpNo = pumpNo,
+                                            Pump = pump,
+                                            ControlMode = PumpControlMode.Direct,
+                                            FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                            FlowCapacity = 0
+                                        };
+                                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                                    }
                                 }
 
                                 if (f.CurveDOStat)
@@ -9133,8 +9138,8 @@ namespace RD3.ViewModels
                                     double a = f.A;//20
                                     double b = double.Parse(f.B);//0.7
                                     double c = f.C;//40
-                                    double calcTimeOffset = Math.Round(calcTotalSeconds / 60, 2);
-                                    double feed = Math.Round(a * Math.Pow(calcTimeOffset / 60, 2) + b * calcTimeOffset / 60 + c, 2);
+                                    double calcTimeOffset = Math.Round(calcTotalSeconds / 3600, 2);
+                                    double feed = Math.Round(a * Math.Pow(calcTimeOffset, 2) + b * calcTimeOffset + c, 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
                                     int pumpNo1 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -9248,7 +9253,7 @@ namespace RD3.ViewModels
                                 case "Exponential"://指数，执行业务逻辑
                                     double f1 = f.A;//20
                                     double μ = double.Parse(f.B);//0.7
-                                    double calcTimeOffset1 = Math.Round(calcTotalSeconds / 60, 2);
+                                    double calcTimeOffset1 = Math.Round(calcTotalSeconds / 3600, 2);
                                     double feed1 = Math.Round(f1 * Math.Exp(μ * calcTimeOffset1), 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)feed1 >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)feed1;
@@ -9389,9 +9394,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                             deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -9415,9 +9420,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                             deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -9476,9 +9481,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                             deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -9503,9 +9508,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                             deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -9584,9 +9589,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                             deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -9611,9 +9616,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                             deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -9672,9 +9677,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                             deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -9699,9 +9704,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                             deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -9795,7 +9800,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -9807,9 +9811,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -9848,7 +9852,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -9860,9 +9863,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -9901,10 +9904,11 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
+
+                                        statTotalSeconds += 1;
 
                                         int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count5 > 0)
@@ -9961,7 +9965,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -9973,9 +9976,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -10014,7 +10017,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -10026,9 +10028,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -10067,7 +10069,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -10147,7 +10148,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -10159,9 +10159,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -10200,7 +10200,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -10212,9 +10211,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -10253,10 +10252,11 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
+
+                                        statTotalSeconds += 1;
 
                                         int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count5 > 0)
@@ -10313,7 +10313,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -10325,9 +10324,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                            double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                            double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -10366,7 +10365,6 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
@@ -10378,9 +10376,9 @@ namespace RD3.ViewModels
                                             paramB = array[1];
                                             paramC = array[2];
                                             paramD = array[3];
-                                            double offset = statTotalSeconds / 60;
+                                            double offset = statTotalSeconds / 3600;
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                            double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                            double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
                                                 deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -10419,10 +10417,11 @@ namespace RD3.ViewModels
 
                                                 count2--;
                                                 Thread.Sleep(1000);
-                                                statTotalSeconds += 1;
                                             }
                                             deviceParameter.FeedParam2.Feed_PV = 0;
                                         }
+
+                                        statTotalSeconds += 1;
 
                                         int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                         while (count5 > 0)
@@ -10645,11 +10644,11 @@ namespace RD3.ViewModels
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
                     double totalSeconds = 0;
+                    var worker = (BackgroundWorker)s;
                     while (true)
                     {
                         try
                         {
-                            var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
                             {
                                 return;
@@ -10696,9 +10695,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -10723,9 +10722,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -10784,9 +10783,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -10811,9 +10810,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -10972,9 +10971,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -10999,9 +10998,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -11059,9 +11058,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flowRate = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -11086,9 +11085,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
                                     deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -11266,7 +11265,6 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11278,9 +11276,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -11319,7 +11317,6 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11331,9 +11328,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -11376,6 +11373,8 @@ namespace RD3.ViewModels
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
+
+                                totalSeconds += 1;
 
                                 int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count1 > 0)
@@ -11432,7 +11431,6 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11444,9 +11442,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -11485,7 +11483,6 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11497,9 +11494,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -11538,10 +11535,11 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
+
+                                totalSeconds += 1;
 
                                 int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count1 > 0)
@@ -11633,11 +11631,11 @@ namespace RD3.ViewModels
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
                     double totalSeconds = 0;
+                    var worker = (BackgroundWorker)s;
                     while (true)
                     {
                         try
                         {
-                            var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
                             {
                                 return;
@@ -11700,7 +11698,6 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11712,9 +11709,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -11765,9 +11762,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -11806,10 +11803,11 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
+
+                                totalSeconds += 1;
 
                                 int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count1 > 0)
@@ -11878,9 +11876,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
-                                    double flow = Math.Round(paramA * Math.Pow(diff / 60, 2) + paramB * diff / 60 + paramC, 2);
+                                    double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -11919,7 +11917,6 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
@@ -11931,9 +11928,9 @@ namespace RD3.ViewModels
                                     paramB = array[1];
                                     paramC = array[2];
                                     paramD = array[3];
-                                    double offset = totalSeconds / 60;
+                                    double offset = totalSeconds / 3600;
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
-                                    double flow = Math.Round(paramA * Math.Exp(paramB * (diff)), 2);
+                                    double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
                                         deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
@@ -11972,10 +11969,11 @@ namespace RD3.ViewModels
 
                                         count--;
                                         Thread.Sleep(1000);
-                                        totalSeconds += 1;
                                     }
                                     deviceParameter.FeedParam2.Feed_PV = 0;
                                 }
+
+                                totalSeconds += 1;
 
                                 int count1 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
                                 while (count1 > 0)
