@@ -153,19 +153,20 @@ namespace RD3
                         RegistrationInfo regInfo = JsonConvert.DeserializeObject<RegistrationInfo>(result);
                         if (regInfo == null)//如果没有注册文件
                         {
-                            MessageBox.Show("注册信息有误，请联系管理员。", "温馨提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly | MessageBoxOptions.ServiceNotification);
-                            Environment.Exit(0);
+                            AutoShutdownService.GetInstance().StartShutdownTimerAsync();
+                            MessageBox.Show("注册信息有误，程序将在5分钟之后退出，请联系管理员。", "温馨提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly | MessageBoxOptions.ServiceNotification);
+                            
                         }
                         if (regInfo.CurrentTime > DateTime.Now || regInfo.StartTime > DateTime.Now)//说明改过系统时间，直接退出
                         {
-                            MessageBox.Show("注册信息有误，请联系管理员。", "温馨提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly | MessageBoxOptions.ServiceNotification);
-                            Environment.Exit(0);
+                            AutoShutdownService.GetInstance().StartShutdownTimerAsync();
+                            MessageBox.Show("注册信息有误，程序将在5分钟之后退出，请联系管理员。", "温馨提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly | MessageBoxOptions.ServiceNotification);
                         }
 
                         if (DateTime.Now > regInfo.EndTime)//试用结束，退出
                         {
-                            MessageBox.Show("试用时间已到期，请联系管理员。", "温馨提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly | MessageBoxOptions.ServiceNotification);
-                            Environment.Exit(0);
+                            AutoShutdownService.GetInstance().StartShutdownTimerAsync();
+                            MessageBox.Show("试用时间已到期，程序将在5分钟之后退出，请联系管理员。", "温馨提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly | MessageBoxOptions.ServiceNotification);
                         }
 
                         regInfo.CurrentTime = DateTime.Now;
@@ -175,11 +176,7 @@ namespace RD3
                     }
                     catch (Exception ex)
                     {
-                        Task.Run(() =>
-                        {
-                            Thread.Sleep(5 * 60 * 1000);
-                            Environment.Exit(0);
-                        });
+                        AutoShutdownService.GetInstance().StartShutdownTimerAsync();
                         MessageBox.Show("注册信息有误，程序将在5分钟之后退出，请联系管理员。","温馨提示", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1,MessageBoxOptions.DefaultDesktopOnly | MessageBoxOptions.ServiceNotification);
                     }
                     finally

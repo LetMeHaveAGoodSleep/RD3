@@ -33,6 +33,10 @@ namespace RD3.ViewModels
                 return;
             }
             string info = RegUtils.ReReg(_registrationCode);
+            if (info.Contains("成功"))
+            {
+                AutoShutdownService.GetInstance().CancelShutdown();
+            }
             await DialogHostService.Info("温馨提示", info);
 
             //if (!AESEncryption.IsEncrypt(_registrationCode))

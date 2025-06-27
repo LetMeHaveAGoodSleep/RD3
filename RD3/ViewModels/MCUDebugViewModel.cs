@@ -937,7 +937,7 @@ namespace RD3.ViewModels
                         catch (Exception ex) { }
                     }
                 }
-                else if (commandText == "29")
+                else if (commandText == "30")
                 {
                     foreach (var SelectedInstrument in SelectedInstruments)
                     {

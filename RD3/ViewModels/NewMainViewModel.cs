@@ -42,6 +42,8 @@ using XZ.SQLite;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using Fpi.Communication.Protocols;
+using MessageBoxOptions = System.Windows.Forms.MessageBoxOptions;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace RD3.ViewModels
 {
@@ -578,6 +580,7 @@ namespace RD3.ViewModels
             };
             backgroundWorker.RunWorkerAsync();
 
+
             RegUtils.StartChecked();
         }
 
@@ -631,7 +634,7 @@ namespace RD3.ViewModels
             CurrentDeviceParameter = DeviceParameterCol[SelectedIndex];
             if (AppSession.RunningDevices.Count < 1 || AppSession.RunningDevices.FindIndex(t => t.Name == CurrentDeviceParameter.Name) < 0)
             {
-                MessageBox.Show(string.Format("反应器{0}未开始批次实验，实验数据不会自动保存！", CurrentDeviceParameter.Name), "温馨提示", MessageBoxButton.OK);
+                MessageBox.Show(string.Format("反应器{0}未开始批次实验，实验数据不会自动保存！", CurrentDeviceParameter.Name), "温馨提示",System.Windows.Forms.MessageBoxButtons.OK);
             }
             DialogParameters keyValuePairs = new DialogParameters() { { nameof(DeviceParameter), CurrentDeviceParameter }, { nameof(ReactorCol), ReactorCol } };
             DialogHostService.ShowOnce(nameof(ReactorView), keyValuePairs, callback =>
