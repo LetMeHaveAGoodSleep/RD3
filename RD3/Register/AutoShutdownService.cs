@@ -57,7 +57,6 @@ namespace RD3
                     isExcute = false;
                 }
             }
-
         }
 
         public void CancelShutdown()
