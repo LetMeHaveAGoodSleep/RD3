@@ -8245,6 +8245,12 @@ namespace RD3.ViewModels
                 Thread.Sleep(100);
             }
 
+            if (dicFeed2Probe[CurrentDeviceParameter.Name] != null)
+            {
+                dicFeed2Probe[CurrentDeviceParameter.Name].StopCtrl();
+                Thread.Sleep(100);
+            }
+
             //关闭控制
             if (!CurrentDeviceParameter.FeedParam2.IsControling)
             {
