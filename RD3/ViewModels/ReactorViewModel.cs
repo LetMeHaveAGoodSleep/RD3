@@ -2591,8 +2591,8 @@ namespace RD3.ViewModels
                             pIDController.SetIntegralLimits(-2000, 2000);
                             pIDController.SetTarget(agitHigh);
 
-                            float pos = pIDController.CalculatePositional(deviceParameter.Agit);
-                            float currentTemp = initialTemp + pos;
+                            float pos = pIDController.CalculateIncremental(deviceParameter.Agit);
+                            float currentTemp = deviceParameter.TempParam.Temp_PV + pos;
                             currentTemp = currentTemp <= deviceParameter.TempDOLowerLimit ? deviceParameter.TempDOLowerLimit : currentTemp;
                             deviceParameter.TempParam.Temp_PV = MathF.Round(currentTemp, 2);
                             LogHelper.Debug(string.Format("反应器{0} 起始温度{1} 单次delta{2} 实际温度{3}", deviceParameter.Name, initialTemp, pos, currentTemp));
