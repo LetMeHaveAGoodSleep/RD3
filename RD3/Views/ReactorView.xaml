@@ -132,8 +132,7 @@
                     CommandParameter="1,0"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='Probe补料策略'}"
-                    Visibility="Collapsed" />
+                    ToolTip="{ex:Language Key='Probe补料策略'}" />
                 <Button
                     Width="36"
                     Height="36"
@@ -144,8 +143,7 @@
                     CommandParameter="1,100"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='Probe补料策略'}"
-                    Visibility="Collapsed" />
+                    ToolTip="{ex:Language Key='Probe补料策略'}" />
                 <Button
                     Width="36"
                     Height="36"
@@ -156,8 +154,7 @@
                     CommandParameter="0,0"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='Probe补料策略'}"
-                    Visibility="Collapsed" />
+                    ToolTip="{ex:Language Key='Probe补料策略'}" />
                 <Button
                     Width="36"
                     Height="36"
@@ -168,8 +165,7 @@
                     CommandParameter="0,14"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='Probe补料策略'}"
-                    Visibility="Collapsed" />
+                    ToolTip="{ex:Language Key='Probe补料策略'}" />
                 <Button
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource SaveGeometry}"

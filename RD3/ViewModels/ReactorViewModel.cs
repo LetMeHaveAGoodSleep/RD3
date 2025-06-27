@@ -1175,8 +1175,8 @@ namespace RD3.ViewModels
                                         e.Result = deviceParameter.Name;
                                         return;
                                     }
-                                    float tempAir = dicDOAgitPid[deviceParameter.Name].CalculatePositional(param.AgitHigh);
-                                    float airSpeed = airFlow + tempAir;
+                                    float tempAir = dicDOAgitPid[deviceParameter.Name].CalculateIncremental(param.AgitHigh);
+                                    float airSpeed = realTimeParam1.AirFlowSpeed + tempAir;
                                     if (airSpeed >= param.AirUpperLimit)
                                     {
                                         airSpeed = param.AirUpperLimit;
@@ -8231,6 +8231,8 @@ namespace RD3.ViewModels
 
             else if (feedMode == FeedControlMode.Probe)
             {
+                var param = ProbingParameterManager.GetInstance().ProbeCol.FindFirst(t => t.DeviceID == CurrentDeviceParameter.Name);
+                dicFeed1Probe[CurrentDeviceParameter.Name].InitProbParam(param);
                 dicFeed1Probe[CurrentDeviceParameter.Name].StartCtrl();
             }
         });
@@ -12296,7 +12298,9 @@ namespace RD3.ViewModels
 
             else if (feedMode == FeedControlMode.Probe)
             {
-                dicFeed1Probe[CurrentDeviceParameter.Name].StartCtrl();
+                var param = ProbingParameterManager.GetInstance().ProbeCol.FindFirst(t => t.DeviceID == CurrentDeviceParameter.Name);
+                dicFeed2Probe[CurrentDeviceParameter.Name].InitProbParam(param);
+                dicFeed2Probe[CurrentDeviceParameter.Name].StartCtrl();
             }
         });
 
