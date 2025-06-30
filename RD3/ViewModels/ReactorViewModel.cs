@@ -1202,6 +1202,11 @@ namespace RD3.ViewModels
                                     }
                                 }
                             }
+                            else
+                            {
+                                deviceParameter.AirParam.FlowSpeed = param.InitialAir;
+                                Thread.Sleep(5000);
+                            }
                             realTimeParam1 = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                             if (realTimeParam1.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam1.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)
                             {
