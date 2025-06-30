@@ -1105,7 +1105,7 @@ namespace RD3.ViewModels
                                 }
                                 continue;
                             }
-                            if (deviceParameter.AgitParam.Agit_PV >= param.AgitHigh)//到达转速高限
+                            if (deviceParameter.AgitParam.Agit_PV > param.AgitHigh)//到达转速高限
                             {
                                 if (deviceParameter.AirParam.FlowSpeed >= param.AirUpperLimit)//通气已经到达极限
                                 {
@@ -1205,6 +1205,10 @@ namespace RD3.ViewModels
                             else
                             {
                                 deviceParameter.AirParam.FlowSpeed = param.InitialAir;
+                                if (param.O2Associated)
+                                {
+                                    deviceParameter.O2Param.FlowSpeed = 0;
+                                }
                                 Thread.Sleep(5000);
                             }
                             realTimeParam1 = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
