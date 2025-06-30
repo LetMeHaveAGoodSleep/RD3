@@ -2540,32 +2540,29 @@ namespace RD3.ViewModels
             {
                 var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == currentDeviceParameter.Name);
                 e.Result = deviceParameter.Name;
-                QPIDController pIDController = new QPIDController();
                 while (true)
                 {
                     Thread.Sleep(5000);
 
                     if (dicDOTempWorker[deviceParameter.Name].CancellationPending)
                     {
-                        e.Result = deviceParameter.Name;
                         return;
                     }
-
                     while (deviceParameter.TempDOAssociated)
                     {
                         if (dicDOTempWorker[deviceParameter.Name].CancellationPending)
                         {
-                            e.Result = deviceParameter.Name;
                             return;
                         }
 
                         float initialTemp = deviceParameter.TempParam.Temp_PV;
                         PIDInfo pIDInfo = null;
+                        QPIDController pIDController = new QPIDController();
+
                         while (deviceParameter.IsDOLimit && deviceParameter.TempParam.IsControling)
                         {
                             if (dicDOTempWorker[deviceParameter.Name].CancellationPending)
                             {
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -2574,7 +2571,6 @@ namespace RD3.ViewModels
                             if (pIDInfos == null)
                             {
                                 MessageBox.Show("PID调控策略列表为空");
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -2582,17 +2578,16 @@ namespace RD3.ViewModels
                             if (pIDInfo == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在温控的PID调控策略", deviceParameter.Name));
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
                             RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                             pIDController.SetParameters(kp: (float)pIDInfo.P, ki: (float)pIDInfo.I, kd: (float)pIDInfo.D, integralThreshold: pIDInfo.Threshold, interval: pIDInfo.Interval);
                             pIDController.SetOutputLimits(-Math.Abs(pIDInfo.maxSpeed), Math.Abs(pIDInfo.maxSpeed));
                             pIDController.SetIntegralLimits(-2000, 2000);
-                            pIDController.SetTarget(deviceParameter.DOParam.DO_PV);
+                            pIDController.SetTarget(agitHigh);
 
-                            float pos = pIDController.CalculateIncremental(realTimeParam.DO);
-                            float currentTemp = deviceParameter.TempParam.Temp_PV - pos;
+                            float pos = pIDController.CalculateIncremental(realTimeParam.Agit);
+                            float currentTemp = deviceParameter.TempParam.Temp_PV + pos;
                             currentTemp = currentTemp <= deviceParameter.TempDOLowerLimit ? deviceParameter.TempDOLowerLimit : currentTemp;
                             deviceParameter.TempParam.Temp_PV = MathF.Round(currentTemp, 2);
                             LogHelper.Debug(string.Format("反应器{0} 起始温度{1} 单次delta{2} 实际温度{3}", deviceParameter.Name, initialTemp, pos, currentTemp));
