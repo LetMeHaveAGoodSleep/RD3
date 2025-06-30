@@ -2585,14 +2585,14 @@ namespace RD3.ViewModels
                                 e.Result = deviceParameter.Name;
                                 return;
                             }
-
+                            RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                             pIDController.SetParameters(kp: (float)pIDInfo.P, ki: (float)pIDInfo.I, kd: (float)pIDInfo.D, integralThreshold: pIDInfo.Threshold, interval: pIDInfo.Interval);
                             pIDController.SetOutputLimits(-Math.Abs(pIDInfo.maxSpeed), Math.Abs(pIDInfo.maxSpeed));
                             pIDController.SetIntegralLimits(-2000, 2000);
-                            pIDController.SetTarget(agitHigh);
+                            pIDController.SetTarget(deviceParameter.DOParam.DO_PV);
 
-                            float pos = pIDController.CalculateIncremental(deviceParameter.Agit);
-                            float currentTemp = deviceParameter.TempParam.Temp_PV + pos;
+                            float pos = pIDController.CalculateIncremental(realTimeParam.DO);
+                            float currentTemp = deviceParameter.TempParam.Temp_PV - pos;
                             currentTemp = currentTemp <= deviceParameter.TempDOLowerLimit ? deviceParameter.TempDOLowerLimit : currentTemp;
                             deviceParameter.TempParam.Temp_PV = MathF.Round(currentTemp, 2);
                             LogHelper.Debug(string.Format("反应器{0} 起始温度{1} 单次delta{2} 实际温度{3}", deviceParameter.Name, initialTemp, pos, currentTemp));
