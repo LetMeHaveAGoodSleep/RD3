@@ -31,6 +31,7 @@ namespace RD3
     {
         static Mutex mutex;
         bool createdNew;
+        EnhancedSqliteBackupService backupService;
 
         protected override Window CreateShell()
         {
@@ -134,6 +135,9 @@ namespace RD3
             //AlarmLogger.GetInstance();
             //DeviceManager.GetInstance();
 
+            backupService = new EnhancedSqliteBackupService(@"hisDatas\xzrd3.db", @"D:\DatabaseBackups");
+            backupService.Start();
+
             base.OnInitialized();
         }
 
@@ -209,6 +213,8 @@ namespace RD3
 
             GC.WaitForPendingFinalizers();
             GC.Collect();
+
+            backupService?.Dispose();
 
             base.OnExit(e);
         }

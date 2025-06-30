@@ -7248,7 +7248,7 @@ namespace RD3.ViewModels
                                         temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
-                                    int count = flag2 == true ? 1 : temp;
+                                    int count = flag2 == true ? temp : temp;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)

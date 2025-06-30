@@ -22,7 +22,7 @@
     d:DesignWidth="1600"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowsTransparency="True"
-    Background="Transparent"
+    Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -32,200 +32,199 @@
     WindowState="Maximized"
     WindowStyle="None"
     mc:Ignorable="d">
-    <Border Background="{StaticResource BackGroundBrush}" CornerRadius="{StaticResource DefaultCornerRadius}">
-        <materialDesign:DialogHost
-            x:Name="DialogHost"
-            DialogTheme="Inherit"
-            Identifier="Root">
-            <Grid Name="MainGrid">
-                <Grid.RowDefinitions>
-                    <RowDefinition Name="Title" Height="40" />
+    <materialDesign:DialogHost
+        x:Name="DialogHost"
+        DialogTheme="Inherit"
+        Identifier="Root">
+        <Grid Name="MainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Name="Title" Height="40" />
+                <!--  标题栏  -->
+                <RowDefinition Name="Menu" Height="40" />
+                <!--  菜单栏  -->
+                <RowDefinition Name="Content" Height="*" />
+                <!--  内容区  -->
+            </Grid.RowDefinitions>
+            <Border
+                Grid.Row="0"
+                Background="{DynamicResource PrimaryBrush}"
+                CornerRadius="4,4,0,0">
+                <Grid Name="TitleGrid">
                     <!--  标题栏  -->
-                    <RowDefinition Name="Menu" Height="40" />
-                    <!--  菜单栏  -->
-                    <RowDefinition Name="Content" Height="*" />
-                    <!--  内容区  -->
-                </Grid.RowDefinitions>
-                <Border
-                    Grid.Row="0"
-                    Background="{DynamicResource PrimaryBrush}"
-                    CornerRadius="4,4,0,0">
-                    <Grid Name="TitleGrid">
-                        <!--  标题栏  -->
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160" />
-                            <!--  log  -->
-                            <ColumnDefinition Width="*" />
-                            <!--  标题  -->
-                            <ColumnDefinition Width="260" />
-                            <!--  用户  -->
-                            <ColumnDefinition Width="100" />
-                            <!--  最大最小  -->
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <Image
-                                Width="24"
-                                Height="24"
-                                Margin="5"
-                                Source="/Assets/logo.png" />
-                            <TextBlock
-                                Margin="5"
-                                FontSize="{StaticResource LargeFontSize}"
-                                FontWeight="Bold"
-                                Foreground="White"
-                                Text="芯造科技"
-                                TextAlignment="Left"
-                                TextWrapping="Wrap" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="3" Orientation="Horizontal">
-                            <Button
-                                Name="btnMin"
-                                hc:IconElement.Geometry="{StaticResource WindowMinGeometry}"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Foreground="White"
-                                ToolTip="{ex:Language Key='Minimize'}" />
-                            <Button
-                                Name="btnMax"
-                                Background="Transparent"
-                                BorderThickness="0">
-                                <materialDesign:PackIcon
-                                    Name="PackIconWindowState"
-                                    Foreground="White"
-                                    Kind="WindowMaximize"
-                                    ToolTip="{ex:Language Key='Maximize'}" />
-                            </Button>
-                            <Button
-                                Name="btnClose"
-                                hc:IconElement.Geometry="{StaticResource CloseGeometry}"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Foreground="White"
-                                ToolTip="{ex:Language Key='Close'}" />
-                        </StackPanel>
-                    </Grid>
-                </Border>
-                <Grid Name="MenuGrid" Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="160" />
+                        <!--  log  -->
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="auto" />
+                        <!--  标题  -->
+                        <ColumnDefinition Width="260" />
+                        <!--  用户  -->
+                        <ColumnDefinition Width="100" />
+                        <!--  最大最小  -->
                     </Grid.ColumnDefinitions>
-                    <!--  菜单栏  -->
-                    <Menu Height="40" VerticalAlignment="Top">
-                        <MenuItem Height="40" Header="系统管理">
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="用户管理"
-                                Tag="UserView" />
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="系统设置"
-                                Tag="SettingView" />
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="因子设置"
-                                Tag="DeviceNodesView" />
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="软件注册"
-                                Tag="RegisterView" />
-                        </MenuItem>
-                        <MenuItem Height="40" Header="设备管理">
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="设备校准"
-                                Tag="CalibrationView" />
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="设备配置"
-                                Tag="PumpMFCView"
-                                Visibility="Collapsed" />
-                            <MenuItem
-                                Width="100"
-                                Command="{Binding ReactorCommand}"
-                                Header="设备详情" />
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="工程调试"
-                                Tag="MCUDebugView" />
-                            <MenuItem Width="100" Header="功能测试">
-                                <MenuItem
-                                    Width="100"
-                                    Click="MenuItem_Open_Click"
-                                    Header="滤波测试"
-                                    Tag="FilterWaveView" />
-                            </MenuItem>
-                        </MenuItem>
-                        <MenuItem Height="40" Header="参数管理">
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="参数配置"
-                                Tag="ParameterView" />
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="参数整定"
-                                Tag="PIDView" />
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="参数来源"
-                                Tag="ParameterSourceView" />
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="阈值设置"
-                                Tag="WarnParamView" />
-                            <MenuItem
-                                Width="150"
-                                Click="MenuItem_Open_Click"
-                                Header="PH动态调控设置"
-                                Tag="PHControlView" />
-                        </MenuItem>
-                        <MenuItem Height="40" Header="数据管理">
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="实验管理"
-                                Tag="NewProjectView"
-                                Visibility="Collapsed" />
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="批次管理"
-                                Tag="NewBatchView" />
-                            <MenuItem
-                                Width="100"
-                                Click="MenuItem_Open_Click"
-                                Header="审计追踪"
-                                Tag="AuditView" />
-                        </MenuItem>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <Image
+                            Width="24"
+                            Height="24"
+                            Margin="5"
+                            Source="/Assets/logo.png" />
+                        <TextBlock
+                            Margin="5"
+                            FontSize="{StaticResource LargeFontSize}"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="芯造科技"
+                            TextAlignment="Left"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="3" Orientation="Horizontal">
+                        <Button
+                            Name="btnMin"
+                            hc:IconElement.Geometry="{StaticResource WindowMinGeometry}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="White"
+                            ToolTip="{ex:Language Key='Minimize'}" />
+                        <Button
+                            Name="btnMax"
+                            Background="Transparent"
+                            BorderThickness="0">
+                            <materialDesign:PackIcon
+                                Name="PackIconWindowState"
+                                Foreground="White"
+                                Kind="WindowMaximize"
+                                ToolTip="{ex:Language Key='Maximize'}" />
+                        </Button>
+                        <Button
+                            Name="btnClose"
+                            hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="White"
+                            ToolTip="{ex:Language Key='Close'}" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Grid Name="MenuGrid" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <!--  菜单栏  -->
+                <Menu Height="40" VerticalAlignment="Top">
+                    <MenuItem Height="40" Header="系统管理">
                         <MenuItem
-                            Height="40"
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="用户管理"
+                            Tag="UserView" />
+                        <MenuItem
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="系统设置"
+                            Tag="SettingView" />
+                        <MenuItem
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="因子设置"
+                            Tag="DeviceNodesView" />
+                        <MenuItem
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="软件注册"
+                            Tag="RegisterView" />
+                    </MenuItem>
+                    <MenuItem Height="40" Header="设备管理">
+                        <MenuItem
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="设备校准"
+                            Tag="CalibrationView" />
+                        <MenuItem
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="设备配置"
+                            Tag="PumpMFCView"
+                            Visibility="Collapsed" />
+                        <MenuItem
+                            Width="100"
                             Command="{Binding ReactorCommand}"
                             Header="设备详情" />
                         <MenuItem
-                            Height="40"
-                            Command="{Binding CameraCommand}"
-                            Header="视频监测" />
-                    </Menu>
-                    <StackPanel Grid.Column="2" Orientation="Horizontal">
-                        <!--<hc:GifImage x:Name="GifImageMain"
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="工程调试"
+                            Tag="MCUDebugView" />
+                        <MenuItem Width="100" Header="功能测试">
+                            <MenuItem
+                                Width="100"
+                                Click="MenuItem_Open_Click"
+                                Header="滤波测试"
+                                Tag="FilterWaveView" />
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Height="40" Header="参数管理">
+                        <MenuItem
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="参数配置"
+                            Tag="ParameterView" />
+                        <MenuItem
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="参数整定"
+                            Tag="PIDView" />
+                        <MenuItem
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="参数来源"
+                            Tag="ParameterSourceView" />
+                        <MenuItem
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="阈值设置"
+                            Tag="WarnParamView" />
+                        <MenuItem
+                            Width="150"
+                            Click="MenuItem_Open_Click"
+                            Header="PH动态调控设置"
+                            Tag="PHControlView" />
+                    </MenuItem>
+                    <MenuItem Height="40" Header="数据管理">
+                        <MenuItem
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="实验管理"
+                            Tag="NewProjectView"
+                            Visibility="Collapsed" />
+                        <MenuItem
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="批次管理"
+                            Tag="NewBatchView" />
+                        <MenuItem
+                            Width="100"
+                            Click="MenuItem_Open_Click"
+                            Header="审计追踪"
+                            Tag="AuditView" />
+                    </MenuItem>
+                    <MenuItem
+                        Height="40"
+                        Command="{Binding ReactorCommand}"
+                        Header="设备详情" />
+                    <MenuItem
+                        Height="40"
+                        Command="{Binding CameraCommand}"
+                        Header="视频监测" />
+                </Menu>
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <!--<hc:GifImage x:Name="GifImageMain"
                                      Stretch="None"
                                      Margin="32"
                                      Uri="/HandyControlDemo;component/Resources/Img/car_chase.gif" />-->
-                    </StackPanel>
-                </Grid>
-                <!--<hc:UniformSpacingPanel
+                </StackPanel>
+            </Grid>
+            <!--<hc:UniformSpacingPanel
                     Margin="20,0,0,0"
                     VerticalAlignment="Center"
                     Spacing="5">
@@ -235,328 +234,327 @@
                         FontSize="{DynamicResource SubHeadFontSize}"
                         Text="{Binding FormattedTime}" />
                 </hc:UniformSpacingPanel>-->
-                <Grid Name="ContentGrid" Grid.Row="2">
-                    <!--  内容区  -->
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="320" />
-                        <!--  左侧设备预览  -->
-                        <ColumnDefinition Width="*" />
-                        <!--  右侧图表+Log日志显示区  -->
-                    </Grid.ColumnDefinitions>
-                    <Grid Name="DevieceGrid" Grid.Column="0">
+            <Grid Name="ContentGrid" Grid.Row="2">
+                <!--  内容区  -->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="320" />
+                    <!--  左侧设备预览  -->
+                    <ColumnDefinition Width="*" />
+                    <!--  右侧图表+Log日志显示区  -->
+                </Grid.ColumnDefinitions>
+                <Grid Name="DevieceGrid" Grid.Column="0">
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="500" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="500" />
+                        <!--  设备列表  -->
+                        <RowDefinition Height="*" />
+                        <!--  设备详情  -->
+                    </Grid.RowDefinitions>
+                    <DataGrid
+                        x:Name="devieceGrid"
+                        Grid.Row="0"
+                        AutoGenerateColumns="False"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        ItemsSource="{Binding ReactorCol}"
+                        MouseRightButtonDown="devieceGrid_MouseRightButtonDown"
+                        SelectedIndex="{Binding SelectedIndex}"
+                        SelectionChanged="DataGrid_SelectionChanged">
+
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn
+                                Width="60"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="曲线"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding CurveDisplay, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <!--  设备列表  -->
-                            <RowDefinition Height="*" />
-                            <!--  设备详情  -->
-                        </Grid.RowDefinitions>
-                        <DataGrid
-                            x:Name="devieceGrid"
-                            Grid.Row="0"
-                            AutoGenerateColumns="False"
-                            Background="{x:Null}"
-                            BorderBrush="{x:Null}"
-                            ItemsSource="{Binding ReactorCol}"
-                            MouseRightButtonDown="devieceGrid_MouseRightButtonDown"
-                            SelectedIndex="{Binding SelectedIndex}"
-                            SelectionChanged="DataGrid_SelectionChanged">
+                            <DataGridTextColumn
+                                Width="80"
+                                Binding="{Binding Name}"
+                                CanUserSort="False"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="反应器"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                                IsReadOnly="True" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Status}"
+                                CanUserSort="False"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="运行状态"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                                IsReadOnly="True" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding ConnectStatus}"
+                                CanUserSort="False"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="连接状态"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                                IsReadOnly="True" />
+                        </DataGrid.Columns>
 
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn
-                                    Width="60"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="曲线"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox IsChecked="{Binding CurveDisplay, UpdateSourceTrigger=PropertyChanged}" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <!--  设备列表  -->
-                                <DataGridTextColumn
-                                    Width="80"
-                                    Binding="{Binding Name}"
-                                    CanUserSort="False"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="反应器"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                                    IsReadOnly="True" />
-                                <DataGridTextColumn
-                                    Width="*"
-                                    Binding="{Binding Status}"
-                                    CanUserSort="False"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="运行状态"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                                    IsReadOnly="True" />
-                                <DataGridTextColumn
-                                    Width="*"
-                                    Binding="{Binding ConnectStatus}"
-                                    CanUserSort="False"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="连接状态"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                                    IsReadOnly="True" />
-                            </DataGrid.Columns>
+                    </DataGrid>
 
-                        </DataGrid>
+                    <DataGrid
+                        Name="DevieceDetial"
+                        Grid.Row="1"
+                        AutoGenerateColumns="False"
+                        Background="{x:Null}"
+                        CanUserSortColumns="False"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding DevieceInfo}"
+                        MinRowHeight="30">
+                        <!--  设备详情  -->
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Width="auto"
+                                Binding="{Binding DescriptionName}"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="名称"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                            <DataGridTemplateColumn
+                                Width="*"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="R01"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Text="{Binding DescriptionValue}"
+                                            TextWrapping="Wrap" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
 
-                        <DataGrid
-                            Name="DevieceDetial"
-                            Grid.Row="1"
-                            AutoGenerateColumns="False"
-                            Background="{x:Null}"
-                            CanUserSortColumns="False"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding DevieceInfo}"
-                            MinRowHeight="30">
-                            <!--  设备详情  -->
-                            <DataGrid.Columns>
-                                <DataGridTextColumn
-                                    Width="auto"
-                                    Binding="{Binding DescriptionName}"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="名称"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                                <DataGridTemplateColumn
-                                    Width="*"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="R01"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock
-                                                VerticalAlignment="Center"
-                                                Text="{Binding DescriptionValue}"
-                                                TextWrapping="Wrap" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
+                <Grid Name="ChartAndLogGrid" Grid.Column="1">
+                    <!--  图表和日志  -->
 
-                    <Grid Name="ChartAndLogGrid" Grid.Column="1">
-                        <!--  图表和日志  -->
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="3*" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3*" />
+                        <!--  图表  -->
+                        <RowDefinition Height="*" />
+                        <!--  日志  -->
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Column="0">
+                        <!--  图表  -->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
                             <!--  图表  -->
-                            <RowDefinition Height="*" />
-                            <!--  日志  -->
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Column="0">
+                            <ColumnDefinition Width="auto" />
+                            <!--  图表菜单  -->
+                        </Grid.ColumnDefinitions>
+                        <Grid Name="chartGrid" Grid.Column="0">
                             <!--  图表  -->
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <!--  图表  -->
-                                <ColumnDefinition Width="auto" />
-                                <!--  图表菜单  -->
-                            </Grid.ColumnDefinitions>
-                            <Grid Name="chartGrid" Grid.Column="0">
-                                <!--  图表  -->
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="0" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Grid Name="chart" Grid.Row="1">
-                                    <wpf:WpfPlot Name="wpfPlot" />
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                Name="chartFlag"
-                                Grid.Column="1"
-                                Margin="20,0,20,0">
-                                <!--  图表选项  -->
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
-
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
-
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="40" />
-                                </Grid.RowDefinitions>
-                                <CheckBox
-                                    Name="Temp"
-                                    Grid.Row="0"
-                                    Content="温度"
-                                    IsChecked="True"
-                                    Tag="0"
-                                    Unchecked="cb_checkChanged" />
-                                <CheckBox
-                                    Name="pH"
-                                    Grid.Row="1"
-                                    Content="pH"
-                                    IsChecked="True"
-                                    Tag="1"
-                                    Unchecked="cb_checkChanged" />
-                                <CheckBox
-                                    Name="DO"
-                                    Grid.Row="2"
-                                    Content="溶氧"
-                                    IsChecked="True"
-                                    Tag="1"
-                                    Unchecked="cb_checkChanged" />
-                                <CheckBox
-                                    Name="Agit"
-                                    Grid.Row="3"
-                                    Content="转速"
-                                    IsChecked="True"
-                                    Tag="0"
-                                    Unchecked="cb_checkChanged" />
-                                <CheckBox
-                                    Name="Air"
-                                    Grid.Row="4"
-                                    Content="Air"
-                                    IsChecked="True"
-                                    Tag="0"
-                                    Unchecked="cb_checkChanged" />
-                                <CheckBox
-                                    Name="AcidPumpFlowRate"
-                                    Grid.Row="5"
-                                    Content="酸泵流速"
-                                    IsChecked="False"
-                                    Tag="0"
-                                    Unchecked="cb_checkChanged"
-                                    Visibility="Collapsed" />
-                                <CheckBox
-                                    Name="BasePumpFlowRate"
-                                    Grid.Row="6"
-                                    Content="碱泵流速"
-                                    IsChecked="False"
-                                    Tag="0"
-                                    Unchecked="cb_checkChanged"
-                                    Visibility="Collapsed" />
-                                <CheckBox
-                                    Name="FeedPumpFlowRate"
-                                    Grid.Row="7"
-                                    Content="补料泵流速"
-                                    IsChecked="False"
-                                    Tag="0"
-                                    Unchecked="cb_checkChanged"
-                                    Visibility="Collapsed" />
-                                <CheckBox
-                                    Name="AFPumpFlowRate"
-                                    Grid.Row="8"
-                                    Content="消泡泵流速"
-                                    IsChecked="False"
-                                    Tag="0"
-                                    Unchecked="cb_checkChanged"
-                                    Visibility="Collapsed" />
-                                <CheckBox
-                                    Name="AcidPumpFlow"
-                                    Grid.Row="9"
-                                    Content="酸泵累积量"
-                                    IsChecked="False"
-                                    Tag="0"
-                                    Unchecked="cb_checkChanged"
-                                    Visibility="Collapsed" />
-                                <CheckBox
-                                    Name="BasePumpFlow"
-                                    Grid.Row="10"
-                                    Content="碱泵累积量"
-                                    IsChecked="False"
-                                    Tag="0"
-                                    Unchecked="cb_checkChanged"
-                                    Visibility="Collapsed" />
-                                <CheckBox
-                                    Name="FeedPumpFlow"
-                                    Grid.Row="11"
-                                    Content="补料泵累积量"
-                                    IsChecked="False"
-                                    Tag="0"
-                                    Unchecked="cb_checkChanged"
-                                    Visibility="Collapsed" />
-                                <CheckBox
-                                    Name="AFPumpFlow"
-                                    Grid.Row="12"
-                                    Content="消泡泵累积量"
-                                    IsChecked="False"
-                                    Tag="0"
-                                    Unchecked="cb_checkChanged"
-                                    Visibility="Collapsed" />
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid Name="chart" Grid.Row="1">
+                                <wpf:WpfPlot Name="wpfPlot" />
                             </Grid>
                         </Grid>
-                        <DataGrid
-                            Name="dataGrid1"
-                            Grid.Row="1"
-                            hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
-                            hc:DataGridAttach.ShowSelectAllButton="False"
-                            AutoGenerateColumns="False"
-                            Background="Transparent"
-                            ColumnWidth="SizeToCells"
-                            FontSize="{DynamicResource NormalFontSize}"
-                            HeadersVisibility="Column"
-                            IsReadOnly="True"
-                            ItemsSource="{Binding DataList}"
-                            RowHeaderWidth="60"
-                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                            ScrollViewer.VerticalScrollBarVisibility="Auto">
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn
-                                    Width="200"
-                                    CellStyle="{StaticResource DataGridTextLeftCellStyle}"
-                                    Header="{ex:Language Key='发生时间'}"
-                                    HeaderStyle="{StaticResource DataGridLeftColumnHeaderStyle}">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Datetime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn
-                                    Width="100"
-                                    Binding="{Binding BatchID}"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='批次'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                                <DataGridTextColumn
-                                    Width="100"
-                                    Binding="{Binding DeviceID}"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='反应器'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                                <!--<DataGridTextColumn
+                        <Grid
+                            Name="chartFlag"
+                            Grid.Column="1"
+                            Margin="20,0,20,0">
+                            <!--  图表选项  -->
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                            </Grid.RowDefinitions>
+                            <CheckBox
+                                Name="Temp"
+                                Grid.Row="0"
+                                Content="温度"
+                                IsChecked="True"
+                                Tag="0"
+                                Unchecked="cb_checkChanged" />
+                            <CheckBox
+                                Name="pH"
+                                Grid.Row="1"
+                                Content="pH"
+                                IsChecked="True"
+                                Tag="1"
+                                Unchecked="cb_checkChanged" />
+                            <CheckBox
+                                Name="DO"
+                                Grid.Row="2"
+                                Content="溶氧"
+                                IsChecked="True"
+                                Tag="1"
+                                Unchecked="cb_checkChanged" />
+                            <CheckBox
+                                Name="Agit"
+                                Grid.Row="3"
+                                Content="转速"
+                                IsChecked="True"
+                                Tag="0"
+                                Unchecked="cb_checkChanged" />
+                            <CheckBox
+                                Name="Air"
+                                Grid.Row="4"
+                                Content="Air"
+                                IsChecked="True"
+                                Tag="0"
+                                Unchecked="cb_checkChanged" />
+                            <CheckBox
+                                Name="AcidPumpFlowRate"
+                                Grid.Row="5"
+                                Content="酸泵流速"
+                                IsChecked="False"
+                                Tag="0"
+                                Unchecked="cb_checkChanged"
+                                Visibility="Collapsed" />
+                            <CheckBox
+                                Name="BasePumpFlowRate"
+                                Grid.Row="6"
+                                Content="碱泵流速"
+                                IsChecked="False"
+                                Tag="0"
+                                Unchecked="cb_checkChanged"
+                                Visibility="Collapsed" />
+                            <CheckBox
+                                Name="FeedPumpFlowRate"
+                                Grid.Row="7"
+                                Content="补料泵流速"
+                                IsChecked="False"
+                                Tag="0"
+                                Unchecked="cb_checkChanged"
+                                Visibility="Collapsed" />
+                            <CheckBox
+                                Name="AFPumpFlowRate"
+                                Grid.Row="8"
+                                Content="消泡泵流速"
+                                IsChecked="False"
+                                Tag="0"
+                                Unchecked="cb_checkChanged"
+                                Visibility="Collapsed" />
+                            <CheckBox
+                                Name="AcidPumpFlow"
+                                Grid.Row="9"
+                                Content="酸泵累积量"
+                                IsChecked="False"
+                                Tag="0"
+                                Unchecked="cb_checkChanged"
+                                Visibility="Collapsed" />
+                            <CheckBox
+                                Name="BasePumpFlow"
+                                Grid.Row="10"
+                                Content="碱泵累积量"
+                                IsChecked="False"
+                                Tag="0"
+                                Unchecked="cb_checkChanged"
+                                Visibility="Collapsed" />
+                            <CheckBox
+                                Name="FeedPumpFlow"
+                                Grid.Row="11"
+                                Content="补料泵累积量"
+                                IsChecked="False"
+                                Tag="0"
+                                Unchecked="cb_checkChanged"
+                                Visibility="Collapsed" />
+                            <CheckBox
+                                Name="AFPumpFlow"
+                                Grid.Row="12"
+                                Content="消泡泵累积量"
+                                IsChecked="False"
+                                Tag="0"
+                                Unchecked="cb_checkChanged"
+                                Visibility="Collapsed" />
+                        </Grid>
+                    </Grid>
+                    <DataGrid
+                        Name="dataGrid1"
+                        Grid.Row="1"
+                        hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+                        hc:DataGridAttach.ShowSelectAllButton="False"
+                        AutoGenerateColumns="False"
+                        Background="Transparent"
+                        ColumnWidth="SizeToCells"
+                        FontSize="{DynamicResource NormalFontSize}"
+                        HeadersVisibility="Column"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding DataList}"
+                        RowHeaderWidth="60"
+                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn
+                                Width="200"
+                                CellStyle="{StaticResource DataGridTextLeftCellStyle}"
+                                Header="{ex:Language Key='发生时间'}"
+                                HeaderStyle="{StaticResource DataGridLeftColumnHeaderStyle}">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Datetime, StringFormat={}{0:yyyy-MM-dd HH:mm:ss}}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn
+                                Width="100"
+                                Binding="{Binding BatchID}"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='批次'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                            <DataGridTextColumn
+                                Width="100"
+                                Binding="{Binding DeviceID}"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='反应器'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                            <!--<DataGridTextColumn
                                     Width="150"
                                     Binding="{Binding Module}"
                                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="{ex:Language Key='模块'}"
                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />-->
-                                <!--<DataGridTextColumn
+                            <!--<DataGridTextColumn
                                     Width="100"
                                     Binding="{Binding Value}"
                                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="{ex:Language Key='值'}"
                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />-->
-                                <!--<DataGridTextColumn
+                            <!--<DataGridTextColumn
                                     Width="80"
                                     Binding="{Binding Grade}"
                                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                     Header="{ex:Language Key='等级'}"
                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />-->
-                                <DataGridTextColumn
-                                    Width="250"
-                                    Binding="{Binding Remark}"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                    Header="{ex:Language Key='描述'}"
-                                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
+                            <DataGridTextColumn
+                                Width="250"
+                                Binding="{Binding Remark}"
+                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                Header="{ex:Language Key='描述'}"
+                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </Grid>
-        </materialDesign:DialogHost>
-    </Border>
+        </Grid>
+    </materialDesign:DialogHost>
 </Window>

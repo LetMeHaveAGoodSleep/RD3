@@ -509,15 +509,27 @@ namespace XZ.SQLite
         {
             try
             {
-                // 使用SQLiteCommand对象执行SQL命令
-                using (var command = connection.CreateCommand())
+                using (var transaction = connection.BeginTransaction())
                 {
-                    command.CommandText = sql;
-                    if (parameters != null)
+                    try
                     {
-                        command.Parameters.AddRange(parameters);
+                        // 使用SQLiteCommand对象执行SQL命令
+                        using (var command = connection.CreateCommand())
+                        {
+                            command.CommandText = sql;
+                            if (parameters != null)
+                            {
+                                command.Parameters.AddRange(parameters);
+                            }
+                            return command.ExecuteNonQuery();
+                        }
+                        transaction.Commit(); // 明确提交
                     }
-                    return command.ExecuteNonQuery();
+                    catch
+                    {
+                        transaction.Rollback(); // 失败时回滚
+                        throw;
+                    }
                 }
             }
             catch (Exception ex)
