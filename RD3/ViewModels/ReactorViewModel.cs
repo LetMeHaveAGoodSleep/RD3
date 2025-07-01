@@ -966,6 +966,7 @@ namespace RD3.ViewModels
 
                     AgitRunCommand.Execute(deviceParameter);
                     AirRunCommand.Execute(deviceParameter);
+                    O2RunCommand.Execute(deviceParameter);
 
                     if (param.O2Associated)
                     {
@@ -1122,7 +1123,8 @@ namespace RD3.ViewModels
 
                             if (deviceParameter.AgitParam.Agit_PV > param.AgitHigh && !hadReach)
                             {
-                                hadReach = true;
+                                LogHelper.Debug($"到达设定转速高限:{param.AgitHigh}");
+                               hadReach = true;
                             }
 
                             if (hadReach)//到达过转速高限
@@ -1132,7 +1134,7 @@ namespace RD3.ViewModels
                                     if (param.O2Associated)
                                     {
                                         dicDOAgitPid[deviceParameter.Name].Reset();
-
+                                        LogHelper.Debug($"到达通气高限:{param.AirUpperLimit}");
                                         break;//跳到氧气
                                     }
                                     else
@@ -1188,7 +1190,7 @@ namespace RD3.ViewModels
                                     deviceParameter.AirParam.FlowSpeed = airSpeed;
                                     Thread.Sleep(3000);
 
-                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 通气预设值：{1}，底值：{2}，delta：{3}", deviceParameter.Name, airSpeed, airFlow, tempAir));
+                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 通气预设值：{1}，当前：{2}，delta：{3}", deviceParameter.Name, airSpeed, realTimeParam.AirFlowSpeed, tempAir));
                                     int count = info.Interval <= 1 ? 1 : info.Interval;
                                     while (count > 0)
                                     {
@@ -1410,7 +1412,7 @@ namespace RD3.ViewModels
                                 }
 
                                 Thread.Sleep(3000);
-                                LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 氧气预设值：{1}，底值：{2}，delta：{3}", deviceParameter.Name, o2Speed, airFlow, tempO2));
+                                LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 氧气预设值：{1}，底值：{2}，delta：{3}", deviceParameter.Name, o2Speed, realTimeParam.O2FlowSpeed, tempO2));
                                 int count = info.Interval <= 1 ? 1 : info.Interval;
                                 while (count > 0)
                                 {
@@ -4129,8 +4131,12 @@ namespace RD3.ViewModels
             }
         });
 
-        public DelegateCommand Feed1RunCommand => new(() =>
+        public DelegateCommand<DeviceParameter> Feed1RunCommand => new((DeviceParameter CurrentDeviceParameter) =>
         {
+            if (CurrentDeviceParameter == null)
+            {
+                CurrentDeviceParameter = this.CurrentDeviceParameter;
+            }
             PeristalticPump pump = PeristalticPump.FeedPump;
 
             if (dicFeed1Worker[CurrentDeviceParameter.Name] != null && dicFeed1Worker[CurrentDeviceParameter.Name].IsBusy)
@@ -8196,8 +8202,13 @@ namespace RD3.ViewModels
             }
         });
 
-        public DelegateCommand Feed2RunCommand => new(() =>
+        public DelegateCommand<DeviceParameter> Feed2RunCommand => new((DeviceParameter CurrentDeviceParameter) =>
         {
+            if (CurrentDeviceParameter == null)
+            {
+                CurrentDeviceParameter = this.CurrentDeviceParameter;
+            }
+
             PeristalticPump pump = PeristalticPump.Feed2Pump;
 
             if (dicFeed2Worker[CurrentDeviceParameter.Name] != null && dicFeed2Worker[CurrentDeviceParameter.Name].IsBusy)
@@ -13948,6 +13959,17 @@ namespace RD3.ViewModels
                 {
                     BaseRunCommand.Execute(deviceParameter);
                 }
+            }
+
+
+            if (deviceParameter.FeedParam1.IsControling)
+            {
+                Feed1RunCommand.Execute(deviceParameter);
+            }
+
+            if (deviceParameter.FeedParam2.IsControling)
+            {
+                Feed2RunCommand.Execute(deviceParameter);
             }
 
             if (deviceParameter.AFParam.AutoDefoaming)
