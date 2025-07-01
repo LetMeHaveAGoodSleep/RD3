@@ -137,6 +137,7 @@ namespace RD3.ViewModels
 
                 FeedStrategyInfos = new ObservableCollection<FeedStrategyInfo>(view1.Cast<FeedStrategyInfo>());
             }
+            allDeviceInfos[deviceID] = FeedStrategyInfos;
             FeedStrategyManager.GetInstance().Save(allDeviceInfos);
         });
 

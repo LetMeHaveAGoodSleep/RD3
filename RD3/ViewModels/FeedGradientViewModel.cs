@@ -145,6 +145,8 @@ namespace RD3.ViewModels
                 if (view1.IsAddingNew) view1.CommitNew();
                 if (view1.IsEditingItem) view1.CommitEdit();
             }
+
+            allDeviceInfos[deviceID] = FeedGradientInfos;
             FeedGradientManager.GetInstance().Save(allDeviceInfos);
         });
 
