@@ -521,9 +521,11 @@ namespace XZ.SQLite
                             {
                                 command.Parameters.AddRange(parameters);
                             }
-                            return command.ExecuteNonQuery();
+
+                            int num = command.ExecuteNonQuery();
+                            transaction.Commit(); // 明确提交
+                            return num;
                         }
-                        transaction.Commit(); // 明确提交
                     }
                     catch
                     {
