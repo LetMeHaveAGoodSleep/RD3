@@ -479,9 +479,9 @@ namespace RD3.Shared
                         //old = temp;
                         //realTimeParam.PH = (float)temp;
 
-                        var device = AnalysisSolution.GetInstance().ReactorCol.FindFirst(t => t.Name == insID);
-                        realTimeParam.Agit = Convert.ToInt32(RCFilter.LowPass(realTimeParam.Agit, realTimeParam.LastAgit, device.AgitSampleCycle, device.AgitSampleFrequency));
-                        realTimeParam.LastAgit = realTimeParam.Agit;
+                        //var device = AnalysisSolution.GetInstance().ReactorCol.FindFirst(t => t.Name == insID);
+                        //realTimeParam.Agit = Convert.ToInt32(RCFilter.LowPass(realTimeParam.Agit, realTimeParam.LastAgit, device.AgitSampleCycle, device.AgitSampleFrequency));
+                        //realTimeParam.LastAgit = realTimeParam.Agit;
 
                         if (!dicDOFilter.ContainsKey(insID))
                         {

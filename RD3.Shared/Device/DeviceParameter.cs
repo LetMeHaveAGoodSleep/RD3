@@ -686,6 +686,13 @@ namespace RD3.Shared
             set { SetProperty(ref _feedDOAssociated, value); }
         }
 
+        private bool _doFilterEnable = false;
+        public bool DOFilterEnable
+        {
+            get => _doFilterEnable;
+            set { SetProperty(ref _doFilterEnable, value); }
+        }
+
         private bool _doRegulationLimit = false;
         [JsonIgnore]
         public bool DORegulationLimit

@@ -98,6 +98,14 @@
             Visibility="{Binding CurrentDeviceParameter.DOParam.IsCycle, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <DockPanel LastChildFill="False">
+                        <CheckBox
+                            Content="滤波开关"
+                            DockPanel.Dock="Bottom"
+                            IsChecked="{Binding CurrentDeviceParameter.DOFilterEnable}"
+                            Style="{StaticResource MaterialDesignCheckBox}"
+                            ToolTip="转速是否开启滤波" />
+                    </DockPanel>
                     <TextBox
                         Width="100"
                         hc:InfoElement.Title="{ex:Language Key='采样周期'}"

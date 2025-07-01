@@ -39,7 +39,7 @@ namespace RD3.ViewModels
             if (!string.IsNullOrEmpty(dataInfo.path))
             {
                 //读取数据
-                string dateTime = "dateTime like '*'";//"dateTime like '%:00'";
+                string dateTime = "dateTime like '%'";//"dateTime like '%:00'";
                 if(dataInfo.second == 10)
                 {
                     dateTime = "(dateTime like '%:00' or dateTime like '%:20' or dateTime like '%:30' or dateTime like '%:40' or dateTime like '%:50')";

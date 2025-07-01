@@ -940,6 +940,8 @@ namespace RD3.ViewModels
                     PIDInfo info = null;
                     PIDInfo lastPid = null;
                     bool hadReach = false;//指示是否到达过转速高限
+                    int lastDODelta = 0;//低通滤波的上个值
+
 
                     MidRangingParam param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                     RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -1036,11 +1038,8 @@ namespace RD3.ViewModels
                                     agit = deviceParameter.AgitParam.Agit_PV;
                                 }
                                 LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-                                deviceParameter.IsDOLimit = false;
-                                dicDOPid[deviceParameter.Name].Reset();
-                                dicDODelta[deviceParameter.Name] = 0;
 
-                                dicDOAgitPid[deviceParameter.Name].Reset();
+                                ResetDOParam(deviceParameter);
                             }
                             lastPid = info;
 
@@ -1084,16 +1083,18 @@ namespace RD3.ViewModels
                             float temp = dicDOPid[deviceParameter.Name].CalculatePositional_DO((float)realTimeParam.DO);
                             int tempAgit = Convert.ToInt32(agit + temp);
 
-                            LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2}", deviceParameter.Name, agit, temp));
-                            if (tempAgit >= param.AgitUpperLimit)
+                            dicDODelta[deviceParameter.Name] = tempAgit;
+                            if (deviceParameter.DOFilterEnable)
                             {
-                                tempAgit = param.AgitUpperLimit;
+                                //增加低通滤波 
+                                var lowPassDelta = Convert.ToInt32(RCFilter.LowPass(tempAgit, lastDODelta, deviceParameter.AgitSampleCycle, deviceParameter.AgitSampleFrequency));
+                                lastDODelta = lowPassDelta;
+                                dicDODelta[deviceParameter.Name] = lowPassDelta;
                             }
-                            else if (tempAgit <= param.AgitLowerLimit)
-                            {
-                                tempAgit = param.AgitLowerLimit;
-                            }
-                            deviceParameter.AgitParam.Agit_PV = tempAgit;
+
+                            LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, agit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
+
+                            deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
                             Thread.Sleep(5000);
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -1172,7 +1173,7 @@ namespace RD3.ViewModels
                                     dicDOAgitPid[deviceParameter.Name].SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
                                     dicDOAgitPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
                                     dicDOAgitPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
-                                    dicDOAgitPid[deviceParameter.Name].SetTarget(realTimeParam.Agit);
+                                    dicDOAgitPid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
 
                                     float tempAir = dicDOAgitPid[deviceParameter.Name].CalculateIncremental(param.AgitHigh);
                                     float airSpeed = realTimeParam.AirFlowSpeed + tempAir;
@@ -1279,11 +1280,8 @@ namespace RD3.ViewModels
                                     agit = deviceParameter.AgitParam.Agit_PV;
                                 }
                                 LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-                                deviceParameter.IsDOLimit = false;
-                                dicDOPid[deviceParameter.Name].Reset();
-                                dicDODelta[deviceParameter.Name] = 0;
 
-                                dicDOAgitPid[deviceParameter.Name].Reset();
+                                ResetDOParam(deviceParameter);
                             }
                             lastPid = info;
 
@@ -1320,17 +1318,18 @@ namespace RD3.ViewModels
 
                             float temp = dicDOPid[deviceParameter.Name].CalculatePositional_DO((float)realTimeParam.DO);
                             int tempAgit = Convert.ToInt32(agit + temp);
+                            dicDODelta[deviceParameter.Name] = tempAgit;
+                            if (deviceParameter.DOFilterEnable)
+                            {
+                                //增加低通滤波 
+                                var lowPassDelta = Convert.ToInt32(RCFilter.LowPass(tempAgit, lastDODelta, deviceParameter.AgitSampleCycle, deviceParameter.AgitSampleFrequency));
+                                lastDODelta = lowPassDelta;
+                                dicDODelta[deviceParameter.Name] = lowPassDelta;
+                            }
 
-                            LogHelper.Debug(string.Format("氧气：反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2}", deviceParameter.Name, agit, temp));
-                            if (tempAgit >= param.AgitUpperLimit)
-                            {
-                                tempAgit = param.AgitUpperLimit;
-                            }
-                            else if (tempAgit <= param.AgitLowerLimit)
-                            {
-                                tempAgit = param.AgitLowerLimit;
-                            }
-                            deviceParameter.AgitParam.Agit_PV = tempAgit;
+                            LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, agit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
+
+                            deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
                             Thread.Sleep(5000);
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -1388,7 +1387,7 @@ namespace RD3.ViewModels
                                 dicDOAgitPid[deviceParameter.Name].SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
                                 dicDOAgitPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
                                 dicDOAgitPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
-                                dicDOAgitPid[deviceParameter.Name].SetTarget(deviceParameter.Agit);
+                                dicDOAgitPid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
 
                                 float tempO2 = dicDOAgitPid[deviceParameter.Name].CalculateIncremental((float)param.AgitHigh);
                                 float o2Speed = realTimeParam.O2FlowSpeed + tempO2;
