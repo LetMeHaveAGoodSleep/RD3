@@ -1172,6 +1172,7 @@ namespace RD3.ViewModels
                                     }
 
                                     realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                    dicDOAgitPid[deviceParameter.Name].Reset();
                                     dicDOAgitPid[deviceParameter.Name].SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
                                     dicDOAgitPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
                                     dicDOAgitPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
@@ -1245,6 +1246,16 @@ namespace RD3.ViewModels
                             }
 
                             param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                            if (param.Unit == 0)//VVM
+                            {
+                                initialAir = MathF.Round((float)(param.InitialAir * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                maxAir = MathF.Round((float)(param.AirUpperLimit * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                            }
+                            else if (param.Unit == 1)//L/min
+                            {
+                                initialAir = param.InitialAir;
+                                maxAir = param.AirUpperLimit;
+                            }
                             string result = File.ReadAllText(FileConst.PidInfoPath);
                             List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
                             if (pIDInfos == null)
@@ -1402,14 +1413,7 @@ namespace RD3.ViewModels
                                     o2Speed = param.InitialO2;
                                 }
                                 deviceParameter.O2Param.FlowSpeed = o2Speed;
-                                if (deviceParameter.AirParam.FlowSpeed > tempO2)
-                                {
-                                    deviceParameter.AirParam.FlowSpeed -= tempO2;
-                                }
-                                else
-                                {
-                                    deviceParameter.AirParam.FlowSpeed = 0;
-                                }
+                                deviceParameter.AirParam.FlowSpeed = maxAir - o2Speed > 0 ? maxAir - o2Speed : 0;
 
                                 Thread.Sleep(3000);
                                 LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 氧气预设值：{1}，底值：{2}，delta：{3}", deviceParameter.Name, o2Speed, realTimeParam.O2FlowSpeed, tempO2));
@@ -4240,7 +4244,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = dicFeed1SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed1SP[CurrentDeviceParameter.Name],
+                                        FlowSpeed = deviceParameter.FeedParam1.Feed_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed1SP[CurrentDeviceParameter.Name],
                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -8312,7 +8316,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = dicFeed2SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed2SP[CurrentDeviceParameter.Name],
+                                        FlowSpeed = deviceParameter.FeedParam2.Feed_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : deviceParameter.FeedParam2.Feed_PV,
                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
