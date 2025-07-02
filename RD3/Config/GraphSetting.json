@@ -4,6 +4,7 @@
   "DO": "溶氧",
   "pH": "pH",
   "MFC1FlowRate": "MFC1流量",
+  "MFC2FlowRate": "MFC2流量",
   "Pump1FlowRate": "泵1流量",
   "Pump2FlowRate": "泵2流量",
   "Pump3FlowRate": "泵3流量",
