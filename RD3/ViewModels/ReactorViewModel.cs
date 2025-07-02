@@ -95,12 +95,12 @@ namespace RD3.ViewModels
         #region 溶氧相关
         private Dictionary<string, BackgroundWorker> dicDOTimeWorker = new Dictionary<string, BackgroundWorker>();
         private Dictionary<string, BackgroundWorker> dicDOWorker = new Dictionary<string, BackgroundWorker>();
-        private Dictionary<string, BackgroundWorker> dicDOTempWorker = new Dictionary<string, BackgroundWorker>();
         private Dictionary<string, int> dicDODelta = new Dictionary<string, int>();
         private Dictionary<string, int> dicAirIndex = new Dictionary<string, int>();
         private Dictionary<string, int> dicO2Index = new Dictionary<string, int>();
         private Dictionary<string, QPIDController> dicDOPid = new Dictionary<string, QPIDController>();
-        private Dictionary<string, QPIDController> dicDOAgitPid = new Dictionary<string, QPIDController>();
+        private Dictionary<string, QPIDController> dicDOAirPid = new Dictionary<string, QPIDController>();
+        private Dictionary<string, QPIDController> dicDOO2Pid = new Dictionary<string, QPIDController>();
         private Dictionary<string, float> dicAgitPid = new Dictionary<string, float>();
 
         private Dictionary<string, BackgroundWorker> dicAgitWorker = new Dictionary<string, BackgroundWorker>();
@@ -886,7 +886,8 @@ namespace RD3.ViewModels
             deviceParameter.DORegulationLimit = false;
             dicDOPid[deviceParameter.Name].Reset();
             dicDODelta[deviceParameter.Name] = 0;
-            dicDOAgitPid[deviceParameter.Name].Reset();
+            dicDOAirPid[deviceParameter.Name].Reset();
+            dicDOO2Pid[deviceParameter.Name].Reset();
         }
 
         public DelegateCommand<DeviceParameter> DORunCommand => new((DeviceParameter device) =>
@@ -903,12 +904,6 @@ namespace RD3.ViewModels
                 Thread.Sleep(100);
             }
 
-            if (dicDOTempWorker[currentDeviceParameter.Name] != null && dicDOTempWorker[currentDeviceParameter.Name].IsBusy)
-            {
-                dicDOTempWorker[currentDeviceParameter.Name].CancelAsync();
-                Thread.Sleep(100);
-            }
-
             //关闭控制
             if (!currentDeviceParameter.DOParam.IsControling)
             {
@@ -916,6 +911,7 @@ namespace RD3.ViewModels
             }
 
             float agitHigh = 0;
+            float initialTemp = currentDeviceParameter.TempParam.Temp_PV;
 
             dicDOPid[currentDeviceParameter.Name].Reset();
             dicDOWorker[currentDeviceParameter.Name] = new BackgroundWorker();
@@ -939,7 +935,7 @@ namespace RD3.ViewModels
 
                     PIDInfo info = null;
                     PIDInfo lastPid = null;
-                    bool hadReach = false;//指示是否到达过转速高限
+                    MidrangingPeriod midrangingPeriod = MidrangingPeriod.DuringAgitHigh;
                     int lastDODelta = 0;//低通滤波的上个值
 
 
@@ -968,23 +964,6 @@ namespace RD3.ViewModels
                     AirRunCommand.Execute(deviceParameter);
                     O2RunCommand.Execute(deviceParameter);
 
-                    if (param.O2Associated)
-                    {
-                        //刚开始不通氧气
-                        //float initialO2 = 0;
-                        //if (param.Unit == 0)//VVM
-                        //{
-                        //    initialO2 = MathF.Round((float)(param.InitialO2 * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                        //}
-                        //else if (param.Unit == 1)//L/min
-                        //{
-                        //    initialO2 = param.InitialO2;
-                        //}
-                        //deviceParameter.O2Param.FlowSpeed = realTimeParam.O2FlowSpeed < initialO2 ? initialO2 : realTimeParam.O2FlowSpeed;
-                        //deviceParameter.O2Param.IsControling = true;
-                        //O2RunCommand.Execute(deviceParameter);
-                    }
-
                     agit = deviceParameter.AgitParam.Agit_PV;
                     airFlow = deviceParameter.AirParam.FlowSpeed;
                     o2Flow = deviceParameter.O2Param.FlowSpeed;
@@ -1000,13 +979,36 @@ namespace RD3.ViewModels
                             {
                                 return;
                             }
+
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                            if (realTimeParam.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)
+                            {
+                                agit = deviceParameter.AgitParam.Agit_PV;
+                                airFlow = deviceParameter.AirParam.FlowSpeed;
+                                o2Flow = deviceParameter.O2Param.FlowSpeed;
+
+                                ResetDOParam(deviceParameter);
+
+                                int count = info.Interval <= 0 ? 1 : info.Interval;
+                                while (count > 0)
+                                {
+                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    {
+                                        return;
+                                    }
+
+                                    count--;
+                                    Thread.Sleep(1000);
+                                }
+                                continue;
+                            }
+
                             param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                             string result = File.ReadAllText(FileConst.PidInfoPath);
                             List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
                             if (pIDInfos == null)
                             {
                                 MessageBox.Show("PID调控策略列表为空");
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
 
@@ -1052,7 +1054,7 @@ namespace RD3.ViewModels
                                 o2Flow = deviceParameter.O2Param.FlowSpeed;
 
                                 deviceParameter.IsDOLimit = false;
-                                dicDOAgitPid[deviceParameter.Name].Reset();
+                                dicDOAirPid[deviceParameter.Name].Reset();
                                 dicDOPid[deviceParameter.Name].Reset();
                                 dicDODelta[deviceParameter.Name] = 0;
                                 int count = info.Interval <= 0 ? 1 : info.Interval;
@@ -1067,11 +1069,6 @@ namespace RD3.ViewModels
                                     Thread.Sleep(1000);
                                 }
                                 continue;
-                            }
-
-                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                            {
-                                return;
                             }
 
                             dicDOPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
@@ -1121,272 +1118,108 @@ namespace RD3.ViewModels
                                 continue;
                             }
 
-                            if (deviceParameter.AgitParam.Agit_PV > param.AgitHigh && !hadReach)
+                            if (deviceParameter.AgitParam.Agit_PV > param.AgitHigh && midrangingPeriod== MidrangingPeriod.DuringAgitHigh)
                             {
                                 LogHelper.Debug($"到达设定转速高限:{param.AgitHigh}");
-                               hadReach = true;
+                                midrangingPeriod = MidrangingPeriod.DuringAirUpperLimit;
                             }
 
-                            if (hadReach)//到达过转速高限
+                            if (midrangingPeriod < MidrangingPeriod.DuringAirUpperLimit)
                             {
-                                if (deviceParameter.AirParam.FlowSpeed >= param.AirUpperLimit)//通气已经到达极限
+                                continue;
+                            }
+                            else if (midrangingPeriod == MidrangingPeriod.DuringReduceFeed)
+                            {
+
+                            }
+                            else if (midrangingPeriod == MidrangingPeriod.DuringFallTemp)
+                            {
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
-                                    if (param.O2Associated)
+                                    return;
+                                }
+
+                                deviceParameter.DORegulationLimit = false;
+
+                                QPIDController pIDController = new QPIDController();
+                                var pIDInfo = pIDInfos.FindFirst(t => t.PidName.Contains("降温") && t.deviceID == deviceParameter.Name);
+                                if (pIDInfo == null)
+                                {
+                                    MessageBox.Show(string.Format("反应器{0}不存在温控的PID调控策略", deviceParameter.Name));
+                                    return;
+                                }
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                pIDController.SetParameters(kp: (float)pIDInfo.P, ki: (float)pIDInfo.I, kd: (float)pIDInfo.D, integralThreshold: pIDInfo.Threshold, interval: pIDInfo.Interval);
+                                pIDController.SetOutputLimits(-Math.Abs(pIDInfo.maxSpeed), Math.Abs(pIDInfo.maxSpeed));
+                                pIDController.SetIntegralLimits(-2000, 2000);
+                                pIDController.SetTarget(agitHigh);
+                                float increment = pIDController.CalculateIncremental(realTimeParam.Agit);
+                                float currentTemp = deviceParameter.TempParam.Temp_PV + increment;
+                                if (currentTemp <= deviceParameter.TempDOLowerLimit)
+                                {
+                                    deviceParameter.DORegulationLimit = true;
+                                    midrangingPeriod = MidrangingPeriod.DuringReduceFeed;
+                                }
+                                else if (currentTemp >= initialTemp)
+                                {
+                                    if (deviceParameter.DOParam.O2Associated)
                                     {
-                                        dicDOAgitPid[deviceParameter.Name].Reset();
-                                        LogHelper.Debug($"到达通气高限:{param.AirUpperLimit}");
-                                        break;//跳到氧气
+                                        midrangingPeriod = MidrangingPeriod.DuringO2UpperLimit;
                                     }
                                     else
                                     {
-                                        if (!deviceParameter.TempDOAssociated)
-                                        {
-                                            if (deviceParameter.FeedDOAssociated)
-                                            {
-                                                deviceParameter.DORegulationLimit = true;
-                                            }
-                                        }
-                                        deviceParameter.IsDOLimit = true;
+                                        midrangingPeriod = MidrangingPeriod.DuringAirUpperLimit;
                                     }
                                 }
-                                else
+                                currentTemp = currentTemp <= deviceParameter.TempDOLowerLimit ? deviceParameter.TempDOLowerLimit : currentTemp >= initialTemp ? initialTemp : currentTemp;
+                                deviceParameter.TempParam.Temp_PV = MathF.Round(currentTemp, 2);
+                                LogHelper.Debug(string.Format("反应器{0} 起始温度{1} 单次delta{2} 实际温度{3}", deviceParameter.Name, initialTemp, increment, currentTemp));
+                                int count = pIDInfo.Interval <= 0 ? 1 : pIDInfo.Interval;
+                                while (count > 0)
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
                                         return;
                                     }
 
-                                    result = File.ReadAllText(FileConst.PidInfoPath);
-                                    pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
-                                    if (pIDInfos == null)
-                                    {
-                                        MessageBox.Show("PID调控策略列表为空");
-                                        return;
-                                    }
-                                    PIDInfo info1 = pIDInfos.FindFirst(t => t.PidName.Contains("通气") && t.deviceID == deviceParameter.Name);
+                                    count--;
+                                    Thread.Sleep(1000);
+                                }
 
-                                    if (info1 == null)
-                                    {
-                                        MessageBox.Show(string.Format("反应器{0}不存在通气的PID调控策略", deviceParameter.Name));
-                                        return;
-                                    }
-
-                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    dicDOAgitPid[deviceParameter.Name].Reset();
-                                    dicDOAgitPid[deviceParameter.Name].SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
-                                    dicDOAgitPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
-                                    dicDOAgitPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
-                                    dicDOAgitPid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
-
-                                    float tempAir = dicDOAgitPid[deviceParameter.Name].CalculateIncremental(param.AgitHigh);
-                                    float airSpeed = realTimeParam.AirFlowSpeed + tempAir;
-                                    if (airSpeed >= param.AirUpperLimit)
-                                    {
-                                        airSpeed = param.AirUpperLimit;
-                                    }
-                                    else if (airSpeed <= param.InitialAir)
-                                    {
-                                        airSpeed = param.InitialAir;
-                                    }
-                                    deviceParameter.AirParam.FlowSpeed = airSpeed;
-                                    Thread.Sleep(3000);
-
-                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 通气预设值：{1}，当前：{2}，delta：{3}", deviceParameter.Name, airSpeed, realTimeParam.AirFlowSpeed, tempAir));
-                                    int count = info.Interval <= 1 ? 1 : info.Interval;
-                                    while (count > 0)
+                                if (midrangingPeriod != MidrangingPeriod.DuringFallTemp)
+                                {
+                                    while (true)
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
                                             return;
                                         }
-
-                                        count--;
+                                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                        if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.Temp_PV) <= 0.1)
+                                        {
+                                            break;
+                                        }
                                         Thread.Sleep(1000);
                                     }
                                 }
                             }
-
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (realTimeParam.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)
+                            else if (midrangingPeriod == MidrangingPeriod.DuringO2UpperLimit)
                             {
-                                agit = deviceParameter.AgitParam.Agit_PV;
-                                airFlow = deviceParameter.AirParam.FlowSpeed;
-                                o2Flow = deviceParameter.O2Param.FlowSpeed;
-
-                                ResetDOParam(deviceParameter);
-
-                                int count = info.Interval <= 0 ? 1 : info.Interval;
-                                while (count > 0)
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                    {
-                                        return;
-                                    }
-
-                                    count--;
-                                    Thread.Sleep(1000);
-                                }
-                                continue;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            LogHelper.Debug(string.Format("DO调整失败_Mid-Ranging，错误信息：{0}", ex.Message));
-                            Thread.Sleep(AppSession.Interval * 1000);
-                        }
-                    }
-
-                    while (param.O2Associated)
-                    {
-                        try
-                        {
-                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                            {
-                                return;
-                            }
-
-                            param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
-                            if (param.Unit == 0)//VVM
-                            {
-                                initialAir = MathF.Round((float)(param.InitialAir * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                maxAir = MathF.Round((float)(param.AirUpperLimit * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                            }
-                            else if (param.Unit == 1)//L/min
-                            {
-                                initialAir = param.InitialAir;
-                                maxAir = param.AirUpperLimit;
-                            }
-                            string result = File.ReadAllText(FileConst.PidInfoPath);
-                            List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
-                            if (pIDInfos == null)
-                            {
-                                MessageBox.Show("PID调控策略列表为空");
-                                return;
-                            }
-
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (realTimeParam.DO <= deviceParameter.DOParam.DO_PV)
-                            {
-                                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.deviceID == deviceParameter.Name);
-                            }
-                            else if (realTimeParam.DO >= deviceParameter.DOParam.DO_PV)
-                            {
-                                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.deviceID == deviceParameter.Name);
-                            }
-
-                            if (info == null)
-                            {
-                                MessageBox.Show(string.Format("反应器{0}不存在DO的PID调控策略", deviceParameter.Name));
-                                return;
-                            }
-
-                            //如果pid类型变了，pid系数清零 方成
-                            if (info != null && lastPid != null && info.PidName != lastPid.PidName)
-                            {
-                                LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
-                                if (agit == -1)
-                                {
-                                    agit = realTimeParam.Agit;
-                                }
-                                else
-                                {
-                                    agit = deviceParameter.AgitParam.Agit_PV;
-                                }
-                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                ResetDOParam(deviceParameter);
-                            }
-                            lastPid = info;
-
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (realTimeParam.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)
-                            {
-                                agit = deviceParameter.AgitParam.Agit_PV;
-                                airFlow = deviceParameter.AirParam.FlowSpeed;
-                                o2Flow = deviceParameter.O2Param.FlowSpeed;
-
-                                ResetDOParam(deviceParameter);
-
-                                int count = info.Interval <= 0 ? 1 : info.Interval;
-                                while (count > 0)
-                                {
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                    {
-                                        return;
-                                    }
-
-                                    count--;
-                                    Thread.Sleep(1000);
-                                }
-                                continue;
-                            }
-
-
-                            dicDOPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
-                            dicDOPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
-                            dicDOPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
-                            dicDOPid[deviceParameter.Name].SetTarget(deviceParameter.DOParam.DO_PV);
-
-                            LogHelper.Debug(string.Format("氧气：反应器{6} Mid-Ranging DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", deviceParameter.DOParam.DO_PV, realTimeParam.DO, info.P, info.I, info.D, info.Interval, deviceParameter.Name));
-
-                            float temp = dicDOPid[deviceParameter.Name].CalculatePositional_DO((float)realTimeParam.DO);
-                            int tempAgit = Convert.ToInt32(agit + temp);
-                            dicDODelta[deviceParameter.Name] = tempAgit;
-                            if (deviceParameter.DOFilterEnable)
-                            {
-                                //增加低通滤波 
-                                var lowPassDelta = Convert.ToInt32(RCFilter.LowPass(tempAgit, lastDODelta, deviceParameter.AgitSampleCycle, deviceParameter.AgitSampleFrequency));
-                                lastDODelta = lowPassDelta;
-                                dicDODelta[deviceParameter.Name] = lowPassDelta;
-                            }
-
-                            LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, agit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
-
-                            deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
-                            Thread.Sleep(5000);
-
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (realTimeParam.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)
-                            {
-                                agit = deviceParameter.AgitParam.Agit_PV;
-                                airFlow = deviceParameter.AirParam.FlowSpeed;
-                                o2Flow = deviceParameter.O2Param.FlowSpeed;
-
-                                ResetDOParam(deviceParameter);
-
-                                int count = info.Interval <= 0 ? 1 : info.Interval;
-                                while (count > 0)
-                                {
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                    {
-                                        return;
-                                    }
-
-                                    count--;
-                                    Thread.Sleep(1000);
-                                }
-                                continue;
-                            }
-
-                            if (deviceParameter.O2Param.FlowSpeed >= param.O2UpperLimit)//氧气已经到达极限
-                            {
-                                if (!deviceParameter.TempDOAssociated)
-                                {
-                                    if (deviceParameter.FeedDOAssociated)
-                                    {
-                                        deviceParameter.DORegulationLimit = true;
-                                    }
-                                }
-                                deviceParameter.IsDOLimit = true;
-                            }
-                            else
-                            {
-                                result = File.ReadAllText(FileConst.PidInfoPath);
-                                pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
-                                if (pIDInfos == null)
-                                {
-                                    MessageBox.Show("PID调控策略列表为空");
                                     return;
+                                }
+
+                                param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                                if (param.Unit == 0)//VVM
+                                {
+                                    initialAir = MathF.Round((float)(param.InitialAir * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                    maxAir = MathF.Round((float)(param.AirUpperLimit * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                }
+                                else if (param.Unit == 1)//L/min
+                                {
+                                    initialAir = param.InitialAir;
+                                    maxAir = param.AirUpperLimit;
                                 }
                                 PIDInfo info1 = pIDInfos.FindFirst(t => t.PidName.Contains("氧气") && t.deviceID == deviceParameter.Name);
 
@@ -1397,21 +1230,33 @@ namespace RD3.ViewModels
                                 }
 
                                 realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                dicDOAgitPid[deviceParameter.Name].SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
-                                dicDOAgitPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
-                                dicDOAgitPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
-                                dicDOAgitPid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
+                                dicDOO2Pid[deviceParameter.Name].Reset();
+                                dicDOO2Pid[deviceParameter.Name].SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
+                                dicDOO2Pid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
+                                dicDOO2Pid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
+                                dicDOO2Pid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
 
-                                float tempO2 = dicDOAgitPid[deviceParameter.Name].CalculateIncremental((float)param.AgitHigh);
+                                float tempO2 = dicDOO2Pid[deviceParameter.Name].CalculateIncremental((float)param.AgitHigh);
                                 float o2Speed = realTimeParam.O2FlowSpeed + tempO2;
-                                if (o2Speed >= param.O2UpperLimit)
+                                if (o2Speed >= maxAir)
                                 {
-                                    o2Speed = param.O2UpperLimit;
+                                    o2Speed = maxAir;
+
+                                    if (deviceParameter.TempDOAssociated && deviceParameter.TempParam.IsControling)
+                                    {
+                                        midrangingPeriod = MidrangingPeriod.DuringFallTemp;
+                                    }
+                                    else if (deviceParameter.FeedDOAssociated)
+                                    {
+                                        midrangingPeriod = MidrangingPeriod.DuringReduceFeed;
+                                    }
                                 }
-                                else if (o2Speed <= param.InitialO2)
+                                else if (o2Speed <= 0)
                                 {
-                                    o2Speed = param.InitialO2;
+                                    o2Speed = 0;
+                                    midrangingPeriod = MidrangingPeriod.DuringAirUpperLimit;
                                 }
+                                o2Speed = o2Speed >= maxAir ? maxAir : o2Speed < 0 ? 0 : o2Speed;
                                 deviceParameter.O2Param.FlowSpeed = o2Speed;
                                 deviceParameter.AirParam.FlowSpeed = maxAir - o2Speed > 0 ? maxAir - o2Speed : 0;
 
@@ -1429,17 +1274,64 @@ namespace RD3.ViewModels
                                     Thread.Sleep(1000);
                                 }
                             }
-
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (realTimeParam.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)
+                            else if (midrangingPeriod == MidrangingPeriod.DuringAirUpperLimit)
                             {
-                                agit = deviceParameter.AgitParam.Agit_PV;
-                                airFlow = deviceParameter.AirParam.FlowSpeed;
-                                o2Flow = deviceParameter.O2Param.FlowSpeed;
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
 
-                                ResetDOParam(deviceParameter);
+                                param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                                if (param.Unit == 0)//VVM
+                                {
+                                    initialAir = MathF.Round((float)(param.InitialAir * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                    maxAir = MathF.Round((float)(param.AirUpperLimit * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                }
+                                else if (param.Unit == 1)//L/min
+                                {
+                                    initialAir = param.InitialAir;
+                                    maxAir = param.AirUpperLimit;
+                                }
+                                PIDInfo info1 = pIDInfos.FindFirst(t => t.PidName.Contains("通气") && t.deviceID == deviceParameter.Name);
 
-                                int count = info.Interval <= 0 ? 1 : info.Interval;
+                                if (info1 == null)
+                                {
+                                    MessageBox.Show(string.Format("反应器{0}不存在通气的PID调控策略", deviceParameter.Name));
+                                    return;
+                                }
+
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                dicDOAirPid[deviceParameter.Name].Reset();
+                                dicDOAirPid[deviceParameter.Name].SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
+                                dicDOAirPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
+                                dicDOAirPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
+                                dicDOAirPid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
+                                float tempAir = dicDOAirPid[deviceParameter.Name].CalculateIncremental(param.AgitHigh);
+                                float airSpeed = realTimeParam.AirFlowSpeed + tempAir;
+                                if (airSpeed >= maxAir)
+                                {
+                                    if (deviceParameter.DOParam.O2Associated)
+                                    {
+                                        midrangingPeriod = MidrangingPeriod.DuringO2UpperLimit;
+                                    }
+                                    else if (deviceParameter.TempDOAssociated && deviceParameter.TempParam.IsControling)
+                                    {
+                                        midrangingPeriod = MidrangingPeriod.DuringFallTemp;
+                                    }
+                                    else if (deviceParameter.FeedDOAssociated)
+                                    {
+                                        midrangingPeriod = MidrangingPeriod.DuringReduceFeed;
+                                    }
+                                }
+                                else if (airSpeed <= initialAir)
+                                {
+                                    airSpeed = initialAir;
+                                }
+                                deviceParameter.AirParam.FlowSpeed = airSpeed;
+                                Thread.Sleep(3000);
+
+                                LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 通气预设值：{1}，当前：{2}，delta：{3}", deviceParameter.Name, airSpeed, realTimeParam.AirFlowSpeed, tempAir));
+                                int count = info.Interval <= 1 ? 1 : info.Interval;
                                 while (count > 0)
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
@@ -1450,7 +1342,6 @@ namespace RD3.ViewModels
                                     count--;
                                     Thread.Sleep(1000);
                                 }
-                                continue;
                             }
                         }
                         catch (Exception ex)
@@ -2502,94 +2393,6 @@ namespace RD3.ViewModels
                 }
             });
             dicDOWorker[currentDeviceParameter.Name].RunWorkerAsync();
-
-            dicDOTempWorker[currentDeviceParameter.Name] = new BackgroundWorker();
-            dicDOTempWorker[currentDeviceParameter.Name].WorkerReportsProgress = true;
-            dicDOTempWorker[currentDeviceParameter.Name].WorkerSupportsCancellation = true;
-            dicDOTempWorker[currentDeviceParameter.Name].DoWork += (s, e) =>
-            {
-                var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == currentDeviceParameter.Name);
-                e.Result = deviceParameter.Name;
-                while (true)
-                {
-                    Thread.Sleep(5000);
-
-                    if (dicDOTempWorker[deviceParameter.Name].CancellationPending)
-                    {
-                        return;
-                    }
-                    while (deviceParameter.TempDOAssociated)
-                    {
-                        if (dicDOTempWorker[deviceParameter.Name].CancellationPending)
-                        {
-                            return;
-                        }
-
-                        float initialTemp = deviceParameter.TempParam.Temp_PV;
-                        PIDInfo pIDInfo = null;
-                        QPIDController pIDController = new QPIDController();
-
-                        while (deviceParameter.IsDOLimit && deviceParameter.TempParam.IsControling)
-                        {
-                            if (dicDOTempWorker[deviceParameter.Name].CancellationPending)
-                            {
-                                return;
-                            }
-
-                            string result = File.ReadAllText(FileConst.PidInfoPath);
-                            List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
-                            if (pIDInfos == null)
-                            {
-                                MessageBox.Show("PID调控策略列表为空");
-                                return;
-                            }
-
-                            pIDInfo = pIDInfos.FindFirst(t => t.PidName.Contains("降温") && t.deviceID == deviceParameter.Name);
-                            if (pIDInfo == null)
-                            {
-                                MessageBox.Show(string.Format("反应器{0}不存在温控的PID调控策略", deviceParameter.Name));
-                                return;
-                            }
-                            RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            pIDController.SetParameters(kp: (float)pIDInfo.P, ki: (float)pIDInfo.I, kd: (float)pIDInfo.D, integralThreshold: pIDInfo.Threshold, interval: pIDInfo.Interval);
-                            pIDController.SetOutputLimits(-Math.Abs(pIDInfo.maxSpeed), Math.Abs(pIDInfo.maxSpeed));
-                            pIDController.SetIntegralLimits(-2000, 2000);
-                            pIDController.SetTarget(agitHigh);
-
-                            float pos = pIDController.CalculateIncremental(realTimeParam.Agit);
-                            float currentTemp = deviceParameter.TempParam.Temp_PV + pos;
-                            currentTemp = currentTemp <= deviceParameter.TempDOLowerLimit ? deviceParameter.TempDOLowerLimit : currentTemp;
-                            deviceParameter.TempParam.Temp_PV = MathF.Round(currentTemp, 2);
-                            LogHelper.Debug(string.Format("反应器{0} 起始温度{1} 单次delta{2} 实际温度{3}", deviceParameter.Name, initialTemp, pos, currentTemp));
-
-
-                            int count = pIDInfo.Interval <= 0 ? 1 : pIDInfo.Interval;
-                            int index1 = 0;
-                            while (index1 < count)
-                            {
-                                if (dicDOTempWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    e.Result = deviceParameter.Name;
-                                    return;
-                                }
-
-                                index1 += 1;
-                                Thread.Sleep(1000);
-                            }
-                        }
-                        pIDController.Reset();
-                    }
-                }
-            };
-            dicDOTempWorker[currentDeviceParameter.Name].RunWorkerCompleted += (s, e) =>
-            {
-                var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == currentDeviceParameter.Name);
-
-                BackgroundWorker backgroundWorker = s as BackgroundWorker;
-                backgroundWorker.Dispose();
-                backgroundWorker = null;
-            };
-            dicDOTempWorker[currentDeviceParameter.Name].RunWorkerAsync();
         });
 
         public DelegateCommand DOOPCommand => new(() =>
@@ -4195,19 +3998,8 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    var allDeviceInfos = FeedStrategyManager.GetInstance().FeedStrategyCol;
-                    FeedStrategyInfo f = null;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
-                    if (allDeviceInfos.TryGetValue(deviceParameter.Name, out var feedGradientInfos) && feedGradientInfos != null)
-                    {
-                        f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper() && t.Pump == pump);
-                        if (f != null && f.A > 0)
-                        {
-                            CurrentDeviceParameter.FeedParam1.Feed_PV = f.A;
-                        }
-                    }
-
-                    int pumpNo = PumpMFCUtil.GetPumpIndex(CurrentDeviceParameter.Name, pump);
+                    int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                     if (pumpNo >= 0)
                     {
                         param = new PeristalticPumpControlParam()
@@ -4215,25 +4007,22 @@ namespace RD3.ViewModels
                             PumpNo = pumpNo,
                             Pump = pump,
                             ControlMode = PumpControlMode.Direct,
-                            FlowSpeed = (float)CurrentDeviceParameter.FeedParam1.Feed_PV >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)CurrentDeviceParameter.FeedParam1.Feed_PV,
+                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)deviceParameter.FeedParam1.Feed_PV,
                             FlowCapacity = Const.MaxPumpFlowCapacity
                         };
-                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, param);
-                        dicFeed1SP[CurrentDeviceParameter.Name] = CurrentDeviceParameter.FeedParam1.Feed_PV;
+                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                        dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam1.Feed_PV;
                     }
 
-                    double totalSecond = 0;
+                    var worker = (BackgroundWorker)s;
                     while (true)
                     {
                         try
                         {
-                            var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
                             {
                                 return;
                             }
-                            f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper() && t.Pump == pump);
-
                             if (dicFeed1SP[deviceParameter.Name] != deviceParameter.FeedParam1.Feed_PV)
                             {
                                 pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -4244,156 +4033,15 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.FeedParam1.Feed_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed1SP[CurrentDeviceParameter.Name],
+                                        FlowSpeed = deviceParameter.FeedParam1.Feed_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : deviceParameter.FeedParam1.Feed_PV,
                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                 }
-
                                 dicFeed1SP[CurrentDeviceParameter.Name] = deviceParameter.FeedParam1.Feed_PV;
                             }
 
                             Thread.Sleep(1000);
-
-                            if (f.StatDisable)
-                            {
-                                totalSecond = 0;
-                            }
-                            else
-                            {
-                                totalSecond += 1;
-                            }
-
-                            if (totalSecond > 0 && f.StatInterval > 0 && totalSecond % f.StatInterval == 0)
-                            {
-                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                if (pumpNo >= 0)
-                                {
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
-                                    param = new PeristalticPumpControlParam()
-                                    {
-                                        PumpNo = pumpNo,
-                                        Pump = pump,
-                                        ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
-                                        FlowCapacity = 0
-                                    };
-                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                }
-
-                                if (f.CurveDOStat)
-                                {
-                                    while (true)
-                                    {
-                                        if (worker.CancellationPending)
-                                        {
-                                            return;
-                                        }
-                                        RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                        if (f.StatSymbol == 0)//小于
-                                        {
-                                            if (realTime.DO < f.StatValue)
-                                            {
-                                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                                if (pumpNo >= 0)
-                                                {
-                                                    deviceParameter.FeedParam1.Feed_PV = dicFeed1SP[CurrentDeviceParameter.Name];
-                                                    param = new PeristalticPumpControlParam()
-                                                    {
-                                                        PumpNo = pumpNo,
-                                                        Pump = pump,
-                                                        ControlMode = PumpControlMode.Direct,
-                                                        FlowSpeed = dicFeed1SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed1SP[CurrentDeviceParameter.Name],
-                                                        FlowCapacity = Const.MaxPumpFlowCapacity
-                                                    };
-                                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                                }
-                                                totalSecond = 0;
-                                                break;
-                                            }
-                                        }
-                                        else if (f.StatSymbol == 1)//大于
-                                        {
-                                            if (realTime.DO > f.StatValue)
-                                            {
-                                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                                if (pumpNo >= 0)
-                                                {
-                                                    deviceParameter.FeedParam1.Feed_PV = dicFeed1SP[CurrentDeviceParameter.Name];
-                                                    param = new PeristalticPumpControlParam()
-                                                    {
-                                                        PumpNo = pumpNo,
-                                                        Pump = pump,
-                                                        ControlMode = PumpControlMode.Direct,
-                                                        FlowSpeed = dicFeed1SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed1SP[CurrentDeviceParameter.Name],
-                                                        FlowCapacity = Const.MaxPumpFlowCapacity
-                                                    };
-                                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                                }
-                                                totalSecond = 0;
-                                                break;
-                                            }
-                                        }
-                                        Thread.Sleep(1000);
-                                    }
-                                }
-                                else if (f.CurvepHStat)
-                                {
-                                    while (true)
-                                    {
-                                        if (worker.CancellationPending)
-                                        {
-                                            return;
-                                        }
-                                        RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                        if (f.StatSymbol == 0)//小于
-                                        {
-                                            if (realTime.PH < f.StatValue)
-                                            {
-                                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                                if (pumpNo >= 0)
-                                                {
-                                                    deviceParameter.FeedParam1.Feed_PV = dicFeed1SP[CurrentDeviceParameter.Name];
-                                                    param = new PeristalticPumpControlParam()
-                                                    {
-                                                        PumpNo = pumpNo,
-                                                        Pump = pump,
-                                                        ControlMode = PumpControlMode.Direct,
-                                                        FlowSpeed = dicFeed1SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed1SP[CurrentDeviceParameter.Name],
-                                                        FlowCapacity = Const.MaxPumpFlowCapacity
-                                                    };
-                                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                                }
-                                                totalSecond = 0;
-                                                break;
-                                            }
-                                        }
-                                        else if (f.StatSymbol == 1)//大于
-                                        {
-                                            if (realTime.PH > f.StatValue)
-                                            {
-                                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                                if (pumpNo >= 0)
-                                                {
-                                                    deviceParameter.FeedParam1.Feed_PV = dicFeed1SP[CurrentDeviceParameter.Name];
-                                                    param = new PeristalticPumpControlParam()
-                                                    {
-                                                        PumpNo = pumpNo,
-                                                        Pump = pump,
-                                                        ControlMode = PumpControlMode.Direct,
-                                                        FlowSpeed = dicFeed1SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed1SP[CurrentDeviceParameter.Name],
-                                                        FlowCapacity = Const.MaxPumpFlowCapacity
-                                                    };
-                                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                                }
-                                                totalSecond = 0;
-                                                break;
-                                            }
-                                        }
-                                        Thread.Sleep(1000);
-                                    }
-                                }
-                            }
                         }
                         catch (Exception ex)
                         {
@@ -8267,19 +7915,8 @@ namespace RD3.ViewModels
                 {
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == CurrentDeviceParameter.Name);
                     e.Result = deviceParameter.Name;
-                    var allDeviceInfos = FeedStrategyManager.GetInstance().FeedStrategyCol;
-                    FeedStrategyInfo f = null;
                     PeristalticPumpControlParam param = new PeristalticPumpControlParam();
-                    if (allDeviceInfos.TryGetValue(deviceParameter.Name, out var feedGradientInfos) && feedGradientInfos != null)
-                    {
-                        f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper() && t.Pump == pump);
-                        if (f != null && f.A > 0)
-                        {
-                            CurrentDeviceParameter.FeedParam2.Feed_PV = f.A;
-                        }
-                    }
-
-                    int pumpNo = PumpMFCUtil.GetPumpIndex(CurrentDeviceParameter.Name, pump);
+                    int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                     if (pumpNo >= 0)
                     {
                         param = new PeristalticPumpControlParam()
@@ -8287,25 +7924,22 @@ namespace RD3.ViewModels
                             PumpNo = pumpNo,
                             Pump = pump,
                             ControlMode = PumpControlMode.Direct,
-                            FlowSpeed = (float)CurrentDeviceParameter.FeedParam2.Feed_PV >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)CurrentDeviceParameter.FeedParam2.Feed_PV,
+                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)deviceParameter.FeedParam2.Feed_PV,
                             FlowCapacity = Const.MaxPumpFlowCapacity
                         };
-                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, param);
-                        dicFeed2SP[CurrentDeviceParameter.Name] = CurrentDeviceParameter.FeedParam2.Feed_PV;
+                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
+                        dicFeed2SP[deviceParameter.Name] = deviceParameter.FeedParam2.Feed_PV;
                     }
 
-                    double totalSecond = 0;
+                    var worker = (BackgroundWorker)s;
                     while (true)
                     {
                         try
                         {
-                            var worker = (BackgroundWorker)s;
                             if (worker.CancellationPending)
                             {
                                 return;
                             }
-                            f = feedGradientInfos.FindFirst(t => t.InfoType.ToUpper() == "Constant".ToUpper() && t.Pump == pump);
-
                             if (dicFeed2SP[deviceParameter.Name] != deviceParameter.FeedParam2.Feed_PV)
                             {
                                 pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -8326,146 +7960,6 @@ namespace RD3.ViewModels
                             }
 
                             Thread.Sleep(1000);
-
-                            if (f.StatDisable)
-                            {
-                                totalSecond = 0;
-                            }
-                            else
-                            {
-                                totalSecond += 1;
-                            }
-
-                            if (totalSecond > 0 && f.StatInterval > 0 && totalSecond % f.StatInterval == 0)
-                            {
-                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                if (pumpNo >= 0)
-                                {
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
-                                    param = new PeristalticPumpControlParam()
-                                    {
-                                        PumpNo = pumpNo,
-                                        Pump = pump,
-                                        ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
-                                        FlowCapacity = 0
-                                    };
-                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                }
-
-                                if (f.CurveDOStat)
-                                {
-                                    while (true)
-                                    {
-                                        if (worker.CancellationPending)
-                                        {
-                                            return;
-                                        }
-                                        RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                        if (f.StatSymbol == 0)//小于
-                                        {
-                                            if (realTime.DO < f.StatValue)
-                                            {
-                                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                                if (pumpNo >= 0)
-                                                {
-                                                    deviceParameter.FeedParam2.Feed_PV = dicFeed2SP[CurrentDeviceParameter.Name];
-                                                    param = new PeristalticPumpControlParam()
-                                                    {
-                                                        PumpNo = pumpNo,
-                                                        Pump = pump,
-                                                        ControlMode = PumpControlMode.Direct,
-                                                        FlowSpeed = dicFeed2SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed2SP[CurrentDeviceParameter.Name],
-                                                        FlowCapacity = Const.MaxPumpFlowCapacity
-                                                    };
-                                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                                }
-                                                totalSecond = 0;
-                                                break;
-                                            }
-                                        }
-                                        else if (f.StatSymbol == 1)//大于
-                                        {
-                                            if (realTime.DO > f.StatValue)
-                                            {
-                                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                                if (pumpNo >= 0)
-                                                {
-                                                    deviceParameter.FeedParam2.Feed_PV = dicFeed2SP[CurrentDeviceParameter.Name];
-                                                    param = new PeristalticPumpControlParam()
-                                                    {
-                                                        PumpNo = pumpNo,
-                                                        Pump = pump,
-                                                        ControlMode = PumpControlMode.Direct,
-                                                        FlowSpeed = dicFeed2SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed2SP[CurrentDeviceParameter.Name],
-                                                        FlowCapacity = Const.MaxPumpFlowCapacity
-                                                    };
-                                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                                }
-                                                totalSecond = 0;
-                                                break;
-                                            }
-                                        }
-                                        Thread.Sleep(1000);
-                                    }
-                                }
-                                else if (f.CurvepHStat)
-                                {
-                                    while (true)
-                                    {
-                                        if (worker.CancellationPending)
-                                        {
-                                            return;
-                                        }
-                                        RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                        if (f.StatSymbol == 0)//小于
-                                        {
-                                            if (realTime.PH < f.StatValue)
-                                            {
-                                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                                if (pumpNo >= 0)
-                                                {
-                                                    deviceParameter.FeedParam2.Feed_PV = dicFeed2SP[CurrentDeviceParameter.Name];
-                                                    param = new PeristalticPumpControlParam()
-                                                    {
-                                                        PumpNo = pumpNo,
-                                                        Pump = pump,
-                                                        ControlMode = PumpControlMode.Direct,
-                                                        FlowSpeed = dicFeed2SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed2SP[CurrentDeviceParameter.Name],
-                                                        FlowCapacity = Const.MaxPumpFlowCapacity
-                                                    };
-                                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                                }
-                                                totalSecond = 0;
-                                                break;
-                                            }
-                                        }
-                                        else if (f.StatSymbol == 1)//大于
-                                        {
-                                            if (realTime.PH > f.StatValue)
-                                            {
-                                                pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                                if (pumpNo >= 0)
-                                                {
-                                                    deviceParameter.FeedParam2.Feed_PV = dicFeed2SP[CurrentDeviceParameter.Name];
-                                                    param = new PeristalticPumpControlParam()
-                                                    {
-                                                        PumpNo = pumpNo,
-                                                        Pump = pump,
-                                                        ControlMode = PumpControlMode.Direct,
-                                                        FlowSpeed = dicFeed2SP[CurrentDeviceParameter.Name] >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : dicFeed2SP[CurrentDeviceParameter.Name],
-                                                        FlowCapacity = Const.MaxPumpFlowCapacity
-                                                    };
-                                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                                }
-                                                totalSecond = 0;
-                                                break;
-                                            }
-                                        }
-                                        Thread.Sleep(1000);
-                                    }
-                                }
-                            }
                         }
                         catch (Exception ex)
                         {
@@ -12655,8 +12149,8 @@ namespace RD3.ViewModels
                 dicDOWorker.Add(reactor.Name, new BackgroundWorker());
                 dicDODelta.Add(reactor.Name, 0);
                 dicDOPid.Add(reactor.Name, new QPIDController());
-                dicDOAgitPid.Add(reactor.Name, new QPIDController());
-                dicDOTempWorker.Add(reactor.Name, new BackgroundWorker());
+                dicDOAirPid.Add(reactor.Name, new QPIDController());
+                dicDOO2Pid.Add(reactor.Name, new QPIDController());
 
                 dicAgitWorker.Add(reactor.Name, new BackgroundWorker());
                 dicAgitSP.Add(reactor.Name, 0f);

@@ -388,8 +388,6 @@
                         hc:InfoElement.Title="{ex:Language Key='通气上限'}"
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding MidRanging.AirUpperLimit, UpdateSourceTrigger=LostFocus}" />
-                </hc:UniformSpacingPanel>
-                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <DockPanel LastChildFill="False">
                         <CheckBox
                             Width="100"
@@ -398,18 +396,6 @@
                             IsChecked="{Binding MidRanging.O2Associated}"
                             Style="{StaticResource MaterialDesignCheckBox}" />
                     </DockPanel>
-                    <TextBox
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='氧气下限'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.InitialO2, UpdateSourceTrigger=LostFocus}" />
-                    <TextBox
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='氧气上限'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.O2UpperLimit, UpdateSourceTrigger=LostFocus}" />
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>

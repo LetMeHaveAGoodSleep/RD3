@@ -8,6 +8,20 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
+    public enum MidrangingPeriod
+    {
+        [Description("未达到转速高限")]
+        DuringAgitHigh,
+        [Description("未达到通气上限")]
+        DuringAirUpperLimit,
+        [Description("未达到氧气上限")]
+        DuringO2UpperLimit,
+        [Description("降温中")]
+        DuringFallTemp,
+        [Description("减少补料中")]
+        DuringReduceFeed
+    }
+
 
     public enum DOControlStrategy
     {
