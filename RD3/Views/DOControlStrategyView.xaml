@@ -156,12 +156,6 @@
                             IsChecked="{Binding CurrentDeviceParameter.TempDOAssociated}"
                             Style="{StaticResource MaterialDesignCheckBox}" />
                     </DockPanel>
-                    <TextBox
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='温度下限(℃)'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.TempDOLowerLimit, UpdateSourceTrigger=LostFocus}" />
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>
@@ -445,6 +439,12 @@
                         hc:InfoElement.Title="{ex:Language Key='通气上限'}"
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding MidRanging.AirUpperLimit, UpdateSourceTrigger=LostFocus}" />
+                    <TextBox
+                        Width="100"
+                        VerticalAlignment="Center"
+                        hc:InfoElement.Title="{ex:Language Key='温度下限(℃)'}"
+                        Style="{StaticResource TextBoxExtend}"
+                        Text="{Binding CurrentDeviceParameter.TempDOLowerLimit, UpdateSourceTrigger=LostFocus}" />
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>
