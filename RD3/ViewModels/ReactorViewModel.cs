@@ -1014,6 +1014,11 @@ namespace RD3.ViewModels
                                 return;
                             }
 
+                            if (agit == -1)
+                            {
+                                agit = realTimeParam.Agit;
+                            }
+
                             //如果pid类型变了，pid系数清零 方成
                             if (info != null && lastPid != null && info.PidName != lastPid.PidName)
                             {
