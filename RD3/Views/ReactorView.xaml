@@ -666,7 +666,7 @@
                                                         </hc:UniformSpacingPanel>
                                                     </MenuItem.Header>
                                                     <MenuItem
-                                                        Header="阶梯通气"
+                                                        Header="阶梯级联"
                                                         IsCheckable="True"
                                                         IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Step}" />
                                                     <Separator />

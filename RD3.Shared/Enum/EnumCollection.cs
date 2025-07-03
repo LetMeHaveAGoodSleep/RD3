@@ -8,6 +8,22 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
+
+    /// <summary>
+    /// 转速是必需项，所以不在此列
+    /// </summary>
+    public enum DOControlFactor
+    {
+        [Description("空气")]
+        Air,
+        [Description("氧气")]
+        O2,
+        [Description("温度")]
+        Temp,
+        [Description("补料")]
+        Feed
+    }
+
     public enum MidrangingPeriod
     {
         [Description("未达到转速高限")]
@@ -25,7 +41,7 @@ namespace RD3.Shared
 
     public enum DOControlStrategy
     {
-        [Description("阶梯通气")]
+        [Description("阶梯级联")]
         Step,
         [Description("中位控制")]
         Midranging,

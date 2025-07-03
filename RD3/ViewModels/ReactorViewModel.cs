@@ -935,46 +935,50 @@ namespace RD3.ViewModels
 
                     PIDInfo info = null;
                     PIDInfo lastPid = null;
-                    MidrangingPeriod midrangingPeriod = MidrangingPeriod.DuringAgitHigh;
+                    //MidrangingPeriod midrangingPeriod = MidrangingPeriod.DuringAgitHigh;
                     int lastDODelta = 0;//低通滤波的上个值
+
+                    int factorIndex = -1;//当前执行索引
+                    float initialGas = 0;
+                    float maxGas = 0;
 
 
                     MidRangingParam param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                     RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                    deviceParameter.AgitParam.IsControling = deviceParameter.AirParam.IsControling = true;
-
-                    float initialAir = 0;
-                    float maxAir = 0;
-                    if (param.Unit == 0)//VVM
-                    {
-                        initialAir = MathF.Round((float)(param.InitialAir * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                        maxAir = MathF.Round((float)(param.AirUpperLimit * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                    }
-                    else if (param.Unit == 1)//L/min
-                    {
-                        initialAir = param.InitialAir;
-                        maxAir = param.AirUpperLimit;
-                    }
-                    //deviceParameter.AirParam.FlowSpeed = realTimeParam.AirFlowSpeed < initialAir ? initialAir : realTimeParam.AirFlowSpeed;
-                    //deviceParameter.AgitParam.Agit_PV = realTimeParam.Agit < param.AgitLowerLimit ? param.AgitLowerLimit : realTimeParam.Agit;
-                    deviceParameter.AirParam.FlowSpeed = realTimeParam.AirFlowSpeed >= initialAir ? realTimeParam.AirFlowSpeed <= maxAir ? realTimeParam.AirFlowSpeed : maxAir : initialAir;
+                    deviceParameter.AgitParam.IsControling = true;
                     deviceParameter.AgitParam.Agit_PV = realTimeParam.Agit >= param.AgitLowerLimit ? realTimeParam.Agit <= param.AgitUpperLimit ? realTimeParam.Agit : param.AgitUpperLimit : param.AgitLowerLimit;
-
                     AgitRunCommand.Execute(deviceParameter);
-                    AirRunCommand.Execute(deviceParameter);
+                   
 
-                    if (deviceParameter.DOParam.O2Associated)
+                    ObservableCollection<DOControlFactor> collection = [.. param.FactorCol];
+
+                    if (collection.Count > 0 && (collection[0] == DOControlFactor.Air || collection[0] == DOControlFactor.O2))
                     {
-                        deviceParameter.O2Param.IsControling = true;
-                        O2RunCommand.Execute(deviceParameter);
+                        if (param.Unit == 0)//VVM
+                        {
+                            initialGas = MathF.Round((float)(param.InitialAir * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                            maxGas = MathF.Round((float)(param.AirUpperLimit * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                        }
+                        else if (param.Unit == 1)//L/min
+                        {
+                            initialGas = param.InitialAir;
+                            maxGas = param.AirUpperLimit;
+                        }
+
+                        switch (collection[0])
+                        {
+                            case DOControlFactor.Air:
+                                deviceParameter.AirParam.FlowSpeed = realTimeParam.AirFlowSpeed >= initialGas ? realTimeParam.AirFlowSpeed <= maxGas ? realTimeParam.AirFlowSpeed : maxGas : initialGas;
+                                AirRunCommand.Execute(deviceParameter);
+                                break;
+                            case DOControlFactor.O2:
+                                deviceParameter.O2Param.FlowSpeed = realTimeParam.O2FlowSpeed >= initialGas ? realTimeParam.O2FlowSpeed <= maxGas ? realTimeParam.O2FlowSpeed : maxGas : initialGas;
+                                O2RunCommand.Execute(deviceParameter);
+                                break;
+                        }
                     }
-                    
 
-                    agit = deviceParameter.AgitParam.Agit_PV;
-                    airFlow = deviceParameter.AirParam.FlowSpeed;
-                    o2Flow = deviceParameter.O2Param.FlowSpeed;
-
-                    Thread.Sleep(5000);
+                    Thread.Sleep(5000);//等待初始化完成
 
                     ResetDOParam(deviceParameter);
                     while (true)
@@ -985,7 +989,7 @@ namespace RD3.ViewModels
                             {
                                 return;
                             }
-                            param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+
                             string result = File.ReadAllText(FileConst.PidInfoPath);
                             List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
                             if (pIDInfos == null)
@@ -1027,6 +1031,8 @@ namespace RD3.ViewModels
                                 ResetDOParam(deviceParameter);
                             }
                             lastPid = info;
+
+                            param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                             if (realTimeParam.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)
@@ -1100,230 +1106,240 @@ namespace RD3.ViewModels
                                 continue;
                             }
 
-                            if (deviceParameter.AgitParam.Agit_PV > param.AgitHigh && midrangingPeriod== MidrangingPeriod.DuringAgitHigh)
+                            if (deviceParameter.AgitParam.Agit_PV > param.AgitHigh && factorIndex == -1)
                             {
                                 LogHelper.Debug($"到达设定转速高限:{param.AgitHigh}");
-                                midrangingPeriod = MidrangingPeriod.DuringAirUpperLimit;
+                                factorIndex = 0;
                             }
 
-                            if (midrangingPeriod < MidrangingPeriod.DuringAirUpperLimit)
+                            if (factorIndex < 0 || collection.Count <= factorIndex)//如果未达到高限或者没有其他执行参数，则一直循环
                             {
                                 continue;
                             }
-                            else if (midrangingPeriod == MidrangingPeriod.DuringReduceFeed)
-                            {
 
+                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                            {
+                                return;
                             }
-                            else if (midrangingPeriod == MidrangingPeriod.DuringFallTemp)
+
+                            param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                            PIDInfo info1 = null;
+                            int sleepCount = 1;
+                            var previousElements = collection.Take(factorIndex);
+                            bool isExistOtherGas = false;//在当前气体之前是否存在气体
+                            switch (collection[factorIndex])
                             {
-                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    return;
-                                }
-
-                                deviceParameter.DORegulationLimit = false;
-
-                                QPIDController pIDController = new QPIDController();
-                                var pIDInfo = pIDInfos.FindFirst(t => t.PidName.Contains("降温") && t.deviceID == deviceParameter.Name);
-                                if (pIDInfo == null)
-                                {
-                                    MessageBox.Show(string.Format("反应器{0}不存在温控的PID调控策略", deviceParameter.Name));
-                                    return;
-                                }
-                                pIDController.SetParameters(kp: (float)pIDInfo.P, ki: (float)pIDInfo.I, kd: (float)pIDInfo.D, integralThreshold: pIDInfo.Threshold, interval: pIDInfo.Interval);
-                                pIDController.SetOutputLimits(-Math.Abs(pIDInfo.maxSpeed), Math.Abs(pIDInfo.maxSpeed));
-                                pIDController.SetIntegralLimits(-2000, 2000);
-                                pIDController.SetTarget(param.AgitHigh);
-                                float increment = pIDController.CalculateIncremental(dicDODelta[deviceParameter.Name]);
-                                float currentTemp = deviceParameter.TempParam.Temp_PV + increment;
-                                if (currentTemp <= deviceParameter.TempDOLowerLimit)
-                                {
-                                    if (deviceParameter.FeedDOAssociated)
+                                case DOControlFactor.Air:
+                                   
+                                    if (!deviceParameter.AirParam.IsControling)
                                     {
-                                        deviceParameter.DORegulationLimit = true;
-                                        midrangingPeriod = MidrangingPeriod.DuringReduceFeed;
-                                    } 
-                                }
-                                else if (currentTemp >= initialTemp)
-                                {
-                                    if (deviceParameter.DOParam.O2Associated)
-                                    {
-                                        midrangingPeriod = MidrangingPeriod.DuringO2UpperLimit;
+                                        deviceParameter.AirParam.IsControling = true;
+                                        AirRunCommand.Execute(deviceParameter);
                                     }
-                                    else
+                                    if (param.Unit == 0)//VVM
                                     {
-                                        midrangingPeriod = MidrangingPeriod.DuringAirUpperLimit;
+                                        initialGas = MathF.Round((float)(param.InitialAir * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                        maxGas = MathF.Round((float)(param.AirUpperLimit * (realTimeParam.JarWeight - 2000) / 1000), 2);
                                     }
-                                }
-                                currentTemp = currentTemp <= deviceParameter.TempDOLowerLimit ? deviceParameter.TempDOLowerLimit : currentTemp >= initialTemp ? initialTemp : currentTemp;
-                                deviceParameter.TempParam.Temp_PV = MathF.Round(currentTemp, 2);
-                                LogHelper.Debug(string.Format("反应器{0} 起始温度{1} 单次delta{2} 实际温度{3}", deviceParameter.Name, initialTemp, increment, currentTemp));
-                                int count = pIDInfo.Interval <= 0 ? 1 : pIDInfo.Interval;
-                                while (count > 0)
-                                {
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    else if (param.Unit == 1)//L/min
                                     {
+                                        initialGas = param.InitialAir;
+                                        maxGas = param.AirUpperLimit;
+                                    }
+
+                                    info1 = pIDInfos.FindFirst(t => t.PidName.Contains("通气") && t.deviceID == deviceParameter.Name);
+                                    if (info1 == null)
+                                    {
+                                        MessageBox.Show(string.Format("反应器{0}不存在通气的PID调控策略", deviceParameter.Name));
                                         return;
                                     }
 
-                                    count--;
-                                    Thread.Sleep(1000);
-                                }
+                                    dicDOAirPid[deviceParameter.Name].Reset();
+                                    dicDOAirPid[deviceParameter.Name].SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
+                                    dicDOAirPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
+                                    dicDOAirPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
+                                    dicDOAirPid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
+                                    float tempAir = dicDOAirPid[deviceParameter.Name].CalculateIncremental(param.AgitHigh);
+                                    float airSpeed = deviceParameter.AirParam.FlowSpeed + tempAir;
+                                    isExistOtherGas = previousElements.Where(t => t == DOControlFactor.O2).Count() > 0;
+                                    float minAir = isExistOtherGas == true ? 0 : initialGas;
+                                    if (airSpeed >= maxGas)
+                                    {
+                                        if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
+                                        {
+                                            factorIndex += 1;
+                                        }
+                                    }
+                                    else if (airSpeed <= minAir)
+                                    {
+                                        if (factorIndex - 1 > -1)
+                                        {
+                                            factorIndex -= 1;
+                                        }
+                                    }
 
-                                if (midrangingPeriod != MidrangingPeriod.DuringFallTemp)
-                                {
-                                    while (true)
+                                    airSpeed = airSpeed >= maxGas ? maxGas : airSpeed < minAir ? minAir : MathF.Round(airSpeed, 2);
+                                    deviceParameter.AirParam.FlowSpeed = airSpeed;
+                                    if (isExistOtherGas)
+                                    {
+                                        deviceParameter.O2Param.IsControling = true;
+                                        deviceParameter.O2Param.FlowSpeed = MathF.Round(maxGas - airSpeed, 2);
+                                    }
+                                    Thread.Sleep(3000);
+
+                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 通气预设值：{1}，当前：{2}，delta：{3}", deviceParameter.Name, airSpeed, deviceParameter.AirParam.FlowSpeed, tempAir));
+                                    sleepCount = info.Interval <= 1 ? 1 : info.Interval;
+                                    while (sleepCount > 0)
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
                                             return;
                                         }
-                                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                        if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.Temp_PV) <= 0.1)
-                                        {
-                                            break;
-                                        }
+
+                                        sleepCount--;
                                         Thread.Sleep(1000);
                                     }
-                                }
-                            }
-                            else if (midrangingPeriod == MidrangingPeriod.DuringO2UpperLimit)
-                            {
-                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    return;
-                                }
-
-                                param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
-                                if (param.Unit == 0)//VVM
-                                {
-                                    initialAir = MathF.Round((float)(param.InitialAir * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                    maxAir = MathF.Round((float)(param.AirUpperLimit * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                }
-                                else if (param.Unit == 1)//L/min
-                                {
-                                    initialAir = param.InitialAir;
-                                    maxAir = param.AirUpperLimit;
-                                }
-                                PIDInfo info1 = pIDInfos.FindFirst(t => t.PidName.Contains("氧气") && t.deviceID == deviceParameter.Name);
-
-                                if (info1 == null)
-                                {
-                                    MessageBox.Show(string.Format("反应器{0}不存在通气的PID调控策略", deviceParameter.Name));
-                                    return;
-                                }
-                                dicDOO2Pid[deviceParameter.Name].Reset();
-                                dicDOO2Pid[deviceParameter.Name].SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
-                                dicDOO2Pid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
-                                dicDOO2Pid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
-                                dicDOO2Pid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
-
-                                float tempO2 = dicDOO2Pid[deviceParameter.Name].CalculateIncremental((float)param.AgitHigh);
-                                float o2Speed = deviceParameter.O2Param.FlowSpeed + tempO2;
-                                if (o2Speed >= maxAir)
-                                {
-                                    o2Speed = maxAir;
-
-                                    if (deviceParameter.TempDOAssociated && deviceParameter.TempParam.IsControling)
+                                    break;
+                                case DOControlFactor.O2:
+                                    if (!deviceParameter.O2Param.IsControling)
                                     {
-                                        midrangingPeriod = MidrangingPeriod.DuringFallTemp;
+                                        deviceParameter.O2Param.IsControling = true;
+                                        O2RunCommand.Execute(deviceParameter);
                                     }
-                                    else if (deviceParameter.FeedDOAssociated)
+                                    if (param.Unit == 0)//VVM
                                     {
-                                        midrangingPeriod = MidrangingPeriod.DuringReduceFeed;
+                                        initialGas = MathF.Round((float)(param.InitialAir * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                        maxGas = MathF.Round((float)(param.AirUpperLimit * (realTimeParam.JarWeight - 2000) / 1000), 2);
                                     }
-                                }
-                                else if (o2Speed <= 0)
-                                {
-                                    o2Speed = 0;
-                                    midrangingPeriod = MidrangingPeriod.DuringAirUpperLimit;
-                                }
-                                o2Speed = o2Speed >= maxAir ? maxAir : o2Speed < 0 ? 0 : MathF.Round(o2Speed, 2);
-                                deviceParameter.O2Param.FlowSpeed = o2Speed;
-                                deviceParameter.AirParam.FlowSpeed = maxAir - o2Speed > 0 ? MathF.Round(maxAir - o2Speed, 2) : 0;
-
-                                Thread.Sleep(3000);
-                                LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 氧气预设值：{1}，底值：{2}，delta：{3}", deviceParameter.Name, o2Speed, deviceParameter.O2Param.FlowSpeed, tempO2));
-                                int count = info.Interval <= 1 ? 1 : info.Interval;
-                                while (count > 0)
-                                {
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    else if (param.Unit == 1)//L/min
                                     {
+                                        initialGas = param.InitialAir;
+                                        maxGas = param.AirUpperLimit;
+                                    }
+
+                                    info1 = pIDInfos.FindFirst(t => t.PidName.Contains("氧气") && t.deviceID == deviceParameter.Name);
+                                    if (info1 == null)
+                                    {
+                                        MessageBox.Show(string.Format("反应器{0}不存在氧气的PID调控策略", deviceParameter.Name));
                                         return;
                                     }
-
-                                    count--;
-                                    Thread.Sleep(1000);
-                                }
-                            }
-                            else if (midrangingPeriod == MidrangingPeriod.DuringAirUpperLimit)
-                            {
-                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    return;
-                                }
-
-                                param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
-                                if (param.Unit == 0)//VVM
-                                {
-                                    initialAir = MathF.Round((float)(param.InitialAir * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                    maxAir = MathF.Round((float)(param.AirUpperLimit * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                }
-                                else if (param.Unit == 1)//L/min
-                                {
-                                    initialAir = param.InitialAir;
-                                    maxAir = param.AirUpperLimit;
-                                }
-                                PIDInfo info1 = pIDInfos.FindFirst(t => t.PidName.Contains("通气") && t.deviceID == deviceParameter.Name);
-
-                                if (info1 == null)
-                                {
-                                    MessageBox.Show(string.Format("反应器{0}不存在通气的PID调控策略", deviceParameter.Name));
-                                    return;
-                                }
-
-                                dicDOAirPid[deviceParameter.Name].Reset();
-                                dicDOAirPid[deviceParameter.Name].SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
-                                dicDOAirPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
-                                dicDOAirPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
-                                dicDOAirPid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
-                                float tempAir = dicDOAirPid[deviceParameter.Name].CalculateIncremental(param.AgitHigh);
-                                float airSpeed = deviceParameter.AirParam.FlowSpeed + tempAir;
-                                if (airSpeed >= maxAir)
-                                {
-                                    airSpeed = maxAir;
-                                    if (deviceParameter.DOParam.O2Associated)
+                                    dicDOO2Pid[deviceParameter.Name].Reset();
+                                    dicDOO2Pid[deviceParameter.Name].SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
+                                    dicDOO2Pid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
+                                    dicDOO2Pid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
+                                    dicDOO2Pid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
+                                    float tempO2 = dicDOO2Pid[deviceParameter.Name].CalculateIncremental((float)param.AgitHigh);
+                                    float o2Speed = deviceParameter.O2Param.FlowSpeed + tempO2;
+                                    isExistOtherGas = previousElements.Where(t => t == DOControlFactor.Air).Count() > 0;
+                                    float minO2 = isExistOtherGas == true ? 0 : initialGas;
+                                    if (o2Speed >= maxGas)
                                     {
-                                        midrangingPeriod = MidrangingPeriod.DuringO2UpperLimit;
+                                        if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
+                                        {
+                                            factorIndex += 1;
+                                        }
                                     }
-                                    else if (deviceParameter.TempDOAssociated && deviceParameter.TempParam.IsControling)
+                                    else if (o2Speed <= minO2)
                                     {
-                                        midrangingPeriod = MidrangingPeriod.DuringFallTemp;
+                                        if (factorIndex - 1 > -1)
+                                        {
+                                            factorIndex -= 1;
+                                        }
                                     }
-                                    else if (deviceParameter.FeedDOAssociated)
-                                    {
-                                        midrangingPeriod = MidrangingPeriod.DuringReduceFeed;
-                                    }
-                                }
-                                else if (airSpeed <= initialAir)
-                                {
-                                    airSpeed = initialAir;
-                                }
-                                deviceParameter.AirParam.FlowSpeed = airSpeed;
-                                Thread.Sleep(3000);
 
-                                LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 通气预设值：{1}，当前：{2}，delta：{3}", deviceParameter.Name, airSpeed, deviceParameter.AirParam.FlowSpeed, tempAir));
-                                int count = info.Interval <= 1 ? 1 : info.Interval;
-                                while (count > 0)
-                                {
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    o2Speed = o2Speed >= maxGas ? maxGas : o2Speed < minO2 ? minO2 : MathF.Round(o2Speed, 2);
+                                    deviceParameter.O2Param.FlowSpeed = o2Speed;
+                                    if (isExistOtherGas)
                                     {
+                                        deviceParameter.AirParam.IsControling = true;
+                                        deviceParameter.AirParam.FlowSpeed = maxGas - o2Speed > 0 ? MathF.Round(maxGas - o2Speed, 2) : 0;
+                                    }
+                                    Thread.Sleep(3000);
+                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 氧气预设值：{1}，底值：{2}，delta：{3}", deviceParameter.Name, o2Speed, deviceParameter.O2Param.FlowSpeed, tempO2));
+                                    sleepCount = info.Interval <= 1 ? 1 : info.Interval;
+                                    while (sleepCount > 0)
+                                    {
+                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                        {
+                                            return;
+                                        }
+
+                                        sleepCount--;
+                                        Thread.Sleep(1000);
+                                    }
+                                    break;
+                                case DOControlFactor.Temp:
+                                    int lastFactorIndex = factorIndex;
+                                    deviceParameter.DORegulationLimit = false;
+                                    QPIDController pIDController = new QPIDController();
+                                    info1 = pIDInfos.FindFirst(t => t.PidName.Contains("降温") && t.deviceID == deviceParameter.Name);
+                                    if (info1 == null)
+                                    {
+                                        MessageBox.Show(string.Format("反应器{0}不存在温控的PID调控策略", deviceParameter.Name));
                                         return;
                                     }
+                                    pIDController.SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
+                                    pIDController.SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
+                                    pIDController.SetIntegralLimits(-2000, 2000);
+                                    pIDController.SetTarget(param.AgitHigh);
+                                    float increment = pIDController.CalculateIncremental(dicDODelta[deviceParameter.Name]);
+                                    float currentTemp = deviceParameter.TempParam.Temp_PV + increment;
+                                    if (currentTemp <= deviceParameter.TempDOLowerLimit)
+                                    {
+                                        if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
+                                        {
+                                            factorIndex += 1;
+                                        }
+                                    }
+                                    else if (currentTemp >= initialTemp)
+                                    {
+                                        if (factorIndex - 1 > -1)
+                                        {
+                                            factorIndex -= 1;
+                                        }
+                                    }
+                                    currentTemp = currentTemp <= deviceParameter.TempDOLowerLimit ? deviceParameter.TempDOLowerLimit : currentTemp >= initialTemp ? initialTemp : currentTemp;
+                                    deviceParameter.TempParam.Temp_PV = MathF.Round(currentTemp, 2);
+                                    LogHelper.Debug(string.Format("反应器{0} 起始温度{1} 单次delta{2} 实际温度{3}", deviceParameter.Name, initialTemp, increment, currentTemp));
+                                    sleepCount = info1.Interval <= 0 ? 1 : info1.Interval;
+                                    while (sleepCount > 0)
+                                    {
+                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                        {
+                                            return;
+                                        }
 
-                                    count--;
-                                    Thread.Sleep(1000);
-                                }
+                                        sleepCount--;
+                                        Thread.Sleep(1000);
+                                    }
+
+                                    if (lastFactorIndex != factorIndex)
+                                    {
+                                        while (true)
+                                        {
+                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                            if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.Temp_PV) <= 0.2)
+                                            {
+                                                break;
+                                            }
+                                            Thread.Sleep(1000);
+                                        }
+                                    }
+                                    break;
+                                case DOControlFactor.Feed:
+                                    if (factorIndex < collection.Count - 1)
+                                    {
+                                        factorIndex += 1;
+                                    }
+                                    else if (factorIndex - 1 > -1)
+                                    {
+                                        factorIndex -= 1;
+                                    }
+                                    break;
                             }
                         }
                         catch (Exception ex)

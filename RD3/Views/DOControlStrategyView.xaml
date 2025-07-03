@@ -47,6 +47,20 @@
             <Setter Property="Icon" Value="../Assets/logo.png" />
         </Style>
     </prism:Dialog.WindowStyle>
+    <UserControl.Resources>
+        <ObjectDataProvider
+            x:Key="DataFromEnum"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:DOControlFactor" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <Style
+            x:Key="CustomTransferStyle"
+            BasedOn="{StaticResource Transfer.CheckBox.Small}"
+            TargetType="hc:Transfer" />
+    </UserControl.Resources>
     <hc:UniformSpacingPanel
         Margin="10"
         Orientation="Vertical"
@@ -58,7 +72,7 @@
                     Height="40"
                     hc:BorderElement.CornerRadius="8"
                     Background="{DynamicResource BorderBrush}"
-                    Content="{ex:Language Key='阶梯通气'}"
+                    Content="{ex:Language Key='阶梯级联'}"
                     FontSize="{DynamicResource MediumFontSize}"
                     Foreground="{DynamicResource SecondaryTextBrush}"
                     IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Step}" />
@@ -123,7 +137,10 @@
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding CurrentDeviceParameter.AgitTimeConstant, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
                 </hc:UniformSpacingPanel>
-                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+                <hc:UniformSpacingPanel
+                    Orientation="Horizontal"
+                    Spacing="20"
+                    Visibility="Collapsed">
                     <DockPanel LastChildFill="False">
                         <CheckBox
                             Content="补料关联"
@@ -151,7 +168,7 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <GroupBox
                 MaxHeight="400"
-                Header="阶梯通气策略参数"
+                Header="阶梯级联策略参数"
                 Style="{StaticResource MaterialDesignGroupBox}"
                 Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Step}">
                 <DockPanel>
@@ -162,6 +179,26 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                            <TextBlock
+                                FontSize="{StaticResource HeadFontSize}"
+                                Foreground="{DynamicResource FixedGradientBrush}"
+                                Text="{Binding Param.FactorContent}" />
+                            <DockPanel LastChildFill="True">
+                                <TextBlock
+                                    DockPanel.Dock="Top"
+                                    Foreground="Red"
+                                    Text="请选择策略的执行参数，执行顺序同选择顺序，转速为执行基本参数，全程执行" />
+                                <hc:Transfer
+                                    Height="120"
+                                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                    Style="{StaticResource Transfer.CheckBox.Small}"
+                                    TransferredItemsChanged="Transfer_TransferredItemsChanged">
+                                    <hc:TransferItem Content="空气" />
+                                    <hc:TransferItem Content="氧气" />
+                                    <hc:TransferItem Content="温度" />
+                                    <hc:TransferItem Content="补料" />
+                                </hc:Transfer>
+                            </DockPanel>
                             <DockPanel LastChildFill="False">
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <TextBox
@@ -176,20 +213,17 @@
                                         hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
                                         Style="{StaticResource TextBoxExtend}"
                                         Text="{Binding Param.AgitUpperLimit, UpdateSourceTrigger=LostFocus}" />
+                                    <ComboBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='气体单位'}"
+                                        DockPanel.Dock="Left"
+                                        SelectedIndex="{Binding Param.Unit}"
+                                        Style="{StaticResource ComboBoxExtend}">
+                                        <ComboBoxItem Content="VVM" />
+                                        <ComboBoxItem Content="L/min" />
+                                    </ComboBox>
                                 </hc:UniformSpacingPanel>
                             </DockPanel>
-                            <DockPanel LastChildFill="False">
-                                <ComboBox
-                                    Width="100"
-                                    hc:InfoElement.Title="{ex:Language Key='气体单位'}"
-                                    DockPanel.Dock="Left"
-                                    SelectedIndex="{Binding Param.Unit}"
-                                    Style="{StaticResource ComboBoxExtend}">
-                                    <ComboBoxItem Content="VVM" />
-                                    <ComboBoxItem Content="L/min" />
-                                </ComboBox>
-                            </DockPanel>
-
                             <DockPanel LastChildFill="False">
                                 <hc:UniformSpacingPanel
                                     DockPanel.Dock="Left"
@@ -342,10 +376,33 @@
             </GroupBox>
         </ScrollViewer>
         <GroupBox
-            Header="mid-ranging策略参数"
+            Header="中位控制策略参数"
             Style="{StaticResource MaterialDesignGroupBox}"
             Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Midranging}">
-            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+            <hc:UniformSpacingPanel
+                Margin="5"
+                Orientation="Vertical"
+                Spacing="10">
+                <TextBlock
+                    FontSize="{StaticResource HeadFontSize}"
+                    Foreground="{DynamicResource FixedGradientBrush}"
+                    Text="{Binding MidRanging.FactorContent}" />
+                <DockPanel LastChildFill="True">
+                    <TextBlock
+                        DockPanel.Dock="Top"
+                        Foreground="Red"
+                        Text="请选择策略的执行参数，执行顺序同选择顺序，转速为执行基本参数，全程执行" />
+                    <hc:Transfer
+                        Height="120"
+                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                        Style="{StaticResource Transfer.CheckBox.Small}"
+                        TransferredItemsChanged="Transfer_TransferredItemsChanged">
+                        <hc:TransferItem Content="空气" />
+                        <hc:TransferItem Content="氧气" />
+                        <hc:TransferItem Content="温度" />
+                        <hc:TransferItem Content="补料" />
+                    </hc:Transfer>
+                </DockPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <TextBox
                         Width="100"
@@ -388,14 +445,6 @@
                         hc:InfoElement.Title="{ex:Language Key='通气上限'}"
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding MidRanging.AirUpperLimit, UpdateSourceTrigger=LostFocus}" />
-                    <DockPanel LastChildFill="False">
-                        <CheckBox
-                            Width="100"
-                            Content="氧气关联"
-                            DockPanel.Dock="Bottom"
-                            IsChecked="{Binding MidRanging.O2Associated}"
-                            Style="{StaticResource MaterialDesignCheckBox}" />
-                    </DockPanel>
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>

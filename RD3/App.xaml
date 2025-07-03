@@ -165,6 +165,10 @@
                 </DockPanel>
             </ControlTemplate>
 
+            <DataTemplate x:Key="CustomListBoxTemplate">
+                <TextBlock Foreground="Red" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+            </DataTemplate>
+
             <!--<Style TargetType="{x:Type views:DialogWindowBase}">
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
                 <Setter Property="Background" Value="White" />

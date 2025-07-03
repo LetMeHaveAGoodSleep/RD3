@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Newtonsoft.Json;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,19 +39,23 @@ namespace RD3.Shared
             set { SetProperty(ref _o2Associated, value); }
         }
 
-        //private float _initialO2 = 0.5f;
-        //public float InitialO2
-        //{
-        //    get => _initialO2;
-        //    set { SetProperty(ref _initialO2, value); }
-        //}
+        private ObservableCollection<DOControlFactor> _factorCol = [];
+        public ObservableCollection<DOControlFactor> FactorCol
+        {
+            get => _factorCol;
+            set
+            {
+                SetProperty(ref _factorCol, value);
+            }
+        }
 
-        //private float _o2UpperLimit = 2f;
-        //public float O2UpperLimit
-        //{
-        //    get => _o2UpperLimit;
-        //    set { SetProperty(ref _o2UpperLimit, value); }
-        //}
+        private string _factorContent;
+        [JsonIgnore]
+        public string FactorContent
+        {
+            get { return _factorContent; }
+            set { SetProperty(ref _factorContent, value); }
+        }
 
         private object _reserve1;
         public object Reserve1
