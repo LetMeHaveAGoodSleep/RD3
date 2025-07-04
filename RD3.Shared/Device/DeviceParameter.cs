@@ -701,6 +701,17 @@ namespace RD3.Shared
             set { SetProperty(ref _doRegulationLimit, value); }
         }
 
+        private bool _feedSuspend = false;
+        /// <summary>
+        /// 如果DO调控时，需要降低补料，则为true；否则为false
+        /// </summary>
+        [JsonIgnore]
+        public bool FeedSuspend
+        {
+            get => _feedSuspend;
+            set { SetProperty(ref _feedSuspend, value); }
+        }
+
         private bool _tempDOAssociated = false;
         public bool TempDOAssociated
         {
@@ -713,6 +724,13 @@ namespace RD3.Shared
         {
             get => _tempDOLowerLimit;
             set { SetProperty(ref _tempDOLowerLimit, value); }
+        }
+
+        private float _feedDOLowerLimit = 0;
+        public float FeedDOLowerLimit
+        {
+            get => _feedDOLowerLimit;
+            set { SetProperty(ref _feedDOLowerLimit, value); }
         }
 
         private float _kalmanConstant = 0f;

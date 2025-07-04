@@ -66,7 +66,10 @@
         Orientation="Vertical"
         Spacing="10">
         <DockPanel LastChildFill="False">
-            <hc:ButtonGroup HorizontalAlignment="Left" Style="{StaticResource ButtonGroupSolid}">
+            <hc:ButtonGroup
+                HorizontalAlignment="Left"
+                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                Style="{StaticResource ButtonGroupSolid}">
                 <RadioButton
                     Width="auto"
                     Height="40"
@@ -136,26 +139,6 @@
                         IsReadOnly="True"
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding CurrentDeviceParameter.AgitTimeConstant, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
-                </hc:UniformSpacingPanel>
-                <hc:UniformSpacingPanel
-                    Orientation="Horizontal"
-                    Spacing="20"
-                    Visibility="Collapsed">
-                    <DockPanel LastChildFill="False">
-                        <CheckBox
-                            Content="补料关联"
-                            DockPanel.Dock="Bottom"
-                            IsChecked="{Binding CurrentDeviceParameter.FeedDOAssociated}"
-                            Style="{StaticResource MaterialDesignCheckBox}"
-                            ToolTip="当溶氧无法继续上升时，则降低补料" />
-                    </DockPanel>
-                    <DockPanel LastChildFill="False">
-                        <CheckBox
-                            Content="温度关联"
-                            DockPanel.Dock="Bottom"
-                            IsChecked="{Binding CurrentDeviceParameter.TempDOAssociated}"
-                            Style="{StaticResource MaterialDesignCheckBox}" />
-                    </DockPanel>
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>
@@ -416,6 +399,12 @@
                         hc:InfoElement.Title="{ex:Language Key='转速高限(rpm)'}"
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding MidRanging.AgitHigh, UpdateSourceTrigger=LostFocus}" />
+                    <TextBox
+                        Width="100"
+                        VerticalAlignment="Center"
+                        hc:InfoElement.Title="{ex:Language Key='温度下限(℃)'}"
+                        Style="{StaticResource TextBoxExtend}"
+                        Text="{Binding CurrentDeviceParameter.TempDOLowerLimit, UpdateSourceTrigger=LostFocus}" />
                 </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <ComboBox
@@ -442,9 +431,10 @@
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='温度下限(℃)'}"
+                        hc:InfoElement.Title="{ex:Language Key='补料下限(mL/h)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.TempDOLowerLimit, UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding CurrentDeviceParameter.FeedDOLowerLimit
+                        , UpdateSourceTrigger=LostFocus}" />
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>
