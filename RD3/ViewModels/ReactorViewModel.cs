@@ -912,8 +912,6 @@ namespace RD3.ViewModels
             }
 
             float agitHigh = 0;
-            float initialTemp = currentDeviceParameter.TempParam.Temp_PV;
-            float initialFeed = 0f;
             bool firstInitFeed = true;
 
             dicDOPid[currentDeviceParameter.Name].Reset();
@@ -926,6 +924,7 @@ namespace RD3.ViewModels
                 var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == currentDeviceParameter.Name);
 
                 deviceParameter.FeedSuspend = deviceParameter.IsDOLimit = deviceParameter.DORegulationLimit = false;
+                deviceParameter.DOParam.InitialTemp = deviceParameter.TempParam.Temp_PV;
                 e.Result = deviceParameter.Name;
 
                 float maxMFCFlow = 0;//用于通气量的总和
@@ -936,7 +935,6 @@ namespace RD3.ViewModels
 
                     PIDInfo info = null;
                     PIDInfo lastPid = null;
-                    //MidrangingPeriod midrangingPeriod = MidrangingPeriod.DuringAgitHigh;
                     int lastDODelta = 0;//低通滤波的上个值
 
                     int factorIndex = -1;//当前执行索引
@@ -1296,16 +1294,16 @@ namespace RD3.ViewModels
                                             factorIndex += 1;
                                         }
                                     }
-                                    else if (currentTemp >= initialTemp)
+                                    else if (currentTemp >= deviceParameter.DOParam.InitialTemp)
                                     {
                                         if (factorIndex - 1 > -1)
                                         {
                                             factorIndex -= 1;
                                         }
                                     }
-                                    currentTemp = currentTemp <= deviceParameter.TempDOLowerLimit ? deviceParameter.TempDOLowerLimit : currentTemp >= initialTemp ? initialTemp : currentTemp;
+                                    currentTemp = currentTemp <= deviceParameter.TempDOLowerLimit ? deviceParameter.TempDOLowerLimit : currentTemp >=  deviceParameter.DOParam.InitialTemp ?  deviceParameter.DOParam.InitialTemp : currentTemp;
                                     deviceParameter.TempParam.Temp_PV = MathF.Round(currentTemp, 2);
-                                    LogHelper.Debug(string.Format("反应器{0} 起始温度{1} 单次delta{2} 实际温度{3}", deviceParameter.Name, initialTemp, increment, currentTemp));
+                                    LogHelper.Debug(string.Format("反应器{0} 起始温度{1} 单次delta{2} 实际温度{3}", deviceParameter.Name,  deviceParameter.DOParam.InitialTemp, increment, currentTemp));
                                     sleepCount = info1.Interval <= 0 ? 1 : info1.Interval;
                                     while (sleepCount > 0)
                                     {
@@ -1318,7 +1316,7 @@ namespace RD3.ViewModels
                                         Thread.Sleep(1000);
                                     }
 
-                                    if (deviceParameter.TempParam.Temp_PV <= deviceParameter.TempDOLowerLimit || deviceParameter.TempParam.Temp_PV >= initialTemp)
+                                    if (deviceParameter.TempParam.Temp_PV <= deviceParameter.TempDOLowerLimit || deviceParameter.TempParam.Temp_PV >=  deviceParameter.DOParam.InitialTemp)
                                     {
                                         while (true)
                                         {
@@ -1351,7 +1349,7 @@ namespace RD3.ViewModels
                                     if (firstInitFeed)
                                     {
                                         deviceParameter.FeedSuspend = true;
-                                        initialFeed = deviceParameter.FeedParam1.Feed_PV;
+                                         deviceParameter.DOParam.InitialFeed = deviceParameter.FeedParam1.Feed_PV;
                                         firstInitFeed = false;
                                     }
                                     QPIDController controller = new QPIDController();
@@ -1373,14 +1371,14 @@ namespace RD3.ViewModels
                                             factorIndex += 1;
                                         }
                                     }
-                                    else if (currentFeed >= initialFeed)
+                                    else if (currentFeed >=  deviceParameter.DOParam.InitialFeed)
                                     {
                                         if (factorIndex - 1 > -1)
                                         {
                                             factorIndex -= 1;
                                         }
                                     }
-                                    currentFeed = currentFeed <= deviceParameter.FeedDOLowerLimit ? deviceParameter.FeedDOLowerLimit : currentFeed >= initialFeed ? initialFeed : currentFeed;
+                                    currentFeed = currentFeed <= deviceParameter.FeedDOLowerLimit ? deviceParameter.FeedDOLowerLimit : currentFeed >=  deviceParameter.DOParam.InitialFeed ?  deviceParameter.DOParam.InitialFeed : currentFeed;
                                     deviceParameter.FeedParam1.Feed_PV = MathF.Round(currentFeed, 2);
                                     PeristalticPump pump = PeristalticPump.FeedPump;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
@@ -1397,7 +1395,7 @@ namespace RD3.ViewModels
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, controlParam);
                                         dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam1.Feed_PV;
                                     }
-                                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 单次delta{2} 实际补料{3}", deviceParameter.Name, initialFeed, incrementFeed, currentFeed));
+                                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 单次delta{2} 实际补料{3}", deviceParameter.Name,  deviceParameter.DOParam.InitialFeed, incrementFeed, currentFeed));
                                     sleepCount = info1.Interval <= 0 ? 1 : info1.Interval;
                                     while (sleepCount > 0)
                                     {
@@ -2445,12 +2443,19 @@ namespace RD3.ViewModels
                     var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == e.Result?.ToString());
                     if (deviceParameter == null)
                     {
-                        LogHelper.Debug(string.Format("DOPID事件完成出错,未找到反应器{0}" + e.Result?.ToString()));
+                        LogHelper.Debug(string.Format("溶氧控制：事件完成出错,未找到反应器{0}" + e.Result?.ToString()));
                         return;
                     }
                     deviceParameter.DOParam.IsControling = false;
                     deviceParameter.DORegulationLimit = false;
                     deviceParameter.FeedSuspend = false;
+
+                    if (deviceParameter.TempParam.IsControling && deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
+                    {
+                        deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
+                    }
+                    
+
                     //deviceParameter.AirParam.IsControling = deviceParameter.AgitParam.IsControling = false;
 
                     BackgroundWorker backgroundWorker = s as BackgroundWorker;
@@ -2459,7 +2464,7 @@ namespace RD3.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Debug("详情界面：溶氧pid取消报错" + ex.Message);
+                    LogHelper.Debug("溶氧控制：取消报错" + ex.Message);
                 }
             });
             dicDOWorker[currentDeviceParameter.Name].RunWorkerAsync();
