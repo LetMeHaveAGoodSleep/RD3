@@ -56,26 +56,26 @@ namespace RD3.ViewModels
 
         public DelegateCommand AddAirCommand => new(() => 
         {
-            Param.AirCol.Add(new DOGas() { VVM= Param.AirCol[Param.AirCol.Count - 1].VVM });
+            Param.AirCol.Add(new CascadeParam() { StepValue= Param.AirCol[Param.AirCol.Count - 1].StepValue });
         });
 
         public DelegateCommand<object> DeleteAirCommand => new((object o) =>
         {
-            DOGas dOAir = o as DOGas;
+            CascadeParam dOAir = o as CascadeParam;
             Param.AirCol.Remove(dOAir);
         });
 
         public DelegateCommand AddO2Command => new(() =>
         {
-            Param.O2Col.Add(new DOGas()
+            Param.O2Col.Add(new CascadeParam()
             {
-                VVM = Param.O2Col.Count > 0 ? Param.O2Col[Param.O2Col.Count - 1].VVM : 0.1f
+                StepValue = Param.O2Col.Count > 0 ? Param.O2Col[Param.O2Col.Count - 1].StepValue : 0.1f
             });
         });
 
         public DelegateCommand<object> DeleteO2Command => new((object o) =>
         {
-            DOGas dOAir = o as DOGas;
+            CascadeParam dOAir = o as CascadeParam;
             Param.O2Col.Remove(dOAir);
         });
 
@@ -87,7 +87,7 @@ namespace RD3.ViewModels
             }
             else
             {
-                Param.AirCol = new ObservableCollection<DOGas>(Param.AirCol.OrderBy(t => t.VVM));
+                Param.AirCol = new ObservableCollection<CascadeParam>(Param.AirCol.OrderBy(t => t.StepValue));
                 DOAssManager.GetInstance().Save(ParamCol);
             }
 

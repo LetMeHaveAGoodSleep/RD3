@@ -509,8 +509,6 @@ namespace XZ.SQLite
         {
             try
             {
-                using (var transaction = connection.BeginTransaction())
-                {
                     try
                     {
                         // 使用SQLiteCommand对象执行SQL命令
@@ -523,16 +521,13 @@ namespace XZ.SQLite
                             }
 
                             int num = command.ExecuteNonQuery();
-                            transaction.Commit(); // 明确提交
                             return num;
                         }
                     }
                     catch
                     {
-                        transaction.Rollback(); // 失败时回滚
                         throw;
                     }
-                }
             }
             catch (Exception ex)
             {
@@ -586,21 +581,23 @@ namespace XZ.SQLite
 
         public static void CommitTransaction(List<Tuple<string, SQLiteParameter[]>> source)
         {
-            try
+            using (var transaction = connection.BeginTransaction())
             {
-                using (var transaction = connection.BeginTransaction())
+                try
                 {
-                    foreach (var row in source) 
+
+                    foreach (var row in source)
                     {
                         ExecuteNonQuery(row.Item1, row.Item2);
                     }
                     transaction.Commit();
                 }
-            }
-            catch (Exception ex)
-            {
-                LogException(ex);
-                return ;
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    LogException(ex);
+                    return;
+                }
             }
         }
 

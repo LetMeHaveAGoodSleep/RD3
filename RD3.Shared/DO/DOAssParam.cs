@@ -36,8 +36,8 @@ namespace RD3.Shared
             set { SetProperty(ref _factorContent, value); }
         }
 
-        private ObservableCollection<DOGas> _airCol = [];
-        public ObservableCollection<DOGas> AirCol
+        private ObservableCollection<CascadeParam> _airCol = [];
+        public ObservableCollection<CascadeParam> AirCol
         {
             get => _airCol;
             set
@@ -46,8 +46,8 @@ namespace RD3.Shared
             }
         }
 
-        private ObservableCollection<DOGas> _o2Col = [];
-        public ObservableCollection<DOGas> O2Col
+        private ObservableCollection<CascadeParam> _o2Col = [];
+        public ObservableCollection<CascadeParam> O2Col
         {
             get => _o2Col;
             set
@@ -77,15 +77,6 @@ namespace RD3.Shared
         }
     }
 
-    public class DOGas : BindableBase
-    {
-        private float _vvm;
-        public float VVM
-        {
-            get => _vvm;
-            set { SetProperty(ref _vvm, value); }
-        }
-    }
 
     public class CascadeParam : BindableBase
     {

@@ -172,7 +172,6 @@ namespace RD3
             containerRegistry.RegisterDialog<AddOffLineDataView, AddOffLineDataViewModel>();
             containerRegistry.RegisterDialog<AddOfflineDatasView, AddOffLineDatasViewModel>();//add by hdb 批量录入离线数据
             containerRegistry.RegisterDialog<NewBatchView, NewBatchViewModel>();
-            containerRegistry.RegisterDialog<DOAssociateView, DOAssociateViewModel>();
 
             containerRegistry.RegisterDialog<PIDView, PIDViewModel>();
             containerRegistry.RegisterDialog<ParameterView, ParameterViewModel>();

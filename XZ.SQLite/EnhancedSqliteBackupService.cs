@@ -96,50 +96,28 @@ public class EnhancedSqliteBackupService : IDisposable
                 string dbName = Path.GetFileNameWithoutExtension(_sourceDbPath);
                 string backupFileName = $"{dbName}_Backup_{timestamp}.db";
                 string backupPath = Path.Combine(dailyBackupPath, backupFileName);
-
-                // 使用SQLite连接锁定数据库并执行备份
-                using (var sourceConn = new SQLiteConnection($"Data Source={_sourceDbPath};Version=3;"))
+                try
                 {
-                    sourceConn.Open();
+                    File.Copy(_sourceDbPath, backupPath, overwrite: true);
 
-                    // 开始事务锁定数据库
-                    using (var transaction = sourceConn.BeginTransaction())
+                    var flag = VerifyBackup(backupPath);
+
+                    // 如果是新的一天，清理前一天的备份
+                    if (_lastBackupDate.Date < DateTime.Today)
                     {
-                        try
-                        {
-                            // 使用SQLite备份API
-                            using (var backupConn = new SQLiteConnection($"Data Source={backupPath};Version=3;"))
-                            {
-                                backupConn.Open();
-                                //sourceConn.BackupDatabase(backupConn, "main", "main", -1, null, 0);
-                                // 3. 实际复制文件
-                                File.Copy(_sourceDbPath, backupPath, overwrite: true);
-                            }
-
-                            transaction.Commit();
-
-                            var flag = VerifyBackup(backupPath);
-
-                            // 如果是新的一天，清理前一天的备份
-                            if (_lastBackupDate.Date < DateTime.Today)
-                            {
-                                CleanupOldBackups();
-                                _lastBackupDate = DateTime.Now;
-                            }
-                        }
-                        catch
-                        {
-                            transaction.Rollback();
-
-                            // 如果备份失败，删除可能已创建的部分备份文件
-                            if (File.Exists(backupPath))
-                            {
-                                try { File.Delete(backupPath); } catch { /* 忽略删除错误 */ }
-                            }
-
-                            throw; // 重新抛出异常
-                        }
+                        CleanupOldBackups();
+                        _lastBackupDate = DateTime.Now;
                     }
+                }
+                catch
+                {
+                    // 如果备份失败，删除可能已创建的部分备份文件
+                    if (File.Exists(backupPath))
+                    {
+                        try { File.Delete(backupPath); } catch { /* 忽略删除错误 */ }
+                    }
+
+                    throw; // 重新抛出异常
                 }
             }
         }

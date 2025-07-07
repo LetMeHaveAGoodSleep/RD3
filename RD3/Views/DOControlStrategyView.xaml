@@ -18,7 +18,7 @@
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     Width="550"
-    Height="650"
+    Height="950"
     d:DataContext="{d:DesignInstance Type=vm:DOControlStrategyViewModel}"
     d:DesignHeight="2000"
     Background="{StaticResource BackGroundBrush}"
@@ -144,7 +144,7 @@
         </GroupBox>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <GroupBox
-                MaxHeight="400"
+                MaxHeight="750"
                 Header="阶梯级联策略参数"
                 Style="{StaticResource MaterialDesignGroupBox}"
                 Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Step}">
@@ -260,7 +260,6 @@
                             </Grid.ColumnDefinitions>
                             <hc:ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                                 <DataGrid
-                                    Name="dataGrid"
                                     hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
                                     hc:DataGridAttach.ShowSelectAllButton="False"
                                     AutoGenerateColumns="False"
@@ -294,7 +293,7 @@
                                         </DataGridTemplateColumn>
                                         <DataGridTextColumn
                                             Width="120"
-                                            Binding="{Binding VVM}"
+                                            Binding="{Binding StepValue}"
                                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                             Header="通气量"
                                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
@@ -340,7 +339,7 @@
                                         </DataGridTemplateColumn>
                                         <DataGridTextColumn
                                             Width="120"
-                                            Binding="{Binding VVM}"
+                                            Binding="{Binding StepValue}"
                                             CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                             Header="氧气量"
                                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
@@ -433,8 +432,7 @@
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='补料下限(mL/h)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.FeedDOLowerLimit
-                        , UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding CurrentDeviceParameter.FeedDOLowerLimit, UpdateSourceTrigger=LostFocus}" />
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>

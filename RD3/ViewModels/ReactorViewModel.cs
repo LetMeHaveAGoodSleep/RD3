@@ -1532,11 +1532,11 @@ namespace RD3.ViewModels
 
                     if (param.Unit == 0)//VVM
                     {
-                        maxMFCFlow = MathF.Round((float)(param.AirCol[param.AirCol.Count - 1].VVM * (deviceParameter.JarWeight - 2000) / 1000), 2);
+                        maxMFCFlow = MathF.Round((float)(param.AirCol[param.AirCol.Count - 1].StepValue * (deviceParameter.JarWeight - 2000) / 1000), 2);
                     }
                     else if (param.Unit == 1)//L/min
                     {
-                        maxMFCFlow = param.AirCol[param.AirCol.Count - 1].VVM;
+                        maxMFCFlow = param.AirCol[param.AirCol.Count - 1].StepValue;
                     }
                     if (dicAirIndex[deviceParameter.Name] > param.AirCol.Count - 1 && param.AirCol.Count > 0)
                     {
@@ -1695,11 +1695,11 @@ namespace RD3.ViewModels
                                 {
                                     if (param.Unit == 0)//VVM
                                     {
-                                        deviceParameter.AirParam.FlowSpeed = MathF.Round((float)(doair.VVM * (realTimeParam1.JarWeight - 2000) / 1000), 2);
+                                        deviceParameter.AirParam.FlowSpeed = MathF.Round((float)(doair.StepValue * (realTimeParam1.JarWeight - 2000) / 1000), 2);
                                     }
                                     else if (param.Unit == 1)//L/min
                                     {
-                                        deviceParameter.AirParam.FlowSpeed = doair.VVM;
+                                        deviceParameter.AirParam.FlowSpeed = doair.StepValue;
                                     }
 
                                     if (realTimeParam1.AirFlowSpeed != deviceParameter.AirParam.FlowSpeed)
@@ -1715,11 +1715,11 @@ namespace RD3.ViewModels
                                     {
                                         if (param.Unit == 0)//VVM
                                         {
-                                            deviceParameter.O2Param.FlowSpeed = MathF.Round((float)(doO2.VVM * (realTimeParam1.JarWeight - 2000) / 1000), 2);
+                                            deviceParameter.O2Param.FlowSpeed = MathF.Round((float)(doO2.StepValue * (realTimeParam1.JarWeight - 2000) / 1000), 2);
                                         }
                                         else if (param.Unit == 1)//L/min
                                         {
-                                            deviceParameter.O2Param.FlowSpeed = doO2.VVM;
+                                            deviceParameter.O2Param.FlowSpeed = doO2.StepValue;
                                         }
 
                                         if (realTimeParam1.O2FlowSpeed != deviceParameter.O2Param.FlowSpeed)
@@ -2140,11 +2140,11 @@ namespace RD3.ViewModels
                                 {
                                     if (param.Unit == 0)//VVM
                                     {
-                                        deviceParameter.AirParam.FlowSpeed = MathF.Round((float)(doair.VVM * (realTimeParam1.JarWeight - 2000) / 1000), 2);
+                                        deviceParameter.AirParam.FlowSpeed = MathF.Round((float)(doair.StepValue * (realTimeParam1.JarWeight - 2000) / 1000), 2);
                                     }
                                     else if (param.Unit == 1)//L/min
                                     {
-                                        deviceParameter.AirParam.FlowSpeed = doair.VVM;
+                                        deviceParameter.AirParam.FlowSpeed = doair.StepValue;
                                     }
 
                                     if (realTimeParam1.AirFlowSpeed != deviceParameter.AirParam.FlowSpeed)
@@ -2158,11 +2158,11 @@ namespace RD3.ViewModels
                                 {
                                     if (param.Unit == 0)//VVM
                                     {
-                                        deviceParameter.O2Param.FlowSpeed = MathF.Round((float)(doO2.VVM * (realTimeParam1.JarWeight - 2000) / 1000), 2);
+                                        deviceParameter.O2Param.FlowSpeed = MathF.Round((float)(doO2.StepValue * (realTimeParam1.JarWeight - 2000) / 1000), 2);
                                     }
                                     else if (param.Unit == 1)//L/min
                                     {
-                                        deviceParameter.O2Param.FlowSpeed = doO2.VVM;
+                                        deviceParameter.O2Param.FlowSpeed = doO2.StepValue;
                                     }
 
                                     if (realTimeParam1.O2FlowSpeed != deviceParameter.O2Param.FlowSpeed)
