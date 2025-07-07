@@ -61,8 +61,8 @@ namespace RD3.ViewModels
 
         public DelegateCommand<object> DeleteAirCommand => new((object o) =>
         {
-            CascadeParam dOAir = o as CascadeParam;
-            Param.AirCol.Remove(dOAir);
+            CascadeParam param = o as CascadeParam;
+            Param.AirCol.Remove(param);
         });
 
         public DelegateCommand AddO2Command => new(() =>
@@ -75,9 +75,38 @@ namespace RD3.ViewModels
 
         public DelegateCommand<object> DeleteO2Command => new((object o) =>
         {
-            CascadeParam dOAir = o as CascadeParam;
-            Param.O2Col.Remove(dOAir);
+            CascadeParam param = o as CascadeParam;
+            Param.O2Col.Remove(param);
         });
+
+        public DelegateCommand AddTempCommand => new(() =>
+        {
+            Param.TempCol.Add(new CascadeParam()
+            {
+                StepValue = Param.TempCol.Count > 0 ? Param.TempCol[Param.TempCol.Count - 1].StepValue : 37f
+            });
+        });
+
+        public DelegateCommand<object> DeleteTempCommand => new((object o) =>
+        {
+            CascadeParam param = o as CascadeParam;
+            Param.TempCol.Remove(param);
+        });
+
+        public DelegateCommand AddFeedCommand => new(() =>
+        {
+            Param.FeedCol.Add(new CascadeParam()
+            {
+                StepValue = Param.FeedCol.Count > 0 ? Param.FeedCol[Param.FeedCol.Count - 1].StepValue : 80f
+            });
+        });
+
+        public DelegateCommand<object> DeleteFeedCommand => new((object o) =>
+        {
+            CascadeParam param = o as CascadeParam;
+            Param.FeedCol.Remove(param);
+        });
+
 
         public DelegateCommand OKCommand => new(() =>
         {

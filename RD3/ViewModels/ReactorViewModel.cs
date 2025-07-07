@@ -2454,7 +2454,11 @@ namespace RD3.ViewModels
                     {
                         deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
                     }
-                    
+
+                    if (deviceParameter.FeedParam1.IsControling && deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
+                    {
+                        deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
+                    }
 
                     //deviceParameter.AirParam.IsControling = deviceParameter.AgitParam.IsControling = false;
 
