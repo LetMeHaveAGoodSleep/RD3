@@ -107,6 +107,10 @@ namespace RD3
 
             UserManager.GetInstance();
             var dialog = Container.Resolve<IDialogService>();
+
+            backupService = new EnhancedSqliteBackupService(@"hisDatas\xzrd3.db", @"D:\DatabaseBackups");
+            backupService.Start();
+
             dialog.ShowDialog(nameof(LoginView),callback =>
             {
                 if (callback.Result != ButtonResult.OK)
@@ -134,9 +138,6 @@ namespace RD3
             AlarmManager.GetInstance();
             //AlarmLogger.GetInstance();
             //DeviceManager.GetInstance();
-
-            backupService = new EnhancedSqliteBackupService(@"hisDatas\xzrd3.db", @"D:\DatabaseBackups");
-            backupService.Start();
 
             base.OnInitialized();
         }
