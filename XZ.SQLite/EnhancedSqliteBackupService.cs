@@ -15,7 +15,7 @@ public class EnhancedSqliteBackupService : IDisposable
         private DateTime _lastBackupDate;
         private readonly object _backupLock = new object();
         private readonly int _maxRetryAttempts = 3;
-        private readonly TimeSpan _retryDelay = TimeSpan.FromSeconds(5);
+        private readonly TimeSpan _retryDelay = TimeSpan.FromSeconds(30);
 
         public EnhancedSqliteBackupService(string sourceDbPath, string backupRootPath)
         {
@@ -34,8 +34,8 @@ public class EnhancedSqliteBackupService : IDisposable
             // 设置每小时执行一次的定时器
             _backupTimer = new Timer(_ => Task.Run(() => PerformBackupWithRetry()),
                                   null,
-                                  TimeSpan.FromHours(1),
-                                  TimeSpan.FromHours(1));
+                                  TimeSpan.FromMinutes(60),
+                                  TimeSpan.FromMinutes(60));
         }
 
         private async Task PerformBackupWithRetry()
