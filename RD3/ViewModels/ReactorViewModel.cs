@@ -97,8 +97,10 @@ namespace RD3.ViewModels
         private Dictionary<string, BackgroundWorker> dicDOTimeWorker = new Dictionary<string, BackgroundWorker>();
         private Dictionary<string, BackgroundWorker> dicDOWorker = new Dictionary<string, BackgroundWorker>();
         private Dictionary<string, int> dicDODelta = new Dictionary<string, int>();
-        private Dictionary<string, int> dicAirIndex = new Dictionary<string, int>();
-        private Dictionary<string, int> dicO2Index = new Dictionary<string, int>();
+        private Dictionary<string, int> dicDOAirIndex = new Dictionary<string, int>();
+        private Dictionary<string, int> dicDOO2Index = new Dictionary<string, int>();
+        private Dictionary<string, int> dicDOTempIndex = new Dictionary<string, int>();
+        private Dictionary<string, int> dicDOFeedIndex = new Dictionary<string, int>();
         private Dictionary<string, QPIDController> dicDOPid = new Dictionary<string, QPIDController>();
         private Dictionary<string, QPIDController> dicDOAirPid = new Dictionary<string, QPIDController>();
         private Dictionary<string, QPIDController> dicDOO2Pid = new Dictionary<string, QPIDController>();
@@ -911,7 +913,6 @@ namespace RD3.ViewModels
                 return;
             }
 
-            float agitHigh = 0;
             bool firstInitFeed = true;
 
             dicDOPid[currentDeviceParameter.Name].Reset();
@@ -927,21 +928,25 @@ namespace RD3.ViewModels
                 deviceParameter.DOParam.InitialTemp = deviceParameter.TempParam.Temp_PV;
                 e.Result = deviceParameter.Name;
 
-                float maxMFCFlow = 0;//用于通气量的总和
+                float maxGas = 0;//用于通气量的总和
+                float initialGas = 0;
+
+                int factorIndex = -1;//当前执行索引
+                int lastFactorIndex = -1;//当前执行索引
+                int lastDODelta = 0;//低通滤波的上个值
+                var baseAgit = -1;//转速底值
+                PIDInfo info = null;
+                PIDInfo lastPid = null;
+
                 //mid-ranging控制
                 if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
                 {
-                    var agit = -1;
-
-                    PIDInfo info = null;
-                    PIDInfo lastPid = null;
-                    int lastDODelta = 0;//低通滤波的上个值
-
-                    int factorIndex = -1;//当前执行索引
-                    int lastFactorIndex = -1;//当前执行索引
-                    float initialGas = 0;
-                    float maxGas = 0;
-
+                    info = null;
+                    lastPid = null;
+                    baseAgit = -1;
+                    lastDODelta = 0;//低通滤波的上个值
+                    factorIndex = -1;//当前执行索引
+                    lastFactorIndex = -1;//当前执行索引
 
                     MidRangingParam param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                     RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -1014,24 +1019,24 @@ namespace RD3.ViewModels
                                 return;
                             }
 
-                            if (agit == -1)
+                            if (baseAgit == -1)
                             {
-                                agit = realTimeParam.Agit;
+                                baseAgit = realTimeParam.Agit;
                             }
 
                             //如果pid类型变了，pid系数清零 方成
                             if (info != null && lastPid != null && info.PidName != lastPid.PidName)
                             {
                                 LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
-                                if (agit == -1)
+                                if (baseAgit == -1)
                                 {
-                                    agit = realTimeParam.Agit;
+                                    baseAgit = realTimeParam.Agit;
                                 }
                                 else
                                 {
-                                    agit = deviceParameter.AgitParam.Agit_PV;
+                                    baseAgit = deviceParameter.AgitParam.Agit_PV;
                                 }
-                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, agit));
+                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, baseAgit));
 
                                 ResetDOParam(deviceParameter);
                             }
@@ -1043,12 +1048,9 @@ namespace RD3.ViewModels
 
                             if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
                             {
-                                agit = deviceParameter.AgitParam.Agit_PV;
+                                baseAgit = deviceParameter.AgitParam.Agit_PV;
+                                ResetDOParam(deviceParameter);
 
-                                deviceParameter.IsDOLimit = false;
-                                dicDOAirPid[deviceParameter.Name].Reset();
-                                dicDOPid[deviceParameter.Name].Reset();
-                                dicDODelta[deviceParameter.Name] = 0;
                                 int count = info.Interval <= 0 ? 1 : info.Interval;
                                 while (count > 0)
                                 {
@@ -1071,7 +1073,7 @@ namespace RD3.ViewModels
                             LogHelper.Debug(string.Format("反应器{6} Mid-Ranging DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", deviceParameter.DOParam.DO_PV, realTimeParam.DO, info.P, info.I, info.D, info.Interval, deviceParameter.Name));
 
                             float temp = dicDOPid[deviceParameter.Name].CalculatePositional_DO((float)realTimeParam.DO);
-                            int tempAgit = Convert.ToInt32(agit + temp);
+                            int tempAgit = Convert.ToInt32(baseAgit + temp);
 
                             dicDODelta[deviceParameter.Name] = tempAgit;
                             if (deviceParameter.DOFilterEnable)
@@ -1082,7 +1084,7 @@ namespace RD3.ViewModels
                                 dicDODelta[deviceParameter.Name] = lowPassDelta;
                             }
 
-                            LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, agit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
+                            LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, baseAgit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
 
                             deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
                             Thread.Sleep(5000);
@@ -1090,7 +1092,7 @@ namespace RD3.ViewModels
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                             if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
                             {
-                                agit = deviceParameter.AgitParam.Agit_PV;
+                                baseAgit = deviceParameter.AgitParam.Agit_PV;
 
                                 ResetDOParam(deviceParameter);
 
@@ -1129,6 +1131,7 @@ namespace RD3.ViewModels
                             int sleepCount = 1;
                             var previousElements = collection.Take(factorIndex);
                             bool isExistOtherGas = false;//在当前气体之前是否存在气体
+
                             switch (collection[factorIndex])
                             {
                                 case DOControlFactor.Air:
@@ -1486,94 +1489,143 @@ namespace RD3.ViewModels
                 //级联通气控制
                 else if(deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step)
                 {
+                    e.Result = deviceParameter.Name;
                     DateTime startTime = DateTime.Now;
                     var sv = deviceParameter.DOParam.DO_PV;
-                    int lastAgit = 0;
-                    var agit = -1;
+                    dicDOAirIndex[deviceParameter.Name] = dicDOO2Index[deviceParameter.Name] = 0;
 
-                    PIDInfo info = null;
-                    PIDInfo lastPid = null;
+                    info = null;
+                    lastPid = null;
+                    baseAgit = -1;
+                    lastDODelta = 0;//低通滤波的上个值
+                    factorIndex = 0;//当前执行索引
+                    lastFactorIndex = -1;//当前执行索引
 
-                    DOAssParam param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
-
-                    deviceParameter.AgitParam.IsControling = deviceParameter.AirParam.IsControling = true;
+                    deviceParameter.AgitParam.IsControling = true;
                     AgitRunCommand.Execute(deviceParameter);
-                    AirRunCommand.Execute(deviceParameter);
-                    if (param.O2Col.Count > 1)
-                    {
-                        deviceParameter.O2Param.IsControling = true;
-                        O2RunCommand.Execute(deviceParameter);
-                    }
 
                     RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-
                     while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
                     {
-                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                         {
-                            e.Result = deviceParameter.Name;
                             return;
                         }
                         Thread.Sleep(1000);
+                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                     }
 
                     realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                     while (realTimeParam.DO > deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsReverse)
                     {
-                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                         {
-                            e.Result = deviceParameter.Name;
                             return;
                         }
                         Thread.Sleep(1000);
+                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                     }
 
-                    if (param.Unit == 0)//VVM
+                    DOAssParam param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+
+                    ObservableCollection<DOControlFactor> collection = [.. param.FactorCol];
+
+                    if (collection.Count > 0 && (collection[0] == DOControlFactor.Air || collection[0] == DOControlFactor.O2))
                     {
-                        maxMFCFlow = MathF.Round((float)(param.AirCol[param.AirCol.Count - 1].StepValue * (deviceParameter.JarWeight - 2000) / 1000), 2);
-                    }
-                    else if (param.Unit == 1)//L/min
-                    {
-                        maxMFCFlow = param.AirCol[param.AirCol.Count - 1].StepValue;
-                    }
-                    if (dicAirIndex[deviceParameter.Name] > param.AirCol.Count - 1 && param.AirCol.Count > 0)
-                    {
-                        LogHelper.Debug(string.Format("上次通气档位为{0}，当前档位总共{1}档，所以跳至{2}档", dicAirIndex[deviceParameter.Name] + 1, param.AirCol.Count, param.AirCol.Count));
-                        dicAirIndex[deviceParameter.Name] = param.AirCol.Count - 1;
+                        switch (collection[0])
+                        {
+                            case DOControlFactor.Air:
+                                if (param.Unit == 0)//VVM
+                                {
+                                    initialGas = MathF.Round((float)(param.AirCol[0].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                    maxGas = MathF.Round((float)(param.AirCol[param.AirCol.Count - 1].StepValue * (deviceParameter.JarWeight - 2000) / 1000), 2);
+                                }
+                                else if (param.Unit == 1)//L/min
+                                {
+                                    initialGas = param.AirCol[0].StepValue;
+                                    maxGas = param.AirCol[param.AirCol.Count - 1].StepValue;
+                                }
+
+                                if (realTimeParam.AirFlowSpeed <= initialGas)
+                                {
+                                    deviceParameter.AirParam.FlowSpeed = initialGas;
+                                    dicDOAirIndex[deviceParameter.Name] = 0;
+                                }
+                                else if (realTimeParam.AirFlowSpeed >= maxGas)
+                                {
+                                    deviceParameter.AirParam.FlowSpeed = maxGas;
+                                    dicDOAirIndex[deviceParameter.Name] = param.AirCol.Count - 1;
+                                }
+                                else
+                                {
+                                    dicDOAirIndex[deviceParameter.Name] = param.AirCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                                    (x.Index == 0 || param.AirCol[x.Index - 1].StepValue <= realTimeParam.AirFlowSpeed) &&
+                                    (x.Index == param.AirCol.Count - 1 || param.AirCol[x.Index + 1].StepValue >= realTimeParam.AirFlowSpeed))?.Index ?? -1;
+                                }
+                                LogHelper.Debug(string.Format("阶梯级联：通气档位为{0}", dicDOAirIndex[deviceParameter.Name] + 1));
+                                AirRunCommand.Execute(deviceParameter);
+                                break;
+                            case DOControlFactor.O2:
+                                if (param.Unit == 0)//VVM
+                                {
+                                    initialGas = MathF.Round((float)(param.O2Col[0].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                    maxGas = MathF.Round((float)(param.O2Col[param.O2Col.Count - 1].StepValue * (deviceParameter.JarWeight - 2000) / 1000), 2);
+                                }
+                                else if (param.Unit == 1)//L/min
+                                {
+                                    initialGas = param.O2Col[0].StepValue;
+                                    maxGas = param.O2Col[param.O2Col.Count - 1].StepValue;
+                                }
+
+                                if (realTimeParam.O2FlowSpeed <= initialGas)
+                                {
+                                    deviceParameter.O2Param.FlowSpeed = initialGas;
+                                    dicDOO2Index[deviceParameter.Name] = 0;
+                                }
+                                else if (realTimeParam.O2FlowSpeed >= maxGas)
+                                {
+                                    deviceParameter.O2Param.FlowSpeed = maxGas;
+                                    dicDOO2Index[deviceParameter.Name] = param.O2Col.Count - 1;
+                                }
+                                else
+                                {
+                                    dicDOO2Index[deviceParameter.Name] = param.O2Col.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                                    (x.Index == 0 || param.O2Col[x.Index - 1].StepValue <= realTimeParam.O2FlowSpeed) &&
+                                    (x.Index == param.O2Col.Count - 1 || param.O2Col[x.Index + 1].StepValue >= realTimeParam.O2FlowSpeed))?.Index ?? -1;
+                                }
+                                LogHelper.Debug(string.Format("阶梯级联：通气档位为{0}", dicDOO2Index[deviceParameter.Name] + 1));
+                                O2RunCommand.Execute(deviceParameter);
+                                break;
+                        }
                     }
 
-                    if (dicO2Index[deviceParameter.Name] > param.O2Col.Count - 1 && param.O2Col.Count > 0)
-                    {
-                        LogHelper.Debug(string.Format("上次氧气档位为{0}，当前档位总共{1}档，所以跳至{2}档", dicO2Index[deviceParameter.Name] + 1, param.O2Col.Count, param.O2Col.Count));
-                        dicO2Index[deviceParameter.Name] = param.AirCol.Count - 1;
-                    }
+                    Thread.Sleep(5000);//等待初始化完成
 
-                    while (dicAirIndex[deviceParameter.Name] < param.AirCol.Count)
+                    ResetDOParam(deviceParameter);
+
+                    while (true)
                     {
                         try
                         {
-                            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
+
                             string result = File.ReadAllText(FileConst.PidInfoPath);
                             List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
                             if (pIDInfos == null)
                             {
                                 MessageBox.Show("PID调控策略列表为空");
-                                e.Result = deviceParameter.Name;
                                 return;
                             }
-                            RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (realTime.DO <= deviceParameter.DOParam.DO_PV)
+
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                            if (realTimeParam.DO <= deviceParameter.DOParam.DO_PV)
                             {
                                 info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.deviceID == deviceParameter.Name);
                             }
-                            else if (realTime.DO >= deviceParameter.DOParam.DO_PV)
+                            else if (realTimeParam.DO >= deviceParameter.DOParam.DO_PV)
                             {
                                 info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.deviceID == deviceParameter.Name);
                             }
@@ -1581,92 +1633,44 @@ namespace RD3.ViewModels
                             if (info == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在DO的PID调控策略", deviceParameter.Name));
-                                e.Result = deviceParameter.Name;
                                 return;
+                            }
+
+                            if (baseAgit == -1)
+                            {
+                                baseAgit = realTimeParam.Agit;
                             }
 
                             //如果pid类型变了，pid系数清零 方成
                             if (info != null && lastPid != null && info.PidName != lastPid.PidName)
                             {
+                                baseAgit = deviceParameter.AgitParam.Agit_PV;
+                                ResetDOParam(deviceParameter);
+
                                 LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
-                                if (agit == -1)
-                                {
-                                    agit = realTime.Agit;
-                                }
-                                else
-                                {
-                                    agit = deviceParameter.AgitParam.Agit_PV;
-                                }
-                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTime.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-                                deviceParameter.IsDOLimit = false;
-                                dicDOPid[deviceParameter.Name].Reset();
-                                dicDODelta[deviceParameter.Name] = 0;
+                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, baseAgit));
                             }
                             lastPid = info;
 
-                            realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (realTime.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTime.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)
+                            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
                             {
-                                LogHelper.Debug(string.Format("溶氧进入死区，反应器{0}，上次转速为{1}，设置为{2}", deviceParameter.Name, agit, lastAgit, realTime.Agit));
-                                if (agit == -1)
-                                {
-                                    agit = realTime.Agit;
-                                }
-                                else
-                                {
-                                    agit = deviceParameter.AgitParam.Agit_PV;
-                                }
-                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTime.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-                                deviceParameter.IsDOLimit = false;
-                                dicDOPid[deviceParameter.Name].Reset();
-                                dicDODelta[deviceParameter.Name] = 0;
+                                baseAgit = deviceParameter.AgitParam.Agit_PV;
+                                ResetDOParam(deviceParameter);
 
+                                int count = info.Interval <= 0 ? 1 : info.Interval;
+                                while (count > 0)
                                 {
-                                    int count = info.Interval <= 0 ? 1 : info.Interval;
-                                    int index1 = 0;
-                                    while (index1 < count)
+                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
-                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                        {
-                                            e.Result = deviceParameter.Name;
-                                            return;
-                                        }
-
-                                        index1 += 1;
-                                        Thread.Sleep(1000);
+                                        return;
                                     }
+
+                                    count--;
+                                    Thread.Sleep(1000);
                                 }
                                 continue;
-                            }
-
-                            realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            while (realTime.DO < deviceParameter.DOParam.DO_PV - info.deadArea && !deviceParameter.DOParam.IsDirect)
-                            {
-                                realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    e.Result = deviceParameter.Name;
-                                    return;
-                                }
-                                Thread.Sleep(1000);
-                            }
-
-                            realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            while (realTime.DO > deviceParameter.DOParam.DO_PV + info.deadArea && !deviceParameter.DOParam.IsReverse)
-                            {
-                                realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    e.Result = deviceParameter.Name;
-                                    return;
-                                }
-                                Thread.Sleep(1000);
-                            }
-
-                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                            {
-                                e.Result = deviceParameter.Name;
-                                return;
                             }
 
                             dicDOPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
@@ -1674,763 +1678,574 @@ namespace RD3.ViewModels
                             dicDOPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
                             dicDOPid[deviceParameter.Name].SetTarget(deviceParameter.DOParam.DO_PV);
 
-                            LogHelper.Debug(string.Format("反应器{6},DO预设值：{0}，DO当前值：{4}，P：{1}，I：{2}，D：{3},采样时间：{5}", deviceParameter.DOParam.DO_PV, info.P, info.I, info.D, deviceParameter.DO, info.Interval, deviceParameter.Name));
+                            LogHelper.Debug(string.Format("反应器{6} 阶梯级联 DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", deviceParameter.DOParam.DO_PV, realTimeParam.DO, info.P, info.I, info.D, info.Interval, deviceParameter.Name));
 
-                            RealTimeParam realTimeParam1 = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (agit == -1 || sv != deviceParameter.DOParam.DO_PV)
+                            float temp = dicDOPid[deviceParameter.Name].CalculatePositional_DO((float)realTimeParam.DO);
+                            float timeOffset = Convert.ToSingle((DateTime.Now - startTime).TotalMinutes);
+                            temp = GetDoK(timeOffset) * temp;
+                            int tempAgit = Convert.ToInt32(baseAgit + temp);
+                            dicDODelta[deviceParameter.Name] = tempAgit;
+                            if (deviceParameter.DOFilterEnable)
                             {
-                                LogHelper.Debug(string.Format("反应器{3},给转速设置底值：{0}，溶氧上次设定值：{1}，当前设定值：{2}", realTimeParam1.Agit, sv, deviceParameter.DOParam.DO_PV, deviceParameter.Name));
-                                agit = Convert.ToInt32(realTimeParam1.Agit);
-                                sv = deviceParameter.DOParam.DO_PV;
+                                //增加低通滤波 
+                                var lowPassDelta = Convert.ToInt32(RCFilter.LowPass(tempAgit, lastDODelta, deviceParameter.AgitSampleCycle, deviceParameter.AgitSampleFrequency));
+                                lastDODelta = lowPassDelta;
+                                dicDODelta[deviceParameter.Name] = lowPassDelta;
+                            }
+                            LogHelper.Debug(string.Format("反应器{0} 阶梯级联 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, baseAgit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
+
+                            deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
+                            Thread.Sleep(5000);
+
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
+                            {
+                                baseAgit = deviceParameter.AgitParam.Agit_PV;
+
+                                ResetDOParam(deviceParameter);
+
+                                int count = info.Interval <= 0 ? 1 : info.Interval;
+                                while (count > 0)
+                                {
+                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    {
+                                        return;
+                                    }
+
+                                    count--;
+                                    Thread.Sleep(1000);
+                                }
+                                continue;
                             }
 
-                            //每次循环都检查当前通气量是否更新 方成
-                            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
-                            if (param != null)
+                            if (factorIndex < 0 || collection.Count <= factorIndex)//如果未达到高限或者没有其他执行参数，则一直循环
                             {
-                                agitHigh = param.AgitUpperLimit;
+                                continue;
+                            }
 
-                                var doair = param.AirCol[dicAirIndex[deviceParameter.Name]];
-                                if (doair != null)
-                                {
+                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                            {
+                                return;
+                            }
+
+                            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                            int sleepCount = 1;
+                            var previousElements = collection.Take(factorIndex);
+                            bool isExistOtherGas = false;//在当前气体之前是否存在气体
+                            switch (collection[factorIndex])
+                            {
+                                case DOControlFactor.Air:
+
+                                    if (!deviceParameter.AirParam.IsControling)
+                                    {
+                                        deviceParameter.AirParam.IsControling = true;
+                                        AirRunCommand.Execute(deviceParameter);
+                                    }
+
                                     if (param.Unit == 0)//VVM
                                     {
-                                        deviceParameter.AirParam.FlowSpeed = MathF.Round((float)(doair.StepValue * (realTimeParam1.JarWeight - 2000) / 1000), 2);
+                                        initialGas = MathF.Round((float)(param.AirCol[0].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                        maxGas = MathF.Round((float)(param.AirCol[param.AirCol.Count - 1].StepValue * (deviceParameter.JarWeight - 2000) / 1000), 2);
                                     }
                                     else if (param.Unit == 1)//L/min
                                     {
-                                        deviceParameter.AirParam.FlowSpeed = doair.StepValue;
+                                        initialGas = param.AirCol[0].StepValue;
+                                        maxGas = param.AirCol[param.AirCol.Count - 1].StepValue;
                                     }
 
-                                    if (realTimeParam1.AirFlowSpeed != deviceParameter.AirParam.FlowSpeed)
-                                    {
-                                        Thread.Sleep(1000);//等待通气改变
-                                    }
-                                }
+                                    isExistOtherGas = previousElements.Where(t => t == DOControlFactor.O2).Count() > 0;
 
-                                if (param.O2Col.Count > 0 && dicO2Index[deviceParameter.Name] <= param.O2Col.Count - 1)
-                                {
-                                    var doO2 = param.O2Col[dicO2Index[deviceParameter.Name]];
-                                    if (doO2 != null)
+                                    if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
                                     {
+                                        if (dicDOAirIndex[deviceParameter.Name] > 0)//还存在上一阶梯
+                                        {
+                                            dicDOAirIndex[deviceParameter.Name] -= 1;
+
+                                            float airFlowSpeed = 0f;
+                                            if (param.Unit == 0)//VVM
+                                            {
+                                                airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                            }
+                                            else if (param.Unit == 1)//L/min
+                                            {
+                                                airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                                            }
+                                            deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+
+                                            if (isExistOtherGas)
+                                            {
+                                                if (dicDOO2Index[deviceParameter.Name] < dicDOO2Index.Count - 1)//加一档
+                                                {
+                                                    dicDOO2Index[deviceParameter.Name] += 1;
+
+                                                    float o2FlowSpeed = 0f;
+                                                    if (param.Unit == 0)//VVM
+                                                    {
+                                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                    }
+                                                    else if (param.Unit == 1)//L/min
+                                                    {
+                                                        o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                                                    }
+                                                    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+                                                    deviceParameter.O2Param.IsControling = true;
+                                                    O2RunCommand.Execute(deviceParameter);
+                                                }
+                                            }
+                                        }
+                                        else if (factorIndex > 0)//非第一因子,所以不需要最低通气
+                                        {
+                                            if (isExistOtherGas)
+                                            {
+                                                deviceParameter.AirParam.FlowSpeed = 0;
+
+                                                if (dicDOO2Index[deviceParameter.Name] < dicDOO2Index.Count - 1)//加一档
+                                                {
+                                                    dicDOO2Index[deviceParameter.Name] += 1;
+
+                                                    float o2FlowSpeed = 0f;
+                                                    if (param.Unit == 0)//VVM
+                                                    {
+                                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                    }
+                                                    else if (param.Unit == 1)//L/min
+                                                    {
+                                                        o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                                                    }
+                                                    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+                                                    deviceParameter.O2Param.IsControling = true;
+                                                    O2RunCommand.Execute(deviceParameter);
+                                                }
+                                            }
+
+                                            factorIndex -= 1;
+                                        }
+                                    }
+                                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
+                                    {
+                                        if (dicDOAirIndex[deviceParameter.Name] < dicDOAirIndex.Count - 1)//还存在下一阶梯
+                                        {
+                                            dicDOAirIndex[deviceParameter.Name] += 1;
+
+                                            float airFlowSpeed = 0f;
+                                            if (param.Unit == 0)//VVM
+                                            {
+                                                airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                            }
+                                            else if (param.Unit == 1)//L/min
+                                            {
+                                                airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                                            }
+                                            deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+
+                                            if (isExistOtherGas)
+                                            {
+                                                if (dicDOO2Index[deviceParameter.Name] > 0)
+                                                {
+                                                    dicDOO2Index[deviceParameter.Name] -= 1;
+
+                                                    float o2FlowSpeed = 0f;
+                                                    if (param.Unit == 0)//VVM
+                                                    {
+                                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                    }
+                                                    else if (param.Unit == 1)//L/min
+                                                    {
+                                                        o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                                                    }
+                                                    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+                                                    deviceParameter.O2Param.IsControling = true;
+                                                    O2RunCommand.Execute(deviceParameter);
+                                                }
+                                            }
+                                        }
+                                        else if (factorIndex < collection.Count - 1)
+                                        {
+                                            factorIndex += 1;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        float airFlowSpeed = 0f;
                                         if (param.Unit == 0)//VVM
                                         {
-                                            deviceParameter.O2Param.FlowSpeed = MathF.Round((float)(doO2.StepValue * (realTimeParam1.JarWeight - 2000) / 1000), 2);
+                                            airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
                                         }
                                         else if (param.Unit == 1)//L/min
                                         {
-                                            deviceParameter.O2Param.FlowSpeed = doO2.StepValue;
+                                            airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
                                         }
-
-                                        if (realTimeParam1.O2FlowSpeed != deviceParameter.O2Param.FlowSpeed)
-                                        {
-                                            Thread.Sleep(1000);//等待通气改变
-                                        }
-                                    }
-                                }
-                            }
-
-                            // 位置式PID计算
-                            float temp = dicDOPid[deviceParameter.Name].CalculatePositional_DO((float)realTimeParam1.DO);
-                            float k = GetDoK((float)(DateTime.Now - startTime).TotalMinutes);
-                            temp = temp * k;
-                            temp = (float)(temp + agit);//加上次值
-                            dicDODelta[deviceParameter.Name] = Convert.ToInt32(temp);//由增量式变更为位置式
-                            LogHelper.Debug(string.Format("反应器{1},DO总Delta:{0},单次Delta:{2},K值：{3},上次转速:{4}", dicDODelta[deviceParameter.Name], deviceParameter.Name, temp, k, agit));
-                            //没勾选反向，当PID算出来的值小于上一次的值时，当次值等于上一次值
-                            if (!deviceParameter.DOParam.IsReverse && dicDODelta[deviceParameter.Name] < lastAgit)
-                            {
-                                LogHelper.Debug(string.Format("反应器{2}，没勾选反向，当前值：{0}，上次值：{1}", dicDODelta[deviceParameter.Name], lastAgit, deviceParameter.Name));
-                                dicDODelta[deviceParameter.Name] = lastAgit;
-                            }
-                            //没勾选正向，当PID算出来的值大于上一次的值时，当次值等于上一次值
-                            if (!deviceParameter.DOParam.IsDirect && dicDODelta[deviceParameter.Name] > lastAgit)
-                            {
-                                LogHelper.Debug(string.Format("反应器{2}，没勾选正向，当前值：{0}，上次值：{1}", dicDODelta[deviceParameter.Name], lastAgit, deviceParameter.Name));
-                                dicDODelta[deviceParameter.Name] = lastAgit;
-                            }
-
-                            if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
-                            {
-                                dicDODelta[deviceParameter.Name] = param.AgitUpperLimit;
-                            }
-                            else if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
-                            {
-                                dicDODelta[deviceParameter.Name] = param.AgitLowerLimit;
-                            }
-
-                            lastAgit = dicDODelta[deviceParameter.Name];
-                            deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name];
-                            Thread.Sleep(1000);//等待转速设置下去
-
-                            //InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(deviceParameter.Name, dicDODelta[deviceParameter.Name]);
-
-                            {
-                                int count = info.Interval <= 0 ? 1 : info.Interval;
-                                int index1 = 0;
-                                while (index1 < count)
-                                {
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                    {
-                                        e.Result = deviceParameter.Name;
-                                        return;
-                                    }
-
-                                    index1 += 1;
-                                    Thread.Sleep(1000);
-                                }
-                            }
-
-                            RealTimeParam realTimeParam2 = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (realTimeParam2.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam2.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)//DO调整完毕
-                            {
-                                if (agit == -1)
-                                {
-                                    agit = realTimeParam2.Agit;
-                                }
-                                else
-                                {
-                                    agit = deviceParameter.AgitParam.Agit_PV;
-                                }
-                                LogHelper.Debug(string.Format("溶氧进入死区，反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam2.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                deviceParameter.IsDOLimit = false;
-                                dicDOPid[deviceParameter.Name].Reset();
-                                dicDODelta[deviceParameter.Name] = 0;
-
-                                //溶氧已调整完毕，不调整参数
-
-                                {
-                                    int count = info.Interval <= 0 ? 1 : info.Interval;
-                                    int index1 = 0;
-                                    while (index1 < count)
-                                    {
                                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                        if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)//DO调整完毕
+                                        if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.1)
                                         {
-                                            if (agit == -1)
+                                            deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+
+                                        }
+
+                                        if (isExistOtherGas)
+                                        {
+                                            float o2FlowSpeed = 0f;
+                                            if (param.Unit == 0)//VVM
                                             {
-                                                agit = realTimeParam.Agit;
+                                                o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
                                             }
-                                            else
+                                            else if (param.Unit == 1)//L/min
                                             {
-                                                agit = deviceParameter.AgitParam.Agit_PV;
+                                                o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
                                             }
-                                            LogHelper.Debug(string.Format("溶氧进入死区，反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                            deviceParameter.IsDOLimit = false;
-                                            dicDOPid[deviceParameter.Name].Reset();
-                                            dicDODelta[deviceParameter.Name] = 0;
-                                            break;
-                                        }
-
-                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                        {
-                                            e.Result = deviceParameter.Name;
-                                            return;
-                                        }
-
-                                        index1 += 1;
-                                        Thread.Sleep(1000);
-                                    }
-                                }
-                                continue;
-                            }
-
-                            if (dicDODelta[deviceParameter.Name] == param.AgitUpperLimit)//达到上限
-                            {
-                                int count = 60;
-                                int index1 = 0;
-                                while (index1 < count)
-                                {
-                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)//DO调整完毕
-                                    {
-                                        if (agit == -1)
-                                        {
-                                            agit = realTimeParam.Agit;
-                                        }
-                                        else
-                                        {
-                                            agit = deviceParameter.AgitParam.Agit_PV;
-                                        }
-                                        LogHelper.Debug(string.Format("溶氧进入死区，反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                        deviceParameter.IsDOLimit = false;
-                                        dicDOPid[deviceParameter.Name].Reset();
-                                        dicDODelta[deviceParameter.Name] = 0;
-                                        //溶氧已调整完毕，不调整参数
-                                        break;
-                                    }
-
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                    {
-                                        e.Result = deviceParameter.Name;
-                                        return;
-                                    }
-
-                                    index1 += 1;
-                                    Thread.Sleep(1000);
-                                }
-
-                                RealTimeParam realTimeParam3 = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                if (realTimeParam3.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam3.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)//DO调整完毕
-                                {
-                                    if (agit == -1)
-                                    {
-                                        agit = realTimeParam3.Agit;
-                                    }
-                                    else
-                                    {
-                                        agit = deviceParameter.AgitParam.Agit_PV;
-                                    }
-                                    LogHelper.Debug(string.Format("溶氧进入死区，反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam3.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                    deviceParameter.IsDOLimit = false;
-                                    dicDOPid[deviceParameter.Name].Reset();
-                                    dicDODelta[deviceParameter.Name] = 0;
-                                    //溶氧已调整完毕，不调整参数
-                                    continue;
-                                }
-
-                                if (realTimeParam3.DO < deviceParameter.DOParam.DO_PV - info.deadArea)
-                                {//溶氧低于设定值，需要调整到下一档通气
-                                    if (dicAirIndex[deviceParameter.Name] < param.AirCol.Count - 1)//存在下一阶段
-                                    {
-                                        dicAirIndex[deviceParameter.Name] += 1;
-                                        continue;
-                                    }
-                                    if (param.O2Col.Count > 0)
-                                    {
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        if (!deviceParameter.TempDOAssociated)
-                                        {
-                                            if (deviceParameter.FeedDOAssociated)
+                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                            if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.1)
                                             {
-                                                deviceParameter.DORegulationLimit = true;
+                                                deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+
                                             }
                                         }
-                                        deviceParameter.IsDOLimit = true;
-                                    }
-                                }
-                            }
-                            else if (dicDODelta[deviceParameter.Name] == param.AgitLowerLimit)//达到下限
-                            {
-                                //当到达上下限时，等待60秒
-                                int count = 60;
-                                int index1 = 0;
-                                while (index1 < count)
-                                {
-                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)//DO调整完毕
-                                    {
-                                        if (agit == -1)
-                                        {
-                                            agit = realTimeParam.Agit;
-                                        }
-                                        else
-                                        {
-                                            agit = deviceParameter.AgitParam.Agit_PV;
-                                        }
-                                        LogHelper.Debug(string.Format("溶氧进入死区，反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                        deviceParameter.IsDOLimit = false;
-                                        dicDOPid[deviceParameter.Name].Reset();
-                                        dicDODelta[deviceParameter.Name] = 0;
-                                        //溶氧已调整完毕，不调整参数
-                                        break;
                                     }
 
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                    {
-                                        e.Result = deviceParameter.Name;
-                                        return;
-                                    }
-
-                                    index1 += 1;
-                                    Thread.Sleep(1000);
-                                }
-
-                                RealTimeParam realTimeParam3 = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                if (realTimeParam3.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam3.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)//DO调整完毕
-                                {
-                                    if (agit == -1)
-                                    {
-                                        agit = realTimeParam3.Agit;
-                                    }
-                                    else
-                                    {
-                                        agit = deviceParameter.AgitParam.Agit_PV;
-                                    }
-                                    LogHelper.Debug(string.Format("溶氧进入死区，反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam3.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                    deviceParameter.IsDOLimit = false;
-                                    dicDOPid[deviceParameter.Name].Reset();
-                                    dicDODelta[deviceParameter.Name] = 0;
-                                    //溶氧已调整完毕，不调整参数
-                                    continue;
-                                }
-
-                                if (realTimeParam3.DO > deviceParameter.DOParam.DO_PV + info.deadArea)
-                                {
-                                    if (dicAirIndex[deviceParameter.Name] > 0)//退回上一阶段
-                                    {
-                                        //dicDODelta[deviceParameter.Name] = 0;
-                                        dicAirIndex[deviceParameter.Name] -= 1;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            LogHelper.Debug(string.Format("DO调整失败，错误信息：{0}", ex.Message));
-                            Thread.Sleep(AppSession.Interval * 1000);
-                        }
-                    }
-
-                    while (dicO2Index[deviceParameter.Name] < param.O2Col.Count && param.O2Col.Count > 0)
-                    {
-                        try
-                        {
-                            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
-                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                            {
-                                e.Result = deviceParameter.Name;
-                                return;
-                            }
-
-                            RealTimeParam realTime = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            string result = File.ReadAllText(FileConst.PidInfoPath);
-                            List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
-                            if (pIDInfos == null)
-                            {
-                                MessageBox.Show("PID调控策略列表为空");
-                                e.Result = deviceParameter.Name;
-                                return;
-                            }
-                            if (realTime.DO <= deviceParameter.DOParam.DO_PV)
-                            {
-                                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.deviceID == deviceParameter.Name);
-                            }
-                            else if (realTime.DO >= deviceParameter.DOParam.DO_PV)
-                            {
-                                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.deviceID == deviceParameter.Name);
-                            }
-
-                            if (info == null)
-                            {
-                                MessageBox.Show(string.Format("反应器{0}不存在DO的PID调控策略", deviceParameter.Name));
-                                e.Result = deviceParameter.Name;
-                                return;
-                            }
-
-                            //如果pid类型变了，pid系数清零 方成
-                            if (info != null && lastPid != null && info.PidName != lastPid.PidName)
-                            {
-                                LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
-                                if (agit == -1)
-                                {
-                                    agit = realTime.Agit;
-                                }
-                                else
-                                {
-                                    agit = deviceParameter.AgitParam.Agit_PV;
-                                }
-                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTime.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                deviceParameter.IsDOLimit = false;
-                                dicDOPid[deviceParameter.Name].Reset();
-                                dicDODelta[deviceParameter.Name] = 0;
-                            }
-                            lastPid = info;
-
-                            if (realTime.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTime.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)
-                            {
-                                LogHelper.Debug(string.Format("溶氧进入死区，反应器{0}，上次转速为{1}，设置为{2}", deviceParameter.Name, agit, lastAgit, realTime.Agit));
-                                if (agit == -1)
-                                {
-                                    agit = realTime.Agit;
-                                }
-                                else
-                                {
-                                    agit = deviceParameter.AgitParam.Agit_PV;
-                                }
-                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTime.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                deviceParameter.IsDOLimit = false;
-                                dicDOPid[deviceParameter.Name].Reset();
-                                dicDODelta[deviceParameter.Name] = 0;
-
-                                {
-                                    int count = info.Interval <= 0 ? 1 : info.Interval;
-                                    int index1 = 0;
-                                    while (index1 < count)
+                                    sleepCount = 5;
+                                    while (sleepCount > 0)
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
 
-                                        index1 += 1;
+                                        sleepCount--;
                                         Thread.Sleep(1000);
                                     }
-                                }
+                                    break;
+                                case DOControlFactor.O2:
+                                    if (!deviceParameter.O2Param.IsControling)
+                                    {
+                                        deviceParameter.O2Param.IsControling = true;
+                                        O2RunCommand.Execute(deviceParameter);
+                                    }
 
-                                continue;
-                            }
-
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            while (realTimeParam.DO < deviceParameter.DOParam.DO_PV - info.deadArea && !deviceParameter.DOParam.IsDirect)
-                            {
-                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    e.Result = deviceParameter.Name;
-                                    return;
-                                }
-                                Thread.Sleep(1000);
-                            }
-
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            while (realTimeParam.DO > deviceParameter.DOParam.DO_PV + info.deadArea && !deviceParameter.DOParam.IsReverse)
-                            {
-                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    e.Result = deviceParameter.Name;
-                                    return;
-                                }
-                                Thread.Sleep(1000);
-                            }
-
-                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                            {
-                                e.Result = deviceParameter.Name;
-                                return;
-                            }
-
-                            dicDOPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
-                            dicDOPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
-                            dicDOPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
-                            dicDOPid[deviceParameter.Name].SetTarget(deviceParameter.DOParam.DO_PV);
-
-                            LogHelper.Debug(string.Format("反应器{6},DO预设值：{0}，DO当前值：{4}，P：{1}，I：{2}，D：{3},采样时间：{5}", deviceParameter.DOParam.DO_PV, info.P, info.I, info.D, deviceParameter.DO, info.Interval, deviceParameter.Name));
-
-                            RealTimeParam realTimeParam1 = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (agit == -1 || sv != deviceParameter.DOParam.DO_PV)
-                            {
-                                LogHelper.Debug(string.Format("反应器{3},给转速设置底值：{0}，溶氧上次设定值：{1}，当前设定值：{2}", realTimeParam1.Agit, sv, deviceParameter.DOParam.DO_PV, deviceParameter.Name));
-                                agit = Convert.ToInt32(realTimeParam1.Agit);
-                                sv = deviceParameter.DOParam.DO_PV;
-                            }
-
-                            //每次循环都检查当前通气量是否更新 方成
-                            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
-                            if (param != null)
-                            {
-                                agitHigh = param.AgitUpperLimit;
-
-                                var doair = param.AirCol[dicAirIndex[deviceParameter.Name]];
-                                if (doair != null)
-                                {
                                     if (param.Unit == 0)//VVM
                                     {
-                                        deviceParameter.AirParam.FlowSpeed = MathF.Round((float)(doair.StepValue * (realTimeParam1.JarWeight - 2000) / 1000), 2);
+                                        initialGas = MathF.Round((float)(param.O2Col[0].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                        maxGas = MathF.Round((float)(param.O2Col[param.O2Col.Count - 1].StepValue * (deviceParameter.JarWeight - 2000) / 1000), 2);
                                     }
                                     else if (param.Unit == 1)//L/min
                                     {
-                                        deviceParameter.AirParam.FlowSpeed = doair.StepValue;
+                                        initialGas = param.O2Col[0].StepValue;
+                                        maxGas = param.O2Col[param.O2Col.Count - 1].StepValue;
                                     }
 
-                                    if (realTimeParam1.AirFlowSpeed != deviceParameter.AirParam.FlowSpeed)
-                                    {
-                                        Thread.Sleep(1000);//等待通气改变
-                                    }
-                                }
+                                    isExistOtherGas = previousElements.Where(t => t == DOControlFactor.Air).Count() > 0;
 
-                                var doO2 = param.O2Col[dicO2Index[deviceParameter.Name]];
-                                if (doO2 != null)
-                                {
-                                    if (param.Unit == 0)//VVM
+                                    if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
                                     {
-                                        deviceParameter.O2Param.FlowSpeed = MathF.Round((float)(doO2.StepValue * (realTimeParam1.JarWeight - 2000) / 1000), 2);
-                                    }
-                                    else if (param.Unit == 1)//L/min
-                                    {
-                                        deviceParameter.O2Param.FlowSpeed = doO2.StepValue;
-                                    }
-
-                                    if (realTimeParam1.O2FlowSpeed != deviceParameter.O2Param.FlowSpeed)
-                                    {
-                                        Thread.Sleep(1000);//等待通气改变
-                                    }
-                                }
-                            }
-
-                            // 位置式PID计算
-                            float temp = dicDOPid[deviceParameter.Name].CalculatePositional_DO((float)realTimeParam1.DO);
-                            float k = GetDoK((float)(DateTime.Now - startTime).TotalMinutes);
-                            LogHelper.Debug(string.Format("反应器{1},DO总Delta:{0},单次Delta:{2},K值：{3},上次转速:{4}", dicDODelta[deviceParameter.Name], deviceParameter.Name, temp, k, agit));
-                            temp = temp * k;
-                            temp = (float)(temp + agit);//加上次值
-                            dicDODelta[deviceParameter.Name] = Convert.ToInt32(temp);//由增量式变更为位置式
-                                                                                     //没勾选反向，当PID算出来的值小于上一次的值时，当次值等于上一次值
-                            if (!deviceParameter.DOParam.IsReverse && dicDODelta[deviceParameter.Name] < lastAgit)
-                            {
-                                LogHelper.Debug(string.Format("反应器{2}，没勾选反向，当前值：{0}，上次值：{1}", dicDODelta[deviceParameter.Name], lastAgit, deviceParameter.Name));
-                                dicDODelta[deviceParameter.Name] = lastAgit;
-                            }
-                            //没勾选正向，当PID算出来的值大于上一次的值时，当次值等于上一次值
-                            if (!deviceParameter.DOParam.IsDirect && dicDODelta[deviceParameter.Name] > lastAgit)
-                            {
-                                LogHelper.Debug(string.Format("反应器{2}，没勾选正向，当前值：{0}，上次值：{1}", dicDODelta[deviceParameter.Name], lastAgit, deviceParameter.Name));
-                                dicDODelta[deviceParameter.Name] = lastAgit;
-                            }
-
-                            if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
-                            {
-                                dicDODelta[deviceParameter.Name] = param.AgitUpperLimit;
-                            }
-                            else if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
-                            {
-                                dicDODelta[deviceParameter.Name] = param.AgitLowerLimit;
-                            }
-
-                            lastAgit = dicDODelta[deviceParameter.Name];
-                            deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name];
-                            Thread.Sleep(1000);//等待转速设置下去
-                            {
-                                int count = info.Interval <= 0 ? 1 : info.Interval;
-                                int index1 = 0;
-                                while (index1 < count)
-                                {
-                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)//DO调整完毕
-                                    {
-                                        if (agit == -1)
+                                        if (dicDOO2Index[deviceParameter.Name] > 0)//还存在上一阶梯
                                         {
-                                            agit = realTimeParam.Agit;
+                                            dicDOO2Index[deviceParameter.Name] -= 1;
+
+                                            float o2FlowSpeed = 0f;
+                                            if (param.Unit == 0)//VVM
+                                            {
+                                                o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                            }
+                                            else if (param.Unit == 1)//L/min
+                                            {
+                                                o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                                            }
+                                            deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+
+                                            if (isExistOtherGas)
+                                            {
+                                                if (dicDOAirIndex[deviceParameter.Name] < dicDOAirIndex.Count - 1)//加一档
+                                                {
+                                                    dicDOAirIndex[deviceParameter.Name] += 1;
+
+                                                    float airFlowSpeed = 0f;
+                                                    if (param.Unit == 0)//VVM
+                                                    {
+                                                        airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                    }
+                                                    else if (param.Unit == 1)//L/min
+                                                    {
+                                                        airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                                                    }
+                                                    deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                                                    deviceParameter.AirParam.IsControling = true;
+                                                    AirRunCommand.Execute(deviceParameter);
+                                                }
+                                            }
                                         }
-                                        else
+                                        else if (factorIndex > 0)//非第一因子，不需要最低通气量
                                         {
-                                            agit = deviceParameter.AgitParam.Agit_PV;
+                                            if (isExistOtherGas)
+                                            {
+                                                deviceParameter.O2Param.FlowSpeed = 0;
+
+                                                if (dicDOAirIndex[deviceParameter.Name] < dicDOAirIndex.Count - 1)//加一档
+                                                {
+                                                    dicDOAirIndex[deviceParameter.Name] += 1;
+
+                                                    float airFlowSpeed = 0f;
+                                                    if (param.Unit == 0)//VVM
+                                                    {
+                                                        airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                    }
+                                                    else if (param.Unit == 1)//L/min
+                                                    {
+                                                        airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                                                    }
+                                                    deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                                                    deviceParameter.AirParam.IsControling = true;
+                                                    AirRunCommand.Execute(deviceParameter);
+                                                }
+                                            }
+
+                                            factorIndex -= 1;
                                         }
-                                        LogHelper.Debug(string.Format("溶氧进入死区，反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                        deviceParameter.IsDOLimit = false;
-                                        dicDOPid[deviceParameter.Name].Reset();
-                                        dicDODelta[deviceParameter.Name] = 0;
-                                        //溶氧已调整完毕，不调整参数
-                                        break;
                                     }
-
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
                                     {
-                                        e.Result = deviceParameter.Name;
-                                        return;
+                                        if (dicDOO2Index[deviceParameter.Name] < dicDOO2Index.Count - 1)//还存在下一阶梯
+                                        {
+                                            dicDOO2Index[deviceParameter.Name] += 1;
+
+                                            float o2FlowSpeed = 0f;
+                                            if (param.Unit == 0)//VVM
+                                            {
+                                                o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                            }
+                                            else if (param.Unit == 1)//L/min
+                                            {
+                                                o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                                            }
+                                            deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+
+                                            if (isExistOtherGas)
+                                            {
+                                                if (dicDOAirIndex[deviceParameter.Name] > 0)
+                                                {
+                                                    dicDOAirIndex[deviceParameter.Name] -= 1;
+
+                                                    float airFlowSpeed = 0f;
+                                                    if (param.Unit == 0)//VVM
+                                                    {
+                                                        airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                    }
+                                                    else if (param.Unit == 1)//L/min
+                                                    {
+                                                        airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                                                    }
+                                                    deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                                                    deviceParameter.AirParam.IsControling = true;
+                                                    AirRunCommand.Execute(deviceParameter);
+                                                }
+                                            }
+                                        }
+                                        else if (factorIndex < collection.Count - 1)
+                                        {
+                                            factorIndex += 1;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        float o2FlowSpeed = 0f;
+                                        if (param.Unit == 0)//VVM
+                                        {
+                                            o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                        }
+                                        else if (param.Unit == 1)//L/min
+                                        {
+                                            o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                                        }
+                                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                        if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.1)
+                                        {
+                                            deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+
+                                        }
+
+                                        if (isExistOtherGas)
+                                        {
+                                            float airFlowSpeed = 0f;
+                                            if (param.Unit == 0)//VVM
+                                            {
+                                                airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                            }
+                                            else if (param.Unit == 1)//L/min
+                                            {
+                                                airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                                            }
+                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                            if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.1)
+                                            {
+                                                deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+
+                                            }
+                                        }
                                     }
 
-                                    index1 += 1;
-                                    Thread.Sleep(1000);
-                                }
-                            }
-
-                            RealTimeParam realTimeParam2 = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (realTimeParam2.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam2.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)//DO调整完毕
-                            {
-                                if (agit == -1)
-                                {
-                                    agit = realTimeParam2.Agit;
-                                }
-                                else
-                                {
-                                    agit = deviceParameter.AgitParam.Agit_PV;
-                                }
-                                LogHelper.Debug(string.Format("溶氧进入死区，反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam2.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                deviceParameter.IsDOLimit = false;
-                                dicDOPid[deviceParameter.Name].Reset();
-                                dicDODelta[deviceParameter.Name] = 0;
-
-                                //溶氧已调整完毕，不调整参数
-                                {
-                                    int count = info.Interval <= 0 ? 1 : info.Interval;
-                                    int index1 = 0;
-                                    while (index1 < count)
+                                    sleepCount = 5;
+                                    while (sleepCount > 0)
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
-                                            e.Result = deviceParameter.Name;
                                             return;
                                         }
 
-                                        index1 += 1;
+                                        sleepCount--;
                                         Thread.Sleep(1000);
                                     }
-                                }
-                                continue;
-                            }
-
-                            if (dicDODelta[deviceParameter.Name] == param.AgitUpperLimit)//达到上限
-                            {
-                                int count = 60;
-                                int index1 = 0;
-                                while (index1 < count)
-                                {
-                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)//DO调整完毕
+                                    break;
+                                case DOControlFactor.Temp:
+                                    deviceParameter.DORegulationLimit = false;
+                                    if (!deviceParameter.TempParam.IsControling)
                                     {
-                                        if (agit == -1)
-                                        {
-                                            agit = realTimeParam.Agit;
-                                        }
-                                        else
-                                        {
-                                            agit = deviceParameter.AgitParam.Agit_PV;
-                                        }
-                                        LogHelper.Debug(string.Format("溶氧进入死区，反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                        deviceParameter.IsDOLimit = false;
-                                        dicDOPid[deviceParameter.Name].Reset();
-                                        dicDODelta[deviceParameter.Name] = 0;
-                                        //溶氧已调整完毕，不调整参数
-                                        break;
+                                        TempRunCommand.Execute(deviceParameter);
+                                        Thread.Sleep(1000);
                                     }
 
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
                                     {
-                                        e.Result = deviceParameter.Name;
-                                        return;
+                                        if (dicDOTempIndex[deviceParameter.Name] > 0)//还存在上一阶梯
+                                        {
+                                            dicDOTempIndex[deviceParameter.Name] -= 1;
+
+                                            deviceParameter.TempParam.Temp_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
+                                        }
+                                        else if (factorIndex > 0)
+                                        {
+                                            factorIndex -= 1;
+
+                                            deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
+                                        }
                                     }
-
-                                    index1 += 1;
-                                    Thread.Sleep(1000);
-                                }
-
-                                RealTimeParam realTimeParam3 = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                if (realTimeParam3.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam3.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)//DO调整完毕
-                                {
-                                    if (agit == -1)
+                                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
                                     {
-                                        agit = realTimeParam3.Agit;
+                                        if (dicDOTempIndex[deviceParameter.Name] < dicDOTempIndex.Count - 1)//还存在下一阶梯
+                                        {
+                                            dicDOTempIndex[deviceParameter.Name] += 1;
+
+                                            deviceParameter.FeedParam1.Feed_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
+                                        }
+                                        else if (factorIndex < collection.Count - 1)
+                                        {
+                                            factorIndex += 1;
+
+                                            deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
+                                        }
                                     }
                                     else
                                     {
-                                        agit = deviceParameter.AgitParam.Agit_PV;
-                                    }
-                                    LogHelper.Debug(string.Format("溶氧进入死区，反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam3.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                    deviceParameter.IsDOLimit = false;
-                                    dicDOPid[deviceParameter.Name].Reset();
-                                    dicDODelta[deviceParameter.Name] = 0;
-                                    //溶氧已调整完毕，不调整参数
-                                    continue;
-                                }
-
-                                if (realTimeParam3.DO < deviceParameter.DOParam.DO_PV - info.deadArea)
-                                {//溶氧低于设定值，需要调整到下一档通气
-                                    if (dicO2Index[deviceParameter.Name] < param.O2Col.Count - 1)//存在下一阶段
-                                    {
-                                        dicO2Index[deviceParameter.Name] += 1;
-
-                                        if (dicAirIndex[deviceParameter.Name] >= 1)
-                                        {
-                                            dicAirIndex[deviceParameter.Name] -= 1;
-                                        }
-                                        continue;
+                                        deviceParameter.FeedParam1.Feed_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
                                     }
 
-                                    if (!deviceParameter.TempDOAssociated)
+                                    if (dicDOTempIndex[deviceParameter.Name] <= 0 || dicDOTempIndex[deviceParameter.Name] >= dicDOTempIndex.Count - 1)
                                     {
-                                        if (deviceParameter.FeedDOAssociated)
+                                        while (true)
                                         {
-                                            deviceParameter.DORegulationLimit = true;
+                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                            if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.Temp_PV) <= 0.2)
+                                            {
+                                                break;
+                                            }
+                                            Thread.Sleep(1000);
                                         }
                                     }
-
-                                    deviceParameter.IsDOLimit = true;
-                                }
-                            }
-                            else if (dicDODelta[deviceParameter.Name] == param.AgitLowerLimit)//达到下限
-                            {
-                                //当到达上下限时，等待60秒
-                                int count = 60;
-                                int index1 = 0;
-                                while (index1 < count)
-                                {
-                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)//DO调整完毕
+                                    break;
+                                case DOControlFactor.Feed:
+                                    if (!deviceParameter.FeedParam1.IsControling)
                                     {
-                                        if (agit == -1)
+                                        if (factorIndex < collection.Count - 1 && lastFactorIndex <= factorIndex)//如果还有下一执行参数，则跳到下一个执行参数
                                         {
-                                            agit = realTimeParam.Agit;
+                                            factorIndex += 1;
                                         }
-                                        else
+                                        else if (factorIndex - 1 > -1 && lastFactorIndex >= factorIndex)
                                         {
-                                            agit = deviceParameter.AgitParam.Agit_PV;
+                                            factorIndex -= 1;
                                         }
-                                        LogHelper.Debug(string.Format("溶氧进入死区，反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, agit));
-
-                                        deviceParameter.IsDOLimit = false;
-                                        dicDOPid[deviceParameter.Name].Reset();
-                                        dicDODelta[deviceParameter.Name] = 0;
-                                        //溶氧已调整完毕，不调整参数
-                                        break;
                                     }
 
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    if (firstInitFeed)
                                     {
-                                        e.Result = deviceParameter.Name;
-                                        return;
+                                        deviceParameter.FeedSuspend = true;
+                                        deviceParameter.DOParam.InitialFeed = deviceParameter.FeedParam1.Feed_PV;
+                                        firstInitFeed = false;
                                     }
 
-                                    index1 += 1;
-                                    Thread.Sleep(1000);
-                                }
-
-                                RealTimeParam realTimeParam3 = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                if (realTimeParam3.DO >= deviceParameter.DOParam.DO_PV - info.deadArea && realTimeParam3.DO <= deviceParameter.DOParam.DO_PV + info.deadArea)//DO调整完毕
-                                {
-                                    if (agit == -1)
+                                    if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
                                     {
-                                        agit = realTimeParam3.Agit;
+                                        if (dicDOFeedIndex[deviceParameter.Name] > 0)//还存在上一阶梯
+                                        {
+                                            dicDOFeedIndex[deviceParameter.Name] -= 1;
+
+                                            float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                                            deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff, 2);
+                                        }
+                                        else if (factorIndex > 0)
+                                        {
+                                            factorIndex -= 1;
+
+                                            deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
+                                        }
+                                    }
+                                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
+                                    {
+                                        if (dicDOFeedIndex[deviceParameter.Name] < dicDOFeedIndex.Count - 1)//还存在下一阶梯
+                                        {
+                                            dicDOFeedIndex[deviceParameter.Name] += 1;
+
+                                            float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                                            deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff, 2);
+                                        }
+                                        else if (factorIndex < collection.Count - 1)
+                                        {
+                                            factorIndex += 1;
+
+                                            deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
+                                        }
                                     }
                                     else
                                     {
-                                        agit = deviceParameter.AgitParam.Agit_PV;
+                                        float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                                        deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff, 2);
                                     }
-                                    LogHelper.Debug(string.Format("溶氧进入死区，反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam3.Agit, deviceParameter.AgitParam.Agit_PV, agit));
 
-                                    deviceParameter.IsDOLimit = false;
-                                    dicDOPid[deviceParameter.Name].Reset();
-                                    dicDODelta[deviceParameter.Name] = 0;
-                                    //溶氧已调整完毕，不调整参数
-                                    continue;
-                                }
-
-                                if (realTimeParam3.DO > deviceParameter.DOParam.DO_PV + info.deadArea)
-                                {
-                                    if (dicAirIndex[deviceParameter.Name] > 0)//退回上一阶段
+                                    PeristalticPump pump = PeristalticPump.FeedPump;
+                                    int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
+                                    if (pumpNo >= 0)
                                     {
-                                        dicAirIndex[deviceParameter.Name] -= 1;
-
-                                        if (dicAirIndex[deviceParameter.Name] < param.AirCol.Count - 1)
+                                        var controlParam = new PeristalticPumpControlParam()
                                         {
-                                            dicAirIndex[deviceParameter.Name] += 1;
-                                        }
-                                        break;
+                                            PumpNo = pumpNo,
+                                            Pump = pump,
+                                            ControlMode = PumpControlMode.Direct,
+                                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                            FlowCapacity = Const.MaxPumpFlowCapacity
+                                        };
+                                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, controlParam);
+                                        dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam1.Feed_PV;
                                     }
-                                }
+                                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 实际补料{2}", deviceParameter.Name, deviceParameter.DOParam.InitialFeed, deviceParameter.FeedParam1.Feed_PV));
+
+                                    sleepCount = 5;
+                                    while (sleepCount > 0)
+                                    {
+                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                        {
+                                            return;
+                                        }
+
+                                        sleepCount--;
+                                        Thread.Sleep(1000);
+                                    }
+                                    break;
                             }
+                            lastFactorIndex = factorIndex;
                         }
                         catch (Exception ex)
                         {
-                            LogHelper.Debug(string.Format("DO调整失败，错误信息：{0}", ex.Message));
+                            LogHelper.Debug(string.Format("DO调整失败：阶梯级联：错误信息：{0}", ex.Message));
                             Thread.Sleep(AppSession.Interval * 1000);
                         }
                     }
@@ -14451,15 +14266,17 @@ namespace RD3.ViewModels
                 dicDOPid.Add(reactor.Name, new QPIDController());
                 dicDOAirPid.Add(reactor.Name, new QPIDController());
                 dicDOO2Pid.Add(reactor.Name, new QPIDController());
+                dicDOTempIndex.Add(reactor.Name, 0);
+                dicDOFeedIndex.Add(reactor.Name, 0);
 
                 dicAgitWorker.Add(reactor.Name, new BackgroundWorker());
                 dicAgitSP.Add(reactor.Name, 0f);
 
-                dicAirIndex.Add(reactor.Name, 0);
+                dicDOAirIndex.Add(reactor.Name, 0);
                 dicAirWorker.Add(reactor.Name, new BackgroundWorker());
                 dicAirSP.Add(reactor.Name, 0f);
 
-                dicO2Index.Add(reactor.Name, 0);
+                dicDOO2Index.Add(reactor.Name, 0);
                 dicO2Worker.Add(reactor.Name, new BackgroundWorker());
                 dicO2SP.Add(reactor.Name, 0f);
 
