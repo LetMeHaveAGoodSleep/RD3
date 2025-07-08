@@ -1492,7 +1492,7 @@ namespace RD3.ViewModels
                     e.Result = deviceParameter.Name;
                     DateTime startTime = DateTime.Now;
                     var sv = deviceParameter.DOParam.DO_PV;
-                    dicDOAirIndex[deviceParameter.Name] = dicDOO2Index[deviceParameter.Name] = 0;
+                    dicDOFeedIndex[deviceParameter.Name] = dicDOTempIndex[deviceParameter.Name] = dicDOAirIndex[deviceParameter.Name] = dicDOO2Index[deviceParameter.Name] = 0;
 
                     info = null;
                     lastPid = null;
@@ -1500,9 +1500,6 @@ namespace RD3.ViewModels
                     lastDODelta = 0;//低通滤波的上个值
                     factorIndex = 0;//当前执行索引
                     lastFactorIndex = -1;//当前执行索引
-
-                    deviceParameter.AgitParam.IsControling = true;
-                    AgitRunCommand.Execute(deviceParameter);
 
                     RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                     while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
@@ -1525,6 +1522,10 @@ namespace RD3.ViewModels
                         Thread.Sleep(1000);
                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                     }
+
+
+                    deviceParameter.AgitParam.IsControling = true;
+                    AgitRunCommand.Execute(deviceParameter);
 
                     DOAssParam param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
 
@@ -1718,7 +1719,7 @@ namespace RD3.ViewModels
                                 continue;
                             }
 
-                            if (factorIndex < 0 || collection.Count <= factorIndex)//如果未达到高限或者没有其他执行参数，则一直循环
+                            if (factorIndex < 0 || collection.Count <= factorIndex)
                             {
                                 continue;
                             }
