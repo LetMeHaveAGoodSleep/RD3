@@ -954,7 +954,6 @@ namespace RD3.ViewModels
                     deviceParameter.AgitParam.Agit_PV = realTimeParam.Agit >= param.AgitLowerLimit ? realTimeParam.Agit <= param.AgitUpperLimit ? realTimeParam.Agit : param.AgitUpperLimit : param.AgitLowerLimit;
                     AgitRunCommand.Execute(deviceParameter);
 
-
                     ObservableCollection<DOControlFactor> collection = [.. param.FactorCol];
 
                     if (collection.Count > 0 && (collection[0] == DOControlFactor.Air || collection[0] == DOControlFactor.O2))
@@ -1001,6 +1000,16 @@ namespace RD3.ViewModels
                             {
                                 MessageBox.Show("PID调控策略列表为空");
                                 return;
+                            }
+
+                            while (AppSession.DOPause)
+                            {
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
+
+                                Thread.Sleep(1000);
                             }
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -1113,6 +1122,7 @@ namespace RD3.ViewModels
                             if (deviceParameter.AgitParam.Agit_PV > param.AgitHigh && factorIndex == -1)
                             {
                                 LogHelper.Debug($"到达设定转速高限:{param.AgitHigh}");
+                                lastFactorIndex= factorIndex;
                                 factorIndex = 0;
                             }
 
@@ -1124,6 +1134,16 @@ namespace RD3.ViewModels
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
                                 return;
+                            }
+
+                            while (AppSession.DOPause)
+                            {
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
+
+                                Thread.Sleep(1000);
                             }
 
                             param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
@@ -1171,6 +1191,7 @@ namespace RD3.ViewModels
                                     {
                                         if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex += 1;
                                         }
                                     }
@@ -1178,6 +1199,7 @@ namespace RD3.ViewModels
                                     {
                                         if (factorIndex - 1 > -1)
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
                                         }
                                     }
@@ -1239,6 +1261,7 @@ namespace RD3.ViewModels
                                     {
                                         if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex += 1;
                                         }
                                     }
@@ -1246,6 +1269,7 @@ namespace RD3.ViewModels
                                     {
                                         if (factorIndex - 1 > -1)
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
                                         }
                                     }
@@ -1294,6 +1318,7 @@ namespace RD3.ViewModels
                                     {
                                         if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex += 1;
                                         }
                                     }
@@ -1301,6 +1326,7 @@ namespace RD3.ViewModels
                                     {
                                         if (factorIndex - 1 > -1)
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
                                         }
                                     }
@@ -1341,10 +1367,12 @@ namespace RD3.ViewModels
                                     {
                                         if (factorIndex < collection.Count - 1 && lastFactorIndex <= factorIndex)//如果还有下一执行参数，则跳到下一个执行参数
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex += 1;
                                         }
                                         else if (factorIndex - 1 > -1&& lastFactorIndex >= factorIndex)
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
                                         }
                                     }
@@ -1371,6 +1399,7 @@ namespace RD3.ViewModels
                                     {
                                         if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex += 1;
                                         }
                                     }
@@ -1378,6 +1407,7 @@ namespace RD3.ViewModels
                                     {
                                         if (factorIndex - 1 > -1)
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
                                         }
                                     }
@@ -1412,7 +1442,6 @@ namespace RD3.ViewModels
                                     }
                                     break;
                             }
-                            lastFactorIndex = factorIndex;
                         }
                         catch (Exception ex)
                         {
@@ -1432,6 +1461,17 @@ namespace RD3.ViewModels
                         {
                             return;
                         }
+
+                        while (AppSession.DOPause)
+                        {
+                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                            {
+                                return;
+                            }
+
+                            Thread.Sleep(1000);
+                        }
+
                         RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                         if (realTimeParam.DO < deviceParameter.DOParam.DO_PV)
                         {
@@ -1501,6 +1541,16 @@ namespace RD3.ViewModels
                     factorIndex = 0;//当前执行索引
                     lastFactorIndex = -1;//当前执行索引
 
+                    while (AppSession.DOPause)
+                    {
+                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                        {
+                            return;
+                        }
+
+                        Thread.Sleep(1000);
+                    }
+
                     RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                     while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
                     {
@@ -1531,72 +1581,44 @@ namespace RD3.ViewModels
 
                     ObservableCollection<DOControlFactor> collection = [.. param.FactorCol];
 
-                    if (collection.Count > 0 && (collection[0] == DOControlFactor.Air || collection[0] == DOControlFactor.O2))
+                    if (collection.Count > 0)
                     {
-                        switch (collection[0])
+                        if (collection.Contains(DOControlFactor.Air) && deviceParameter.AirParam.IsControling)
                         {
-                            case DOControlFactor.Air:
-                                if (param.Unit == 0)//VVM
-                                {
-                                    initialGas = MathF.Round((float)(param.AirCol[0].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                    maxGas = MathF.Round((float)(param.AirCol[param.AirCol.Count - 1].StepValue * (deviceParameter.JarWeight - 2000) / 1000), 2);
-                                }
-                                else if (param.Unit == 1)//L/min
-                                {
-                                    initialGas = param.AirCol[0].StepValue;
-                                    maxGas = param.AirCol[param.AirCol.Count - 1].StepValue;
-                                }
+                            if (param.Unit == 0)//VVM
+                            {
+                                dicDOAirIndex[deviceParameter.Name] = param.AirCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                                 (x.Index == 0 || MathF.Round(param.AirCol[x.Index - 1].StepValue * (realTimeParam.JarWeight - 2000) / 1000, 2) <= realTimeParam.AirFlowSpeed) &&
+                                 (x.Index == param.AirCol.Count - 1 || MathF.Round(param.AirCol[x.Index + 1].StepValue * (realTimeParam.JarWeight - 2000) / 1000, 2) >= realTimeParam.AirFlowSpeed))?.Index ?? -1;
+                            }
+                            else if (param.Unit == 1)//L/min
+                            {
+                                dicDOAirIndex[deviceParameter.Name] = param.AirCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                                 (x.Index == 0 || param.AirCol[x.Index - 1].StepValue <= realTimeParam.AirFlowSpeed) &&
+                                 (x.Index == param.AirCol.Count - 1 || param.AirCol[x.Index + 1].StepValue >= realTimeParam.AirFlowSpeed))?.Index ?? -1;
+                            }
 
-                                if (realTimeParam.AirFlowSpeed <= initialGas)
-                                {
-                                    deviceParameter.AirParam.FlowSpeed = initialGas;
-                                    dicDOAirIndex[deviceParameter.Name] = 0;
-                                }
-                                else if (realTimeParam.AirFlowSpeed >= maxGas)
-                                {
-                                    deviceParameter.AirParam.FlowSpeed = maxGas;
-                                    dicDOAirIndex[deviceParameter.Name] = param.AirCol.Count - 1;
-                                }
-                                else
-                                {
-                                    dicDOAirIndex[deviceParameter.Name] = param.AirCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
-                                    (x.Index == 0 || param.AirCol[x.Index - 1].StepValue <= realTimeParam.AirFlowSpeed) &&
-                                    (x.Index == param.AirCol.Count - 1 || param.AirCol[x.Index + 1].StepValue >= realTimeParam.AirFlowSpeed))?.Index ?? -1;
-                                }
-                                LogHelper.Debug(string.Format("阶梯级联：通气档位为{0}", dicDOAirIndex[deviceParameter.Name] + 1));
-                                AirRunCommand.Execute(deviceParameter);
-                                break;
-                            case DOControlFactor.O2:
-                                if (param.Unit == 0)//VVM
-                                {
-                                    initialGas = MathF.Round((float)(param.O2Col[0].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                    maxGas = MathF.Round((float)(param.O2Col[param.O2Col.Count - 1].StepValue * (deviceParameter.JarWeight - 2000) / 1000), 2);
-                                }
-                                else if (param.Unit == 1)//L/min
-                                {
-                                    initialGas = param.O2Col[0].StepValue;
-                                    maxGas = param.O2Col[param.O2Col.Count - 1].StepValue;
-                                }
+                            LogHelper.Debug(string.Format("阶梯级联：通气档位为{0}", dicDOAirIndex[deviceParameter.Name] + 1));
+                            AirRunCommand.Execute(deviceParameter);
+                        }
 
-                                if (realTimeParam.O2FlowSpeed <= initialGas)
-                                {
-                                    deviceParameter.O2Param.FlowSpeed = initialGas;
-                                    dicDOO2Index[deviceParameter.Name] = 0;
-                                }
-                                else if (realTimeParam.O2FlowSpeed >= maxGas)
-                                {
-                                    deviceParameter.O2Param.FlowSpeed = maxGas;
-                                    dicDOO2Index[deviceParameter.Name] = param.O2Col.Count - 1;
-                                }
-                                else
-                                {
-                                    dicDOO2Index[deviceParameter.Name] = param.O2Col.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
-                                    (x.Index == 0 || param.O2Col[x.Index - 1].StepValue <= realTimeParam.O2FlowSpeed) &&
-                                    (x.Index == param.O2Col.Count - 1 || param.O2Col[x.Index + 1].StepValue >= realTimeParam.O2FlowSpeed))?.Index ?? -1;
-                                }
-                                LogHelper.Debug(string.Format("阶梯级联：通气档位为{0}", dicDOO2Index[deviceParameter.Name] + 1));
-                                O2RunCommand.Execute(deviceParameter);
-                                break;
+                        if (collection.Contains(DOControlFactor.O2) && deviceParameter.O2Param.IsControling)
+                        {
+                            if (param.Unit == 0)//VVM
+                            {
+                                dicDOO2Index[deviceParameter.Name] = param.O2Col.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                                 (x.Index == 0 || MathF.Round(param.O2Col[x.Index - 1].StepValue * (realTimeParam.JarWeight - 2000) / 1000, 2) <= realTimeParam.O2FlowSpeed) &&
+                                 (x.Index == param.O2Col.Count - 1 || MathF.Round(param.O2Col[x.Index + 1].StepValue * (realTimeParam.JarWeight - 2000) / 1000, 2) >= realTimeParam.O2FlowSpeed))?.Index ?? -1;
+                            }
+                            else if (param.Unit == 1)//L/min
+                            {
+                                dicDOO2Index[deviceParameter.Name] = param.O2Col.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                                 (x.Index == 0 || param.O2Col[x.Index - 1].StepValue <= realTimeParam.O2FlowSpeed) &&
+                                 (x.Index == param.O2Col.Count - 1 || param.O2Col[x.Index + 1].StepValue >= realTimeParam.O2FlowSpeed))?.Index ?? -1;
+                            }
+
+                            LogHelper.Debug(string.Format("阶梯级联：氧气档位为{0}", dicDOO2Index[deviceParameter.Name] + 1));
+                            O2RunCommand.Execute(deviceParameter);
                         }
                     }
 
@@ -1611,6 +1633,16 @@ namespace RD3.ViewModels
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
                                 return;
+                            }
+
+                            while (AppSession.DOPause)
+                            {
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
+
+                                Thread.Sleep(1000);
                             }
 
                             string result = File.ReadAllText(FileConst.PidInfoPath);
@@ -1729,6 +1761,16 @@ namespace RD3.ViewModels
                                 return;
                             }
 
+                            while (AppSession.DOPause)
+                            {
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
+
+                                Thread.Sleep(1000);
+                            }
+
                             param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                             int sleepCount = 1;
                             var previousElements = collection.Take(factorIndex);
@@ -1741,6 +1783,22 @@ namespace RD3.ViewModels
                                     {
                                         deviceParameter.AirParam.IsControling = true;
                                         AirRunCommand.Execute(deviceParameter);
+                                    }
+
+                                    float airFlowSpeed1 = 0f;
+                                    if (param.Unit == 0)//VVM
+                                    {
+                                        airFlowSpeed1 = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                    }
+                                    else if (param.Unit == 1)//L/min
+                                    {
+                                        airFlowSpeed1 = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                                    }
+                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                    if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed1) > 0.1)
+                                    {
+                                        deviceParameter.AirParam.FlowSpeed = airFlowSpeed1;
+                                        Thread.Sleep(10000);
                                     }
 
                                     if (param.Unit == 0)//VVM
@@ -1775,7 +1833,7 @@ namespace RD3.ViewModels
 
                                             if (isExistOtherGas)
                                             {
-                                                if (dicDOO2Index[deviceParameter.Name] < dicDOO2Index.Count - 1)//加一档
+                                                if (dicDOO2Index[deviceParameter.Name] < param.O2Col.Count - 1)//加一档
                                                 {
                                                     dicDOO2Index[deviceParameter.Name] += 1;
 
@@ -1800,7 +1858,7 @@ namespace RD3.ViewModels
                                             {
                                                 deviceParameter.AirParam.FlowSpeed = 0;
 
-                                                if (dicDOO2Index[deviceParameter.Name] < dicDOO2Index.Count - 1)//加一档
+                                                if (dicDOO2Index[deviceParameter.Name] < param.O2Col.Count - 1)//加一档
                                                 {
                                                     dicDOO2Index[deviceParameter.Name] += 1;
 
@@ -1819,12 +1877,40 @@ namespace RD3.ViewModels
                                                 }
                                             }
 
+                                            lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
                                         }
                                     }
                                     else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
                                     {
-                                        if (dicDOAirIndex[deviceParameter.Name] < dicDOAirIndex.Count - 1)//还存在下一阶梯
+                                        if (isExistOtherGas)
+                                        {
+                                            if (dicDOO2Index[deviceParameter.Name] > 0)
+                                            {
+                                                dicDOO2Index[deviceParameter.Name] -= 1;
+
+                                                float o2FlowSpeed = 0f;
+                                                if (param.Unit == 0)//VVM
+                                                {
+                                                    o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                }
+                                                else if (param.Unit == 1)//L/min
+                                                {
+                                                    o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                                                }
+                                                deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+                                                deviceParameter.O2Param.IsControling = true;
+                                                O2RunCommand.Execute(deviceParameter);
+                                            }
+                                            else
+                                            {
+                                                deviceParameter.O2Param.FlowSpeed = 0;
+                                                deviceParameter.O2Param.IsControling = true;
+                                                O2RunCommand.Execute(deviceParameter);
+                                            }
+                                        }
+
+                                        if (dicDOAirIndex[deviceParameter.Name] < param.AirCol.Count - 1)//还存在下一阶梯
                                         {
                                             dicDOAirIndex[deviceParameter.Name] += 1;
 
@@ -1838,30 +1924,10 @@ namespace RD3.ViewModels
                                                 airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
                                             }
                                             deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
-
-                                            if (isExistOtherGas)
-                                            {
-                                                if (dicDOO2Index[deviceParameter.Name] > 0)
-                                                {
-                                                    dicDOO2Index[deviceParameter.Name] -= 1;
-
-                                                    float o2FlowSpeed = 0f;
-                                                    if (param.Unit == 0)//VVM
-                                                    {
-                                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                                    }
-                                                    else if (param.Unit == 1)//L/min
-                                                    {
-                                                        o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
-                                                    }
-                                                    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
-                                                    deviceParameter.O2Param.IsControling = true;
-                                                    O2RunCommand.Execute(deviceParameter);
-                                                }
-                                            }
                                         }
                                         else if (factorIndex < collection.Count - 1)
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex += 1;
                                         }
                                     }
@@ -1877,10 +1943,9 @@ namespace RD3.ViewModels
                                             airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
                                         }
                                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                        if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.1)
+                                        if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.05)
                                         {
                                             deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
-
                                         }
 
                                         if (isExistOtherGas)
@@ -1895,7 +1960,7 @@ namespace RD3.ViewModels
                                                 o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
                                             }
                                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                            if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.1)
+                                            if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.05)
                                             {
                                                 deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
 
@@ -1920,6 +1985,22 @@ namespace RD3.ViewModels
                                     {
                                         deviceParameter.O2Param.IsControling = true;
                                         O2RunCommand.Execute(deviceParameter);
+                                    }
+
+                                    float o2FlowSpeed1 = 0f;
+                                    if (param.Unit == 0)//VVM
+                                    {
+                                        o2FlowSpeed1 = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                    }
+                                    else if (param.Unit == 1)//L/min
+                                    {
+                                        o2FlowSpeed1 = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                                    }
+                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                    if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed1) > 0.05)
+                                    {
+                                        deviceParameter.O2Param.FlowSpeed = o2FlowSpeed1;
+                                        Thread.Sleep(10000);
                                     }
 
                                     if (param.Unit == 0)//VVM
@@ -1954,7 +2035,7 @@ namespace RD3.ViewModels
 
                                             if (isExistOtherGas)
                                             {
-                                                if (dicDOAirIndex[deviceParameter.Name] < dicDOAirIndex.Count - 1)//加一档
+                                                if (dicDOAirIndex[deviceParameter.Name] < param.AirCol.Count - 1)//加一档
                                                 {
                                                     dicDOAirIndex[deviceParameter.Name] += 1;
 
@@ -1979,7 +2060,7 @@ namespace RD3.ViewModels
                                             {
                                                 deviceParameter.O2Param.FlowSpeed = 0;
 
-                                                if (dicDOAirIndex[deviceParameter.Name] < dicDOAirIndex.Count - 1)//加一档
+                                                if (dicDOAirIndex[deviceParameter.Name] < param.AirCol.Count - 1)//加一档
                                                 {
                                                     dicDOAirIndex[deviceParameter.Name] += 1;
 
@@ -1998,12 +2079,40 @@ namespace RD3.ViewModels
                                                 }
                                             }
 
+                                            lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
                                         }
                                     }
                                     else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
                                     {
-                                        if (dicDOO2Index[deviceParameter.Name] < dicDOO2Index.Count - 1)//还存在下一阶梯
+                                        if (isExistOtherGas)
+                                        {
+                                            if (dicDOAirIndex[deviceParameter.Name] > 0)
+                                            {
+                                                dicDOAirIndex[deviceParameter.Name] -= 1;
+
+                                                float airFlowSpeed = 0f;
+                                                if (param.Unit == 0)//VVM
+                                                {
+                                                    airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                }
+                                                else if (param.Unit == 1)//L/min
+                                                {
+                                                    airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                                                }
+                                                deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                                                deviceParameter.AirParam.IsControling = true;
+                                                AirRunCommand.Execute(deviceParameter);
+                                            }
+                                            else
+                                            {
+                                                deviceParameter.AirParam.FlowSpeed = 0;
+                                                deviceParameter.AirParam.IsControling = true;
+                                                AirRunCommand.Execute(deviceParameter);
+                                            }
+                                        }
+
+                                        if (dicDOO2Index[deviceParameter.Name] < param.O2Col.Count - 1)//还存在下一阶梯
                                         {
                                             dicDOO2Index[deviceParameter.Name] += 1;
 
@@ -2017,30 +2126,10 @@ namespace RD3.ViewModels
                                                 o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
                                             }
                                             deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
-
-                                            if (isExistOtherGas)
-                                            {
-                                                if (dicDOAirIndex[deviceParameter.Name] > 0)
-                                                {
-                                                    dicDOAirIndex[deviceParameter.Name] -= 1;
-
-                                                    float airFlowSpeed = 0f;
-                                                    if (param.Unit == 0)//VVM
-                                                    {
-                                                        airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                                    }
-                                                    else if (param.Unit == 1)//L/min
-                                                    {
-                                                        airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
-                                                    }
-                                                    deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
-                                                    deviceParameter.AirParam.IsControling = true;
-                                                    AirRunCommand.Execute(deviceParameter);
-                                                }
-                                            }
                                         }
                                         else if (factorIndex < collection.Count - 1)
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex += 1;
                                         }
                                     }
@@ -2077,7 +2166,6 @@ namespace RD3.ViewModels
                                             if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.1)
                                             {
                                                 deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
-
                                             }
                                         }
                                     }
@@ -2102,6 +2190,26 @@ namespace RD3.ViewModels
                                         Thread.Sleep(1000);
                                     }
 
+                                    float temperature = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
+                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                    if (Math.Abs(realTimeParam.Temp - temperature) > 0.05)
+                                    {
+                                        deviceParameter.TempParam.Temp_PV = temperature;
+                                        while (true)
+                                        {
+                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                            if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.Temp_PV) <= 0.2)
+                                            {
+                                                break;
+                                            }
+                                            Thread.Sleep(1000);
+                                        }
+                                    }
+
                                     if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
                                     {
                                         if (dicDOTempIndex[deviceParameter.Name] > 0)//还存在上一阶梯
@@ -2112,6 +2220,7 @@ namespace RD3.ViewModels
                                         }
                                         else if (factorIndex > 0)
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
 
                                             deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
@@ -2119,14 +2228,15 @@ namespace RD3.ViewModels
                                     }
                                     else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
                                     {
-                                        if (dicDOTempIndex[deviceParameter.Name] < dicDOTempIndex.Count - 1)//还存在下一阶梯
+                                        if (dicDOTempIndex[deviceParameter.Name] < param.TempCol.Count - 1)//还存在下一阶梯
                                         {
                                             dicDOTempIndex[deviceParameter.Name] += 1;
 
-                                            deviceParameter.FeedParam1.Feed_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
+                                            deviceParameter.TempParam.Temp_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
                                         }
                                         else if (factorIndex < collection.Count - 1)
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex += 1;
 
                                             deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
@@ -2134,7 +2244,7 @@ namespace RD3.ViewModels
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
+                                        deviceParameter.TempParam.Temp_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
                                     }
 
                                     if (dicDOTempIndex[deviceParameter.Name] <= 0 || dicDOTempIndex[deviceParameter.Name] >= dicDOTempIndex.Count - 1)
@@ -2159,10 +2269,12 @@ namespace RD3.ViewModels
                                     {
                                         if (factorIndex < collection.Count - 1 && lastFactorIndex <= factorIndex)//如果还有下一执行参数，则跳到下一个执行参数
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex += 1;
                                         }
                                         else if (factorIndex - 1 > -1 && lastFactorIndex >= factorIndex)
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
                                         }
                                     }
@@ -2174,17 +2286,39 @@ namespace RD3.ViewModels
                                         firstInitFeed = false;
                                     }
 
+                                    float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                                    float feedFlowSpeed = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
+                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                    if (Math.Abs(realTimeParam.FeedFlowSpeed - deviceParameter.FeedParam1.Feed_PV) > 0.05)
+                                    {
+                                        deviceParameter.FeedParam1.Feed_PV = feedFlowSpeed;
+                                        while (true)
+                                        {
+                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                            if (Math.Abs(realTimeParam.FeedFlowSpeed - deviceParameter.FeedParam1.Feed_PV) <= 0.2)
+                                            {
+                                                break;
+                                            }
+                                            Thread.Sleep(1000);
+                                        }
+                                    }
+
                                     if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
                                     {
                                         if (dicDOFeedIndex[deviceParameter.Name] > 0)//还存在上一阶梯
                                         {
                                             dicDOFeedIndex[deviceParameter.Name] -= 1;
 
-                                            float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
-                                            deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff, 2);
+                                            coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                                            deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                         }
                                         else if (factorIndex > 0)
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
 
                                             deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
@@ -2192,15 +2326,16 @@ namespace RD3.ViewModels
                                     }
                                     else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
                                     {
-                                        if (dicDOFeedIndex[deviceParameter.Name] < dicDOFeedIndex.Count - 1)//还存在下一阶梯
+                                        if (dicDOFeedIndex[deviceParameter.Name] < param.FeedCol.Count - 1)//还存在下一阶梯
                                         {
                                             dicDOFeedIndex[deviceParameter.Name] += 1;
 
-                                            float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
-                                            deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff, 2);
+                                            coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                                            deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                         }
                                         else if (factorIndex < collection.Count - 1)
                                         {
+                                            lastFactorIndex = factorIndex;
                                             factorIndex += 1;
 
                                             deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
@@ -2208,8 +2343,8 @@ namespace RD3.ViewModels
                                     }
                                     else
                                     {
-                                        float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
-                                        deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff, 2);
+                                         coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                                        deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                     }
 
                                     PeristalticPump pump = PeristalticPump.FeedPump;
@@ -2242,7 +2377,6 @@ namespace RD3.ViewModels
                                     }
                                     break;
                             }
-                            lastFactorIndex = factorIndex;
                         }
                         catch (Exception ex)
                         {
@@ -2266,12 +2400,12 @@ namespace RD3.ViewModels
                     deviceParameter.DORegulationLimit = false;
                     deviceParameter.FeedSuspend = false;
 
-                    if (deviceParameter.TempParam.IsControling && deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
+                    if (deviceParameter.TempParam.IsControling && (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging || deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step))
                     {
                         deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
                     }
 
-                    if (deviceParameter.FeedParam1.IsControling && deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
+                    if (deviceParameter.FeedParam1.IsControling && (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging || deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step))
                     {
                         deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
                     }
@@ -8855,6 +8989,7 @@ namespace RD3.ViewModels
             else if (feedMode == FeedControlMode.Probe)
             {
                 var param = ProbingParameterManager.GetInstance().ProbeCol.FindFirst(t => t.DeviceID == CurrentDeviceParameter.Name);
+                dicFeed1Probe[CurrentDeviceParameter.Name].SetDevice(CurrentDeviceParameter);
                 dicFeed1Probe[CurrentDeviceParameter.Name].InitProbParam(param);
                 dicFeed1Probe[CurrentDeviceParameter.Name].StartCtrl();
             }
@@ -13883,6 +14018,7 @@ namespace RD3.ViewModels
             else if (feedMode == FeedControlMode.Probe)
             {
                 var param = ProbingParameterManager.GetInstance().ProbeCol.FindFirst(t => t.DeviceID == CurrentDeviceParameter.Name);
+                dicFeed2Probe[CurrentDeviceParameter.Name].SetDevice(CurrentDeviceParameter);
                 dicFeed2Probe[CurrentDeviceParameter.Name].InitProbParam(param);
                 dicFeed2Probe[CurrentDeviceParameter.Name].StartCtrl();
             }
