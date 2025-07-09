@@ -216,6 +216,8 @@ namespace RD3
 
             backupService?.Dispose();
 
+            SQLiteHelper.Close();
+
             base.OnExit(e);
         }
     }
