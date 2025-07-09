@@ -1026,9 +1026,9 @@ namespace XZ.SQLite
             SQLiteHelper.CreateTableByFields(BatchTable, hasAutoIncrementId: true, batchFields);
 
             //创建索引以提高查询效率
-            SQLiteHelper.CreateIndex(BatchTable, "ownerID");
-            SQLiteHelper.CreateIndex(BatchTable, "startDate");
-            SQLiteHelper.CreateIndex(BatchTable, "endDate");
+            SQLiteHelper.CreateIndex(BatchTable, "devieceID");
+            SQLiteHelper.CreateIndex(BatchTable, "startDateTime");
+            SQLiteHelper.CreateIndex(BatchTable, "endDateTime");
             return true;
         }
 
