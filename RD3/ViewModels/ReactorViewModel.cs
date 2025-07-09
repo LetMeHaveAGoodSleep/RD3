@@ -3902,7 +3902,7 @@ namespace RD3.ViewModels
                             PumpNo = pumpNo,
                             Pump = pump,
                             ControlMode = PumpControlMode.Direct,
-                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)deviceParameter.FeedParam1.Feed_PV,
+                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.FeedParam1.Feed_PV,
                             FlowCapacity = Const.MaxPumpFlowCapacity
                         };
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -8930,7 +8930,7 @@ namespace RD3.ViewModels
                             PumpNo = pumpNo,
                             Pump = pump,
                             ControlMode = PumpControlMode.Direct,
-                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)deviceParameter.FeedParam2.Feed_PV,
+                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.FeedParam2.Feed_PV,
                             FlowCapacity = Const.MaxPumpFlowCapacity
                         };
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
