@@ -938,6 +938,8 @@ namespace RD3.ViewModels
                 PIDInfo info = null;
                 PIDInfo lastPid = null;
 
+                int waitCount = 5;
+
                 //mid-ranging控制
                 if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
                 {
@@ -982,7 +984,16 @@ namespace RD3.ViewModels
                         }
                     }
 
-                    Thread.Sleep(5000);//等待初始化完成
+                    waitCount = 5;
+                    while (waitCount > 0)
+                    {
+                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                        {
+                            return;
+                        }
+                        waitCount--;
+                        Thread.Sleep(1000);
+                    }
 
                     ResetDOParam(deviceParameter);
                     while (true)
@@ -1096,7 +1107,17 @@ namespace RD3.ViewModels
                             LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, baseAgit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
 
                             deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
-                            Thread.Sleep(5000);
+
+                            waitCount = 5;
+                            while (waitCount > 0)
+                            {
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
+                                waitCount--;
+                                Thread.Sleep(1000);
+                            }
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                             if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
@@ -1622,7 +1643,16 @@ namespace RD3.ViewModels
                         }
                     }
 
-                    Thread.Sleep(5000);//等待初始化完成
+                    waitCount = 5;
+                    while (waitCount > 0)
+                    {
+                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                        {
+                            return;
+                        }
+                        waitCount--;
+                        Thread.Sleep(1000);
+                    }
 
                     ResetDOParam(deviceParameter);
 
@@ -1728,7 +1758,17 @@ namespace RD3.ViewModels
                             LogHelper.Debug(string.Format("反应器{0} 阶梯级联 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, baseAgit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
 
                             deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
-                            Thread.Sleep(5000);
+
+                            waitCount = 5;
+                            while (waitCount > 0)
+                            {
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
+                                waitCount--;
+                                Thread.Sleep(1000);
+                            }
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                             if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
@@ -2380,14 +2420,44 @@ namespace RD3.ViewModels
                     deviceParameter.DORegulationLimit = false;
                     deviceParameter.FeedSuspend = false;
 
-                    if (deviceParameter.TempParam.IsControling && (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging || deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step))
+                    if (deviceParameter.TempParam.IsControling)
                     {
-                        deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
+                        if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
+                        {
+                            var param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                            if (param.FactorCol.Contains(DOControlFactor.Temp))
+                            {
+                                deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
+                            }
+                        }
+                        else if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step)
+                        {
+                            var param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                            if (param.FactorCol.Contains(DOControlFactor.Temp))
+                            {
+                                deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
+                            }
+                        }
                     }
 
-                    if (deviceParameter.FeedParam1.IsControling && (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging || deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step))
+                    if (deviceParameter.FeedParam1.IsControling)
                     {
-                        deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
+                        if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
+                        {
+                            var param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                            if (param.FactorCol.Contains(DOControlFactor.Temp))
+                            {
+                                deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
+                            }
+                        }
+                        else if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step)
+                        {
+                            var param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                            if (param.FactorCol.Contains(DOControlFactor.Temp))
+                            {
+                                deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
+                            }
+                        }
                     }
 
                     //deviceParameter.AirParam.IsControling = deviceParameter.AgitParam.IsControling = false;
