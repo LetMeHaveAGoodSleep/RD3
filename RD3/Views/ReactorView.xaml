@@ -198,23 +198,6 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                <!--<Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition
-                            Name="rowGraph3"
-                            Height="auto"
-                            MaxHeight="60" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <WrapPanel
-                            Name="ChkGraphList3"
-                            Orientation="Horizontal"
-                            Visibility="Collapsed" />
-                    </ScrollViewer>
-                    <wpf:WpfPlot Name="wpfPlot3" Grid.Row="2" />
-                </Grid>-->
                 <DockPanel Grid.Row="1" LastChildFill="False">
                     <Canvas
                         Width="925"

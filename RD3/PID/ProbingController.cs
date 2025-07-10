@@ -58,6 +58,7 @@ namespace RD3.Shared
         /// </summary>
         public void StopCtrl()
         {
+            AppSession.DOPause = false;
             ctrlFlag = false;
         }
         /// <summary>
@@ -166,7 +167,7 @@ namespace RD3.Shared
                 InitProbParam(param);
 
                 var realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(prob?.DeviceID);
-                while (Math.Abs(realTimeParam.DO - prob.Osp)  <= prob.AllowDiff * prob.Oreac)
+                while (Math.Abs(realTimeParam.DO - prob.Osp) <= prob.AllowDiff * prob.Oreac)
                 {
                     while (DOControlFeed())
                     {
