@@ -36,7 +36,6 @@ namespace RD3.Shared
             Tpulse = prob.Tmax;
             Tcontrol = prob.Tmax * 4;
             this.prob = prob;
-            this.flowRate = prob.F;
         }
 
         public void SetDevice(DeviceParameter deviceParameter)
@@ -157,6 +156,8 @@ namespace RD3.Shared
 
         private void Prob()
         {
+            this.flowRate = prob.F;
+
             LogHelper.Debug(string.Format("Probe:开始：泵速{0}", flowRate));
 
             DoFeedCtrl(flowRate);
@@ -177,6 +178,7 @@ namespace RD3.Shared
                         continue;
                     }
 
+                    //打脉冲
                     LogHelper.Debug(string.Format("Probe:暂停DO控制,当前流速{0}", flowRate));
                     AppSession.DOPause = true;
                     realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(prob?.DeviceID);
