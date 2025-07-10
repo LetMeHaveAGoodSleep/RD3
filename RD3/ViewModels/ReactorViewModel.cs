@@ -14332,7 +14332,14 @@ namespace RD3.ViewModels
             }
         });
 
-
+        public DelegateCommand<string> DODIYCommand => new((string content) =>
+        {
+            string input = Microsoft.VisualBasic.Interaction.InputBox($"请输入溶氧自定义值:", "修改溶氧", "");
+            if (float.TryParse(input, out float value))
+            {
+                AppSession.VirtualDO = value;
+            }
+        });
 
         public ReactorViewModel(IContainerProvider provider,
              IDialogHostService dialogHostService) : base(provider, dialogHostService)

@@ -127,11 +127,21 @@
                     hc:IconElement.Geometry="{StaticResource GeometryProbe}"
                     Background="#80796B"
                     BorderThickness="0"
+                    Command="{Binding DODIYCommand}"
+                    Foreground="White"
+                    Style="{StaticResource ButtonIconCircular}"
+                    ToolTip="{ex:Language Key='溶氧自定义'}" />
+                <!--<Button
+                    Width="36"
+                    Height="36"
+                    hc:IconElement.Geometry="{StaticResource GeometryProbe}"
+                    Background="#80796B"
+                    BorderThickness="0"
                     Command="{Binding TestCommand}"
                     CommandParameter="1,0"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='Probe补料策略'}" />
+                    ToolTip="{ex:Language Key='溶氧置零'}" />
                 <Button
                     Width="36"
                     Height="36"
@@ -142,7 +152,7 @@
                     CommandParameter="1,100"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='Probe补料策略'}" />
+                    ToolTip="{ex:Language Key='溶氧置百'}" />-->
                 <Button
                     Width="36"
                     Height="36"
@@ -153,7 +163,7 @@
                     CommandParameter="0,0"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='Probe补料策略'}" />
+                    ToolTip="{ex:Language Key='pH置零'}" />
                 <Button
                     Width="36"
                     Height="36"
@@ -164,7 +174,7 @@
                     CommandParameter="0,14"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='Probe补料策略'}" />
+                    ToolTip="{ex:Language Key='pH置百'}" />
                 <Button
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource SaveGeometry}"

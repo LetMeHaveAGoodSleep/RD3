@@ -204,16 +204,15 @@ namespace RD3.Shared
 
                     if (diff < prob.Oreac)//下降幅度小于Oreac
                     {
-                        float finc = -fPluse;
-                        flowRate -= finc;
-                        LogHelper.Debug(string.Format("Probe:下降幅度小，速度{0}", flowRate));
+                        flowRate -= fPluse;
+                        LogHelper.Debug(string.Format("Probe:下降幅度小，设定速度{0}，脉冲速度{1}", flowRate, fPluse));
                         DoFeedCtrl(flowRate);
                     }
                     else if (diff > prob.Oreac)//下降幅度大于Oreac
                     {
                         float finc = prob.k * flowRate * Math.Abs(diff) / (100 - prob.Osp);
-                        flowRate += finc;
-                        LogHelper.Debug(string.Format("Probe:下降幅度大，速度{0}", flowRate));
+                        flowRate = finc;
+                        LogHelper.Debug(string.Format("Probe:下降幅度大，设定速度{0},变更速度{1}", flowRate, finc));
                         DoFeedCtrl(flowRate);
                     }
 
