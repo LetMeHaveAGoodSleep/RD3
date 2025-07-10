@@ -156,13 +156,27 @@ namespace RD3.Shared
 
         private void Prob()
         {
+            DoFeedCtrl(flowRate);
+
+            int count1 = Convert.ToInt32(prob.Tmax * 60);
+            while (count1 > 0)
+            {
+                if (!ctrlFlag)
+                {
+                    return;
+                }
+
+                count1--;
+                Thread.Sleep(1000);
+            }
+
             while (ctrlFlag)
             {
                 var param = ProbingParameterManager.GetInstance().ProbeCol.FindFirst(t => t.DeviceID == prob?.DeviceID);
                 InitProbParam(param);
 
                 var realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(prob?.DeviceID);
-                while (Math.Abs(realTimeParam.DO - prob.Osp) / 100 <= prob.AllowDiff * prob.Oreac)
+                while (Math.Abs(realTimeParam.DO - prob.Osp)  <= prob.AllowDiff * prob.Oreac)
                 {
                     while (DOControlFeed())
                     {
@@ -181,7 +195,7 @@ namespace RD3.Shared
                    
                     DoFeedCtrl(temp);
 
-                    int count = Convert.ToInt32(prob.Tmax);
+                    int count = Convert.ToInt32(prob.Tmax * 60);
                     while (count > 0)
                     {
                         if (!ctrlFlag)
@@ -211,7 +225,7 @@ namespace RD3.Shared
                     }
 
                     AppSession.DOPause = false;
-                    int controlCount = Convert.ToInt32(4 * prob.Tmax);
+                    int controlCount = Convert.ToInt32(4 * prob.Tmax * 60);
                     while (controlCount > 0)
                     {
                         if (!ctrlFlag)
@@ -227,6 +241,10 @@ namespace RD3.Shared
                 DoFeedCtrl(0);
                 Thread.Sleep(1000);
             }
+
+            AppSession.DOPause = false;
+            DoFeedCtrl(0);
+            Thread.Sleep(1000);
         }
 
         /// <summary>
