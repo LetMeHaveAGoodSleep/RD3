@@ -110,9 +110,15 @@
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="100"
+                    Binding="{Binding M}"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="系数M(-)"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                <DataGridTextColumn
+                    Width="100"
                     Binding="{Binding k}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="系数K"
+                    Header="系数K(+)"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="120"

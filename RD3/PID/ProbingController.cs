@@ -177,7 +177,7 @@ namespace RD3.Shared
                         continue;
                     }
 
-                    LogHelper.Debug(string.Format("Probe:暂停DO控制", flowRate));
+                    LogHelper.Debug(string.Format("Probe:暂停DO控制,当前流速{0}", flowRate));
                     AppSession.DOPause = true;
                     realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(prob?.DeviceID);
                     float oldDO = realTimeParam.DO;
@@ -205,8 +205,8 @@ namespace RD3.Shared
 
                     if (diff < prob.Oreac)//下降幅度小于Oreac
                     {
-                        flowRate -= fPluse;
-                        LogHelper.Debug(string.Format("Probe:下降幅度小，设定速度{0}，脉冲速度{1}", flowRate, fPluse));
+                        flowRate -= prob.M * fPluse;
+                        LogHelper.Debug(string.Format("Probe:下降幅度小，设定速度{0}，脉冲速度{1}", flowRate, prob.M * fPluse));
                         DoFeedCtrl(flowRate);
                     }
                     else if (diff > prob.Oreac)//下降幅度大于Oreac
@@ -254,7 +254,7 @@ namespace RD3.Shared
                 {
                     PumpNo = pumpNo,
                     FlowSpeed = rF,
-                    FlowCapacity = rF * Tpulse / 3600f
+                    FlowCapacity = Const.MaxPumpFlowCapacity
                 };
                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(prob?.DeviceID, param);
                 LogHelper.Debug(string.Format("Probe:泵速{0}", rF));

@@ -20,6 +20,7 @@ namespace RD3.Shared
         private float _f;
         private string _deviceID;
         private float _allowDiff;
+        private float _m;
 
         public float Tmax
         {
@@ -70,7 +71,16 @@ namespace RD3.Shared
         }
 
         /// <summary>
-        /// 比例系数
+        /// 减小比例系数
+        /// </summary>
+        public float M
+        {
+            get => _m;
+            set => SetProperty(ref _m, value);
+        }
+
+        /// <summary>
+        /// 增大比例系数
         /// </summary>
         public float k
         {
