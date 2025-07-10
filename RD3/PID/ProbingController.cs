@@ -156,19 +156,9 @@ namespace RD3.Shared
 
         private void Prob()
         {
+            LogHelper.Debug(string.Format("Probe:开始：泵速{0}", flowRate));
+
             DoFeedCtrl(flowRate);
-
-            int count1 = Convert.ToInt32(prob.Tmax * 60);
-            while (count1 > 0)
-            {
-                if (!ctrlFlag)
-                {
-                    return;
-                }
-
-                count1--;
-                Thread.Sleep(1000);
-            }
 
             while (ctrlFlag)
             {
@@ -181,21 +171,23 @@ namespace RD3.Shared
                     while (DOControlFeed())
                     {
                         AppSession.DOPause = false;
-                        DoFeedCtrl(0);
+                        DoFeedCtrl(flowRate);
                         Thread.Sleep(1000);
                         continue;
                     }
 
+                    LogHelper.Debug(string.Format("Probe:暂停DO控制", flowRate));
                     AppSession.DOPause = true;
                     realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(prob?.DeviceID);
                     float oldDO = realTimeParam.DO;
                     float coefficient = 4 * prob.Oreac / (100 - prob.Osp);
                     float fPluse = coefficient * flowRate;
                     float temp = fPluse + flowRate;
-                   
+
+                    LogHelper.Debug(string.Format("Probe:暂停DO控制，速度{0}", temp));
                     DoFeedCtrl(temp);
 
-                    int count = Convert.ToInt32(prob.Tmax * 60);
+                    int count = Convert.ToInt32(prob.Tmax);
                     while (count > 0)
                     {
                         if (!ctrlFlag)
@@ -209,23 +201,24 @@ namespace RD3.Shared
 
                     realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(prob?.DeviceID);
                     float diff = oldDO - realTimeParam.DO;
-                    float percent = diff / oldDO;
 
-                    if (percent < prob.Oreac)//下降幅度小于Oreac
+                    if (diff < prob.Oreac)//下降幅度小于Oreac
                     {
                         float finc = -fPluse;
                         flowRate -= finc;
+                        LogHelper.Debug(string.Format("Probe:下降幅度小，速度{0}", flowRate));
                         DoFeedCtrl(flowRate);
                     }
-                    else if (percent > prob.Oreac)//下降幅度大于Oreac
+                    else if (diff > prob.Oreac)//下降幅度大于Oreac
                     {
-                        float finc = prob.k * flowRate * Math.Abs(diff) / 100 - prob.Osp;
+                        float finc = prob.k * flowRate * Math.Abs(diff) / (100 - prob.Osp);
                         flowRate += finc;
+                        LogHelper.Debug(string.Format("Probe:下降幅度大，速度{0}", flowRate));
                         DoFeedCtrl(flowRate);
                     }
 
                     AppSession.DOPause = false;
-                    int controlCount = Convert.ToInt32(4 * prob.Tmax * 60);
+                    int controlCount = Convert.ToInt32(Tcontrol);
                     while (controlCount > 0)
                     {
                         if (!ctrlFlag)
@@ -238,12 +231,12 @@ namespace RD3.Shared
                 }
 
                 AppSession.DOPause = false;
-                DoFeedCtrl(0);
+                DoFeedCtrl(flowRate);
                 Thread.Sleep(1000);
             }
 
             AppSession.DOPause = false;
-            DoFeedCtrl(0);
+            DoFeedCtrl(flowRate);
             Thread.Sleep(1000);
         }
 
@@ -261,7 +254,7 @@ namespace RD3.Shared
                 {
                     PumpNo = pumpNo,
                     FlowSpeed = rF,
-                    FlowCapacity = rF * Tpulse / 60
+                    FlowCapacity = rF * Tpulse / 3600f
                 };
                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(prob?.DeviceID, param);
                 LogHelper.Debug(string.Format("Probe:泵速{0}", rF));

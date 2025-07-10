@@ -88,7 +88,7 @@
                     Width="auto"
                     Binding="{Binding Tmax}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="脉冲时长（分钟）"
+                    Header="脉冲时长（秒）"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="auto"
