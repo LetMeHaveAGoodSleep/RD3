@@ -11,8 +11,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
-    Width="1150"
-    Height="750"
+    Width="800"
+    Height="400"
     d:DataContext="{d:DesignInstance Type=viewmodels:ProbViewModel}"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
@@ -81,63 +81,53 @@
                 <DataGridTextColumn
                     Width="100"
                     Binding="{Binding DeviceID}"
-                    CanUserSort="False"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="设备"
-                    IsReadOnly="False" />
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
-                    Width="100"
+                    Width="auto"
                     Binding="{Binding Tmax}"
-                    CanUserSort="False"
-                    Header="Tmax"
-                    IsReadOnly="False" />
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="脉冲时长（分钟）"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
-                    Width="120"
+                    Width="auto"
                     Binding="{Binding Oreac}"
-                    CanUserSort="False"
-                    Header="Oreac"
-                    IsReadOnly="False" />
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="反应阈值（%）"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
-                    Width="120"
-                    Binding="{Binding Ops}"
-                    CanUserSort="False"
-                    Header="Ops"
-                    IsReadOnly="False" />
+                    Width="auto"
+                    Binding="{Binding AllowDiff}"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="偏差系数"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
-                    Width="100"
+                    Width="auto"
                     Binding="{Binding Osp}"
-                    CanUserSort="False"
-                    Header="Osp"
-                    IsReadOnly="False" />
-                <DataGridTextColumn
-                    Width="100"
-                    Binding="{Binding Nmax1}"
-                    CanUserSort="False"
-                    Header="Nmax-"
-                    IsReadOnly="False" />
-                <DataGridTextColumn
-                    Width="100"
-                    Binding="{Binding Nmax2}"
-                    CanUserSort="False"
-                    Header="Nmax+"
-                    IsReadOnly="False" />
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="溶氧设定值（%）"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="100"
                     Binding="{Binding k}"
-                    CanUserSort="False"
-                    Header="k"
-                    IsReadOnly="False" />
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="系数K"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="120"
                     Binding="{Binding ki}"
-                    CanUserSort="False"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="ki"
-                    IsReadOnly="False" />
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                    IsReadOnly="False"
+                    Visibility="Collapsed" />
                 <DataGridTextColumn
                     Width="100"
                     Binding="{Binding F}"
-                    CanUserSort="False"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="补料速度"
-                    IsReadOnly="False" />
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

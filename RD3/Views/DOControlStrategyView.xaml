@@ -148,23 +148,18 @@
                 Header="阶梯级联策略参数"
                 Style="{StaticResource MaterialDesignGroupBox}"
                 Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Step}">
-                <DockPanel LastChildFill="True">
-                    <Grid Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto" />
-                            <RowDefinition Height="5" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                <TabControl Style="{StaticResource TabControlInLine}">
+                    <TabItem Header="基础参数">
+                        <hc:UniformSpacingPanel
+                            Margin="5"
+                            Orientation="Vertical"
+                            Spacing="10">
                             <TextBlock
                                 FontSize="{StaticResource HeadFontSize}"
                                 Foreground="{DynamicResource FixedGradientBrush}"
                                 Text="{Binding Param.FactorContent}" />
+                            <TextBlock Foreground="Red" Text="请选择策略的执行参数，执行顺序同选择顺序，转速为执行基本参数，全程执行" />
                             <DockPanel LastChildFill="True">
-                                <TextBlock
-                                    DockPanel.Dock="Top"
-                                    Foreground="Red"
-                                    Text="请选择策略的执行参数，执行顺序同选择顺序，转速为执行基本参数，全程执行" />
                                 <hc:Transfer
                                     Height="120"
                                     IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
@@ -202,8 +197,10 @@
                                 </hc:UniformSpacingPanel>
                             </DockPanel>
                         </hc:UniformSpacingPanel>
+                    </TabItem>
+                    <TabItem Header="级联参数">
                         <hc:ScrollViewer
-                            Grid.Row="2"
+                            Margin="5"
                             HorizontalScrollBarVisibility="Auto"
                             VerticalScrollBarVisibility="Auto">
                             <Grid>
@@ -388,6 +385,7 @@
                                     </hc:UniformSpacingPanel>
                                     <hc:ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                                         <DataGrid
+                                            Name="gridTemp"
                                             hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
                                             hc:DataGridAttach.ShowSelectAllButton="False"
                                             AutoGenerateColumns="False"
@@ -503,8 +501,8 @@
                                 </DockPanel>
                             </Grid>
                         </hc:ScrollViewer>
-                    </Grid>
-                </DockPanel>
+                    </TabItem>
+                </TabControl>
             </GroupBox>
         </hc:ScrollViewer>
         <GroupBox
@@ -519,11 +517,11 @@
                     FontSize="{StaticResource HeadFontSize}"
                     Foreground="{DynamicResource FixedGradientBrush}"
                     Text="{Binding MidRanging.FactorContent}" />
+                <TextBlock
+                    DockPanel.Dock="Top"
+                    Foreground="Red"
+                    Text="请选择策略的执行参数，执行顺序同选择顺序，转速为执行基本参数，全程执行" />
                 <DockPanel LastChildFill="True">
-                    <TextBlock
-                        DockPanel.Dock="Top"
-                        Foreground="Red"
-                        Text="请选择策略的执行参数，执行顺序同选择顺序，转速为执行基本参数，全程执行" />
                     <hc:Transfer
                         Height="120"
                         IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"

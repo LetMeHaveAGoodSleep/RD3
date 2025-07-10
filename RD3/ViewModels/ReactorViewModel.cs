@@ -1785,21 +1785,21 @@ namespace RD3.ViewModels
                                         AirRunCommand.Execute(deviceParameter);
                                     }
 
-                                    float airFlowSpeed1 = 0f;
-                                    if (param.Unit == 0)//VVM
-                                    {
-                                        airFlowSpeed1 = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                    }
-                                    else if (param.Unit == 1)//L/min
-                                    {
-                                        airFlowSpeed1 = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
-                                    }
-                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed1) > 0.1)
-                                    {
-                                        deviceParameter.AirParam.FlowSpeed = airFlowSpeed1;
-                                        Thread.Sleep(10000);
-                                    }
+                                    //float airFlowSpeed1 = 0f;
+                                    //if (param.Unit == 0)//VVM
+                                    //{
+                                    //    airFlowSpeed1 = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                    //}
+                                    //else if (param.Unit == 1)//L/min
+                                    //{
+                                    //    airFlowSpeed1 = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                                    //}
+                                    //realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                    //if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed1) > 0.1)
+                                    //{
+                                    //    deviceParameter.AirParam.FlowSpeed = airFlowSpeed1;
+                                    //    Thread.Sleep(10000);
+                                    //}
 
                                     if (param.Unit == 0)//VVM
                                     {
@@ -1883,33 +1883,6 @@ namespace RD3.ViewModels
                                     }
                                     else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
                                     {
-                                        if (isExistOtherGas)
-                                        {
-                                            if (dicDOO2Index[deviceParameter.Name] > 0)
-                                            {
-                                                dicDOO2Index[deviceParameter.Name] -= 1;
-
-                                                float o2FlowSpeed = 0f;
-                                                if (param.Unit == 0)//VVM
-                                                {
-                                                    o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                                }
-                                                else if (param.Unit == 1)//L/min
-                                                {
-                                                    o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
-                                                }
-                                                deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
-                                                deviceParameter.O2Param.IsControling = true;
-                                                O2RunCommand.Execute(deviceParameter);
-                                            }
-                                            else
-                                            {
-                                                deviceParameter.O2Param.FlowSpeed = 0;
-                                                deviceParameter.O2Param.IsControling = true;
-                                                O2RunCommand.Execute(deviceParameter);
-                                            }
-                                        }
-
                                         if (dicDOAirIndex[deviceParameter.Name] < param.AirCol.Count - 1)//还存在下一阶梯
                                         {
                                             dicDOAirIndex[deviceParameter.Name] += 1;
@@ -1924,6 +1897,33 @@ namespace RD3.ViewModels
                                                 airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
                                             }
                                             deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+
+                                            if (isExistOtherGas)
+                                            {
+                                                if (dicDOO2Index[deviceParameter.Name] > 0)
+                                                {
+                                                    dicDOO2Index[deviceParameter.Name] -= 1;
+
+                                                    float o2FlowSpeed = 0f;
+                                                    if (param.Unit == 0)//VVM
+                                                    {
+                                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                    }
+                                                    else if (param.Unit == 1)//L/min
+                                                    {
+                                                        o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                                                    }
+                                                    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+                                                    deviceParameter.O2Param.IsControling = true;
+                                                    O2RunCommand.Execute(deviceParameter);
+                                                }
+                                                else
+                                                {
+                                                    deviceParameter.O2Param.FlowSpeed = 0;
+                                                    deviceParameter.O2Param.IsControling = true;
+                                                    O2RunCommand.Execute(deviceParameter);
+                                                }
+                                            }
                                         }
                                         else if (factorIndex < collection.Count - 1)
                                         {
@@ -1987,21 +1987,21 @@ namespace RD3.ViewModels
                                         O2RunCommand.Execute(deviceParameter);
                                     }
 
-                                    float o2FlowSpeed1 = 0f;
-                                    if (param.Unit == 0)//VVM
-                                    {
-                                        o2FlowSpeed1 = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                    }
-                                    else if (param.Unit == 1)//L/min
-                                    {
-                                        o2FlowSpeed1 = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
-                                    }
-                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed1) > 0.05)
-                                    {
-                                        deviceParameter.O2Param.FlowSpeed = o2FlowSpeed1;
-                                        Thread.Sleep(10000);
-                                    }
+                                    //float o2FlowSpeed1 = 0f;
+                                    //if (param.Unit == 0)//VVM
+                                    //{
+                                    //    o2FlowSpeed1 = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                    //}
+                                    //else if (param.Unit == 1)//L/min
+                                    //{
+                                    //    o2FlowSpeed1 = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                                    //}
+                                    //realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                    //if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed1) > 0.05)
+                                    //{
+                                    //    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed1;
+                                    //    Thread.Sleep(10000);
+                                    //}
 
                                     if (param.Unit == 0)//VVM
                                     {
@@ -2085,33 +2085,6 @@ namespace RD3.ViewModels
                                     }
                                     else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
                                     {
-                                        if (isExistOtherGas)
-                                        {
-                                            if (dicDOAirIndex[deviceParameter.Name] > 0)
-                                            {
-                                                dicDOAirIndex[deviceParameter.Name] -= 1;
-
-                                                float airFlowSpeed = 0f;
-                                                if (param.Unit == 0)//VVM
-                                                {
-                                                    airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                                }
-                                                else if (param.Unit == 1)//L/min
-                                                {
-                                                    airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
-                                                }
-                                                deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
-                                                deviceParameter.AirParam.IsControling = true;
-                                                AirRunCommand.Execute(deviceParameter);
-                                            }
-                                            else
-                                            {
-                                                deviceParameter.AirParam.FlowSpeed = 0;
-                                                deviceParameter.AirParam.IsControling = true;
-                                                AirRunCommand.Execute(deviceParameter);
-                                            }
-                                        }
-
                                         if (dicDOO2Index[deviceParameter.Name] < param.O2Col.Count - 1)//还存在下一阶梯
                                         {
                                             dicDOO2Index[deviceParameter.Name] += 1;
@@ -2126,6 +2099,33 @@ namespace RD3.ViewModels
                                                 o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
                                             }
                                             deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+
+                                            if (isExistOtherGas)
+                                            {
+                                                if (dicDOAirIndex[deviceParameter.Name] > 0)
+                                                {
+                                                    dicDOAirIndex[deviceParameter.Name] -= 1;
+
+                                                    float airFlowSpeed = 0f;
+                                                    if (param.Unit == 0)//VVM
+                                                    {
+                                                        airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                    }
+                                                    else if (param.Unit == 1)//L/min
+                                                    {
+                                                        airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                                                    }
+                                                    deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                                                    deviceParameter.AirParam.IsControling = true;
+                                                    AirRunCommand.Execute(deviceParameter);
+                                                }
+                                                else
+                                                {
+                                                    deviceParameter.AirParam.FlowSpeed = 0;
+                                                    deviceParameter.AirParam.IsControling = true;
+                                                    AirRunCommand.Execute(deviceParameter);
+                                                }
+                                            }
                                         }
                                         else if (factorIndex < collection.Count - 1)
                                         {
@@ -2188,26 +2188,6 @@ namespace RD3.ViewModels
                                     {
                                         TempRunCommand.Execute(deviceParameter);
                                         Thread.Sleep(1000);
-                                    }
-
-                                    float temperature = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
-                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    if (Math.Abs(realTimeParam.Temp - temperature) > 0.05)
-                                    {
-                                        deviceParameter.TempParam.Temp_PV = temperature;
-                                        while (true)
-                                        {
-                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                            {
-                                                return;
-                                            }
-                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                            if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.Temp_PV) <= 0.2)
-                                            {
-                                                break;
-                                            }
-                                            Thread.Sleep(1000);
-                                        }
                                     }
 
                                     if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
@@ -2286,26 +2266,26 @@ namespace RD3.ViewModels
                                         firstInitFeed = false;
                                     }
 
-                                    float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
-                                    float feedFlowSpeed = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
-                                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    if (Math.Abs(realTimeParam.FeedFlowSpeed - deviceParameter.FeedParam1.Feed_PV) > 0.05)
-                                    {
-                                        deviceParameter.FeedParam1.Feed_PV = feedFlowSpeed;
-                                        while (true)
-                                        {
-                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                            {
-                                                return;
-                                            }
-                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                            if (Math.Abs(realTimeParam.FeedFlowSpeed - deviceParameter.FeedParam1.Feed_PV) <= 0.2)
-                                            {
-                                                break;
-                                            }
-                                            Thread.Sleep(1000);
-                                        }
-                                    }
+                                    //float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                                    //float feedFlowSpeed = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
+                                    //realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                    //if (Math.Abs(realTimeParam.FeedFlowSpeed - deviceParameter.FeedParam1.Feed_PV) > 0.05)
+                                    //{
+                                    //    deviceParameter.FeedParam1.Feed_PV = feedFlowSpeed;
+                                    //    while (true)
+                                    //    {
+                                    //        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    //        {
+                                    //            return;
+                                    //        }
+                                    //        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                                    //        if (Math.Abs(realTimeParam.FeedFlowSpeed - deviceParameter.FeedParam1.Feed_PV) <= 0.2)
+                                    //        {
+                                    //            break;
+                                    //        }
+                                    //        Thread.Sleep(1000);
+                                    //    }
+                                    //}
 
                                     if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
                                     {
@@ -2313,7 +2293,7 @@ namespace RD3.ViewModels
                                         {
                                             dicDOFeedIndex[deviceParameter.Name] -= 1;
 
-                                            coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                                            float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
                                             deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                         }
                                         else if (factorIndex > 0)
@@ -2330,7 +2310,7 @@ namespace RD3.ViewModels
                                         {
                                             dicDOFeedIndex[deviceParameter.Name] += 1;
 
-                                            coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                                            float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
                                             deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                         }
                                         else if (factorIndex < collection.Count - 1)
@@ -2343,7 +2323,7 @@ namespace RD3.ViewModels
                                     }
                                     else
                                     {
-                                         coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                                        float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
                                         deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                     }
 
