@@ -211,7 +211,7 @@ namespace RD3.Shared
                     }
                     else if (diff > prob.Oreac)//下降幅度大于Oreac
                     {
-                        float finc = prob.k * flowRate * Math.Abs(diff) / (100 - prob.Osp);
+                        float finc = prob.k * prob.F * Math.Abs(diff) / (100 - prob.Osp);
                         flowRate += finc;
                         LogHelper.Debug(string.Format("Probe:下降幅度大，设定速度{0},变更速度{1}", flowRate, finc));
                         DoFeedCtrl(flowRate);
