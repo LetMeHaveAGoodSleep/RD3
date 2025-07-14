@@ -59,12 +59,19 @@ namespace RD3.ViewModels
             set { SetProperty(ref _face, value); }
         }
 
-        private int _doeIndex = 2;
-        public int DoeIndex
+        private DOEDesignType _selectedDesignType = DOEDesignType.CentralComposite;
+        public DOEDesignType SelectedDesignType
         {
-            get => _doeIndex;
-            set { SetProperty(ref _doeIndex, value); }
+            get => _selectedDesignType;
+            set { SetProperty(ref _selectedDesignType, value); }
         }
+
+        //private int _doeIndex = 2;
+        //public int DoeIndex
+        //{
+        //    get => _doeIndex;
+        //    set { SetProperty(ref _doeIndex, value); }
+        //}
 
         private List<Factor> _selectedFactors = [];
 
@@ -81,11 +88,11 @@ namespace RD3.ViewModels
 
         public  DelegateCommand GenerateCommand => new(async () =>
         {
-            if (DoeIndex == -1)
-            {
-                await DialogExtensions.Info("温馨提示", "请选择设计类型!");
-                return;
-            }
+            //if (SelectedDesignType)
+            //{
+            //    await DialogExtensions.Info("温馨提示", "请选择设计类型!");
+            //    return;
+            //}
             foreach (var item in _designCol)
             {
                 if ((item.Low == 0 && item.High == 0) || item.High < item.Low)
@@ -158,46 +165,46 @@ namespace RD3.ViewModels
 
         private void GenerateDOEResult()
         {
-            
-            if (DoeIndex == 0)//全因子
+            switch (SelectedDesignType)
             {
-                DataSource = DOEUtil.GenerateCombinationsAsDataTable(DesignCol);
-                aggregator.SendMessage("", nameof(DOEDesignViewModel), DataSource);
-            }
-            else if (DoeIndex == 1)//二水平部分因子
-            {
-                DataSource = DOEUtil.GenerateCombinationsAsDataTable(DesignCol);
-                aggregator.SendMessage("", nameof(DOEDesignViewModel), DataSource);
-            }
-            else if (DoeIndex == 2) //中心复合
-            {
-                // 设置alpha值
-                double alpha = DOEUtil.CalculateAlpha(DesignCol.Count, SelectedAlpha);
-                // 步骤一：确定因素数量和水平范围（已在上述代码完成，主要是定义变量存储相关信息）
-                // 步骤二：构建析因点（基于二水平全因子设计算法构建）
-                double[,] factorialPoints = DOEUtil.BuildFactorialPoints(DesignCol);
-                // 步骤三：计算星点（根据传入的alpha值、设计选项以及因素上下限计算星点位置）
-                double[,] axialPoints = DOEUtil.CalculateAxialPoints(DesignCol, alpha, SelectedFace, CenterPoint, RepeatCount);
-                // 步骤四：添加中心点（计算各因素的中心值并构建中心点坐标，考虑多个中心点情况）
-                double[] centerPoint = DOEUtil.CalculateCenterPoint(DesignCol);
-                double[,] designMatrix = DOEUtil.GetResult(factorialPoints, axialPoints, centerPoint, RepeatCount);
-                int count = designMatrix.GetLength(0);
-                int length = designMatrix.GetLength(1);
-                DataSource.Rows.Clear();
-                for (int i = 0; i < count; i++)
-                {
-                    DataRow row = DataSource.NewRow();
-                    row[0] = (i + 1).ToString();
-                    for (int j = 0; j < length; j++)
+                case DOEDesignType.FullFactorial:
+                    DataSource = DOEUtil.GenerateCombinationsAsDataTable(DesignCol);
+                    aggregator.SendMessage("", nameof(DOEDesignViewModel), DataSource);
+                    break;
+                case DOEDesignType.TwoLevelFractionalFactorial:
+                    DataSource = DOEUtil.GenerateCombinationsAsDataTable(DesignCol);
+                    aggregator.SendMessage("", nameof(DOEDesignViewModel), DataSource);
+                    break;
+                case DOEDesignType.Plackett_Burman:
+                    break;
+                case DOEDesignType.Box_Behnken:
+                    break;
+                case DOEDesignType.CentralComposite:
+                    // 设置alpha值
+                    double alpha = DOEUtil.CalculateAlpha(DesignCol.Count, SelectedAlpha);
+                    // 步骤一：确定因素数量和水平范围（已在上述代码完成，主要是定义变量存储相关信息）
+                    // 步骤二：构建析因点（基于二水平全因子设计算法构建）
+                    double[,] factorialPoints = DOEUtil.BuildFactorialPoints(DesignCol);
+                    // 步骤三：计算星点（根据传入的alpha值、设计选项以及因素上下限计算星点位置）
+                    double[,] axialPoints = DOEUtil.CalculateAxialPoints(DesignCol, alpha, SelectedFace, CenterPoint, RepeatCount);
+                    // 步骤四：添加中心点（计算各因素的中心值并构建中心点坐标，考虑多个中心点情况）
+                    double[] centerPoint = DOEUtil.CalculateCenterPoint(DesignCol);
+                    double[,] designMatrix = DOEUtil.GetResult(factorialPoints, axialPoints, centerPoint, RepeatCount);
+                    int count = designMatrix.GetLength(0);
+                    int length = designMatrix.GetLength(1);
+                    DataSource.Rows.Clear();
+                    for (int i = 0; i < count; i++)
                     {
-                        row[j + 1] = Math.Round(designMatrix[i, j], 3);
+                        DataRow row = DataSource.NewRow();
+                        row[0] = (i + 1).ToString();
+                        for (int j = 0; j < length; j++)
+                        {
+                            row[j + 1] = Math.Round(designMatrix[i, j], 3);
+                        }
+                        DataSource.Rows.Add(row);
                     }
-                    DataSource.Rows.Add(row);
-                }
+                    break;
             }
-            //暂时未实现
-            else if (DoeIndex == 3) { }
-            else if (DoeIndex == 4) { }
         }
     }
 }

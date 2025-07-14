@@ -278,17 +278,29 @@ namespace RD3.Shared
 
     public enum Factor
     {
+        [Description("溶氧")]
         DO,
-        PH,
+        [Description("pH")]
+        pH,
+        [Description("温度")]
         Temperature,
+        [Description("消泡速度")]
         AF_Flow,
+        [Description("转速")]
         Agitation,
+        [Description("酸泵速度")]
         Acid,
+        [Description("碱速度")]
         Base,
+        [Description("补料速度")]
         Feed,
+        [Description("通气量")]
         Air,
+        [Description("通氧量")]
         O2,
+        [Description("通二氧化碳量")]
         CO2,
+        [Description("通氮气量")]
         N2
     }
 
@@ -314,6 +326,22 @@ namespace RD3.Shared
         PH_PV,
     }
 
+    public enum DOEDesignType
+    {
+        [Description("全因子设计")]
+        FullFactorial,
+        [Description("两水平因子设计")]
+       TwoLevelFractionalFactorial,
+        [Description("Plackett-Burman")]
+        Plackett_Burman,
+        [Description("Box-Behnken")]
+        Box_Behnken, 
+        [Description("中心复合设计")]
+        CentralComposite,
+        [Description("拉丁超立方设计")]
+        LatinHypercube, 
+    }
+
     public enum DOEAlpha
     {
         [Description("正交")]
@@ -326,8 +354,11 @@ namespace RD3.Shared
 
     public enum DOEFace
     {
+        [Description("面心型")]
         Faced,
+        [Description("内切型")]
         Inscribed,
+        [Description("外切型")]
         Circumscribed
     }
 
@@ -385,9 +416,13 @@ namespace RD3.Shared
 
     public enum MCUBoardType
     {
+        [Description("主板")]
         MainBoard = 1,
+        [Description("信号板")]
         SignalBoard,
+        [Description("温控板")]
         TemperatureCcontrolBoard,
+        [Description("冷凝板")]
         CondensationBoard
     }
 

@@ -112,7 +112,7 @@ namespace RD3.ViewModels
                 { "Factors", SelectedFactors }
             };
 
-            DialogHostService.ShowDialog(nameof(DOEDesignView), keyValuePairs, callback =>
+            DialogHostService.ShowOnce(nameof(DOEDesignView), keyValuePairs, callback =>
             {
                 if (callback.Result != ButtonResult.OK)
                 {
@@ -270,7 +270,7 @@ namespace RD3.ViewModels
             {
                 { "SelectedDevices", SelectedDevices }
             };
-            DialogHostService.ShowDialog(nameof(ChooseReactorView), keyValuePairs, callback =>
+            DialogHostService.ShowOnce(nameof(ChooseReactorView), keyValuePairs, callback =>
             {
                 if (callback.Result != ButtonResult.OK) return;
                 SelectedDevices = callback.Parameters.GetValue<List<Device>>("Reactors");
@@ -321,7 +321,7 @@ namespace RD3.ViewModels
             }
         }
 
-        public string Title => AppSession.CompanyName;
+        public string Title => "实验设计";
 
         public event Action<IDialogResult> RequestClose;
 

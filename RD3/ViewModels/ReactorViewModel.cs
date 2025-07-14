@@ -1123,6 +1123,7 @@ namespace RD3.ViewModels
                             LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, baseAgit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
 
                             deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.Agit_PV);
 
                             sleepCount = info.Interval <= 0 ? 1 : info.Interval;
                             while (sleepCount > 0)
@@ -1568,6 +1569,7 @@ namespace RD3.ViewModels
                             {
                                 deviceParameter.AgitParam.Agit_PV = deviceParameter.DOParam.AgitCycle.UpperLimit;
                             }
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.Agit_PV);
 
                             int count = deviceParameter.DOParam.AgitCycle.DirectInterval;
                             int index = 0;
@@ -1602,6 +1604,7 @@ namespace RD3.ViewModels
                             {
                                 deviceParameter.AgitParam.Agit_PV = deviceParameter.DOParam.AgitCycle.UpperLimit;
                             }
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.Agit_PV);
 
                             int count = deviceParameter.DOParam.AgitCycle.ReverseInterval;
                             int index = 0;
@@ -1869,6 +1872,7 @@ namespace RD3.ViewModels
                             LogHelper.Debug(string.Format("反应器{0} 阶梯级联 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, baseAgit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
 
                             deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.Agit_PV);
 
                             sleepCount = info.Interval <= 1 ? 1 : info.Interval;
                             while (sleepCount > 0)

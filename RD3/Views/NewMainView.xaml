@@ -38,17 +38,14 @@
         Identifier="Root">
         <Grid Name="MainGrid">
             <Grid.RowDefinitions>
-                <RowDefinition Name="Title" Height="40" />
+                <RowDefinition Name="Title" Height="auto" />
                 <!--  标题栏  -->
-                <RowDefinition Name="Menu" Height="40" />
+                <RowDefinition Name="Menu" Height="auto" />
                 <!--  菜单栏  -->
                 <RowDefinition Name="Content" Height="*" />
                 <!--  内容区  -->
             </Grid.RowDefinitions>
-            <Border
-                Grid.Row="0"
-                Background="{DynamicResource PrimaryBrush}"
-                CornerRadius="4,4,0,0">
+            <Border Grid.Row="0" Background="{DynamicResource PrimaryBrush}">
                 <Grid Name="TitleGrid">
                     <!--  标题栏  -->
                     <Grid.ColumnDefinitions>
@@ -111,111 +108,92 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <!--  菜单栏  -->
-                <Menu Height="40" VerticalAlignment="Top">
-                    <MenuItem Height="40" Header="系统管理">
+                <Menu FontFamily="{DynamicResource AppFontFamily}" Style="{StaticResource MaterialDesignMenu}">
+                    <MenuItem Header="系统管理">
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="用户管理"
                             Tag="UserView" />
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="系统设置"
                             Tag="SettingView" />
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="因子设置"
                             Tag="DeviceNodesView" />
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="软件注册"
                             Tag="RegisterView" />
                     </MenuItem>
-                    <MenuItem Height="40" Header="设备管理">
+                    <MenuItem Header="设备管理">
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="设备校准"
                             Tag="CalibrationView" />
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="设备配置"
                             Tag="PumpMFCView"
                             Visibility="Collapsed" />
+                        <MenuItem Command="{Binding ReactorCommand}" Header="设备详情" />
                         <MenuItem
-                            Width="100"
-                            Command="{Binding ReactorCommand}"
-                            Header="设备详情" />
-                        <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="工程调试"
                             Tag="MCUDebugView" />
-                        <MenuItem Width="100" Header="功能测试">
+                        <MenuItem Header="功能测试">
                             <MenuItem
-                                Width="100"
                                 Click="MenuItem_Open_Click"
                                 Header="滤波测试"
                                 Tag="FilterWaveView" />
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Height="40" Header="参数管理">
+                    <MenuItem Header="参数管理">
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="参数配置"
                             Tag="ParameterView" />
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="参数整定"
                             Tag="PIDView" />
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="参数来源"
                             Tag="ParameterSourceView" />
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="阈值设置"
                             Tag="WarnParamView" />
                         <MenuItem
-                            Width="150"
                             Click="MenuItem_Open_Click"
                             Header="PH动态调控设置"
                             Tag="PHControlView" />
                     </MenuItem>
-                    <MenuItem Height="40" Header="数据管理">
+                    <MenuItem Header="数据管理">
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="实验管理"
                             Tag="NewProjectView"
                             Visibility="Collapsed" />
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="批次管理"
                             Tag="NewBatchView" />
                         <MenuItem
-                            Width="100"
                             Click="MenuItem_Open_Click"
                             Header="审计追踪"
                             Tag="AuditView" />
                     </MenuItem>
-                    <MenuItem
-                        Height="40"
-                        Command="{Binding ReactorCommand}"
-                        Header="设备详情" />
-                    <MenuItem
-                        Height="40"
-                        Command="{Binding CameraCommand}"
-                        Header="视频监测" />
+                    <MenuItem Header="高级功能">
+                        <MenuItem
+                            Click="MenuItem_Open_Click"
+                            Header="实验设计"
+                            Tag="DOEMainView" />
+                    </MenuItem>
+                    <MenuItem Command="{Binding ReactorCommand}" Header="设备详情" />
+                    <MenuItem Command="{Binding CameraCommand}" Header="视频监测" />
                 </Menu>
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
                     <!--<hc:GifImage x:Name="GifImageMain"
