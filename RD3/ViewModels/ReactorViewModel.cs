@@ -938,7 +938,7 @@ namespace RD3.ViewModels
                 PIDInfo info = null;
                 PIDInfo lastPid = null;
 
-                int waitCount = 5;
+                int sleepCount = 1;
 
                 //mid-ranging控制
                 if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
@@ -949,6 +949,7 @@ namespace RD3.ViewModels
                     lastDODelta = 0;//低通滤波的上个值
                     factorIndex = -1;//当前执行索引
                     lastFactorIndex = -1;//当前执行索引
+                    
 
                     MidRangingParam param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                     RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -984,14 +985,22 @@ namespace RD3.ViewModels
                         }
                     }
 
-                    waitCount = 5;
-                    while (waitCount > 0)
+                    sleepCount = 5;
+                    while (sleepCount > 0)
                     {
                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                         {
                             return;
                         }
-                        waitCount--;
+                        while (AppSession.DOPause)
+                        {
+                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                            {
+                                return;
+                            }
+                            Thread.Sleep(1000);
+                        }
+                        sleepCount--;
                         Thread.Sleep(1000);
                     }
 
@@ -1078,7 +1087,14 @@ namespace RD3.ViewModels
                                     {
                                         return;
                                     }
-
+                                    while (AppSession.DOPause)
+                                    {
+                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                        {
+                                            return;
+                                        }
+                                        Thread.Sleep(1000);
+                                    }
                                     count--;
                                     Thread.Sleep(1000);
                                 }
@@ -1108,14 +1124,22 @@ namespace RD3.ViewModels
 
                             deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
 
-                            waitCount = 5;
-                            while (waitCount > 0)
+                            sleepCount = info.Interval <= 0 ? 1 : info.Interval;
+                            while (sleepCount > 0)
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
                                     return;
                                 }
-                                waitCount--;
+                                while (AppSession.DOPause)
+                                {
+                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    {
+                                        return;
+                                    }
+                                    Thread.Sleep(1000);
+                                }
+                                sleepCount--;
                                 Thread.Sleep(1000);
                             }
 
@@ -1133,7 +1157,14 @@ namespace RD3.ViewModels
                                     {
                                         return;
                                     }
-
+                                    while (AppSession.DOPause)
+                                    {
+                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                        {
+                                            return;
+                                        }
+                                        Thread.Sleep(1000);
+                                    }
                                     count--;
                                     Thread.Sleep(1000);
                                 }
@@ -1163,13 +1194,11 @@ namespace RD3.ViewModels
                                 {
                                     return;
                                 }
-
                                 Thread.Sleep(1000);
                             }
 
                             param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                             PIDInfo info1 = null;
-                            int sleepCount = 1;
                             var previousElements = collection.Take(factorIndex);
                             bool isExistOtherGas = false;//在当前气体之前是否存在气体
 
@@ -1232,7 +1261,6 @@ namespace RD3.ViewModels
                                         deviceParameter.O2Param.IsControling = true;
                                         deviceParameter.O2Param.FlowSpeed = MathF.Round(maxGas - airSpeed, 2);
                                     }
-                                    Thread.Sleep(3000);
 
                                     LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 通气预设值：{1}，当前：{2}，delta：{3}", deviceParameter.Name, airSpeed, deviceParameter.AirParam.FlowSpeed, tempAir));
                                     sleepCount = info.Interval <= 1 ? 1 : info.Interval;
@@ -1242,7 +1270,14 @@ namespace RD3.ViewModels
                                         {
                                             return;
                                         }
-
+                                        while (AppSession.DOPause)
+                                        {
+                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            Thread.Sleep(1000);
+                                        }
                                         sleepCount--;
                                         Thread.Sleep(1000);
                                     }
@@ -1302,7 +1337,6 @@ namespace RD3.ViewModels
                                         deviceParameter.AirParam.IsControling = true;
                                         deviceParameter.AirParam.FlowSpeed = maxGas - o2Speed > 0 ? MathF.Round(maxGas - o2Speed, 2) : 0;
                                     }
-                                    Thread.Sleep(3000);
                                     LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 氧气预设值：{1}，底值：{2}，delta：{3}", deviceParameter.Name, o2Speed, deviceParameter.O2Param.FlowSpeed, tempO2));
                                     sleepCount = info.Interval <= 1 ? 1 : info.Interval;
                                     while (sleepCount > 0)
@@ -1311,7 +1345,14 @@ namespace RD3.ViewModels
                                         {
                                             return;
                                         }
-
+                                        while (AppSession.DOPause)
+                                        {
+                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            Thread.Sleep(1000);
+                                        }
                                         sleepCount--;
                                         Thread.Sleep(1000);
                                     }
@@ -1361,7 +1402,14 @@ namespace RD3.ViewModels
                                         {
                                             return;
                                         }
-
+                                        while (AppSession.DOPause)
+                                        {
+                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            Thread.Sleep(1000);
+                                        }
                                         sleepCount--;
                                         Thread.Sleep(1000);
                                     }
@@ -1373,6 +1421,14 @@ namespace RD3.ViewModels
                                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                             {
                                                 return;
+                                            }
+                                            while (AppSession.DOPause)
+                                            {
+                                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                                {
+                                                    return;
+                                                }
+                                                Thread.Sleep(1000);
                                             }
                                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                                             if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.Temp_PV) <= 0.2)
@@ -1457,7 +1513,14 @@ namespace RD3.ViewModels
                                         {
                                             return;
                                         }
-
+                                        while (AppSession.DOPause)
+                                        {
+                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            Thread.Sleep(1000);
+                                        }
                                         sleepCount--;
                                         Thread.Sleep(1000);
                                     }
@@ -1514,6 +1577,15 @@ namespace RD3.ViewModels
                                 {
                                     return;
                                 }
+
+                                while (AppSession.DOPause)
+                                {
+                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    {
+                                        return;
+                                    }
+                                    Thread.Sleep(1000);
+                                }
                                 index += 1;
                                 Thread.Sleep(1000);
                             }
@@ -1538,6 +1610,14 @@ namespace RD3.ViewModels
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
                                     return;
+                                }
+                                while (AppSession.DOPause)
+                                {
+                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    {
+                                        return;
+                                    }
+                                    Thread.Sleep(1000);
                                 }
                                 index += 1;
                                 Thread.Sleep(1000);
@@ -1579,6 +1659,14 @@ namespace RD3.ViewModels
                         {
                             return;
                         }
+                        while (AppSession.DOPause)
+                        {
+                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                            {
+                                return;
+                            }
+                            Thread.Sleep(1000);
+                        }
                         Thread.Sleep(1000);
                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                     }
@@ -1589,6 +1677,14 @@ namespace RD3.ViewModels
                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                         {
                             return;
+                        }
+                        while (AppSession.DOPause)
+                        {
+                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                            {
+                                return;
+                            }
+                            Thread.Sleep(1000);
                         }
                         Thread.Sleep(1000);
                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -1643,14 +1739,22 @@ namespace RD3.ViewModels
                         }
                     }
 
-                    waitCount = 5;
-                    while (waitCount > 0)
+                    sleepCount = 5;
+                    while (sleepCount > 0)
                     {
                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                         {
                             return;
                         }
-                        waitCount--;
+                        while (AppSession.DOPause)
+                        {
+                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                            {
+                                return;
+                            }
+                            Thread.Sleep(1000);
+                        }
+                        sleepCount--;
                         Thread.Sleep(1000);
                     }
 
@@ -1729,7 +1833,14 @@ namespace RD3.ViewModels
                                     {
                                         return;
                                     }
-
+                                    while (AppSession.DOPause)
+                                    {
+                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                        {
+                                            return;
+                                        }
+                                        Thread.Sleep(1000);
+                                    }
                                     count--;
                                     Thread.Sleep(1000);
                                 }
@@ -1759,14 +1870,22 @@ namespace RD3.ViewModels
 
                             deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
 
-                            waitCount = 5;
-                            while (waitCount > 0)
+                            sleepCount = info.Interval <= 1 ? 1 : info.Interval;
+                            while (sleepCount > 0)
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
                                     return;
                                 }
-                                waitCount--;
+                                while (AppSession.DOPause)
+                                {
+                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    {
+                                        return;
+                                    }
+                                    Thread.Sleep(1000);
+                                }
+                                sleepCount--;
                                 Thread.Sleep(1000);
                             }
 
@@ -1784,7 +1903,14 @@ namespace RD3.ViewModels
                                     {
                                         return;
                                     }
-
+                                    while (AppSession.DOPause)
+                                    {
+                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                        {
+                                            return;
+                                        }
+                                        Thread.Sleep(1000);
+                                    }
                                     count--;
                                     Thread.Sleep(1000);
                                 }
@@ -1807,12 +1933,10 @@ namespace RD3.ViewModels
                                 {
                                     return;
                                 }
-
                                 Thread.Sleep(1000);
                             }
 
                             param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
-                            int sleepCount = 1;
                             var previousElements = collection.Take(factorIndex);
                             bool isExistOtherGas = false;//在当前气体之前是否存在气体
                             switch (collection[factorIndex])
@@ -2008,14 +2132,21 @@ namespace RD3.ViewModels
                                         }
                                     }
 
-                                    sleepCount = 5;
+                                    sleepCount = 1;
                                     while (sleepCount > 0)
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
                                             return;
                                         }
-
+                                        while (AppSession.DOPause)
+                                        {
+                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            Thread.Sleep(1000);
+                                        }
                                         sleepCount--;
                                         Thread.Sleep(1000);
                                     }
@@ -2210,14 +2341,21 @@ namespace RD3.ViewModels
                                         }
                                     }
 
-                                    sleepCount = 5;
+                                    sleepCount = 1;
                                     while (sleepCount > 0)
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
                                             return;
                                         }
-
+                                        while (AppSession.DOPause)
+                                        {
+                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            Thread.Sleep(1000);
+                                        }
                                         sleepCount--;
                                         Thread.Sleep(1000);
                                     }
@@ -2274,6 +2412,14 @@ namespace RD3.ViewModels
                                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                             {
                                                 return;
+                                            }
+                                            while (AppSession.DOPause)
+                                            {
+                                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                                {
+                                                    return;
+                                                }
+                                                Thread.Sleep(1000);
                                             }
                                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                                             if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.Temp_PV) <= 0.2)
@@ -2384,14 +2530,21 @@ namespace RD3.ViewModels
                                     }
                                     LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 实际补料{2}", deviceParameter.Name, deviceParameter.DOParam.InitialFeed, deviceParameter.FeedParam1.Feed_PV));
 
-                                    sleepCount = 5;
+                                    sleepCount = 1;
                                     while (sleepCount > 0)
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
                                             return;
                                         }
-
+                                        while (AppSession.DOPause)
+                                        {
+                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                            {
+                                                return;
+                                            }
+                                            Thread.Sleep(1000);
+                                        }
                                         sleepCount--;
                                         Thread.Sleep(1000);
                                     }
