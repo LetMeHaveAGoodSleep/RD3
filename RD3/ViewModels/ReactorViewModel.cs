@@ -1554,7 +1554,7 @@ namespace RD3.ViewModels
                         catch (Exception ex)
                         {
                             MessageBox.Show(string.Format("DO调整失败_Mid-Ranging，错误信息：{0}", ex.Message));
-                            LogHelper.Debug(string.Format("DO调整失败_Mid-Ranging，错误信息：{0}", ex.Message));
+                            //LogHelper.Debug(string.Format("DO调整失败_Mid-Ranging，错误信息：{0}", ex.Message));
                             return;
                         }
                     }
