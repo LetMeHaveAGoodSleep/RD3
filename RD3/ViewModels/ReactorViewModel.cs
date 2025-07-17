@@ -64,6 +64,7 @@ using static Microsoft.FSharp.Core.ByRefKinds;
 using System.Security.Cryptography;
 using Fpi.Communication.Commands.Config;
 using System.Diagnostics.Metrics;
+using ScottPlot.Finance;
 
 namespace RD3.ViewModels
 {
@@ -914,6 +915,7 @@ namespace RD3.ViewModels
             }
 
             bool firstInitFeed = true;
+            bool firstInitTemp = true;
 
             dicDOPid[currentDeviceParameter.Name].Reset();
             dicDOWorker[currentDeviceParameter.Name] = new BackgroundWorker();
@@ -940,6 +942,9 @@ namespace RD3.ViewModels
 
                 int sleepCount = 1;
 
+                float baseAir = -1;
+                float baseO2 = -1;
+
                 //mid-ranging控制
                 if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
                 {
@@ -949,7 +954,9 @@ namespace RD3.ViewModels
                     lastDODelta = 0;//低通滤波的上个值
                     factorIndex = -1;//当前执行索引
                     lastFactorIndex = -1;//当前执行索引
-                    
+
+                    baseAir = -1;
+                    baseO2 = -1;
 
                     MidRangingParam param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                     RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -1051,6 +1058,16 @@ namespace RD3.ViewModels
                             if (baseAgit == -1)
                             {
                                 baseAgit = realTimeParam.Agit;
+                            }
+
+                            if (baseAir == -1)
+                            {
+                                baseAir = realTimeParam.AirFlowSpeed;
+                            }
+
+                            if (baseO2 == -1)
+                            {
+                                baseO2 = realTimeParam.O2FlowSpeed;
                             }
 
                             //如果pid类型变了，pid系数清零 方成
@@ -1234,8 +1251,8 @@ namespace RD3.ViewModels
                                     dicDOAirPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
                                     dicDOAirPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
                                     dicDOAirPid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
-                                    float tempAir = dicDOAirPid[deviceParameter.Name].CalculateIncremental(param.AgitHigh);
-                                    float airSpeed = deviceParameter.AirParam.FlowSpeed + tempAir;
+                                    float tempAir = dicDOAirPid[deviceParameter.Name].CalculatePositional(param.AgitHigh);
+                                    float airSpeed = baseAir + tempAir;
                                     isExistOtherGas = previousElements.Where(t => t == DOControlFactor.O2).Count() > 0;
                                     float minAir = isExistOtherGas == true ? 0 : initialGas;
                                     if (airSpeed >= maxGas)
@@ -1310,8 +1327,8 @@ namespace RD3.ViewModels
                                     dicDOO2Pid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
                                     dicDOO2Pid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
                                     dicDOO2Pid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
-                                    float tempO2 = dicDOO2Pid[deviceParameter.Name].CalculateIncremental((float)param.AgitHigh);
-                                    float o2Speed = deviceParameter.O2Param.FlowSpeed + tempO2;
+                                    float tempO2 = dicDOO2Pid[deviceParameter.Name].CalculatePositional((float)param.AgitHigh);
+                                    float o2Speed = baseO2 + tempO2;
                                     isExistOtherGas = previousElements.Where(t => t == DOControlFactor.Air).Count() > 0;
                                     float minO2 = isExistOtherGas == true ? 0 : initialGas;
                                     if (o2Speed >= maxGas)
@@ -1365,6 +1382,12 @@ namespace RD3.ViewModels
                                         TempRunCommand.Execute(deviceParameter);
                                         Thread.Sleep(1000);
                                     }
+                                    if (firstInitTemp)
+                                    {
+                                        deviceParameter.DOParam.InitialTemp = deviceParameter.TempParam.Temp_PV;
+                                        firstInitTemp = false;
+                                    }
+
                                     QPIDController pIDController = new QPIDController();
                                     info1 = pIDInfos.FindFirst(t => t.PidName.Contains("降温") && t.deviceID == deviceParameter.Name);
                                     if (info1 == null)
@@ -1375,8 +1398,8 @@ namespace RD3.ViewModels
                                     pIDController.SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
                                     pIDController.SetIntegralLimits(-2000, 2000);
                                     pIDController.SetTarget(param.AgitHigh);
-                                    float increment = pIDController.CalculateIncremental(dicDODelta[deviceParameter.Name]);
-                                    float currentTemp = deviceParameter.TempParam.Temp_PV + increment;
+                                    float increment = pIDController.CalculatePositional(dicDODelta[deviceParameter.Name]);
+                                    float currentTemp = deviceParameter.DOParam.InitialTemp + increment;
                                     if (currentTemp <= deviceParameter.TempDOLowerLimit)
                                     {
                                         if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
@@ -1458,7 +1481,7 @@ namespace RD3.ViewModels
                                     if (firstInitFeed)
                                     {
                                         deviceParameter.FeedSuspend = true;
-                                         deviceParameter.DOParam.InitialFeed = deviceParameter.FeedParam1.Feed_PV;
+                                        deviceParameter.DOParam.InitialFeed = deviceParameter.FeedParam1.Feed_PV;
                                         firstInitFeed = false;
                                     }
                                     QPIDController controller = new QPIDController();
@@ -1530,8 +1553,9 @@ namespace RD3.ViewModels
                         }
                         catch (Exception ex)
                         {
+                            MessageBox.Show(string.Format("DO调整失败_Mid-Ranging，错误信息：{0}", ex.Message));
                             LogHelper.Debug(string.Format("DO调整失败_Mid-Ranging，错误信息：{0}", ex.Message));
-                            Thread.Sleep(AppSession.Interval * 1000);
+                            return;
                         }
                     }
                 }
@@ -14546,25 +14570,21 @@ namespace RD3.ViewModels
             });
         });
 
-        public DelegateCommand<string> TestCommand => new((string content) =>
-        {
-            var array = content.Split(",");
-            if (array[0] == "1")
-            {
-                AppSession.VirtualDO = float.Parse(array[1]);
-            }
-            else
-            {
-                AppSession.VirtualpH = float.Parse(array[1]);
-            }
-        });
-
         public DelegateCommand<string> DODIYCommand => new((string content) =>
         {
             string input = Microsoft.VisualBasic.Interaction.InputBox($"请输入溶氧自定义值:", "修改溶氧", "");
             if (float.TryParse(input, out float value))
             {
                 AppSession.VirtualDO = value;
+            }
+        });
+
+        public DelegateCommand<string> pHDIYCommand => new((string content) =>
+        {
+            string input = Microsoft.VisualBasic.Interaction.InputBox($"请输入pH自定义值:", "修改pH", "");
+            if (float.TryParse(input, out float value))
+            {
+                AppSession.VirtualpH = value;
             }
         });
 

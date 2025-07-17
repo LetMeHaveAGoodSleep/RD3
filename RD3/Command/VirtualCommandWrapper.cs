@@ -127,7 +127,6 @@ namespace RD3.Shared
 
             realTime.AlarmBytes = [(byte)RandomNumberUtil.GetRandomInt(1,4)];
             realTime.WorkStatus = WorkStatus.Idle;
-            realTime.SampleTime = DateTime.Now;
 
             #region 丢弃滑动窗口滤波 
             //rawTempData.Add(realTime.PH);

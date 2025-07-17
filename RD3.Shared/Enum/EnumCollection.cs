@@ -348,8 +348,8 @@ namespace RD3.Shared
         Orthogonal,
         [Description("可旋转性")]
         Rotatable,
-        [Description("球形")]
-        Spherical
+        //[Description("球形")]
+        //Spherical
     }
 
     public enum DOEFace

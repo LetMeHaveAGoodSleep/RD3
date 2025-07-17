@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
-    public class RealTimeParam : BindableBase
+    public class RealTimeParam : BindableBase,ICloneable
     {
         public RealTimeParam()
         {
@@ -749,6 +749,12 @@ namespace RD3.Shared
         {
             get => _alarmCodes;
             set { SetProperty(ref _alarmCodes, value); }
+        }
+
+        public object Clone()
+        {
+            var clonedObject = ObjectCloner.DeepCopy(this);
+            return clonedObject;
         }
     }
 }

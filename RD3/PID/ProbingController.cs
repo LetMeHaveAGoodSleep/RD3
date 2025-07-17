@@ -170,6 +170,7 @@ namespace RD3.Shared
                 var realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(prob?.DeviceID);
                 while (Math.Abs(realTimeParam.DO - prob.Osp) <= prob.AllowDiff * prob.Oreac)
                 {
+                    LogHelper.Debug(string.Format("Probe:当前DO{0},目标DO{1}，反应阈值{2}，Oreac{3}", realTimeParam.DO, prob.Osp, prob.AllowDiff, prob.Oreac));
                     while (DOControlFeed())
                     {
                         AppSession.DOPause = false;
@@ -179,7 +180,7 @@ namespace RD3.Shared
                     }
 
                     //打脉冲
-                    LogHelper.Debug(string.Format("Probe:暂停DO控制,当前流速{0}", flowRate));
+                    LogHelper.Debug(string.Format("Probe:暂停DO控制,当前DO{0},目标DO{1}，当前流速{2}", realTimeParam.DO, prob.Osp, flowRate.ToString("F2")));
                     AppSession.DOPause = true;
                     realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(prob?.DeviceID);
                     float oldDO = realTimeParam.DO;
@@ -187,7 +188,7 @@ namespace RD3.Shared
                     float fPluse = coefficient * flowRate;
                     float temp = fPluse + flowRate;
 
-                    LogHelper.Debug(string.Format("Probe:暂停DO控制，速度{0}", temp));
+                    LogHelper.Debug(string.Format("Probe:暂停DO控制,当前DO{0},目标DO{1}，脉冲高度{2},设定速度{3}", realTimeParam.DO, prob.Osp, fPluse.ToString("F2"), temp.ToString("F2")));
                     DoFeedCtrl(temp);
 
                     int count = Convert.ToInt32(prob.Tmax);
@@ -208,14 +209,14 @@ namespace RD3.Shared
                     if (diff < prob.Oreac)//下降幅度小于Oreac
                     {
                         flowRate -= prob.M * fPluse;
-                        LogHelper.Debug(string.Format("Probe:下降幅度小，设定速度{0}，脉冲速度{1}", flowRate, prob.M * fPluse));
+                        LogHelper.Debug(string.Format("Probe:下降幅度小，设定速度{0}，系数{1}，脉冲高度{2},减小量{3}", flowRate.ToString("F2"), prob.M.ToString("F2"), fPluse.ToString("F2"), prob.M * fPluse));
                         DoFeedCtrl(flowRate);
                     }
                     else if (diff > prob.Oreac)//下降幅度大于Oreac
                     {
                         float finc = prob.k * flowRate * Math.Abs(diff) / (100 - prob.Osp);
                         flowRate += finc;
-                        LogHelper.Debug(string.Format("Probe:下降幅度大，设定速度{0},变更速度{1}", flowRate, finc));
+                        LogHelper.Debug(string.Format("Probe:下降幅度大，设定速度{0}，系数{1}，DO差值{2}，DO目标值{3},增加量{4}", flowRate, prob.k, diff, prob.Osp, finc));
                         DoFeedCtrl(flowRate);
                     }
 
@@ -230,6 +231,8 @@ namespace RD3.Shared
                         controlCount--;
                         Thread.Sleep(1000);
                     }
+
+                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(prob?.DeviceID);
                 }
 
                 AppSession.DOPause = false;

@@ -162,6 +162,13 @@ namespace RD3.ViewModels
 
     public class PIDInfo : BindableBase
     {
+        public PIDInfo()
+        {
+            createTime = DateTime.Now;
+            maxSpeed = 100;
+            Interval = 1;
+        }
+
         public DateTime createTime { get; set; }
         public string createUser { get; set; }
         public string deviceID { get; set; }

@@ -17,6 +17,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using System.Xml.Linq;
@@ -33,6 +34,14 @@ namespace RD3
         bool createdNew;
         EnhancedSqliteBackupService backupService;
 
+        // 设置高性能模式（需调用Windows API）
+        [DllImport("kernel32.dll")]
+        static extern uint SetThreadExecutionState(uint esFlags);
+        const uint ES_CONTINUOUS = 0x80000000;
+        const uint ES_SYSTEM_REQUIRED = 0x00000001;
+
+        
+
         protected override Window CreateShell()
         {
             return Container.Resolve<NewMainView>();
@@ -47,6 +56,9 @@ namespace RD3
             mutex = new Mutex(true, mutexName, out createdNew);
             if (createdNew)
             {
+                //使用CPU高性能模式
+                SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED);
+
                 FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false;
                 DispatcherUnhandledException += App_DispatcherUnhandledException;
                 mutex.ReleaseMutex();

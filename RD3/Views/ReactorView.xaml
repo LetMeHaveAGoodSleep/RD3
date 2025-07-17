@@ -131,50 +131,16 @@
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
                     ToolTip="{ex:Language Key='溶氧自定义'}" />
-                <!--<Button
-                    Width="36"
-                    Height="36"
-                    hc:IconElement.Geometry="{StaticResource GeometryProbe}"
-                    Background="#80796B"
-                    BorderThickness="0"
-                    Command="{Binding TestCommand}"
-                    CommandParameter="1,0"
-                    Foreground="White"
-                    Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='溶氧置零'}" />
                 <Button
                     Width="36"
                     Height="36"
                     hc:IconElement.Geometry="{StaticResource GeometryProbe}"
                     Background="#80796B"
                     BorderThickness="0"
-                    Command="{Binding TestCommand}"
-                    CommandParameter="1,100"
+                    Command="{Binding pHDIYCommand}"
                     Foreground="White"
                     Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='溶氧置百'}" />-->
-                <Button
-                    Width="36"
-                    Height="36"
-                    hc:IconElement.Geometry="{StaticResource GeometryProbe}"
-                    Background="#4DBBD5"
-                    BorderThickness="0,0"
-                    Command="{Binding TestCommand}"
-                    CommandParameter="0,0"
-                    Foreground="White"
-                    Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='pH置零'}" />
-                <Button
-                    Width="36"
-                    Height="36"
-                    hc:IconElement.Geometry="{StaticResource GeometryProbe}"
-                    Background="#4DBBD5"
-                    BorderThickness="0,0"
-                    Command="{Binding TestCommand}"
-                    CommandParameter="0,14"
-                    Foreground="White"
-                    Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="{ex:Language Key='pH置百'}" />
+                    ToolTip="{ex:Language Key='pH自定义'}" />
                 <Button
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource SaveGeometry}"
@@ -619,7 +585,6 @@
                                         Width="75"
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='溶氧(%)'}"
-                                        BorderBrush="Gray"
                                         Style="{StaticResource TextBoxExtend}">
                                         <TextBox.Text>
                                             <Binding Path="CurrentDeviceParameter.DOParam.DO_PV" UpdateSourceTrigger="LostFocus">
@@ -737,7 +702,6 @@
                                         Width="75"
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='转速(rpm)'}"
-                                        BorderBrush="Gray"
                                         Style="{StaticResource TextBoxExtend}"
                                         Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
                                         <TextBox.Text>

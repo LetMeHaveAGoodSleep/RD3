@@ -344,7 +344,7 @@ namespace RD3.ViewModels
                         {
                             continue;
                         }
-                        string dt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        //string dt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         PropertyInfo[] propertyInfos = typeof(RealTimeParam).GetProperties().Where(c => c.CanWrite && c.CanRead && (c.PropertyType == typeof(double) || c.PropertyType == typeof(float) || c.PropertyType == typeof(int) || c.PropertyType == typeof(string))).ToArray();
                         foreach (var item in ReactorCol)
                         {
@@ -383,7 +383,7 @@ namespace RD3.ViewModels
                                     List<object> values = new List<object>();
                                     values.Add(device.Name);
                                     values.Add(device.BatchID.ToString());
-                                    values.Add(dt);
+                                    values.Add(realTime.SampleTime.ToString("yyyy-MM-dd HH:mm:ss"));
                                     foreach (var p in propertyInfos)
                                     {
                                         object o = p.GetValue(realTime);
@@ -414,7 +414,7 @@ namespace RD3.ViewModels
                                     List<object> values = new List<object>();
                                     values.Add(device.Name);
                                     values.Add(device.BatchID.ToString());
-                                    values.Add(dt);
+                                    values.Add(realTime.SampleTime.ToString("yyyy-MM-dd HH:mm:ss"));
                                     foreach (var p in propertyInfos)
                                     {
                                         object o = p.GetValue(realTime);

@@ -78,6 +78,7 @@
                 <DockPanel DockPanel.Dock="Top" LastChildFill="True">
                     <ComboBox
                         Name="ComboBoxDesignType"
+                        Margin="5"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="设计类型"
                         ItemsSource="{Binding Source={StaticResource DataFromEnum2}}"
@@ -109,20 +110,21 @@
                                         Width="60"
                                         hc:InfoElement.Title="中心点"
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding CenterPoint}" />
+                                        Text="{Binding LowCenterPoint}" />
                                     <TextBox
                                         Grid.Column="1"
                                         Width="60"
-                                        hc:InfoElement.Title="重复次数"
+                                        hc:InfoElement.Title=" "
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding RepeatCount}" />
+                                        Text="{Binding HighCenterPoint}" />
                                 </Grid>
                                 <ComboBox
                                     Width="120"
-                                    hc:InfoElement.Title="Alpha计算方式"
+                                    hc:InfoElement.Title="Alpha"
                                     ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                                     SelectedItem="{Binding SelectedAlpha}"
-                                    Style="{StaticResource ComboBoxExtend}">
+                                    Style="{StaticResource ComboBoxExtend}"
+                                    Visibility="Collapsed">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
@@ -131,7 +133,7 @@
                                 </ComboBox>
                                 <ComboBox
                                     Width="120"
-                                    hc:InfoElement.Title="响应面"
+                                    hc:InfoElement.Title="CCD类型"
                                     ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
                                     SelectedItem="{Binding SelectedFace}"
                                     Style="{StaticResource ComboBoxExtend}">
@@ -234,7 +236,7 @@
                     AutoGenerateColumns="True"
                     Background="{StaticResource DefaultBrush}"
                     CanUserSortColumns="False"
-                    ColumnWidth="SizeToCells"
+                    ColumnWidth="auto"
                     HeadersVisibility="Column"
                     IsReadOnly="True"
                     ItemsSource="{Binding DataSource.DefaultView}"

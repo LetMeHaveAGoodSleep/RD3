@@ -333,71 +333,135 @@ namespace RD3.Views
         {
             Dispatcher.BeginInvoke(() =>
             {
-                foreach (WpfPlot item in GridMain.FindVisualChildren<WpfPlot>())
+                try
                 {
-                    try
+                    wpfPlot3.Plot.Remove<ScottPlot.Plottables.SignalXY>();
+                    Dictionary<string, string> dictionary = CustomGraphConfig.GetValue(wpfPlot3.Name.Substring(wpfPlot3.Name.Length - 5, 5)) as Dictionary<string, string>;
+                    foreach (var item2 in graphDataSource.ExperimentHistoryDatas)
                     {
-                        item.Plot.Remove<ScottPlot.Plottables.SignalXY>();
-                        Dictionary<string, string> dictionary = CustomGraphConfig.GetValue(item.Name.Substring(item.Name.Length - 5, 5)) as Dictionary<string, string>;
-                        foreach (var item2 in graphDataSource.ExperimentHistoryDatas)
+                        Dictionary<string, string> reverseDict = GraphConfig.Dictionary;
+                        var count = item2.Xs.Count <= item2.Ys.Count ? item2.Xs.Count : item2.Ys.Count;
+                        dictionary.TryGetValue(item2.ParamerterName, out var str);
+                        bool flag = Convert.ToBoolean(str);
+                        if (!flag)//modify by hdb 不显示的曲线，不往图表中添加
+                            continue;
+                        Dictionary<string, string> reverseDict1 = PumpMFCConfig.GetValue((CmbDevice.SelectedItem as Device)?.Name);
+                        for (int i = 0; i < count; i++)
                         {
-                            Dictionary<string, string> reverseDict = GraphConfig.Dictionary;
-                            var count = item2.Xs.Count <= item2.Ys.Count ? item2.Xs.Count : item2.Ys.Count;
-                            dictionary.TryGetValue(item2.ParamerterName, out var str);
-                            bool flag = Convert.ToBoolean(str);
-                            if (!flag)//modify by hdb 不显示的曲线，不往图表中添加
-                                continue;
-                            Dictionary<string, string> reverseDict1 = PumpMFCConfig.GetValue((CmbDevice.SelectedItem as Device)?.Name);
-                            for (int i = 0; i < count; i++)
+                            try
                             {
-                                try
-                                {
-                                    string legendText = graphDataSource.DeviceName + "_" + item2.ParamerterName + "_" + (i + 1).ToString();
+                                string legendText = graphDataSource.DeviceName + "_" + item2.ParamerterName + "_" + (i + 1).ToString();
 
-                                    dicColor.TryGetValue(item.Name, out var keyValuePairs);
-                                    ScottPlot.Color color = ScottPlot.Color.FromHex("#FFFFFF");
-                                    string propertyName = PameterMapperConfig.GetValue(item2.ParamerterName)?.ToString();
-                                    var node1 = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.fieldName.ToUpper() == propertyName.ToUpper());
-                                    if (node1 != null)
+                                dicColor.TryGetValue(wpfPlot3.Name, out var keyValuePairs);
+                                ScottPlot.Color color = ScottPlot.Color.FromHex("#FFFFFF");
+                                string propertyName = PameterMapperConfig.GetValue(item2.ParamerterName)?.ToString();
+                                var node1 = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.fieldName.ToUpper() == propertyName.ToUpper());
+                                if (node1 != null)
+                                {
+                                    var array = node1.colorStr.Split(',');
+                                    color = ScottPlot.Color.FromARGB(System.Drawing.Color.FromArgb(byte.Parse(array[0]), byte.Parse(array[1]), byte.Parse(array[2])).ToArgb());
+                                }
+                                var signal = wpfPlot3.Plot.Add.SignalXY(item2.Xs[i].ToArray(), item2.Ys[i].ToArray(), color);
+                                signal.LegendText = legendText;
+                                signal.IsVisible = flag;
+                                signal.MarkerSize = (float)node1?.pointSize;
+                                signal.LineWidth = (float)node1?.lineWidth;
+                                if (flag)
+                                {
+                                    var yAxis = wpfPlot3.Plot.Axes.GetAxes().FindFirst(t => t.Label.Text.Contains(reverseDict[item2.ParamerterName]?.ToString()));
+                                    if (yAxis != null)
                                     {
-                                        var array = node1.colorStr.Split(',');
-                                        color = ScottPlot.Color.FromARGB(System.Drawing.Color.FromArgb(byte.Parse(array[0]), byte.Parse(array[1]), byte.Parse(array[2])).ToArgb());
-                                    }
-                                    var signal = item.Plot.Add.SignalXY(item2.Xs[i].ToArray(), item2.Ys[i].ToArray(), color);
-                                    signal.LegendText = legendText;
-                                    signal.IsVisible = flag;
-                                    signal.MarkerSize = (float)node1?.pointSize;
-                                    signal.LineWidth = (float)node1?.lineWidth;
-                                    if (flag)
-                                    {
-                                        var yAxis = item.Plot.Axes.GetAxes().FindFirst(t => t.Label.Text.Contains(reverseDict[item2.ParamerterName]?.ToString()));
-                                        if (yAxis != null)
-                                        {
-                                            signal.Axes.YAxis = (IYAxis)yAxis;
-                                        }
-                                        else
-                                        {
-                                            signal.Axes.YAxis = item.Plot.Axes.Left;
-                                        }
+                                        signal.Axes.YAxis = (IYAxis)yAxis;
                                     }
                                     else
                                     {
-                                        signal.Axes.YAxis = item.Plot.Axes.Left;
+                                        signal.Axes.YAxis = wpfPlot3.Plot.Axes.Left;
                                     }
-                                    signal.Axes.XAxis = item.Plot.Axes.Bottom;
                                 }
-                                catch (Exception ex)
+                                else
                                 {
-
+                                    signal.Axes.YAxis = wpfPlot3.Plot.Axes.Left;
                                 }
+                                signal.Axes.XAxis = wpfPlot3.Plot.Axes.Bottom;
+                            }
+                            catch (Exception ex)
+                            {
+
                             }
                         }
-                        item?.Refresh();
                     }
-                    catch (Exception ex)
+                    wpfPlot3?.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Error("详情界面：右上角图表出错：" + ex.Message + "\r\n" + ex.StackTrace);
+                }
+            });
+
+            Dispatcher.BeginInvoke(() =>
+            {
+                try
+                {
+                    wpfPlot4.Plot.Remove<ScottPlot.Plottables.SignalXY>();
+                    Dictionary<string, string> dictionary = CustomGraphConfig.GetValue(wpfPlot4.Name.Substring(wpfPlot4.Name.Length - 5, 5)) as Dictionary<string, string>;
+                    foreach (var item2 in graphDataSource.ExperimentHistoryDatas)
                     {
-                        LogHelper.Error("详情界面出错：" + ex.Message + "\r\n" + ex.StackTrace);
+                        Dictionary<string, string> reverseDict = GraphConfig.Dictionary;
+                        var count = item2.Xs.Count <= item2.Ys.Count ? item2.Xs.Count : item2.Ys.Count;
+                        dictionary.TryGetValue(item2.ParamerterName, out var str);
+                        bool flag = Convert.ToBoolean(str);
+                        if (!flag)//modify by hdb 不显示的曲线，不往图表中添加
+                            continue;
+                        Dictionary<string, string> reverseDict1 = PumpMFCConfig.GetValue((CmbDevice.SelectedItem as Device)?.Name);
+                        for (int i = 0; i < count; i++)
+                        {
+                            try
+                            {
+                                string legendText = graphDataSource.DeviceName + "_" + item2.ParamerterName + "_" + (i + 1).ToString();
+
+                                dicColor.TryGetValue(wpfPlot4.Name, out var keyValuePairs);
+                                ScottPlot.Color color = ScottPlot.Color.FromHex("#FFFFFF");
+                                string propertyName = PameterMapperConfig.GetValue(item2.ParamerterName)?.ToString();
+                                var node1 = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.fieldName.ToUpper() == propertyName.ToUpper());
+                                if (node1 != null)
+                                {
+                                    var array = node1.colorStr.Split(',');
+                                    color = ScottPlot.Color.FromARGB(System.Drawing.Color.FromArgb(byte.Parse(array[0]), byte.Parse(array[1]), byte.Parse(array[2])).ToArgb());
+                                }
+                                var signal = wpfPlot4.Plot.Add.SignalXY(item2.Xs[i].ToArray(), item2.Ys[i].ToArray(), color);
+                                signal.LegendText = legendText;
+                                signal.IsVisible = flag;
+                                signal.MarkerSize = (float)node1?.pointSize;
+                                signal.LineWidth = (float)node1?.lineWidth;
+                                if (flag)
+                                {
+                                    var yAxis = wpfPlot4.Plot.Axes.GetAxes().FindFirst(t => t.Label.Text.Contains(reverseDict[item2.ParamerterName]?.ToString()));
+                                    if (yAxis != null)
+                                    {
+                                        signal.Axes.YAxis = (IYAxis)yAxis;
+                                    }
+                                    else
+                                    {
+                                        signal.Axes.YAxis = wpfPlot4.Plot.Axes.Left;
+                                    }
+                                }
+                                else
+                                {
+                                    signal.Axes.YAxis = wpfPlot4.Plot.Axes.Left;
+                                }
+                                signal.Axes.XAxis = wpfPlot4.Plot.Axes.Bottom;
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+                        }
                     }
+                    wpfPlot4?.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Error("详情界面：右下角图表出错：" + ex.Message + "\r\n" + ex.StackTrace);
                 }
             });
         }

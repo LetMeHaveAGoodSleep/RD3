@@ -450,7 +450,6 @@ namespace RD3.Shared
                     realTimeParam.StirringMotorPower = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_StirringMotorPower), Const.NumericalPrecision);
 
                     realTimeParam.HasFoam = recvCommand.GetByte(ParamId.RRealtimeParam_ReadResponse_HasFoam) == 0x01;
-                    realTimeParam.SampleTime = DateTime.Now;
                     #region 丢弃滑动窗口滤波 
                     //rawTempData.Add(realTimeParam.PH);
                     //list = [];

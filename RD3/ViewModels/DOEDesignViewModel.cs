@@ -30,20 +30,19 @@ namespace RD3.ViewModels
             private set { SetProperty(ref _dataSource, value); }
         }
 
-        private int _centerPoint = 2;
-        public int CenterPoint
+        private int _lowCenterPoint = 2;
+        public int LowCenterPoint
         {
-            get => _centerPoint;
-            set { SetProperty(ref _centerPoint, value); }
+            get => _lowCenterPoint;
+            set { SetProperty(ref _lowCenterPoint, value); }
         }
 
-        private int _repeatCount = 2;
-        public int RepeatCount
+        private int _highCenterPoint = 2;
+        public int HighCenterPoint
         {
-            get => _repeatCount;
-            set { SetProperty(ref _repeatCount, value); }
+            get => _highCenterPoint;
+            set { SetProperty(ref _highCenterPoint, value); }
         }
-        
 
         private DOEAlpha _alpha = DOEAlpha.Orthogonal;
         public DOEAlpha SelectedAlpha
@@ -123,7 +122,7 @@ namespace RD3.ViewModels
 
         }
 
-        public string Title => AppSession.CompanyName;
+        public string Title => "新建设计";
 
         public event Action<IDialogResult> RequestClose;
 
@@ -180,16 +179,18 @@ namespace RD3.ViewModels
                 case DOEDesignType.Box_Behnken:
                     break;
                 case DOEDesignType.CentralComposite:
+                    var res = DOEUtil.BuildCCDDesign(DesignCol, (LowCenterPoint, HighCenterPoint), SelectedAlpha, SelectedFace);
+
                     // 设置alpha值
                     double alpha = DOEUtil.CalculateAlpha(DesignCol.Count, SelectedAlpha);
                     // 步骤一：确定因素数量和水平范围（已在上述代码完成，主要是定义变量存储相关信息）
                     // 步骤二：构建析因点（基于二水平全因子设计算法构建）
                     double[,] factorialPoints = DOEUtil.BuildFactorialPoints(DesignCol);
                     // 步骤三：计算星点（根据传入的alpha值、设计选项以及因素上下限计算星点位置）
-                    double[,] axialPoints = DOEUtil.CalculateAxialPoints(DesignCol, alpha, SelectedFace, CenterPoint, RepeatCount);
+                    double[,] axialPoints = DOEUtil.CalculateAxialPoints(DesignCol, alpha, SelectedFace, LowCenterPoint, HighCenterPoint);
                     // 步骤四：添加中心点（计算各因素的中心值并构建中心点坐标，考虑多个中心点情况）
                     double[] centerPoint = DOEUtil.CalculateCenterPoint(DesignCol);
-                    double[,] designMatrix = DOEUtil.GetResult(factorialPoints, axialPoints, centerPoint, RepeatCount);
+                    double[,] designMatrix = DOEUtil.GetResult(factorialPoints, axialPoints, centerPoint, HighCenterPoint);
                     int count = designMatrix.GetLength(0);
                     int length = designMatrix.GetLength(1);
                     DataSource.Rows.Clear();
