@@ -131,12 +131,12 @@ namespace RD3
         /// <summary>
         /// 使能
         /// </summary>
-        public const int RWTempParam_ReadWrite_Enable = 0xFF00;
+        public const int RWTempParam_ReadWrite_Enable = 0xEE00;
 
         /// <summary>
         /// 温度
         /// </summary>
-        public const int RWTempParam_ReadWrite_Temp = 0xFF01;
+        public const int RWTempParam_ReadWrite_Temp = 0xEE01;
 
         /// <summary>
         /// 写回应
@@ -144,14 +144,24 @@ namespace RD3
         public const int RWTempParam_WriteResponse_ResponseValue = 0x8800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWTempParam_CommunicationError_ResponseValue = 0xFF00;
+
+        /// <summary>
         /// 转速
         /// </summary>
-        public const int RWAgitParam_ReadWrite_Agit = 0x1FF00;
+        public const int RWAgitParam_ReadWrite_Agit = 0x1EE00;
 
         /// <summary>
         /// 写回应
         /// </summary>
         public const int RWAgitParam_WriteResponse_ResponseValue = 0x18800;
+
+        /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWAgitParam_CommunicationError_ResponseValue = 0x1FF00;
 
         /// <summary>
         /// 泵编号
@@ -161,22 +171,22 @@ namespace RD3
         /// <summary>
         /// 泵编号
         /// </summary>
-        public const int RWPeristalticPumpControl_ReadWrite_SerialNo = 0x2FF00;
+        public const int RWPeristalticPumpControl_ReadWrite_SerialNo = 0x2EE00;
 
         /// <summary>
         /// 控制模式
         /// </summary>
-        public const int RWPeristalticPumpControl_ReadWrite_ControlMode = 0x2FF01;
+        public const int RWPeristalticPumpControl_ReadWrite_ControlMode = 0x2EE01;
 
         /// <summary>
         /// 流速
         /// </summary>
-        public const int RWPeristalticPumpControl_ReadWrite_FlowSpeed = 0x2FF02;
+        public const int RWPeristalticPumpControl_ReadWrite_FlowSpeed = 0x2EE02;
 
         /// <summary>
         /// 流量
         /// </summary>
-        public const int RWPeristalticPumpControl_ReadWrite_FlowCapacity = 0x2FF03;
+        public const int RWPeristalticPumpControl_ReadWrite_FlowCapacity = 0x2EE03;
 
         /// <summary>
         /// 写回应
@@ -184,34 +194,44 @@ namespace RD3
         public const int RWPeristalticPumpControl_WriteResponse_ResponseValue = 0x28800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWPeristalticPumpControl_CommunicationError_ResponseValue = 0x2FF00;
+
+        /// <summary>
         /// 使能
         /// </summary>
-        public const int RWAutoDefoamingControl_ReadWrite_Enable = 0x3FF00;
+        public const int RWAutoDefoamingControl_ReadWrite_Enable = 0x3EE00;
 
         /// <summary>
         /// 泵编号
         /// </summary>
-        public const int RWAutoDefoamingControl_ReadWrite_PumpNo = 0x3FF01;
+        public const int RWAutoDefoamingControl_ReadWrite_PumpNo = 0x3EE01;
 
         /// <summary>
         /// 泵流速
         /// </summary>
-        public const int RWAutoDefoamingControl_ReadWrite_FlowRate = 0x3FF02;
+        public const int RWAutoDefoamingControl_ReadWrite_FlowRate = 0x3EE02;
 
         /// <summary>
         /// 检测周期
         /// </summary>
-        public const int RWAutoDefoamingControl_ReadWrite_CheckCycle = 0x3FF03;
+        public const int RWAutoDefoamingControl_ReadWrite_CheckCycle = 0x3EE03;
 
         /// <summary>
         /// 占空比
         /// </summary>
-        public const int RWAutoDefoamingControl_ReadWrite_DutyCycle = 0x3FF04;
+        public const int RWAutoDefoamingControl_ReadWrite_DutyCycle = 0x3EE04;
 
         /// <summary>
         /// 写回应
         /// </summary>
         public const int RWAutoDefoamingControl_WriteResponse_ResponseValue = 0x38800;
+
+        /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWAutoDefoamingControl_CommunicationError_ResponseValue = 0x3FF00;
 
         /// <summary>
         /// MFC编号
@@ -221,12 +241,12 @@ namespace RD3
         /// <summary>
         /// MFC编号
         /// </summary>
-        public const int RWMFCControl_ReadWrite_SerialNo = 0x4FF00;
+        public const int RWMFCControl_ReadWrite_SerialNo = 0x4EE00;
 
         /// <summary>
         /// 流速
         /// </summary>
-        public const int RWMFCControl_ReadWrite_FlowSpeed = 0x4FF01;
+        public const int RWMFCControl_ReadWrite_FlowSpeed = 0x4EE01;
 
         /// <summary>
         /// 写回应
@@ -234,19 +254,29 @@ namespace RD3
         public const int RWMFCControl_WriteResponse_ResponseValue = 0x48800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWMFCControl_CommunicationError_ResponseValue = 0x4FF00;
+
+        /// <summary>
         /// 传感器种类
         /// </summary>
-        public const int RWSensorSetting_ReadWrite_Kind = 0x5FF00;
+        public const int RWSensorSetting_ReadWrite_Kind = 0x5EE00;
 
         /// <summary>
         /// 传感器类型
         /// </summary>
-        public const int RWSensorSetting_ReadWrite_Type = 0x5FF01;
+        public const int RWSensorSetting_ReadWrite_Type = 0x5EE01;
 
         /// <summary>
         /// 写回应
         /// </summary>
         public const int RWSensorSetting_WriteResponse_ResponseValue = 0x58800;
+
+        /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWSensorSetting_CommunicationError_ResponseValue = 0x5FF00;
 
         /// <summary>
         /// 温度
@@ -509,6 +539,11 @@ namespace RD3
         public const int RRealtimeParam_WriteResponse_ResponseValue = 0x68800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RRealtimeParam_CommunicationError_ResponseValue = 0x6FF00;
+
+        /// <summary>
         /// 板类型
         /// </summary>
         public const int RMCUVersion_Read_Type = 0x75500;
@@ -529,24 +564,29 @@ namespace RD3
         public const int RMCUVersion_WriteResponse_ResponseValue = 0x78800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RMCUVersion_CommunicationError_ResponseValue = 0x7FF00;
+
+        /// <summary>
         /// P参数
         /// </summary>
-        public const int RWTempControlDebug_ReadWrite_P = 0x8FF00;
+        public const int RWTempControlDebug_ReadWrite_P = 0x8EE00;
 
         /// <summary>
         /// I参数
         /// </summary>
-        public const int RWTempControlDebug_ReadWrite_I = 0x8FF01;
+        public const int RWTempControlDebug_ReadWrite_I = 0x8EE01;
 
         /// <summary>
         /// D参数
         /// </summary>
-        public const int RWTempControlDebug_ReadWrite_D = 0x8FF02;
+        public const int RWTempControlDebug_ReadWrite_D = 0x8EE02;
 
         /// <summary>
         /// 系数
         /// </summary>
-        public const int RWTempControlDebug_ReadWrite_K = 0x8FF03;
+        public const int RWTempControlDebug_ReadWrite_K = 0x8EE03;
 
         /// <summary>
         /// 写回应
@@ -554,39 +594,49 @@ namespace RD3
         public const int RWTempControlDebug_WriteResponse_ResponseValue = 0x88800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWTempControlDebug_CommunicationError_ResponseValue = 0x8FF00;
+
+        /// <summary>
         /// 主板IP地址
         /// </summary>
-        public const int RWDeviceParam_ReadWrite_MainIPAdress = 0x9FF00;
+        public const int RWDeviceParam_ReadWrite_MainIPAdress = 0x9EE00;
 
         /// <summary>
         /// 主板端口号
         /// </summary>
-        public const int RWDeviceParam_ReadWrite_MainPort = 0x9FF01;
+        public const int RWDeviceParam_ReadWrite_MainPort = 0x9EE01;
 
         /// <summary>
         /// 主板网关
         /// </summary>
-        public const int RWDeviceParam_ReadWrite_MainGateway = 0x9FF02;
+        public const int RWDeviceParam_ReadWrite_MainGateway = 0x9EE02;
 
         /// <summary>
         /// Wifi模组IP地址
         /// </summary>
-        public const int RWDeviceParam_ReadWrite_WifiIPAdress = 0x9FF03;
+        public const int RWDeviceParam_ReadWrite_WifiIPAdress = 0x9EE03;
 
         /// <summary>
         /// Wifi端口号
         /// </summary>
-        public const int RWDeviceParam_ReadWrite_WifiPort = 0x9FF04;
+        public const int RWDeviceParam_ReadWrite_WifiPort = 0x9EE04;
 
         /// <summary>
         /// Wifi网关
         /// </summary>
-        public const int RWDeviceParam_ReadWrite_WifiGateway = 0x9FF05;
+        public const int RWDeviceParam_ReadWrite_WifiGateway = 0x9EE05;
 
         /// <summary>
         /// 写回应
         /// </summary>
         public const int RWDeviceParam_WriteResponse_ResponseValue = 0x98800;
+
+        /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWDeviceParam_CommunicationError_ResponseValue = 0x9FF00;
 
         /// <summary>
         /// 传感器种类
@@ -634,6 +684,11 @@ namespace RD3
         public const int RWSensorCorrect_WriteResponse_ResponseValue = 0xA8800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWSensorCorrect_CommunicationError_ResponseValue = 0xAFF00;
+
+        /// <summary>
         /// 蠕动泵编号
         /// </summary>
         public const int RWPeristalticPumpCorrect_Read_PeristalticPumpNo = 0xB5500;
@@ -669,6 +724,11 @@ namespace RD3
         public const int RWPeristalticPumpCorrect_WriteResponse_ResponseValue = 0xB8800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWPeristalticPumpCorrect_CommunicationError_ResponseValue = 0xBFF00;
+
+        /// <summary>
         /// 流量类型
         /// </summary>
         public const int WCleanFlowCapacity_Write_Type = 0xC6600;
@@ -684,24 +744,29 @@ namespace RD3
         public const int WCleanFlowCapacity_WriteResponse_ResponseValue = 0xC8800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int WCleanFlowCapacity_CommunicationError_ResponseValue = 0xCFF00;
+
+        /// <summary>
         /// 红灯状态
         /// </summary>
-        public const int RWSoundLightAlarm_ReadWrite_RedLightStatus = 0xDFF00;
+        public const int RWSoundLightAlarm_ReadWrite_RedLightStatus = 0xDEE00;
 
         /// <summary>
         /// 绿灯状态
         /// </summary>
-        public const int RWSoundLightAlarm_ReadWrite_GreenLightStatus = 0xDFF01;
+        public const int RWSoundLightAlarm_ReadWrite_GreenLightStatus = 0xDEE01;
 
         /// <summary>
         /// 蓝灯状态
         /// </summary>
-        public const int RWSoundLightAlarm_ReadWrite_BlueLightStatus = 0xDFF02;
+        public const int RWSoundLightAlarm_ReadWrite_BlueLightStatus = 0xDEE02;
 
         /// <summary>
         /// 蜂鸣器状态
         /// </summary>
-        public const int RWSoundLightAlarm_ReadWrite_BuzzerStatus = 0xDFF03;
+        public const int RWSoundLightAlarm_ReadWrite_BuzzerStatus = 0xDEE03;
 
         /// <summary>
         /// 写回应
@@ -709,54 +774,64 @@ namespace RD3
         public const int RWSoundLightAlarm_WriteResponse_ResponseValue = 0xD8800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWSoundLightAlarm_CommunicationError_ResponseValue = 0xDFF00;
+
+        /// <summary>
         /// 年
         /// </summary>
-        public const int RWTimeSync_ReadWrite_Year = 0xEFF00;
+        public const int RWTimeSync_ReadWrite_Year = 0xEEE00;
 
         /// <summary>
         /// 月
         /// </summary>
-        public const int RWTimeSync_ReadWrite_Month = 0xEFF01;
+        public const int RWTimeSync_ReadWrite_Month = 0xEEE01;
 
         /// <summary>
         /// 日
         /// </summary>
-        public const int RWTimeSync_ReadWrite_Day = 0xEFF02;
+        public const int RWTimeSync_ReadWrite_Day = 0xEEE02;
 
         /// <summary>
         /// 时
         /// </summary>
-        public const int RWTimeSync_ReadWrite_Hour = 0xEFF03;
+        public const int RWTimeSync_ReadWrite_Hour = 0xEEE03;
 
         /// <summary>
         /// 分
         /// </summary>
-        public const int RWTimeSync_ReadWrite_Minute = 0xEFF04;
+        public const int RWTimeSync_ReadWrite_Minute = 0xEEE04;
 
         /// <summary>
         /// 秒
         /// </summary>
-        public const int RWTimeSync_ReadWrite_Second = 0xEFF05;
+        public const int RWTimeSync_ReadWrite_Second = 0xEEE05;
 
         /// <summary>
         /// 时
         /// </summary>
-        public const int RWTimeSync_ReadWrite_RunningHour = 0xEFF06;
+        public const int RWTimeSync_ReadWrite_RunningHour = 0xEEE06;
 
         /// <summary>
         /// 分
         /// </summary>
-        public const int RWTimeSync_ReadWrite_RunningMinute = 0xEFF07;
+        public const int RWTimeSync_ReadWrite_RunningMinute = 0xEEE07;
 
         /// <summary>
         /// 秒
         /// </summary>
-        public const int RWTimeSync_ReadWrite_RunningSecond = 0xEFF08;
+        public const int RWTimeSync_ReadWrite_RunningSecond = 0xEEE08;
 
         /// <summary>
         /// 写回应
         /// </summary>
         public const int RWTimeSync_WriteResponse_ResponseValue = 0xE8800;
+
+        /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWTimeSync_CommunicationError_ResponseValue = 0xEFF00;
 
         /// <summary>
         /// PH自动控制
@@ -784,19 +859,29 @@ namespace RD3
         public const int WSettingSync_WriteResponse_ResponseValue = 0xF8800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int WSettingSync_CommunicationError_ResponseValue = 0xFFF00;
+
+        /// <summary>
         /// 使能
         /// </summary>
-        public const int RWCondensationControl_ReadWrite_Enable = 0x10FF00;
+        public const int RWCondensationControl_ReadWrite_Enable = 0x10EE00;
 
         /// <summary>
         /// 设定温度
         /// </summary>
-        public const int RWCondensationControl_ReadWrite_Temp = 0x10FF01;
+        public const int RWCondensationControl_ReadWrite_Temp = 0x10EE01;
 
         /// <summary>
         /// 写回应
         /// </summary>
         public const int RWCondensationControl_WriteResponse_ResponseValue = 0x108800;
+
+        /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWCondensationControl_CommunicationError_ResponseValue = 0x10FF00;
 
         /// <summary>
         /// 氧气浓度
@@ -814,6 +899,11 @@ namespace RD3
         public const int ROffgas_WriteResponse_ResponseValue = 0x118800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int ROffgas_CommunicationError_ResponseValue = 0x11FF00;
+
+        /// <summary>
         /// 下载程序状态
         /// </summary>
         public const int RWMCUDownload_ReadResponse_Status = 0x12AA00;
@@ -827,6 +917,11 @@ namespace RD3
         /// 写回应
         /// </summary>
         public const int RWMCUDownload_WriteResponse_ResponseValue = 0x128800;
+
+        /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWMCUDownload_CommunicationError_ResponseValue = 0x12FF00;
 
         /// <summary>
         /// 部件类型
@@ -844,14 +939,19 @@ namespace RD3
         public const int WResetDefaultSetting_WriteResponse_ResponseValue = 0x138800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int WResetDefaultSetting_CommunicationError_ResponseValue = 0x13FF00;
+
+        /// <summary>
         /// 主板IP地址
         /// </summary>
-        public const int RWMCUDownloadAdress_ReadWrite_IPAdress = 0x14FF00;
+        public const int RWMCUDownloadAdress_ReadWrite_IPAdress = 0x14EE00;
 
         /// <summary>
         /// 主板端口号
         /// </summary>
-        public const int RWMCUDownloadAdress_ReadWrite_Port = 0x14FF01;
+        public const int RWMCUDownloadAdress_ReadWrite_Port = 0x14EE01;
 
         /// <summary>
         /// 写回应
@@ -859,14 +959,24 @@ namespace RD3
         public const int RWMCUDownloadAdress_WriteResponse_ResponseValue = 0x148800;
 
         /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWMCUDownloadAdress_CommunicationError_ResponseValue = 0x14FF00;
+
+        /// <summary>
         /// 电机型号
         /// </summary>
-        public const int RWStirringMotorType_ReadWrite_MotorType = 0x15FF00;
+        public const int RWStirringMotorType_ReadWrite_MotorType = 0x15EE00;
 
         /// <summary>
         /// 写回应
         /// </summary>
         public const int RWStirringMotorType_WriteResponse_ResponseValue = 0x158800;
+
+        /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWStirringMotorType_CommunicationError_ResponseValue = 0x15FF00;
 
     }
 }

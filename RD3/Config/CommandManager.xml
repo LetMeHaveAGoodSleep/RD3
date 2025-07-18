@@ -17,7 +17,7 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -48,6 +48,18 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
 			</commandExtends>
 		</commandDesc>
 
@@ -64,7 +76,7 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -83,6 +95,19 @@
 						<param>
 							<id>ResponseValue</id>
 							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
 							<type>byte</type>
 							<length>1</length>
 						</param>
@@ -113,7 +138,7 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -156,6 +181,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
 			</commandExtends>
 		</commandDesc>
 
@@ -172,7 +210,7 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -220,6 +258,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
 			</commandExtends>
 		</commandDesc>
 
@@ -244,7 +295,7 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -275,6 +326,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				
 			</commandExtends>
 		</commandDesc>
 
@@ -291,7 +355,7 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -322,6 +386,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				
 			</commandExtends>
 		</commandDesc>
 
@@ -663,6 +740,18 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
 			</commandExtends>
 		</commandDesc>
 
@@ -719,6 +808,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
 			</commandExtends>
 		</commandDesc>
 
@@ -735,7 +837,7 @@
 				</commandExtend>
 				
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -778,6 +880,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				
 			</commandExtends>
 		</commandDesc>
 
@@ -794,7 +909,7 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -843,6 +958,19 @@
 						<param>
 							<id>ResponseValue</id>
 							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
 							<type>byte</type>
 							<length>1</length>
 						</param>
@@ -941,6 +1069,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
 			</commandExtends>
 		</commandDesc>
 
@@ -1021,6 +1162,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
 			</commandExtends>
 		</commandDesc>
 
@@ -1062,6 +1216,20 @@
 						</param>
 					</parameters>
 				</commandExtend>
+
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				
 			</commandExtends>
 		</commandDesc>
 
@@ -1078,7 +1246,7 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -1121,6 +1289,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
 			</commandExtends>
 		</commandDesc>
 		
@@ -1137,7 +1318,7 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -1210,6 +1391,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				
 			</commandExtends>
 		</commandDesc>
 
@@ -1265,6 +1459,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				
 			</commandExtends>
 		</commandDesc>
 
@@ -1282,7 +1489,7 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -1313,6 +1520,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				
 			</commandExtends>
 		</commandDesc>
 
@@ -1355,6 +1575,19 @@
 						<param>
 							<id>ResponseValue</id>
 							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
 							<type>byte</type>
 							<length>1</length>
 						</param>
@@ -1416,6 +1649,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				
 			</commandExtends>
 		</commandDesc>
 
@@ -1458,6 +1704,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
 			</commandExtends>
 		</commandDesc>
 
@@ -1474,7 +1733,7 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -1505,6 +1764,19 @@
 					</parameters>
 				</commandExtend>
 
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
 			</commandExtends>
 		</commandDesc>
 
@@ -1521,7 +1793,7 @@
 				</commandExtend>
 
 				<commandExtend>
-					<id>0xff</id>
+					<id>0xee</id>
 					<name>ReadWrite</name>
 					<parameters>
 						<param>
@@ -1540,6 +1812,19 @@
 						<param>
 							<id>ResponseValue</id>
 							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
 							<type>byte</type>
 							<length>1</length>
 						</param>
