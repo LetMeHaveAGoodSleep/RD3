@@ -60,6 +60,7 @@ using System.Threading;
 using System.Data;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Runtime.Intrinsics;
+using Fpi.Util.WinApiUtil.CommDataType;
 
 namespace RD3.Views
 {
@@ -415,6 +416,66 @@ namespace RD3.Views
                     window.WindowState = window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
                 }
             };
+
+
+            var backgroundWorker = new BackgroundWorker();
+            backgroundWorker.WorkerSupportsCancellation = true;
+            backgroundWorker.WorkerReportsProgress = true;
+            backgroundWorker.DoWork += (s, e) =>
+            {
+                while (true)
+                {
+                    try
+                    {
+                        App.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            var selectedItem = dataGrid1.SelectedItem as AuditRecord;
+                            StringBuilder stringBuilder = new StringBuilder();
+                            stringBuilder.AppendLine("select * from Audit");
+                            ObservableCollection<AuditRecord> auditRecords = dataGrid1.ItemsSource as ObservableCollection<AuditRecord>;
+                            if (auditRecords != null && auditRecords.Count > 0)
+                            {
+                                stringBuilder.AppendLine($"where DateTime > '{auditRecords[0].Datetime}'");
+                            }
+                            stringBuilder.AppendLine("order by DateTime desc");
+                            DataTable dt = SQLiteHelper.GetDatasToDataTable(stringBuilder.ToString());
+                            var addRecords = new ObservableCollection<AuditRecord>();
+                            for (int i = 0; i < dt.Rows.Count; i++)
+                            {
+                                AuditRecord record = new AuditRecord();
+                                record.BatchID = dt.Rows[i]["BatchID"].ToString();
+                                record.Datetime = dt.Rows[i]["Datetime"].ToString();
+                                record.DeviceID = dt.Rows[i]["DeviceID"].ToString();
+                                record.Remark = dt.Rows[i]["Remark"].ToString();
+                                addRecords.Add(record);
+                            }
+                            if (auditRecords != null && auditRecords.Count > 0)
+                            {
+                                foreach (AuditRecord record in auditRecords) 
+                                {
+                                    addRecords.Add(record);
+                                }
+                            }
+                            dataGrid1.ItemsSource = addRecords;
+                            if (selectedItem != null)
+                            {
+                                dataGrid1.ScrollIntoView(selectedItem);
+                                dataGrid1.SelectedItem = selectedItem;
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        LogHelper.Debug("获取操作记录失败" + ex.Message);
+                    }
+                    finally
+                    {
+                        Thread.Sleep(AppSession.Interval * 1000);
+                    }
+                }
+            };
+            backgroundWorker.RunWorkerAsync();
+
         }
         private void CreatePlotMark()
         {

@@ -71,9 +71,6 @@ namespace RD3.ViewModels
             set { SetProperty(ref _currentDeviceParameter, value); }
         }
 
-        private ObservableCollection<AuditRecord> _dataList = [];
-        public ObservableCollection<AuditRecord> DataList { get { return _dataList; } set { SetProperty(ref _dataList, value); } }
-
         private ObservableCollection<DeviceParameter> _deviceParameterCol = [];
         public ObservableCollection<DeviceParameter> DeviceParameterCol
         {
@@ -542,43 +539,6 @@ namespace RD3.ViewModels
             //    }
             //});
             //    RegisterManager.MonitorRegister();
-
-            var backgroundWorker = new BackgroundWorker();
-            backgroundWorker.WorkerSupportsCancellation = true;
-            backgroundWorker.WorkerReportsProgress = true;
-            backgroundWorker.DoWork += (s, e) =>
-            {
-                while (true)
-                {
-                    try
-                    {
-                        App.Current.Dispatcher.BeginInvoke(() =>
-                        {
-                            DataList.Clear();
-                            string sql = $"select * from Audit order by DateTime desc";
-                            DataTable dt = SQLiteHelper.GetDatasToDataTable(sql);
-                            for (int i = 0; i < dt.Rows.Count; i++)
-                            {
-                                AuditRecord record = new AuditRecord();
-                                record.BatchID = dt.Rows[i]["BatchID"].ToString();
-                                record.Datetime = dt.Rows[i]["Datetime"].ToString();
-                                record.DeviceID = dt.Rows[i]["DeviceID"].ToString();
-                                record.Remark = dt.Rows[i]["Remark"].ToString();
-                                DataList.Add(record);
-                            }
-                        });
-                    }
-                    catch (Exception ex)
-                    {
-                        LogHelper.Debug("获取操作记录失败" + ex.Message);
-                    }
-                    finally
-                    {
-                        Thread.Sleep(AppSession.Interval * 1000);
-                    }
-                }
-            };
-            backgroundWorker.RunWorkerAsync();
 
 
             RegUtils.StartChecked();

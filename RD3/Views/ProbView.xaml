@@ -11,8 +11,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
-    Width="900"
-    Height="500"
+    Width="1100"
+    Height="600"
     d:DataContext="{d:DesignInstance Type=viewmodels:ProbViewModel}"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
@@ -79,7 +79,7 @@
             VerticalGridLinesBrush="LightGray">
             <DataGrid.Columns>
                 <DataGridTextColumn
-                    Width="100"
+                    Width="auto"
                     Binding="{Binding DeviceID}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="设备"
@@ -109,19 +109,19 @@
                     Header="溶氧设定值（%）"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
-                    Width="100"
+                    Width="auto"
                     Binding="{Binding M}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="系数M(-)"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
-                    Width="100"
+                    Width="auto"
                     Binding="{Binding k}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="系数K(+)"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
-                    Width="120"
+                    Width="auto"
                     Binding="{Binding ki}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="ki"
@@ -129,10 +129,22 @@
                     IsReadOnly="False"
                     Visibility="Collapsed" />
                 <DataGridTextColumn
-                    Width="100"
+                    Width="auto"
+                    Binding="{Binding FMax}"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="最大值（mL/h）"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding FMin}"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="最小值（mL/h）"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                <DataGridTextColumn
+                    Width="auto"
                     Binding="{Binding F}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="补料速度"
+                    Header="初始值（mL/h）"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
             </DataGrid.Columns>
         </DataGrid>

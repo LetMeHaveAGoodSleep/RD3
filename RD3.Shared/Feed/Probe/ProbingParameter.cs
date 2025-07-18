@@ -21,6 +21,8 @@ namespace RD3.Shared
         private string _deviceID;
         private float _allowDiff;
         private float _m;
+        private float _fMax = 200;
+        private float _fMin = 1;
 
         public float Tmax
         {
@@ -98,12 +100,30 @@ namespace RD3.Shared
         }
 
         /// <summary>
-        /// 设定的补料速度
+        /// 初始补料速度
         /// </summary>
         public float F
         {
             get => _f;
             set => SetProperty(ref _f, value);
+        }
+
+        /// <summary>
+        /// 最大补料速度
+        /// </summary>
+        public float FMax
+        {
+            get => _fMax;
+            set => SetProperty(ref _fMax, value);
+        }
+
+        /// <summary>
+        /// 最小补料速度
+        /// </summary>
+        public float FMin
+        {
+            get => _fMin;
+            set => SetProperty(ref _fMin, value);
         }
 
         public string DeviceID

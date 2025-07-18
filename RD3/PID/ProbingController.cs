@@ -253,7 +253,7 @@ namespace RD3.Shared
             int pumpNo = PumpMFCUtil.GetPumpIndex(prob?.DeviceID, PeristalticPump.FeedPump);
             if (pumpNo > -1)
             {
-                rF = rF >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : rF <= 0 ? 0 : rF;
+                rF = rF >= prob.FMax ? prob.FMax : rF <= prob.FMin ? prob.FMin : rF;
                 deviceParameter.FeedParam1.Feed_PV = rF;
                 PeristalticPumpControlParam param = new PeristalticPumpControlParam()
                 {
@@ -262,9 +262,7 @@ namespace RD3.Shared
                     FlowCapacity = Const.MaxPumpFlowCapacity
                 };
                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(prob?.DeviceID, param);
-                LogHelper.Debug(string.Format("Probe:泵速{0}", rF));
             }
-
         }
 
         /// <summary>

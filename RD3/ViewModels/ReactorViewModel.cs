@@ -945,6 +945,54 @@ namespace RD3.ViewModels
                 float baseAir = -1;
                 float baseO2 = -1;
 
+                while (AppSession.DOPause)
+                {
+                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                    {
+                        return;
+                    }
+
+                    Thread.Sleep(1000);
+                }
+
+                RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
+                {
+                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                    {
+                        return;
+                    }
+                    while (AppSession.DOPause)
+                    {
+                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                        {
+                            return;
+                        }
+                        Thread.Sleep(1000);
+                    }
+                    Thread.Sleep(1000);
+                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                }
+
+                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                while (realTimeParam.DO > deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsReverse)
+                {
+                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                    {
+                        return;
+                    }
+                    while (AppSession.DOPause)
+                    {
+                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                        {
+                            return;
+                        }
+                        Thread.Sleep(1000);
+                    }
+                    Thread.Sleep(1000);
+                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                }
+
                 //mid-ranging控制
                 if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
                 {
@@ -959,7 +1007,7 @@ namespace RD3.ViewModels
                     baseO2 = -1;
 
                     MidRangingParam param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
-                    RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                     deviceParameter.AgitParam.IsControling = true;
                     deviceParameter.AgitParam.Agit_PV = realTimeParam.Agit >= param.AgitLowerLimit ? realTimeParam.Agit <= param.AgitUpperLimit ? realTimeParam.Agit : param.AgitUpperLimit : param.AgitLowerLimit;
                     AgitRunCommand.Execute(deviceParameter);
@@ -1016,16 +1064,46 @@ namespace RD3.ViewModels
                     {
                         try
                         {
-                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                            while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
                             {
-                                return;
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
+                                while (AppSession.DOPause)
+                                {
+                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    {
+                                        return;
+                                    }
+                                    Thread.Sleep(1000);
+                                }
+                                Thread.Sleep(1000);
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                             }
 
-                            string result = File.ReadAllText(FileConst.PidInfoPath);
-                            List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
-                            if (pIDInfos == null)
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                            while (realTimeParam.DO > deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsReverse)
                             {
-                                MessageBox.Show("PID调控策略列表为空");
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
+                                while (AppSession.DOPause)
+                                {
+                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    {
+                                        return;
+                                    }
+                                    Thread.Sleep(1000);
+                                }
+                                Thread.Sleep(1000);
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                            }
+
+                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                            {
                                 return;
                             }
 
@@ -1039,6 +1117,13 @@ namespace RD3.ViewModels
                                 Thread.Sleep(1000);
                             }
 
+                            string result = File.ReadAllText(FileConst.PidInfoPath);
+                            List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
+                            if (pIDInfos == null)
+                            {
+                                MessageBox.Show("PID调控策略列表为空");
+                                return;
+                            }
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                             if (realTimeParam.DO <= deviceParameter.DOParam.DO_PV)
                             {
@@ -1566,6 +1651,44 @@ namespace RD3.ViewModels
                     AgitRunCommand.Execute(deviceParameter);
                     while (true)
                     {
+                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                        while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
+                        {
+                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                            {
+                                return;
+                            }
+                            while (AppSession.DOPause)
+                            {
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
+                                Thread.Sleep(1000);
+                            }
+                            Thread.Sleep(1000);
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                        }
+
+                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                        while (realTimeParam.DO > deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsReverse)
+                        {
+                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                            {
+                                return;
+                            }
+                            while (AppSession.DOPause)
+                            {
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
+                                Thread.Sleep(1000);
+                            }
+                            Thread.Sleep(1000);
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                        }
+
                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                         {
                             return;
@@ -1581,7 +1704,7 @@ namespace RD3.ViewModels
                             Thread.Sleep(1000);
                         }
 
-                        RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                         if (realTimeParam.DO < deviceParameter.DOParam.DO_PV)
                         {
                             deviceParameter.AgitParam.Agit_PV += deviceParameter.DOParam.AgitCycle.DirectStep;
@@ -1669,55 +1792,6 @@ namespace RD3.ViewModels
                     factorIndex = 0;//当前执行索引
                     lastFactorIndex = -1;//当前执行索引
 
-                    while (AppSession.DOPause)
-                    {
-                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                        {
-                            return;
-                        }
-
-                        Thread.Sleep(1000);
-                    }
-
-                    RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                    while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
-                    {
-                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                        {
-                            return;
-                        }
-                        while (AppSession.DOPause)
-                        {
-                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                            {
-                                return;
-                            }
-                            Thread.Sleep(1000);
-                        }
-                        Thread.Sleep(1000);
-                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                    }
-
-                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                    while (realTimeParam.DO > deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsReverse)
-                    {
-                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                        {
-                            return;
-                        }
-                        while (AppSession.DOPause)
-                        {
-                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                            {
-                                return;
-                            }
-                            Thread.Sleep(1000);
-                        }
-                        Thread.Sleep(1000);
-                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                    }
-
-
                     deviceParameter.AgitParam.IsControling = true;
                     AgitRunCommand.Execute(deviceParameter);
 
@@ -1791,6 +1865,44 @@ namespace RD3.ViewModels
                     {
                         try
                         {
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                            while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
+                            {
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
+                                while (AppSession.DOPause)
+                                {
+                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    {
+                                        return;
+                                    }
+                                    Thread.Sleep(1000);
+                                }
+                                Thread.Sleep(1000);
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                            }
+
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                            while (realTimeParam.DO > deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsReverse)
+                            {
+                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                {
+                                    return;
+                                }
+                                while (AppSession.DOPause)
+                                {
+                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                                    {
+                                        return;
+                                    }
+                                    Thread.Sleep(1000);
+                                }
+                                Thread.Sleep(1000);
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                            }
+
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
                                 return;

@@ -474,13 +474,17 @@
                         AutoGenerateColumns="False"
                         Background="Transparent"
                         ColumnWidth="SizeToCells"
+                        EnableColumnVirtualization="True"
+                        EnableRowVirtualization="True"
                         FontSize="{DynamicResource NormalFontSize}"
                         HeadersVisibility="Column"
                         IsReadOnly="True"
                         ItemsSource="{Binding DataList}"
                         RowHeaderWidth="60"
                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                        ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        SelectedItem="{Binding SelectedAudit}"
+                        VirtualizingStackPanel.VirtualizationMode="Recycling">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn
                                 Width="200"
