@@ -1160,11 +1160,7 @@ namespace RD3.ViewModels
                             if (info != null && lastPid != null && !info.Equals(lastPid))
                             {
                                 LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
-                                if (baseAgit == -1)
-                                {
-                                    baseAgit = realTimeParam.Agit;
-                                }
-                                else
+                                if (info.PidName != lastPid.PidName)
                                 {
                                     baseAgit = deviceParameter.AgitParam.Agit_PV;
                                 }
@@ -1952,7 +1948,11 @@ namespace RD3.ViewModels
                             //if (info != null && lastPid != null && info.PidName != lastPid.PidName)
                             if (info != null && lastPid != null && !info.Equals(lastPid))
                             {
-                                baseAgit = deviceParameter.AgitParam.Agit_PV;
+                                if (info.PidName != lastPid.PidName)
+                                {
+                                    baseAgit = deviceParameter.AgitParam.Agit_PV;
+                                }
+                                
                                 ResetDOParam(deviceParameter);
 
                                 LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));

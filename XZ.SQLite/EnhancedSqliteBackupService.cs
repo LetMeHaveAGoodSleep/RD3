@@ -100,7 +100,7 @@ public class EnhancedSqliteBackupService : IDisposable
                 {
                     File.Copy(_sourceDbPath, backupPath, overwrite: true);
 
-                    var flag = VerifyBackup(backupPath);
+                    //var flag = VerifyBackup(backupPath);
 
                     // 如果是新的一天，清理前一天的备份
                     if (_lastBackupDate.Date < DateTime.Today)
