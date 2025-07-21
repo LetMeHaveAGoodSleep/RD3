@@ -1,0 +1,3 @@
+{
+  "SQLliteConnectStr": "Data Source={0}.db;Version=3;"
+}

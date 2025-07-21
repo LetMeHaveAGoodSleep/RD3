@@ -1156,7 +1156,8 @@ namespace RD3.ViewModels
                             }
 
                             //如果pid类型变了，pid系数清零 方成
-                            if (info != null && lastPid != null && info.PidName != lastPid.PidName)
+                            //if (info != null && lastPid != null && info.PidName != lastPid.PidName)
+                            if (info != null && lastPid != null && !info.Equals(lastPid))
                             {
                                 LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
                                 if (baseAgit == -1)
@@ -1948,7 +1949,8 @@ namespace RD3.ViewModels
                             }
 
                             //如果pid类型变了，pid系数清零 方成
-                            if (info != null && lastPid != null && info.PidName != lastPid.PidName)
+                            //if (info != null && lastPid != null && info.PidName != lastPid.PidName)
+                            if (info != null && lastPid != null && !info.Equals(lastPid))
                             {
                                 baseAgit = deviceParameter.AgitParam.Agit_PV;
                                 ResetDOParam(deviceParameter);
@@ -3350,7 +3352,8 @@ namespace RD3.ViewModels
                             }
 
                             //如果pid类型变了，pid系数清零 方成
-                            if (info != null && lastPid != null && info.PidName != lastPid.PidName)
+                            //if (info != null && lastPid != null && info.PidName != lastPid.PidName)
+                            if (info != null && lastPid != null && !info.Equals(lastPid))
                             {
                                 LogHelper.Debug(string.Format("PH调控：由{0}切换至{1}", lastPid.PidName, info.PidName));
                                 dicPHPid[deviceParameter.Name].Reset();
@@ -14603,6 +14606,7 @@ namespace RD3.ViewModels
                 {
                     return;
                 }
+
             });
         });
 

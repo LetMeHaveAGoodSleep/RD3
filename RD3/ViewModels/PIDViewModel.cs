@@ -110,6 +110,8 @@ namespace RD3.ViewModels
             string json = JsonConvert.SerializeObject(PidInfos);
             File.Delete(FileConst.PidInfoPath);
             File.WriteAllText(FileConst.PidInfoPath, json);
+
+            RequestClose?.Invoke(new DialogResult(ButtonResult.OK));
         });
 
         private ObservableCollection<MenuBar> menuBars = new ObservableCollection<MenuBar>();

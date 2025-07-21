@@ -12,6 +12,19 @@ namespace RD3.Shared
     /// <summary>
     /// 转速是必需项，所以不在此列
     /// </summary>
+    public enum SoftwarePlatform
+    {
+        [Description("1.5L发酵罐_电脑")]
+        Default,
+        [Description("5L发酵罐_Windows平板")]
+        WindowsPad,
+        [Description("500mL发酵罐_电脑")]
+        HighThroughput
+    }
+
+    /// <summary>
+    /// 转速是必需项，所以不在此列
+    /// </summary>
     public enum DOControlFactor
     {
         [Description("空气")]

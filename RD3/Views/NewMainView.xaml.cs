@@ -67,7 +67,7 @@ namespace RD3.Views
     /// <summary>
     /// MainView.xaml 的交互逻辑
     /// </summary>
-    public partial class NewMainView : Window
+    public partial class NewMainView : GlowWindow
     {
         private SubscriptionToken token = null;
         private SubscriptionToken token1 = null;

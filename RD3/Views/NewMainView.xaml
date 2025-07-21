@@ -1,4 +1,4 @@
-﻿<Window
+﻿<hc:GlowWindow
     x:Class="RD3.Views.NewMainView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -539,4 +539,4 @@
             </Grid>
         </Grid>
     </materialDesign:DialogHost>
-</Window>
+</hc:GlowWindow>

@@ -40,12 +40,25 @@ namespace RD3
         const uint ES_CONTINUOUS = 0x80000000;
         const uint ES_SYSTEM_REQUIRED = 0x00000001;
 
-        
+
 
         protected override Window CreateShell()
         {
-            return Container.Resolve<NewMainView>();
-            //return Container.Resolve<MainView>();
+            var softwarePlatform = VarConfig.GetValue("SoftwarePlatform")?.ToString();
+            Enum.TryParse(typeof(SoftwarePlatform), softwarePlatform, out var result);
+            if (result == null)
+            {
+                result = SoftwarePlatform.Default;
+            }
+            switch ((SoftwarePlatform)result)
+            {
+                case SoftwarePlatform.WindowsPad:
+                    VarConfig.SetValue("SoftwarePlatform", SoftwarePlatform.WindowsPad);
+                    return Container.Resolve<PadMainView>();
+                default:
+                    VarConfig.SetValue("SoftwarePlatform", SoftwarePlatform.Default);
+                    return Container.Resolve<NewMainView>();
+            }
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -66,7 +79,7 @@ namespace RD3
             }
             else
             {
-                MessageBox.Show("应用程序已经在运行！");
+                System.Windows.Forms.MessageBox.Show("应用程序已经在运行！", "温馨提示", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning, System.Windows.Forms.MessageBoxDefaultButton.Button1, System.Windows.Forms.MessageBoxOptions.DefaultDesktopOnly | System.Windows.Forms.MessageBoxOptions.ServiceNotification);
                 Application.Current.Shutdown();
                 Environment.Exit(0);
                 return;
@@ -82,33 +95,45 @@ namespace RD3
 
         public static void LoginOut(IContainerProvider containerProvider)
         {
-            Current.MainWindow.Hide();
-
-            var dialog = containerProvider.Resolve<IDialogService>();
-
-            dialog.ShowDialog(nameof(LoginView), callback =>
+            var softwarePlatform = VarConfig.GetValue("SoftwarePlatform")?.ToString();
+            Enum.TryParse(typeof(SoftwarePlatform), softwarePlatform, out var result);
+            if (result == null)
             {
-                if (callback.Result != ButtonResult.OK)
-                {
-                    Environment.Exit(0);
-                    return;
-                }
-            });
+                result = SoftwarePlatform.Default;
+            }
 
-            var service = App.Current.MainWindow.DataContext as IConfigureService;
-            if (service != null)
-                service.Configure();
-
-            dialog.ShowDialog(nameof(SelfCheckView), callback =>
+            switch ((SoftwarePlatform)result)
             {
-                if (callback.Result != ButtonResult.OK)
-                {
-                    Environment.Exit(0);
-                    return;
-                }
-            });
+                case SoftwarePlatform.Default:
+                    Current.MainWindow.Hide();
 
-            Current.MainWindow.Show();
+                    var dialog = containerProvider.Resolve<IDialogService>();
+
+                    dialog.ShowDialog(nameof(LoginView), callback =>
+                    {
+                        if (callback.Result != ButtonResult.OK)
+                        {
+                            Environment.Exit(0);
+                            return;
+                        }
+                    });
+
+                    var service = App.Current.MainWindow.DataContext as IConfigureService;
+                    if (service != null)
+                        service.Configure();
+
+                    dialog.ShowDialog(nameof(SelfCheckView), callback =>
+                    {
+                        if (callback.Result != ButtonResult.OK)
+                        {
+                            Environment.Exit(0);
+                            return;
+                        }
+                    });
+
+                    Current.MainWindow.Show();
+                    break;
+            }
         }
 
         protected override void OnInitialized()
@@ -123,23 +148,37 @@ namespace RD3
             backupService = new EnhancedSqliteBackupService(@"hisDatas\xzrd3.db", @"D:\DatabaseBackups");
             backupService.Start();
 
-            dialog.ShowDialog(nameof(LoginView),callback =>
+            var softwarePlatform = VarConfig.GetValue("SoftwarePlatform")?.ToString();
+            Enum.TryParse(typeof(SoftwarePlatform), softwarePlatform, out var result);
+            if (result == null)
             {
-                if (callback.Result != ButtonResult.OK)
-                {
-                    Environment.Exit(0);
-                    return;
-                }
-            });
+                result = SoftwarePlatform.Default;
+            }
 
-            dialog.ShowDialog(nameof(SelfCheckView), callback =>
+            switch ((SoftwarePlatform)result)
             {
-                if (callback.Result != ButtonResult.OK)
-                {
-                    Environment.Exit(0);
-                    return;
-                }
-            });
+                case SoftwarePlatform.Default:
+                    dialog.ShowDialog(nameof(LoginView), callback =>
+                    {
+                        if (callback.Result != ButtonResult.OK)
+                        {
+                            Environment.Exit(0);
+                            return;
+                        }
+                    });
+
+                    dialog.ShowDialog(nameof(SelfCheckView), callback =>
+                    {
+                        if (callback.Result != ButtonResult.OK)
+                        {
+                            Environment.Exit(0);
+                            return;
+                        }
+                    });
+                    break;
+                case SoftwarePlatform.WindowsPad:
+                    break;
+            }
 
             var service = App.Current.MainWindow.DataContext as IConfigureService;
             if (service != null)
@@ -207,6 +246,7 @@ namespace RD3
             containerRegistry.RegisterDialog<DOControlStrategyView, DOControlStrategyViewModel>();
             containerRegistry.RegisterDialog<ProbView, ProbViewModel>();
             containerRegistry.RegisterDialog<AdaptpHView, AdaptpHViewModel>();
+            containerRegistry.RegisterForNavigation<PadMainView, PadMainViewModel>();
             //containerRegistry.RegisterDialogWindow<DialogWindowBase>();
         }
 
