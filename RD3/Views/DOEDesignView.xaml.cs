@@ -77,5 +77,10 @@ namespace RD3.Views
                 }
             }
         }
+
+        private void DataGridDesign_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            e.Column.Width= new DataGridLength(1, DataGridLengthUnitType.Auto);
+        }
     }
 }

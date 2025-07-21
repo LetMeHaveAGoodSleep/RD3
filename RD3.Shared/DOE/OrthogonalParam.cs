@@ -1,6 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,23 @@ namespace RD3
         {
             get { return _high; }
             set { SetProperty(ref _high, value); }
+        }
+
+        private ObservableCollection<FactorLevel> _factorLevels = [];
+        public ObservableCollection<FactorLevel> FactorLevels
+        {
+            get => _factorLevels;
+            set { SetProperty(ref _factorLevels, value); }
+        }
+    }
+
+    public class FactorLevel : BindableBase
+    {
+        private float _levelValue;
+        public float LevelValue
+        {
+            get { return _levelValue; }
+            set { SetProperty(ref _levelValue, value); }
         }
     }
 }

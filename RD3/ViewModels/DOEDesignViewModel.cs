@@ -30,6 +30,14 @@ namespace RD3.ViewModels
             private set { SetProperty(ref _dataSource, value); }
         }
 
+        private int _level = 2;
+        public int Level
+        {
+            get => _level;
+            set { SetProperty(ref _level, value); }
+        }
+
+
         private int _lowCenterPoint = 2;
         public int LowCenterPoint
         {
@@ -143,7 +151,7 @@ namespace RD3.ViewModels
             if (_selectedFactors == null) return;
             Columns = new string[_selectedFactors.Count + 1];
             Columns[0] = "";
-            DataColumn column = new DataColumn("Index");
+            DataColumn column = new DataColumn("索引");
             column.ReadOnly = true;
             DataSource.Columns.Add(column);
             for (int i = 0; i < _selectedFactors.Count; i++)
@@ -167,6 +175,12 @@ namespace RD3.ViewModels
             switch (SelectedDesignType)
             {
                 case DOEDesignType.FullFactorial:
+                    List<int> ints = new List<int>();
+                    foreach (var item in DesignCol)
+                    {
+                        ints.Add(Level);
+                    }
+                    var temp = DesignOfExperiments.Fullfact(ints.ToArray());
                     DataSource = DOEUtil.GenerateCombinationsAsDataTable(DesignCol);
                     aggregator.SendMessage("", nameof(DOEDesignViewModel), DataSource);
                     break;
@@ -177,6 +191,7 @@ namespace RD3.ViewModels
                 case DOEDesignType.Plackett_Burman:
                     break;
                 case DOEDesignType.Box_Behnken:
+                    var res1 = DesignOfExperiments.Bbdesign(DesignCol.Count, 1);
                     break;
                 case DOEDesignType.CentralComposite:
                     var res = DOEUtil.BuildCCDDesign(DesignCol, (LowCenterPoint, HighCenterPoint), SelectedAlpha, SelectedFace);

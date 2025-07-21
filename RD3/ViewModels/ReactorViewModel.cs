@@ -4326,6 +4326,9 @@ namespace RD3.ViewModels
 
             if (dicFeed1Probe[CurrentDeviceParameter.Name] != null)
             {
+                var param = ProbingParameterManager.GetInstance().ProbeCol.FindFirst(t => t.DeviceID == CurrentDeviceParameter.Name);
+                dicFeed1Probe[CurrentDeviceParameter.Name].SetDevice(CurrentDeviceParameter);
+                dicFeed1Probe[CurrentDeviceParameter.Name].InitProbParam(param);
                 dicFeed1Probe[CurrentDeviceParameter.Name].StopCtrl();
                 Thread.Sleep(100);
             }
@@ -9355,6 +9358,9 @@ namespace RD3.ViewModels
 
             if (dicFeed2Probe[CurrentDeviceParameter.Name] != null)
             {
+                var param = ProbingParameterManager.GetInstance().ProbeCol.FindFirst(t => t.DeviceID == CurrentDeviceParameter.Name);
+                dicFeed2Probe[CurrentDeviceParameter.Name].SetDevice(CurrentDeviceParameter);
+                dicFeed2Probe[CurrentDeviceParameter.Name].InitProbParam(param);
                 dicFeed2Probe[CurrentDeviceParameter.Name].StopCtrl();
                 Thread.Sleep(100);
             }

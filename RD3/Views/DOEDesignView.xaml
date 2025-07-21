@@ -97,6 +97,12 @@
                         Orientation="Vertical"
                         Spacing="10">
                         <DockPanel LastChildFill="False">
+                            <TextBox
+                                Width="80"
+                                hc:InfoElement.Title="水平"
+                                Style="{StaticResource TextBoxExtend}"
+                                Text="{Binding Level}"
+                                Visibility="{Binding SelectedDesignType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='FullFactorial,Plackett_Burman,LatinHypercube'}" />
                             <hc:UniformSpacingPanel
                                 DockPanel.Dock="Right"
                                 Orientation="Horizontal"
@@ -186,6 +192,7 @@
                         hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
                         hc:DataGridAttach.ShowSelectAllButton="False"
                         AutoGenerateColumns="False"
+                        AutoGeneratingColumn="DataGridDesign_AutoGeneratingColumn"
                         Background="{StaticResource DefaultBrush}"
                         CanUserSortColumns="False"
                         ColumnWidth="SizeToCells"
