@@ -60,7 +60,6 @@ namespace RD3.Shared
             this.flowRate = 0;
             AppSession.DOPause = false;
             ctrlFlag = false;
-            DoFeedCtrl(flowRate);
         }
         /// <summary>
         /// 控制补料

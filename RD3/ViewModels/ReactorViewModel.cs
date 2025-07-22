@@ -97,6 +97,7 @@ namespace RD3.ViewModels
         #region 溶氧相关
         private Dictionary<string, BackgroundWorker> dicDOTimeWorker = new Dictionary<string, BackgroundWorker>();
         private Dictionary<string, BackgroundWorker> dicDOWorker = new Dictionary<string, BackgroundWorker>();
+        private Dictionary<string, bool> dicDOStatus = new Dictionary<string, bool>();
         private Dictionary<string, int> dicDODelta = new Dictionary<string, int>();
         private Dictionary<string, int> dicDOAirIndex = new Dictionary<string, int>();
         private Dictionary<string, int> dicDOO2Index = new Dictionary<string, int>();
@@ -120,6 +121,7 @@ namespace RD3.ViewModels
         #region PH相关
         private Dictionary<string, BackgroundWorker> dicPHTimeWorker = new Dictionary<string, BackgroundWorker>();
         private Dictionary<string, BackgroundWorker> dicPHWorker = new Dictionary<string, BackgroundWorker>();
+        private Dictionary<string, bool> dicPHStatus = new Dictionary<string, bool>();
         private Dictionary<string, float> dicPHDelta = new Dictionary<string, float>();
         private Dictionary<string, QPIDController> dicPHPid = new Dictionary<string, QPIDController>();
         private Dictionary<string, IntelligentPHController> dicPHController = new Dictionary<string, IntelligentPHController>();
@@ -905,7 +907,10 @@ namespace RD3.ViewModels
             if (dicDOWorker[currentDeviceParameter.Name] != null && dicDOWorker[currentDeviceParameter.Name].IsBusy)
             {
                 dicDOWorker[currentDeviceParameter.Name].CancelAsync();
-                Thread.Sleep(100);
+                while (dicDOStatus[currentDeviceParameter.Name])
+                {
+                    Thread.Sleep(100);
+                }
             }
 
             //关闭控制
@@ -924,6 +929,8 @@ namespace RD3.ViewModels
             // 绑定事件
             dicDOWorker[currentDeviceParameter.Name].DoWork += ((s, e) =>
             {
+                dicDOStatus[currentDeviceParameter.Name]  = true;
+
                 var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == currentDeviceParameter.Name);
 
                 deviceParameter.FeedSuspend = deviceParameter.IsDOLimit = deviceParameter.DORegulationLimit = false;
@@ -945,10 +952,13 @@ namespace RD3.ViewModels
                 float baseAir = -1;
                 float baseO2 = -1;
 
+                float lastDO = 0;
+
                 while (AppSession.DOPause)
                 {
                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                     {
+                        dicDOStatus[currentDeviceParameter.Name] = false;
                         return;
                     }
 
@@ -960,12 +970,14 @@ namespace RD3.ViewModels
                 {
                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                     {
+                        dicDOStatus[currentDeviceParameter.Name] = false;
                         return;
                     }
                     while (AppSession.DOPause)
                     {
                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                         {
+                            dicDOStatus[currentDeviceParameter.Name] = false;
                             return;
                         }
                         Thread.Sleep(1000);
@@ -979,12 +991,14 @@ namespace RD3.ViewModels
                 {
                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                     {
+                        dicDOStatus[currentDeviceParameter.Name] = false;
                         return;
                     }
                     while (AppSession.DOPause)
                     {
                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                         {
+                            dicDOStatus[currentDeviceParameter.Name] = false;
                             return;
                         }
                         Thread.Sleep(1000);
@@ -1045,12 +1059,14 @@ namespace RD3.ViewModels
                     {
                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                         {
+                            dicDOStatus[currentDeviceParameter.Name] = false;
                             return;
                         }
                         while (AppSession.DOPause)
                         {
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
+                                dicDOStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
                             Thread.Sleep(1000);
@@ -1069,12 +1085,14 @@ namespace RD3.ViewModels
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
                                 while (AppSession.DOPause)
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
+                                        dicDOStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
                                     Thread.Sleep(1000);
@@ -1088,12 +1106,14 @@ namespace RD3.ViewModels
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
                                 while (AppSession.DOPause)
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
+                                        dicDOStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
                                     Thread.Sleep(1000);
@@ -1104,6 +1124,7 @@ namespace RD3.ViewModels
 
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
+                                dicDOStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
 
@@ -1111,6 +1132,7 @@ namespace RD3.ViewModels
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
 
@@ -1159,9 +1181,9 @@ namespace RD3.ViewModels
                             //if (info != null && lastPid != null && info.PidName != lastPid.PidName)
                             if (info != null && lastPid != null && !info.Equals(lastPid))
                             {
-                                LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
                                 if (info.PidName != lastPid.PidName)
                                 {
+                                    LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
                                     baseAgit = deviceParameter.AgitParam.Agit_PV;
                                 }
                                 LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, baseAgit));
@@ -1184,12 +1206,14 @@ namespace RD3.ViewModels
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
+                                        dicDOStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
                                     while (AppSession.DOPause)
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
+                                            dicDOStatus[currentDeviceParameter.Name] = false;
                                             return;
                                         }
                                         Thread.Sleep(1000);
@@ -1199,6 +1223,21 @@ namespace RD3.ViewModels
                                 }
                                 continue;
                             }
+
+                            if (Math.Abs(lastDO - realTimeParam.DO) <= 0.01)
+                            {
+                                if (deviceParameter.DOParam.DO_PV >= realTimeParam.DO)
+                                {
+                                    baseAgit += 1;
+                                    LogHelper.Debug(string.Format("反应器{0} 上次DO{1} 当次DO{2}，转速底值＋1，底值{3}", deviceParameter.Name, lastDO, realTimeParam.DO, baseAgit));
+                                }
+                                else if (deviceParameter.DOParam.DO_PV <= realTimeParam.DO)
+                                {
+                                    baseAgit -= 1;
+                                    LogHelper.Debug(string.Format("反应器{0} 上次DO{1} 当次DO{2}，转速底值-1，底值{3}", deviceParameter.Name, lastDO, realTimeParam.DO, baseAgit));
+                                }
+                            }
+                            lastDO = realTimeParam.DO;
 
                             dicDOPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
                             dicDOPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
@@ -1229,12 +1268,14 @@ namespace RD3.ViewModels
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
                                 while (AppSession.DOPause)
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
+                                        dicDOStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
                                     Thread.Sleep(1000);
@@ -1255,12 +1296,14 @@ namespace RD3.ViewModels
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
+                                        dicDOStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
                                     while (AppSession.DOPause)
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
+                                            dicDOStatus[currentDeviceParameter.Name] = false;
                                             return;
                                         }
                                         Thread.Sleep(1000);
@@ -1285,6 +1328,7 @@ namespace RD3.ViewModels
 
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
+                                dicDOStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
 
@@ -1292,6 +1336,7 @@ namespace RD3.ViewModels
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
                                 Thread.Sleep(1000);
@@ -1368,12 +1413,14 @@ namespace RD3.ViewModels
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
+                                            dicDOStatus[currentDeviceParameter.Name] = false;
                                             return;
                                         }
                                         while (AppSession.DOPause)
                                         {
                                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                             {
+                                                dicDOStatus[currentDeviceParameter.Name] = false;
                                                 return;
                                             }
                                             Thread.Sleep(1000);
@@ -1443,12 +1490,14 @@ namespace RD3.ViewModels
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
+                                            dicDOStatus[currentDeviceParameter.Name] = false;
                                             return;
                                         }
                                         while (AppSession.DOPause)
                                         {
                                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                             {
+                                                dicDOStatus[currentDeviceParameter.Name] = false;
                                                 return;
                                             }
                                             Thread.Sleep(1000);
@@ -1506,12 +1555,14 @@ namespace RD3.ViewModels
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
+                                            dicDOStatus[currentDeviceParameter.Name] = false;
                                             return;
                                         }
                                         while (AppSession.DOPause)
                                         {
                                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                             {
+                                                dicDOStatus[currentDeviceParameter.Name] = false;
                                                 return;
                                             }
                                             Thread.Sleep(1000);
@@ -1526,12 +1577,14 @@ namespace RD3.ViewModels
                                         {
                                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                             {
+                                                dicDOStatus[currentDeviceParameter.Name] = false;
                                                 return;
                                             }
                                             while (AppSession.DOPause)
                                             {
                                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                                 {
+                                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                                     return;
                                                 }
                                                 Thread.Sleep(1000);
@@ -1617,12 +1670,14 @@ namespace RD3.ViewModels
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
+                                            dicDOStatus[currentDeviceParameter.Name] = false;
                                             return;
                                         }
                                         while (AppSession.DOPause)
                                         {
                                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                             {
+                                                dicDOStatus[currentDeviceParameter.Name] = false;
                                                 return;
                                             }
                                             Thread.Sleep(1000);
@@ -1653,12 +1708,14 @@ namespace RD3.ViewModels
                         {
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
+                                dicDOStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
                             while (AppSession.DOPause)
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
                                 Thread.Sleep(1000);
@@ -1672,12 +1729,14 @@ namespace RD3.ViewModels
                         {
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
+                                dicDOStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
                             while (AppSession.DOPause)
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
                                 Thread.Sleep(1000);
@@ -1688,6 +1747,7 @@ namespace RD3.ViewModels
 
                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                         {
+                            dicDOStatus[currentDeviceParameter.Name] = false;
                             return;
                         }
 
@@ -1695,6 +1755,7 @@ namespace RD3.ViewModels
                         {
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
+                                dicDOStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
 
@@ -1721,6 +1782,7 @@ namespace RD3.ViewModels
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
 
@@ -1728,6 +1790,7 @@ namespace RD3.ViewModels
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
+                                        dicDOStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
                                     Thread.Sleep(1000);
@@ -1756,12 +1819,14 @@ namespace RD3.ViewModels
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
                                 while (AppSession.DOPause)
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
+                                        dicDOStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
                                     Thread.Sleep(1000);
@@ -1842,12 +1907,14 @@ namespace RD3.ViewModels
                     {
                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                         {
+                            dicDOStatus[currentDeviceParameter.Name] = false;
                             return;
                         }
                         while (AppSession.DOPause)
                         {
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
+                                dicDOStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
                             Thread.Sleep(1000);
@@ -1867,12 +1934,14 @@ namespace RD3.ViewModels
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
                                 while (AppSession.DOPause)
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
+                                        dicDOStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
                                     Thread.Sleep(1000);
@@ -1886,12 +1955,14 @@ namespace RD3.ViewModels
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
                                 while (AppSession.DOPause)
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
+                                        dicDOStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
                                     Thread.Sleep(1000);
@@ -1902,6 +1973,7 @@ namespace RD3.ViewModels
 
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
+                                dicDOStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
 
@@ -1909,6 +1981,7 @@ namespace RD3.ViewModels
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
 
@@ -1950,12 +2023,11 @@ namespace RD3.ViewModels
                             {
                                 if (info.PidName != lastPid.PidName)
                                 {
+                                    LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
                                     baseAgit = deviceParameter.AgitParam.Agit_PV;
                                 }
                                 
                                 ResetDOParam(deviceParameter);
-
-                                LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
                                 LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, baseAgit));
                             }
                             lastPid = info;
@@ -1972,12 +2044,14 @@ namespace RD3.ViewModels
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
+                                        dicDOStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
                                     while (AppSession.DOPause)
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
+                                            dicDOStatus[currentDeviceParameter.Name] = false;
                                             return;
                                         }
                                         Thread.Sleep(1000);
@@ -1987,6 +2061,21 @@ namespace RD3.ViewModels
                                 }
                                 continue;
                             }
+
+                            if (Math.Abs(lastDO - realTimeParam.DO) <= 0.01)
+                            {
+                                if (deviceParameter.DOParam.DO_PV >= realTimeParam.DO)
+                                {
+                                    baseAgit += 1;
+                                    LogHelper.Debug(string.Format("反应器{0} 上次DO{1} 当次DO{2}，转速底值＋1，底值{3}", deviceParameter.Name, lastDO, realTimeParam.DO, baseAgit));
+                                }
+                                else if (deviceParameter.DOParam.DO_PV <= realTimeParam.DO)
+                                {
+                                    baseAgit -= 1;
+                                    LogHelper.Debug(string.Format("反应器{0} 上次DO{1} 当次DO{2}，转速底值-1，底值{3}", deviceParameter.Name, lastDO, realTimeParam.DO, baseAgit));
+                                }
+                            }
+                            lastDO = realTimeParam.DO;
 
                             dicDOPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
                             dicDOPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
@@ -2017,12 +2106,14 @@ namespace RD3.ViewModels
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
                                 while (AppSession.DOPause)
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
+                                        dicDOStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
                                     Thread.Sleep(1000);
@@ -2043,12 +2134,14 @@ namespace RD3.ViewModels
                                 {
                                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                     {
+                                        dicDOStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
                                     while (AppSession.DOPause)
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
+                                            dicDOStatus[currentDeviceParameter.Name] = false;
                                             return;
                                         }
                                         Thread.Sleep(1000);
@@ -2066,6 +2159,7 @@ namespace RD3.ViewModels
 
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
+                                dicDOStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
 
@@ -2073,6 +2167,7 @@ namespace RD3.ViewModels
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
+                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
                                 Thread.Sleep(1000);
@@ -2279,12 +2374,14 @@ namespace RD3.ViewModels
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
+                                            dicDOStatus[currentDeviceParameter.Name] = false;
                                             return;
                                         }
                                         while (AppSession.DOPause)
                                         {
                                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                             {
+                                                dicDOStatus[currentDeviceParameter.Name] = false;
                                                 return;
                                             }
                                             Thread.Sleep(1000);
@@ -2299,22 +2396,6 @@ namespace RD3.ViewModels
                                         deviceParameter.O2Param.IsControling = true;
                                         O2RunCommand.Execute(deviceParameter);
                                     }
-
-                                    //float o2FlowSpeed1 = 0f;
-                                    //if (param.Unit == 0)//VVM
-                                    //{
-                                    //    o2FlowSpeed1 = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                    //}
-                                    //else if (param.Unit == 1)//L/min
-                                    //{
-                                    //    o2FlowSpeed1 = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
-                                    //}
-                                    //realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    //if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed1) > 0.05)
-                                    //{
-                                    //    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed1;
-                                    //    Thread.Sleep(10000);
-                                    //}
 
                                     if (param.Unit == 0)//VVM
                                     {
@@ -2488,12 +2569,14 @@ namespace RD3.ViewModels
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
+                                            dicDOStatus[currentDeviceParameter.Name] = false;
                                             return;
                                         }
                                         while (AppSession.DOPause)
                                         {
                                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                             {
+                                                dicDOStatus[currentDeviceParameter.Name] = false;
                                                 return;
                                             }
                                             Thread.Sleep(1000);
@@ -2553,12 +2636,14 @@ namespace RD3.ViewModels
                                         {
                                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                             {
+                                                dicDOStatus[currentDeviceParameter.Name] = false;
                                                 return;
                                             }
                                             while (AppSession.DOPause)
                                             {
                                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                                 {
+                                                    dicDOStatus[currentDeviceParameter.Name] = false;
                                                     return;
                                                 }
                                                 Thread.Sleep(1000);
@@ -2593,27 +2678,6 @@ namespace RD3.ViewModels
                                         deviceParameter.DOParam.InitialFeed = deviceParameter.FeedParam1.Feed_PV;
                                         firstInitFeed = false;
                                     }
-
-                                    //float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
-                                    //float feedFlowSpeed = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
-                                    //realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    //if (Math.Abs(realTimeParam.FeedFlowSpeed - deviceParameter.FeedParam1.Feed_PV) > 0.05)
-                                    //{
-                                    //    deviceParameter.FeedParam1.Feed_PV = feedFlowSpeed;
-                                    //    while (true)
-                                    //    {
-                                    //        if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                    //        {
-                                    //            return;
-                                    //        }
-                                    //        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    //        if (Math.Abs(realTimeParam.FeedFlowSpeed - deviceParameter.FeedParam1.Feed_PV) <= 0.2)
-                                    //        {
-                                    //            break;
-                                    //        }
-                                    //        Thread.Sleep(1000);
-                                    //    }
-                                    //}
 
                                     if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
                                     {
@@ -2677,12 +2741,14 @@ namespace RD3.ViewModels
                                     {
                                         if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                         {
+                                            dicDOStatus[currentDeviceParameter.Name] = false;
                                             return;
                                         }
                                         while (AppSession.DOPause)
                                         {
                                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                             {
+                                                dicDOStatus[currentDeviceParameter.Name] = false;
                                                 return;
                                             }
                                             Thread.Sleep(1000);
@@ -3243,7 +3309,10 @@ namespace RD3.ViewModels
             if (dicPHWorker[currentDeviceParameter.Name] != null && dicPHWorker[currentDeviceParameter.Name].IsBusy)
             {
                 dicPHWorker[currentDeviceParameter.Name].CancelAsync();
-                Thread.Sleep(100);
+                while (dicPHStatus[currentDeviceParameter.Name])
+                {
+                    Thread.Sleep(100);
+                }
             }
 
             //关闭控制
@@ -3304,6 +3373,7 @@ namespace RD3.ViewModels
             // 绑定事件
             dicPHWorker[currentDeviceParameter.Name].DoWork += ((s, e) =>
             {
+                dicPHStatus[currentDeviceParameter.Name] = true;
                 var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == currentDeviceParameter.Name);
                 e.Result = deviceParameter.Name;
                 if (deviceParameter.PHParam.PHControlMode == PHControlMode.PID)
@@ -3317,9 +3387,8 @@ namespace RD3.ViewModels
                         try
                         {
                             if (dicPHWorker[deviceParameter.Name].CancellationPending)
-                            { // 检查取消请求
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                            {
+                                dicPHStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
 
@@ -3328,8 +3397,7 @@ namespace RD3.ViewModels
                             if (pIDInfos == null)
                             {
                                 MessageBox.Show("PID调控策略列表为空");
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                                dicPHStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
 
@@ -3346,8 +3414,7 @@ namespace RD3.ViewModels
                             if (info == null)
                             {
                                 MessageBox.Show(string.Format("反应器{0}不存在PH的PID调控策略", deviceParameter.Name));
-                                //e.Cancel = true;
-                                e.Result = deviceParameter.Name;
+                                dicPHStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
 
@@ -3355,9 +3422,12 @@ namespace RD3.ViewModels
                             //if (info != null && lastPid != null && info.PidName != lastPid.PidName)
                             if (info != null && lastPid != null && !info.Equals(lastPid))
                             {
-                                LogHelper.Debug(string.Format("PH调控：由{0}切换至{1}", lastPid.PidName, info.PidName));
                                 dicPHPid[deviceParameter.Name].Reset();
-                                dicPHDelta[deviceParameter.Name] = 0;
+                                if (info.PidName != lastPid.PidName)
+                                {
+                                    LogHelper.Debug(string.Format("PH调控：由{0}切换至{1}", lastPid.PidName, info.PidName));
+                                    dicPHDelta[deviceParameter.Name] = 0;
+                                }
                             }
 
                             lastPid = info;
@@ -3405,16 +3475,13 @@ namespace RD3.ViewModels
                                 dicPHPid[deviceParameter.Name].Reset();
                                 dicPHDelta[deviceParameter.Name] = 0;
 
-                                //Thread.Sleep(info.Interval * 1000);
-
                                 int count = info.Interval <= 0 ? 1 : info.Interval;
                                 int index = 0;
                                 while (index < count)
                                 {
                                     if (dicPHWorker[deviceParameter.Name].CancellationPending)
-                                    { // 检查取消请求
-                                        //e.Cancel = true;
-                                        e.Result = deviceParameter.Name;
+                                    {
+                                        dicPHStatus[currentDeviceParameter.Name] = false;
                                         return;
                                     }
 
@@ -3503,9 +3570,8 @@ namespace RD3.ViewModels
                             while (index1 < count1)
                             {
                                 if (dicPHWorker[deviceParameter.Name].CancellationPending)
-                                { // 检查取消请求
-                                    //e.Cancel = true;
-                                    e.Result = deviceParameter.Name;
+                                {
+                                    dicPHStatus[currentDeviceParameter.Name] = false;
                                     return;
                                 }
 
@@ -3524,13 +3590,11 @@ namespace RD3.ViewModels
                 {
                     try
                     {
-
                         while (true)
                         {
                             if (dicPHWorker[deviceParameter.Name].CancellationPending)
                             {
-                                e.Result = deviceParameter.Name;
-                                //e.Cancel = true;
+                                dicPHStatus[currentDeviceParameter.Name] = false;
                                 return;
                             }
 
@@ -3678,9 +3742,8 @@ namespace RD3.ViewModels
                                         while (time > 0)
                                         {
                                             if (dicPHWorker[deviceParameter.Name].CancellationPending)
-                                            { // 检查取消请求
-                                                e.Result = deviceParameter.Name;
-                                                //e.Cancel = true;
+                                            {
+                                                dicPHStatus[currentDeviceParameter.Name] = false;
                                                 return;
                                             }
 
@@ -3715,9 +3778,8 @@ namespace RD3.ViewModels
                                     while (time > 0)//等一分钟
                                     {
                                         if (dicPHWorker[deviceParameter.Name].CancellationPending)
-                                        { // 检查取消请求
-                                            //e.Cancel = true;
-                                            e.Result = deviceParameter.Name;
+                                        {
+                                            dicPHStatus[currentDeviceParameter.Name] = false;
                                             return;
                                         }
 
@@ -3764,6 +3826,7 @@ namespace RD3.ViewModels
                     {
                         if (dicPHWorker[deviceParameter.Name].CancellationPending)
                         {
+                            dicPHStatus[currentDeviceParameter.Name] = false;
                             return;
                         }
                         dicPHController[deviceParameter.Name].TargetPH = deviceParameter.PHParam.PH_PV;
@@ -3812,6 +3875,7 @@ namespace RD3.ViewModels
                                         {
                                             if (dicPHWorker[deviceParameter.Name].CancellationPending)
                                             {
+                                                dicPHStatus[currentDeviceParameter.Name] = false;
                                                 return;
                                             }
                                             Thread.Sleep(1000);
@@ -3859,6 +3923,7 @@ namespace RD3.ViewModels
                                         {
                                             if (dicPHWorker[deviceParameter.Name].CancellationPending)
                                             {
+                                                dicPHStatus[currentDeviceParameter.Name] = false;
                                                 return;
                                             }
                                             Thread.Sleep(1000);

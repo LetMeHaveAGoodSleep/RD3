@@ -72,7 +72,7 @@ namespace RD3.Shared
             realTime.Temp = temperature == 0 ? RandomNumberUtil.GetRandomSingle(20f, 37.1f) : temperature;
             realTime.Agit = agit == 0 ? RandomNumberUtil.GetRandomInt(300, 1500) : RandomNumberUtil.GetRandomInt(agit - 3, agit + 3);
             realTime.PH = RandomNumberUtil.GetRandomSingle(AppSession.VirtualpH - 0.1f, AppSession.VirtualpH + 0.1f);
-            realTime.DO = RandomNumberUtil.GetRandomSingle(AppSession.VirtualDO - 1f, AppSession.VirtualDO + 1f);
+            realTime.DO = RandomNumberUtil.GetRandomSingle(AppSession.VirtualDO, AppSession.VirtualDO);
             realTime.Pump1FlowRate = pump1FlowRate == 0 ? RandomNumberUtil.GetRandomSingle() : pump1FlowRate;
             realTime.Pump1Flow = RandomNumberUtil.GetRandomSingle();
             realTime.Pump1FlowCapacity = RandomNumberUtil.GetRandomSingle();
