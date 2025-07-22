@@ -193,9 +193,9 @@ namespace RD3.Shared
                 float coefficient = 4 * prob.Oreac / (100 - prob.Osp);
                 float fPluse = coefficient * flowRate;
                 float temp = fPluse + flowRate;
-
+                float flowCapacity = MathF.Round(temp * prob.Tmax / 3600f, 2);
                 LogHelper.Debug(string.Format("Probe:暂停DO控制,当前DO{0},目标DO{1}，脉冲高度{2},预设速度{3},实际速度{4}", realTimeParam.DO, prob.Osp, fPluse.ToString("F2"), temp.ToString("F2"), prob?.FMax));
-                DoFeedCtrl(prob.FMax);
+                DoFeedCtrl(prob.FMax, flowCapacity);
 
                 int count = Convert.ToInt32(prob.Tmax);
                 while (count > 0)
@@ -249,7 +249,7 @@ namespace RD3.Shared
         /// <summary>
         /// 控制补料速度
         /// </summary>
-        private void DoFeedCtrl(float rF)
+        private void DoFeedCtrl(float rF, float flowCapacity = float.MaxValue)
         {
             int pumpNo = PumpMFCUtil.GetPumpIndex(prob?.DeviceID, PeristalticPump.FeedPump);
             if (pumpNo > -1)
@@ -260,7 +260,7 @@ namespace RD3.Shared
                 {
                     PumpNo = pumpNo,
                     FlowSpeed = rF,
-                    FlowCapacity = Const.MaxPumpFlowCapacity
+                    FlowCapacity = flowCapacity
                 };
                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(prob?.DeviceID, param);
             }
