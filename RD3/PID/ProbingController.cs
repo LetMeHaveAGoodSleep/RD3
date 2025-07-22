@@ -195,7 +195,7 @@ namespace RD3.Shared
                 float temp = fPluse + flowRate;
 
                 LogHelper.Debug(string.Format("Probe:暂停DO控制,当前DO{0},目标DO{1}，脉冲高度{2},预设速度{3},实际速度{4}", realTimeParam.DO, prob.Osp, fPluse.ToString("F2"), temp.ToString("F2"), prob?.FMax));
-                DoFeedCtrl(temp);
+                DoFeedCtrl(prob.FMax);
 
                 int count = Convert.ToInt32(prob.Tmax);
                 while (count > 0)
