@@ -40,6 +40,9 @@ using System.Globalization;
 using System.Windows.Data;
 using MathNet.Symbolics;
 using Fpi.Util.WinApiUtil.CommDataType;
+using ScottPlot;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Xml.Linq;
 
 namespace RD3.ViewModels
 {
@@ -222,6 +225,23 @@ namespace RD3.ViewModels
         }
 
         public string connectedWith { get; set; }//关联项
+
+        public override bool Equals(object obj)
+        {
+            // 检查null和类型是否匹配
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            PIDInfo other = (PIDInfo)obj;
+            return P == other.P && I == other.I && D == other.D && deviceID == other.deviceID && Interval == other.Interval && Threshold == other.Threshold
+                && deadArea == other.deadArea && Factor == other.Factor;
+        }
+
+        // 必须同时重写GetHashCode
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(P, I, D, deviceID, Interval, Threshold, deadArea, Factor);
+        }
     }
 
     public class StatusToTextConverter : IValueConverter
