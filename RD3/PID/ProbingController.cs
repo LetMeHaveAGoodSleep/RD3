@@ -181,7 +181,6 @@ namespace RD3.Shared
                 while (DOControlFeed())
                 {
                     AppSession.DOPause = false;
-                    DoFeedCtrl(flowRate);
                     Thread.Sleep(1000);
                     continue;
                 }

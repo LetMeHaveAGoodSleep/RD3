@@ -949,11 +949,6 @@ namespace RD3.ViewModels
 
                 int sleepCount = 1;
 
-                float baseAir = -1;
-                float baseO2 = -1;
-
-                float lastDO = 0;
-
                 while (AppSession.DOPause)
                 {
                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
@@ -1016,9 +1011,6 @@ namespace RD3.ViewModels
                     lastDODelta = 0;//低通滤波的上个值
                     factorIndex = -1;//当前执行索引
                     lastFactorIndex = -1;//当前执行索引
-
-                    baseAir = -1;
-                    baseO2 = -1;
 
                     MidRangingParam param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                     realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -1167,16 +1159,6 @@ namespace RD3.ViewModels
                                 baseAgit = realTimeParam.Agit;
                             }
 
-                            if (baseAir == -1)
-                            {
-                                baseAir = realTimeParam.AirFlowSpeed;
-                            }
-
-                            if (baseO2 == -1)
-                            {
-                                baseO2 = realTimeParam.O2FlowSpeed;
-                            }
-
                             //如果pid类型变了，pid系数清零 方成
                             //if (info != null && lastPid != null && info.PidName != lastPid.PidName)
                             if (info != null && lastPid != null && !info.Equals(lastPid))
@@ -1223,21 +1205,6 @@ namespace RD3.ViewModels
                                 }
                                 continue;
                             }
-
-                            if (Math.Abs(lastDO - realTimeParam.DO) <= 0.01)
-                            {
-                                if (deviceParameter.DOParam.DO_PV >= realTimeParam.DO)
-                                {
-                                    baseAgit += 1;
-                                    LogHelper.Debug(string.Format("反应器{0} 上次DO{1} 当次DO{2}，转速底值＋1，底值{3}", deviceParameter.Name, lastDO, realTimeParam.DO, baseAgit));
-                                }
-                                else if (deviceParameter.DOParam.DO_PV <= realTimeParam.DO)
-                                {
-                                    baseAgit -= 1;
-                                    LogHelper.Debug(string.Format("反应器{0} 上次DO{1} 当次DO{2}，转速底值-1，底值{3}", deviceParameter.Name, lastDO, realTimeParam.DO, baseAgit));
-                                }
-                            }
-                            lastDO = realTimeParam.DO;
 
                             dicDOPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
                             dicDOPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
@@ -1378,8 +1345,8 @@ namespace RD3.ViewModels
                                     dicDOAirPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
                                     dicDOAirPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
                                     dicDOAirPid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
-                                    float tempAir = dicDOAirPid[deviceParameter.Name].CalculatePositional(param.AgitHigh);
-                                    float airSpeed = baseAir + tempAir;
+                                    float tempAir = dicDOAirPid[deviceParameter.Name].CalculateIncremental(param.AgitHigh);
+                                    float airSpeed = deviceParameter.AirParam.FlowSpeed + tempAir;
                                     isExistOtherGas = previousElements.Where(t => t == DOControlFactor.O2).Count() > 0;
                                     float minAir = isExistOtherGas == true ? 0 : initialGas;
                                     if (airSpeed >= maxGas)
@@ -1456,8 +1423,8 @@ namespace RD3.ViewModels
                                     dicDOO2Pid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
                                     dicDOO2Pid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
                                     dicDOO2Pid[deviceParameter.Name].SetTarget(dicDODelta[deviceParameter.Name]);
-                                    float tempO2 = dicDOO2Pid[deviceParameter.Name].CalculatePositional((float)param.AgitHigh);
-                                    float o2Speed = baseO2 + tempO2;
+                                    float tempO2 = dicDOO2Pid[deviceParameter.Name].CalculateIncremental((float)param.AgitHigh);
+                                    float o2Speed = deviceParameter.O2Param.FlowSpeed + tempO2;
                                     isExistOtherGas = previousElements.Where(t => t == DOControlFactor.Air).Count() > 0;
                                     float minO2 = isExistOtherGas == true ? 0 : initialGas;
                                     if (o2Speed >= maxGas)
@@ -1529,8 +1496,8 @@ namespace RD3.ViewModels
                                     pIDController.SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
                                     pIDController.SetIntegralLimits(-2000, 2000);
                                     pIDController.SetTarget(param.AgitHigh);
-                                    float increment = pIDController.CalculatePositional(dicDODelta[deviceParameter.Name]);
-                                    float currentTemp = deviceParameter.DOParam.InitialTemp + increment;
+                                    float increment = pIDController.CalculateIncremental(dicDODelta[deviceParameter.Name]);
+                                    float currentTemp = deviceParameter.TempParam.Temp_PV + increment;
                                     if (currentTemp <= deviceParameter.TempDOLowerLimit)
                                     {
                                         if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
@@ -2061,21 +2028,6 @@ namespace RD3.ViewModels
                                 }
                                 continue;
                             }
-
-                            if (Math.Abs(lastDO - realTimeParam.DO) <= 0.01)
-                            {
-                                if (deviceParameter.DOParam.DO_PV >= realTimeParam.DO)
-                                {
-                                    baseAgit += 1;
-                                    LogHelper.Debug(string.Format("反应器{0} 上次DO{1} 当次DO{2}，转速底值＋1，底值{3}", deviceParameter.Name, lastDO, realTimeParam.DO, baseAgit));
-                                }
-                                else if (deviceParameter.DOParam.DO_PV <= realTimeParam.DO)
-                                {
-                                    baseAgit -= 1;
-                                    LogHelper.Debug(string.Format("反应器{0} 上次DO{1} 当次DO{2}，转速底值-1，底值{3}", deviceParameter.Name, lastDO, realTimeParam.DO, baseAgit));
-                                }
-                            }
-                            lastDO = realTimeParam.DO;
 
                             dicDOPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
                             dicDOPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
