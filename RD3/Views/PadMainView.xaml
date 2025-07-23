@@ -5,116 +5,176 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="PadMainWindow"
     Width="800"
     Height="450"
+    ResizeMode="NoResize"
+    WindowState="Maximized"
     mc:Ignorable="d">
     <DockPanel LastChildFill="True">
-        <Grid DockPanel.Dock="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-        </Grid>
-        <DockPanel LastChildFill="True">
-            <hc:TransitioningContentControl DockPanel.Dock="Right">
-                <hc:SideMenu
-                    Width="200"
-                    Margin="10"
-                    BorderThickness="1">
-                    <hc:SideMenu.Resources>
-                        <Color x:Key="PrimaryColor">#FFD80073</Color>
-                        <Color x:Key="DarkPrimaryColor">#FFD80073</Color>
-                        <LinearGradientBrush x:Key="PrimaryBrush" StartPoint="0,0" EndPoint="1,0">
-                            <GradientStop Offset="0" Color="{DynamicResource PrimaryColor}" />
-                            <GradientStop Offset="1" Color="{DynamicResource DarkPrimaryColor}" />
-                        </LinearGradientBrush>
-                    </hc:SideMenu.Resources>
-                    <hc:Interaction.Triggers>
-                        <hc:EventTrigger EventName="SelectionChanged">
-                            <hc:EventToCommand Command="{Binding SwitchItemCmd}" PassEventArgsToCommand="True" />
-                        </hc:EventTrigger>
-                    </hc:Interaction.Triggers>
-                    <hc:SideMenuItem Header="Overview">
-                        <hc:SideMenuItem.Icon>
-                            <Image
-                                Width="24"
-                                Height="24"
-                                Source="pack://application:,,,/Resource/Image/DevOps/DevOps-Boards.png" />
-                        </hc:SideMenuItem.Icon>
-                        <hc:SideMenuItem
-                            Command="{Binding SelectCmd}"
-                            CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
-                            Header="Summary">
-                            <hc:SideMenuItem.Icon>
-                                <TextBlock
-                                    FontFamily="{StaticResource IconFont}"
-                                    Style="{StaticResource TextBlockSubTitle}"
-                                    Text="&#xe604;" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem
-                            Command="{Binding SelectCmd}"
-                            CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
-                            Header="Dashboards">
-                            <hc:SideMenuItem.Icon>
-                                <TextBlock
-                                    FontFamily="{StaticResource IconFont}"
-                                    Style="{StaticResource TextBlockSubTitle}"
-                                    Text="&#xe603;" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem
-                            Command="{Binding SelectCmd}"
-                            CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
-                            Header="Wiki">
-                            <hc:SideMenuItem.Icon>
-                                <TextBlock
-                                    FontFamily="{StaticResource IconFont}"
-                                    Style="{StaticResource TextBlockSubTitle}"
-                                    Text="&#xe602;" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem
-                            Command="{Binding SelectCmd}"
-                            CommandParameter="{Binding Header, RelativeSource={RelativeSource Self}}"
-                            Header="Wiki">
-                            <hc:SideMenuItem.Icon>
-                                <TextBlock
-                                    FontFamily="{StaticResource IconFont}"
-                                    Style="{StaticResource TextBlockSubTitle}"
-                                    Text="&#xe601;" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                    </hc:SideMenuItem>
-                    <hc:SideMenuItem Header="Boards">
-                        <hc:SideMenuItem.Icon>
-                            <Image
-                                Width="24"
-                                Height="24"
-                                Source="pack://application:,,,/Resource/Image/DevOps/DevOps-Pipelines.png" />
-                        </hc:SideMenuItem.Icon>
-                        <hc:SideMenuItem Header="Sprints">
-                            <hc:SideMenuItem.Icon>
-                                <TextBlock
-                                    FontFamily="{StaticResource IconFont}"
-                                    Style="{StaticResource TextBlockSubTitle}"
-                                    Text="&#xe600;" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem Header="Queries">
-                            <hc:SideMenuItem.Icon>
-                                <TextBlock
-                                    FontFamily="{StaticResource IconFont}"
-                                    Style="{StaticResource TextBlockSubTitle}"
-                                    Text="&#xe67f;" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                    </hc:SideMenuItem>
-                </hc:SideMenu>
-            </hc:TransitioningContentControl>
-            <ContentControl />
+        <DockPanel
+            Background="#049095"
+            DockPanel.Dock="Top"
+            LastChildFill="False">
+            <hc:UniformSpacingPanel
+                Margin="20,0,12,0"
+                DockPanel.Dock="Right"
+                FlowDirection="LeftToRight"
+                Orientation="Horizontal"
+                Spacing="10">
+                <DockPanel LastChildFill="False">
+                    <TextBlock
+                        Name="FormattedTime"
+                        VerticalAlignment="Center"
+                        FontFamily="{StaticResource IconFont}"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White"
+                        Text="2025-07-23 17:14:32" />
+                </DockPanel>
+                <!--<hc:Divider
+                    Height="30"
+                    LineStroke="White"
+                    LineStrokeThickness="1"
+                    Orientation="Vertical" />-->
+                <Button
+                    Height="40"
+                    hc:IconElement.Geometry="{StaticResource GeometryUserCircle}"
+                    hc:IconElement.Height="30"
+                    hc:IconElement.Width="30"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    FontSize="{StaticResource HeadFontSize}"
+                    Foreground="White" />
+            </hc:UniformSpacingPanel>
         </DockPanel>
+        <materialDesign:Card>
+            <TabControl Style="{StaticResource MaterialDesignNavigationRailTabControl}" TabStripPlacement="Right">
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon
+                                Width="40"
+                                Height="40"
+                                HorizontalAlignment="Center"
+                                Kind="Home" />
+                            <TextBlock HorizontalAlignment="Center" Text="首页" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel Margin="16" />
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon
+                                Width="40"
+                                Height="40"
+                                HorizontalAlignment="Center"
+                                Kind="Database" />
+                            <TextBlock HorizontalAlignment="Center" Text="数据" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel Margin="16">
+                        <TextBlock
+                            Margin="0,0,0,8"
+                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                            Text="Recent" />
+                        <TextBlock>
+                            <Run Text="tab 2 content. Default look and behaviors." />
+                            <LineBreak />
+                            <LineBreak />
+                            <Run FontStyle="Italic">
+                                Praesent sed dui arcu. Vivamus porta auctor sagittis
+                            </Run>
+                        </TextBlock>
+                    </StackPanel>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon
+                                Width="40"
+                                Height="40"
+                                HorizontalAlignment="Center"
+                                Kind="Apps" />
+                            <TextBlock HorizontalAlignment="Center" Text="控制" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel Margin="16">
+                        <TextBlock
+                            Margin="0,0,0,8"
+                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                            Text="Recent" />
+                        <TextBlock>
+                            <Run Text="tab 2 content. Default look and behaviors." />
+                            <LineBreak />
+                            <LineBreak />
+                            <Run FontStyle="Italic">
+                                Praesent sed dui arcu. Vivamus porta auctor sagittis
+                            </Run>
+                        </TextBlock>
+                    </StackPanel>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon
+                                Width="40"
+                                Height="40"
+                                HorizontalAlignment="Center"
+                                Kind="AlphaCBoxOutline" />
+                            <TextBlock HorizontalAlignment="Center" Text="标定" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel Margin="16">
+                        <TextBlock
+                            Margin="0,0,0,8"
+                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                            Text="Photos" />
+                        <TextBlock>
+                            <Run Text="tab 3 content. Default look and behaviors." />
+                            <LineBreak />
+                            <LineBreak />
+                        </TextBlock>
+                    </StackPanel>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon
+                                Width="40"
+                                Height="40"
+                                HorizontalAlignment="Center"
+                                Kind="Alarm" />
+                            <TextBlock HorizontalAlignment="Center" Text="报警" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel Margin="16">
+                        <TextBlock
+                            Margin="0,0,0,8"
+                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                            Text="Sounds" />
+                        <TextBlock>
+                            <Run Text="tab 4 content. Default look and behaviors." />
+                            <LineBreak />
+                            <LineBreak />
+                        </TextBlock>
+                    </StackPanel>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Width="auto" Height="auto">
+                            <materialDesign:PackIcon
+                                Width="40"
+                                Height="40"
+                                HorizontalAlignment="Center"
+                                Kind="FileSign" />
+                            <TextBlock HorizontalAlignment="Center" Text="审计" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <StackPanel Margin="16" />
+                </TabItem>
+            </TabControl>
+        </materialDesign:Card>
     </DockPanel>
 </hc:GlowWindow>

@@ -169,6 +169,8 @@
                 <TextBlock Foreground="Red" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
             </DataTemplate>
 
+            <FontFamily x:Key="IconFont">pack://application:,,,/Themes/#iconfont</FontFamily>
+
             <!--<Style TargetType="{x:Type views:DialogWindowBase}">
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
                 <Setter Property="Background" Value="White" />

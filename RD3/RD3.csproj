@@ -31,6 +31,11 @@
     <None Remove="Images\cloud.png" />
     <None Remove="Images\DataGrid\Delete.png" />
     <None Remove="Images\DataGrid\Edit.png" />
+    <None Remove="Images\DevOps\DevOps-Boards.png" />
+    <None Remove="Images\DevOps\DevOps-Overview.png" />
+    <None Remove="Images\DevOps\DevOps-Pipelines.png" />
+    <None Remove="Images\DevOps\DevOps-Repos.png" />
+    <None Remove="Images\DevOps\DevOps-TestPlans.png" />
     <None Remove="Images\DOE\Fullfactorial.png" />
     <None Remove="Images\Feed\Ass.png" />
     <None Remove="Images\Feed\Constant.png" />
@@ -107,6 +112,7 @@
     <None Remove="Images\SideMenu\Project_Primary.png" />
     <None Remove="Images\SideMenu\Setting.png" />
     <None Remove="Images\SideMenu\Setting_Primary.png" />
+    <None Remove="Themes\iconfont.ttf" />
     <None Remove="Views\yefkiliw.oaj~" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +178,11 @@
     </Resource>
     <Resource Include="Images\DataGrid\Edit.png" />
     <Resource Include="Assets\logo.png" />
+    <Resource Include="Images\DevOps\DevOps-Boards.png" />
+    <Resource Include="Images\DevOps\DevOps-Overview.png" />
+    <Resource Include="Images\DevOps\DevOps-Pipelines.png" />
+    <Resource Include="Images\DevOps\DevOps-Repos.png" />
+    <Resource Include="Images\DevOps\DevOps-TestPlans.png" />
     <Resource Include="Images\DOE\Fullfactorial.png" />
     <Resource Include="Images\Feed\Ass.png" />
     <Resource Include="Images\Feed\Constant.png" />
@@ -251,6 +262,9 @@
     <Resource Include="Images\SideMenu\Project_Primary.png" />
     <Resource Include="Images\SideMenu\Setting.png" />
     <Resource Include="Images\SideMenu\Setting_Primary.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\iconfont.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Update="App.config">

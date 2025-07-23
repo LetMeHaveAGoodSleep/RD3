@@ -22,6 +22,7 @@ using System.Threading;
 using System.Windows;
 using System.Xml.Linq;
 using XZ.SQLite;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace RD3
 {
@@ -177,6 +178,25 @@ namespace RD3
                     });
                     break;
                 case SoftwarePlatform.WindowsPad:
+                    var lastUser = VarConfig.GetValue("LastUser")?.ToString();
+                    if (string.IsNullOrWhiteSpace(lastUser))
+                    {
+                        dialog.ShowDialog(nameof(LoginView), callback =>
+                        {
+                            if (callback.Result != ButtonResult.OK)
+                            {
+                                Environment.Exit(0);
+                                return;
+                            }
+                        });
+                    }
+                    lastUser = VarConfig.GetValue("LastUser")?.ToString();
+                    var lastPassWord = VarConfig.GetValue("LastPassWord")?.ToString();
+                    User user = UserManager.GetInstance().Users?.ToList().Find(t => t.UserName == lastUser && AESEncryption.Encrypt(t.Password) == lastPassWord);
+                    if (user != null)
+                    {
+                        AppSession.CurrentUser = user;
+                    }
                     break;
             }
 
