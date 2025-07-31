@@ -1,0 +1,39 @@
+[
+  {
+    "DeviceID": "G01",
+    "MFCIndex": 1,
+    "Gas": 1,
+    "IsExist": true,
+    "IsEnable": true
+  },
+  {
+    "DeviceID": "G01",
+    "MFCIndex": 2,
+    "Gas": 2,
+    "IsExist": true,
+    "IsEnable": true
+  },
+  {
+    "DeviceID": "G01",
+    "MFCIndex": 3,
+    "Gas": 3,
+    "IsExist": true,
+    "IsEnable": true
+  },
+  {
+    "DeviceID": "G01",
+    "MFCIndex": 4,
+    "Gas": 4,
+    "IsExist": true,
+    "IsEnable": true
+  },
+  {
+    "DeviceID": "G01",
+    "MFCIndex": 0,
+    "Gas": 0,
+    "IsExist": true,
+    "IsEnable": true
+  }
+]
+
+

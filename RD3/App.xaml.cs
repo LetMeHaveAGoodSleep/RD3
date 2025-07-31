@@ -1,5 +1,6 @@
 ﻿using DryIoc;
 using Fpi.Util.Interfaces.Initialize;
+using HandyControl.Data;
 using log4net;
 using MaterialDesignThemes.Wpf;
 using Prism.DryIoc;
@@ -34,6 +35,7 @@ namespace RD3
         static Mutex mutex;
         bool createdNew;
         EnhancedSqliteBackupService backupService;
+        SoftwarePlatform platform = SoftwarePlatform.Default;
 
         // 设置高性能模式（需调用Windows API）
         [DllImport("kernel32.dll")]
@@ -45,13 +47,7 @@ namespace RD3
 
         protected override Window CreateShell()
         {
-            var softwarePlatform = VarConfig.GetValue("SoftwarePlatform")?.ToString();
-            Enum.TryParse(typeof(SoftwarePlatform), softwarePlatform, out var result);
-            if (result == null)
-            {
-                result = SoftwarePlatform.Default;
-            }
-            switch ((SoftwarePlatform)result)
+            switch (platform)
             {
                 case SoftwarePlatform.WindowsPad:
                     VarConfig.SetValue("SoftwarePlatform", SoftwarePlatform.WindowsPad);
@@ -66,16 +62,40 @@ namespace RD3
         {
             DeviceManager.GetInstance();
 
+            var softwarePlatform = VarConfig.GetValue("SoftwarePlatform")?.ToString();
+            Enum.TryParse(typeof(SoftwarePlatform), softwarePlatform, out var result);
+            if (result == null)
+            {
+                result = SoftwarePlatform.Default;
+            }
+            platform = (SoftwarePlatform)result;
+
             string mutexName = "RD3";
+            switch (platform)
+            {
+                case SoftwarePlatform.Default:
+                    mutexName = "RD3";
+                    break;
+                case SoftwarePlatform.WindowsPad:
+                    mutexName = "RD3_Pad";
+                    break;
+                case SoftwarePlatform.HighThroughput:
+                    mutexName = "RD3_HT";
+                    break;
+            }
+
             mutex = new Mutex(true, mutexName, out createdNew);
-            if (createdNew)
+            if (createdNew|| System.Diagnostics.Debugger.IsAttached)
             {
                 //使用CPU高性能模式
                 SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED);
 
                 FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false;
                 DispatcherUnhandledException += App_DispatcherUnhandledException;
-                mutex.ReleaseMutex();
+                if (createdNew)
+                {
+                    mutex.ReleaseMutex();
+                }
                 base.OnStartup(e);
             }
             else
@@ -90,8 +110,12 @@ namespace RD3
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            LogHelper.Error(e.Exception+"  "+ e.Exception.StackTrace);
+            LogHelper.Error(e.Exception + "  " + e.Exception.StackTrace);
             e.Handled = true;
+
+            HandyControl.Controls.MessageBox.Warning("程序出错，请重启软件", "温馨提示");
+            Application.Current.Shutdown();
+            Environment.Exit(0);
         }
 
         public static void LoginOut(IContainerProvider containerProvider)
@@ -146,7 +170,7 @@ namespace RD3
             UserManager.GetInstance();
             var dialog = Container.Resolve<IDialogService>();
 
-            backupService = new EnhancedSqliteBackupService(@"hisDatas\xzrd3.db", @"D:\DatabaseBackups");
+            backupService = new EnhancedSqliteBackupService(@"hisDatas\xzrd3.db", AppDomain.CurrentDomain.BaseDirectory + @"\DatabaseBackups");
             backupService.Start();
 
             var softwarePlatform = VarConfig.GetValue("SoftwarePlatform")?.ToString();
@@ -197,6 +221,15 @@ namespace RD3
                     {
                         AppSession.CurrentUser = user;
                     }
+
+                    dialog.ShowDialog(nameof(SelfCheckView), callback =>
+                    {
+                        if (callback.Result != ButtonResult.OK)
+                        {
+                            Environment.Exit(0);
+                            return;
+                        }
+                    });
                     break;
             }
 
@@ -267,6 +300,7 @@ namespace RD3
             containerRegistry.RegisterDialog<ProbView, ProbViewModel>();
             containerRegistry.RegisterDialog<AdaptpHView, AdaptpHViewModel>();
             containerRegistry.RegisterForNavigation<PadMainView, PadMainViewModel>();
+            containerRegistry.RegisterDialog<PumpSettingView, PumpSettingViewModel>();
             //containerRegistry.RegisterDialogWindow<DialogWindowBase>();
         }
 

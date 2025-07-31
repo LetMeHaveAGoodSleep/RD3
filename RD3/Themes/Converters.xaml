@@ -19,4 +19,5 @@
     <rd3:EnumToInverseBoolConverter x:Key="EnumToInverseBoolConverter" />
     <rd3:MultiBoolToBoolConverter x:Key="MultiBoolToBoolConverter" />
     <rd3:RowToIndexConverter x:Key="RowToIndexConverter" />
+    <rd3:DynamicFormatConverter x:Key="DynamicFormatConverter" />
 </ResourceDictionary>

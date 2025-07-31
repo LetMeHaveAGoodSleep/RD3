@@ -19,6 +19,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\AlibabaPuHuiTi-2-55-Regular.otf" />
+    <None Remove="Assets\logo.bmp" />
     <None Remove="Assets\MiSans-Regular.otf" />
     <None Remove="Assets\NotoSans-Regular.otf" />
     <None Remove="Images\Advance.png" />
@@ -31,11 +32,6 @@
     <None Remove="Images\cloud.png" />
     <None Remove="Images\DataGrid\Delete.png" />
     <None Remove="Images\DataGrid\Edit.png" />
-    <None Remove="Images\DevOps\DevOps-Boards.png" />
-    <None Remove="Images\DevOps\DevOps-Overview.png" />
-    <None Remove="Images\DevOps\DevOps-Pipelines.png" />
-    <None Remove="Images\DevOps\DevOps-Repos.png" />
-    <None Remove="Images\DevOps\DevOps-TestPlans.png" />
     <None Remove="Images\DOE\Fullfactorial.png" />
     <None Remove="Images\Feed\Ass.png" />
     <None Remove="Images\Feed\Constant.png" />
@@ -70,6 +66,49 @@
     <None Remove="Images\Main\PH_Primary.png" />
     <None Remove="Images\Main\Temp.png" />
     <None Remove="Images\Main\Temp_Primary.png" />
+    <None Remove="Images\NewReactor\button1.png" />
+    <None Remove="Images\NewReactor\ft.png" />
+    <None Remove="Images\NewReactor\logo.png" />
+    <None Remove="Images\NewReactor\关闭.png" />
+    <None Remove="Images\NewReactor\分割线.png" />
+    <None Remove="Images\NewReactor\分割线（图右）.png" />
+    <None Remove="Images\NewReactor\分割线（图左2）.png" />
+    <None Remove="Images\NewReactor\分割线（图左）.png" />
+    <None Remove="Images\NewReactor\名称提示线.png" />
+    <None Remove="Images\NewReactor\小瓶.png" />
+    <None Remove="Images\NewReactor\小瓶（称重）.png" />
+    <None Remove="Images\NewReactor\尾气制冷.png" />
+    <None Remove="Images\NewReactor\总 按键按下瞬间参考.jpg" />
+    <None Remove="Images\NewReactor\总1.jpg" />
+    <None Remove="Images\NewReactor\总2.jpg" />
+    <None Remove="Images\NewReactor\按下效果（中文）.png" />
+    <None Remove="Images\NewReactor\按下效果（英文）.png" />
+    <None Remove="Images\NewReactor\按钮1.png" />
+    <None Remove="Images\NewReactor\按钮1（按下）.png" />
+    <None Remove="Images\NewReactor\提示角标.png" />
+    <None Remove="Images\NewReactor\搅拌0.png" />
+    <None Remove="Images\NewReactor\搅拌1.png" />
+    <None Remove="Images\NewReactor\搅拌2.png" />
+    <None Remove="Images\NewReactor\最小化.png" />
+    <None Remove="Images\NewReactor\水.png" />
+    <None Remove="Images\NewReactor\温度计.png" />
+    <None Remove="Images\NewReactor\眉头.jpg" />
+    <None Remove="Images\NewReactor\红.png" />
+    <None Remove="Images\NewReactor\绿.png" />
+    <None Remove="Images\NewReactor\罐加热（制冷）.png" />
+    <None Remove="Images\NewReactor\罐加热（加热）.png" />
+    <None Remove="Images\NewReactor\罐加热（常规）.png" />
+    <None Remove="Images\NewReactor\背景.jpg" />
+    <None Remove="Images\NewReactor\蓝.png" />
+    <None Remove="Images\NewReactor\蠕动泵贯穿线.png" />
+    <None Remove="Images\NewReactor\蠕动泵（关闭）.png" />
+    <None Remove="Images\NewReactor\蠕动泵（开启）.png" />
+    <None Remove="Images\NewReactor\还原.png" />
+    <None Remove="Images\NewReactor\选中（主流）.png" />
+    <None Remove="Images\NewReactor\选项框.png" />
+    <None Remove="Images\NewReactor\阀（关）.png" />
+    <None Remove="Images\NewReactor\阀（开）.png" />
+    <None Remove="Images\NewReactor\黄.png" />
     <None Remove="Images\Projects.png" />
     <None Remove="Images\ReactorNew\MFC不使能.png" />
     <None Remove="Images\ReactorNew\MFC使能.png" />
@@ -140,7 +179,7 @@
     <PackageReference Include="MathNet.Symbolics" Version="0.25.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
-    <PackageReference Include="ScottPlot.WPF" Version="5.0.36" />
+    <PackageReference Include="ScottPlot.WPF" Version="5.0.55" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fpi.Assembly\Fpi.Assembly.csproj" />
@@ -161,6 +200,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\logo.bmp" />
     <Resource Include="Fonts\AlibabaPuHuiTi-2-55-Regular.otf" />
     <Resource Include="Fonts\MiSans-Regular.otf" />
     <Resource Include="Fonts\NotoSans-Regular.otf">
@@ -178,11 +218,6 @@
     </Resource>
     <Resource Include="Images\DataGrid\Edit.png" />
     <Resource Include="Assets\logo.png" />
-    <Resource Include="Images\DevOps\DevOps-Boards.png" />
-    <Resource Include="Images\DevOps\DevOps-Overview.png" />
-    <Resource Include="Images\DevOps\DevOps-Pipelines.png" />
-    <Resource Include="Images\DevOps\DevOps-Repos.png" />
-    <Resource Include="Images\DevOps\DevOps-TestPlans.png" />
     <Resource Include="Images\DOE\Fullfactorial.png" />
     <Resource Include="Images\Feed\Ass.png" />
     <Resource Include="Images\Feed\Constant.png" />
@@ -218,6 +253,49 @@
     <Resource Include="Images\Main\Temp.png" />
     <Resource Include="Images\Main\PH_ass.png" />
     <Resource Include="Images\Main\Temp_Primary.png" />
+    <Resource Include="Images\NewReactor\button1.png" />
+    <Resource Include="Images\NewReactor\ft.png" />
+    <Resource Include="Images\NewReactor\logo.png" />
+    <Resource Include="Images\NewReactor\关闭.png" />
+    <Resource Include="Images\NewReactor\分割线.png" />
+    <Resource Include="Images\NewReactor\分割线（图右）.png" />
+    <Resource Include="Images\NewReactor\分割线（图左2）.png" />
+    <Resource Include="Images\NewReactor\分割线（图左）.png" />
+    <Resource Include="Images\NewReactor\名称提示线.png" />
+    <Resource Include="Images\NewReactor\小瓶.png" />
+    <Resource Include="Images\NewReactor\小瓶（称重）.png" />
+    <Resource Include="Images\NewReactor\尾气制冷.png" />
+    <Resource Include="Images\NewReactor\总 按键按下瞬间参考.jpg" />
+    <Resource Include="Images\NewReactor\总1.jpg" />
+    <Resource Include="Images\NewReactor\总2.jpg" />
+    <Resource Include="Images\NewReactor\按下效果（中文）.png" />
+    <Resource Include="Images\NewReactor\按下效果（英文）.png" />
+    <Resource Include="Images\NewReactor\按钮1.png" />
+    <Resource Include="Images\NewReactor\按钮1（按下）.png" />
+    <Resource Include="Images\NewReactor\提示角标.png" />
+    <Resource Include="Images\NewReactor\搅拌0.png" />
+    <Resource Include="Images\NewReactor\搅拌1.png" />
+    <Resource Include="Images\NewReactor\搅拌2.png" />
+    <Resource Include="Images\NewReactor\最小化.png" />
+    <Resource Include="Images\NewReactor\水.png" />
+    <Resource Include="Images\NewReactor\温度计.png" />
+    <Resource Include="Images\NewReactor\眉头.jpg" />
+    <Resource Include="Images\NewReactor\红.png" />
+    <Resource Include="Images\NewReactor\绿.png" />
+    <Resource Include="Images\NewReactor\罐加热（制冷）.png" />
+    <Resource Include="Images\NewReactor\罐加热（加热）.png" />
+    <Resource Include="Images\NewReactor\罐加热（常规）.png" />
+    <Resource Include="Images\NewReactor\背景.jpg" />
+    <Resource Include="Images\NewReactor\蓝.png" />
+    <Resource Include="Images\NewReactor\蠕动泵贯穿线.png" />
+    <Resource Include="Images\NewReactor\蠕动泵（关闭）.png" />
+    <Resource Include="Images\NewReactor\蠕动泵（开启）.png" />
+    <Resource Include="Images\NewReactor\还原.png" />
+    <Resource Include="Images\NewReactor\选中（主流）.png" />
+    <Resource Include="Images\NewReactor\选项框.png" />
+    <Resource Include="Images\NewReactor\阀（关）.png" />
+    <Resource Include="Images\NewReactor\阀（开）.png" />
+    <Resource Include="Images\NewReactor\黄.png" />
     <Resource Include="Images\ReactorNew\MFC不使能.png" />
     <Resource Include="Images\ReactorNew\MFC没启用.png" />
     <Resource Include="Images\ReactorNew\MFC使能.png" />
@@ -280,6 +358,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Config\CommandManager.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\MFCInfo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\PumpInfo.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Config\SensorAlarmCode.json">

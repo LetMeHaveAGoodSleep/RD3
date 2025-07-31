@@ -12,6 +12,9 @@
     <Compile Update="Controls\IndicatorLight.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AdaptpHView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\CameraView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,9 +22,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\DialogWindowBase.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\DOAssociateView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\DOControlStrategyView.xaml.cs">
@@ -39,13 +39,25 @@
     <Compile Update="Views\FeedCycleView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\FilterWaveView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\FlashOverlayWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\MCUDebugView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\PadMainView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PumpMFCSettingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\PumpMFCView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PumpSettingView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\RegisterView.xaml.cs">
@@ -108,9 +120,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CompareBatchView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\DOAssociateView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\DOEDesignView.xaml">

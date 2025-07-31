@@ -7167,7 +7167,7 @@ namespace RD3.ViewModels
 
                             lastInfoType = f.InfoType;
                         }
-                        endTime = feedGradientInfos[feedGradientInfos.Count - 1].EndTime;
+                        endTime = feedGradientInfos[feedGradientInfos.Count - 1].EndTime * 60;
                     }
                 };
                 dicFeed1Worker[CurrentDeviceParameter.Name].RunWorkerCompleted += (s, e) =>
@@ -14920,59 +14920,6 @@ namespace RD3.ViewModels
                             realTimeParam = ClockSupervisor.realDatasDic[deviceParameter.Name][index];
 
                             PropertyMapper.Map(realTimeParam, deviceParameter);
-
-                            //deviceParameter.Temp = realTimeParam.Temp;
-                            //deviceParameter.PH = realTimeParam.PH;
-                            //deviceParameter.Agit = realTimeParam.Agit;
-                            //deviceParameter.DO = realTimeParam.DO;
-                            //deviceParameter.WorkStatus = realTimeParam.WorkStatus;
-                            //deviceParameter.JarWeight = realTimeParam.JarWeight;
-                            //deviceParameter.Bottle1Weight = realTimeParam.Bottle1Weight;
-                            //deviceParameter.Bottle2Weight = realTimeParam.Bottle2Weight;
-                            //deviceParameter.HasFoam = realTimeParam.HasFoam;
-                            //deviceParameter.AlarmBytes = [.. realTimeParam.AlarmBytes];
-
-                            //deviceParameter.Pump1FlowSpeed = realTimeParam.Pump1FlowRate;
-                            //deviceParameter.Pump1FlowCapacity = realTimeParam.Pump1FlowCapacity;
-                            //deviceParameter.Pump2FlowSpeed = realTimeParam.Pump2FlowRate;
-                            //deviceParameter.Pump2FlowCapacity = realTimeParam.Pump2FlowCapacity;
-                            //deviceParameter.Pump3FlowSpeed = realTimeParam.Pump3FlowRate;
-                            //deviceParameter.Pump3FlowCapacity = realTimeParam.Pump3FlowCapacity;
-                            //deviceParameter.Pump4FlowSpeed = realTimeParam.Pump4FlowRate;
-                            //deviceParameter.Pump4FlowCapacity = realTimeParam.Pump4FlowCapacity;
-                            //deviceParameter.Pump5FlowSpeed = realTimeParam.Pump5FlowRate;
-                            //deviceParameter.Pump5FlowCapacity = realTimeParam.Pump5FlowCapacity;
-                            //deviceParameter.Pump6FlowSpeed = realTimeParam.Pump6FlowRate;
-                            //deviceParameter.Pump6FlowCapacity = realTimeParam.Pump6FlowCapacity;
-
-                            //deviceParameter.AcidFlowSpeed = realTimeParam.AcidFlowSpeed;
-                            //deviceParameter.AcidFlowCapacity = realTimeParam.AcidFlowCapacity;
-                            //deviceParameter.BaseFlowSpeed = realTimeParam.BaseFlowSpeed;
-                            //deviceParameter.BaseFlowCapacity = realTimeParam.BaseFlowCapacity;
-                            //deviceParameter.FeedFlowSpeed = realTimeParam.FeedFlowSpeed;
-                            //deviceParameter.FeedFlowCapacity = realTimeParam.FeedFlowCapacity;
-                            //deviceParameter.AFFlowSpeed = realTimeParam.AFFlowSpeed;
-                            //deviceParameter.AFFlowCapacity = realTimeParam.AFFlowCapacity;
-
-                            //deviceParameter.MFC1FlowSpeed = realTimeParam.MFC1FlowRate;
-                            //deviceParameter.MFC1FlowCapacity = realTimeParam.MFC1FlowCapacity;
-                            //deviceParameter.MFC2FlowSpeed = realTimeParam.MFC2FlowRate;
-                            //deviceParameter.MFC2FlowCapacity = realTimeParam.MFC2FlowCapacity;
-                            //deviceParameter.MFC3FlowSpeed = realTimeParam.MFC3FlowRate;
-                            //deviceParameter.MFC3FlowCapacity = realTimeParam.MFC3FlowCapacity;
-                            //deviceParameter.MFC4FlowSpeed = realTimeParam.MFC4FlowRate;
-                            //deviceParameter.MFC4FlowCapacity = realTimeParam.MFC4FlowCapacity;
-                            //deviceParameter.MFC5FlowSpeed = realTimeParam.MFC5FlowRate;
-                            //deviceParameter.MFC5FlowCapacity = realTimeParam.MFC5FlowCapacity;
-
-                            //deviceParameter.AirFlowSpeed = realTimeParam.AirFlowSpeed;
-                            //deviceParameter.AirFlowCapacity = realTimeParam.AirFlowCapacity;
-                            //deviceParameter.O2FlowSpeed = realTimeParam.O2FlowSpeed;
-                            //deviceParameter.O2FlowCapacity = realTimeParam.O2FlowCapacity;
-                            //deviceParameter.CO2FlowSpeed = realTimeParam.CO2FlowSpeed;
-                            //deviceParameter.CO2FlowCapacity = realTimeParam.CO2FlowCapacity;
-                            //deviceParameter.N2FlowSpeed = realTimeParam.N2FlowSpeed;
-                            //deviceParameter.N2FlowCapacity = realTimeParam.N2FlowCapacity;
                         }
                     }
                     catch (Exception ex)
@@ -15788,7 +15735,7 @@ namespace RD3.ViewModels
 
                     Task.Run(() =>
                     {
-                        AnalysisSolution.GetInstance().Save(DeviceParameterCol);//保存设置
+                        AnalysisSolution.GetInstance().SaveReactorSetting(DeviceParameterCol);//保存设置
                     });
                     Thread.Sleep(1000);
                 }

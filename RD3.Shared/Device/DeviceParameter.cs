@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -19,14 +20,6 @@ namespace RD3.Shared
         {
             get { return _name; }
             set { SetProperty(ref _name, value); }
-        }
-
-        private string _id;
-        [JsonIgnore]
-        public string Id
-        {
-            get { return _id; }
-            set { SetProperty(ref _id, value); }
         }
 
         private int _serialNumber;
@@ -75,14 +68,6 @@ namespace RD3.Shared
             set { SetProperty(ref _ip, value); }
         }
 
-        //private float _temp = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float Temp
-        //{
-        //    get { return _temp; }
-        //    set { SetProperty(ref _temp, value); }
-        //}
 
         private TempParam _tempParam = new();
         public TempParam TempParam
@@ -91,30 +76,12 @@ namespace RD3.Shared
             set { SetProperty(ref _tempParam, value); }
         }
 
-        //private float _pH = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float PH
-        //{
-        //    get { return _pH; }
-        //    set { SetProperty(ref _pH, value); }
-        //}
-
         private PHParam _pHParam = new();
         public PHParam PHParam
         {
             get { return _pHParam; }
             set { SetProperty(ref _pHParam, value); }
         }
-
-        //private float _dO = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float DO
-        //{
-        //    get { return _dO; }
-        //    set { SetProperty(ref _dO, value); }
-        //}
 
         private DOParam _dOParam = new();
         public DOParam DOParam
@@ -130,15 +97,6 @@ namespace RD3.Shared
             get { return _isDOLimit; }
             set { SetProperty(ref _isDOLimit, value); }
         }
-
-        //private int _agit = 0;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public int Agit
-        //{
-        //    get { return _agit; }
-        //    set { SetProperty(ref _agit, value); }
-        //}
 
         private AgitParam _agitParam = new();
         public AgitParam AgitParam
@@ -204,249 +162,6 @@ namespace RD3.Shared
             set { SetProperty(ref _pumpMFCSetting, value); }
         }
 
-        private float _pump1FlowSpeed = 0f;
-        [JsonIgnore]
-        [ReflectionAttribute("Pump1FlowRate")]
-        public float Pump1FlowSpeed
-        {
-            get { return _pump1FlowSpeed; }
-            set { SetProperty(ref _pump1FlowSpeed, value); }
-        }
-
-        //private float _pump1Flow = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float Pump1Flow
-        //{
-        //    get { return _pump1Flow; }
-        //    set { SetProperty(ref _pump1Flow, value); }
-        //}
-
-        //private float _pump1FlowCapacity = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float Pump1FlowCapacity
-        //{
-        //    get { return _pump1FlowCapacity; }
-        //    set { SetProperty(ref _pump1FlowCapacity, value); }
-        //}
-
-        private float _pump2FlowSpeed = 0f;
-        [JsonIgnore]
-        [ReflectionAttribute("Pump2FlowRate")]
-        public float Pump2FlowSpeed
-        {
-            get { return _pump2FlowSpeed; }
-            set { SetProperty(ref _pump2FlowSpeed, value); }
-        }
-
-        //private float _pump2Flow = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float Pump2Flow
-        //{
-        //    get { return _pump2Flow; }
-        //    set { SetProperty(ref _pump2Flow, value); }
-        //}
-
-        //private float _pump2FlowCapacity = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float Pump2FlowCapacity
-        //{
-        //    get { return _pump2FlowCapacity; }
-        //    set { SetProperty(ref _pump2FlowCapacity, value); }
-        //}
-
-        private float _pump3FlowSpeed = 0f;
-        [JsonIgnore]
-        [ReflectionAttribute("Pump3FlowRate")]
-        public float Pump3FlowSpeed
-        {
-            get { return _pump3FlowSpeed; }
-            set { SetProperty(ref _pump3FlowSpeed, value); }
-        }
-
-        //private float _pump3Flow = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float Pump3Flow
-        //{
-        //    get { return _pump3Flow; }
-        //    set { SetProperty(ref _pump3Flow, value); }
-        //}
-
-        //private float _pump3FlowCapacity = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float Pump3FlowCapacity
-        //{
-        //    get { return _pump3FlowCapacity; }
-        //    set { SetProperty(ref _pump3FlowCapacity, value); }
-        //}
-
-        private float _pump4FlowSpeed = 0f;
-        [JsonIgnore]
-        [ReflectionAttribute("Pump4FlowRate")]
-        public float Pump4FlowSpeed
-        {
-            get { return _pump4FlowSpeed; }
-            set { SetProperty(ref _pump4FlowSpeed, value); }
-        }
-
-        //private float _pump4Flow = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float Pump4Flow
-        //{
-        //    get { return _pump4Flow; }
-        //    set { SetProperty(ref _pump4Flow, value); }
-        //}
-
-        //private float _pump4FlowCapacity = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float Pump4FlowCapacity
-        //{
-        //    get { return _pump4FlowCapacity; }
-        //    set { SetProperty(ref _pump4FlowCapacity, value); }
-        //}
-
-        private float _pump5FlowSpeed = 0f;
-        [JsonIgnore]
-        [ReflectionAttribute("Pump5FlowRate")]
-        public float Pump5FlowSpeed
-        {
-            get { return _pump5FlowSpeed; }
-            set { SetProperty(ref _pump5FlowSpeed, value); }
-        }
-
-        //private float _pump5Flow = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float Pump5Flow
-        //{
-        //    get { return _pump5Flow; }
-        //    set { SetProperty(ref _pump5Flow, value); }
-        //}
-
-        //private float _pump5FlowCapacity = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float Pump5FlowCapacity
-        //{
-        //    get { return _pump5FlowCapacity; }
-        //    set { SetProperty(ref _pump5FlowCapacity, value); }
-        //}
-
-        private float _pump6FlowSpeed = 0f;
-        [JsonIgnore]
-        [ReflectionAttribute("Pump6FlowRate")]
-        public float Pump6FlowSpeed
-        {
-            get { return _pump6FlowSpeed; }
-            set { SetProperty(ref _pump6FlowSpeed, value); }
-        }
-
-        //private float _pump6FlowCapacity = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float Pump6FlowCapacity
-        //{
-        //    get { return _pump6FlowCapacity; }
-        //    set { SetProperty(ref _pump6FlowCapacity, value); }
-        //}
-
-        private float _mfc1FlowSpeed = 0f;
-        [JsonIgnore]
-        [ReflectionAttribute("MFC1FlowRate")]
-        public float MFC1FlowSpeed
-        {
-            get { return _mfc1FlowSpeed; }
-            set { SetProperty(ref _mfc1FlowSpeed, value); }
-        }
-
-        //private float _mfc1FlowCapacity = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float MFC1FlowCapacity
-        //{
-        //    get { return _mfc1FlowCapacity; }
-        //    set { SetProperty(ref _mfc1FlowCapacity, value); }
-        //}
-
-        private float _mfc2FlowSpeed = 0f;
-        [JsonIgnore]
-        [ReflectionAttribute("MFC2FlowRate")]
-        public float MFC2FlowSpeed
-        {
-            get { return _mfc2FlowSpeed; }
-            set { SetProperty(ref _mfc2FlowSpeed, value); }
-        }
-
-        //private float _mfc2FlowCapacity = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float MFC2FlowCapacity
-        //{
-        //    get { return _mfc2FlowCapacity; }
-        //    set { SetProperty(ref _mfc2FlowCapacity, value); }
-        //}
-
-        private float _mfc3FlowSpeed = 0f;
-        [JsonIgnore]
-        [ReflectionAttribute("MFC3FlowRate")]
-        public float MFC3FlowSpeed
-        {
-            get { return _mfc3FlowSpeed; }
-            set { SetProperty(ref _mfc3FlowSpeed, value); }
-        }
-
-        //private float _mfc3FlowCapacity = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float MFC3FlowCapacity
-        //{
-        //    get { return _mfc3FlowCapacity; }
-        //    set { SetProperty(ref _mfc3FlowCapacity, value); }
-        //}
-
-        private float _mfc4FlowSpeed = 0f;
-        [JsonIgnore]
-        [ReflectionAttribute("MFC4FlowRate")]
-        public float MFC4FlowSpeed
-        {
-            get { return _mfc4FlowSpeed; }
-            set { SetProperty(ref _mfc4FlowSpeed, value); }
-        }
-
-        //private float _mfc4FlowCapacity = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float MFC4FlowCapacity
-        //{
-        //    get { return _mfc4FlowCapacity; }
-        //    set { SetProperty(ref _mfc4FlowCapacity, value); }
-        //}
-
-        private float _mfc5FlowSpeed = 0f;
-        [JsonIgnore]
-        [ReflectionAttribute("MFC5FlowRate")]
-        public float MFC5FlowSpeed
-        {
-            get { return _mfc5FlowSpeed; }
-            set { SetProperty(ref _mfc5FlowSpeed, value); }
-        }
-
-        //private float _mfc5FlowCapacity = 0f;
-        //[JsonIgnore]
-        //[ReflectionAttribute]
-        //public float MFC5FlowCapacity
-        //{
-        //    get { return _mfc5FlowCapacity; }
-        //    set { SetProperty(ref _mfc5FlowCapacity, value); }
-        //}
-
         DefoamingSetting _defoamingSetting = new DefoamingSetting();
         public DefoamingSetting DefoamingSetting
         {
@@ -466,13 +181,6 @@ namespace RD3.Shared
         {
             get => _feedParam2;
             set { SetProperty(ref _feedParam2, value); }
-        }
-
-        private bool _feedDOAssociated = false;
-        public bool FeedDOAssociated
-        {
-            get => _feedDOAssociated;
-            set { SetProperty(ref _feedDOAssociated, value); }
         }
 
         private bool _doFilterEnable = false;
@@ -501,13 +209,6 @@ namespace RD3.Shared
             set { SetProperty(ref _feedSuspend, value); }
         }
 
-        private bool _tempDOAssociated = false;
-        public bool TempDOAssociated
-        {
-            get => _tempDOAssociated;
-            set { SetProperty(ref _tempDOAssociated, value); }
-        }
-
         private float _tempDOLowerLimit = 25;
         public float TempDOLowerLimit
         {
@@ -520,13 +221,6 @@ namespace RD3.Shared
         {
             get => _feedDOLowerLimit;
             set { SetProperty(ref _feedDOLowerLimit, value); }
-        }
-
-        private float _kalmanConstant = 0f;
-        public float KalmanConstant
-        {
-            get => _kalmanConstant;
-            set { SetProperty(ref _kalmanConstant, value); }
         }
 
         private float _agitSampleCycle = 1f;

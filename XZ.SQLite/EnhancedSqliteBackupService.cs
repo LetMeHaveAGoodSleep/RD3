@@ -26,6 +26,23 @@ public class EnhancedSqliteBackupService : IDisposable
             Directory.CreateDirectory(_backupRootPath);
         }
 
+        public static string[] GetNonSystemDrives()
+        {
+            // 动态获取系统盘符（如"C:\\"）
+            string systemDrive = Path.GetPathRoot(Environment.SystemDirectory);
+
+            // 获取所有逻辑驱动器，筛选非系统盘且为固定磁盘的驱动器
+            var nonSystemDrives = DriveInfo.GetDrives()
+                .Where(drive =>
+                    drive.IsReady &&
+                    drive.DriveType == DriveType.Fixed &&
+                    !drive.Name.Equals(systemDrive, StringComparison.OrdinalIgnoreCase))
+                .Select(drive => drive.Name)
+                .ToArray();
+
+            return nonSystemDrives;
+        }
+
         public void Start()
         {
             // 立即执行第一次备份
@@ -84,6 +101,8 @@ public class EnhancedSqliteBackupService : IDisposable
             // 使用锁确保同一时间只有一个备份操作
             lock (_backupLock)
             {
+                CleanupOldBackups();
+
                 // 获取当前日期作为子文件夹名
                 string dateFolder = DateTime.Now.ToString("yyyyMMdd");
                 string dailyBackupPath = Path.Combine(_backupRootPath, dateFolder);
@@ -105,7 +124,6 @@ public class EnhancedSqliteBackupService : IDisposable
                     // 如果是新的一天，清理前一天的备份
                     if (_lastBackupDate.Date < DateTime.Today)
                     {
-                        CleanupOldBackups();
                         _lastBackupDate = DateTime.Now;
                     }
                 }
@@ -157,8 +175,8 @@ public class EnhancedSqliteBackupService : IDisposable
                     .OrderByDescending(f => f.Date)
                     .ToList();
 
-                // 保留今天的备份，删除其他所有日期的备份
-                foreach (var folder in dateFolders.Where(f => f.Date < DateTime.Today))
+                //删除其他所有备份
+                foreach (var folder in dateFolders)
                 {
                     try
                     {

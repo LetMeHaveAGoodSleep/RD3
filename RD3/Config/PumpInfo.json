@@ -1,0 +1,58 @@
+[
+  {
+    "DeviceID": "G01",
+    "PumpIndex": 1,
+    "Pump": 1,
+    "IsExist": true,
+    "IsWeigh": true,
+    "WeighIndex": 1,
+    "IsEnable": true
+  },
+  {
+    "DeviceID": "G01",
+    "PumpIndex": 2,
+    "Pump": 2,
+    "IsExist": true,
+    "IsWeigh": true,
+    "WeighIndex": 2,
+    "IsEnable": true
+  },
+  {
+    "DeviceID": "G01",
+    "PumpIndex": 3,
+    "Pump": 3,
+    "IsExist": true,
+    "IsWeigh": false,
+    "WeighIndex": 2,
+    "IsEnable": true
+  },
+  {
+    "DeviceID": "G01",
+    "PumpIndex": 4,
+    "Pump": 4,
+    "IsExist": true,
+    "IsWeigh": false,
+    "WeighIndex": 2,
+    "IsEnable": true
+  },
+  {
+    "DeviceID": "G01",
+    "PumpIndex": 5,
+    "Pump": 5,
+    "IsExist": true,
+    "IsWeigh": true,
+    "WeighIndex": 2,
+    "IsEnable": false
+  },
+  {
+    "DeviceID": "G01",
+    "PumpIndex": 6,
+    "Pump": 0,
+    "IsExist": true,
+    "IsWeigh": true,
+    "WeighIndex": 2,
+    "IsEnable": false
+  }
+]
+
+

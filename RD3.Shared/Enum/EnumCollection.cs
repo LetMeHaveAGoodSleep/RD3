@@ -121,6 +121,8 @@ namespace RD3.Shared
 
     public enum GasType
     {
+        [Description("未设置")]
+        Unset = 0,
         [Description("空气")]
         Air = 1,
         [Description("氧气")]

@@ -1,0 +1,64 @@
+﻿<UserControl
+    x:Class="RD3.Views.MFCView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="35"
+    d:DesignWidth="200"
+    mc:Ignorable="d">
+    <Canvas>
+        <Image
+            Name="mfcState"
+            Canvas.Left="3"
+            Canvas.Top="6"
+            Width="29"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Source="/Images/NewReactor/阀（开）.png" />
+        <TextBlock
+            Name="mfcName"
+            Canvas.Left="37"
+            Canvas.Top="9"
+            Width="38"
+            Height="22"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            RenderTransformOrigin="0.382,-0.376"
+            Text="氧气"
+            TextWrapping="Wrap" />
+        <TextBox
+            Name="flowTargetValue"
+            Canvas.Left="75"
+            Canvas.Top="2"
+            Width="41"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="0"
+            TextWrapping="Wrap" />
+
+        <TextBlock
+            Name="flowRealValue"
+            Canvas.Left="122"
+            Canvas.Top="9"
+            Width="38"
+            Height="22"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            RenderTransformOrigin="0.382,-0.376"
+            Text="99.2 "
+            TextWrapping="Wrap" />
+        <TextBlock
+            Name="capcityUnit"
+            Canvas.Left="157"
+            Canvas.Top="9"
+            Width="43"
+            Height="22"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            RenderTransformOrigin="0.382,-0.376"
+            Text="mL/h"
+            TextWrapping="Wrap" />
+    </Canvas>
+</UserControl>
