@@ -113,6 +113,28 @@ namespace RD3.ViewModels
             }
         }
 
+        public int CommunicationProtocol
+        {
+            get
+            {
+                string temp = VarConfig.GetValue("CommunicationProtocol")?.ToString();
+                if (!int.TryParse(temp, out var result))
+                {
+                    return 0;
+                }
+                else
+                {
+                    return result;
+                }
+            }
+            set
+            {
+                int temp = -1;
+                VarConfig.SetValue("CommunicationProtocol", value);
+                SetProperty(ref temp, value);
+            }
+        }
+
         private string _defaultPumpFlowRate = VarConfig.GetValue("DefaultPumpFlowRate")?.ToString();
         public string DefaultPumpFlowRate
         {

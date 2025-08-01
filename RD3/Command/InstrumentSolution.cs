@@ -32,17 +32,34 @@ namespace RD3.Shared
 
         private RealCommandWrapper _realCommandWrapper = new();
         private VirtualCommandWrapper _virtualCommandWrapper = new();
+
+        private Real5LCommandWrapper _real5LCommandWrapper = new();
+        private Virtual5LCommandWrapper _virtual5LCommandWrapper = new();
         public ICommandWrapper CommandWrapper
         {
             get
             {
-                if (IsSimulation)
+                if (CommunicationProtocol == 0)
                 {
-                    return _virtualCommandWrapper;
+                    if (IsSimulation)
+                    {
+                        return _virtualCommandWrapper;
+                    }
+                    else
+                    {
+                        return _realCommandWrapper;
+                    }
                 }
                 else
                 {
-                    return _realCommandWrapper;
+                    if (IsSimulation)
+                    {
+                        return _virtual5LCommandWrapper;
+                    }
+                    else
+                    {
+                        return _real5LCommandWrapper;
+                    }
                 }
             }
         }
@@ -68,6 +85,20 @@ namespace RD3.Shared
             get { return Convert.ToBoolean(VarConfig.GetValue("IsSimulation")); }
         }
 
-
+        public int CommunicationProtocol
+        {
+            get 
+            {
+                string temp = VarConfig.GetValue("CommunicationProtocol")?.ToString();
+                if (!int.TryParse(temp, out var result))
+                {
+                    return 0;
+                }
+                else
+                {
+                    return result;
+                }
+            } 
+        }
     }
 }

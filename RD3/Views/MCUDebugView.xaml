@@ -128,6 +128,15 @@
                 <x:Type TypeName="share:GasType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum11"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:MagneticBaseStatus" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -715,6 +724,12 @@
                                                     DockPanel.Dock="Bottom"
                                                     IsChecked="{Binding RealTimeParam.HasFoam}" />
                                             </DockPanel>
+                                            <DockPanel LastChildFill="False">
+                                                <CheckBox
+                                                    Content="是否温控"
+                                                    DockPanel.Dock="Bottom"
+                                                    IsChecked="{Binding RealTimeParam.TempControling}" />
+                                            </DockPanel>
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                             <TextBox
@@ -903,6 +918,12 @@
                                                 Text="{Binding RealTimeParam.JarWeight}" />
                                             <TextBox
                                                 Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='保留重量'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.ReserveWeight}" />
+                                            <TextBox
+                                                Width="120"
                                                 hc:InfoElement.Title="{ex:Language Key='称重1'}"
                                                 IsReadOnly="True"
                                                 Style="{StaticResource TextBoxExtend}"
@@ -957,7 +978,12 @@
                                                 IsReadOnly="True"
                                                 Style="{StaticResource TextBoxExtend}"
                                                 Text="{Binding RealTimeParam.CoolingModuleRoomNTCTemp}" />
-
+                                            <TextBox
+                                                Width="120"
+                                                hc:InfoElement.Title="{ex:Language Key='EPC压力'}"
+                                                IsReadOnly="True"
+                                                Style="{StaticResource TextBoxExtend}"
+                                                Text="{Binding RealTimeParam.EPCPressure}" />
                                         </hc:UniformSpacingPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                             <TextBox
@@ -1139,7 +1165,8 @@
                                         Width="120"
                                         hc:InfoElement.Title="{ex:Language Key='Wifi Module IP'}"
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding DeviceParam.WifiAdress}" />
+                                        Text="{Binding DeviceParam.WifiAdress}"
+                                        Visibility="{Binding CommunicationProtocol, Converter={StaticResource NumericCompareToVisibilityConverter}, ConverterParameter=0}" />
                                     <TextBox
                                         Width="120"
                                         hc:InfoElement.Title="{ex:Language Key='Port'}"
@@ -1172,8 +1199,10 @@
                                         <DockPanel LastChildFill="False">
                                             <ComboBox
                                                 Width="200"
+                                                hc:InfoElement.Title="1.5升传感器"
                                                 DockPanel.Dock="Left"
-                                                SelectedIndex="{Binding SelectedSensorIndex}">
+                                                SelectedIndex="{Binding SelectedSensorIndex}"
+                                                Style="{StaticResource ComboBoxExtend}">
                                                 <ComboBoxItem Content="pH传感器" />
                                                 <ComboBoxItem Content="DO传感器" />
                                                 <ComboBoxItem Content="称重1传感器" />
@@ -1187,6 +1216,24 @@
                                                 <ComboBoxItem Content="冷凝NTC1冷面" />
                                                 <ComboBoxItem Content="冷凝NTC2热面" />
                                                 <ComboBoxItem Content="冷凝NTC3室温" />
+                                            </ComboBox>
+                                            <ComboBox
+                                                Width="200"
+                                                hc:InfoElement.Title="5升传感器"
+                                                DockPanel.Dock="Left"
+                                                SelectedIndex="{Binding SelectedSensorIndex}"
+                                                Style="{StaticResource ComboBoxExtend}">
+                                                <ComboBoxItem Content="pH传感器" />
+                                                <ComboBoxItem Content="DO传感器" />
+                                                <ComboBoxItem Content="称重1传感器" />
+                                                <ComboBoxItem Content="称重2传感器" />
+                                                <ComboBoxItem Content="称重3传感器" />
+                                                <ComboBoxItem Content="称重4传感器" />
+                                                <ComboBoxItem Content="PT100传感器" />
+                                                <ComboBoxItem Content="pH传感器温度" />
+                                                <ComboBoxItem Content="DO传感器温度" />
+                                                <ComboBoxItem Content="加热毯NTC" />
+                                                <ComboBoxItem Content="室温NTC" />
                                             </ComboBox>
                                         </DockPanel>
                                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
@@ -1521,6 +1568,52 @@
                                         </hc:UniformSpacingPanel>
                                     </hc:UniformSpacingPanel>
                                 </GroupBox>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <TextBox
+                                        Width="100"
+                                        hc:InfoElement.Title="{ex:Language Key='EPC压力'}"
+                                        Style="{StaticResource TextBoxExtend}"
+                                        Text="{Binding Pressure}" />
+                                    <Button
+                                        Width="80"
+                                        Height="30"
+                                        Margin="0,20,0,0"
+                                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                        Command="{Binding ReadCommand}"
+                                        CommandParameter="31"
+                                        Content="{ex:Language Key='Read'}" />
+                                    <Button
+                                        Width="80"
+                                        Height="30"
+                                        Margin="0,20,0,0"
+                                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                        Command="{Binding SetCommand}"
+                                        CommandParameter="31"
+                                        Content="{ex:Language Key='Set'}" />
+                                </hc:UniformSpacingPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <hc:ComboBox
+                                        Width="150"
+                                        hc:InfoElement.Title="{ex:Language Key='磁吸底座控制状态'}"
+                                        ItemsSource="{Binding Source={StaticResource DataFromEnum11}}"
+                                        SelectedItem="{Binding SelectedMagneticBaseStatus}" />
+                                    <Button
+                                        Width="80"
+                                        Height="30"
+                                        Margin="0,20,0,0"
+                                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                        Command="{Binding ReadCommand}"
+                                        CommandParameter="32"
+                                        Content="{ex:Language Key='Read'}" />
+                                    <Button
+                                        Width="80"
+                                        Height="30"
+                                        Margin="0,20,0,0"
+                                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                        Command="{Binding SetCommand}"
+                                        CommandParameter="32"
+                                        Content="{ex:Language Key='Set'}" />
+                                </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>
                     </hc:ScrollViewer>

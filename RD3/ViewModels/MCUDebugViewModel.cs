@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -290,7 +291,7 @@ namespace RD3.ViewModels
         private Dictionary<int, List<string>> keyValuePairs = new Dictionary<int, List<string>>()
         {
             {0,["希尔曼-模拟","希尔曼-数字", "微基-模拟", "微基-数字"]},
-            {1,["希尔曼-数字","微基-数字"]}
+            {1,["希尔曼-数字","微基-数字","昇辉-数字"]}
         };
 
         private int _selectedSensorKindIndex = 0;
@@ -493,6 +494,35 @@ namespace RD3.ViewModels
             set { SetProperty(ref _mcuDownloadParam, value); }
         }
 
+        private float _pressure = 0f;
+        public float Pressure
+        {
+            get { return _pressure; }
+            set { SetProperty(ref _pressure, value); }
+        }
+
+        private MagneticBaseStatus _selectedMagneticBaseStatus = MagneticBaseStatus.Unset;
+        public MagneticBaseStatus SelectedMagneticBaseStatus
+        {
+            get { return _selectedMagneticBaseStatus; }
+            set { SetProperty(ref _selectedMagneticBaseStatus, value); }
+        }
+
+        public int CommunicationProtocol
+        {
+            get
+            {
+                string temp = VarConfig.GetValue("CommunicationProtocol")?.ToString();
+                if (!int.TryParse(temp, out var result))
+                {
+                    return 0;
+                }
+                else
+                {
+                    return result;
+                }
+            }
+        }
         public DelegateCommand<string> ReadCommand => new(async (string commandText) =>
         {
             try
@@ -571,7 +601,7 @@ namespace RD3.ViewModels
                 }
                 else if (commandText == "6")
                 {
-                    var tuple = InstrumentSolution.GetInstance().CommandWrapper.GetMCUSensorTypeSetting(SelectedInstrument?.id, SelectedSensorKindIndex);
+                    var tuple = InstrumentSolution.GetInstance().CommandWrapper.GetMCUSensorTypeSetting(SelectedInstrument?.id, SelectedSensorKindIndex + 1);
                     SelectedSensorKindIndex = tuple.Item1 - 1;
                     SelectedSensorKindIndex1 = tuple.Item2 - 1 < -1 ? -1 : tuple.Item2 - 1;
                 }
@@ -581,7 +611,7 @@ namespace RD3.ViewModels
                 }
                 else if (commandText == "10")
                 {
-                    SoftwareVersion = InstrumentSolution.GetInstance().CommandWrapper.GetMCUVersion(SelectedInstrument?.id, SelectedMCUBoardType);
+                    SoftwareVersion = InstrumentSolution.GetInstance().CommandWrapper.GetMCUVersion(SelectedInstrument?.id, (byte)SelectedMCUBoardType);
                 }
                 else if (commandText == "12")
                 {
@@ -593,7 +623,7 @@ namespace RD3.ViewModels
                 }
                 else if (commandText == "14")
                 {
-                    var param = InstrumentSolution.GetInstance().CommandWrapper.GetSensorCorrect(SelectedInstrument?.id, SensorCorrectParam.SensorType);
+                    var param = InstrumentSolution.GetInstance().CommandWrapper.GetSensorCorrect(SelectedInstrument?.id, (byte)SensorCorrectParam.SensorType);
                     SensorCorrectParam.SensorType = param.SensorType;
                     SensorCorrectParam.Coefficient = param.Coefficient;
                     SensorCorrectParam.Bias= param.Bias;
@@ -635,6 +665,14 @@ namespace RD3.ViewModels
                 else if (commandText == "30")
                 {
                     SelectedStirringMotorType = InstrumentSolution.GetInstance().CommandWrapper.GetStirringMotorType(SelectedInstrument?.id);
+                }
+                else if (commandText == "31")
+                {
+                    Pressure = InstrumentSolution.GetInstance().CommandWrapper.GetEPCPressure(SelectedInstrument?.id);
+                }
+                else if (commandText == "32")
+                {
+                    SelectedMagneticBaseStatus = (MagneticBaseStatus)InstrumentSolution.GetInstance().CommandWrapper.GetMagneticBase(SelectedInstrument?.id);
                 }
             }
             catch (Exception ex)
@@ -910,7 +948,14 @@ namespace RD3.ViewModels
                     {
                         try
                         {
-                            InstrumentSolution.GetInstance().CommandWrapper.SetMCUDownloadInfo(SelectedInstrument?.id, SelectedMCUBoardType);
+                            if (SelectedMCUBoardType == MCUBoardType.TemperatureControlBoard && InstrumentSolution.GetInstance().CommandWrapper.GetType() == typeof(Real5LCommandWrapper))
+                            {
+                                InstrumentSolution.GetInstance().CommandWrapper.SetMCUDownloadInfo(SelectedInstrument?.id, 0x02);
+                            }
+                            else
+                            {
+                                InstrumentSolution.GetInstance().CommandWrapper.SetMCUDownloadInfo(SelectedInstrument?.id, (byte)SelectedMCUBoardType);
+                            }
                         }
                         catch (Exception ex) { }
                     }
@@ -948,6 +993,29 @@ namespace RD3.ViewModels
                         catch (Exception ex) { }
                     }
                 }
+                else if (commandText == "31")
+                {
+                    foreach (var SelectedInstrument in SelectedInstruments)
+                    {
+                        try
+                        {
+                            InstrumentSolution.GetInstance().CommandWrapper.SetEPCPressure(SelectedInstrument?.id, Pressure);
+                        }
+                        catch (Exception ex) { }
+                    }
+                }
+                else if (commandText == "32")
+                {
+                    foreach (var SelectedInstrument in SelectedInstruments)
+                    {
+                        try
+                        {
+                            InstrumentSolution.GetInstance().CommandWrapper.SetMagneticBase(SelectedInstrument?.id, (byte)SelectedMagneticBaseStatus);
+                        }
+                        catch (Exception ex) { }
+                    }
+                }
+
             }
             catch (Exception ex)
             {

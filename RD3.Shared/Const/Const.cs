@@ -12,7 +12,7 @@ namespace RD3.Shared
         public static readonly string ENGLanguage = "English";
         public static readonly double MaxTemp = 100;
         public static readonly double MaxPH = 14;
-        public static readonly double MaxAgit = 1500;
+        public static readonly int MaxAgit = 1500;
         public static readonly double MaxDO = 100;
         public static readonly float PHPumpSpeed = 50;
         public static readonly float FeedPumpSpeed = 100;

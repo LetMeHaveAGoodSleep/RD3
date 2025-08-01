@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
-    public class RealCommandWrapper : ICommandWrapper
+    public class Real5LCommandWrapper : ICommandWrapper
     {
         OptimizedSlidingFilter tempFilter = new OptimizedSlidingFilter(20);
         List<double> rawTempData = [];
@@ -29,9 +29,10 @@ namespace RD3.Shared
 
         private Dictionary<string, KalmanFilter1D> dicDOFilter = new Dictionary<string, KalmanFilter1D>();
 
-        public RealCommandWrapper()
+        public Real5LCommandWrapper()
         {
         }
+
         public RecvCommand Send(string insId, SendCommand sendCommand)
         {
             return (RecvCommand)PortManager.GetInstance().Send(insId, sendCommand);
@@ -41,14 +42,14 @@ namespace RD3.Shared
         public TempParam GetTempSetting(string insID)
         {
             TempParam param = new TempParam();
-            SendCommand sendCommand = new SendCommand(CommandId.RWTempParam, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWTempParam, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    param.Temp_PV = recvCommand.GetSingle(ParamId.RWTempParam_ReadWrite_Temp);
-                    param.IsEnable = recvCommand.GetByte(ParamId.RWTempParam_ReadWrite_Enable) == 0x00 ? false : true;
+                    param.Temp_PV = recvCommand.GetSingle(ParamId_5L.RWTempParam_ReadWrite_Temp);
+                    param.IsEnable = recvCommand.GetByte(ParamId_5L.RWTempParam_ReadWrite_Enable) == 0x00 ? false : true;
                 }
             }
             catch (Exception ex)
@@ -63,11 +64,11 @@ namespace RD3.Shared
 
         public void SetTempSetting(string insID, TempParam tempParam)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWTempParam, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWTempParam, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWTempParam_ReadWrite_Temp, tempParam.Temp_PV);
-                sendCommand.SetValue(ParamId.RWTempParam_ReadWrite_Enable, tempParam.IsEnable == true ? 0x01 : 0x00);
+                sendCommand.SetValue(ParamId_5L.RWTempParam_ReadWrite_Temp, tempParam.Temp_PV);
+                sendCommand.SetValue(ParamId_5L.RWTempParam_ReadWrite_Enable, tempParam.IsEnable == true ? 0x01 : 0x00);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -88,13 +89,13 @@ namespace RD3.Shared
         public int GetAgitSpeed(string insID)
         {
             var value = -1;
-            SendCommand sendCommand = new SendCommand(CommandId.RWAgitParam, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWAgitParam, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    value = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWAgitParam_ReadWrite_Agit));
+                    value = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWAgitParam_ReadWrite_Agit));
                 }
             }
             catch (Exception ex)
@@ -109,10 +110,10 @@ namespace RD3.Shared
 
         public void SetAgitSpeed(string insID, int speed)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWAgitParam, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWAgitParam, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWAgitParam_ReadWrite_Agit, BitConverter.GetBytes(speed));
+                sendCommand.SetValue(ParamId_5L.RWAgitParam_ReadWrite_Agit, BitConverter.GetBytes(speed));
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -133,19 +134,19 @@ namespace RD3.Shared
         public PeristalticPumpControlParam GetPeristalticPumpControlParam(string insID, int pumpNo)
         {
             PeristalticPumpControlParam param = new();
-            SendCommand sendCommand = new SendCommand(CommandId.RWPeristalticPumpControl, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWPeristalticPumpControl, CommandExtendId.Read);
             try
             {
-                sendCommand.SetValue(ParamId.RWPeristalticPumpControl_Read_SerialNo, (byte)pumpNo);
+                sendCommand.SetValue(ParamId_5L.RWPeristalticPumpControl_Read_SerialNo, (byte)pumpNo);
                 RecvCommand recvCommand = Send(insID, sendCommand);
 
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    //param.Pump = (PeristalticPump)recvCommand.GetByte(ParamId.RWPeristalticPumpControl_ReadResponse_SerialNo);
-                    param.PumpNo = recvCommand.GetByte(ParamId.RWPeristalticPumpControl_ReadWrite_SerialNo);
-                    param.ControlMode = (PumpControlMode)recvCommand.GetByte(ParamId.RWPeristalticPumpControl_ReadWrite_ControlMode);
-                    param.FlowSpeed = recvCommand.GetSingle(ParamId.RWPeristalticPumpControl_ReadWrite_FlowSpeed);
-                    param.FlowCapacity = recvCommand.GetSingle(ParamId.RWPeristalticPumpControl_ReadWrite_FlowCapacity);
+                    //param.Pump = (PeristalticPump)recvCommand.GetByte(ParamId_5L.RWPeristalticPumpControl_ReadResponse_SerialNo);
+                    param.PumpNo = recvCommand.GetByte(ParamId_5L.RWPeristalticPumpControl_ReadWrite_SerialNo);
+                    param.ControlMode = (PumpControlMode)recvCommand.GetByte(ParamId_5L.RWPeristalticPumpControl_ReadWrite_ControlMode);
+                    param.FlowSpeed = recvCommand.GetSingle(ParamId_5L.RWPeristalticPumpControl_ReadWrite_FlowSpeed);
+                    param.FlowCapacity = recvCommand.GetSingle(ParamId_5L.RWPeristalticPumpControl_ReadWrite_FlowCapacity);
                 }
             }
             catch (Exception ex)
@@ -160,13 +161,13 @@ namespace RD3.Shared
 
         public void SetPeristalticPumpControlParam(string insID, PeristalticPumpControlParam peristalticPumpControlParam)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWPeristalticPumpControl, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWPeristalticPumpControl, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWPeristalticPumpControl_ReadWrite_ControlMode, (byte)peristalticPumpControlParam.ControlMode);
-                sendCommand.SetValue(ParamId.RWPeristalticPumpControl_ReadWrite_SerialNo, (byte)peristalticPumpControlParam.PumpNo);
-                sendCommand.SetValue(ParamId.RWPeristalticPumpControl_ReadWrite_FlowSpeed, peristalticPumpControlParam.FlowSpeed);
-                sendCommand.SetValue(ParamId.RWPeristalticPumpControl_ReadWrite_FlowCapacity, peristalticPumpControlParam.FlowCapacity);
+                sendCommand.SetValue(ParamId_5L.RWPeristalticPumpControl_ReadWrite_ControlMode, (byte)peristalticPumpControlParam.ControlMode);
+                sendCommand.SetValue(ParamId_5L.RWPeristalticPumpControl_ReadWrite_SerialNo, (byte)peristalticPumpControlParam.PumpNo);
+                sendCommand.SetValue(ParamId_5L.RWPeristalticPumpControl_ReadWrite_FlowSpeed, peristalticPumpControlParam.FlowSpeed);
+                sendCommand.SetValue(ParamId_5L.RWPeristalticPumpControl_ReadWrite_FlowCapacity, peristalticPumpControlParam.FlowCapacity);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -187,17 +188,17 @@ namespace RD3.Shared
         public DefoamingParam GetAutoDefoamingSetting(string insID)
         {
             DefoamingParam param = new();
-            SendCommand sendCommand = new SendCommand(CommandId.RWAutoDefoamingControl, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWAutoDefoamingControl, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
 
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    param.SensorEnable = recvCommand.GetByte(ParamId.RWAutoDefoamingControl_ReadWrite_Enable) == 0;//0:使能 1:不使能
-                    param.PumpNo = recvCommand.GetByte(ParamId.RWAutoDefoamingControl_ReadWrite_PumpNo);
-                    param.Cycle = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWAutoDefoamingControl_ReadWrite_CheckCycle));
-                    param.TimeRatio = recvCommand.GetSingle(ParamId.RWAutoDefoamingControl_ReadWrite_DutyCycle);
+                    param.SensorEnable = recvCommand.GetByte(ParamId_5L.RWAutoDefoamingControl_ReadWrite_Enable) == 0;//0:使能 1:不使能
+                    param.PumpNo = recvCommand.GetByte(ParamId_5L.RWAutoDefoamingControl_ReadWrite_PumpNo);
+                    param.Cycle = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWAutoDefoamingControl_ReadWrite_CheckCycle));
+                    param.TimeRatio = recvCommand.GetSingle(ParamId_5L.RWAutoDefoamingControl_ReadWrite_DutyCycle);
                 }
             }
             catch (Exception ex)
@@ -212,14 +213,14 @@ namespace RD3.Shared
 
         public void SetAutoDefoamingSetting(string insID, DefoamingParam param)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWAutoDefoamingControl, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWAutoDefoamingControl, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWAutoDefoamingControl_ReadWrite_PumpNo, param.PumpNo);
-                sendCommand.SetValue(ParamId.RWAutoDefoamingControl_ReadWrite_Enable, (param.SensorEnable ? 0x01 : 0x00));
-                sendCommand.SetValue(ParamId.RWAutoDefoamingControl_ReadWrite_CheckCycle, BitConverter.GetBytes(param.Cycle));
-                sendCommand.SetValue(ParamId.RWAutoDefoamingControl_ReadWrite_DutyCycle, param.TimeRatio);
-                sendCommand.SetValue(ParamId.RWAutoDefoamingControl_ReadWrite_FlowRate, param.FlowSpeed);
+                sendCommand.SetValue(ParamId_5L.RWAutoDefoamingControl_ReadWrite_PumpNo, param.PumpNo);
+                sendCommand.SetValue(ParamId_5L.RWAutoDefoamingControl_ReadWrite_Enable, (param.SensorEnable ? 0x01 : 0x00));
+                sendCommand.SetValue(ParamId_5L.RWAutoDefoamingControl_ReadWrite_CheckCycle, BitConverter.GetBytes(param.Cycle));
+                sendCommand.SetValue(ParamId_5L.RWAutoDefoamingControl_ReadWrite_DutyCycle, param.TimeRatio);
+                sendCommand.SetValue(ParamId_5L.RWAutoDefoamingControl_ReadWrite_FlowRate, param.FlowSpeed);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -239,15 +240,15 @@ namespace RD3.Shared
         #region 0x05 读写MFC控制（气体）
         public GasParam GetGasSpeed(string insID, GasParam param)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWMFCControl, CommandExtendId.Read);
-            sendCommand.SetValue(ParamId.RWMFCControl_Read_SerialNo, param.MFCNo);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWMFCControl, CommandExtendId.Read);
+            sendCommand.SetValue(ParamId_5L.RWMFCControl_Read_SerialNo, param.MFCNo);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    param.MFCNo = recvCommand.GetByte(ParamId.RWMFCControl_ReadWrite_SerialNo);
-                    param.FlowSpeed = recvCommand.GetSingle(ParamId.RWMFCControl_ReadWrite_FlowSpeed);
+                    param.MFCNo = recvCommand.GetByte(ParamId_5L.RWMFCControl_ReadWrite_SerialNo);
+                    param.FlowSpeed = recvCommand.GetSingle(ParamId_5L.RWMFCControl_ReadWrite_FlowSpeed);
                 }
             }
             catch (Exception ex)
@@ -262,11 +263,11 @@ namespace RD3.Shared
 
         public void SetGasSpeed(string insID, GasParam param)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWMFCControl, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWMFCControl, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWMFCControl_ReadWrite_SerialNo, (byte)param.MFCNo);
-                sendCommand.SetValue(ParamId.RWMFCControl_ReadWrite_FlowSpeed, param.FlowSpeed);
+                sendCommand.SetValue(ParamId_5L.RWMFCControl_ReadWrite_SerialNo, (byte)param.MFCNo);
+                sendCommand.SetValue(ParamId_5L.RWMFCControl_ReadWrite_FlowSpeed, param.FlowSpeed);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -286,14 +287,14 @@ namespace RD3.Shared
         #region 0x06 读写传感器型号
         public Tuple<int, int> GetMCUSensorTypeSetting(string insID, int sensorType)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWSensorSetting, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWSensorSetting, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    int kind = recvCommand.GetByte(ParamId.RWSensorSetting_ReadWrite_Kind);
-                    int type = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWSensorSetting_ReadWrite_Type));
+                    int kind = recvCommand.GetByte(ParamId_5L.RWSensorSetting_ReadWrite_Kind);
+                    int type = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWSensorSetting_ReadWrite_Type));
                     return Tuple.Create(kind, type);
                 }
                 else
@@ -313,11 +314,11 @@ namespace RD3.Shared
 
         public void SetMCUSensorTypeSetting(string insID, int sensorType, int signal)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWSensorSetting, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWSensorSetting, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWSensorSetting_ReadWrite_Kind, (byte)sensorType);
-                sendCommand.SetValue(ParamId.RWSensorSetting_ReadWrite_Type, BitConverter.GetBytes(signal));
+                sendCommand.SetValue(ParamId_5L.RWSensorSetting_ReadWrite_Kind, (byte)sensorType);
+                sendCommand.SetValue(ParamId_5L.RWSensorSetting_ReadWrite_Type, BitConverter.GetBytes(signal));
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -337,14 +338,14 @@ namespace RD3.Shared
         #region 0x08 读写主要功能控制开关  删除
         //public SwitchMode GetFunctionControlMode(string insID, ControlObject controlObject)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.RWFunctionControl, CommandExtendId.Read);
-        //    sendCommand.SetValue(ParamId.RWFunctionControl_Read_Object, (byte)controlObject);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.RWFunctionControl, CommandExtendId.Read);
+        //    sendCommand.SetValue(ParamId_5L.RWFunctionControl_Read_Object, (byte)controlObject);
         //    try
         //    {
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
         //        {
-        //            SwitchMode switchMode = (SwitchMode)recvCommand.GetByte(ParamId.RWFunctionControl_ReadResponse_Mode);
+        //            SwitchMode switchMode = (SwitchMode)recvCommand.GetByte(ParamId_5L.RWFunctionControl_ReadResponse_Mode);
         //            return switchMode;
         //        }
         //        else
@@ -363,11 +364,11 @@ namespace RD3.Shared
 
         //public void SetFunctionControlMode(string insID, ControlObject controlObject, SwitchMode switchMode)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.RWFunctionControl, CommandExtendId.Write);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.RWFunctionControl, CommandExtendId.Write);
         //    try
         //    {
-        //        sendCommand.SetValue(ParamId.RWFunctionControl_Write_Object, (byte)controlObject);
-        //        sendCommand.SetValue(ParamId.RWFunctionControl_Write_Mode, (byte)switchMode);
+        //        sendCommand.SetValue(ParamId_5L.RWFunctionControl_Write_Object, (byte)controlObject);
+        //        sendCommand.SetValue(ParamId_5L.RWFunctionControl_Write_Mode, (byte)switchMode);
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
         //        {
@@ -387,7 +388,7 @@ namespace RD3.Shared
         public RealTimeParam GetRealTime(string insID)
         {
             RealTimeParam realTimeParam = new RealTimeParam();
-            SendCommand sendCommand = new SendCommand(CommandId.RRealtimeParam, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RRealtimeParam, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
@@ -395,61 +396,61 @@ namespace RD3.Shared
 
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    realTimeParam.Temp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Temp), Const.NumericalPrecision);
-                    realTimeParam.PH = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_PH), Const.NumericalPrecision);
-                    realTimeParam.Agit = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RRealtimeParam_ReadResponse_Agit));
-                    realTimeParam.DO = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_DO), Const.NumericalPrecision);
-                    realTimeParam.AlarmBytes = recvCommand.GetBytes(ParamId.RRealtimeParam_ReadResponse_AlarmCodes);
-                    realTimeParam.Pump1FlowRate = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump1FlowRate), Const.NumericalPrecision);
-                    realTimeParam.Pump1Flow = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump1Flow), Const.NumericalPrecision);
-                    realTimeParam.Pump1FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump1FlowTotal), Const.NumericalPrecision);
-                    realTimeParam.Pump2FlowRate = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump2FlowRate), Const.NumericalPrecision);
-                    realTimeParam.Pump2Flow = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump2Flow), Const.NumericalPrecision);
-                    realTimeParam.Pump2FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump2FlowTotal), Const.NumericalPrecision);
-                    realTimeParam.Pump3FlowRate = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump3FlowRate), Const.NumericalPrecision);
-                    realTimeParam.Pump3Flow = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump3Flow), Const.NumericalPrecision);
-                    realTimeParam.Pump3FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump3FlowTotal), Const.NumericalPrecision);
-                    realTimeParam.Pump4FlowRate = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump4FlowRate), Const.NumericalPrecision);
-                    realTimeParam.Pump4Flow = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump4Flow), Const.NumericalPrecision);
-                    realTimeParam.Pump4FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump4FlowTotal), Const.NumericalPrecision);
-                    realTimeParam.Pump5FlowRate = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump5FlowRate), Const.NumericalPrecision);
-                    realTimeParam.Pump5Flow = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump5Flow), Const.NumericalPrecision);
-                    realTimeParam.Pump5FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Pump5FlowTotal), Const.NumericalPrecision);
-                    realTimeParam.MFC1FlowRate = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_MFC1FlowRate), Const.NumericalPrecision);
-                    realTimeParam.MFC1FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_MFC1FlowCapacity), Const.NumericalPrecision);
-                    realTimeParam.MFC2FlowRate = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_MFC2FlowRate), Const.NumericalPrecision);
-                    realTimeParam.MFC2FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_MFC2FlowCapacity), Const.NumericalPrecision);
-                    realTimeParam.MFC3FlowRate = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_MFC3FlowRate), Const.NumericalPrecision);
-                    realTimeParam.MFC3FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_MFC3FlowCapacity), Const.NumericalPrecision);
-                    realTimeParam.MFC4FlowRate = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_MFC4FlowRate), Const.NumericalPrecision);
-                    realTimeParam.MFC4FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_MFC4FlowCapacity), Const.NumericalPrecision);
-                    realTimeParam.JarWeight = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_JarWeight), Const.NumericalPrecision);
-                    realTimeParam.Bottle1Weight = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Bottle1Weight), Const.NumericalPrecision);
-                    realTimeParam.Bottle2Weight = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_Bottle2Weight), Const.NumericalPrecision);
-                    realTimeParam.PHSensorTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_pHSensorTemp), Const.NumericalPrecision);
-                    realTimeParam.DOSensorTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_DOSensorTemp), Const.NumericalPrecision);
-                    realTimeParam.HeatingBaseCoolingNTCTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_HeatingBaseCoolingNTCTemp), Const.NumericalPrecision);
-                    realTimeParam.HeatingBaseHeatingNTCTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_HeatingBaseHeatingNTCTemp), Const.NumericalPrecision);
-                    realTimeParam.CoolingModuleCoolingNTCTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_CoolingModuleCoolingNTCTemp), Const.NumericalPrecision);
-                    realTimeParam.CoolingModuleHeatingNTCTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_CoolingModuleHeatingNTCTemp), Const.NumericalPrecision);
-                    realTimeParam.CoolingModuleRoomNTCTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_CoolingModuleRoomNTCTemp), Const.NumericalPrecision);
+                    realTimeParam.Temp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Temp), Const.NumericalPrecision);
+                    realTimeParam.PH = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_PH), Const.NumericalPrecision);
+                    realTimeParam.Agit = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RRealtimeParam_ReadResponse_Agit));
+                    realTimeParam.DO = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_DO), Const.NumericalPrecision);
+                    realTimeParam.StirringMotorTemp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_StirringMotorTemp), Const.NumericalPrecision);
+                    realTimeParam.StirringMotorPower = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_StirringMotorPower), Const.NumericalPrecision);
+                    realTimeParam.AlarmBytes = recvCommand.GetBytes(ParamId_5L.RRealtimeParam_ReadResponse_AlarmCodes);
+                    realTimeParam.Pump1FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump1FlowRate), Const.NumericalPrecision);
+                    realTimeParam.Pump1Flow = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump1Flow), Const.NumericalPrecision);
+                    realTimeParam.Pump1FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump1FlowTotal), Const.NumericalPrecision);
+                    realTimeParam.Pump2FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump2FlowRate), Const.NumericalPrecision);
+                    realTimeParam.Pump2Flow = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump2Flow), Const.NumericalPrecision);
+                    realTimeParam.Pump2FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump2FlowTotal), Const.NumericalPrecision);
+                    realTimeParam.Pump3FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump3FlowRate), Const.NumericalPrecision);
+                    realTimeParam.Pump3Flow = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump3Flow), Const.NumericalPrecision);
+                    realTimeParam.Pump3FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump3FlowTotal), Const.NumericalPrecision);
+                    realTimeParam.Pump4FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump4FlowRate), Const.NumericalPrecision);
+                    realTimeParam.Pump4Flow = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump4Flow), Const.NumericalPrecision);
+                    realTimeParam.Pump4FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump4FlowTotal), Const.NumericalPrecision);
+                    realTimeParam.Pump5FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump5FlowRate), Const.NumericalPrecision);
+                    realTimeParam.Pump5Flow = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump5Flow), Const.NumericalPrecision);
+                    realTimeParam.Pump5FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump5FlowTotal), Const.NumericalPrecision);
+                    realTimeParam.MFC1FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC1FlowRate), Const.NumericalPrecision);
+                    realTimeParam.MFC1FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC1FlowCapacity), Const.NumericalPrecision);
+                    realTimeParam.MFC2FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC2FlowRate), Const.NumericalPrecision);
+                    realTimeParam.MFC2FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC2FlowCapacity), Const.NumericalPrecision);
+                    realTimeParam.MFC3FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC3FlowRate), Const.NumericalPrecision);
+                    realTimeParam.MFC3FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC3FlowCapacity), Const.NumericalPrecision);
+                    realTimeParam.MFC4FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC4FlowRate), Const.NumericalPrecision);
+                    realTimeParam.MFC4FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC4FlowCapacity), Const.NumericalPrecision);
+                    realTimeParam.JarWeight = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_JarWeight), Const.NumericalPrecision);
+                    realTimeParam.ReserveWeight = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_ReserveWeight), Const.NumericalPrecision);
+                    realTimeParam.Bottle1Weight = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Bottle1Weight), Const.NumericalPrecision);
+                    realTimeParam.Bottle2Weight = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Bottle2Weight), Const.NumericalPrecision);
+                    realTimeParam.PHSensorTemp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_pHSensorTemp), Const.NumericalPrecision);
+                    realTimeParam.DOSensorTemp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_DOSensorTemp), Const.NumericalPrecision);
+                    realTimeParam.HeatingBlanketNTCTemp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_HeatingBlanketNTCTemp), Const.NumericalPrecision);
+                    realTimeParam.RoomTemp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_RoomTemp), Const.NumericalPrecision);
+                    realTimeParam.EPCPressure = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_EPCPressure), Const.NumericalPrecision);
 
-                    realTimeParam.IntakeModuleCO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_IntakeModuleCO2Concentration), Const.NumericalPrecision);
-                    realTimeParam.IntakeModuleO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_IntakeModuleO2Concentration), Const.NumericalPrecision);
-                    realTimeParam.IntakeModuleGasTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_IntakeModuleGasTemp), Const.NumericalPrecision);
-                    realTimeParam.IntakeModuleGasHumidity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_IntakeModuleGasHumidity), Const.NumericalPrecision);
-                    realTimeParam.IntakeModuleGasPressure = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_IntakeModuleGasPressure), Const.NumericalPrecision);
+                    realTimeParam.IntakeModuleCO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_IntakeModuleCO2Concentration), Const.NumericalPrecision);
+                    realTimeParam.IntakeModuleO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_IntakeModuleO2Concentration), Const.NumericalPrecision);
+                    realTimeParam.IntakeModuleGasTemp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_IntakeModuleGasTemp), Const.NumericalPrecision);
+                    realTimeParam.IntakeModuleGasHumidity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_IntakeModuleGasHumidity), Const.NumericalPrecision);
+                    realTimeParam.IntakeModuleGasPressure = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_IntakeModuleGasPressure), Const.NumericalPrecision);
 
-                    realTimeParam.OffgasModuleCO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_OffgasModuleCO2Concentration), Const.NumericalPrecision);
-                    realTimeParam.OffgasModuleO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_OffgasModuleO2Concentration), Const.NumericalPrecision);
-                    realTimeParam.OffgasModuleGasTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_OffgasModuleGasTemp), Const.NumericalPrecision);
-                    realTimeParam.OffgasModuleGasHumidity = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_OffgasModuleGasHumidity), Const.NumericalPrecision);
-                    realTimeParam.OffgasModuleGasPressure = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_OffgasModuleGasPressure), Const.NumericalPrecision);
+                    realTimeParam.OffgasModuleCO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_OffgasModuleCO2Concentration), Const.NumericalPrecision);
+                    realTimeParam.OffgasModuleO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_OffgasModuleO2Concentration), Const.NumericalPrecision);
+                    realTimeParam.OffgasModuleGasTemp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_OffgasModuleGasTemp), Const.NumericalPrecision);
+                    realTimeParam.OffgasModuleGasHumidity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_OffgasModuleGasHumidity), Const.NumericalPrecision);
+                    realTimeParam.OffgasModuleGasPressure = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_OffgasModuleGasPressure), Const.NumericalPrecision);
 
-                    realTimeParam.StirringMotorTemp = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_StirringMotorTemp), Const.NumericalPrecision);
-                    realTimeParam.StirringMotorPower = MathF.Round(recvCommand.GetSingle(ParamId.RRealtimeParam_ReadResponse_StirringMotorPower), Const.NumericalPrecision);
+                    realTimeParam.HasFoam = recvCommand.GetByte(ParamId_5L.RRealtimeParam_ReadResponse_HasFoam) == 0x01;
+                    realTimeParam.TempControling = recvCommand.GetByte(ParamId_5L.RRealtimeParam_ReadResponse_TempControlStatus) == 0x01;
 
-                    realTimeParam.HasFoam = recvCommand.GetByte(ParamId.RRealtimeParam_ReadResponse_HasFoam) == 0x01;
                     #region 丢弃滑动窗口滤波 
                     //rawTempData.Add(realTimeParam.PH);
                     //list = [];
@@ -796,14 +797,14 @@ namespace RD3.Shared
         public string GetMCUVersion(string insID, byte boardType)
         {
             string version = string.Empty;
-            SendCommand sendCommand = new SendCommand(CommandId.RMCUVersion, CommandExtendId.Read);
-            sendCommand.SetValue(ParamId.RMCUVersion_Read_Type, boardType);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RMCUVersion, CommandExtendId.Read);
+            sendCommand.SetValue(ParamId_5L.RMCUVersion_Read_Type, boardType);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    version = recvCommand.GetString(ParamId.RMCUVersion_ReadResponse_Version);
+                    version = recvCommand.GetString(ParamId_5L.RMCUVersion_ReadResponse_Version);
                 }
             }
             catch (Exception ex)
@@ -820,11 +821,11 @@ namespace RD3.Shared
         #region 0x0b 写电机调试 删除
         //public void SetMotorDebug(string insID, int motorNo, DebugMode debugMode)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.WMotorDebug, CommandExtendId.Write);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.WMotorDebug, CommandExtendId.Write);
         //    try
         //    {
-        //        sendCommand.SetValue(ParamId.WMotorDebug_Write_MotorNo, (byte)motorNo);
-        //        sendCommand.SetValue(ParamId.WMotorDebug_Write_Mode, (byte)debugMode);
+        //        sendCommand.SetValue(ParamId_5L.WMotorDebug_Write_MotorNo, (byte)motorNo);
+        //        sendCommand.SetValue(ParamId_5L.WMotorDebug_Write_Mode, (byte)debugMode);
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
         //        {
@@ -845,16 +846,16 @@ namespace RD3.Shared
         public TECParam GetTECPID(string insID)
         {
             TECParam param = new();
-            SendCommand sendCommand = new SendCommand(CommandId.RWTempControlDebug, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWTempControlDebug, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    param.P = recvCommand.GetSingle(ParamId.RWTempControlDebug_ReadWrite_P);
-                    param.I = recvCommand.GetSingle(ParamId.RWTempControlDebug_ReadWrite_I);
-                    param.D = recvCommand.GetSingle(ParamId.RWTempControlDebug_ReadWrite_D);
-                    param.K = recvCommand.GetSingle(ParamId.RWTempControlDebug_ReadWrite_K);
+                    param.P = recvCommand.GetSingle(ParamId_5L.RWTempControlDebug_ReadWrite_P);
+                    param.I = recvCommand.GetSingle(ParamId_5L.RWTempControlDebug_ReadWrite_I);
+                    param.D = recvCommand.GetSingle(ParamId_5L.RWTempControlDebug_ReadWrite_D);
+                    param.K = recvCommand.GetSingle(ParamId_5L.RWTempControlDebug_ReadWrite_K);
                 }
             }
             catch (Exception ex)
@@ -869,13 +870,13 @@ namespace RD3.Shared
 
         public void SetTECPID(string insID, TECParam tECParam)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWTempControlDebug, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWTempControlDebug, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWTempControlDebug_ReadWrite_P, tECParam.P);
-                sendCommand.SetValue(ParamId.RWTempControlDebug_ReadWrite_I, tECParam.I);
-                sendCommand.SetValue(ParamId.RWTempControlDebug_ReadWrite_D, tECParam.D);
-                sendCommand.SetValue(ParamId.RWTempControlDebug_ReadWrite_K, tECParam.K);
+                sendCommand.SetValue(ParamId_5L.RWTempControlDebug_ReadWrite_P, tECParam.P);
+                sendCommand.SetValue(ParamId_5L.RWTempControlDebug_ReadWrite_I, tECParam.I);
+                sendCommand.SetValue(ParamId_5L.RWTempControlDebug_ReadWrite_D, tECParam.D);
+                sendCommand.SetValue(ParamId_5L.RWTempControlDebug_ReadWrite_K, tECParam.K);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -896,18 +897,15 @@ namespace RD3.Shared
         DeviceParam ICommandWrapper.GetDeviceParam(string insID)
         {
             DeviceParam deviceParam = new DeviceParam();
-            SendCommand sendCommand = new SendCommand(CommandId.RWDeviceParam, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWDeviceParam, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    deviceParam.MainIpAdress = recvCommand.GetBytes(ParamId.RWDeviceParam_ReadWrite_MainIPAdress);
-                    deviceParam.MainPort = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWDeviceParam_ReadWrite_MainPort));
-                    deviceParam.MainGateway = recvCommand.GetBytes(ParamId.RWDeviceParam_ReadWrite_MainGateway);
-                    deviceParam.WifiIpAdress = recvCommand.GetBytes(ParamId.RWDeviceParam_ReadWrite_WifiIPAdress);
-                    deviceParam.WifiPort = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWDeviceParam_ReadWrite_WifiPort));
-                    deviceParam.WifiGateway = recvCommand.GetBytes(ParamId.RWDeviceParam_ReadWrite_WifiGateway);
+                    deviceParam.MainIpAdress = recvCommand.GetBytes(ParamId_5L.RWDeviceParam_ReadWrite_MainIPAdress);
+                    deviceParam.MainPort = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWDeviceParam_ReadWrite_MainPort));
+                    deviceParam.MainGateway = recvCommand.GetBytes(ParamId_5L.RWDeviceParam_ReadWrite_MainGateway);
                 }
             }
             catch (Exception ex)
@@ -922,7 +920,7 @@ namespace RD3.Shared
 
         public void SetDeviceParam(string insID, DeviceParam deviceParam)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWDeviceParam, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWDeviceParam, CommandExtendId.Write);
             try
             {
                 byte[] bytes = new byte[4];
@@ -953,12 +951,9 @@ namespace RD3.Shared
                     bytes3[i] = (byte)Convert.ToInt32(array[i]);
                 }
                 deviceParam.WifiGateway = bytes3;
-                sendCommand.SetValue(ParamId.RWDeviceParam_ReadWrite_MainIPAdress, deviceParam.MainIpAdress);
-                sendCommand.SetValue(ParamId.RWDeviceParam_ReadWrite_MainPort, BitConverter.GetBytes(deviceParam.MainPort));
-                sendCommand.SetValue(ParamId.RWDeviceParam_ReadWrite_MainGateway, deviceParam.MainGateway);
-                sendCommand.SetValue(ParamId.RWDeviceParam_ReadWrite_WifiIPAdress, deviceParam.WifiIpAdress);
-                sendCommand.SetValue(ParamId.RWDeviceParam_ReadWrite_WifiPort, BitConverter.GetBytes(deviceParam.WifiPort));
-                sendCommand.SetValue(ParamId.RWDeviceParam_ReadWrite_WifiGateway, deviceParam.WifiGateway);
+                sendCommand.SetValue(ParamId_5L.RWDeviceParam_ReadWrite_MainIPAdress, deviceParam.MainIpAdress);
+                sendCommand.SetValue(ParamId_5L.RWDeviceParam_ReadWrite_MainPort, BitConverter.GetBytes(deviceParam.MainPort));
+                sendCommand.SetValue(ParamId_5L.RWDeviceParam_ReadWrite_MainGateway, deviceParam.MainGateway);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -979,17 +974,17 @@ namespace RD3.Shared
         public SensorCorrectParam GetSensorCorrect(string insID, byte sensorType)
         {
             SensorCorrectParam sensorCorrectParam = new();
-            SendCommand sendCommand = new SendCommand(CommandId.RWSensorCorrect, CommandExtendId.Read);
-            sendCommand.SetValue(ParamId.RWSensorCorrect_Read_SensorType, sensorType);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWSensorCorrect, CommandExtendId.Read);
+            sendCommand.SetValue(ParamId_5L.RWSensorCorrect_Read_SensorType, sensorType);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    sensorCorrectParam.SensorType = (SensorType)recvCommand.GetByte(ParamId.RWSensorCorrect_ReadResponse_SensorType);
-                    sensorCorrectParam.Bias = recvCommand.GetSingle(ParamId.RWSensorCorrect_ReadResponse_SensorBias);
-                    sensorCorrectParam.Coefficient = recvCommand.GetSingle(ParamId.RWSensorCorrect_ReadResponse_SensorCoefficient);
-                    sensorCorrectParam.StatusCode = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWSensorCorrect_ReadResponse_StatusCode));
+                    sensorCorrectParam.SensorType = (SensorType)recvCommand.GetByte(ParamId_5L.RWSensorCorrect_ReadResponse_SensorType);
+                    sensorCorrectParam.Bias = recvCommand.GetSingle(ParamId_5L.RWSensorCorrect_ReadResponse_SensorBias);
+                    sensorCorrectParam.Coefficient = recvCommand.GetSingle(ParamId_5L.RWSensorCorrect_ReadResponse_SensorCoefficient);
+                    sensorCorrectParam.StatusCode = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWSensorCorrect_ReadResponse_StatusCode));
                 }
             }
             catch (Exception ex)
@@ -1004,12 +999,12 @@ namespace RD3.Shared
 
         public void SetSensorCorrect(string insID, SensorCorrectParam sensorCorrectParam)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWSensorCorrect, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWSensorCorrect, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWSensorCorrect_Write_SensorType, (byte)sensorCorrectParam.SensorType);
-                sendCommand.SetValue(ParamId.RWSensorCorrect_Write_CorrectMode, (byte)sensorCorrectParam.CorrectMode);
-                sendCommand.SetValue(ParamId.RWSensorCorrect_Write_CorrectValue, sensorCorrectParam.CorrectValue);
+                sendCommand.SetValue(ParamId_5L.RWSensorCorrect_Write_SensorType, (byte)sensorCorrectParam.SensorType);
+                sendCommand.SetValue(ParamId_5L.RWSensorCorrect_Write_CorrectMode, (byte)sensorCorrectParam.CorrectMode);
+                sendCommand.SetValue(ParamId_5L.RWSensorCorrect_Write_CorrectValue, sensorCorrectParam.CorrectValue);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -1029,16 +1024,16 @@ namespace RD3.Shared
         #region 0x0f 读写DO传感器校准  删除
         //public Tuple<int,float> GetDOSensorCorrect(string insID)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.RWDOSensorCorrect, CommandExtendId.Read);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.RWDOSensorCorrect, CommandExtendId.Read);
         //    try
         //    {
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
         //        {
-        //            byte[] bytes = recvCommand.GetBytes(ParamId.RWDOSensorCorrect_ReadResponse_Status);
+        //            byte[] bytes = recvCommand.GetBytes(ParamId_5L.RWDOSensorCorrect_ReadResponse_Status);
         //            Array.Reverse(bytes);
         //            int status = BitConverter.ToInt32(bytes);
-        //            float coefficient = recvCommand.GetSingle(ParamId.RWDOSensorCorrect_ReadResponse_SensorCoefficient);
+        //            float coefficient = recvCommand.GetSingle(ParamId_5L.RWDOSensorCorrect_ReadResponse_SensorCoefficient);
         //            return Tuple.Create(status, coefficient);
         //        }
         //        else
@@ -1057,12 +1052,12 @@ namespace RD3.Shared
 
         //public void SetDOSensorCorrect(string insID, SensorCorrectMode mode, TwoPointCorrectParam twoPointCorrectParam, float calitrationValue)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.RWDOSensorCorrect, CommandExtendId.Write);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.RWDOSensorCorrect, CommandExtendId.Write);
         //    try
         //    {
-        //        sendCommand.SetValue(ParamId.RWDOSensorCorrect_Write_CorrectMode, (byte)mode);
-        //        sendCommand.SetValue(ParamId.RWDOSensorCorrect_Write_CorrectParam, (byte)twoPointCorrectParam);
-        //        sendCommand.SetValue(ParamId.RWDOSensorCorrect_Write_CorrectValue, calitrationValue);
+        //        sendCommand.SetValue(ParamId_5L.RWDOSensorCorrect_Write_CorrectMode, (byte)mode);
+        //        sendCommand.SetValue(ParamId_5L.RWDOSensorCorrect_Write_CorrectParam, (byte)twoPointCorrectParam);
+        //        sendCommand.SetValue(ParamId_5L.RWDOSensorCorrect_Write_CorrectValue, calitrationValue);
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
         //        {
@@ -1082,15 +1077,15 @@ namespace RD3.Shared
         #region 0x10 读写称重传感器校准  删除
         //public Tuple<float, float> GetWeightSensorCorrect(string insID, int sensorNo)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.RWWeightSensorCorrect, CommandExtendId.Read);
-        //    sendCommand.SetValue(ParamId.RWWeightSensorCorrect_Read_SensorKind, (byte)sensorNo);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.RWWeightSensorCorrect, CommandExtendId.Read);
+        //    sendCommand.SetValue(ParamId_5L.RWWeightSensorCorrect_Read_SensorKind, (byte)sensorNo);
         //    try
         //    {
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
         //        {
-        //            float bias = recvCommand.GetSingle(ParamId.RWWeightSensorCorrect_ReadResponse_SensorBias);
-        //            float coefficient = recvCommand.GetSingle(ParamId.RWWeightSensorCorrect_ReadResponse_SensorCoefficient);
+        //            float bias = recvCommand.GetSingle(ParamId_5L.RWWeightSensorCorrect_ReadResponse_SensorBias);
+        //            float coefficient = recvCommand.GetSingle(ParamId_5L.RWWeightSensorCorrect_ReadResponse_SensorCoefficient);
         //            return Tuple.Create(bias, coefficient);
         //        }
         //        else
@@ -1109,13 +1104,13 @@ namespace RD3.Shared
 
         //public void SetWeightSensorCorrect(string insID, int sensorNo, SensorCorrectMode mode, TwoPointCorrectParam twoPointCorrectParam, float calitrationValue)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.RWWeightSensorCorrect, CommandExtendId.Write);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.RWWeightSensorCorrect, CommandExtendId.Write);
         //    try
         //    {
-        //        sendCommand.SetValue(ParamId.RWWeightSensorCorrect_Write_SensorNo, (byte)sensorNo);
-        //        sendCommand.SetValue(ParamId.RWWeightSensorCorrect_Write_CorrectMode, (byte)mode);
-        //        sendCommand.SetValue(ParamId.RWWeightSensorCorrect_Write_CorrectParam, (byte)twoPointCorrectParam);
-        //        sendCommand.SetValue(ParamId.RWWeightSensorCorrect_Write_CorrectValue, calitrationValue);
+        //        sendCommand.SetValue(ParamId_5L.RWWeightSensorCorrect_Write_SensorNo, (byte)sensorNo);
+        //        sendCommand.SetValue(ParamId_5L.RWWeightSensorCorrect_Write_CorrectMode, (byte)mode);
+        //        sendCommand.SetValue(ParamId_5L.RWWeightSensorCorrect_Write_CorrectParam, (byte)twoPointCorrectParam);
+        //        sendCommand.SetValue(ParamId_5L.RWWeightSensorCorrect_Write_CorrectValue, calitrationValue);
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
         //        {
@@ -1135,14 +1130,14 @@ namespace RD3.Shared
         #region 0x11 读写PT100校准  删除
         //public Tuple<float, float> GetPT100SensorCorrect(string insID)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.RWPT100SensorCorrect, CommandExtendId.Read);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.RWPT100SensorCorrect, CommandExtendId.Read);
         //    try
         //    {
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
         //        {
-        //            float bias = recvCommand.GetSingle(ParamId.RWPT100SensorCorrect_ReadResponse_SensorBias);
-        //            float coefficient = recvCommand.GetSingle(ParamId.RWPT100SensorCorrect_ReadResponse_SensorCoefficient);
+        //            float bias = recvCommand.GetSingle(ParamId_5L.RWPT100SensorCorrect_ReadResponse_SensorBias);
+        //            float coefficient = recvCommand.GetSingle(ParamId_5L.RWPT100SensorCorrect_ReadResponse_SensorCoefficient);
         //            return Tuple.Create(bias, coefficient);
         //        }
         //        else
@@ -1162,12 +1157,12 @@ namespace RD3.Shared
 
         //public void SetPT100SensorCorrect(string insID, SensorCorrectMode mode, TwoPointCorrectParam twoPointCorrectParam, float calitrationValue)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.RWPT100SensorCorrect, CommandExtendId.Write);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.RWPT100SensorCorrect, CommandExtendId.Write);
         //    try
         //    {
-        //        sendCommand.SetValue(ParamId.RWPT100SensorCorrect_Write_CorrectMode, (byte)mode);
-        //        sendCommand.SetValue(ParamId.RWPT100SensorCorrect_Write_CorrectParam, (byte)twoPointCorrectParam);
-        //        sendCommand.SetValue(ParamId.RWPT100SensorCorrect_Write_CorrectValue, calitrationValue);
+        //        sendCommand.SetValue(ParamId_5L.RWPT100SensorCorrect_Write_CorrectMode, (byte)mode);
+        //        sendCommand.SetValue(ParamId_5L.RWPT100SensorCorrect_Write_CorrectParam, (byte)twoPointCorrectParam);
+        //        sendCommand.SetValue(ParamId_5L.RWPT100SensorCorrect_Write_CorrectValue, calitrationValue);
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
         //        {
@@ -1188,14 +1183,14 @@ namespace RD3.Shared
         public float GetPeristalticPumpCorrect(string insID, int pumpNo)
         {
             float coefficient = -1;
-            SendCommand sendCommand = new SendCommand(CommandId.RWPeristalticPumpCorrect, CommandExtendId.Read);
-            sendCommand.SetValue(ParamId.RWPeristalticPumpCorrect_Read_PeristalticPumpNo, (byte)pumpNo);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWPeristalticPumpCorrect, CommandExtendId.Read);
+            sendCommand.SetValue(ParamId_5L.RWPeristalticPumpCorrect_Read_PeristalticPumpNo, (byte)pumpNo);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    coefficient = recvCommand.GetSingle(ParamId.RWPeristalticPumpCorrect_ReadResponse_PeristalticPumpCoefficient);
+                    coefficient = recvCommand.GetSingle(ParamId_5L.RWPeristalticPumpCorrect_ReadResponse_PeristalticPumpCoefficient);
                 }
             }
             catch (Exception ex)
@@ -1210,12 +1205,12 @@ namespace RD3.Shared
 
         public void SetPeristalticPumpCorrect(string insID, int pumpNo, int calitrationParam, float calitrationValue)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWPeristalticPumpCorrect, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWPeristalticPumpCorrect, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWPeristalticPumpCorrect_Write_PeristalticPumpNo, (byte)pumpNo);
-                sendCommand.SetValue(ParamId.RWPeristalticPumpCorrect_Write_CorrectParam, (byte)calitrationParam);
-                sendCommand.SetValue(ParamId.RWPeristalticPumpCorrect_Write_CorrectValue, calitrationValue);
+                sendCommand.SetValue(ParamId_5L.RWPeristalticPumpCorrect_Write_PeristalticPumpNo, (byte)pumpNo);
+                sendCommand.SetValue(ParamId_5L.RWPeristalticPumpCorrect_Write_CorrectParam, (byte)calitrationParam);
+                sendCommand.SetValue(ParamId_5L.RWPeristalticPumpCorrect_Write_CorrectValue, calitrationValue);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -1235,16 +1230,16 @@ namespace RD3.Shared
         #region 0x13 读写蠕动泵对应功能配置  删除
         //public PeristalticPump[] GetPeristalticPumpSetting(string insID)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.RWPeristalticPumpSetting, CommandExtendId.Read);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.RWPeristalticPumpSetting, CommandExtendId.Read);
         //    try
         //    {
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
         //        {
-        //            var pump1 = (PeristalticPump)recvCommand.GetByte(ParamId.RWPeristalticPumpSetting_ReadWrite_Pump1Setting);
-        //            var pump2 = (PeristalticPump)recvCommand.GetByte(ParamId.RWPeristalticPumpSetting_ReadWrite_Pump2Setting);
-        //            var pump3 = (PeristalticPump)recvCommand.GetByte(ParamId.RWPeristalticPumpSetting_ReadWrite_Pump3Setting);
-        //            var pump4 = (PeristalticPump)recvCommand.GetByte(ParamId.RWPeristalticPumpSetting_ReadWrite_Pump4Setting);
+        //            var pump1 = (PeristalticPump)recvCommand.GetByte(ParamId_5L.RWPeristalticPumpSetting_ReadWrite_Pump1Setting);
+        //            var pump2 = (PeristalticPump)recvCommand.GetByte(ParamId_5L.RWPeristalticPumpSetting_ReadWrite_Pump2Setting);
+        //            var pump3 = (PeristalticPump)recvCommand.GetByte(ParamId_5L.RWPeristalticPumpSetting_ReadWrite_Pump3Setting);
+        //            var pump4 = (PeristalticPump)recvCommand.GetByte(ParamId_5L.RWPeristalticPumpSetting_ReadWrite_Pump4Setting);
         //            return new PeristalticPump[] { pump1, pump2, pump3, pump4 };
         //        }
         //        else
@@ -1264,13 +1259,13 @@ namespace RD3.Shared
 
         //public void SetPeristalticSetting(string insID, PeristalticPump[] pumps)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.RWPeristalticPumpSetting, CommandExtendId.Write);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.RWPeristalticPumpSetting, CommandExtendId.Write);
         //    try
         //    {
-        //        sendCommand.SetValue(ParamId.RWPeristalticPumpSetting_ReadWrite_Pump1Setting, (byte)pumps[0]);
-        //        sendCommand.SetValue(ParamId.RWPeristalticPumpSetting_ReadWrite_Pump2Setting, (byte)pumps[1]);
-        //        sendCommand.SetValue(ParamId.RWPeristalticPumpSetting_ReadWrite_Pump3Setting, (byte)pumps[2]);
-        //        sendCommand.SetValue(ParamId.RWPeristalticPumpSetting_ReadWrite_Pump4Setting, (byte)pumps[3]);
+        //        sendCommand.SetValue(ParamId_5L.RWPeristalticPumpSetting_ReadWrite_Pump1Setting, (byte)pumps[0]);
+        //        sendCommand.SetValue(ParamId_5L.RWPeristalticPumpSetting_ReadWrite_Pump2Setting, (byte)pumps[1]);
+        //        sendCommand.SetValue(ParamId_5L.RWPeristalticPumpSetting_ReadWrite_Pump3Setting, (byte)pumps[2]);
+        //        sendCommand.SetValue(ParamId_5L.RWPeristalticPumpSetting_ReadWrite_Pump4Setting, (byte)pumps[3]);
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
         //        {
@@ -1290,14 +1285,14 @@ namespace RD3.Shared
         #region 0x14 读写MFC对应功能配置  删除
         //public GasType[] GetMFCSetting(string insID)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.RWMFCSetting, CommandExtendId.Read);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.RWMFCSetting, CommandExtendId.Read);
         //    try
         //    {
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
         //        {
-        //            var item1 = (GasType)recvCommand.GetByte(ParamId.RWMFCSetting_ReadWrite_MFC1Setting);
-        //            var item2 = (GasType)recvCommand.GetByte(ParamId.RWMFCSetting_ReadWrite_MFC2Setting);
+        //            var item1 = (GasType)recvCommand.GetByte(ParamId_5L.RWMFCSetting_ReadWrite_MFC1Setting);
+        //            var item2 = (GasType)recvCommand.GetByte(ParamId_5L.RWMFCSetting_ReadWrite_MFC2Setting);
         //            return new GasType[] { item1, item2 };
         //        }
         //        else
@@ -1317,11 +1312,11 @@ namespace RD3.Shared
 
         //public void SetMFCSetting(string insID, GasType[] gases)
         //{
-        //    SendCommand sendCommand = new SendCommand(CommandId.RWMFCSetting, CommandExtendId.Write);
+        //    SendCommand sendCommand = new SendCommand(CommandId_5L.RWMFCSetting, CommandExtendId.Write);
         //    try
         //    {
-        //        sendCommand.SetValue(ParamId.RWMFCSetting_ReadWrite_MFC1Setting, (byte)gases[0]);
-        //        sendCommand.SetValue(ParamId.RWMFCSetting_ReadWrite_MFC2Setting, (byte)gases[1]);
+        //        sendCommand.SetValue(ParamId_5L.RWMFCSetting_ReadWrite_MFC1Setting, (byte)gases[0]);
+        //        sendCommand.SetValue(ParamId_5L.RWMFCSetting_ReadWrite_MFC2Setting, (byte)gases[1]);
         //        RecvCommand recvCommand = Send(insID, sendCommand);
         //        if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
         //        {
@@ -1341,11 +1336,11 @@ namespace RD3.Shared
         #region 0x15 写流量清零
         public void SetResetFlowCapacity(string insID, ClearModule clearModule, int serialNo = 1)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.WCleanFlowCapacity, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.WCleanFlowCapacity, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.WCleanFlowCapacity_Write_Type, (byte)clearModule);
-                sendCommand.SetValue(ParamId.WCleanFlowCapacity_Write_No, (byte)serialNo);
+                sendCommand.SetValue(ParamId_5L.WCleanFlowCapacity_Write_Type, (byte)clearModule);
+                sendCommand.SetValue(ParamId_5L.WCleanFlowCapacity_Write_No, (byte)serialNo);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -1365,17 +1360,17 @@ namespace RD3.Shared
         #region 0x16 读写声光报警
         AlarmParam ICommandWrapper.GetSoundLightAlarm(string insID)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWSoundLightAlarm, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWSoundLightAlarm, CommandExtendId.Read);
             AlarmParam param = new();
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    param.RedLightEnable = (SwitchMode)recvCommand.GetByte(ParamId.RWSoundLightAlarm_ReadWrite_RedLightStatus);
-                    param.GreenLightEnable = (SwitchMode)recvCommand.GetByte(ParamId.RWSoundLightAlarm_ReadWrite_GreenLightStatus);
-                    param.BlueLightEnable = (SwitchMode)recvCommand.GetByte(ParamId.RWSoundLightAlarm_ReadWrite_BlueLightStatus);
-                    param.BuzzerEnable = (SwitchMode)recvCommand.GetByte(ParamId.RWSoundLightAlarm_ReadWrite_BuzzerStatus);
+                    param.RedLightEnable = (SwitchMode)recvCommand.GetByte(ParamId_5L.RWSoundLightAlarm_ReadWrite_RedLightStatus);
+                    param.GreenLightEnable = (SwitchMode)recvCommand.GetByte(ParamId_5L.RWSoundLightAlarm_ReadWrite_GreenLightStatus);
+                    param.BlueLightEnable = (SwitchMode)recvCommand.GetByte(ParamId_5L.RWSoundLightAlarm_ReadWrite_BlueLightStatus);
+                    param.BuzzerEnable = (SwitchMode)recvCommand.GetByte(ParamId_5L.RWSoundLightAlarm_ReadWrite_BuzzerStatus);
                     return param;
                 }
                 else
@@ -1394,13 +1389,13 @@ namespace RD3.Shared
 
         void ICommandWrapper.SetSoundLightAlarm(string insID, AlarmParam alarmParam)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWSoundLightAlarm, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWSoundLightAlarm, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWSoundLightAlarm_ReadWrite_RedLightStatus, (byte)alarmParam.RedLightEnable);
-                sendCommand.SetValue(ParamId.RWSoundLightAlarm_ReadWrite_GreenLightStatus, (byte)alarmParam.GreenLightEnable);
-                sendCommand.SetValue(ParamId.RWSoundLightAlarm_ReadWrite_BlueLightStatus, (byte)alarmParam.BlueLightEnable);
-                sendCommand.SetValue(ParamId.RWSoundLightAlarm_ReadWrite_BuzzerStatus, (byte)alarmParam.BuzzerEnable);
+                sendCommand.SetValue(ParamId_5L.RWSoundLightAlarm_ReadWrite_RedLightStatus, (byte)alarmParam.RedLightEnable);
+                sendCommand.SetValue(ParamId_5L.RWSoundLightAlarm_ReadWrite_GreenLightStatus, (byte)alarmParam.GreenLightEnable);
+                sendCommand.SetValue(ParamId_5L.RWSoundLightAlarm_ReadWrite_BlueLightStatus, (byte)alarmParam.BlueLightEnable);
+                sendCommand.SetValue(ParamId_5L.RWSoundLightAlarm_ReadWrite_BuzzerStatus, (byte)alarmParam.BuzzerEnable);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -1421,21 +1416,21 @@ namespace RD3.Shared
 
         public (System.DateTime, TimeSpan) GetTimeSync(string insID)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWTimeSync, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWTimeSync, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    int year = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWTimeSync_ReadWrite_Year));
-                    int month = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWTimeSync_ReadWrite_Month));
-                    int day = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWTimeSync_ReadWrite_Day));
-                    int hour = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWTimeSync_ReadWrite_Hour));
-                    int minute = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWTimeSync_ReadWrite_Minute));
-                    int second = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWTimeSync_ReadWrite_Second));
-                    int hour1 = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWTimeSync_ReadWrite_RunningHour));
-                    int minute1 = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWTimeSync_ReadWrite_RunningMinute));
-                    int second1 = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWTimeSync_ReadWrite_RunningSecond));
+                    int year = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWTimeSync_ReadWrite_Year));
+                    int month = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWTimeSync_ReadWrite_Month));
+                    int day = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWTimeSync_ReadWrite_Day));
+                    int hour = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWTimeSync_ReadWrite_Hour));
+                    int minute = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWTimeSync_ReadWrite_Minute));
+                    int second = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWTimeSync_ReadWrite_Second));
+                    int hour1 = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWTimeSync_ReadWrite_RunningHour));
+                    int minute1 = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWTimeSync_ReadWrite_RunningMinute));
+                    int second1 = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWTimeSync_ReadWrite_RunningSecond));
                     return (new DateTime(year, month, day, hour, minute, second), new TimeSpan(hour1, minute1, second1));
                 }
                 else
@@ -1454,30 +1449,30 @@ namespace RD3.Shared
 
         public void SetTimeSync(string insID, System.DateTime dateTime, TimeSpan timeSpan)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWTimeSync, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWTimeSync, CommandExtendId.Write);
             try
             {
                 byte[] array1 = BitConverter.GetBytes(dateTime.Year);
                 //Array.Reverse(array1);
-                sendCommand.SetValue(ParamId.RWTimeSync_ReadWrite_Year, array1);
+                sendCommand.SetValue(ParamId_5L.RWTimeSync_ReadWrite_Year, array1);
                 byte[] array2 = BitConverter.GetBytes(dateTime.Month);
                 //Array.Reverse(array2);
-                sendCommand.SetValue(ParamId.RWTimeSync_ReadWrite_Month, array2);
+                sendCommand.SetValue(ParamId_5L.RWTimeSync_ReadWrite_Month, array2);
                 byte[] array3 = BitConverter.GetBytes(dateTime.Day);
                 //Array.Reverse(array3);
-                sendCommand.SetValue(ParamId.RWTimeSync_ReadWrite_Day, array3);
+                sendCommand.SetValue(ParamId_5L.RWTimeSync_ReadWrite_Day, array3);
                 byte[] array4 = BitConverter.GetBytes(dateTime.Hour);
                 //Array.Reverse(array4);
-                sendCommand.SetValue(ParamId.RWTimeSync_ReadWrite_Hour, array4);
+                sendCommand.SetValue(ParamId_5L.RWTimeSync_ReadWrite_Hour, array4);
                 byte[] array5 = BitConverter.GetBytes(dateTime.Minute);
                 //Array.Reverse(array5);
-                sendCommand.SetValue(ParamId.RWTimeSync_ReadWrite_Minute, array5);
+                sendCommand.SetValue(ParamId_5L.RWTimeSync_ReadWrite_Minute, array5);
                 byte[] array6 = BitConverter.GetBytes(dateTime.Second);
                 //Array.Reverse(array6);
-                sendCommand.SetValue(ParamId.RWTimeSync_ReadWrite_Second, array6);
-                sendCommand.SetValue(ParamId.RWTimeSync_ReadWrite_RunningHour, BitConverter.GetBytes(timeSpan.Hours));
-                sendCommand.SetValue(ParamId.RWTimeSync_ReadWrite_RunningMinute, BitConverter.GetBytes(timeSpan.Minutes));
-                sendCommand.SetValue(ParamId.RWTimeSync_ReadWrite_RunningSecond, BitConverter.GetBytes(timeSpan.Seconds));
+                sendCommand.SetValue(ParamId_5L.RWTimeSync_ReadWrite_Second, array6);
+                sendCommand.SetValue(ParamId_5L.RWTimeSync_ReadWrite_RunningHour, BitConverter.GetBytes(timeSpan.Hours));
+                sendCommand.SetValue(ParamId_5L.RWTimeSync_ReadWrite_RunningMinute, BitConverter.GetBytes(timeSpan.Minutes));
+                sendCommand.SetValue(ParamId_5L.RWTimeSync_ReadWrite_RunningSecond, BitConverter.GetBytes(timeSpan.Seconds));
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -1497,13 +1492,13 @@ namespace RD3.Shared
         #region 0x18 写配置
         public void SetSettingSync(string insID, ScreenParam param)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.WSettingSync, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.WSettingSync, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.WSettingSync_Write_PH, param.PH);
-                sendCommand.SetValue(ParamId.WSettingSync_Write_PHAuto, param.PhAuto == true ? 0x01 : 0x00);
-                sendCommand.SetValue(ParamId.WSettingSync_Write_DO, param.DO);
-                sendCommand.SetValue(ParamId.WSettingSync_Write_DOAuto, param.DOAuto == true ? 0x01 : 0x00);
+                sendCommand.SetValue(ParamId_5L.WSettingSync_Write_PH, param.PH);
+                sendCommand.SetValue(ParamId_5L.WSettingSync_Write_PHAuto, param.PhAuto == true ? 0x01 : 0x00);
+                sendCommand.SetValue(ParamId_5L.WSettingSync_Write_DO, param.DO);
+                sendCommand.SetValue(ParamId_5L.WSettingSync_Write_DOAuto, param.DOAuto == true ? 0x01 : 0x00);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -1524,14 +1519,14 @@ namespace RD3.Shared
         public CondensationParam GetCondensationControl(string insID)
         {
             CondensationParam condensationParam = new CondensationParam();
-            SendCommand sendCommand = new SendCommand(CommandId.RWCondensationControl, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWCondensationControl, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    condensationParam.Enable = recvCommand.GetByte(ParamId.RWCondensationControl_ReadWrite_Enable) == 0x01 ? true : false;
-                    condensationParam.Temp = recvCommand.GetSingle(ParamId.RWCondensationControl_ReadWrite_Temp);
+                    condensationParam.Enable = recvCommand.GetByte(ParamId_5L.RWCondensationControl_ReadWrite_Enable) == 0x01 ? true : false;
+                    condensationParam.Temp = recvCommand.GetSingle(ParamId_5L.RWCondensationControl_ReadWrite_Temp);
                 }
             }
             catch (Exception ex)
@@ -1545,11 +1540,11 @@ namespace RD3.Shared
 
         public void SetCondensationControl(string insID, CondensationParam param)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWCondensationControl, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWCondensationControl, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWCondensationControl_ReadWrite_Enable, param.Enable == true ? 0x01 : 0x00);
-                sendCommand.SetValue(ParamId.RWCondensationControl_ReadWrite_Temp, param.Temp);
+                sendCommand.SetValue(ParamId_5L.RWCondensationControl_ReadWrite_Enable, param.Enable == true ? 0x01 : 0x00);
+                sendCommand.SetValue(ParamId_5L.RWCondensationControl_ReadWrite_Temp, param.Temp);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -1570,14 +1565,14 @@ namespace RD3.Shared
         public OffGasParam GetOffGas(string insID)
         {
             OffGasParam param = new OffGasParam();
-            SendCommand sendCommand = new SendCommand(CommandId.ROffgas, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.ROffgas, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    param.CO2 = recvCommand.GetSingle(ParamId.ROffgas_ReadResponse_CO2);
-                    param.O2 = recvCommand.GetSingle(ParamId.ROffgas_ReadResponse_O2);
+                    param.CO2 = recvCommand.GetSingle(ParamId_5L.ROffgas_ReadResponse_CO2);
+                    param.O2 = recvCommand.GetSingle(ParamId_5L.ROffgas_ReadResponse_O2);
                 }
             }
             catch (Exception ex)
@@ -1593,13 +1588,13 @@ namespace RD3.Shared
         #region 0x1b 读写程序下载信息
         public MCUDownloadStatus GetMCUDownloadInfo(string insID)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWMCUDownload, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWMCUDownload, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    return (MCUDownloadStatus)recvCommand.GetByte(ParamId.RWMCUDownload_ReadResponse_Status);
+                    return (MCUDownloadStatus)recvCommand.GetByte(ParamId_5L.RWMCUDownload_ReadResponse_Status);
                 }
             }
             catch (Exception ex)
@@ -1613,10 +1608,10 @@ namespace RD3.Shared
 
         public void SetMCUDownloadInfo(string insID, byte boardType)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWMCUDownload, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWMCUDownload, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWMCUDownload_Write_No, boardType);
+                sendCommand.SetValue(ParamId_5L.RWMCUDownload_Write_No, boardType);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -1635,11 +1630,11 @@ namespace RD3.Shared
         #region 0x1c 写部件恢复默认
         public void SetResetDefaultSetting(string insID, ClearModule clearModule, int serialNo = 1)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.WResetDefaultSetting, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.WResetDefaultSetting, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.WResetDefaultSetting_Write_No, (byte)serialNo);
-                sendCommand.SetValue(ParamId.WResetDefaultSetting_Write_Type, (byte)clearModule);
+                sendCommand.SetValue(ParamId_5L.WResetDefaultSetting_Write_No, (byte)serialNo);
+                sendCommand.SetValue(ParamId_5L.WResetDefaultSetting_Write_Type, (byte)clearModule);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -1659,14 +1654,14 @@ namespace RD3.Shared
         public DeviceParam GetMCUDownloadAdress(string insID)
         {
             DeviceParam deviceParam = new DeviceParam();
-            SendCommand sendCommand = new SendCommand(CommandId.RWMCUDownloadAdress, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWMCUDownloadAdress, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    deviceParam.MainIpAdress = recvCommand.GetBytes(ParamId.RWMCUDownloadAdress_ReadWrite_IPAdress);
-                    deviceParam.MainPort = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWMCUDownloadAdress_ReadWrite_Port));
+                    deviceParam.MainIpAdress = recvCommand.GetBytes(ParamId_5L.RWMCUDownloadAdress_ReadWrite_IPAdress);
+                    deviceParam.MainPort = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWMCUDownloadAdress_ReadWrite_Port));
                 }
             }
             catch (Exception ex)
@@ -1681,7 +1676,7 @@ namespace RD3.Shared
 
         public void SetMCUDownloadAdress(string insID, DeviceParam deviceParam)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWMCUDownloadAdress, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWMCUDownloadAdress, CommandExtendId.Write);
             try
             {
                 byte[] bytes = new byte[4];
@@ -1691,8 +1686,8 @@ namespace RD3.Shared
                     bytes[i] = (byte)Convert.ToInt32(array[i]);
                 }
                 deviceParam.MainIpAdress = bytes;
-                sendCommand.SetValue(ParamId.RWMCUDownloadAdress_ReadWrite_IPAdress, deviceParam.MainIpAdress);
-                sendCommand.SetValue(ParamId.RWMCUDownloadAdress_ReadWrite_Port, BitConverter.GetBytes(deviceParam.MainPort));
+                sendCommand.SetValue(ParamId_5L.RWMCUDownloadAdress_ReadWrite_IPAdress, deviceParam.MainIpAdress);
+                sendCommand.SetValue(ParamId_5L.RWMCUDownloadAdress_ReadWrite_Port, BitConverter.GetBytes(deviceParam.MainPort));
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -1713,13 +1708,13 @@ namespace RD3.Shared
         public int GetStirringMotorType(string insID)
         {
             int index = -1;
-            SendCommand sendCommand = new SendCommand(CommandId.RWStirringMotorType, CommandExtendId.Read);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWStirringMotorType, CommandExtendId.Read);
             try
             {
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    index = BitConverter.ToInt32(recvCommand.GetBytes(ParamId.RWStirringMotorType_ReadWrite_MotorType));
+                    index = BitConverter.ToInt32(recvCommand.GetBytes(ParamId_5L.RWStirringMotorType_ReadWrite_MotorType));
                 }
             }
             catch (Exception ex)
@@ -1734,10 +1729,10 @@ namespace RD3.Shared
 
         public void SetStirringMotorType(string insID, int index)
         {
-            SendCommand sendCommand = new SendCommand(CommandId.RWStirringMotorType, CommandExtendId.Write);
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWStirringMotorType, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId.RWStirringMotorType_ReadWrite_MotorType, BitConverter.GetBytes(index));
+                sendCommand.SetValue(ParamId_5L.RWStirringMotorType_ReadWrite_MotorType, BitConverter.GetBytes(index));
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -1803,12 +1798,44 @@ namespace RD3.Shared
         public byte GetMagneticBase(string insID)
         {
             byte status = 0xff;
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWMagneticBaseStatus, CommandExtendId.Read);
+            try
+            {
+                RecvCommand recvCommand = Send(insID, sendCommand);
+                if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
+                {
+                    status = recvCommand.GetByte(ParamId_5L.RWMagneticBaseStatus_ReadWrite_ControlStatus);
+                }
+            }
+            catch (Exception ex)
+            {
+                // 获取当前方法名并记录日志
+                var methodName = new StackTrace().GetFrame(0).GetMethod().Name;
+                LogHelper.Debug($"Error in method {methodName}: {ex}");
+
+            }
             return status;
         }
 
         public void SetMagneticBase(string insID, byte status)
         {
-            return;
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWMagneticBaseStatus, CommandExtendId.Write);
+            try
+            {
+                sendCommand.SetValue(ParamId_5L.RWMagneticBaseStatus_ReadWrite_ControlStatus, status);
+                RecvCommand recvCommand = Send(insID, sendCommand);
+                if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
+                {
+                    throw new Exception("设置失败");
+                }
+            }
+            catch (Exception ex)
+            {
+                // 获取当前方法名并记录日志
+                var methodName = new StackTrace().GetFrame(0).GetMethod().Name;
+                LogHelper.Debug($"Error in method {methodName}: {ex}");
+
+            }
         }
         #endregion
     }

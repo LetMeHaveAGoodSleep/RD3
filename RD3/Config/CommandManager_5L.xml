@@ -412,9 +412,21 @@
                             <type>byte</type>
                             <length>4</length>
                         </param>
+						<param>
+							<id>StirringMotorTemp</id>
+							<name>搅拌电机温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>StirringMotorPower</id>
+							<name>搅拌电机功率</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
                         <param>
                             <id>Pump1FlowRate</id>
-                            <name>泵1流量</name>
+                            <name>泵1流速</name>
                             <type>float</type>
                             <length>1</length>
                         </param>
@@ -432,7 +444,7 @@
                         </param>
                         <param>
                             <id>Pump2FlowRate</id>
-                            <name>泵2流量</name>
+                            <name>泵2流速</name>
                             <type>float</type>
                             <length>1</length>
                         </param>
@@ -450,7 +462,7 @@
                         </param>
                         <param>
                             <id>Pump3FlowRate</id>
-                            <name>泵3流量</name>
+                            <name>泵3流速</name>
                             <type>float</type>
                             <length>1</length>
                         </param>
@@ -468,7 +480,7 @@
                         </param>
                         <param>
                             <id>Pump4FlowRate</id>
-                            <name>泵4流量</name>
+                            <name>泵4流速</name>
                             <type>float</type>
                             <length>1</length>
                         </param>
@@ -486,7 +498,7 @@
                         </param>
                         <param>
                             <id>Pump5FlowRate</id>
-                            <name>泵5流量</name>
+                            <name>泵5流速</name>
                             <type>float</type>
                             <length>1</length>
                         </param>
@@ -502,6 +514,24 @@
                             <type>float</type>
                             <length>1</length>
                         </param>
+						<param>
+							<id>Pump6FlowRate</id>
+							<name>泵6流速</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>Pump6Flow</id>
+							<name>泵6流量</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+						<param>
+							<id>Pump6FlowTotal</id>
+							<name>泵6总量</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
                         <param>
                             <id>MFC1FlowRate</id>
                             <name>MFC1流量</name>
@@ -556,6 +586,12 @@
                             <type>float</type>
                             <length>1</length>
                         </param>
+						<param>
+							<id>ReserveWeight</id>
+							<name>保留重量</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
                         <param>
                             <id>Bottle1Weight</id>
                             <name>瓶子1重量</name>
@@ -580,33 +616,15 @@
                             <type>float</type>
                             <length>1</length>
                         </param>
+						<param>
+							<id>HeatingBlanketNTCTemp</id>
+							<name>加热毯NTC温度</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
                         <param>
-                            <id>HeatingBaseCoolingNTCTemp</id>
-                            <name>加热座冷面NTC温度</name>
-                            <type>float</type>
-                            <length>1</length>
-                        </param>
-                        <param>
-                            <id>HeatingBaseHeatingNTCTemp</id>
-                            <name>加热座热面NTC温度</name>
-                            <type>float</type>
-                            <length>1</length>
-                        </param>
-                        <param>
-                            <id>CoolingModuleCoolingNTCTemp</id>
-                            <name>冷凝模块冷面NTC温度</name>
-                            <type>float</type>
-                            <length>1</length>
-                        </param>
-                        <param>
-                            <id>CoolingModuleHeatingNTCTemp</id>
-                            <name>冷凝模块热面NTC温度</name>
-                            <type>float</type>
-                            <length>1</length>
-                        </param>
-                        <param>
-                            <id>CoolingModuleRoomNTCTemp</id>
-                            <name>冷凝模块室内NTC温度</name>
+                            <id>RoomTemp</id>
+                            <name>室内温度</name>
                             <type>float</type>
                             <length>1</length>
                         </param>
@@ -670,24 +688,24 @@
                             <type>float</type>
                             <length>1</length>
                         </param>
-                        <param>
-                            <id>StirringMotorTemp</id>
-                            <name>搅拌电机温度</name>
-                            <type>float</type>
-                            <length>1</length>
-                        </param>
-                        <param>
-                            <id>StirringMotorPower</id>
-                            <name>搅拌电机功率</name>
-                            <type>float</type>
-                            <length>1</length>
-                        </param>
+						<param>
+							<id>EPCPressure</id>
+							<name>EPC压力</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
                         <param>
                             <id>HasFoam</id>
                             <name>有无泡沫</name>
                             <type>byte</type>
                             <length>1</length>
                         </param>
+						<param>
+							<id>TempControlStatus</id>
+							<name>温控状态</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
                         <param>
                             <id>AlarmCodes</id>
                             <name>报警码</name>
@@ -882,24 +900,6 @@
                         <param>
                             <id>MainGateway</id>
                             <name>主板网关</name>
-                            <type>byte</type>
-                            <length>4</length>
-                        </param>
-                        <param>
-                            <id>WifiIPAdress</id>
-                            <name>Wifi模组IP地址</name>
-                            <type>byte</type>
-                            <length>4</length>
-                        </param>
-                        <param>
-                            <id>WifiPort</id>
-                            <name>Wifi端口号</name>
-                            <type>byte</type>
-                            <length>4</length>
-                        </param>
-                        <param>
-                            <id>WifiGateway</id>
-                            <name>Wifi网关</name>
                             <type>byte</type>
                             <length>4</length>
                         </param>
@@ -1721,5 +1721,103 @@
                 </commandExtend>
             </commandExtends>
         </commandDesc>
+		<commandDesc>
+			<id>RWEPCPressure</id>
+			<name>读写EPC压力</name>
+			<commandCode>0x1f</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+				<commandExtend>
+					<id>0xee</id>
+					<name>ReadWrite</name>
+					<parameters>
+						<param>
+							<id>Pressure</id>
+							<name>压力值</name>
+							<type>float</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+			</commandExtends>
+		</commandDesc>
+		<commandDesc>
+			<id>RWMagneticBaseStatus</id>
+			<name>读写设置磁吸底座状态</name>
+			<commandCode>0x20</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+				<commandExtend>
+					<id>0xee</id>
+					<name>ReadWrite</name>
+					<parameters>
+						<param>
+							<id>ControlStatus</id>
+							<name>控制状态</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+			</commandExtends>
+		</commandDesc>
     </commandDescs>
 </commandManager>

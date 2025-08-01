@@ -46,11 +46,16 @@ namespace RD3.Views
 
             RefershPumps(true);
 
-            SourceInitialized += (s, e) => {
-                IntPtr hwnd = new WindowInteropHelper(this).Handle;
-                HwndSource.FromHwnd(hwnd)?.AddHook(WndProc);
-                ForceFullScreen();
-            };
+            //调试模式下，就不需要让窗口不可移动
+            if (!System.Diagnostics.Debugger.IsAttached)
+            {
+                SourceInitialized += (s, e) =>
+                {
+                    IntPtr hwnd = new WindowInteropHelper(this).Handle;
+                    HwndSource.FromHwnd(hwnd)?.AddHook(WndProc);
+                    ForceFullScreen();
+                };
+            }
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

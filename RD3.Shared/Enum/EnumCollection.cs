@@ -9,9 +9,16 @@ using System.Threading.Tasks;
 namespace RD3.Shared
 {
 
-    /// <summary>
-    /// 转速是必需项，所以不在此列
-    /// </summary>
+    public enum MagneticBaseStatus
+    {
+        [Description("松开")]
+        Release,
+        [Description("吸合")]
+        Engage,
+        [Description("未设置")]
+        Unset,
+    }
+
     public enum SoftwarePlatform
     {
         [Description("1.5L发酵罐_电脑")]
@@ -163,6 +170,21 @@ namespace RD3.Shared
         CoolingModuleNTC1,
         CoolingModuleNTC2,
         CoolingModuleNTC3,
+    }
+
+    public enum SensorType_5L
+    {
+        pH = 0x01,
+        DO,
+        JarWeight,
+        ReserveWeight,
+        Bottle1Weight,
+        Bottle2Weight,
+        PT100,
+        pHTemp,
+        DOTemp,
+        HeatBlanketNTC,
+        RoomTempNTC
     }
 
     public enum SensorCorrectMode
@@ -436,7 +458,7 @@ namespace RD3.Shared
         [Description("信号板")]
         SignalBoard,
         [Description("温控板")]
-        TemperatureCcontrolBoard,
+        TemperatureControlBoard,
         [Description("冷凝板")]
         CondensationBoard
     }

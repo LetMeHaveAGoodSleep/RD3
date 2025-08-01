@@ -15,12 +15,12 @@
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="1920"
     Height="1200"
-    MaxWidth="1920"
-    MaxHeight="1200"
     d:DataContext="{d:DesignInstance Type=viewmodels:PadMainViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
+    FontSize="{StaticResource SubHeadFontSize}"
     ResizeMode="NoResize"
     UseLayoutRounding="True"
+    WindowStartupLocation="CenterScreen"
     WindowState="Maximized"
     mc:Ignorable="d">
     <Window.Resources>
@@ -267,22 +267,57 @@
                             <!--  电机  -->
                             <hc:Divider
                                 Canvas.Left="610"
-                                Canvas.Top="67"
-                                Height="110"
+                                Canvas.Top="47"
+                                Height="130"
                                 LineStroke="#FF7F7F7F"
                                 LineStrokeThickness="2"
                                 Orientation="Vertical" />
                             <hc:Divider
                                 Canvas.Left="616"
-                                Canvas.Top="41"
+                                Canvas.Top="21"
                                 Width="215"
                                 LineStroke="#FF7F7F7F"
                                 LineStrokeThickness="2"
                                 Orientation="Horizontal" />
-                            <local:AgitCtrlView
-                                x:Name="agit"
+                            <hc:UniformSpacingPanel
                                 Canvas.Left="842"
-                                Canvas.Top="50" />
+                                Canvas.Top="10"
+                                Orientation="Horizontal"
+                                Spacing="15">
+                                <DockPanel LastChildFill="False">
+                                    <ToggleButton
+                                        Width="40"
+                                        Height="40"
+                                        VerticalAlignment="Bottom"
+                                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                                        Command="{Binding AgitRunCommand}"
+                                        DockPanel.Dock="Bottom"
+                                        IsChecked="{Binding CurrentDeviceParameter.AgitParam.IsControling}"
+                                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                        Style="{StaticResource ToggleButtonCustom}">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <materialDesign:PackIcon
+                                                Width="40"
+                                                Height="40"
+                                                DockPanel.Dock="Bottom"
+                                                Foreground="{DynamicResource FixedGradientBrush}"
+                                                Kind="AlphaMCircle" />
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <materialDesign:PackIcon
+                                            Width="40"
+                                            Height="40"
+                                            DockPanel.Dock="Bottom"
+                                            Foreground="Gray"
+                                            Kind="AlphaMCircle" />
+                                    </ToggleButton>
+                                </DockPanel>
+                                <TextBox
+                                    Width="110"
+                                    materialDesign:HintAssist.Hint="当前转速(rpm)"
+                                    IsEnabled="False"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding CurrentDeviceParameter.Agit, StringFormat={}{0:F0}}" />
+                            </hc:UniformSpacingPanel>
                             <!--  关键参数  -->
                             <hc:Divider
                                 Canvas.Left="639"
@@ -292,29 +327,140 @@
                                 LineStrokeThickness="2"
                                 Orientation="Horizontal" />
                             <hc:Divider
+                                Canvas.Left="746"
+                                Canvas.Top="95"
+                                Width="75"
+                                LineStroke="#FF7F7F7F"
+                                LineStrokeThickness="2"
+                                Orientation="Horizontal" />
+                            <hc:UniformSpacingPanel
+                                Canvas.Left="842"
+                                Canvas.Top="85"
+                                Orientation="Horizontal"
+                                Spacing="10">
+                                <DockPanel LastChildFill="False">
+                                    <ToggleButton
+                                        Width="40"
+                                        Height="40"
+                                        VerticalAlignment="Bottom"
+                                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                                        Command="{Binding DORunCommand}"
+                                        DockPanel.Dock="Bottom"
+                                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsControling}"
+                                        Style="{StaticResource ToggleButtonCustom}">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <materialDesign:PackIcon
+                                                Width="40"
+                                                Height="40"
+                                                DockPanel.Dock="Bottom"
+                                                Foreground="{DynamicResource FixedGradientBrush}"
+                                                Kind="AlphaDCircle" />
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <materialDesign:PackIcon
+                                            Width="40"
+                                            Height="40"
+                                            DockPanel.Dock="Bottom"
+                                            Foreground="Gray"
+                                            Kind="AlphaDCircle" />
+                                    </ToggleButton>
+                                </DockPanel>
+                                <TextBox
+                                    Width="110"
+                                    materialDesign:HintAssist.Hint="当前溶氧(%)"
+                                    IsEnabled="False"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding CurrentDeviceParameter.DO, StringFormat={}{0:F2}}" />
+                            </hc:UniformSpacingPanel>
+                            <hc:Divider
                                 Canvas.Left="740"
-                                Canvas.Top="125"
-                                Height="120"
+                                Canvas.Top="120"
+                                Height="135"
                                 LineStroke="#FF7F7F7F"
                                 LineStrokeThickness="2"
                                 Orientation="Vertical" />
-                            <local:DoCtrlView Canvas.Left="842" Canvas.Top="170" />
+                            <hc:UniformSpacingPanel
+                                Canvas.Left="842"
+                                Canvas.Top="150"
+                                Orientation="Horizontal"
+                                Spacing="10">
+                                <DockPanel LastChildFill="False">
+                                    <ToggleButton
+                                        Width="40"
+                                        Height="40"
+                                        VerticalAlignment="Bottom"
+                                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                                        Command="{Binding PHRunCommand}"
+                                        DockPanel.Dock="Bottom"
+                                        IsChecked="{Binding CurrentDeviceParameter.PHParam.IsControling}"
+                                        Style="{StaticResource ToggleButtonCustom}">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <materialDesign:PackIcon
+                                                Width="40"
+                                                Height="40"
+                                                DockPanel.Dock="Bottom"
+                                                Foreground="{DynamicResource FixedGradientBrush}"
+                                                Kind="AlphaPCircle" />
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <materialDesign:PackIcon
+                                            Width="40"
+                                            Height="40"
+                                            DockPanel.Dock="Bottom"
+                                            Foreground="Gray"
+                                            Kind="AlphaPCircle" />
+                                    </ToggleButton>
+                                </DockPanel>
+                                <TextBox
+                                    Width="110"
+                                    materialDesign:HintAssist.Hint="当前pH"
+                                    IsEnabled="False"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding CurrentDeviceParameter.PH, StringFormat={}{0:F2}}" />
+                            </hc:UniformSpacingPanel>
                             <hc:Divider
                                 Canvas.Left="746"
-                                Canvas.Top="100"
+                                Canvas.Top="230"
                                 Width="75"
                                 LineStroke="#FF7F7F7F"
                                 LineStrokeThickness="2"
                                 Orientation="Horizontal" />
-                            <local:pHCtrlView Canvas.Left="842" Canvas.Top="110" />
-                            <hc:Divider
-                                Canvas.Left="746"
-                                Canvas.Top="220"
-                                Width="75"
-                                LineStroke="#FF7F7F7F"
-                                LineStrokeThickness="2"
-                                Orientation="Horizontal" />
-                            <local:TemCtrlView Canvas.Left="842" Canvas.Top="230" />
+                            <hc:UniformSpacingPanel
+                                Canvas.Left="842"
+                                Canvas.Top="215"
+                                Orientation="Horizontal"
+                                Spacing="15">
+                                <DockPanel LastChildFill="False">
+                                    <ToggleButton
+                                        Width="40"
+                                        Height="40"
+                                        VerticalAlignment="Bottom"
+                                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                                        Command="{Binding TempRunCommand}"
+                                        DockPanel.Dock="Bottom"
+                                        IsChecked="{Binding CurrentDeviceParameter.TempParam.IsControling}"
+                                        Style="{StaticResource ToggleButtonCustom}">
+                                        <hc:StatusSwitchElement.CheckedElement>
+                                            <materialDesign:PackIcon
+                                                Width="40"
+                                                Height="40"
+                                                DockPanel.Dock="Bottom"
+                                                Foreground="{DynamicResource FixedGradientBrush}"
+                                                Kind="AlphaTCircle" />
+                                        </hc:StatusSwitchElement.CheckedElement>
+                                        <materialDesign:PackIcon
+                                            Width="40"
+                                            Height="40"
+                                            DockPanel.Dock="Bottom"
+                                            Foreground="Gray"
+                                            Kind="AlphaTCircle" />
+                                    </ToggleButton>
+                                </DockPanel>
+                                <TextBox
+                                    Width="110"
+                                    materialDesign:HintAssist.Hint="当前温度(℃)"
+                                    IsEnabled="False"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}" />
+                            </hc:UniformSpacingPanel>
                             <hc:UniformSpacingPanel
                                 Canvas.Left="575"
                                 Canvas.Top="665"

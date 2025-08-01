@@ -6,28 +6,19 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="35"
     d:DesignWidth="170"
     mc:Ignorable="d">
     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-        <TextBlock
-            Name="pumpName"
-            Canvas.Left="5"
-            Canvas.Top="9"
-            Width="38"
-            Height="22"
-            Text="转速"
-            TextWrapping="Wrap" />
         <TextBox
-            Name="targetValue"
-            Canvas.Left="43"
-            Canvas.Top="2"
-            Width="41"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Text="0"
-            TextWrapping="Wrap" />
+            Width="110"
+            materialDesign:HintAssist.HelperText="最大:600 单位:mL/h"
+            materialDesign:HintAssist.Hint="设定流速"
+            IsEnabled="{Binding PumpInfo.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+            Text="{Binding PumpInfo.FlowRate_SP, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}" />
         <TextBlock
             Name="realValue"
             Canvas.Left="90"

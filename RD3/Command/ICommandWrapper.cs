@@ -105,7 +105,7 @@ namespace RD3.Shared
         /// <summary>
         /// 读取MCU版本信息
         /// </summary>
-        string GetMCUVersion(string insID, MCUBoardType boardType);
+        string GetMCUVersion(string insID, byte boardType);
         #endregion
 
         #region 0x0b  删除
@@ -143,7 +143,7 @@ namespace RD3.Shared
         /// <summary>
         /// 读取传感器校准设置
         /// </summary>
-        SensorCorrectParam GetSensorCorrect(string insID, SensorType sensorType);
+        SensorCorrectParam GetSensorCorrect(string insID, byte sensorType);
 
         /// <summary>
         /// 写入PH传感器校准设置
@@ -276,7 +276,7 @@ namespace RD3.Shared
         #region 0x1b 读写程序下载信息
         MCUDownloadStatus GetMCUDownloadInfo(string insID);
 
-        void SetMCUDownloadInfo(string insID, MCUBoardType boardType);
+        void SetMCUDownloadInfo(string insID, byte boardType);
         #endregion
 
         #region 0x1c 写部件恢复默认
@@ -293,6 +293,18 @@ namespace RD3.Shared
         int GetStirringMotorType(string insID);
 
         void SetStirringMotorType(string insID, int index);
+        #endregion
+
+        #region 0x1e 读写EPC压力
+        float GetEPCPressure(string insID);
+
+        void SetEPCPressure(string insID, float pressure);
+        #endregion
+
+        #region 0x1e 读写设置磁吸底座状态
+        byte GetMagneticBase(string insID);
+
+        void SetMagneticBase(string insID, byte status);
         #endregion
     }
 }

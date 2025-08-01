@@ -15,6 +15,9 @@
     <Compile Update="Views\AdaptpHView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AgitSettingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\CameraView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -70,6 +73,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SettingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\TempSettingView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\TimeSeriesView.xaml.cs">

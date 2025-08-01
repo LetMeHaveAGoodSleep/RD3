@@ -113,6 +113,13 @@ namespace RD3
             }
         }
 
+        public void SaveAllSetting()
+        {
+            SaveReactorSetting();
+            SavePumpSetting();
+            SaveMFCSetting();
+        }
+
         public void SaveReactorSetting(ObservableCollection<DeviceParameter> dataList = null)
         {
             lock (_lock1)

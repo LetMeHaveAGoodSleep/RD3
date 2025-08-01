@@ -11,7 +11,7 @@ using RD3.Common;
 
 namespace RD3.Shared
 {
-    public class VirtualCommandWrapper : ICommandWrapper
+    public class Virtual5LCommandWrapper : ICommandWrapper
     {
         OptimizedSlidingFilter tempFilter = new OptimizedSlidingFilter(20);
         List<double> rawTempData = [];
@@ -109,6 +109,9 @@ namespace RD3.Shared
             realTime.CoolingModuleCoolingNTCTemp = RandomNumberUtil.GetRandomSingle();
             realTime.CoolingModuleHeatingNTCTemp = RandomNumberUtil.GetRandomSingle();
             realTime.CoolingModuleRoomNTCTemp = RandomNumberUtil.GetRandomSingle();
+            realTime.HeatingBlanketNTCTemp = RandomNumberUtil.GetRandomSingle();
+            realTime.RoomTemp = RandomNumberUtil.GetRandomSingle();
+            realTime.EPCPressure = RandomNumberUtil.GetRandomSingle();
 
             realTime.IntakeModuleCO2Concentration = RandomNumberUtil.GetRandomSingle();
             realTime.IntakeModuleO2Concentration = RandomNumberUtil.GetRandomSingle();

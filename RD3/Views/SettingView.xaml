@@ -199,6 +199,8 @@
                                 <RowDefinition Height="20" />
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="20" />
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="20" />
                             </Grid.RowDefinitions>
                             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
                                 <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='仪器模式'}" />
@@ -307,6 +309,26 @@
                                 Width="150"
                                 Style="{StaticResource TextBoxExtend}"
                                 Text="{Binding DefaultPumpFlowRate, UpdateSourceTrigger=LostFocus}" />
+                            <hc:UniformSpacingPanel
+                                Grid.Row="12"
+                                Orientation="Vertical"
+                                Spacing="5">
+                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='通讯协议'}" />
+                                <TextBlock
+                                    FontSize="10"
+                                    FontStyle="Oblique"
+                                    Foreground="gray"
+                                    Text="{ex:Language Key='区分不同反应器.'}" />
+                            </hc:UniformSpacingPanel>
+                            <ComboBox
+                                Grid.Row="12"
+                                Grid.Column="1"
+                                Width="150"
+                                SelectedIndex="{Binding CommunicationProtocol}"
+                                Style="{StaticResource ComboBoxExtend}">
+                                <ComboBoxItem Content="通用协议1" />
+                                <ComboBoxItem Content="自定义协议1" />
+                            </ComboBox>
                         </Grid>
                     </hc:UniformSpacingPanel>
                 </Border>

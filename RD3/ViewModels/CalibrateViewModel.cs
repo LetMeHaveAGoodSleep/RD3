@@ -466,7 +466,7 @@ namespace RD3.ViewModels
                             StatusCode = 0;
                             continue;
                         }
-                        var param = InstrumentSolution.GetInstance().CommandWrapper.GetSensorCorrect(SelectedReactor, SensorType);
+                        var param = InstrumentSolution.GetInstance().CommandWrapper.GetSensorCorrect(SelectedReactor, (byte)SensorType);
                         Coefficient = param.Coefficient;
                         Bias = param.Bias;
                         StatusCode = param.StatusCode;

@@ -465,6 +465,14 @@ namespace RD3.Shared
             set { SetProperty(ref _jarWeight, value); }
         }
 
+        private float _reserveWeight = 0f;
+        [JsonIgnore]
+        public float ReserveWeight
+        {
+            get { return _reserveWeight; }
+            set { SetProperty(ref _reserveWeight, value); }
+        }
+
         private float _bottle1Weight = 0f;
         [JsonIgnore]
         public float Bottle1Weight
@@ -495,6 +503,39 @@ namespace RD3.Shared
         {
             get { return _doSensorTemp; }
             set { SetProperty(ref _doSensorTemp, value); }
+        }
+
+        private float _heatingBlanketNTCTemp = 0f;
+        /// <summary>
+        /// 加热毯温度
+        /// </summary>
+        [JsonIgnore]
+        public float HeatingBlanketNTCTemp
+        {
+            get { return _heatingBlanketNTCTemp; }
+            set { SetProperty(ref _heatingBlanketNTCTemp, value); }
+        }
+
+        private float _roomTemp = 0f;
+        /// <summary>
+        /// 室内温度
+        /// </summary>
+        [JsonIgnore]
+        public float RoomTemp
+        {
+            get { return _roomTemp; }
+            set { SetProperty(ref _roomTemp, value); }
+        }
+
+        private float _epcPressure = 0f;
+        /// <summary>
+        /// EPC压力
+        /// </summary>
+        [JsonIgnore]
+        public float EPCPressure
+        {
+            get { return _epcPressure; }
+            set { SetProperty(ref _epcPressure, value); }
         }
 
         private float _heatingBaseCoolingNTCTemp = 0f;
@@ -692,6 +733,14 @@ namespace RD3.Shared
             set { SetProperty(ref _hasFoam, value); }
         }
 
+        private bool _tempControling = false;
+        [JsonIgnore]
+        public bool TempControling
+        {
+            get { return _tempControling; }
+            set { SetProperty(ref _tempControling, value); }
+        }
+
         private WorkStatus  _workStatus;
         [JsonIgnore]
         public WorkStatus WorkStatus
@@ -699,34 +748,6 @@ namespace RD3.Shared
             get { return _workStatus; }
             set { SetProperty(ref _workStatus, value); }
         }
-
-        //private byte[] _alarmBytes;
-        //public byte[] AlarmBytes
-        //{
-        //    get { return _alarmBytes; }
-        //    set
-        //    {
-        //        if (value != null && value != _alarmBytes && value.Length > 0)
-        //        {
-        //            List<string> array = [];
-        //            foreach (var item in value)
-        //            {
-        //                string hexCode = "0x" + item.ToString("X2");
-        //                array.Add(hexCode);
-        //            }
-        //            AlarmCodes = string.Join("-", array);
-        //        }
-        //        SetProperty(ref _alarmBytes, value);
-        //    }
-        //}
-
-        //private string _alarmCodes;
-        //public string AlarmCodes
-        //{
-        //    get => _alarmCodes;
-        //    set { SetProperty(ref _alarmCodes, value); }
-        //}
-
 
         private byte[] _alarmBytes;
         [JsonIgnore]

@@ -17,7 +17,7 @@
     d:DesignHeight="79"
     d:DesignWidth="900"
     prism:ViewModelLocator.AutoWireViewModel="True"
-    Background="White"
+    Background="Transparent"
     FontSize="{StaticResource SubHeadFontSize}"
     mc:Ignorable="d">
     <UserControl.Resources>

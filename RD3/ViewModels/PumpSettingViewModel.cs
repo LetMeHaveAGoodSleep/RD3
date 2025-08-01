@@ -36,9 +36,16 @@ namespace RD3.ViewModels
         {
             try
             {
-                //var pumpSetting = AnalysisSolution.GetInstance().PumpCol.FindFirst(t => t.PumpIndex == PumpInfo.PumpIndex);
-                //PropertyMapper.Map(PumpInfo, pumpSetting);
-                //AnalysisSolution.GetInstance().SavePumpSetting();
+                if (PumpInfo.Pump != PeristalticPump.None)
+                {
+                    int count = AnalysisSolution.GetInstance().PumpInfoCol.Count(t => t.Pump == PumpInfo.Pump);
+                    if (count > 1)
+                    {
+                        HandyControl.Controls.MessageBox.Info($"已存在{EnumUtil.GetEnumDescription(PumpInfo.Pump)}泵", "温馨提示");
+                        PumpInfo.Pump = PeristalticPump.None;
+                        return;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -54,7 +61,6 @@ namespace RD3.ViewModels
             }
             CommandWrapper.SetResetFlowCapacity(PumpInfo.DeviceID, ClearModule.Pump, PumpInfo.PumpIndex);
         });
-
 
         public DelegateCommand PumpControlCommand => new(() => 
         {
@@ -104,7 +110,7 @@ namespace RD3.ViewModels
             CurrentDeviceParameter = AnalysisSolution.GetInstance().ReactorCol[0];
         }
 
-        public string Title => "泵详情";
+        public string Title => "蠕动泵设置";
 
         public event Action<IDialogResult> RequestClose;
 

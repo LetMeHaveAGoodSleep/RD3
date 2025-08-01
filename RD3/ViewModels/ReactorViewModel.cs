@@ -4028,7 +4028,7 @@ namespace RD3.ViewModels
                                     Pump = PeristalticPump.AcidPump,
                                     ControlMode = PumpControlMode.Direct,
                                     FlowSpeed = (float)currentDeviceParameter.AcidParam.Acid_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)currentDeviceParameter.AcidParam.Acid_PV,
-                                    FlowCapacity = 100
+                                    FlowCapacity = Const.MaxPumpFlowCapacity
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(currentDeviceParameter.Name, param);
                                 dicAcidSP[currentDeviceParameter.Name] = currentDeviceParameter.AcidParam.Acid_PV;
@@ -4060,7 +4060,7 @@ namespace RD3.ViewModels
                                             Pump = PeristalticPump.AcidPump,
                                             ControlMode = PumpControlMode.Direct,
                                             FlowSpeed = (float)deviceParameter.AcidParam.Acid_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.AcidParam.Acid_PV,
-                                            FlowCapacity = 100
+                                            FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                         dicAcidSP[deviceParameter.Name] = deviceParameter.AcidParam.Acid_PV;
@@ -4142,7 +4142,7 @@ namespace RD3.ViewModels
                             Pump = PeristalticPump.BasePump,
                             ControlMode = PumpControlMode.Direct,
                             FlowSpeed = (float)currentDeviceParameter.BaseParam.Base_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)currentDeviceParameter.BaseParam.Base_PV,
-                            FlowCapacity = 100
+                            FlowCapacity = Const.MaxPumpFlowCapacity
                         };
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(currentDeviceParameter.Name, param);
                         dicBaseSP[currentDeviceParameter.Name] = currentDeviceParameter.BaseParam.Base_PV;
@@ -4175,7 +4175,7 @@ namespace RD3.ViewModels
                                             Pump = PeristalticPump.BasePump,
                                             ControlMode = PumpControlMode.Direct,
                                             FlowSpeed = (float)deviceParameter.BaseParam.Base_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.BaseParam.Base_PV,
-                                            FlowCapacity = 100
+                                            FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                         dicBaseSP[deviceParameter.Name] = deviceParameter.BaseParam.Base_PV;
@@ -14414,7 +14414,7 @@ namespace RD3.ViewModels
                             Pump = PeristalticPump.AFPump,
                             ControlMode = PumpControlMode.Direct,
                             FlowSpeed = (float)CurrentDeviceParameter.AFParam.AF_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)CurrentDeviceParameter.AFParam.AF_PV,
-                            FlowCapacity = 1000
+                            FlowCapacity = Const.MaxPumpFlowCapacity
                         };
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, param);
                         dicAFSP[CurrentDeviceParameter.Name] = CurrentDeviceParameter.AFParam.AF_PV;
@@ -14447,7 +14447,7 @@ namespace RD3.ViewModels
                                             Pump = PeristalticPump.AFPump,
                                             ControlMode = PumpControlMode.Direct,
                                             FlowSpeed = (float)deviceParameter.AFParam.AF_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.AFParam.AF_PV,
-                                            FlowCapacity = 100
+                                            FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                         dicAFSP[deviceParameter.Name] = deviceParameter.AFParam.AF_PV;
