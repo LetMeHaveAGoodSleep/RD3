@@ -12,5 +12,6 @@
   "Pump1FlowCapacity": "泵1累积量",
   "Pump2FlowCapacity": "泵2累积量",
   "Pump3FlowCapacity": "泵3累积量",
-  "Pump4FlowCapacity": "泵4累积量"
+  "Pump4FlowCapacity": "泵4累积量",
+  "EPCPressure": "EPC压力"
 }

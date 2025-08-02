@@ -12,7 +12,8 @@
     "Pump1FlowCapacity": "False",
     "Pump2FlowCapacity": "False",
     "Pump3FlowCapacity": "False",
-    "Pump4FlowCapacity": "False"
+    "Pump4FlowCapacity": "False",
+    "EPCPressure": "False"
   },
   "Plot3": {
     "Temp": "False",
@@ -27,7 +28,8 @@
     "Pump1FlowCapacity": "False",
     "Pump2FlowCapacity": "False",
     "Pump3FlowCapacity": "False",
-    "Pump4FlowCapacity": "False"
+    "Pump4FlowCapacity": "False",
+    "EPCPressure": "False"
   },
   "Plot4": {
     "Temp": "False",
@@ -42,6 +44,7 @@
     "Pump1FlowCapacity": "False",
     "Pump2FlowCapacity": "False",
     "Pump3FlowCapacity": "False",
-    "Pump4FlowCapacity": "False"
+    "Pump4FlowCapacity": "False",
+    "EPCPressure": "False"
   }
 }

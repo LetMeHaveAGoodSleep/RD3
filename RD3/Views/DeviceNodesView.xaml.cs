@@ -96,7 +96,7 @@ namespace RD3.Views
             colAxisType.DisplayMemberPath = "Name";
             colAxisType.SelectedValuePath = "Value";
 
-            List<string> unitList = new List<string>() {"", "℃",  "mL", "mL/h", "L/min", "%", "rpm" };
+            List<string> unitList = new List<string>() {"", "℃",  "mL", "mL/h", "L/min", "%", "rpm","psi" };
             colUnit.ItemsSource = unitList;
 
 
@@ -134,7 +134,12 @@ namespace RD3.Views
                             DataGridRow row = dataGrid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
                             if (row != null)
                             {
-                                string[] colorStr = (item as ParameterNode).colorStr.Split(',');
+                                var node = item as ParameterNode;
+                                if (node == null|| string.IsNullOrEmpty(node.colorStr))
+                                {
+                                    continue;
+                                }
+                                string[] colorStr = node.colorStr.Split(',');
                                 System.Windows.Media.Color c = System.Windows.Media.Color.FromArgb(255, byte.Parse(colorStr[0]), byte.Parse(colorStr[1]), byte.Parse(colorStr[2]));
                                 SolidColorBrush b = new SolidColorBrush(c);
                                 System.Windows.Controls.DataGridCell cell = dataGrid.Columns[dataGrid.Columns.Count - 2].GetCellContent(row)?.Parent as DataGridCell;
