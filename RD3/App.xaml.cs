@@ -301,6 +301,12 @@ namespace RD3
             containerRegistry.RegisterDialog<AdaptpHView, AdaptpHViewModel>();
             containerRegistry.RegisterForNavigation<PadMainView, PadMainViewModel>();
             containerRegistry.RegisterDialog<PumpSettingView, PumpSettingViewModel>();
+
+            containerRegistry.RegisterDialog<AgitSettingView, AgitSettingViewModel>();
+            containerRegistry.RegisterDialog<DOSettingView, DOSettingViewModel>();
+            containerRegistry.RegisterDialog<MFCSettingView, MFCSettingViewModel>();
+            containerRegistry.RegisterDialog<TempSettingView, TempSettingViewModel>();
+            containerRegistry.RegisterDialog<pHSettingView, pHSettingViewModel>();
             //containerRegistry.RegisterDialogWindow<DialogWindowBase>();
         }
 

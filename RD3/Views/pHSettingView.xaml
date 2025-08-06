@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="RD3.Views.AgitSettingView"
+    x:Class="RD3.Views.pHSettingView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -61,56 +61,60 @@
         Spacing="10">
         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
             <TextBox
-                materialDesign:HintAssist.Hint="设定转速(rpm)"
+                Width="110"
+                materialDesign:HintAssist.Hint="设定pH"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F0}}" />
+                Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, StringFormat={}{0:F2}}" />
             <TextBox
-                materialDesign:HintAssist.Hint="当前转速(rpm)"
+                Width="110"
+                materialDesign:HintAssist.Hint="当前pH"
                 IsEnabled="False"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.Agit, StringFormat={}{0:F0}}" />
+                Text="{Binding CurrentDeviceParameter.PH, StringFormat={}{0:F2}}" />
         </hc:UniformSpacingPanel>
         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
             <TextBox
-                materialDesign:HintAssist.Hint="转速下限(rpm)"
+                Width="110"
+                materialDesign:HintAssist.Hint="pH下限"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.AgitParam.LowerLimit, StringFormat={}{0:F0}}" />
+                Text="{Binding CurrentDeviceParameter.PHParam.LowerLimit, StringFormat={}{0:F2}}" />
             <TextBox
-                materialDesign:HintAssist.Hint="转速上限(rpm)"
+                Width="110"
+                materialDesign:HintAssist.Hint="pH上限"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.AgitParam.UpperLimit, StringFormat={}{0:F0}}" />
+                Text="{Binding CurrentDeviceParameter.PHParam.UpperLimit, StringFormat={}{0:F2}}" />
         </hc:UniformSpacingPanel>
         <ToggleButton
+            Width="230"
             Height="35"
             hc:StatusSwitchElement.HideUncheckedElement="True"
-            IsChecked="{Binding CurrentDeviceParameter.AgitParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-            IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+            IsChecked="{Binding CurrentDeviceParameter.PHParam.IsControling}"
             Style="{StaticResource ToggleButtonCustom}">
             <hc:StatusSwitchElement.CheckedElement>
                 <Border
-                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                    Width="230"
+                    Height="35"
+                    Background="{DynamicResource PrimaryBrush}"
                     BorderBrush="{DynamicResource PrimaryBrush}"
-                    BorderThickness="1"
                     CornerRadius="{StaticResource DefaultCornerRadius}">
                     <TextBlock
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Foreground="{DynamicResource PrimaryBrush}"
-                        Text="关闭" />
+                        Foreground="White"
+                        Text="开启" />
                 </Border>
             </hc:StatusSwitchElement.CheckedElement>
             <Border
                 Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                Height="35"
-                Background="{DynamicResource PrimaryBrush}"
+                Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
                 BorderBrush="{DynamicResource PrimaryBrush}"
+                BorderThickness="1"
                 CornerRadius="{StaticResource DefaultCornerRadius}">
                 <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Foreground="White"
-                    Text="开启" />
+                    Foreground="{DynamicResource PrimaryBrush}"
+                    Text="关闭" />
             </Border>
         </ToggleButton>
     </hc:UniformSpacingPanel>

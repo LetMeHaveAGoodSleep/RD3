@@ -61,10 +61,13 @@
             Orientation="Vertical"
             Spacing="20">
             <ComboBox
+                Name="DisplaySelectedItemCheckBox"
+                materialDesign:ComboBoxAssist.ShowSelectedItem="True"
                 materialDesign:HintAssist.HelperText="{Binding PumpInfo.PumpIndex, StringFormat='泵{0}用途'}"
                 ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                 SelectedItem="{Binding PumpInfo.Pump}"
-                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                Visibility="Collapsed">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
@@ -97,37 +100,73 @@
                         Style="{StaticResource ButtonPrimary}" />
                 </DockPanel>
             </hc:UniformSpacingPanel>
+            <CheckBox
+                Content="恒速运行"
+                IsChecked="{Binding PumpInfo.IsConstSpeed}"
+                Visibility="{Binding PumpInfo.Pump, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='None,AcidPump,BasePump,AFPump'}">
+                <CheckBox.IsEnabled>
+                    <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
+                        <Binding Converter="{StaticResource InverseBooleanConverter}" Path="PumpInfo.IsControlled" />
+                        <Binding Converter="{StaticResource InverseBooleanConverter}" Path="PumpInfo.IsControling" />
+                    </MultiBinding>
+                </CheckBox.IsEnabled>
+            </CheckBox>
             <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                 <TextBox
                     Width="110"
                     materialDesign:HintAssist.HelperText="最大:600 单位:mL/h"
                     materialDesign:HintAssist.Hint="设定流速"
-                    IsEnabled="{Binding PumpInfo.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                    materialDesign:TextFieldAssist.HasClearButton="True"
+                    IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     Text="{Binding PumpInfo.FlowRate_SP, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}" />
                 <TextBox
                     Width="110"
                     materialDesign:HintAssist.HelperText="{Binding PumpInfo.FormattedTime, StringFormat='已运行{0} 单位:秒'}"
                     materialDesign:HintAssist.Hint="运行时间"
-                    IsEnabled="{Binding PumpInfo.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                    materialDesign:TextFieldAssist.HasClearButton="True"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding PumpInfo.RunningTime_SP, StringFormat={}{0:F0}, UpdateSourceTrigger=LostFocus}" />
+                    Text="{Binding PumpInfo.RunningTime_SP, StringFormat={}{0:F0}, UpdateSourceTrigger=LostFocus}">
+                    <TextBox.IsEnabled>
+                        <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
+                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="PumpInfo.IsControlled" />
+                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="PumpInfo.IsConstSpeed" />
+                        </MultiBinding>
+                    </TextBox.IsEnabled>
+                </TextBox>
             </hc:UniformSpacingPanel>
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="20">
-                <ComboBox
-                    Height="60"
-                    materialDesign:HintAssist.Hint="补料策略"
-                    IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
-                    ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
-                    SelectedItem="{Binding PumpInfo.FeedMode}"
-                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                    Visibility="{Binding PumpInfo.Pump, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='FeedPump,Feed2Pump'}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                <Grid Visibility="{Binding PumpInfo.Pump, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='FeedPump,Feed2Pump'}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="auto" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox
+                        Height="60"
+                        materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                        materialDesign:HintAssist.Hint="补料策略"
+                        IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
+                        ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
+                        SelectedItem="{Binding PumpInfo.FeedMode}"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <DockPanel Grid.Column="2" LastChildFill="False">
+                        <Button
+                            Height="40"
+                            hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding FeedStrategyCommand}"
+                            DockPanel.Dock="Bottom"
+                            Foreground="Gray" />
+                    </DockPanel>
+                </Grid>
                 <ToggleButton
                     Width="230"
                     Height="35"

@@ -33,42 +33,6 @@ namespace RD3.Views
         public PumpView()
         {
             InitializeComponent();
-
-            BackgroundWorker backgroundWorker = new BackgroundWorker();
-            backgroundWorker.DoWork += (s, e) =>
-            {
-                while (true)
-                {
-                    string deviceID = "G01";
-                    foreach (var item in ClockSupervisor.realDatasDic.Keys)
-                    {
-                        deviceID = item;
-                        break;
-                    }
-                    if (!ClockSupervisor.realDatasDic.ContainsKey(deviceID) || ClockSupervisor.realDatasDic[deviceID].Count < 1)
-                    {
-                        Thread.Sleep(1000);
-                        continue;
-                    }
-                    int index = ClockSupervisor.realDatasDic[deviceID].Count - 1;
-                    var realTimeParam = ClockSupervisor.realDatasDic[deviceID][index];
-                    PumpInfo pumpInfo = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.PumpIndex == pumpIndex);
-
-                    float flowRate = 0;
-                    Type type = realTimeParam.GetType();
-                    PropertyInfo[] properties = type.GetProperties();
-                    foreach (PropertyInfo prop in properties.Where(t => t.CanWrite && t.CanRead))
-                    {
-                        if (prop.Name == $"Pump{pumpIndex}FlowRate")
-                        {
-                            object value = prop.GetValue(realTimeParam);
-                            flowRate = Convert.ToSingle(value);
-                        }
-                    }
-                    Thread.Sleep(1000);
-                }
-            };
-            backgroundWorker.RunWorkerAsync();
         }
 
         public void ResumePumpSetting(int index)

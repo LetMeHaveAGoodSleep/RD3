@@ -4,6 +4,7 @@ using Prism.Ioc;
 using Prism.Services.Dialogs;
 using RD3.Common;
 using RD3.Shared;
+using RD3.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,42 +68,43 @@ namespace RD3.ViewModels
             //关闭泵
             if (PumpInfo.IsControling)
             {
-                PeristalticPumpControlParam param = new PeristalticPumpControlParam()
-                {
-                    PumpNo = PumpInfo.PumpIndex,
-                    ControlMode = PumpControlMode.Direct,
-                    FlowSpeed = 0,
-                    FlowCapacity = 0
-                };
-                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(PumpInfo.DeviceID, param);
                 PumpInfo.IsControling = false;
                 return;
             }
-            if (PumpInfo.FlowRate_SP <= 0)
-            {
-                HandyControl.Controls.MessageBox.Warning("流速必须大于0", "温馨提示");
-                return;
-            }
-            if (PumpInfo.RunningTime_SP <= 0)
-            {
-                HandyControl.Controls.MessageBox.Warning("运行时间必须大于0", "温馨提示");
-                return;
-            }
 
-            PumpInfo.FlowRate_SP = PumpInfo.FlowRate_SP >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : PumpInfo.FlowRate_SP;
+            PumpInfo.FlowRate_SP = Math.Clamp(PumpInfo.FlowRate_SP, 0, Const.MaxPumpFlowRate);
             if (PumpInfo.Pump != PeristalticPump.FeedPump && PumpInfo.Pump != PeristalticPump.Feed2Pump)
             {
-                PeristalticPumpControlParam param = new PeristalticPumpControlParam()
+                if (PumpInfo.FlowRate_SP <= 0)
                 {
-                    PumpNo = PumpInfo.PumpIndex,
-                    ControlMode = PumpControlMode.Direct,
-                    FlowSpeed = PumpInfo.FlowRate_SP >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : PumpInfo.FlowRate_SP,
-                    FlowCapacity = PumpInfo.FlowRate_SP * PumpInfo.RunningTime_SP / 3600f
-                };
-                InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(PumpInfo.DeviceID, param);
+                    HandyControl.Controls.MessageBox.Warning("流速必须大于0", "温馨提示");
+                    return;
+                }
+                if (PumpInfo.RunningTime_SP <= 0 && !PumpInfo.IsConstSpeed)
+                {
+                    HandyControl.Controls.MessageBox.Warning("运行时间必须大于0", "温馨提示");
+                    return;
+                }
                 PumpInfo.IsControling = true;
                 return;
             }
+        });
+
+        public DelegateCommand FeedStrategyCommand => new(() =>
+        {
+            DialogParameters keyValuePairs = new DialogParameters()
+            {
+                {"deviceID",PumpInfo.DeviceID },
+                {nameof(PeristalticPump), PumpInfo.Pump}
+            };
+
+            DialogHostService.ShowOnce(nameof(FeedStrategyView), keyValuePairs, callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+            });
         });
 
         public PumpSettingViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)

@@ -44,7 +44,7 @@ namespace RD3.Views
             };
             timer.Start();
 
-            RefershPumps(true);
+            RefershPumpMFC();
 
             //调试模式下，就不需要让窗口不可移动
             if (!System.Diagnostics.Debugger.IsAttached)
@@ -87,7 +87,7 @@ namespace RD3.Views
         }
 
 
-        private void RefershPumps(bool init)
+        private void RefershPumpMFC()
         {
             pump1.ResumePumpSetting(1);
             pump2.ResumePumpSetting(2);
@@ -96,10 +96,10 @@ namespace RD3.Views
             pump5.ResumePumpSetting(5);
             pump6.ResumePumpSetting(6);
 
-            mfc1.RefershControls("空气");
-            mfc2.RefershControls("氧气");
-            mfc3.RefershControls("氧气");
-            mfc4.RefershControls("氮气");
+            mfc1.ResumeMFCSetting(1);
+            mfc2.ResumeMFCSetting(2);
+            mfc3.ResumeMFCSetting(3);
+            mfc4.ResumeMFCSetting(4);
         }
 
         private void PadMainView_Closing(object sender, System.ComponentModel.CancelEventArgs e)

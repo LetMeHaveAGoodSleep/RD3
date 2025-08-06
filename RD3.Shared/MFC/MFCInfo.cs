@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Newtonsoft.Json;
+using Prism.Mvvm;
 using RD3.Shared;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,14 @@ namespace RD3.Shared
 {
     public class MFCInfo : MFCSetting, ICloneable
     {
-        private float _setPoint;
+        private float _flowRate_SP;
         /// <summary>
-        /// 流量设定值
+        /// 流速设定值
         /// </summary>
-        public float SetPoint
+        public float FlowRate_SP
         {
-            get => _setPoint;
-            set { SetProperty(ref _setPoint, value); }
+            get => _flowRate_SP;
+            set { SetProperty(ref _flowRate_SP, value); }
         }
 
         private float _flowRate;
@@ -29,10 +30,6 @@ namespace RD3.Shared
             get => _flowRate;
             set
             {
-                if (value > 0)
-                {
-                    IsRunning = true;
-                }
                 SetProperty(ref _flowRate, value);
             }
         }
@@ -50,11 +47,40 @@ namespace RD3.Shared
             }
         }
 
-        private bool _isRunning = false;
-        public bool IsRunning
+        private bool _lastIsControling = false;
+        public bool LastIsControling
         {
-            get => _isRunning;
-            private set { SetProperty(ref _isRunning, value); }
+            get { return _lastIsControling; }
+           private set { SetProperty(ref _lastIsControling, value); }
+        }
+
+        private bool _isControling = false;
+        public bool IsControling
+        {
+            get { return _isControling; }
+            set 
+            {
+                LastIsControling = _isControling;
+                SetProperty(ref _isControling, value);
+            }
+        }
+
+        private bool _isControlled = false;
+        /// <summary>
+        /// 是否被其他控制，比如溶氧
+        /// </summary>
+        [JsonIgnore]
+        public bool IsControlled
+        {
+            get => _isControlled;
+            set
+            {
+                SetProperty(ref _isControlled, value);
+                if (value)
+                {
+                    IsControling = true;
+                }
+            }
         }
 
         public object Clone()

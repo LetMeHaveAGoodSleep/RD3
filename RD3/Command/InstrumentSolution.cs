@@ -100,5 +100,21 @@ namespace RD3.Shared
                 }
             } 
         }
+
+        public float ReactorWeight
+        {
+            get
+            {
+                string temp = VarConfig.GetValue("ReactorWeight")?.ToString();
+                if (!float.TryParse(temp, out var result))
+                {
+                    return 0;
+                }
+                else
+                {
+                    return result;
+                }
+            }
+        }
     }
 }

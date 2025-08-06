@@ -3,6 +3,7 @@ using Prism.Commands;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
 using RD3.Common;
+using RD3.Controller;
 using RD3.Shared;
 using RD3.Views;
 using SixLabors.ImageSharp.Drawing;
@@ -20,11 +21,22 @@ namespace RD3.ViewModels
 {
     public class PumpViewModel : BaseViewModel
     {
+        private PumpController _controller = new();
+        public PumpController Controller
+        {
+            get => _controller;
+            set { SetProperty(ref _controller, value); }
+        }
+
         private PumpInfo _pumpInfo = new();
         public PumpInfo PumpInfo
         {
             get => _pumpInfo;
-            set { SetProperty(ref _pumpInfo, value); }
+            set 
+            { 
+                SetProperty(ref _pumpInfo, value);
+                Controller.PumpInfo = value;
+            }
         }
 
 
@@ -99,25 +111,49 @@ namespace RD3.ViewModels
                 PumpInfo info = null;
                 while (true)
                 {
-                    if (info != null)
+                    try
                     {
-                        if (!info.IsControling && PumpInfo.IsControling)
+
+                        if (info != null)
                         {
-                            PumpInfo.RunningTime = 0;
-                        }
-                        else if (PumpInfo.IsControling)
-                        {
-                            if (PumpInfo.RunningTime <= PumpInfo.RunningTime_SP - 1)
+                            if (!info.IsControling && PumpInfo.IsControling)
                             {
-                                PumpInfo.RunningTime += 1;
+                                PumpInfo.RunningTime = 0;
+                            }
+                            else if (PumpInfo.IsControling)
+                            {
+                                if (PumpInfo.RunningTime <= PumpInfo.RunningTime_SP - 1 || PumpInfo.IsConstSpeed)
+                                {
+                                    PumpInfo.RunningTime += 1;
+                                }
                             }
                         }
+                        info = PumpInfo.Clone() as PumpInfo;
+
+                        if (Controller.PumpInfo != null)
+                        {
+                            if (Controller.PumpInfo.IsControling && !Controller.PumpInfo.LastIsControling)
+                            {
+                                Controller.StartWork();
+                            }
+                            else if (Controller.PumpInfo.LastIsControling && !Controller.PumpInfo.IsControling)
+                            {
+                                Controller.StopWork();
+                            }
+                            Controller.PumpInfo.IsControling = Controller.PumpInfo.IsControling;
+                        }
+
                     }
-                    info = PumpInfo.Clone() as PumpInfo;
-                    Thread.Sleep(1000);
+                    catch (Exception ex) { }
+                    finally
+                    {
+                        Thread.Sleep(1000);
+                    }
                 }
             };
             backgroundWorker.RunWorkerAsync();
+
+
         }
     }
 }

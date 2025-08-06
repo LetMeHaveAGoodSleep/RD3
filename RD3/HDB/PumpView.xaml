@@ -55,7 +55,7 @@
                 Orientation="Horizontal">
                 <TextBlock
                     Grid.Row="2"
-                    Width="40"
+                    Width="50"
                     VerticalAlignment="Center"
                     FontSize="{StaticResource NormalFontSize}"
                     Text="{Binding PumpInfo.FlowRate, StringFormat={}{0:F2}}" />
@@ -150,7 +150,7 @@
                         </Grid.RowDefinitions>
                         <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                             <TextBlock
-                                Width="40"
+                                Width="60"
                                 VerticalAlignment="Center"
                                 FontSize="{StaticResource NormalFontSize}"
                                 Text="{Binding PumpInfo.FlowCapacity, StringFormat={}{0:F2}}" />
@@ -161,7 +161,7 @@
                         </StackPanel>
                         <Image
                             Grid.Row="1"
-                            Width="70"
+                            Width="90"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Source="/Images/NewReactor/分割线（图左2）.png" />
@@ -171,7 +171,7 @@
                             Orientation="Horizontal">
                             <TextBlock
                                 Grid.Row="2"
-                                Width="40"
+                                Width="60"
                                 VerticalAlignment="Center"
                                 FontSize="{StaticResource NormalFontSize}"
                                 Text="{Binding PumpInfo.Weight, StringFormat={}{0:F2}}" />

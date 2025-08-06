@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RD3.Common;
+using RD3.Controller;
 using RD3.Shared;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,22 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RD3
 {
-    public class AnalysisSolution
+    public class AnalysisSolution:IDisposable
     {
+        public AgitController AgitController { get; private set; }
+
+        public DOController DOController { get; private set; }
+
+        public TempController TempController { get; private set; }
+
+        public pHController pHController { get; private set; }
+        
+
         public ObservableCollection<DeviceParameter> ReactorCol
         {
             get;
@@ -39,6 +50,11 @@ namespace RD3
         private AnalysisSolution()
         {
             LoadSetting();
+
+            AgitController = new();
+            DOController = new();
+            TempController = new();
+            pHController = new();
         }
 
         public static AnalysisSolution GetInstance()
@@ -162,6 +178,11 @@ namespace RD3
             string json = JsonConvert.SerializeObject(MFCInfoCol);
             File.Delete(FileConst.MFCInfoPath);
             File.WriteAllText(FileConst.MFCInfoPath, json);
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }

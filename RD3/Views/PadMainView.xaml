@@ -194,44 +194,44 @@
                                 Orientation="Horizontal" />
                             <local:MFCView
                                 x:Name="mfc1"
-                                Canvas.Left="805"
-                                Canvas.Top="305" />
+                                Canvas.Left="815"
+                                Canvas.Top="281" />
                             <hc:Divider
                                 Canvas.Left="740"
                                 Canvas.Top="330"
-                                Height="194"
+                                Height="211"
                                 LineStroke="#FF7F7F7F"
                                 LineStrokeThickness="2"
                                 Orientation="Vertical" />
                             <local:MFCView
                                 x:Name="mfc2"
-                                Canvas.Left="805"
-                                Canvas.Top="376" />
+                                Canvas.Left="815"
+                                Canvas.Top="351" />
                             <hc:Divider
                                 Canvas.Left="747"
-                                Canvas.Top="376"
+                                Canvas.Top="375"
                                 Width="55"
                                 LineStroke="#FF7F7F7F"
                                 LineStrokeThickness="2"
                                 Orientation="Horizontal" />
                             <local:MFCView
                                 x:Name="mfc3"
-                                Canvas.Left="805"
-                                Canvas.Top="437" />
+                                Canvas.Left="815"
+                                Canvas.Top="421" />
                             <hc:Divider
                                 Canvas.Left="747"
-                                Canvas.Top="437"
+                                Canvas.Top="445"
                                 Width="55"
                                 LineStroke="#FF7F7F7F"
                                 LineStrokeThickness="2"
                                 Orientation="Horizontal" />
                             <local:MFCView
                                 x:Name="mfc4"
-                                Canvas.Left="805"
-                                Canvas.Top="498" />
+                                Canvas.Left="815"
+                                Canvas.Top="491" />
                             <hc:Divider
                                 Canvas.Left="747"
-                                Canvas.Top="498"
+                                Canvas.Top="515"
                                 Width="55"
                                 LineStroke="#FF7F7F7F"
                                 LineStrokeThickness="2"
@@ -285,35 +285,22 @@
                                 Orientation="Horizontal"
                                 Spacing="15">
                                 <DockPanel LastChildFill="False">
-                                    <ToggleButton
+                                    <materialDesign:PackIcon
                                         Width="40"
                                         Height="40"
-                                        VerticalAlignment="Bottom"
-                                        hc:StatusSwitchElement.HideUncheckedElement="True"
-                                        Command="{Binding AgitRunCommand}"
                                         DockPanel.Dock="Bottom"
-                                        IsChecked="{Binding CurrentDeviceParameter.AgitParam.IsControling}"
-                                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                                        Style="{StaticResource ToggleButtonCustom}">
-                                        <hc:StatusSwitchElement.CheckedElement>
-                                            <materialDesign:PackIcon
-                                                Width="40"
-                                                Height="40"
-                                                DockPanel.Dock="Bottom"
-                                                Foreground="{DynamicResource FixedGradientBrush}"
-                                                Kind="AlphaMCircle" />
-                                        </hc:StatusSwitchElement.CheckedElement>
-                                        <materialDesign:PackIcon
-                                            Width="40"
-                                            Height="40"
-                                            DockPanel.Dock="Bottom"
-                                            Foreground="Gray"
-                                            Kind="AlphaMCircle" />
-                                    </ToggleButton>
+                                        Foreground="{DynamicResource FixedGradientBrush}"
+                                        Kind="AlphaMCircle">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding AgitSettingCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </materialDesign:PackIcon>
                                 </DockPanel>
                                 <TextBox
-                                    Width="110"
-                                    materialDesign:HintAssist.Hint="当前转速(rpm)"
+                                    Width="100"
+                                    materialDesign:HintAssist.Hint="转速(rpm)"
                                     IsEnabled="False"
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     Text="{Binding CurrentDeviceParameter.Agit, StringFormat={}{0:F0}}" />
@@ -339,34 +326,22 @@
                                 Orientation="Horizontal"
                                 Spacing="10">
                                 <DockPanel LastChildFill="False">
-                                    <ToggleButton
+                                    <materialDesign:PackIcon
                                         Width="40"
                                         Height="40"
-                                        VerticalAlignment="Bottom"
-                                        hc:StatusSwitchElement.HideUncheckedElement="True"
-                                        Command="{Binding DORunCommand}"
                                         DockPanel.Dock="Bottom"
-                                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsControling}"
-                                        Style="{StaticResource ToggleButtonCustom}">
-                                        <hc:StatusSwitchElement.CheckedElement>
-                                            <materialDesign:PackIcon
-                                                Width="40"
-                                                Height="40"
-                                                DockPanel.Dock="Bottom"
-                                                Foreground="{DynamicResource FixedGradientBrush}"
-                                                Kind="AlphaDCircle" />
-                                        </hc:StatusSwitchElement.CheckedElement>
-                                        <materialDesign:PackIcon
-                                            Width="40"
-                                            Height="40"
-                                            DockPanel.Dock="Bottom"
-                                            Foreground="Gray"
-                                            Kind="AlphaDCircle" />
-                                    </ToggleButton>
+                                        Foreground="{DynamicResource FixedGradientBrush}"
+                                        Kind="AlphaDCircle">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding DOSettingCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </materialDesign:PackIcon>
                                 </DockPanel>
                                 <TextBox
-                                    Width="110"
-                                    materialDesign:HintAssist.Hint="当前溶氧(%)"
+                                    Width="100"
+                                    materialDesign:HintAssist.Hint="溶氧(%)"
                                     IsEnabled="False"
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     Text="{Binding CurrentDeviceParameter.DO, StringFormat={}{0:F2}}" />
@@ -384,34 +359,22 @@
                                 Orientation="Horizontal"
                                 Spacing="10">
                                 <DockPanel LastChildFill="False">
-                                    <ToggleButton
+                                    <materialDesign:PackIcon
                                         Width="40"
                                         Height="40"
-                                        VerticalAlignment="Bottom"
-                                        hc:StatusSwitchElement.HideUncheckedElement="True"
-                                        Command="{Binding PHRunCommand}"
                                         DockPanel.Dock="Bottom"
-                                        IsChecked="{Binding CurrentDeviceParameter.PHParam.IsControling}"
-                                        Style="{StaticResource ToggleButtonCustom}">
-                                        <hc:StatusSwitchElement.CheckedElement>
-                                            <materialDesign:PackIcon
-                                                Width="40"
-                                                Height="40"
-                                                DockPanel.Dock="Bottom"
-                                                Foreground="{DynamicResource FixedGradientBrush}"
-                                                Kind="AlphaPCircle" />
-                                        </hc:StatusSwitchElement.CheckedElement>
-                                        <materialDesign:PackIcon
-                                            Width="40"
-                                            Height="40"
-                                            DockPanel.Dock="Bottom"
-                                            Foreground="Gray"
-                                            Kind="AlphaPCircle" />
-                                    </ToggleButton>
+                                        Foreground="{DynamicResource FixedGradientBrush}"
+                                        Kind="AlphaPCircle">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding pHSettingCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </materialDesign:PackIcon>
                                 </DockPanel>
                                 <TextBox
-                                    Width="110"
-                                    materialDesign:HintAssist.Hint="当前pH"
+                                    Width="100"
+                                    materialDesign:HintAssist.Hint="pH"
                                     IsEnabled="False"
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     Text="{Binding CurrentDeviceParameter.PH, StringFormat={}{0:F2}}" />
@@ -429,34 +392,22 @@
                                 Orientation="Horizontal"
                                 Spacing="15">
                                 <DockPanel LastChildFill="False">
-                                    <ToggleButton
+                                    <materialDesign:PackIcon
                                         Width="40"
                                         Height="40"
-                                        VerticalAlignment="Bottom"
-                                        hc:StatusSwitchElement.HideUncheckedElement="True"
-                                        Command="{Binding TempRunCommand}"
                                         DockPanel.Dock="Bottom"
-                                        IsChecked="{Binding CurrentDeviceParameter.TempParam.IsControling}"
-                                        Style="{StaticResource ToggleButtonCustom}">
-                                        <hc:StatusSwitchElement.CheckedElement>
-                                            <materialDesign:PackIcon
-                                                Width="40"
-                                                Height="40"
-                                                DockPanel.Dock="Bottom"
-                                                Foreground="{DynamicResource FixedGradientBrush}"
-                                                Kind="AlphaTCircle" />
-                                        </hc:StatusSwitchElement.CheckedElement>
-                                        <materialDesign:PackIcon
-                                            Width="40"
-                                            Height="40"
-                                            DockPanel.Dock="Bottom"
-                                            Foreground="Gray"
-                                            Kind="AlphaTCircle" />
-                                    </ToggleButton>
+                                        Foreground="{DynamicResource FixedGradientBrush}"
+                                        Kind="AlphaTCircle">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding TempSettingCommand}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </materialDesign:PackIcon>
                                 </DockPanel>
                                 <TextBox
-                                    Width="110"
-                                    materialDesign:HintAssist.Hint="当前温度(℃)"
+                                    Width="100"
+                                    materialDesign:HintAssist.Hint="温度(℃)"
                                     IsEnabled="False"
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     Text="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}" />

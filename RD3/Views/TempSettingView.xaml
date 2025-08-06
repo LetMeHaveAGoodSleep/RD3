@@ -55,54 +55,68 @@
             <Setter Property="Icon" Value="../Assets/logo.png" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <StackPanel Margin="10">
-        <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
-            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                <TextBox
-                    materialDesign:HintAssist.Hint="设定温度(℃)"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, StringFormat={}{0:F2}}" />
-                <TextBox
-                    materialDesign:HintAssist.Hint="当前温度(℃)"
-                    IsEnabled="False"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}" />
-            </hc:UniformSpacingPanel>
-            <ToggleButton
-                Width="230"
-                Height="35"
-                hc:StatusSwitchElement.HideUncheckedElement="True"
-                Command="{Binding TempRunCommand}"
-                IsChecked="{Binding CurrentDeviceParameter.TempParam.IsControling}"
-                Style="{StaticResource ToggleButtonCustom}">
-                <hc:StatusSwitchElement.CheckedElement>
-                    <Border
-                        Width="230"
-                        Height="35"
-                        Background="{DynamicResource PrimaryBrush}"
-                        BorderBrush="{DynamicResource PrimaryBrush}"
-                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="开启" />
-                    </Border>
-                </hc:StatusSwitchElement.CheckedElement>
+    <hc:UniformSpacingPanel
+        Margin="10"
+        Orientation="Vertical"
+        Spacing="10">
+        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+            <TextBox
+                Width="110"
+                materialDesign:HintAssist.Hint="设定温度(℃)"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, StringFormat={}{0:F2}}" />
+            <TextBox
+                Width="110"
+                materialDesign:HintAssist.Hint="当前温度(℃)"
+                IsEnabled="False"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}" />
+        </hc:UniformSpacingPanel>
+        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+            <TextBox
+                Width="110"
+                materialDesign:HintAssist.Hint="温度下限(℃)"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding CurrentDeviceParameter.TempParam.LowerLimit, StringFormat={}{0:F2}}" />
+            <TextBox
+                Width="110"
+                materialDesign:HintAssist.Hint="温度上限(℃)"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding CurrentDeviceParameter.TempParam.UpperLimit, StringFormat={}{0:F2}}" />
+        </hc:UniformSpacingPanel>
+        <ToggleButton
+            Width="230"
+            Height="35"
+            hc:StatusSwitchElement.HideUncheckedElement="True"
+            IsChecked="{Binding CurrentDeviceParameter.TempParam.IsControling}"
+            Style="{StaticResource ToggleButtonCustom}">
+            <hc:StatusSwitchElement.CheckedElement>
                 <Border
-                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                    Width="230"
+                    Height="35"
+                    Background="{DynamicResource PrimaryBrush}"
                     BorderBrush="{DynamicResource PrimaryBrush}"
-                    BorderThickness="1"
                     CornerRadius="{StaticResource DefaultCornerRadius}">
                     <TextBlock
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Foreground="{DynamicResource PrimaryBrush}"
-                        Text="关闭" />
+                        Foreground="White"
+                        Text="开启" />
                 </Border>
-            </ToggleButton>
-        </hc:UniformSpacingPanel>
-    </StackPanel>
+            </hc:StatusSwitchElement.CheckedElement>
+            <Border
+                Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource DefaultCornerRadius}">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="{DynamicResource PrimaryBrush}"
+                    Text="关闭" />
+            </Border>
+        </ToggleButton>
+    </hc:UniformSpacingPanel>
 </UserControl>
 

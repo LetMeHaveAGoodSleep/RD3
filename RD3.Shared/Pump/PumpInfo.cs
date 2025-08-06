@@ -46,6 +46,7 @@ namespace RD3.Shared
         /// <summary>
         /// 流速实际值
         /// </summary>
+        [JsonIgnore]
         public float FlowRate
         {
             get => _flowRate;
@@ -80,7 +81,7 @@ namespace RD3.Shared
                     TimeSpan ts = TimeSpan.FromSeconds(value);
                     FormattedTime = ts.ToString(@"hh\:mm\:ss");
 
-                    if (value >= RunningTime_SP)
+                    if (value >= RunningTime_SP && !IsConstSpeed)
                     {
                         IsControling = false;
                     }
@@ -135,6 +136,19 @@ namespace RD3.Shared
             }
         }
 
+        private bool _isConstSpeed = false;
+        /// <summary>
+        /// 是否恒速运行
+        /// </summary>
+        public bool IsConstSpeed
+        {
+            get => _isConstSpeed;
+            set  
+            {
+                SetProperty(ref _isConstSpeed, value);
+            }
+        }
+
         private bool _isRunning = false;
         /// <summary>
         /// 通过流速来判断泵是否在转动
@@ -144,6 +158,14 @@ namespace RD3.Shared
         {
             get => _isRunning;
             private set { SetProperty(ref _isRunning, value); }
+        }
+
+        private bool _lastIsControling = false;
+        [JsonIgnore]
+        public bool LastIsControling
+        {
+            get { return _lastIsControling; }
+            private set { SetProperty(ref _lastIsControling, value); }
         }
 
         private bool _isControling = false;
@@ -156,6 +178,7 @@ namespace RD3.Shared
             get => _isControling;
             set 
             {
+                LastIsControling = _isControling;
                 SetProperty(ref _isControling, value);
                 if (!value)
                 {
@@ -163,7 +186,6 @@ namespace RD3.Shared
                 }
             }
         }
-
 
         private bool _isControlled = false;
         /// <summary>
@@ -178,6 +200,7 @@ namespace RD3.Shared
                 SetProperty(ref _isControlled, value);
                 if (value)
                 {
+                    RunningTime_SP = int.MaxValue;
                     IsControling = true;
                 }
             }

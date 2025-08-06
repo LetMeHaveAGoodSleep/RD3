@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="RD3.Views.DOControlStrategyView"
+    x:Class="RD3.Views.DOSettingView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behavior="clr-namespace:RD3.Behaviors"
@@ -19,7 +19,7 @@
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     Width="550"
     Height="650"
-    d:DataContext="{d:DesignInstance Type=vm:DOControlStrategyViewModel}"
+    d:DataContext="{d:DesignInstance Type=vm:DOSettingViewModel}"
     d:DesignHeight="2000"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
@@ -65,7 +65,7 @@
         Margin="10"
         Orientation="Vertical"
         Spacing="10">
-        <DockPanel LastChildFill="False">
+        <DockPanel LastChildFill="True">
             <hc:ButtonGroup
                 HorizontalAlignment="Left"
                 IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
@@ -100,20 +100,35 @@
                     Foreground="{DynamicResource SecondaryTextBrush}"
                     IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Cycle}" />
             </hc:ButtonGroup>
-            <Button
-                Width="100"
-                Height="40"
-                VerticalAlignment="Top"
-                Command="{Binding OKCommand}"
-                Content="确定"
-                DockPanel.Dock="Right"
-                Style="{StaticResource ButtonPrimary}" />
         </DockPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="15" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBox
+                materialDesign:HintAssist.HelperText=""
+                materialDesign:HintAssist.Hint="设定溶氧(%)"
+                materialDesign:TextFieldAssist.HasClearButton="True"
+                FontSize="{StaticResource SubHeadFontSize}"
+                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}" />
+            <TextBox
+                Grid.Column="2"
+                materialDesign:HintAssist.HelperText=""
+                materialDesign:HintAssist.Hint="当前溶氧(%)"
+                FontSize="{StaticResource SubHeadFontSize}"
+                IsEnabled="False"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding CurrentDeviceParameter.DO, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}" />
+        </Grid>
         <GroupBox
             Header="基础参数"
             Style="{StaticResource MaterialDesignGroupBox}"
             Visibility="{Binding CurrentDeviceParameter.DOParam.IsCycle, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="15">
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <DockPanel LastChildFill="False">
                         <CheckBox
@@ -178,13 +193,15 @@
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding Param.AgitLowerLimit, UpdateSourceTrigger=LostFocus}" />
+                                        Text="{Binding Param.AgitLowerLimit, UpdateSourceTrigger=LostFocus}"
+                                        Visibility="Collapsed" />
                                     <TextBox
                                         Width="100"
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding Param.AgitUpperLimit, UpdateSourceTrigger=LostFocus}" />
+                                        Text="{Binding Param.AgitUpperLimit, UpdateSourceTrigger=LostFocus}"
+                                        Visibility="Collapsed" />
                                     <ComboBox
                                         Width="100"
                                         hc:InfoElement.Title="{ex:Language Key='气体单位'}"
@@ -539,13 +556,15 @@
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AgitLowerLimit, UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding MidRanging.AgitLowerLimit, UpdateSourceTrigger=LostFocus}"
+                        Visibility="Collapsed" />
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AgitUpperLimit, UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding MidRanging.AgitUpperLimit, UpdateSourceTrigger=LostFocus}"
+                        Visibility="Collapsed" />
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
@@ -648,5 +667,37 @@
                 </GroupBox>
             </hc:UniformSpacingPanel>
         </GroupBox>
+        <ToggleButton
+            Height="35"
+            hc:StatusSwitchElement.HideUncheckedElement="True"
+            IsChecked="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+            Style="{StaticResource ToggleButtonCustom}">
+            <hc:StatusSwitchElement.CheckedElement>
+                <Border
+                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                    BorderBrush="{DynamicResource PrimaryBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{StaticResource DefaultCornerRadius}">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="{DynamicResource PrimaryBrush}"
+                        Text="关闭" />
+                </Border>
+            </hc:StatusSwitchElement.CheckedElement>
+            <Border
+                Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                Height="35"
+                Background="{DynamicResource PrimaryBrush}"
+                BorderBrush="{DynamicResource PrimaryBrush}"
+                CornerRadius="{StaticResource DefaultCornerRadius}">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="White"
+                    Text="开启" />
+            </Border>
+        </ToggleButton>
     </hc:UniformSpacingPanel>
 </UserControl>

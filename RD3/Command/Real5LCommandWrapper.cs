@@ -402,7 +402,7 @@ namespace RD3.Shared
                     realTimeParam.DO = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_DO), Const.NumericalPrecision);
                     realTimeParam.StirringMotorTemp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_StirringMotorTemp), Const.NumericalPrecision);
                     realTimeParam.StirringMotorPower = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_StirringMotorPower), Const.NumericalPrecision);
-                    realTimeParam.AlarmBytes = recvCommand.GetBytes(ParamId_5L.RRealtimeParam_ReadResponse_AlarmCodes);
+
                     realTimeParam.Pump1FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump1FlowRate), Const.NumericalPrecision);
                     realTimeParam.Pump1Flow = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump1Flow), Const.NumericalPrecision);
                     realTimeParam.Pump1FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump1FlowTotal), Const.NumericalPrecision);
@@ -418,6 +418,10 @@ namespace RD3.Shared
                     realTimeParam.Pump5FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump5FlowRate), Const.NumericalPrecision);
                     realTimeParam.Pump5Flow = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump5Flow), Const.NumericalPrecision);
                     realTimeParam.Pump5FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump5FlowTotal), Const.NumericalPrecision);
+                    realTimeParam.Pump6FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump6FlowRate), Const.NumericalPrecision);
+                    realTimeParam.Pump6Flow = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump6Flow), Const.NumericalPrecision);
+                    realTimeParam.Pump6FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Pump6FlowTotal), Const.NumericalPrecision);
+
                     realTimeParam.MFC1FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC1FlowRate), Const.NumericalPrecision);
                     realTimeParam.MFC1FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC1FlowCapacity), Const.NumericalPrecision);
                     realTimeParam.MFC2FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC2FlowRate), Const.NumericalPrecision);
@@ -426,15 +430,16 @@ namespace RD3.Shared
                     realTimeParam.MFC3FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC3FlowCapacity), Const.NumericalPrecision);
                     realTimeParam.MFC4FlowRate = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC4FlowRate), Const.NumericalPrecision);
                     realTimeParam.MFC4FlowCapacity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_MFC4FlowCapacity), Const.NumericalPrecision);
+
                     realTimeParam.JarWeight = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_JarWeight), Const.NumericalPrecision);
                     realTimeParam.ReserveWeight = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_ReserveWeight), Const.NumericalPrecision);
                     realTimeParam.Bottle1Weight = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Bottle1Weight), Const.NumericalPrecision);
                     realTimeParam.Bottle2Weight = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_Bottle2Weight), Const.NumericalPrecision);
+
                     realTimeParam.PHSensorTemp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_pHSensorTemp), Const.NumericalPrecision);
                     realTimeParam.DOSensorTemp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_DOSensorTemp), Const.NumericalPrecision);
                     realTimeParam.HeatingBlanketNTCTemp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_HeatingBlanketNTCTemp), Const.NumericalPrecision);
                     realTimeParam.RoomTemp = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_RoomTemp), Const.NumericalPrecision);
-                    realTimeParam.EPCPressure = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_EPCPressure), Const.NumericalPrecision);
 
                     realTimeParam.IntakeModuleCO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_IntakeModuleCO2Concentration), Const.NumericalPrecision);
                     realTimeParam.IntakeModuleO2Concentration = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_IntakeModuleO2Concentration), Const.NumericalPrecision);
@@ -448,8 +453,12 @@ namespace RD3.Shared
                     realTimeParam.OffgasModuleGasHumidity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_OffgasModuleGasHumidity), Const.NumericalPrecision);
                     realTimeParam.OffgasModuleGasPressure = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_OffgasModuleGasPressure), Const.NumericalPrecision);
 
+                    realTimeParam.EPCPressure = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_EPCPressure), Const.NumericalPrecision);
+
                     realTimeParam.HasFoam = recvCommand.GetByte(ParamId_5L.RRealtimeParam_ReadResponse_HasFoam) == 0x01;
                     realTimeParam.TempControling = recvCommand.GetByte(ParamId_5L.RRealtimeParam_ReadResponse_TempControlStatus) == 0x01;
+
+                    realTimeParam.AlarmBytes = recvCommand.GetBytes(ParamId_5L.RRealtimeParam_ReadResponse_AlarmCodes);
 
                     #region 丢弃滑动窗口滤波 
                     //rawTempData.Add(realTimeParam.PH);

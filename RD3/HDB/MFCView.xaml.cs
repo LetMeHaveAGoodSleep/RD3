@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ImTools;
 using RD3.Shared;
 using RD3.ViewModels;
 
@@ -22,17 +26,19 @@ namespace RD3.Views
     /// </summary>
     public partial class MFCView : UserControl
     {
+        int mfcIndex = -1;
+
         public MFCView()
         {
             InitializeComponent();
         }
-        /// <summary>
-        /// 初始化控件/刷新数据
-        /// </summary>
-        /// <param name="mfcSetting"></param>
-        public void RefershControls(string text)
+
+        public void ResumeMFCSetting(int index)
         {
-            mfcName.Text = text;
+            mfcIndex = index;
+            var vm = this.DataContext as MFCViewModel;
+            var mfcInfo = AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.MFCIndex == index);
+            vm.MFCInfo = mfcInfo;
         }
     }
 }
