@@ -104,17 +104,39 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="15" />
+                <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBox
-                materialDesign:HintAssist.HelperText=""
-                materialDesign:HintAssist.Hint="设定溶氧(%)"
-                materialDesign:TextFieldAssist.HasClearButton="True"
-                FontSize="{StaticResource SubHeadFontSize}"
-                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}" />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    materialDesign:HintAssist.HelperText=""
+                    materialDesign:HintAssist.Hint="设定溶氧(%)"
+                    materialDesign:TextFieldAssist.HasClearButton="True"
+                    FontSize="{StaticResource SubHeadFontSize}"
+                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}" />
+                <hc:UniformSpacingPanel
+                    Grid.Column="2"
+                    Orientation="Vertical"
+                    Spacing="10">
+                    <CheckBox
+                        Content="正向(+)"
+                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsDirect}"
+                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                        Style="{StaticResource MaterialDesignCheckBox}" />
+                    <CheckBox
+                        Content="反向(-)"
+                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsReverse}"
+                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                        Style="{StaticResource MaterialDesignCheckBox}" />
+                </hc:UniformSpacingPanel>
+            </Grid>
             <TextBox
                 Grid.Column="2"
                 materialDesign:HintAssist.HelperText=""

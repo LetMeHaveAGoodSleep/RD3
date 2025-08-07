@@ -22,6 +22,7 @@
     d:DataContext="{d:DesignInstance Type=vm:CalibrateViewModel}"
     d:DesignHeight="600"
     d:DesignWidth="1500"
+    prism:ViewModelLocator.AutoWireViewModel="True"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"

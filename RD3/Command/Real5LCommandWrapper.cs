@@ -1011,7 +1011,7 @@ namespace RD3.Shared
             SendCommand sendCommand = new SendCommand(CommandId_5L.RWSensorCorrect, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId_5L.RWSensorCorrect_Write_SensorType, (byte)sensorCorrectParam.SensorType);
+                sendCommand.SetValue(ParamId_5L.RWSensorCorrect_Write_SensorType, (byte)sensorCorrectParam.SensorType_5L);
                 sendCommand.SetValue(ParamId_5L.RWSensorCorrect_Write_CorrectMode, (byte)sensorCorrectParam.CorrectMode);
                 sendCommand.SetValue(ParamId_5L.RWSensorCorrect_Write_CorrectValue, sensorCorrectParam.CorrectValue);
                 RecvCommand recvCommand = Send(insID, sendCommand);

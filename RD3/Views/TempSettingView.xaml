@@ -76,11 +76,13 @@
             <TextBox
                 Width="110"
                 materialDesign:HintAssist.Hint="温度下限(℃)"
+                IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 Text="{Binding CurrentDeviceParameter.TempParam.LowerLimit, StringFormat={}{0:F2}}" />
             <TextBox
                 Width="110"
                 materialDesign:HintAssist.Hint="温度上限(℃)"
+                IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 Text="{Binding CurrentDeviceParameter.TempParam.UpperLimit, StringFormat={}{0:F2}}" />
         </hc:UniformSpacingPanel>

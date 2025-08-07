@@ -60,6 +60,16 @@
         Orientation="Vertical"
         Spacing="10">
         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+            <CheckBox
+                Content="酸(-)"
+                IsChecked="{Binding CurrentDeviceParameter.PHParam.AcidAssociated}"
+                IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+            <CheckBox
+                Content="碱(+)"
+                IsChecked="{Binding CurrentDeviceParameter.PHParam.BaseAssociated}"
+                IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+        </hc:UniformSpacingPanel>
+        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
             <TextBox
                 Width="110"
                 materialDesign:HintAssist.Hint="设定pH"
@@ -76,11 +86,13 @@
             <TextBox
                 Width="110"
                 materialDesign:HintAssist.Hint="pH下限"
+                IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 Text="{Binding CurrentDeviceParameter.PHParam.LowerLimit, StringFormat={}{0:F2}}" />
             <TextBox
                 Width="110"
                 materialDesign:HintAssist.Hint="pH上限"
+                IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 Text="{Binding CurrentDeviceParameter.PHParam.UpperLimit, StringFormat={}{0:F2}}" />
         </hc:UniformSpacingPanel>

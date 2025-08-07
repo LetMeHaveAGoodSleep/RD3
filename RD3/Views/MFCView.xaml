@@ -21,7 +21,8 @@
             <Image
                 Width="29"
                 DockPanel.Dock="Bottom"
-                Source="/Images/NewReactor/阀（开）.png">
+                Source="/Images/NewReactor/阀（开）.png"
+                Visibility="{Binding MFCInfo.IsEnable, Converter={StaticResource Boolean2VisibilityConverter}}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <i:InvokeCommandAction Command="{Binding MFCSettingCommand}" />
@@ -32,13 +33,7 @@
                 Width="29"
                 DockPanel.Dock="Bottom"
                 Source="/Images/NewReactor/阀（关）.png"
-                Visibility="Collapsed">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseLeftButtonDown">
-                        <i:InvokeCommandAction Command="{Binding MFCSettingCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Image>
+                Visibility="{Binding MFCInfo.IsEnable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
         </DockPanel>
         <TextBox
             Width="80"

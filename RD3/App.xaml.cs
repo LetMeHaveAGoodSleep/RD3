@@ -77,7 +77,13 @@ namespace RD3
                     mutexName = "RD3";
                     break;
                 case SoftwarePlatform.WindowsPad:
+                    User user = UserManager.GetInstance().Users?.ToList().Find(t => t.Type == UserType.Admin);
+                    if (user != null)
+                    {
+                        AppSession.CurrentUser = user;
+                    }
                     mutexName = "RD3_Pad";
+                    VarConfig.SetValue("CommunicationProtocol", 1);
                     break;
                 case SoftwarePlatform.HighThroughput:
                     mutexName = "RD3_HT";
@@ -202,26 +208,6 @@ namespace RD3
                     });
                     break;
                 case SoftwarePlatform.WindowsPad:
-                    var lastUser = VarConfig.GetValue("LastUser")?.ToString();
-                    if (string.IsNullOrWhiteSpace(lastUser))
-                    {
-                        dialog.ShowDialog(nameof(LoginView), callback =>
-                        {
-                            if (callback.Result != ButtonResult.OK)
-                            {
-                                Environment.Exit(0);
-                                return;
-                            }
-                        });
-                    }
-                    lastUser = VarConfig.GetValue("LastUser")?.ToString();
-                    var lastPassWord = VarConfig.GetValue("LastPassWord")?.ToString();
-                    User user = UserManager.GetInstance().Users?.ToList().Find(t => t.UserName == lastUser && AESEncryption.Encrypt(t.Password) == lastPassWord);
-                    if (user != null)
-                    {
-                        AppSession.CurrentUser = user;
-                    }
-
                     dialog.ShowDialog(nameof(SelfCheckView), callback =>
                     {
                         if (callback.Result != ButtonResult.OK)
@@ -307,6 +293,8 @@ namespace RD3
             containerRegistry.RegisterDialog<MFCSettingView, MFCSettingViewModel>();
             containerRegistry.RegisterDialog<TempSettingView, TempSettingViewModel>();
             containerRegistry.RegisterDialog<pHSettingView, pHSettingViewModel>();
+            containerRegistry.RegisterDialog<PadCalibrationView, PadCalibrationViewModel>();
+            containerRegistry.RegisterDialog<PadConfigurationView, PadConfigurationViewModel>();
             //containerRegistry.RegisterDialogWindow<DialogWindowBase>();
         }
 

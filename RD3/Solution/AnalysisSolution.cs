@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using ImTools;
+using Newtonsoft.Json;
 using RD3.Common;
 using RD3.Controller;
 using RD3.Shared;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -157,7 +159,6 @@ namespace RD3
             }
         }
 
-
         public void SavePumpSetting(ObservableCollection<PumpInfo> dataList = null)
         {
             if (dataList != null && !dataList.Equals(PumpInfoCol))
@@ -178,6 +179,31 @@ namespace RD3
             string json = JsonConvert.SerializeObject(MFCInfoCol);
             File.Delete(FileConst.MFCInfoPath);
             File.WriteAllText(FileConst.MFCInfoPath, json);
+        }
+
+        public void SavePumpMFCToOld(string reactorName)
+        {
+            var dictionary = PumpMFCConfig.GetValue(reactorName);
+            if (dictionary == null || dictionary.Keys.Count < 1)
+            {
+                dictionary = new Dictionary<string, string>();
+            }
+
+            Type type = this.GetType();
+            PropertyInfo[] properties = type.GetProperties();
+            for (int i = 1; i < 7; i++)
+            {
+                PumpInfo pumpInfo = PumpInfoCol.FindFirst(t => t.PumpIndex == i);
+                if (pumpInfo == null) continue;
+                dictionary[$"Pump{i}"] = pumpInfo.Pump.ToString();
+            }
+            for (int i = 1; i < 4; i++)
+            {
+                MFCInfo mfcInfo = MFCInfoCol.FindFirst(t => t.MFCIndex == i);
+                if (mfcInfo == null) continue;
+                dictionary[$"MFC{i}"] = mfcInfo.Gas.ToString();
+            }
+            PumpMFCConfig.SetValue(reactorName, dictionary);
         }
 
         public void Dispose()

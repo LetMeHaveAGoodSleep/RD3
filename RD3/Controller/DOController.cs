@@ -45,6 +45,21 @@ namespace RD3.Controller
             get { return AnalysisSolution.GetInstance().ReactorCol[0]; }
         }
 
+        public PumpInfo FeedPumpInfo
+        {
+            get => AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.Pump == PeristalticPump.FeedPump && t.IsEnable);
+        }
+
+        public MFCInfo MFCAir
+        {
+            get => AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.Gas == GasType.Air && t.IsEnable);
+        }
+
+        public MFCInfo MFCO2
+        {
+            get => AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.Gas == GasType.O2 && t.IsEnable);
+        }
+
         public DOController()
         {
         }
@@ -55,10 +70,6 @@ namespace RD3.Controller
             {
                 return;
             }
-
-            MFCInfo mfcAir = new();
-            MFCInfo mfcO2 = new();
-            PumpInfo feedPump = new PumpInfo();
 
             bool firstInitFeed = true;
             bool firstInitTemp = true;
@@ -159,38 +170,23 @@ namespace RD3.Controller
                     ObservableCollection<DOControlFactor> collection = [.. param.FactorCol];
                     if (collection.Contains(DOControlFactor.Air))
                     {
-                        mfcAir = AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.Gas == GasType.Air);
-                        if (mfcAir.Gas == GasType.Air)
+                        if (MFCAir != null)
                         {
-                            mfcAir.IsControlled = true;
-                        }
-                        else
-                        {
-                            mfcAir = null;
+                            MFCAir.IsControlled = true;
                         }
                     }
                     if (collection.Contains(DOControlFactor.O2))
                     {
-                        mfcO2 = AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.Gas == GasType.O2);
-                        if (mfcO2.Gas == GasType.O2)
+                        if (MFCO2 != null)
                         {
-                            mfcO2.IsControlled = true;
-                        }
-                        else
-                        {
-                            mfcO2 = null;
+                            MFCO2.IsControlled = true;
                         }
                     }
                     if (collection.Contains(DOControlFactor.Feed))
                     {
-                        feedPump = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.Pump == PeristalticPump.FeedPump);
-                        if (feedPump.Pump == PeristalticPump.FeedPump)
+                        if (FeedPumpInfo != null)
                         {
-                            feedPump.IsControlled = true;
-                        }
-                        else
-                        {
-                            feedPump = null;
+                            FeedPumpInfo.IsControlled = true;
                         }
                     }
 
@@ -210,18 +206,17 @@ namespace RD3.Controller
                         switch (collection[0])
                         {
                             case DOControlFactor.Air:
-                                if (mfcAir != null)
+                                if (MFCAir != null)
                                 {
-                                    mfcAir.FlowRate_SP = Math.Clamp(realTimeParam.AirFlowSpeed, initialGas, maxGas);
-                                    mfcAir.IsControling = true;
+                                    MFCAir.FlowRate_SP = Math.Clamp(realTimeParam.AirFlowSpeed, initialGas, maxGas);
+                                    MFCAir.IsControling = true;
                                 }
-                                
                                 break;
                             case DOControlFactor.O2:
-                                if (mfcO2 != null)
+                                if (MFCO2 != null)
                                 {
-                                    mfcO2.FlowRate_SP = Math.Clamp(realTimeParam.O2FlowSpeed, initialGas, maxGas);
-                                    mfcO2.IsControling = true;
+                                    MFCO2.FlowRate_SP = Math.Clamp(realTimeParam.O2FlowSpeed, initialGas, maxGas);
+                                    MFCO2.IsControling = true;
                                 }
                                 break;
                         }
@@ -501,13 +496,14 @@ namespace RD3.Controller
                             switch (collection[factorIndex])
                             {
                                 case DOControlFactor.Air:
-                                    if (mfcAir == null)
+                                    if (MFCAir == null)
                                     {
-                                        continue;
+                                        HandyControl.Controls.MessageBox.Show("通气MFC不存在。", "温馨提示");
+                                        return;
                                     }
-                                    if ( !mfcAir.IsControling)
+                                    if ( !MFCAir.IsControling)
                                     {
-                                        mfcAir.IsControling = true;
+                                        MFCAir.IsControling = true;
                                     }
                                     if (param.Unit == 0)//VVM
                                     {
@@ -532,7 +528,7 @@ namespace RD3.Controller
                                     _airPIDController.SetIntegralLimits(-2000, 2000);
                                     _airPIDController.SetTarget(_agitDelta);
                                     float tempAir = _airPIDController.CalculateIncremental(param.AgitHigh);
-                                    float airSpeed = mfcAir.FlowRate_SP + tempAir;
+                                    float airSpeed = MFCAir.FlowRate_SP + tempAir;
                                     isExistOtherGas = previousElements.Where(t => t == DOControlFactor.O2).Count() > 0;
                                     float minAir = isExistOtherGas == true ? 0 : initialGas;
                                     if (airSpeed >= maxGas)
@@ -553,14 +549,14 @@ namespace RD3.Controller
                                     }
 
                                     airSpeed = airSpeed >= maxGas ? maxGas : airSpeed < minAir ? minAir : MathF.Round(airSpeed, 2);
-                                    mfcAir.FlowRate_SP = airSpeed;
+                                    MFCAir.FlowRate_SP = airSpeed;
                                     if (isExistOtherGas)
                                     {
-                                        mfcO2.IsControling = true;
-                                        mfcO2.FlowRate_SP = MathF.Round(maxGas - airSpeed, 2);
+                                        MFCO2.IsControling = true;
+                                        MFCO2.FlowRate_SP = MathF.Round(maxGas - airSpeed, 2);
                                     }
 
-                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 通气预设值：{1}，当前：{2}，delta：{3}", CurrentDeviceParameter.Name, airSpeed, mfcAir.FlowRate_SP, tempAir));
+                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 通气预设值：{1}，当前：{2}，delta：{3}", CurrentDeviceParameter.Name, airSpeed, MFCAir.FlowRate_SP, tempAir));
                                     sleepCount = info.Interval <= 1 ? 1 : info.Interval;
                                     while (sleepCount > 0)
                                     {
@@ -583,13 +579,14 @@ namespace RD3.Controller
                                     }
                                     break;
                                 case DOControlFactor.O2:
-                                    if (mfcO2 == null)
+                                    if (MFCO2 == null)
                                     {
-                                        continue;
+                                        HandyControl.Controls.MessageBox.Show("氧气MFC不存在。", "温馨提示");
+                                        return;
                                     }
-                                    if (!mfcO2.IsControling)
+                                    if (!MFCO2.IsControling)
                                     {
-                                        mfcO2.IsControling = true;
+                                        MFCO2.IsControling = true;
                                     }
                                     if (param.Unit == 0)//VVM
                                     {
@@ -613,7 +610,7 @@ namespace RD3.Controller
                                     _o2PIDController.SetIntegralLimits(-2000, 2000);
                                     _o2PIDController.SetTarget(_agitDelta);
                                     float tempO2 = _o2PIDController.CalculateIncremental((float)param.AgitHigh);
-                                    float o2Speed = mfcO2.FlowRate_SP + tempO2;
+                                    float o2Speed = MFCO2.FlowRate_SP + tempO2;
                                     isExistOtherGas = previousElements.Where(t => t == DOControlFactor.Air).Count() > 0;
                                     float minO2 = isExistOtherGas == true ? 0 : initialGas;
                                     if (o2Speed >= maxGas)
@@ -634,14 +631,14 @@ namespace RD3.Controller
                                     }
 
                                     o2Speed = o2Speed >= maxGas ? maxGas : o2Speed < minO2 ? minO2 : MathF.Round(o2Speed, 2);
-                                    mfcO2.FlowRate_SP = o2Speed;
+                                    MFCO2.FlowRate_SP = o2Speed;
                                     if (isExistOtherGas)
                                     {
 
-                                        mfcAir.IsControling = true;
-                                        mfcAir.FlowRate_SP = maxGas - o2Speed > 0 ? MathF.Round(maxGas - o2Speed, 2) : 0;
+                                        MFCAir.IsControling = true;
+                                        MFCAir.FlowRate_SP = maxGas - o2Speed > 0 ? MathF.Round(maxGas - o2Speed, 2) : 0;
                                     }
-                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 氧气预设值：{1}，底值：{2}，delta：{3}", CurrentDeviceParameter.Name, o2Speed, mfcO2.FlowRate_SP, tempO2));
+                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 氧气预设值：{1}，底值：{2}，delta：{3}", CurrentDeviceParameter.Name, o2Speed, MFCO2.FlowRate_SP, tempO2));
                                     sleepCount = info.Interval <= 1 ? 1 : info.Interval;
                                     while (sleepCount > 0)
                                     {
@@ -756,12 +753,13 @@ namespace RD3.Controller
                                     }
                                     break;
                                 case DOControlFactor.Feed:
-                                    if (feedPump == null)
+                                    if (FeedPumpInfo == null)
                                     {
-                                        continue;
+                                        HandyControl.Controls.MessageBox.Show("补料泵不存在。", "温馨提示");
+                                        return;
                                     }
 
-                                    if (!feedPump.IsControling)
+                                    if (!FeedPumpInfo.IsControling)
                                     {
                                         if (factorIndex < collection.Count - 1 && lastFactorIndex <= factorIndex)//如果还有下一执行参数，则跳到下一个执行参数
                                         {
@@ -778,7 +776,7 @@ namespace RD3.Controller
                                     if (firstInitFeed)
                                     {
                                         CurrentDeviceParameter.FeedSuspend = true;
-                                        CurrentDeviceParameter.DOParam.InitialFeed = feedPump.FlowRate_SP;
+                                        CurrentDeviceParameter.DOParam.InitialFeed = FeedPumpInfo.FlowRate_SP;
                                         firstInitFeed = false;
                                     }
                                     QPIDController controller = new QPIDController();
@@ -792,7 +790,7 @@ namespace RD3.Controller
                                     controller.SetIntegralLimits(-2000, 2000);
                                     controller.SetTarget(param.AgitHigh);
                                     float incrementFeed = controller.CalculateIncremental(_agitDelta);
-                                    float currentFeed = feedPump.FlowRate_SP + incrementFeed;
+                                    float currentFeed = FeedPumpInfo.FlowRate_SP + incrementFeed;
                                     if (currentFeed <= CurrentDeviceParameter.FeedDOLowerLimit)
                                     {
                                         if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
@@ -810,13 +808,13 @@ namespace RD3.Controller
                                         }
                                     }
                                     currentFeed = currentFeed <= CurrentDeviceParameter.FeedDOLowerLimit ? CurrentDeviceParameter.FeedDOLowerLimit : currentFeed >= CurrentDeviceParameter.DOParam.InitialFeed ? CurrentDeviceParameter.DOParam.InitialFeed : currentFeed;
-                                    feedPump.FlowRate_SP = Math.Clamp(MathF.Round(currentFeed, 2), 0, Const.MaxPumpFlowRate);
+                                    FeedPumpInfo.FlowRate_SP = Math.Clamp(MathF.Round(currentFeed, 2), 0, Const.MaxPumpFlowRate);
                                     var controlParam = new PeristalticPumpControlParam()
                                     {
-                                        PumpNo = feedPump.PumpIndex,
-                                        Pump = feedPump.Pump,
+                                        PumpNo = FeedPumpInfo.PumpIndex,
+                                        Pump = FeedPumpInfo.Pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = feedPump.FlowRate_SP,
+                                        FlowSpeed = FeedPumpInfo.FlowRate_SP,
                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, controlParam);
@@ -1016,38 +1014,23 @@ namespace RD3.Controller
 
                     if (collection.Contains(DOControlFactor.Air))
                     {
-                        mfcAir = AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.Gas == GasType.Air);
-                        if (mfcAir.Gas == GasType.Air)
+                        if (MFCAir != null)
                         {
-                            mfcAir.IsControlled = true;
-                        }
-                        else
-                        {
-                            mfcAir = null;
+                            MFCAir.IsControlled = true;
                         }
                     }
                     if (collection.Contains(DOControlFactor.O2))
                     {
-                        mfcO2 = AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.Gas == GasType.O2);
-                        if (mfcO2.Gas == GasType.O2)
+                        if (MFCO2 != null)
                         {
-                            mfcO2.IsControlled = true;
-                        }
-                        else
-                        {
-                            mfcO2 = null;
+                            MFCO2.IsControlled = true;
                         }
                     }
                     if (collection.Contains(DOControlFactor.Feed))
                     {
-                        feedPump = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.Pump == PeristalticPump.FeedPump);
-                        if (feedPump.Pump == PeristalticPump.FeedPump)
+                        if (FeedPumpInfo != null)
                         {
-                            feedPump.IsControlled = true;
-                        }
-                        else
-                        {
-                            feedPump = null;
+                            FeedPumpInfo.IsControlled = true;
                         }
                     }
 
@@ -1069,9 +1052,9 @@ namespace RD3.Controller
                             }
 
                             LogHelper.Debug(string.Format("阶梯级联：通气档位为{0}", _airIndex + 1));
-                            if (mfcAir != null)
+                            if (MFCAir != null)
                             {
-                                mfcAir.IsControling = true;
+                                MFCAir.IsControling = true;
                             }
                         }
 
@@ -1091,9 +1074,9 @@ namespace RD3.Controller
                             }
 
                             LogHelper.Debug(string.Format("阶梯级联：氧气档位为{0}", _o2Index + 1));
-                            if (mfcO2 != null)
+                            if (MFCO2 != null)
                             {
-                                mfcO2.IsControling = true;
+                                MFCO2.IsControling = true;
                             }
                         }
                     }
@@ -1360,13 +1343,14 @@ namespace RD3.Controller
                             switch (collection[factorIndex])
                             {
                                 case DOControlFactor.Air:
-                                    if (mfcAir == null)
+                                    if (MFCAir == null)
                                     {
-                                        continue;
+                                        HandyControl.Controls.MessageBox.Show("通气MFC不存在。", "温馨提示");
+                                        return;
                                     }
-                                    if (!mfcAir.IsControling)
+                                    if (!MFCAir.IsControling)
                                     {
-                                        mfcAir.IsControling = true;
+                                        MFCAir.IsControling = true;
                                     }
 
                                     if (param.Unit == 0)//VVM
@@ -1397,7 +1381,7 @@ namespace RD3.Controller
                                             {
                                                 airFlowSpeed = param.AirCol[_airIndex].StepValue;
                                             }
-                                            CurrentDeviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                                            MFCAir.FlowRate_SP = airFlowSpeed;
 
                                             if (isExistOtherGas)
                                             {
@@ -1414,8 +1398,8 @@ namespace RD3.Controller
                                                     {
                                                         o2FlowSpeed = param.O2Col[_o2Index].StepValue;
                                                     }
-                                                    mfcO2.FlowRate_SP = o2FlowSpeed;
-                                                    mfcO2.IsControling = true;
+                                                    MFCO2.FlowRate_SP = o2FlowSpeed;
+                                                    MFCO2.IsControling = true;
                                                 }
                                             }
                                         }
@@ -1423,7 +1407,7 @@ namespace RD3.Controller
                                         {
                                             if (isExistOtherGas)
                                             {
-                                                CurrentDeviceParameter.AirParam.FlowSpeed = 0;
+                                                MFCAir.FlowRate_SP = 0;
 
                                                 if (_o2Index < param.O2Col.Count - 1)//加一档
                                                 {
@@ -1438,9 +1422,8 @@ namespace RD3.Controller
                                                     {
                                                         o2FlowSpeed = param.O2Col[_o2Index].StepValue;
                                                     }
-                                                    CurrentDeviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
-                                                    CurrentDeviceParameter.O2Param.IsControling = true;
-                                                    //O2RunCommand.Execute(CurrentDeviceParameter);
+                                                    MFCO2.FlowRate_SP = o2FlowSpeed;
+                                                    MFCO2.IsControling = true;
                                                 }
                                             }
 
@@ -1463,7 +1446,7 @@ namespace RD3.Controller
                                             {
                                                 airFlowSpeed = param.AirCol[_airIndex].StepValue;
                                             }
-                                            CurrentDeviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                                            MFCAir.FlowRate_SP = airFlowSpeed;
 
                                             if (isExistOtherGas)
                                             {
@@ -1480,15 +1463,13 @@ namespace RD3.Controller
                                                     {
                                                         o2FlowSpeed = param.O2Col[_o2Index].StepValue;
                                                     }
-                                                    CurrentDeviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
-                                                    CurrentDeviceParameter.O2Param.IsControling = true;
-                                                    //O2RunCommand.Execute(CurrentDeviceParameter);
+                                                    MFCO2.FlowRate_SP = o2FlowSpeed;
+                                                    MFCO2.IsControling = true;
                                                 }
                                                 else
                                                 {
-                                                    CurrentDeviceParameter.O2Param.FlowSpeed = 0;
-                                                    CurrentDeviceParameter.O2Param.IsControling = true;
-                                                    //O2RunCommand.Execute(CurrentDeviceParameter);
+                                                    MFCO2.FlowRate_SP = 0;
+                                                    MFCO2.IsControling = true;
                                                 }
                                             }
                                         }
@@ -1512,7 +1493,7 @@ namespace RD3.Controller
                                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                                         if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.05)
                                         {
-                                            CurrentDeviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                                            MFCAir.FlowRate_SP = airFlowSpeed;
                                         }
 
                                         if (isExistOtherGas)
@@ -1529,8 +1510,7 @@ namespace RD3.Controller
                                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                                             if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.05)
                                             {
-                                                CurrentDeviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
-
+                                                MFCO2.FlowRate_SP = o2FlowSpeed;
                                             }
                                         }
                                     }
@@ -1557,13 +1537,14 @@ namespace RD3.Controller
                                     }
                                     break;
                                 case DOControlFactor.O2:
-                                    if (mfcO2 == null)
+                                    if (MFCO2 == null)
                                     {
-                                        continue;
+                                        HandyControl.Controls.MessageBox.Show("氧气MFC不存在。", "温馨提示");
+                                        return;
                                     }
-                                    if (!mfcO2.IsControling)
+                                    if (!MFCO2.IsControling)
                                     {
-                                        mfcO2.IsControling = true;
+                                        MFCO2.IsControling = true;
                                     }
 
                                     if (param.Unit == 0)//VVM
@@ -1594,7 +1575,7 @@ namespace RD3.Controller
                                             {
                                                 o2FlowSpeed = param.O2Col[_o2Index].StepValue;
                                             }
-                                            mfcO2.FlowRate_SP = o2FlowSpeed;
+                                            MFCO2.FlowRate_SP = o2FlowSpeed;
 
                                             if (isExistOtherGas)
                                             {
@@ -1611,8 +1592,8 @@ namespace RD3.Controller
                                                     {
                                                         airFlowSpeed = param.AirCol[_airIndex].StepValue;
                                                     }
-                                                    mfcAir.FlowRate_SP = airFlowSpeed;
-                                                    mfcAir.IsControling = true;
+                                                    MFCAir.FlowRate_SP = airFlowSpeed;
+                                                    MFCAir.IsControling = true;
                                                 }
                                             }
                                         }
@@ -1620,7 +1601,7 @@ namespace RD3.Controller
                                         {
                                             if (isExistOtherGas)
                                             {
-                                                mfcO2.FlowRate_SP = 0;
+                                                MFCO2.FlowRate_SP = 0;
 
                                                 if (_airIndex < param.AirCol.Count - 1)//加一档
                                                 {
@@ -1635,8 +1616,8 @@ namespace RD3.Controller
                                                     {
                                                         airFlowSpeed = param.AirCol[_airIndex].StepValue;
                                                     }
-                                                    mfcAir.FlowRate_SP = airFlowSpeed;
-                                                    mfcAir.IsControling = true;
+                                                    MFCAir.FlowRate_SP = airFlowSpeed;
+                                                    MFCAir.IsControling = true;
                                                 }
                                             }
 
@@ -1659,7 +1640,7 @@ namespace RD3.Controller
                                             {
                                                 o2FlowSpeed = param.O2Col[_o2Index].StepValue;
                                             }
-                                            mfcO2.FlowRate_SP = o2FlowSpeed;
+                                            MFCO2.FlowRate_SP = o2FlowSpeed;
 
                                             if (isExistOtherGas)
                                             {
@@ -1676,13 +1657,13 @@ namespace RD3.Controller
                                                     {
                                                         airFlowSpeed = param.AirCol[_airIndex].StepValue;
                                                     }
-                                                    mfcAir.FlowRate_SP = airFlowSpeed;
-                                                    mfcAir.IsControling = true;
+                                                    MFCAir.FlowRate_SP = airFlowSpeed;
+                                                    MFCAir.IsControling = true;
                                                 }
                                                 else
                                                 {
-                                                    mfcAir.FlowRate_SP = 0;
-                                                    mfcAir.IsControling = true;
+                                                    MFCAir.FlowRate_SP = 0;
+                                                    MFCAir.IsControling = true;
                                                 }
                                             }
                                         }
@@ -1706,7 +1687,7 @@ namespace RD3.Controller
                                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                                         if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.1)
                                         {
-                                            mfcO2.FlowRate_SP = o2FlowSpeed;
+                                            MFCO2.FlowRate_SP = o2FlowSpeed;
                                         }
 
                                         if (isExistOtherGas)
@@ -1723,7 +1704,7 @@ namespace RD3.Controller
                                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                                             if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.1)
                                             {
-                                                mfcAir.FlowRate_SP = airFlowSpeed;
+                                                MFCAir.FlowRate_SP = airFlowSpeed;
                                             }
                                         }
                                     }
@@ -1822,12 +1803,13 @@ namespace RD3.Controller
                                     }
                                     break;
                                 case DOControlFactor.Feed:
-                                    if (feedPump == null)
+                                    if (FeedPumpInfo == null)
                                     {
-                                        continue;
+                                        HandyControl.Controls.MessageBox.Show("补料泵不存在。", "温馨提示");
+                                        return;
                                     }
 
-                                    if (!feedPump.IsControling)
+                                    if (!FeedPumpInfo.IsControling)
                                     {
                                         if (factorIndex < collection.Count - 1 && lastFactorIndex <= factorIndex)//如果还有下一执行参数，则跳到下一个执行参数
                                         {
@@ -1844,7 +1826,7 @@ namespace RD3.Controller
                                     if (firstInitFeed)
                                     {
                                         CurrentDeviceParameter.FeedSuspend = true;
-                                        CurrentDeviceParameter.DOParam.InitialFeed = feedPump.FlowRate_SP;
+                                        CurrentDeviceParameter.DOParam.InitialFeed = FeedPumpInfo.FlowRate_SP;
                                         firstInitFeed = false;
                                     }
 
@@ -1855,14 +1837,14 @@ namespace RD3.Controller
                                             _feedIndex -= 1;
 
                                             float coeff = param.FeedCol[_feedIndex].StepValue;
-                                            feedPump.FlowRate_SP = MathF.Round(CurrentDeviceParameter.DOParam.InitialFeed * coeff / 100, 2);
+                                            FeedPumpInfo.FlowRate_SP = MathF.Round(CurrentDeviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                         }
                                         else if (factorIndex > 0)
                                         {
                                             lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
 
-                                            feedPump.FlowRate_SP = CurrentDeviceParameter.DOParam.InitialFeed;
+                                            FeedPumpInfo.FlowRate_SP = CurrentDeviceParameter.DOParam.InitialFeed;
                                         }
                                     }
                                     else if (_agitDelta >= param.AgitUpperLimit)
@@ -1872,33 +1854,33 @@ namespace RD3.Controller
                                             _feedIndex += 1;
 
                                             float coeff = param.FeedCol[_feedIndex].StepValue;
-                                            feedPump.FlowRate_SP = MathF.Round(CurrentDeviceParameter.DOParam.InitialFeed * coeff / 100, 2);
+                                            FeedPumpInfo.FlowRate_SP = MathF.Round(CurrentDeviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                         }
                                         else if (factorIndex < collection.Count - 1)
                                         {
                                             lastFactorIndex = factorIndex;
                                             factorIndex += 1;
 
-                                            feedPump.FlowRate_SP = CurrentDeviceParameter.DOParam.InitialFeed;
+                                            FeedPumpInfo.FlowRate_SP = CurrentDeviceParameter.DOParam.InitialFeed;
                                         }
                                     }
                                     else
                                     {
                                         float coeff = param.FeedCol[_feedIndex].StepValue;
-                                        feedPump.FlowRate_SP = MathF.Round(CurrentDeviceParameter.DOParam.InitialFeed * coeff / 100, 2);
+                                        FeedPumpInfo.FlowRate_SP = MathF.Round(CurrentDeviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                     }
 
-                                    feedPump.FlowRate_SP = Math.Clamp(feedPump.FlowRate_SP, 0, Const.MaxPumpFlowRate);
+                                    FeedPumpInfo.FlowRate_SP = Math.Clamp(FeedPumpInfo.FlowRate_SP, 0, Const.MaxPumpFlowRate);
                                     var controlParam = new PeristalticPumpControlParam()
                                     {
-                                        PumpNo = feedPump.PumpIndex,
-                                        Pump = feedPump.Pump,
+                                        PumpNo = FeedPumpInfo.PumpIndex,
+                                        Pump = FeedPumpInfo.Pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = feedPump.FlowRate_SP,
+                                        FlowSpeed = FeedPumpInfo.FlowRate_SP,
                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, controlParam);
-                                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 实际补料{2}", CurrentDeviceParameter.Name, CurrentDeviceParameter.DOParam.InitialFeed, feedPump.FlowRate_SP));
+                                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 实际补料{2}", CurrentDeviceParameter.Name, CurrentDeviceParameter.DOParam.InitialFeed, FeedPumpInfo.FlowRate_SP));
 
                                     sleepCount = 1;
                                     while (sleepCount > 0)
@@ -1945,25 +1927,25 @@ namespace RD3.Controller
                     CurrentDeviceParameter.DORegulationLimit = false;
                     CurrentDeviceParameter.FeedSuspend = false;
 
-                    if (mfcAir != null)
+                    if (MFCAir != null)
                     {
-                        mfcAir.IsControlled = false;
+                        MFCAir.IsControlled = false;
                     }
-                    if (mfcO2 != null)
+                    if (MFCO2 != null)
                     {
-                        mfcO2.IsControlled = false;
+                        MFCO2.IsControlled = false;
                     }
-                    if (feedPump != null)
+                    if (FeedPumpInfo != null)
                     {
-                        feedPump.IsControlled = false;
-                        if (feedPump.IsControling)
+                        FeedPumpInfo.IsControlled = false;
+                        if (FeedPumpInfo.IsControling)
                         {
                             if (CurrentDeviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
                             {
                                 var param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
                                 if (param.FactorCol.Contains(DOControlFactor.Temp))
                                 {
-                                    feedPump.FlowRate_SP = CurrentDeviceParameter.DOParam.InitialFeed;
+                                    FeedPumpInfo.FlowRate_SP = CurrentDeviceParameter.DOParam.InitialFeed;
                                 }
                             }
                             else if (CurrentDeviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step)
@@ -1971,7 +1953,7 @@ namespace RD3.Controller
                                 var param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
                                 if (param.FactorCol.Contains(DOControlFactor.Temp))
                                 {
-                                    feedPump.FlowRate_SP = CurrentDeviceParameter.DOParam.InitialFeed;
+                                    FeedPumpInfo.FlowRate_SP = CurrentDeviceParameter.DOParam.InitialFeed;
                                 }
                             }
                         }

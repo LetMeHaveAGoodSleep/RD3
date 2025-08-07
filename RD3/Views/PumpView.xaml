@@ -81,7 +81,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Source="/Images/NewReactor/蠕动泵（开启）.png"
-            Visibility="{Binding PumpInfo.IsRunning, Converter={StaticResource Boolean2VisibilityConverter}}">
+            Visibility="{Binding PumpInfo.IsEnable, Converter={StaticResource Boolean2VisibilityConverter}}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseLeftButtonDown">
                     <i:InvokeCommandAction Command="{Binding PumpSettingCommand}" />
@@ -96,13 +96,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Source="/Images/NewReactor/蠕动泵（关闭）.png"
-            Visibility="{Binding PumpInfo.IsRunning, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding PumpSettingCommand}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Image>
+            Visibility="{Binding PumpInfo.IsEnable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
         <hc:UniformSpacingPanel
             Canvas.Left="160"
             Canvas.Top="20"

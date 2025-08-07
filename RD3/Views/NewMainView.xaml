@@ -131,7 +131,7 @@
                         <MenuItem
                             Click="MenuItem_Open_Click"
                             Header="设备校准"
-                            Tag="CalibrationView" />
+                            Tag="CalibrationView,PadCalibrationView" />
                         <MenuItem
                             Click="MenuItem_Open_Click"
                             Header="设备配置"

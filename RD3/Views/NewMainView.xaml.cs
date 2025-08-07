@@ -825,7 +825,9 @@ namespace RD3.Views
         private void MenuItem_Open_Click(object sender, RoutedEventArgs e)
         {
             MenuItem mItem = sender as MenuItem;
-            dialogHostService?.ShowOnce(mItem.Tag.ToString(), callback =>
+            string[] array = mItem.Tag?.ToString().Split(",");
+            string viewName = array[InstrumentSolution.GetInstance().CommunicationProtocol];
+            dialogHostService?.ShowOnce(viewName, callback =>
             {
                 if (callback.Result != ButtonResult.OK)
                 {

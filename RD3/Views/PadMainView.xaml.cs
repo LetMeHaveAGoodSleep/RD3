@@ -104,16 +104,7 @@ namespace RD3.Views
 
         private void PadMainView_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (AppSession.CurrentUser.Type != Shared.UserType.Admin)
-            {
-                HandyControl.Controls.Growl.WarningGlobal("非管理员不可关闭软件！");
-                e.Cancel = true;
-            }
-            else
-            {
-                Application.Current.Shutdown();
-                Environment.Exit(0);
-            }
+
         }
 
         private void ButtonView_Click(object sender, RoutedEventArgs e)

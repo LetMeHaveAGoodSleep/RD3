@@ -12,27 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using RD3.Shared;
-using RD3.ViewModels;
 
 namespace RD3.Views
 {
     /// <summary>
-    /// peristalticpump.xaml 的交互逻辑
+    /// PadConfigurationView.xaml 的交互逻辑
     /// </summary>
-    public partial class AgitCtrlView : UserControl
+    public partial class PadConfigurationView : UserControl
     {
-        public AgitCtrlView()
+        public PadConfigurationView()
         {
             InitializeComponent();
-        }
-
-
-        /// <summary>
-        /// 刷新数据
-        /// </summary>
-        public void RefershCtrlValue(string text)
-        {
         }
     }
 }
