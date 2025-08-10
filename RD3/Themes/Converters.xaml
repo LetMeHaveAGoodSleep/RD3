@@ -20,4 +20,8 @@
     <rd3:MultiBoolToBoolConverter x:Key="MultiBoolToBoolConverter" />
     <rd3:RowToIndexConverter x:Key="RowToIndexConverter" />
     <rd3:DynamicFormatConverter x:Key="DynamicFormatConverter" />
+    <rd3:MultiBoolToVisibilityConverter x:Key="AndBool2VisConverter" Logic="AND" />
+    <rd3:MultiBoolToVisibilityConverter x:Key="OrBool2VisConverter" Logic="OR" />
+    <rd3:MultiVisibilityToVisibilityConverter x:Key="AndVis2VisConverter" Logic="AND" />
+    <rd3:MultiVisibilityToVisibilityConverter x:Key="OrVis2VisConverter" Logic="OR" />
 </ResourceDictionary>

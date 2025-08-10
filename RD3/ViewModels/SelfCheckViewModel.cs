@@ -12,6 +12,7 @@ using RD3.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Resources;
 using System.Text;
 using System.Threading;
@@ -73,6 +74,12 @@ namespace RD3.ViewModels
         {
             LoadConfig();
             CloseDialog();
+
+            PropertyInfo[] propertyInfos = typeof(RealTimeParam).GetProperties().Where(c => c.CanWrite && c.CanRead && (c.PropertyType == typeof(double) || c.PropertyType == typeof(float) || c.PropertyType == typeof(int) || c.PropertyType == typeof(string))).ToArray();
+            RD3SQLHelper.CreateRealTimeParamTable1(propertyInfos);
+
+            EnhancedSqliteBackupService backupService = new EnhancedSqliteBackupService(@"hisDatas\xzrd3.db", AppDomain.CurrentDomain.BaseDirectory + @"\DatabaseBackups");
+            backupService.Start();
 
             countdownTimer?.Stop();
             countdownTimer = null;

@@ -32,91 +32,8 @@ namespace RD3.ViewModels
             set 
             {
                 SetProperty(ref _selectedMenuIndex, value);
-                if (value == 1)
-                {
-                    #region 批次数据
-                    List<RD3Batch> batches = RD3SQLHelper.QueryBatch();
-                    BatchCol = new ObservableCollection<RD3Batch>(batches);
-                    #endregion
-                }
             }
         }
-
-        #region 批次数据
-        ObservableCollection<RD3Batch> _batchCol = new ObservableCollection<RD3Batch>();
-        public ObservableCollection<RD3Batch> BatchCol
-        {
-            get { return _batchCol; }
-            set { SetProperty(ref _batchCol, value); }
-        }
-
-        public DelegateCommand<object> DeleteBatchCommand => new((object o) =>
-        {
-            var list = o as List<RD3Batch>;
-            foreach (var item in list)
-            {
-                try
-                {
-                    BatchCol.Remove(item);
-                    RD3SQLHelper.DeleteBatch(item);
-                }
-                catch (Exception ex)
-                { }
-
-            }
-        });
-
-        public DelegateCommand<object> CompareBatchCommand => new((object o) =>
-        {
-            DialogParameters pairs = new DialogParameters
-                {
-                    { "Batches", o },
-                };
-            DialogHostService.ShowOnce(nameof(CompareBatchView), pairs, callback =>
-            {
-                if (callback.Result != ButtonResult.OK)
-                {
-                    return;
-                }
-            });
-        });
-
-        /// <summary>
-        /// 离线数据命令
-        /// </summary>
-        public DelegateCommand<object> OffLineDataCommand => new((object o) =>
-        {
-            DialogParameters pairs = new DialogParameters
-                {
-                    { "Batch", o },
-                };
-            DialogHostService.ShowOnce(nameof(OffLineDatasView), pairs, callback =>
-            {
-                if (callback.Result != ButtonResult.OK)
-                {
-                    return;
-                }
-            });
-        });
-
-        /// <summary>
-        /// 导出数据命令
-        /// </summary>
-        public DelegateCommand<object> OutputDataCommand => new((object o) =>
-        {
-            DialogParameters pairs = new DialogParameters
-                {
-                    { "Batch", o },
-                };
-            DialogHostService.ShowOnce(nameof(OutputBatchDataView), pairs, callback =>
-            {
-                if (callback.Result != ButtonResult.OK)
-                {
-                    return;
-                }
-            });
-        });
-        #endregion
 
         private DeviceParameter _currentDeviceParameter;
         public DeviceParameter CurrentDeviceParameter
@@ -161,7 +78,9 @@ namespace RD3.ViewModels
                 {
                     Application.Current.Shutdown();
                     Environment.Exit(0);
-                } 
+                    return;
+                }
+
             }
 
         });

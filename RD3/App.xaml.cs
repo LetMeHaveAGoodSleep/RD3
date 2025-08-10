@@ -102,6 +102,8 @@ namespace RD3
                 {
                     mutex.ReleaseMutex();
                 }
+
+                RD3SQLHelper.InitDB();
                 base.OnStartup(e);
             }
             else
@@ -169,15 +171,8 @@ namespace RD3
 
         protected override void OnInitialized()
         {
-            RD3SQLHelper.InitDB();
-            PropertyInfo[] propertyInfos = typeof(RealTimeParam).GetProperties().Where(c => c.CanWrite && c.CanRead && (c.PropertyType == typeof(double) || c.PropertyType == typeof(float) || c.PropertyType == typeof(int) || c.PropertyType == typeof(string))).ToArray();
-            RD3SQLHelper.CreateRealTimeParamTable1(propertyInfos);
-
             UserManager.GetInstance();
             var dialog = Container.Resolve<IDialogService>();
-
-            backupService = new EnhancedSqliteBackupService(@"hisDatas\xzrd3.db", AppDomain.CurrentDomain.BaseDirectory + @"\DatabaseBackups");
-            backupService.Start();
 
             var softwarePlatform = VarConfig.GetValue("SoftwarePlatform")?.ToString();
             Enum.TryParse(typeof(SoftwarePlatform), softwarePlatform, out var result);
@@ -313,8 +308,6 @@ namespace RD3
 
             GC.WaitForPendingFinalizers();
             GC.Collect();
-
-            backupService?.Dispose();
 
             SQLiteHelper.Close();
 

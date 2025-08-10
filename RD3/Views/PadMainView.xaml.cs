@@ -35,6 +35,8 @@ namespace RD3.Views
         {
             InitializeComponent();
             this.Closing += PadMainView_Closing;
+            tabMenu.SelectionChanged += TabControl_SelectionChanged;
+
             FormattedTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(500);
@@ -49,6 +51,7 @@ namespace RD3.Views
             //调试模式下，就不需要让窗口不可移动
             if (!System.Diagnostics.Debugger.IsAttached)
             {
+                this.WindowStyle = WindowStyle.None;
                 SourceInitialized += (s, e) =>
                 {
                     IntPtr hwnd = new WindowInteropHelper(this).Handle;
@@ -107,103 +110,47 @@ namespace RD3.Views
 
         }
 
-        private void ButtonView_Click(object sender, RoutedEventArgs e)
-        {
-            object o = dataGridBatch.SelectedItem;
-            List<RD3Batch> batches = new List<RD3Batch>();
-            batches.Add(o as RD3Batch);
-            ((PadMainViewModel)this.DataContext)?.CompareBatchCommand.Execute(batches);
-        }
-        private void ButtonDeleteBatch_Click(object sender, RoutedEventArgs e)
-        {
-            if (dataGridBatch.SelectedItems.Count < 1)
-            {
-                return;
-            }
-            List<RD3Batch> list = dataGridBatch.SelectedItems.Cast<RD3Batch>().ToList();
-            ((PadMainViewModel)this.DataContext)?.DeleteBatchCommand.Execute(list);
-        }
-
-        private void DataGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            ContextMenu context = new ContextMenu();
-            MenuItem item = new MenuItem() { Width = 100 };
-            item.Header = "批次比较";
-            item.Click += new RoutedEventHandler(CompareBatch_click);
-            context.Items.Add(item);
-            context.IsOpen = true;
-
-            MenuItem dataOutPut = new MenuItem() { Width = 100 };
-            dataOutPut.Header = "数据导出";
-            dataOutPut.Click += new RoutedEventHandler(BatchDataOutPut_click);
-            context.Items.Add(dataOutPut);
-            context.IsOpen = true;
-
-            MenuItem offlineData = new MenuItem() { Width = 100 };
-            offlineData.Header = "离线数据";
-            offlineData.Click += new RoutedEventHandler(BatchOffLinedata_click);
-            context.Items.Add(offlineData);
-            context.IsOpen = true;
-        }
-
-        /// <summary>
-        /// 右键-数据导出
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BatchDataOutPut_click(object sender, RoutedEventArgs e)
-        {
-            if (dataGridBatch.SelectedItems.Count > 0)
-            {
-                List<RD3Batch> batches = new List<RD3Batch>();
-                //1弹出选数据//2显示
-                foreach (var item in dataGridBatch.SelectedItems)
-                {
-                    batches.Add(item as RD3Batch);
-                    break;
-                }
-            ((PadMainViewModel)this.DataContext)?.OutputDataCommand.Execute(batches[0]);
-            }
-        }
-
-        /// <summary>
-        /// 导入离线数据
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BatchOffLinedata_click(object sender, RoutedEventArgs e)
-        {
-            if (dataGridBatch.SelectedItems.Count > 0)
-            {
-                List<RD3Batch> batches = new List<RD3Batch>();
-                foreach (var item in dataGridBatch.SelectedItems)
-                {
-                    batches.Add(item as RD3Batch);
-                    break;
-                }
-            ((PadMainViewModel)this.DataContext)?.OffLineDataCommand.Execute(batches[0]);
-            }
-        }
-
-        /// <summary>
-        /// 比较
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CompareBatch_click(object sender, RoutedEventArgs e)
-        {
-            List<RD3Batch> batches = new List<RD3Batch>();
-            //1弹出选数据//2显示
-            foreach (var item in dataGridBatch.SelectedItems)
-            {
-                batches.Add(item as RD3Batch);
-            }
-            ((PadMainViewModel)this.DataContext)?.CompareBatchCommand.Execute(batches);
-        }
-
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            System.Windows.Controls.TabControl tabControl = sender as System.Windows.Controls.TabControl;
+            if (e.AddedItems.Count < 1) return;
 
+            if (e.AddedItems[0] is System.Windows.Controls.TabItem selectedItem)
+            {
+                if (selectedItem.Name == nameof(tabBatch))
+                {
+                    (batchView.DataContext as NewBatchViewModel).ReloadDataCommand.Execute();
+                }
+
+                if (selectedItem.Tag != null)
+                {
+                    var lastItem = e.RemovedItems[0] as System.Windows.Controls.TabItem;
+                    lastItem.IsSelected = true;
+                }
+            }
+        }
+
+        private void WindowMinimizeEvent(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void WindowCloseEvent(object sender, MouseButtonEventArgs e)
+        {
+            if (AppSession.CurrentUser.Type != Shared.UserType.Admin)
+            {
+                HandyControl.Controls.Growl.WarningGlobal("非管理员不可关闭软件！");
+            }
+            else
+            {
+                if (HandyControl.Controls.MessageBox.Show("确定退出本系统？", "温馨提示", MessageBoxButton.YesNoCancel, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    Application.Current.Shutdown();
+                    Environment.Exit(0);
+                    return;
+                }
+                this.WindowState = WindowState.Maximized;
+            }
         }
     }
 }

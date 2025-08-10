@@ -71,15 +71,15 @@ namespace RD3.ViewModels
                 PumpInfo.IsControling = false;
                 return;
             }
+            if (PumpInfo.FlowRate_SP <= 0)
+            {
+                HandyControl.Controls.MessageBox.Warning("流速必须大于0", "温馨提示");
+                return;
+            }
 
             PumpInfo.FlowRate_SP = Math.Clamp(PumpInfo.FlowRate_SP, 0, Const.MaxPumpFlowRate);
             if (PumpInfo.Pump != PeristalticPump.FeedPump && PumpInfo.Pump != PeristalticPump.Feed2Pump)
             {
-                if (PumpInfo.FlowRate_SP <= 0)
-                {
-                    HandyControl.Controls.MessageBox.Warning("流速必须大于0", "温馨提示");
-                    return;
-                }
                 if (PumpInfo.RunningTime_SP <= 0 && !PumpInfo.IsConstSpeed)
                 {
                     HandyControl.Controls.MessageBox.Warning("运行时间必须大于0", "温馨提示");
@@ -88,6 +88,20 @@ namespace RD3.ViewModels
                 PumpInfo.IsControling = true;
                 return;
             }
+            PumpInfo.IsControling = true;
+        });
+
+        public DelegateCommand<DeviceParameter> AFSettingCommand => new((DeviceParameter device) =>
+        {
+            DefoamingParam param = new DefoamingParam()
+            {
+                PumpNo = PumpInfo.PumpIndex,
+                SensorEnable = PumpInfo.AutoDefoaming,
+                Cycle = PumpInfo.Cycle,
+                TimeRatio = PumpInfo.DutyCycle,
+                FlowSpeed = PumpInfo.FlowRate_SP
+            };
+            InstrumentSolution.GetInstance().CommandWrapper.SetAutoDefoamingSetting(PumpInfo.DeviceID, param);
         });
 
         public DelegateCommand FeedStrategyCommand => new(() =>

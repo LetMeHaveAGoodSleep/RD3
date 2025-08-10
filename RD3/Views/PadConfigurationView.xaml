@@ -48,6 +48,14 @@
                 <x:Type TypeName="share:GasType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum2"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:WeightIndex" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
@@ -111,6 +119,27 @@
                                 IsChecked="{Binding PumpInfo1.IsEnable}"
                                 Style="{StaticResource MaterialDesignCheckBox}" />
                         </DockPanel>
+                        <DockPanel LastChildFill="False">
+                            <CheckBox
+                                Content="称重"
+                                DockPanel.Dock="Bottom"
+                                IsChecked="{Binding PumpInfo1.IsWeigh}"
+                                Style="{StaticResource MaterialDesignCheckBox}" />
+                        </DockPanel>
+                        <ComboBox
+                            Width="120"
+                            materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                            materialDesign:HintAssist.Hint="称选择"
+                            ItemsSource="{Binding Source={StaticResource DataFromEnum2}}"
+                            SelectedItem="{Binding PumpInfo1.WeighIndex}"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                            Visibility="{Binding PumpInfo1.IsWeigh, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </hc:UniformSpacingPanel>
                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                         <TextBox
@@ -149,6 +178,27 @@
                                 IsChecked="{Binding PumpInfo2.IsEnable}"
                                 Style="{StaticResource MaterialDesignCheckBox}" />
                         </DockPanel>
+                        <DockPanel LastChildFill="False">
+                            <CheckBox
+                                Content="称重"
+                                DockPanel.Dock="Bottom"
+                                IsChecked="{Binding PumpInfo2.IsWeigh}"
+                                Style="{StaticResource MaterialDesignCheckBox}" />
+                        </DockPanel>
+                        <ComboBox
+                            Width="120"
+                            materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                            materialDesign:HintAssist.Hint="称选择"
+                            ItemsSource="{Binding Source={StaticResource DataFromEnum2}}"
+                            SelectedItem="{Binding PumpInfo2.WeighIndex}"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                            Visibility="{Binding PumpInfo2.IsWeigh, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </hc:UniformSpacingPanel>
                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                         <TextBox
@@ -187,6 +237,27 @@
                                 IsChecked="{Binding PumpInfo3.IsEnable}"
                                 Style="{StaticResource MaterialDesignCheckBox}" />
                         </DockPanel>
+                        <DockPanel LastChildFill="False">
+                            <CheckBox
+                                Content="称重"
+                                DockPanel.Dock="Bottom"
+                                IsChecked="{Binding PumpInfo3.IsWeigh}"
+                                Style="{StaticResource MaterialDesignCheckBox}" />
+                        </DockPanel>
+                        <ComboBox
+                            Width="120"
+                            materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                            materialDesign:HintAssist.Hint="称选择"
+                            ItemsSource="{Binding Source={StaticResource DataFromEnum2}}"
+                            SelectedItem="{Binding PumpInfo3.WeighIndex}"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                            Visibility="{Binding PumpInfo3.IsWeigh, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </hc:UniformSpacingPanel>
                 </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
@@ -227,6 +298,27 @@
                                 IsChecked="{Binding PumpInfo4.IsEnable}"
                                 Style="{StaticResource MaterialDesignCheckBox}" />
                         </DockPanel>
+                        <DockPanel LastChildFill="False">
+                            <CheckBox
+                                Content="称重"
+                                DockPanel.Dock="Bottom"
+                                IsChecked="{Binding PumpInfo4.IsWeigh}"
+                                Style="{StaticResource MaterialDesignCheckBox}" />
+                        </DockPanel>
+                        <ComboBox
+                            Width="120"
+                            materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                            materialDesign:HintAssist.Hint="称选择"
+                            ItemsSource="{Binding Source={StaticResource DataFromEnum2}}"
+                            SelectedItem="{Binding PumpInfo4.WeighIndex}"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                            Visibility="{Binding PumpInfo4.IsWeigh, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </hc:UniformSpacingPanel>
                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                         <TextBox
@@ -265,6 +357,27 @@
                                 IsChecked="{Binding PumpInfo5.IsEnable}"
                                 Style="{StaticResource MaterialDesignCheckBox}" />
                         </DockPanel>
+                        <DockPanel LastChildFill="False">
+                            <CheckBox
+                                Content="称重"
+                                DockPanel.Dock="Bottom"
+                                IsChecked="{Binding PumpInfo5.IsWeigh}"
+                                Style="{StaticResource MaterialDesignCheckBox}" />
+                        </DockPanel>
+                        <ComboBox
+                            Width="120"
+                            materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                            materialDesign:HintAssist.Hint="称选择"
+                            ItemsSource="{Binding Source={StaticResource DataFromEnum2}}"
+                            SelectedItem="{Binding PumpInfo5.WeighIndex}"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                            Visibility="{Binding PumpInfo5.IsWeigh, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </hc:UniformSpacingPanel>
                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                         <TextBox
@@ -303,6 +416,27 @@
                                 IsChecked="{Binding PumpInfo6.IsEnable}"
                                 Style="{StaticResource MaterialDesignCheckBox}" />
                         </DockPanel>
+                        <DockPanel LastChildFill="False">
+                            <CheckBox
+                                Content="称重"
+                                DockPanel.Dock="Bottom"
+                                IsChecked="{Binding PumpInfo6.IsWeigh}"
+                                Style="{StaticResource MaterialDesignCheckBox}" />
+                        </DockPanel>
+                        <ComboBox
+                            Width="120"
+                            materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                            materialDesign:HintAssist.Hint="称选择"
+                            ItemsSource="{Binding Source={StaticResource DataFromEnum2}}"
+                            SelectedItem="{Binding PumpInfo6.WeighIndex}"
+                            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                            Visibility="{Binding PumpInfo6.IsWeigh, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </hc:UniformSpacingPanel>
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>

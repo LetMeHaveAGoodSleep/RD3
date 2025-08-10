@@ -8,6 +8,27 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
+    // 定义逻辑类型（默认为逻辑与）
+    public enum LogicType 
+    {
+        [Description("与")]
+        AND,
+        [Description("或")]
+        OR 
+    }
+    public enum WeightIndex
+    {
+        [Description("未设置")]
+        Unset,
+        [Description("称1")]
+        Weight1 = 1,
+        [Description("称2")]
+        Weight2,
+        [Description("称3")]
+        Weight3,
+        [Description("称4")]
+        Weight4
+    }
 
     public enum MagneticBaseStatus
     {

@@ -53,8 +53,8 @@ namespace RD3.Shared
             set { SetProperty(ref _isWeigh, value); }
         }
 
-        private int _weighIndex = -1;
-        public int WeighIndex
+        private WeightIndex _weighIndex =  WeightIndex.Unset;
+        public WeightIndex WeighIndex
         {
             get => _weighIndex;
             set { SetProperty(ref _weighIndex, value); }

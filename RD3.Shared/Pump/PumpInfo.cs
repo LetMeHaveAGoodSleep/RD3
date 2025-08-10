@@ -206,6 +206,27 @@ namespace RD3.Shared
             }
         }
 
+        private bool _autoDefoaming = false;
+        public bool AutoDefoaming
+        {
+            get { return _autoDefoaming; }
+            set { SetProperty(ref _autoDefoaming, value); }
+        }
+
+        private int _cycle;
+        public int Cycle
+        {
+            get => _cycle;
+            set { SetProperty(ref _cycle, value); }
+        }
+
+        private float _dutyCycle;
+        public float DutyCycle
+        {
+            get => _dutyCycle;
+            set { SetProperty(ref _dutyCycle, value); }
+        }
+
         private FeedControlMode _feedMode = FeedControlMode.ConstantSpeed;
         public FeedControlMode FeedMode
         {

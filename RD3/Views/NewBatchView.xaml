@@ -16,6 +16,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:NewBatchViewModel}"
     d:DesignHeight="600"
     d:DesignWidth="1000"
+    prism:ViewModelLocator.AutoWireViewModel="True"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
@@ -41,10 +42,6 @@
             <Setter Property="Opacity" Value="1" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <UserControl.Resources>
-        <local:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
-        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
-    </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -52,59 +49,11 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <hc:UniformSpacingPanel
-            Grid.Row="0"
-            Orientation="Vertical"
-            Spacing="5">
-            <DockPanel LastChildFill="False">
-                <hc:SearchBar
-                    Name="TxtSearch"
-                    Width="240"
-                    Height="45"
-                    HorizontalAlignment="Left"
-                    hc:InfoElement.ShowClearButton="True"
-                    DockPanel.Dock="Left"
-                    IsRealTime="True"
-                    SearchStarted="TxtSearch_SearchStarted"
-                    Visibility="Collapsed" />
-                <hc:UniformSpacingPanel DockPanel.Dock="Right" Spacing="10">
-                    <Button
-                        Name="ButtonCompare"
-                        Height="35"
-                        HorizontalContentAlignment="Center"
-                        d:IsHidden="True"
-                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                        hc:IconElement.Geometry="{StaticResource GeometryCompare}"
-                        Content="{ex:Language Key='Compare'}"
-                        FontSize="{DynamicResource NormalFontSize}"
-                        Visibility="Collapsed" />
-                    <Button
-                        Height="35"
-                        HorizontalContentAlignment="Center"
-                        d:IsHidden="True"
-                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                        hc:IconElement.Geometry="{StaticResource GeometryExport}"
-                        Click="ButtonExport_Click"
-                        Content="{ex:Language Key='Export'}"
-                        FontSize="{DynamicResource NormalFontSize}"
-                        Visibility="Collapsed" />
-                    <Button
-                        Height="35"
-                        HorizontalContentAlignment="Center"
-                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                        hc:IconElement.Geometry="{StaticResource GeometryDelete}"
-                        Command="{Binding DeleteCommand}"
-                        CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
-                        FontSize="{DynamicResource NormalFontSize}"
-                        Foreground="Red"
-                        Visibility="Collapsed" />
-                    <Button
-                        Click="ButtonDelete_Click"
-                        Content="删除数据"
-                        Style="{StaticResource ButtonPrimary}" />
-                </hc:UniformSpacingPanel>
-            </DockPanel>
-        </hc:UniformSpacingPanel>
+        <Button
+            HorizontalAlignment="Right"
+            Click="ButtonDelete_Click"
+            Content="删除数据"
+            Style="{StaticResource ButtonPrimary}" />
         <DataGrid
             Name="dataGrid1"
             Grid.Row="2"
@@ -175,7 +124,7 @@
                     Header="备注"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTemplateColumn
-                    Width="50"
+                    Width="100"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="操作"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
@@ -204,7 +153,7 @@
                                     Background="Transparent"
                                     BorderThickness="0"
                                     Click="ButtonView_Click"
-                                    ToolTip="{ex:Language Key='View'}" />
+                                    ToolTip="{ex:Language Key='查看'}" />
                                 <Button
                                     HorizontalAlignment="Left"
                                     hc:IconElement.Geometry="{StaticResource GeometryDelete}"
@@ -212,8 +161,7 @@
                                     BorderThickness="0"
                                     Click="ButtonDelete_Click"
                                     Foreground="Red"
-                                    ToolTip="{ex:Language Key='Delete'}"
-                                    Visibility="Collapsed" />
+                                    ToolTip="{ex:Language Key='删除'}" />
                             </hc:UniformSpacingPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

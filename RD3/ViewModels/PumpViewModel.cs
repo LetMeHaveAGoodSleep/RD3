@@ -83,6 +83,7 @@ namespace RD3.ViewModels
                         }
                         int index = ClockSupervisor.realDatasDic[deviceID].Count - 1;
                         var realTimeParam = ClockSupervisor.realDatasDic[deviceID][index];
+                        PumpInfo.FlowRate = PumpInfo.FlowCapacity = PumpInfo.Weight = 0;
 
                         var type = realTimeParam.GetType();
                         var properties = type.GetProperties();
@@ -97,6 +98,38 @@ namespace RD3.ViewModels
                             {
                                 object value = item.GetValue(realTimeParam);
                                 PumpInfo.FlowCapacity = Convert.ToSingle(value);
+                            }
+                            else if (item.Name == $"JarWeight")
+                            {
+                                if (PumpInfo.IsWeigh && PumpInfo.WeighIndex == WeightIndex.Weight1)
+                                {
+                                    object value = item.GetValue(realTimeParam);
+                                    PumpInfo.Weight = Convert.ToSingle(value);
+                                }
+                            }
+                            else if (item.Name == $"ReserveWeight")
+                            {
+                                if (PumpInfo.IsWeigh && PumpInfo.WeighIndex == WeightIndex.Weight2)
+                                {
+                                    object value = item.GetValue(realTimeParam);
+                                    PumpInfo.Weight = Convert.ToSingle(value);
+                                }
+                            }
+                            else if (item.Name == $"Bottle1Weight")
+                            {
+                                if (PumpInfo.IsWeigh && PumpInfo.WeighIndex == WeightIndex.Weight3)
+                                {
+                                    object value = item.GetValue(realTimeParam);
+                                    PumpInfo.Weight = Convert.ToSingle(value);
+                                }
+                            }
+                            else if (item.Name == $"Bottle2Weight")
+                            {
+                                if (PumpInfo.IsWeigh && PumpInfo.WeighIndex == WeightIndex.Weight4)
+                                {
+                                    object value = item.GetValue(realTimeParam);
+                                    PumpInfo.Weight = Convert.ToSingle(value);
+                                }
                             }
                         }
                     }
@@ -152,8 +185,6 @@ namespace RD3.ViewModels
                 }
             };
             backgroundWorker.RunWorkerAsync();
-
-
         }
     }
 }

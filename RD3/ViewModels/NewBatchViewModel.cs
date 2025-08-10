@@ -23,10 +23,8 @@ using XZ.SQLite;
 
 namespace RD3.ViewModels
 {
-    public class NewBatchViewModel : BaseViewModel,IDialogAware
+    public class NewBatchViewModel : BaseViewModel, IDialogAware
     {
-        private readonly IDialogService dialogService;
-
         private bool _enable;
         public bool Enable
         {
@@ -148,20 +146,12 @@ namespace RD3.ViewModels
             }
         });
 
-        private void CheckContent()
-        {
-            //if (string.IsNullOrWhiteSpace(Batch.EndTime.ToString()))
-            //{
-            //    MessageBox.Show(Language.GetValue("请选择结束时间").ToString());
-            //    return;
-            //}
-        }
+        public DelegateCommand ReloadDataCommand => new(() => InitBatchInfos());
 
         string hisDataDir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData";
         public NewBatchViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
-            dialogService = dialogHostService;
-            InitBatchInfos();
+            
         }
 
         /// <summary>
@@ -174,16 +164,6 @@ namespace RD3.ViewModels
             {
                 List<RD3Batch> batches = RD3SQLHelper.QueryBatch();
                 RD3Batch = new ObservableCollection<RD3Batch>(batches);
-                //DirectoryInfo batchDir = Directory.CreateDirectory(hisDataDir);
-                //FileInfo[] batchInfos = batchDir.GetFiles("*.txt", SearchOption.AllDirectories);
-                ////List<RD3Batch> list = new List<RD3Batch>();
-                //foreach(var item in batchInfos)
-                //{
-                //    string result = File.ReadAllText(item.FullName);
-                //    RD3Batch batch = CustomApp.JsonHelper.StringToObject<RD3Batch>(result);
-                //    _rD3Batch.Add(batch);
-                //}
-                //RD3Batch = new ObservableCollection<RD3Batch>(_rD3Batch);
             }
             catch(Exception ex)
             {
@@ -203,7 +183,7 @@ namespace RD3.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
-            
+            InitBatchInfos();
         }
     }
 }

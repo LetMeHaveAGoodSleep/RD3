@@ -15,6 +15,7 @@
     Width="250"
     Height="450"
     d:DataContext="{d:DesignInstance Type=viewmodels:PumpSettingViewModel}"
+    d:DesignHeight="550"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="{StaticResource BackGroundBrush}"
     FontSize="{StaticResource SubHeadFontSize}"
@@ -119,7 +120,14 @@
                     materialDesign:TextFieldAssist.HasClearButton="True"
                     IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding PumpInfo.FlowRate_SP, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}" />
+                    Text="{Binding PumpInfo.FlowRate_SP, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}">
+                    <TextBox.Visibility>
+                        <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
+                            <Binding Path="IsCondition1Met" />
+                            <Binding Path="IsCondition2Met" />
+                        </MultiBinding>
+                    </TextBox.Visibility>
+                </TextBox>
                 <TextBox
                     Width="110"
                     materialDesign:HintAssist.HelperText="{Binding PumpInfo.FormattedTime, StringFormat='已运行{0} 单位:秒'}"
@@ -135,6 +143,31 @@
                     </TextBox.IsEnabled>
                 </TextBox>
             </hc:UniformSpacingPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBox
+                    Width="110"
+                    materialDesign:HintAssist.HelperText="单位:mL"
+                    materialDesign:HintAssist.Hint="设定体积"
+                    materialDesign:TextFieldAssist.HasClearButton="True"
+                    IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding PumpInfo.FlowCapacity_SP, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}">
+                    <TextBox.Visibility>
+                        <MultiBinding Converter="{StaticResource AndBool2VisConverter}">
+                            <Binding
+                                Converter="{StaticResource EnumToBoolConverter}"
+                                ConverterParameter="FeedPump,Feed2Pump"
+                                Path="PumpInfo.Pump" />
+                            <Binding
+                                Converter="{StaticResource EnumToBoolConverter}"
+                                ConverterParameter="Quantitative"
+                                Path="PumpInfo.FeedMode" />
+                        </MultiBinding>
+                    </TextBox.Visibility>
+                </TextBox>
+
+            </StackPanel>
+
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="20">
                 <Grid Visibility="{Binding PumpInfo.Pump, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='FeedPump,Feed2Pump'}">
                     <Grid.ColumnDefinitions>
@@ -167,6 +200,41 @@
                             Foreground="Gray" />
                     </DockPanel>
                 </Grid>
+                <hc:UniformSpacingPanel
+                    IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
+                    Orientation="Vertical"
+                    Spacing="10"
+                    Visibility="{Binding PumpInfo.Pump, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='AFPump'}">
+                    <CheckBox
+                        Content="自动消泡"
+                        IsChecked="{Binding PumpInfo.AutoDefoaming}"
+                        Style="{StaticResource MaterialDesignCheckBox}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Checked">
+                                <i:InvokeCommandAction Command="{Binding AFSettingCommand}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Unchecked">
+                                <i:InvokeCommandAction Command="{Binding AFSettingCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </CheckBox>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            materialDesign:HintAssist.Hint="周期(s)"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding PumpInfo.Cycle, StringFormat={}{0:F0}}" />
+                        <TextBox
+                            Grid.Column="2"
+                            materialDesign:HintAssist.Hint="占空比(%)"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding PumpInfo.DutyCycle, StringFormat={}{0:F2}}" />
+                    </Grid>
+                </hc:UniformSpacingPanel>
                 <ToggleButton
                     Width="230"
                     Height="35"
