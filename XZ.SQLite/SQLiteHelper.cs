@@ -1059,6 +1059,18 @@ namespace XZ.SQLite
 
             return row > 0;
         }
+
+        /// <summary>
+        /// 结束批次实验
+        /// </summary>
+        /// <returns></returns>
+        public static bool EndBatch(int batchID, DateTime time)
+        {
+            string sql = $"UPDATE {BatchTable} set endDateTime = '{time}' where ID = {batchID}";
+            int row = SQLiteHelper.ExecuteNonQuery(sql);
+            return row > 0;
+        }
+
         /// <summary>
         /// 删除
         /// </summary>
@@ -1104,6 +1116,22 @@ namespace XZ.SQLite
                 }
             }
             return batch;
+        }
+        #endregion
+
+        #region 分页查询（带总数）
+        public static DataTable GetPaginationCount(string tableName, string condition = "")
+        {
+            string sql = $"select count(*) from {tableName} {condition};";
+            DataTable dataTable = SQLiteHelper.GetDatasToDataTable(sql);
+            return dataTable;
+        }
+
+        public static DataTable GetPaginationData(string tableName, string condition,int startIndex, int count)
+        {
+            string sql = $"WITH paginated_data AS (SELECT *,ROW_NUMBER() OVER(ORDER BY id) AS row_num FROM {tableName} {condition}) SELECT * FROM paginated_data WHERE row_num BETWEEN {startIndex} AND {startIndex + count};";
+            DataTable dataTable = SQLiteHelper.GetDatasToDataTable(sql);
+            return dataTable;
         }
         #endregion
     }

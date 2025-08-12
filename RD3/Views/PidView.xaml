@@ -16,6 +16,7 @@
     Width="1350"
     Height="700"
     d:DataContext="{d:DesignInstance Type=viewmodels:PIDViewModel}"
+    prism:ViewModelLocator.AutoWireViewModel="True"
     Background="{StaticResource BackGroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"

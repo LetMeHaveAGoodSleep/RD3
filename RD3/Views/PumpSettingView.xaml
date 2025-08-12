@@ -225,7 +225,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <TextBox
-                            materialDesign:HintAssist.Hint="周期(s)"
+                            materialDesign:HintAssist.Hint="消泡周期(s)"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                             Text="{Binding PumpInfo.Cycle, StringFormat={}{0:F0}}" />
                         <TextBox

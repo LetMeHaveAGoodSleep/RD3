@@ -13,6 +13,7 @@
     xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     Width="1920"
     Height="1200"
     d:DataContext="{d:DesignInstance Type=viewmodels:PadMainViewModel}"
@@ -38,10 +39,14 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border Background="{DynamicResource PrimaryBrush}" DockPanel.Dock="Top">
+        <Border
+            Height="50"
+            Background="{DynamicResource PrimaryBrush}"
+            DockPanel.Dock="Top">
             <DockPanel>
                 <Image
                     Width="117"
+                    Height="50"
                     Margin="5,0,0,0"
                     Source="/Images/NewReactor/logo.png" />
                 <Grid>
@@ -54,29 +59,42 @@
                         HorizontalAlignment="Center"
                         Orientation="Horizontal"
                         Spacing="20">
-                        <DockPanel LastChildFill="False">
-                            <TextBox
-                                materialDesign:HintAssist.FloatingScale="0.8"
-                                materialDesign:HintAssist.Hint="批次运行时间"
-                                materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
-                                FontSize="{StaticResource MediumFontSize}"
+                        <Button
+                            Height="36"
+                            hc:IconElement.Geometry="{StaticResource GeometryStart}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding StartExperimentCommand}"
+                            Content="开始实验"
+                            FontSize="{StaticResource HeadFontSize}"
+                            Foreground="White"
+                            Visibility="{Binding CurrentDeviceParameter.InExperimenting, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        <Button
+                            Height="36"
+                            hc:IconElement.Geometry="{StaticResource GeometryStop}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding EndExperimentCommand}"
+                            Content="结束实验"
+                            FontSize="{StaticResource HeadFontSize}"
+                            Foreground="White"
+                            Visibility="{Binding CurrentDeviceParameter.InExperimenting, Converter={StaticResource Boolean2VisibilityConverter}}" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Width="320"
+                                VerticalAlignment="Center"
+                                FontSize="{StaticResource HeadFontSize}"
                                 Foreground="White"
-                                IsEnabled="False"
-                                IsReadOnly="False"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                Text="00天00时00分00秒" />
-                        </DockPanel>
-                        <DockPanel LastChildFill="False">
-                            <TextBox
-                                materialDesign:HintAssist.FloatingScale="0.8"
-                                materialDesign:HintAssist.Hint="批次号"
-                                materialDesign:TextFieldAssist.TextBoxViewMargin="1 0 1 0"
-                                FontSize="{StaticResource MediumFontSize}"
+                                Text="{Binding CurrentDeviceParameter.FormattedTime, StringFormat='批次运行时间：{0}'}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Width="250"
+                                VerticalAlignment="Center"
+                                FontSize="{StaticResource HeadFontSize}"
                                 Foreground="White"
-                                IsEnabled="False"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                Text="Test-B01" />
-                        </DockPanel>
+                                Text="{Binding CurrentDeviceParameter.BatchID, StringFormat='批次号：{0}'}" />
+                        </StackPanel>
                     </hc:UniformSpacingPanel>
                     <hc:UniformSpacingPanel
                         Grid.Column="1"
@@ -89,7 +107,7 @@
                                 Name="FormattedTime"
                                 VerticalAlignment="Center"
                                 FontFamily="{StaticResource IconFont}"
-                                FontSize="{StaticResource HeadFontSize}"
+                                FontSize="{StaticResource LargeFontSize}"
                                 Foreground="White"
                                 Text="2025-07-23 17:14:32" />
                         </DockPanel>
@@ -98,7 +116,7 @@
                             hc:IconElement.Geometry="{StaticResource GeometryUserCircle}"
                             hc:IconElement.Height="30"
                             hc:IconElement.Width="30"
-                            materialDesign:RippleAssist.Feedback="#DD000000"
+                            materialDesign:RippleAssist.Feedback="#000000"
                             Background="Transparent"
                             BorderThickness="0"
                             FontSize="{StaticResource HeadFontSize}"
@@ -441,6 +459,32 @@
                     </Canvas>
                 </Grid>
             </TabItem>
+            <TabItem Name="tabCurve">
+                <TabItem.Header>
+                    <StackPanel Width="auto" Height="auto">
+                        <materialDesign:PackIcon
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            Kind="ChartBellCurveCumulative" />
+                        <TextBlock HorizontalAlignment="Center" Text="图表" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Name="GridMain" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Name="rowGraph3"
+                            Height="auto"
+                            MaxHeight="60" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <WrapPanel Name="ChkGraphList3" Orientation="Horizontal" />
+                    </ScrollViewer>
+                    <wpf:WpfPlot Name="wpfPlot3" Grid.Row="2" />
+                </Grid>
+            </TabItem>
             <TabItem Name="tabBatch">
                 <TabItem.Header>
                     <StackPanel Width="auto" Height="auto">
@@ -497,17 +541,7 @@
                         <TextBlock HorizontalAlignment="Center" Text="报警" />
                     </StackPanel>
                 </TabItem.Header>
-                <StackPanel Margin="16">
-                    <TextBlock
-                        Margin="0,0,0,8"
-                        Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                        Text="Sounds" />
-                    <TextBlock>
-                        <Run Text="tab 4 content. Default look and behaviors." />
-                        <LineBreak />
-                        <LineBreak />
-                    </TextBlock>
-                </StackPanel>
+                <local:AlarmRecordView HorizontalAlignment="Left" VerticalAlignment="Top" />
             </TabItem>
             <TabItem>
                 <TabItem.Header>
@@ -522,29 +556,33 @@
                 </TabItem.Header>
                 <StackPanel Margin="16" />
             </TabItem>
-            <TabItem Tag="1">
+            <TabItem Tag="tabQuit">
                 <TabItem.Header>
-                    <StackPanel Width="auto" Height="auto">
+                    <StackPanel
+                        Width="auto"
+                        Height="auto"
+                        MouseLeftButtonDown="WindowCloseEvent">
                         <materialDesign:PackIcon
                             Width="40"
                             Height="40"
                             HorizontalAlignment="Center"
-                            Kind="CloseCircle"
-                            MouseLeftButtonDown="WindowCloseEvent" />
+                            Kind="CloseCircle" />
                         <TextBlock HorizontalAlignment="Center" Text="退出系统" />
                     </StackPanel>
                 </TabItem.Header>
                 <StackPanel Margin="16" />
             </TabItem>
-            <TabItem Tag="1">
+            <TabItem Tag="tabMinimize">
                 <TabItem.Header>
-                    <StackPanel Width="auto" Height="auto">
+                    <StackPanel
+                        Width="auto"
+                        Height="auto"
+                        MouseLeftButtonDown="WindowMinimizeEvent">
                         <materialDesign:PackIcon
                             Width="40"
                             Height="40"
                             HorizontalAlignment="Center"
-                            Kind="ArrowCollapseAll"
-                            MouseLeftButtonDown="WindowMinimizeEvent" />
+                            Kind="ArrowCollapseAll" />
                         <TextBlock HorizontalAlignment="Center" Text="最小化" />
                     </StackPanel>
                 </TabItem.Header>

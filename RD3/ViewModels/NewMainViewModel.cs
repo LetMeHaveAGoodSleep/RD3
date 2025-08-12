@@ -353,7 +353,7 @@ namespace RD3.ViewModels
                             {
                                 if (!AppSession.DicTankWeight.ContainsKey(device.Name))
                                 {
-                                    AppSession.DicTankWeight[device.Name] = Tuple.Create(realTimeParam.JarWeight, realTimeParam.AcidFlowCapacity, realTimeParam.BaseFlowCapacity, realTimeParam.FeedFlowCapacity, realTimeParam.AFFlowCapacity);
+                                    AppSession.DicTankWeight[device.Name] = Tuple.Create(realTimeParam.JarWeight, realTimeParam.Pump1FlowCapacity, realTimeParam.Pump2FlowCapacity, realTimeParam.Pump3FlowCapacity, realTimeParam.Pump4FlowCapacity, realTimeParam.Pump5FlowCapacity, realTimeParam.Pump6FlowCapacity);
                                 }
                             }
 

@@ -89,7 +89,6 @@ namespace RD3.ViewModels
 
         #endregion
 
-
         public DelegateCommand<string> ChangePumpCommand => new((string str) =>
         {
             try

@@ -17,11 +17,11 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
-    Width="auto"
-    Height="auto"
-    MinWidth="1000"
-    MinHeight="500"
+    Width="700"
+    Height="400"
     d:DataContext="{d:DesignInstance Type=vm:SettingViewModel}"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Background="White"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
     TextElement.FontWeight="Regular"
@@ -32,7 +32,7 @@
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
             <Setter Property="SizeToContent" Value="WidthAndHeight" />
-            <Setter Property="ResizeMode" Value="CanResize" />
+            <Setter Property="ResizeMode" Value="NoResize" />
             <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
             <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -47,292 +47,282 @@
             <Setter Property="Icon" Value="../Assets/logo.png" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="20" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <DockPanel HorizontalAlignment="Left" LastChildFill="False">
+    <hc:UniformSpacingPanel
+        Margin="10"
+        Orientation="Vertical"
+        Spacing="20">
+        <hc:UniformSpacingPanel
+            Orientation="Vertical"
+            Spacing="5"
+            Visibility="Collapsed">
+            <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Instruction manual'}" />
+            <TextBlock
+                FontSize="10"
+                FontStyle="Oblique"
+                Foreground="gray"
+                Text="{ex:Language Key='Browse the product manual online'}" />
+        </hc:UniformSpacingPanel>
+        <hc:UniformSpacingPanel
+            Orientation="Horizontal"
+            Spacing="10"
+            Visibility="Collapsed">
             <Border
-                Height="45"
-                Background="{DynamicResource BorderBrush}"
-                BorderThickness="0.5"
-                CornerRadius="8">
-                <hc:ButtonGroup
-                    Name="ButtonGroup"
-                    VerticalAlignment="Center"
-                    Style="{StaticResource ButtonGroupSolid}">
-                    <RadioButton
+                Width="250"
+                Height="150"
+                Padding="8"
+                Background="White"
+                BorderBrush="LightGray"
+                BorderThickness="1"
+                CornerRadius="8"
+                Effect="{StaticResource EffectShadow1}">
+                <Grid>
+                    <Image Source="/images/login.png" Stretch="UniformToFill" />
+                    <Button
                         Width="100"
-                        Height="35"
-                        Margin="5,0,0,0"
-                        hc:BorderElement.CornerRadius="8"
-                        Background="{DynamicResource BorderBrush}"
-                        Content="{ex:Language Key='General'}"
-                        FontSize="{DynamicResource MediumFontSize}"
-                        Foreground="{DynamicResource SecondaryTextBrush}"
-                        IsChecked="True"
-                        Tag="tabGeneral" />
-                    <RadioButton
-                        Width="100"
-                        Height="35"
-                        Margin="5,0,5,0"
-                        hc:BorderElement.CornerRadius="8"
-                        Background="{DynamicResource BorderBrush}"
-                        Content="{ex:Language Key='Other'}"
-                        FontSize="{DynamicResource SubHeadFontSize}"
-                        Foreground="{DynamicResource SecondaryTextBrush}" />
-                </hc:ButtonGroup>
+                        Height="100"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="PlayPauseButton_Click"
+                        Content="▶"
+                        FontSize="40"
+                        Foreground="White"
+                        Tag="\Instruction\video.mp4" />
+                </Grid>
             </Border>
-        </DockPanel>
-        <TabControl
-            Name="TabControl"
-            Grid.Row="2"
-            BorderThickness="0"
-            Loaded="TabControl_Loaded">
-            <TabItem Name="tabGeneral" Header="General">
-                <Border Style="{StaticResource BorderCard}">
-                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="20">
-                        <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
-                            <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='Instruction manual'}" />
-                            <TextBlock
-                                FontSize="10"
-                                FontStyle="Oblique"
-                                Foreground="gray"
-                                Text="{ex:Language Key='Browse the product manual online'}" />
-                        </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                            <Border
-                                Width="250"
-                                Height="150"
-                                Padding="8"
-                                Background="White"
-                                BorderBrush="LightGray"
-                                BorderThickness="1"
-                                CornerRadius="8"
-                                Effect="{StaticResource EffectShadow1}">
-                                <Grid>
-                                    <Image Source="/images/login.png" Stretch="UniformToFill" />
-                                    <Button
-                                        Width="100"
-                                        Height="100"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Click="PlayPauseButton_Click"
-                                        Content="▶"
-                                        FontSize="40"
-                                        Foreground="White"
-                                        Tag="\Instruction\video.mp4" />
-                                </Grid>
-                            </Border>
-                            <Border
-                                Width="250"
-                                Height="150"
-                                Padding="8"
-                                Background="White"
-                                BorderBrush="LightGray"
-                                BorderThickness="1"
-                                CornerRadius="8"
-                                Effect="{StaticResource EffectShadow1}">
-                                <Grid>
-                                    <Image Source="/images/login.png" Stretch="UniformToFill" />
-                                    <Button
-                                        Width="100"
-                                        Height="100"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Click="PlayPauseButton_Click"
-                                        Content="▶"
-                                        FontSize="40"
-                                        Foreground="White"
-                                        Tag="\Instruction\video.mp4" />
-                                </Grid>
-                            </Border>
-                            <Border
-                                Width="250"
-                                Height="150"
-                                Padding="8"
-                                Background="White"
-                                BorderBrush="LightGray"
-                                BorderThickness="1"
-                                CornerRadius="8"
-                                Effect="{StaticResource EffectShadow1}">
-                                <Grid>
-                                    <Image Source="/images/login.png" Stretch="UniformToFill" />
-                                    <Button
-                                        Width="100"
-                                        Height="100"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Click="PlayPauseButton_Click"
-                                        Content="▶"
-                                        FontSize="40"
-                                        Foreground="White"
-                                        Tag="\Instruction\video.mp4" />
-                                </Grid>
-                            </Border>
-                        </hc:UniformSpacingPanel>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="20" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="20" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="20" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="20" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="20" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="20" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="20" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="20" />
-                            </Grid.RowDefinitions>
-                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
-                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='仪器模式'}" />
-                                <TextBlock
-                                    FontSize="10"
-                                    FontStyle="Oblique"
-                                    Foreground="gray"
-                                    Text="{ex:Language Key='打开模拟模式.'}" />
-                            </hc:UniformSpacingPanel>
-                            <ToggleButton
-                                Grid.Column="1"
-                                Width="150"
-                                HorizontalAlignment="Center"
-                                BorderThickness="0"
-                                IsChecked="{Binding IsSimulation}"
-                                Style="{StaticResource ToggleButtonSwitch}" />
-                            <hc:UniformSpacingPanel
-                                Grid.Row="2"
-                                Orientation="Vertical"
-                                Spacing="5">
-                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='日志开关'}" />
-                                <TextBlock
-                                    Grid.Row="2"
-                                    FontSize="10"
-                                    FontStyle="Oblique"
-                                    Foreground="gray"
-                                    Text="{ex:Language Key='打开日志.'}" />
-                            </hc:UniformSpacingPanel>
-                            <ToggleButton
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                Width="150"
-                                HorizontalAlignment="Center"
-                                BorderThickness="0"
-                                IsChecked="{Binding LogOpen}"
-                                Style="{StaticResource ToggleButtonSwitch}" />
-                            <hc:UniformSpacingPanel
-                                Grid.Row="4"
-                                Orientation="Vertical"
-                                Spacing="5">
-                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='采样间隔'}" />
-                                <TextBlock
-                                    FontSize="10"
-                                    FontStyle="Oblique"
-                                    Foreground="gray"
-                                    Text="{ex:Language Key='读取实时信息  单位：秒.'}" />
-                            </hc:UniformSpacingPanel>
-                            <ComboBox
-                                Grid.Row="4"
-                                Grid.Column="1"
-                                Width="150"
-                                ItemsSource="{Binding IntervalSource}"
-                                SelectedItem="{Binding TimeInterval}"
-                                Style="{StaticResource ComboBoxExtend}" />
-                            <hc:UniformSpacingPanel
-                                Grid.Row="6"
-                                Orientation="Vertical"
-                                Spacing="5">
-                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='系统字体'}" />
-                                <TextBlock
-                                    FontSize="10"
-                                    FontStyle="Oblique"
-                                    Foreground="gray"
-                                    Text="{ex:Language Key='字体来源于本机.'}" />
-                            </hc:UniformSpacingPanel>
-                            <ComboBox
-                                Grid.Row="6"
-                                Grid.Column="1"
-                                Width="150"
-                                ItemsSource="{Binding FontSource}"
-                                SelectedItem="{Binding FontFamily}"
-                                Style="{StaticResource ComboBoxExtend}" />
-                            <hc:UniformSpacingPanel
-                                Grid.Row="8"
-                                Orientation="Vertical"
-                                Spacing="5">
-                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='滤波开关'}" />
-                                <TextBlock
-                                    FontSize="10"
-                                    FontStyle="Oblique"
-                                    Foreground="gray"
-                                    Text="{ex:Language Key='屏蔽外界干扰.'}" />
-                            </hc:UniformSpacingPanel>
-                            <ToggleButton
-                                Grid.Row="8"
-                                Grid.Column="1"
-                                Width="150"
-                                HorizontalAlignment="Center"
-                                BorderThickness="0"
-                                IsChecked="{Binding IsFilterWave}"
-                                Style="{StaticResource ToggleButtonSwitch}" />
-                            <hc:UniformSpacingPanel
-                                Grid.Row="10"
-                                Orientation="Vertical"
-                                Spacing="5">
-                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='蠕动泵默认速度'}" />
-                                <TextBlock
-                                    FontSize="10"
-                                    FontStyle="Oblique"
-                                    Foreground="gray"
-                                    Text="{ex:Language Key='默认泵速  单位：ml/h.'}" />
-                            </hc:UniformSpacingPanel>
-                            <TextBox
-                                Grid.Row="10"
-                                Grid.Column="1"
-                                Width="150"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding DefaultPumpFlowRate, UpdateSourceTrigger=LostFocus}" />
-                            <hc:UniformSpacingPanel
-                                Grid.Row="12"
-                                Orientation="Vertical"
-                                Spacing="5">
-                                <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='通讯协议'}" />
-                                <TextBlock
-                                    FontSize="10"
-                                    FontStyle="Oblique"
-                                    Foreground="gray"
-                                    Text="{ex:Language Key='区分不同反应器.'}" />
-                            </hc:UniformSpacingPanel>
-                            <ComboBox
-                                Grid.Row="12"
-                                Grid.Column="1"
-                                Width="150"
-                                SelectedIndex="{Binding CommunicationProtocol}"
-                                Style="{StaticResource ComboBoxExtend}">
-                                <ComboBoxItem Content="通用协议1" />
-                                <ComboBoxItem Content="自定义协议1" />
-                            </ComboBox>
-                        </Grid>
-                    </hc:UniformSpacingPanel>
-                </Border>
-            </TabItem>
-        </TabControl>
-    </Grid>
+            <Border
+                Width="250"
+                Height="150"
+                Padding="8"
+                Background="White"
+                BorderBrush="LightGray"
+                BorderThickness="1"
+                CornerRadius="8"
+                Effect="{StaticResource EffectShadow1}">
+                <Grid>
+                    <Image Source="/images/login.png" Stretch="UniformToFill" />
+                    <Button
+                        Width="100"
+                        Height="100"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="PlayPauseButton_Click"
+                        Content="▶"
+                        FontSize="40"
+                        Foreground="White"
+                        Tag="\Instruction\video.mp4" />
+                </Grid>
+            </Border>
+            <Border
+                Width="250"
+                Height="150"
+                Padding="8"
+                Background="White"
+                BorderBrush="LightGray"
+                BorderThickness="1"
+                CornerRadius="8"
+                Effect="{StaticResource EffectShadow1}">
+                <Grid>
+                    <Image Source="/images/login.png" Stretch="UniformToFill" />
+                    <Button
+                        Width="100"
+                        Height="100"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="PlayPauseButton_Click"
+                        Content="▶"
+                        FontSize="40"
+                        Foreground="White"
+                        Tag="\Instruction\video.mp4" />
+                </Grid>
+            </Border>
+        </hc:UniformSpacingPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+                <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
+                    <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='仪器模式'}" />
+                    <TextBlock
+                        FontSize="10"
+                        FontStyle="Oblique"
+                        Foreground="gray"
+                        Text="{ex:Language Key='打开模拟模式.'}" />
+                </hc:UniformSpacingPanel>
+                <ToggleButton
+                    Grid.Column="1"
+                    Width="150"
+                    HorizontalAlignment="Center"
+                    BorderThickness="0"
+                    IsChecked="{Binding IsSimulation}"
+                    Style="{StaticResource ToggleButtonSwitch}" />
+                <hc:UniformSpacingPanel
+                    Grid.Row="2"
+                    Orientation="Vertical"
+                    Spacing="5">
+                    <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='日志开关'}" />
+                    <TextBlock
+                        Grid.Row="2"
+                        FontSize="10"
+                        FontStyle="Oblique"
+                        Foreground="gray"
+                        Text="{ex:Language Key='打开日志.'}" />
+                </hc:UniformSpacingPanel>
+                <ToggleButton
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Width="150"
+                    HorizontalAlignment="Center"
+                    BorderThickness="0"
+                    IsChecked="{Binding LogOpen}"
+                    Style="{StaticResource ToggleButtonSwitch}" />
+                <hc:UniformSpacingPanel
+                    Grid.Row="4"
+                    Orientation="Vertical"
+                    Spacing="5">
+                    <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='采样间隔'}" />
+                    <TextBlock
+                        FontSize="10"
+                        FontStyle="Oblique"
+                        Foreground="gray"
+                        Text="{ex:Language Key='读取实时信息  单位：秒.'}" />
+                </hc:UniformSpacingPanel>
+                <ComboBox
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Width="150"
+                    ItemsSource="{Binding IntervalSource}"
+                    SelectedItem="{Binding TimeInterval}"
+                    Style="{StaticResource ComboBoxExtend}" />
+                <hc:UniformSpacingPanel
+                    Grid.Row="6"
+                    Orientation="Vertical"
+                    Spacing="5">
+                    <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='系统字体'}" />
+                    <TextBlock
+                        FontSize="10"
+                        FontStyle="Oblique"
+                        Foreground="gray"
+                        Text="{ex:Language Key='字体来源于本机.'}" />
+                </hc:UniformSpacingPanel>
+                <ComboBox
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Width="150"
+                    ItemsSource="{Binding FontSource}"
+                    SelectedItem="{Binding FontFamily}"
+                    Style="{StaticResource ComboBoxExtend}" />
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="20" />
+                </Grid.RowDefinitions>
+                <hc:UniformSpacingPanel
+                    Grid.Row="6"
+                    Orientation="Vertical"
+                    Spacing="5">
+                    <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='滤波开关'}" />
+                    <TextBlock
+                        FontSize="10"
+                        FontStyle="Oblique"
+                        Foreground="gray"
+                        Text="{ex:Language Key='屏蔽外界干扰.'}" />
+                </hc:UniformSpacingPanel>
+                <ToggleButton
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Width="150"
+                    HorizontalAlignment="Center"
+                    BorderThickness="0"
+                    IsChecked="{Binding IsFilterWave}"
+                    Style="{StaticResource ToggleButtonSwitch}" />
+                <hc:UniformSpacingPanel
+                    Grid.Row="0"
+                    Orientation="Vertical"
+                    Spacing="5">
+                    <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='通讯协议'}" />
+                    <TextBlock
+                        FontSize="10"
+                        FontStyle="Oblique"
+                        Foreground="gray"
+                        Text="{ex:Language Key='区分不同反应器.'}" />
+                </hc:UniformSpacingPanel>
+                <ComboBox
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Width="150"
+                    SelectedIndex="{Binding CommunicationProtocol}"
+                    Style="{StaticResource ComboBoxExtend}">
+                    <ComboBoxItem Content="通用协议1" />
+                    <ComboBoxItem Content="自定义协议1" />
+                </ComboBox>
+                <hc:UniformSpacingPanel
+                    Grid.Row="2"
+                    Orientation="Vertical"
+                    Spacing="5">
+                    <TextBlock FontSize="{DynamicResource SubHeadFontSize}" Text="{ex:Language Key='蠕动泵默认速度'}" />
+                    <TextBlock
+                        FontSize="10"
+                        FontStyle="Oblique"
+                        Foreground="gray"
+                        Text="{ex:Language Key='默认泵速  单位：ml/h.'}" />
+                </hc:UniformSpacingPanel>
+                <TextBox
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Width="150"
+                    Style="{StaticResource TextBoxExtend}"
+                    Text="{Binding DefaultPumpFlowRate, UpdateSourceTrigger=LostFocus}" />
+
+            </Grid>
+        </Grid>
+    </hc:UniformSpacingPanel>
 </UserControl>

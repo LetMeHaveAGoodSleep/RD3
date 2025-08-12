@@ -29,6 +29,66 @@ namespace RD3.Shared
             set { SetProperty(ref _serialNumber, value); }
         }
 
+        private bool _inExperimenting = false;
+        /// <summary>
+        /// 表示该反应器是否在批次实验中
+        /// </summary>
+        public bool InExperimenting
+        {
+            get { return _inExperimenting; }
+            set { SetProperty(ref _inExperimenting, value); }
+        }
+
+        private int _batchID = -1;
+        /// <summary>
+        /// 批次号
+        /// </summary>
+        public int BatchID
+        {
+            get { return _batchID; }
+            set 
+            { 
+                SetProperty(ref _batchID, value);
+                if (value <= 0)
+                {
+                    ExperimentTime = 0;
+                }
+            }
+        }
+
+        private int _experimentTime;
+        /// <summary>
+        ///实验时间实际值
+        /// </summary>
+        public int ExperimentTime
+        {
+            get => _experimentTime;
+            set
+            {
+                SetProperty(ref _experimentTime, value);
+                if (value <= 0)
+                {
+                    FormattedTime = "00天00时00分00秒";
+                }
+                else
+                {
+                    TimeSpan ts = TimeSpan.FromSeconds(value);
+                    FormattedTime = $"{ts.Days:00}天{ts.Hours:00}时{ts.Minutes:00}分{ts.Seconds:00}秒";
+                }
+            }
+        }
+
+        private string _formattedTime = "00天00时00分00秒";
+        /// <summary>
+        /// 运行时间实际值
+        /// </summary>
+        [JsonIgnore]
+        public string FormattedTime
+        {
+            get => _formattedTime;
+            set { SetProperty(ref _formattedTime, value); }
+        }
+
         private ReactorStatus _reactorStatus = ReactorStatus.DisConnected;
         [JsonIgnore]
         public ReactorStatus ReactorStatus

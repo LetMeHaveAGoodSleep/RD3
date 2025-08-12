@@ -176,6 +176,17 @@
                         IsReadOnly="True"
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding CurrentDeviceParameter.AgitTimeConstant, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                    <DockPanel LastChildFill="False">
+                        <Button
+                            Height="30"
+                            hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            Command="{Binding PIDSettingCommand}"
+                            Content="PID设置"
+                            DockPanel.Dock="Bottom"
+                            Foreground="Gray" />
+                    </DockPanel>
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>

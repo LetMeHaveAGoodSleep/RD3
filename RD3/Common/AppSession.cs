@@ -117,7 +117,7 @@ namespace RD3.Common
         /// <summary>
         /// 存储软件打开后的罐子重量以及泵的累积量
         /// </summary>
-        public static Dictionary<string, Tuple<float, float, float, float, float>> DicTankWeight = new Dictionary<string, Tuple<float, float, float, float, float>>();
+        public static Dictionary<string, Tuple<float, float, float, float, float,float, float>> DicTankWeight = new Dictionary<string, Tuple<float, float, float, float, float, float, float>>();
 
         public static TimeSpan RunningTimeSpan { get; set; }= TimeSpan.Zero;
 

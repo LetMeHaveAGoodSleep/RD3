@@ -18,9 +18,9 @@
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
     Width="1440"
-    Height="700"
+    Height="900"
     d:DataContext="{d:DesignInstance Type=vm:PadConfigurationViewModel}"
-    d:DesignHeight="600"
+    d:DesignHeight="900"
     d:DesignWidth="1500"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="Transparent"
@@ -600,6 +600,9 @@
                     </hc:UniformSpacingPanel>
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
+        </GroupBox>
+        <GroupBox Header="MFC配置" Style="{StaticResource MaterialDesignCardGroupBox}">
+            <local:SettingView HorizontalAlignment="Left" />
         </GroupBox>
     </hc:UniformSpacingPanel>
 </UserControl>

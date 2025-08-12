@@ -93,6 +93,21 @@ namespace RD3.ViewModels
 
         public DelegateCommand<DeviceParameter> AFSettingCommand => new((DeviceParameter device) =>
         {
+            if (PumpInfo.FlowRate_SP <= 0)
+            {
+                HandyControl.Controls.MessageBox.Warning("流速必须大于0", "温馨提示");
+                return;
+            }
+            if (PumpInfo.Cycle <= 0)
+            {
+                HandyControl.Controls.MessageBox.Warning("消泡周期必须大于0", "温馨提示");
+                return;
+            }
+            if (PumpInfo.DutyCycle <= 0)
+            {
+                HandyControl.Controls.MessageBox.Warning("占空比必须大于0", "温馨提示");
+                return;
+            }
             DefoamingParam param = new DefoamingParam()
             {
                 PumpNo = PumpInfo.PumpIndex,

@@ -6,6 +6,7 @@ using Prism.Ioc;
 using Prism.Services.Dialogs;
 using RD3.Common;
 using RD3.Shared;
+using RD3.Views;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -166,6 +167,17 @@ namespace RD3.ViewModels
                     MidRanging.FactorContent = "执行顺序：" + string.Join("-", stringList);
                     break;
             }
+        });
+
+        public DelegateCommand PIDSettingCommand => new(() => 
+        {
+            DialogHostService.ShowOnce(nameof(PIDView), callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+            });
         });
 
         public DOSettingViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)

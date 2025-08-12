@@ -37,6 +37,10 @@ namespace RD3.ViewModels
         public void OnDialogOpened(IDialogParameters parameters)
         {
             AdaptivepHParameter = parameters.GetValue<AdaptivepHParameter>(nameof(AdaptivepHParameter));
+            if (AdaptivepHParameter == null && InstrumentSolution.GetInstance().CommunicationProtocol == 1)
+            {
+                AdaptivepHParameter = AnalysisSolution.GetInstance().ReactorCol[0].AdaptivepHParameter;
+            }
         }
 
         public AdaptpHViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
