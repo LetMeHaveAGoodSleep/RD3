@@ -530,7 +530,7 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top" />
             </TabItem>
-            <TabItem>
+            <TabItem Name="tabAlarm">
                 <TabItem.Header>
                     <StackPanel Width="auto" Height="auto">
                         <materialDesign:PackIcon
@@ -541,9 +541,12 @@
                         <TextBlock HorizontalAlignment="Center" Text="报警" />
                     </StackPanel>
                 </TabItem.Header>
-                <local:AlarmRecordView HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <local:AlarmRecordView
+                    x:Name="alarmRecordView"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top" />
             </TabItem>
-            <TabItem>
+            <TabItem Name="tabAudit">
                 <TabItem.Header>
                     <StackPanel Width="auto" Height="auto">
                         <materialDesign:PackIcon
@@ -554,7 +557,10 @@
                         <TextBlock HorizontalAlignment="Center" Text="审计" />
                     </StackPanel>
                 </TabItem.Header>
-                <StackPanel Margin="16" />
+                <local:PadAuditView
+                    x:Name="auditView"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top" />
             </TabItem>
             <TabItem Tag="tabQuit">
                 <TabItem.Header>

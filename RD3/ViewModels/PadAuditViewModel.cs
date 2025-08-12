@@ -25,15 +25,15 @@ using XZ.SQLite;
 
 namespace RD3.ViewModels
 {
-    public class AlarmRecordViewModel : BaseViewModel
+    public class PadAuditViewModel : BaseViewModel
     {
         private DateTime _lastSearchTime;
         private readonly TimeSpan _debounceInterval = TimeSpan.FromMilliseconds(300);
         private CancellationTokenSource _cancellationTokenSource;
         private string _condition = string.Empty;
 
-        private ObservableCollection<AlarmRecord> _alarmRecordCol = new ObservableCollection<AlarmRecord>();
-        public ObservableCollection<AlarmRecord> AlarmRecordCol { get { return _alarmRecordCol; } set { SetProperty(ref _alarmRecordCol, value); } }
+        private ObservableCollection<Operation> _operationCol = [];
+        public ObservableCollection<Operation> OperationCol { get { return _operationCol; } set { SetProperty(ref _operationCol, value); } }
 
         private int _pageCount;
         public int PageCount
@@ -64,15 +64,14 @@ namespace RD3.ViewModels
             }
             else
             {
-                _condition = $"where Code like '%{e.Info}%' or Source like '%{e.Info}%' or Module like '%{e.Info}%' or Grade like '%{e.Info}%' or Remark like '%{e.Info}%'" +
-                $"or AlarmTime like '%{e.Info}%' or RemoveTime like '%{e.Info}%'";
+                _condition = $"where BatchID like '%{e.Info}%' or DateTime like '%{e.Info}%' or Remark like '%{e.Info}%' ";
             }
-           await QueryAlarmRecordAsync();
+           await QueryAuditRecordAsync();
         });
 
-        public DelegateCommand ReloadDataCommand => new(async() => 
+        public DelegateCommand ReloadDataCommand => new(async () =>
         {
-           await QueryAlarmRecordAsync();
+            await QueryAuditRecordAsync();
         });
 
         public DelegateCommand CancelLoadCommand => new(() =>
@@ -80,11 +79,11 @@ namespace RD3.ViewModels
             _cancellationTokenSource?.Cancel();
         });
 
-        public AlarmRecordViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
+        public PadAuditViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
         }
 
-        async Task QueryAlarmRecordAsync()
+        async Task QueryAuditRecordAsync()
         {
             // 取消之前的搜索请求（如果有）
              _cancellationTokenSource?.Cancel();
@@ -104,13 +103,13 @@ namespace RD3.ViewModels
             {
                 await Task.Run(() =>
                 {
-                    DataTable dataTable = RD3SQLHelper.GetPaginationCount(nameof(AlarmRecord),_condition);
+                    DataTable dataTable = RD3SQLHelper.GetPaginationCount("Audit", _condition);
                     int dataCount = Convert.ToInt32(dataTable.Rows[0][0]);
                     PageCount = dataCount / DataCountPerPage + (dataCount % DataCountPerPage != 0 ? 1 : 0);
                     int startIndex = (PageIndex - 1) * DataCountPerPage + 1;
-                    DataTable data = RD3SQLHelper.GetPaginationData(nameof(AlarmRecord), _condition, startIndex, DataCountPerPage);
-                    var list = DataTableConverter.ConvertTo<AlarmRecord>(data);
-                    AlarmRecordCol = [.. list];
+                    DataTable data = RD3SQLHelper.GetPaginationData("Audit", _condition, startIndex, DataCountPerPage);
+                    var list = DataTableConverter.ConvertTo<Operation>(data);
+                    OperationCol = [.. list];
                 }, _cancellationTokenSource.Token);
             }
             catch (OperationCanceledException)
@@ -130,7 +129,7 @@ namespace RD3.ViewModels
         private async void PageUpdated(FunctionEventArgs<int> info)
         {
             PageIndex = info.Info;
-            await QueryAlarmRecordAsync();
+            await QueryAuditRecordAsync();
         }
     }
 }

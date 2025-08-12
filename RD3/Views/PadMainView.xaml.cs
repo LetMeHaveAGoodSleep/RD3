@@ -627,11 +627,28 @@ namespace RD3.Views
 
                 if (selectedItem.Name == tabCurve.Name)
                 {
+                    AnalysisSolution.GetInstance().EventPublisher.DataProcessed -= EventPublisher_DataProcessed;
                     AnalysisSolution.GetInstance().EventPublisher.DataProcessed += EventPublisher_DataProcessed;
                 }
                 else
                 {
                     AnalysisSolution.GetInstance().EventPublisher.DataProcessed -= EventPublisher_DataProcessed;
+                }
+                if (selectedItem.Name == tabAlarm.Name)
+                {
+                    ((AlarmRecordViewModel)alarmRecordView.DataContext).ReloadDataCommand.Execute();
+                }
+                else
+                {
+                    ((AlarmRecordViewModel)alarmRecordView.DataContext).CancelLoadCommand.Execute();
+                }
+                if (selectedItem.Name == tabAudit.Name)
+                {
+                    ((PadAuditViewModel)auditView.DataContext).ReloadDataCommand.Execute();
+                }
+                else
+                {
+                    ((PadAuditViewModel)auditView.DataContext).CancelLoadCommand.Execute();
                 }
             }
         }
