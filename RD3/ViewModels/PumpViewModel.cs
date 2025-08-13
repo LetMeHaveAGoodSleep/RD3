@@ -39,6 +39,11 @@ namespace RD3.ViewModels
             }
         }
 
+        public DeviceParameter CurrentDeviceParameter
+        {
+            get { return AnalysisSolution.GetInstance().ReactorCol[0]; }
+        }
+
 
         public DelegateCommand PumpSettingCommand => new(() =>
         {
@@ -146,6 +151,10 @@ namespace RD3.ViewModels
                 {
                     try
                     {
+                        if (CurrentDeviceParameter.ReactorStatus == ReactorStatus.DisConnected)
+                        {
+                            continue;
+                        }
 
                         if (info != null)
                         {

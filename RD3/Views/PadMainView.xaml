@@ -124,7 +124,18 @@
                             Foreground="White" />
                         <Button
                             Height="40"
-                            hc:IconElement.Geometry="{StaticResource GeometryBackToHome}"
+                            hc:IconElement.Geometry="{StaticResource GeometryArrowCollapseAll}"
+                            hc:IconElement.Height="30"
+                            hc:IconElement.Width="30"
+                            materialDesign:RippleAssist.Feedback="#DD000000"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding MinimizeCommand}"
+                            FontSize="{StaticResource HeadFontSize}"
+                            Foreground="White" />
+                        <Button
+                            Height="40"
+                            hc:IconElement.Geometry="{StaticResource GeometryQuit}"
                             hc:IconElement.Height="30"
                             hc:IconElement.Width="30"
                             materialDesign:RippleAssist.Feedback="#DD000000"
@@ -132,8 +143,7 @@
                             BorderThickness="0"
                             Command="{Binding ExitCommand}"
                             FontSize="{StaticResource HeadFontSize}"
-                            Foreground="White"
-                            Visibility="Collapsed" />
+                            Foreground="White" />
                     </hc:UniformSpacingPanel>
                 </Grid>
             </DockPanel>
@@ -162,44 +172,6 @@
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <hc:UniformSpacingPanel
-                        Margin="160,40,0,0"
-                        VerticalAlignment="Top"
-                        Orientation="Horizontal"
-                        Spacing="1">
-                        <Viewbox
-                            Width="30"
-                            Height="30"
-                            Visibility="{Binding StatusType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Stop}">
-                            <Border
-                                Width="30"
-                                Height="30"
-                                Background="LightGray"
-                                CornerRadius="20" />
-                        </Viewbox>
-                        <Viewbox
-                            Width="30"
-                            Height="30"
-                            Visibility="{Binding StatusType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Start}">
-                            <Border
-                                Width="30"
-                                Height="30"
-                                Background="{DynamicResource FixedGradientBrush}"
-                                CornerRadius="20" />
-                        </Viewbox>
-
-                        <Viewbox
-                            Width="30"
-                            Height="30"
-                            Visibility="{Binding StatusType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Warning}">
-                            <Border
-                                Width="30"
-                                Height="30"
-                                Background="YellowGreen"
-                                CornerRadius="20" />
-                        </Viewbox>
-                    </hc:UniformSpacingPanel>
-
                     <Canvas>
                         <Image
                             Canvas.Left="500"
@@ -587,37 +559,17 @@
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top" />
             </TabItem>
-            <TabItem Tag="tabQuit">
+            <TabItem>
                 <TabItem.Header>
-                    <StackPanel
-                        Width="auto"
-                        Height="auto"
-                        MouseLeftButtonDown="WindowCloseEvent">
+                    <StackPanel Width="auto" Height="auto">
                         <materialDesign:PackIcon
                             Width="40"
                             Height="40"
                             HorizontalAlignment="Center"
-                            Kind="CloseCircle" />
-                        <TextBlock HorizontalAlignment="Center" Text="退出系统" />
+                            Kind="TimelineClockOutline" />
+                        <TextBlock HorizontalAlignment="Center" Text="顺控" />
                     </StackPanel>
                 </TabItem.Header>
-                <StackPanel Margin="16" />
-            </TabItem>
-            <TabItem Tag="tabMinimize">
-                <TabItem.Header>
-                    <StackPanel
-                        Width="auto"
-                        Height="auto"
-                        MouseLeftButtonDown="WindowMinimizeEvent">
-                        <materialDesign:PackIcon
-                            Width="40"
-                            Height="40"
-                            HorizontalAlignment="Center"
-                            Kind="ArrowCollapseAll" />
-                        <TextBlock HorizontalAlignment="Center" Text="最小化" />
-                    </StackPanel>
-                </TabItem.Header>
-                <StackPanel Margin="16" />
             </TabItem>
         </TabControl>
     </Grid>

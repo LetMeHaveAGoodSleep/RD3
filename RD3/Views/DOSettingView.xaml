@@ -85,7 +85,7 @@
                     Margin="15,0,0,0"
                     hc:BorderElement.CornerRadius="8"
                     Background="{DynamicResource BorderBrush}"
-                    Content="{ex:Language Key='中位控制'}"
+                    Content="{ex:Language Key='中位级联'}"
                     FontSize="{DynamicResource MediumFontSize}"
                     Foreground="{DynamicResource SecondaryTextBrush}"
                     IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Midranging}" />

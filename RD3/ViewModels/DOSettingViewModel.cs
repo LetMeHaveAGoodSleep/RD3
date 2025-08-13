@@ -171,7 +171,7 @@ namespace RD3.ViewModels
 
         public DelegateCommand PIDSettingCommand => new(() => 
         {
-            DialogHostService.ShowOnce(nameof(PIDView), callback =>
+            DialogHostService.ShowOnce(nameof(PadDOPIDView), callback =>
             {
                 if (callback.Result != ButtonResult.OK)
                 {

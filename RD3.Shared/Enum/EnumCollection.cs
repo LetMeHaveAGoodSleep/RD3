@@ -70,7 +70,7 @@ namespace RD3.Shared
     {
         [Description("阶梯级联")]
         Step,
-        [Description("中位控制")]
+        [Description("中位级联")]
         Midranging,
         [Description("周期")]
         Cycle

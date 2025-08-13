@@ -154,8 +154,20 @@ namespace RD3
                 {
                     Directory.CreateDirectory(dir);
                 }
-                File.Delete(filePath);
-                File.WriteAllText(filePath, json);
+
+                string originalFile = filePath;
+                string newFile = Path.Combine(FileConst.ConfigDirectory, Path.GetFileNameWithoutExtension(originalFile) + Guid.NewGuid().ToString("N") + Path.GetExtension(originalFile));
+                // 检查文件是否存在并重命名
+                if (File.Exists(originalFile))
+                {
+                    File.WriteAllText(newFile, json);
+                    File.Move(newFile, originalFile, true);
+                    File.Delete(newFile);
+                }
+                else
+                {
+                    File.WriteAllText(originalFile, json);
+                }
             }
         }
 
@@ -166,8 +178,20 @@ namespace RD3
                 PumpInfoCol = dataList;
             }
             string json = JsonConvert.SerializeObject(PumpInfoCol);
-            File.Delete(FileConst.PumpInfoPath);
-            File.WriteAllText(FileConst.PumpInfoPath, json);
+
+            string originalFile = FileConst.PumpInfoPath;
+            string newFile = Path.Combine(FileConst.ConfigDirectory, Path.GetFileNameWithoutExtension(originalFile) + Guid.NewGuid().ToString("N") + Path.GetExtension(originalFile));
+            // 检查文件是否存在并重命名
+            if (File.Exists(originalFile))
+            {
+                File.WriteAllText(newFile, json);
+                File.Move(newFile, originalFile, true);
+                File.Delete(newFile);
+            }
+            else
+            {
+                File.WriteAllText(originalFile, json);
+            }
         }
 
         public void SaveMFCSetting(ObservableCollection<MFCInfo> dataList = null)
@@ -177,8 +201,19 @@ namespace RD3
                 MFCInfoCol = dataList;
             }
             string json = JsonConvert.SerializeObject(MFCInfoCol);
-            File.Delete(FileConst.MFCInfoPath);
-            File.WriteAllText(FileConst.MFCInfoPath, json);
+            string originalFile = FileConst.MFCInfoPath;
+            string newFile = Path.Combine(FileConst.ConfigDirectory, Path.GetFileNameWithoutExtension(originalFile) + Guid.NewGuid().ToString("N") + Path.GetExtension(originalFile));
+            // 检查文件是否存在并重命名
+            if (File.Exists(originalFile))
+            {
+                File.WriteAllText(newFile, json);
+                File.Move(newFile, originalFile, true);
+                File.Delete(newFile);
+            }
+            else
+            {
+                File.WriteAllText(originalFile, json);
+            }
         }
 
         public void SavePumpMFCToOld(string reactorName)

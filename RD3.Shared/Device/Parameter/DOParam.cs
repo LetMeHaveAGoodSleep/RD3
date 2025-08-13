@@ -205,6 +205,25 @@ namespace RD3.Shared
             }
         }
 
+        private PIDInfo _directPID;
+        public PIDInfo DirectPID
+        {
+            get => _directPID;
+            set
+            {
+                SetProperty(ref _directPID, value);
+            }
+        }
+
+        private PIDInfo _reversePID;
+        public PIDInfo ReversePID
+        {
+            get => _reversePID;
+            set
+            {
+                SetProperty(ref _reversePID, value);
+            }
+        }
         public object Clone()
         {
             var clonedObject = ObjectCloner.DeepCopy(this);

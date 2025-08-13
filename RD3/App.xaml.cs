@@ -290,6 +290,7 @@ namespace RD3
             containerRegistry.RegisterDialog<pHSettingView, pHSettingViewModel>();
             containerRegistry.RegisterDialog<PadCalibrationView, PadCalibrationViewModel>();
             containerRegistry.RegisterDialog<PadConfigurationView, PadConfigurationViewModel>();
+            containerRegistry.RegisterDialog<PadDOPIDView, PadDOPIDViewModel>();
             //containerRegistry.RegisterDialogWindow<DialogWindowBase>();
         }
 

@@ -48,8 +48,20 @@ namespace RD3.Shared
             }
             string json = JsonConvert.SerializeObject(dataList ?? DOAssParamCol);
             json = AESEncryption.Encrypt(json);
-            File.Delete(FileConst.DOAssParamPath);
-            File.WriteAllText(FileConst.DOAssParamPath, json);
+
+            string originalFile = FileConst.DOAssParamPath;
+            string newFile = Path.Combine(FileConst.ConfigDirectory, Path.GetFileNameWithoutExtension(originalFile) + Guid.NewGuid().ToString("N") + Path.GetExtension(originalFile));
+            // 检查文件是否存在并重命名
+            if (File.Exists(originalFile))
+            {
+                File.WriteAllText(newFile, json);
+                File.Move(newFile, originalFile, true);
+                File.Delete(newFile);
+            }
+            else
+            {
+                File.WriteAllText(originalFile, json);
+            }
         }
     }
 }

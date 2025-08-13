@@ -13,7 +13,7 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="450"
-    Height="450"
+    Height="550"
     d:DataContext="{d:DesignInstance Type=viewmodels:pHSettingViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="{StaticResource BackGroundBrush}"
@@ -59,137 +59,197 @@
         Margin="10"
         Orientation="Vertical"
         Spacing="10">
-        <DockPanel DockPanel.Dock="Top" LastChildFill="False">
-            <hc:ButtonGroup
-                HorizontalAlignment="Left"
-                IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                Style="{StaticResource ButtonGroupSolid}">
-                <RadioButton
-                    Width="auto"
-                    Height="40"
-                    hc:BorderElement.CornerRadius="8"
-                    Background="{DynamicResource BorderBrush}"
-                    Content="PID调控"
-                    FontSize="{DynamicResource MediumFontSize}"
-                    Foreground="{DynamicResource SecondaryTextBrush}"
-                    IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=PID, UpdateSourceTrigger=PropertyChanged}" />
-                <RadioButton
-                    Width="auto"
-                    Height="40"
-                    Margin="15,0,0,0"
-                    hc:BorderElement.CornerRadius="8"
-                    Background="{DynamicResource BorderBrush}"
-                    Content="自适应调节"
-                    FontSize="{DynamicResource MediumFontSize}"
-                    Foreground="{DynamicResource SecondaryTextBrush}"
-                    IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Adaptive, UpdateSourceTrigger=PropertyChanged}" />
-                <RadioButton
-                    Width="auto"
-                    Height="40"
-                    Margin="15,0,0,0"
-                    hc:BorderElement.CornerRadius="8"
-                    Background="{DynamicResource BorderBrush}"
-                    Content="动态缓冲调控"
-                    FontSize="{DynamicResource MediumFontSize}"
-                    Foreground="{DynamicResource SecondaryTextBrush}"
-                    IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Buffer, UpdateSourceTrigger=PropertyChanged}" />
-            </hc:ButtonGroup>
-        </DockPanel>
-        <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-                <TextBox
-                    materialDesign:HintAssist.Hint="设定pH"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, StringFormat={}{0:F2}}" />
-                <DockPanel Grid.Column="2" LastChildFill="False">
-                    <CheckBox
-                        Content="酸(-)"
-                        DockPanel.Dock="Top"
-                        IsChecked="{Binding CurrentDeviceParameter.PHParam.AcidAssociated}"
-                        IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
-                    <CheckBox
-                        Content="碱(+)"
-                        DockPanel.Dock="Bottom"
-                        IsChecked="{Binding CurrentDeviceParameter.PHParam.BaseAssociated}"
-                        IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+        <GroupBox Header="基础参数" Style="{StaticResource MaterialDesignGroupBox}">
+            <DockPanel LastChildFill="True">
+                <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+                    <hc:ButtonGroup
+                        HorizontalAlignment="Left"
+                        IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                        Style="{StaticResource ButtonGroupSolid}">
+                        <RadioButton
+                            Width="auto"
+                            Height="40"
+                            hc:BorderElement.CornerRadius="8"
+                            Background="{DynamicResource BorderBrush}"
+                            Content="PID调控"
+                            FontSize="{DynamicResource MediumFontSize}"
+                            Foreground="{DynamicResource SecondaryTextBrush}"
+                            IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=PID, UpdateSourceTrigger=PropertyChanged}" />
+                        <RadioButton
+                            Width="auto"
+                            Height="40"
+                            Margin="5,0,0,0"
+                            hc:BorderElement.CornerRadius="8"
+                            Background="{DynamicResource BorderBrush}"
+                            Content="自适应调节"
+                            FontSize="{DynamicResource MediumFontSize}"
+                            Foreground="{DynamicResource SecondaryTextBrush}"
+                            IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Adaptive, UpdateSourceTrigger=PropertyChanged}" />
+                        <RadioButton
+                            Width="auto"
+                            Height="40"
+                            Margin="5,0,0,0"
+                            hc:BorderElement.CornerRadius="8"
+                            Background="{DynamicResource BorderBrush}"
+                            Content="动态缓冲调控"
+                            FontSize="{DynamicResource MediumFontSize}"
+                            Foreground="{DynamicResource SecondaryTextBrush}"
+                            IsChecked="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Buffer, UpdateSourceTrigger=PropertyChanged}" />
+                    </hc:ButtonGroup>
                 </DockPanel>
-                <TextBox
-                    Grid.Column="4"
-                    materialDesign:HintAssist.Hint="当前pH"
-                    IsEnabled="False"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding CurrentDeviceParameter.PH, StringFormat={}{0:F2}}" />
-                <Button
-                    Grid.Column="6"
-                    Height="36"
-                    VerticalAlignment="Bottom"
-                    hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding StrategySettingCommand}"
-                    DockPanel.Dock="Bottom"
-                    Foreground="Gray" />
-            </Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="10" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBox
-                    materialDesign:HintAssist.Hint="pH下限"
-                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding CurrentDeviceParameter.PHParam.LowerLimit, StringFormat={}{0:F2}}" />
-                <TextBox
-                    Grid.Column="2"
-                    materialDesign:HintAssist.Hint="pH上限"
-                    IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding CurrentDeviceParameter.PHParam.UpperLimit, StringFormat={}{0:F2}}" />
-            </Grid>
-            <ToggleButton
-                Width="430"
-                Height="35"
-                hc:StatusSwitchElement.HideUncheckedElement="True"
-                IsChecked="{Binding CurrentDeviceParameter.PHParam.IsControling}"
-                Style="{StaticResource ToggleButtonCustom}">
-                <hc:StatusSwitchElement.CheckedElement>
-                    <Border
-                        Width="430"
+                <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            materialDesign:HintAssist.Hint="设定pH"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, StringFormat={}{0:F2}}" />
+                        <DockPanel Grid.Column="2" LastChildFill="False">
+                            <CheckBox
+                                Content="碱(+)"
+                                DockPanel.Dock="Bottom"
+                                IsChecked="{Binding CurrentDeviceParameter.PHParam.BaseAssociated}"
+                                IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+                            <CheckBox
+                                Content="酸(-)"
+                                DockPanel.Dock="Bottom"
+                                IsChecked="{Binding CurrentDeviceParameter.PHParam.AcidAssociated}"
+                                IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
+                        </DockPanel>
+                        <TextBox
+                            Grid.Column="4"
+                            materialDesign:HintAssist.Hint="当前pH"
+                            IsEnabled="False"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.PH, StringFormat={}{0:F2}}" />
+                        <Button
+                            Grid.Column="6"
+                            Height="36"
+                            VerticalAlignment="Bottom"
+                            hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding StrategySettingCommand}"
+                            DockPanel.Dock="Bottom"
+                            Foreground="Gray"
+                            Visibility="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='Adaptive,Buffer'}" />
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            materialDesign:HintAssist.Hint="pH下限"
+                            IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.PHParam.LowerLimit, StringFormat={}{0:F2}}" />
+                        <TextBox
+                            Grid.Column="2"
+                            materialDesign:HintAssist.Hint="pH上限"
+                            IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.PHParam.UpperLimit, StringFormat={}{0:F2}}" />
+                    </Grid>
+                    <ToggleButton
+                        Width="410"
                         Height="35"
-                        Background="{DynamicResource PrimaryBrush}"
-                        BorderBrush="{DynamicResource PrimaryBrush}"
-                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="开启" />
-                    </Border>
-                </hc:StatusSwitchElement.CheckedElement>
-                <Border
-                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                    BorderBrush="{DynamicResource PrimaryBrush}"
-                    BorderThickness="1"
-                    CornerRadius="{StaticResource DefaultCornerRadius}">
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Foreground="{DynamicResource PrimaryBrush}"
-                        Text="关闭" />
-                </Border>
-            </ToggleButton>
-        </hc:UniformSpacingPanel>
+                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                        IsChecked="{Binding CurrentDeviceParameter.PHParam.IsControling}"
+                        Style="{StaticResource ToggleButtonCustom}">
+                        <hc:StatusSwitchElement.CheckedElement>
+                            <Border
+                                Width="410"
+                                Height="35"
+                                Background="{DynamicResource PrimaryBrush}"
+                                BorderBrush="{DynamicResource PrimaryBrush}"
+                                CornerRadius="{StaticResource DefaultCornerRadius}">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Foreground="White"
+                                    Text="开启" />
+                            </Border>
+                        </hc:StatusSwitchElement.CheckedElement>
+                        <Border
+                            Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                            Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                            BorderBrush="{DynamicResource PrimaryBrush}"
+                            BorderThickness="1"
+                            CornerRadius="{StaticResource DefaultCornerRadius}">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource PrimaryBrush}"
+                                Text="关闭" />
+                        </Border>
+                    </ToggleButton>
+                </hc:UniformSpacingPanel>
+            </DockPanel>
+        </GroupBox>
+        <GroupBox
+            Header="PID参数"
+            Style="{StaticResource MaterialDesignGroupBox}"
+            Visibility="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=PID, UpdateSourceTrigger=PropertyChanged}">
+            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                <GroupBox Header="酸(-)" Style="{StaticResource GroupBoxTab.Small}">
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                        <TextBox
+                            Width="90"
+                            materialDesign:HintAssist.Hint="比例P"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.P, StringFormat={}{0:F2}}" />
+                        <TextBox
+                            Width="90"
+                            materialDesign:HintAssist.Hint="积分I"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.I, StringFormat={}{0:F2}}" />
+                        <TextBox
+                            Width="90"
+                            materialDesign:HintAssist.Hint="微分D"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.D, StringFormat={}{0:F2}}" />
+                        <TextBox
+                            Width="90"
+                            materialDesign:HintAssist.Hint="死区"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.deadArea, StringFormat={}{0:F2}}" />
+                    </hc:UniformSpacingPanel>
+                </GroupBox>
+                <GroupBox Header="碱(+)" Style="{StaticResource GroupBoxTab.Small}">
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                        <TextBox
+                            Width="90"
+                            materialDesign:HintAssist.Hint="比例P"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.P, StringFormat={}{0:F2}}" />
+                        <TextBox
+                            Width="90"
+                            materialDesign:HintAssist.Hint="积分I"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.I, StringFormat={}{0:F2}}" />
+                        <TextBox
+                            Width="90"
+                            materialDesign:HintAssist.Hint="微分D"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.D, StringFormat={}{0:F2}}" />
+                        <TextBox
+                            Width="90"
+                            materialDesign:HintAssist.Hint="死区"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.deadArea, StringFormat={}{0:F2}}" />
+                    </hc:UniformSpacingPanel>
+                </GroupBox>
+            </hc:UniformSpacingPanel>
+        </GroupBox>
     </hc:UniformSpacingPanel>
 </UserControl>

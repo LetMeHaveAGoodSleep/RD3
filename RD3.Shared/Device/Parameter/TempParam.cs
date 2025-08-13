@@ -119,6 +119,16 @@ namespace RD3.Shared
             }
         }
 
+        private TECParam _tecParam;
+        public TECParam PIDParam
+        {
+            get => _tecParam;
+            set
+            {
+                SetProperty(ref _tecParam, value);
+            }
+        }
+
         public AuditModule Module { get => AuditModule.Temp_controller; }
 
         public object Clone()

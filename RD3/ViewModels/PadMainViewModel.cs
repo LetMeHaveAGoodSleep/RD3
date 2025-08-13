@@ -27,20 +27,13 @@ namespace RD3.ViewModels
 {
     public class PadMainViewModel : BaseViewModel, IConfigureService
     {
-        private IndicatorType _statusType = IndicatorType.Stop;
-        public IndicatorType StatusType
-        {
-            get => _statusType;
-            set { SetProperty(ref _statusType, value); }
-        }
-
         private List<DeviceExperimentHistoryData> _graphDataSourceList = new List<DeviceExperimentHistoryData>();
 
         private int _selectedMenuIndex = 0;
         public int SelectedMenuIndex
         {
             get => _selectedMenuIndex;
-            set 
+            set
             {
                 SetProperty(ref _selectedMenuIndex, value);
             }
@@ -53,7 +46,7 @@ namespace RD3.ViewModels
             set { SetProperty(ref _currentDeviceParameter, value); }
         }
 
-        public DelegateCommand StartExperimentCommand => new(() => 
+        public DelegateCommand StartExperimentCommand => new(() =>
         {
             if (CurrentDeviceParameter.InExperimenting)
             {
@@ -62,7 +55,7 @@ namespace RD3.ViewModels
             }
 
             Tuple<string, string, string> tuple = Tuple.Create(string.Empty, string.Empty, string.Empty);
-            List<string> list = new List<string>() { CurrentDeviceParameter.Name};
+            List<string> list = new List<string>() { CurrentDeviceParameter.Name };
             DialogParameters dialogParameters = new DialogParameters()
             {
                 { "DeviceName",string.Join("|",list)}
@@ -139,6 +132,11 @@ namespace RD3.ViewModels
             DialogHostService.ShowOnce(nameof(TempSettingView), callback => { });
         });
 
+
+        public DelegateCommand MinimizeCommand => new(() =>
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        });
         public DelegateCommand ExitCommand => new(() =>
         {
             if (AppSession.CurrentUser.Type != Shared.UserType.Admin)
@@ -186,7 +184,7 @@ namespace RD3.ViewModels
             _graphDataSourceList.Add(data);
 
 
-            Thread thread = new Thread(new ThreadStart(() => 
+            Thread thread = new Thread(new ThreadStart(() =>
             {
                 while (true)
                 {
@@ -230,25 +228,30 @@ namespace RD3.ViewModels
                         Pipe pipe = PortManager.GetInstance().FindSendPipe(CurrentDeviceParameter.Name);
                         if (pipe == null)
                         {
-                            StatusType = IndicatorType.Stop;
+                            CurrentDeviceParameter.ReactorStatus = ReactorStatus.DisConnected;
                             Thread.Sleep(1000);
                             continue;
                         }
                         if (InstrumentSolution.GetInstance().IsSimulation)
                         {
-                            StatusType = IndicatorType.Warning;
+                            CurrentDeviceParameter.ReactorStatus = ReactorStatus.Simulated;
                         }
                         else
                         {
-                            StatusType = pipe.Connected == true ? IndicatorType.Start : IndicatorType.Stop;
+                            CurrentDeviceParameter.ReactorStatus = pipe.Connected == true ? ReactorStatus.Connected : ReactorStatus.DisConnected;
+                            if (CurrentDeviceParameter.ReactorStatus == ReactorStatus.DisConnected)
+                            {
+                                HandyControl.Controls.MessageBox.Show("连接异常", "温馨提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                continue;
+                            }
                         }
                     }
                     catch (Exception ex) { }
-                    finally 
+                    finally
                     {
                         Thread.Sleep(1000);
                     }
-                    
+
                 }
             }));
             thread1.IsBackground = true;
@@ -384,6 +387,11 @@ namespace RD3.ViewModels
                 {
                     try
                     {
+                        if (CurrentDeviceParameter.ReactorStatus == ReactorStatus.DisConnected)
+                        {
+                            continue;
+                        }
+
                         if (!CurrentDeviceParameter.TempParam.LastIsControling && CurrentDeviceParameter.TempParam.IsControling)
                         {
                             AnalysisSolution.GetInstance().TempController.StartWork();
@@ -411,6 +419,11 @@ namespace RD3.ViewModels
                 {
                     try
                     {
+                        if (CurrentDeviceParameter.ReactorStatus == ReactorStatus.DisConnected)
+                        {
+                            continue;
+                        }
+
                         if (!CurrentDeviceParameter.AgitParam.LastIsControling && CurrentDeviceParameter.AgitParam.IsControling)
                         {
                             AnalysisSolution.GetInstance().AgitController.StartWork();
@@ -438,6 +451,11 @@ namespace RD3.ViewModels
                 {
                     try
                     {
+                        if (CurrentDeviceParameter.ReactorStatus == ReactorStatus.DisConnected)
+                        {
+                            continue;
+                        }
+
                         if (!CurrentDeviceParameter.DOParam.LastIsControling && CurrentDeviceParameter.DOParam.IsControling)
                         {
                             AnalysisSolution.GetInstance().DOController.StartWork();
@@ -465,6 +483,11 @@ namespace RD3.ViewModels
                 {
                     try
                     {
+                        if (CurrentDeviceParameter.ReactorStatus == ReactorStatus.DisConnected)
+                        {
+                            continue;
+                        }
+
                         if (!CurrentDeviceParameter.PHParam.LastIsControling && CurrentDeviceParameter.PHParam.IsControling)
                         {
                             AnalysisSolution.GetInstance().pHController.StartWork();

@@ -653,10 +653,6 @@ namespace RD3.Views
             }
         }
 
-        private void WindowMinimizeEvent(object sender, MouseButtonEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
-        }
 
         private void WindowCloseEvent(object sender, MouseButtonEventArgs e)
         {
@@ -674,11 +670,6 @@ namespace RD3.Views
                 }
                 this.WindowState = WindowState.Maximized;
             }
-        }
-
-        private void WindowMaximizeEvent(object sender, MouseButtonEventArgs e)
-        {
-            this.WindowState = WindowState.Maximized;
         }
     }
 }

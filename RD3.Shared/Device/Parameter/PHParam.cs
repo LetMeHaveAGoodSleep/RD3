@@ -141,6 +141,26 @@ namespace RD3.Shared
             }
         }
 
+        private PIDInfo _acidPID;
+        public PIDInfo AcidPID
+        {
+            get => _acidPID;
+            set
+            {
+                SetProperty(ref _acidPID, value);
+            }
+        }
+
+        private PIDInfo _basePID;
+        public PIDInfo BasePID
+        {
+            get => _basePID;
+            set
+            {
+                SetProperty(ref _basePID, value);
+            }
+        }
+
         public object Clone()
         {
             var clonedObject = ObjectCloner.DeepCopy(this);
