@@ -2,6 +2,7 @@
     x:Class="RD3.Views.PadMainView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:RD3.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
@@ -161,20 +162,44 @@
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <DockPanel LastChildFill="False">
-                        <hc:ButtonGroup
-                            Margin="10,50,0,0"
-                            Orientation="Vertical"
-                            Visibility="Collapsed">
-                            <RadioButton
-                                Content="G01"
-                                FontSize="{StaticResource LargeFontSize}"
-                                IsChecked="True" />
-                            <RadioButton Content="G02" FontSize="{StaticResource LargeFontSize}" />
-                            <RadioButton Content="G03" FontSize="{StaticResource LargeFontSize}" />
-                            <RadioButton Content="G04" FontSize="{StaticResource LargeFontSize}" />
-                        </hc:ButtonGroup>
-                    </DockPanel>
+                    <hc:UniformSpacingPanel
+                        Margin="160,40,0,0"
+                        VerticalAlignment="Top"
+                        Orientation="Horizontal"
+                        Spacing="1">
+                        <Viewbox
+                            Width="30"
+                            Height="30"
+                            Visibility="{Binding StatusType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Stop}">
+                            <Border
+                                Width="30"
+                                Height="30"
+                                Background="LightGray"
+                                CornerRadius="20" />
+                        </Viewbox>
+                        <Viewbox
+                            Width="30"
+                            Height="30"
+                            Visibility="{Binding StatusType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Start}">
+                            <Border
+                                Width="30"
+                                Height="30"
+                                Background="{DynamicResource FixedGradientBrush}"
+                                CornerRadius="20" />
+                        </Viewbox>
+
+                        <Viewbox
+                            Width="30"
+                            Height="30"
+                            Visibility="{Binding StatusType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Warning}">
+                            <Border
+                                Width="30"
+                                Height="30"
+                                Background="YellowGreen"
+                                CornerRadius="20" />
+                        </Viewbox>
+                    </hc:UniformSpacingPanel>
+
                     <Canvas>
                         <Image
                             Canvas.Left="500"

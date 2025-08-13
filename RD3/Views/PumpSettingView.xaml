@@ -179,7 +179,7 @@
                         Height="60"
                         materialDesign:ComboBoxAssist.ShowSelectedItem="True"
                         materialDesign:HintAssist.Hint="补料策略"
-                        IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
+                        IsEnabled="{Binding PumpInfo.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                         ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
                         SelectedItem="{Binding PumpInfo.FeedMode}"
                         Style="{StaticResource MaterialDesignFloatingHintComboBox}">
@@ -189,13 +189,42 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <DockPanel Grid.Column="2" LastChildFill="False">
+                    <DockPanel
+                        Grid.Column="2"
+                        LastChildFill="False"
+                        Visibility="{Binding PumpInfo.FeedMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='Polynomial,Exponential,DO_stat_Speed,pH_stat_Speed,DO_stat_Volume,pH_stat_Volume,Quantitative'}">
                         <Button
                             Height="40"
                             hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
                             Background="Transparent"
                             BorderThickness="0"
                             Command="{Binding FeedStrategyCommand}"
+                            DockPanel.Dock="Bottom"
+                            Foreground="Gray" />
+                    </DockPanel>
+                    <DockPanel
+                        Grid.Column="2"
+                        LastChildFill="False"
+                        Visibility="{Binding PumpInfo.FeedMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='TimeSeries'}">
+                        <Button
+                            Height="40"
+                            hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding FeedTimeSeriesCommand}"
+                            DockPanel.Dock="Bottom"
+                            Foreground="Gray" />
+                    </DockPanel>
+                    <DockPanel
+                        Grid.Column="2"
+                        LastChildFill="False"
+                        Visibility="{Binding PumpInfo.FeedMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='Probe'}">
+                        <Button
+                            Height="40"
+                            hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding FeedProbeCommand}"
                             DockPanel.Dock="Bottom"
                             Foreground="Gray" />
                     </DockPanel>

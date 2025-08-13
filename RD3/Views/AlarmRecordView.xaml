@@ -45,7 +45,6 @@
                 </hc:Interaction.Triggers>
             </hc:Pagination>
             <hc:SearchBar
-                Name="txtSearch"
                 Width="240"
                 Height="40"
                 hc:InfoElement.ShowClearButton="True"
@@ -71,6 +70,7 @@
             EnableColumnVirtualization="True"
             EnableRowVirtualization="True"
             FocusManager.FocusedElement="{Binding ElementName=dataGrid}"
+            Focusable="True"
             HeadersVisibility="Column"
             IsReadOnly="True"
             ItemsSource="{Binding AlarmRecordCol}"

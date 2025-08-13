@@ -1,4 +1,5 @@
-﻿using ImTools;
+﻿using Fpi.Communication.Manager;
+using ImTools;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Ioc;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -25,6 +27,13 @@ namespace RD3.ViewModels
 {
     public class PadMainViewModel : BaseViewModel, IConfigureService
     {
+        private IndicatorType _statusType = IndicatorType.Stop;
+        public IndicatorType StatusType
+        {
+            get => _statusType;
+            set { SetProperty(ref _statusType, value); }
+        }
+
         private List<DeviceExperimentHistoryData> _graphDataSourceList = new List<DeviceExperimentHistoryData>();
 
         private int _selectedMenuIndex = 0;
@@ -211,6 +220,40 @@ namespace RD3.ViewModels
             thread.IsBackground = true;
             thread.Priority = ThreadPriority.Highest;
             thread.Start();
+
+            Thread thread1 = new Thread(new ThreadStart(() =>
+            {
+                while (true)
+                {
+                    try
+                    {
+                        Pipe pipe = PortManager.GetInstance().FindSendPipe(CurrentDeviceParameter.Name);
+                        if (pipe == null)
+                        {
+                            StatusType = IndicatorType.Stop;
+                            Thread.Sleep(1000);
+                            continue;
+                        }
+                        if (InstrumentSolution.GetInstance().IsSimulation)
+                        {
+                            StatusType = IndicatorType.Warning;
+                        }
+                        else
+                        {
+                            StatusType = pipe.Connected == true ? IndicatorType.Start : IndicatorType.Stop;
+                        }
+                    }
+                    catch (Exception ex) { }
+                    finally 
+                    {
+                        Thread.Sleep(1000);
+                    }
+                    
+                }
+            }));
+            thread1.IsBackground = true;
+            thread1.Priority = ThreadPriority.Lowest;
+            thread1.Start();
 
             //读取实时信息
             var worker = new BackgroundWorker();

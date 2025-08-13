@@ -25,6 +25,10 @@ namespace RD3.Views
         public AlarmRecordView()
         {
             InitializeComponent();
+            this.Loaded += (s, e) => 
+            {
+                Keyboard.Focus(dataGrid);
+            };
         }
     }
 }

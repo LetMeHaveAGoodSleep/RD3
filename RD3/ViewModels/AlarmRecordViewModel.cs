@@ -122,9 +122,6 @@ namespace RD3.ViewModels
                 // 处理其他异常
               HandyControl.Controls.MessageBox.Show($"搜索出错: {ex.Message}","温馨提示");
             }
-
-
-
         }
 
         private async void PageUpdated(FunctionEventArgs<int> info)

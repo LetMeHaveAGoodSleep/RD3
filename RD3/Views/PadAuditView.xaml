@@ -45,7 +45,6 @@
                 </hc:Interaction.Triggers>
             </hc:Pagination>
             <hc:SearchBar
-                Name="txtSearch"
                 Width="240"
                 Height="40"
                 hc:InfoElement.ShowClearButton="True"
@@ -66,7 +65,6 @@
             AutoGenerateColumns="False"
             Background="Transparent"
             ColumnWidth="SizeToCells"
-            FocusManager.FocusedElement="{Binding ElementName=dataGrid}"
             HeadersVisibility="Column"
             IsReadOnly="True"
             ItemsSource="{Binding OperationCol}"

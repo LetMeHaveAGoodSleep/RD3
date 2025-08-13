@@ -136,6 +136,36 @@ namespace RD3.ViewModels
             });
         });
 
+        public DelegateCommand FeedTimeSeriesCommand => new(() =>
+        {
+            DialogParameters keyValuePairs = new DialogParameters()
+            {
+                 {"deviceID",PumpInfo.DeviceID },
+                {nameof(PeristalticPump), PumpInfo.Pump}
+            };
+
+            DialogHostService.ShowOnce(nameof(FeedGradientView), keyValuePairs, callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+            });
+        });
+
+
+
+        public DelegateCommand FeedProbeCommand => new(() =>
+        {
+            DialogHostService.ShowOnce(nameof(ProbView), callback =>
+            {
+                if (callback.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+            });
+        });
+
         public PumpSettingViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             CurrentDeviceParameter = AnalysisSolution.GetInstance().ReactorCol[0];

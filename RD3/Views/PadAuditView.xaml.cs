@@ -23,6 +23,11 @@ namespace RD3.Views
         public PadAuditView()
         {
             InitializeComponent();
+
+            this.Loaded += (s, e) =>
+            {
+                Keyboard.Focus(dataGrid);
+            };
         }
     }
 }
