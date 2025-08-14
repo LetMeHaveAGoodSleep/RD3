@@ -73,8 +73,8 @@ namespace RD3.Views
                     HwndSource.FromHwnd(hwnd)?.AddHook(WndProc);
                     ForceFullScreen();
                 };
+                btnDOSimulate.Visibility = btnpHSimulate.Visibility = Visibility.Collapsed;
             }
-
 
             foreach (KeyValuePair<string, string> item in GraphConfig.GetAllValue())
             {

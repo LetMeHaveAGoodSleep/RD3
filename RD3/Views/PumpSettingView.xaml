@@ -65,10 +65,10 @@
                 Name="DisplaySelectedItemCheckBox"
                 materialDesign:ComboBoxAssist.ShowSelectedItem="True"
                 materialDesign:HintAssist.HelperText="{Binding PumpInfo.PumpIndex, StringFormat='泵{0}用途'}"
+                IsEnabled="False"
                 ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
                 SelectedItem="{Binding PumpInfo.Pump}"
-                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                Visibility="Collapsed">
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
@@ -88,6 +88,7 @@
             <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                 <TextBox
                     Width="120"
+                    materialDesign:HintAssist.Hint="总体积(mL)"
                     IsEnabled="False"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     Text="{Binding PumpInfo.FlowCapacity, StringFormat={}{0:F2}}" />
@@ -112,7 +113,7 @@
                     </MultiBinding>
                 </CheckBox.IsEnabled>
             </CheckBox>
-            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                 <TextBox
                     Width="110"
                     materialDesign:HintAssist.HelperText="最大:600 单位:mL/h"
@@ -129,7 +130,7 @@
                     </TextBox.Visibility>
                 </TextBox>
                 <TextBox
-                    Width="110"
+                    Width="115"
                     materialDesign:HintAssist.HelperText="{Binding PumpInfo.FormattedTime, StringFormat='已运行{0} 单位:秒'}"
                     materialDesign:HintAssist.Hint="运行时间"
                     materialDesign:TextFieldAssist.HasClearButton="True"

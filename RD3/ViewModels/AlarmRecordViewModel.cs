@@ -102,16 +102,22 @@ namespace RD3.ViewModels
 
             try
             {
-                await Task.Run(() =>
+                var list = await Task.Run(() =>
+                 {
+                     DataTable dataTable = RD3SQLHelper.GetPaginationCount(nameof(AlarmRecord), _condition);
+                     int dataCount = Convert.ToInt32(dataTable.Rows[0][0]);
+                     PageCount = dataCount / DataCountPerPage + (dataCount % DataCountPerPage != 0 ? 1 : 0);
+                     int startIndex = (PageIndex - 1) * DataCountPerPage + 1;
+                     DataTable data = RD3SQLHelper.GetPaginationData(nameof(AlarmRecord), _condition, startIndex, DataCountPerPage);
+                     var list = DataTableConverter.ConvertTo<AlarmRecord>(data);
+                     return list;
+                 }, _cancellationTokenSource.Token);
+
+                AlarmRecordCol.Clear();
+                foreach (AlarmRecord row in list)
                 {
-                    DataTable dataTable = RD3SQLHelper.GetPaginationCount(nameof(AlarmRecord),_condition);
-                    int dataCount = Convert.ToInt32(dataTable.Rows[0][0]);
-                    PageCount = dataCount / DataCountPerPage + (dataCount % DataCountPerPage != 0 ? 1 : 0);
-                    int startIndex = (PageIndex - 1) * DataCountPerPage + 1;
-                    DataTable data = RD3SQLHelper.GetPaginationData(nameof(AlarmRecord), _condition, startIndex, DataCountPerPage);
-                    var list = DataTableConverter.ConvertTo<AlarmRecord>(data);
-                    AlarmRecordCol = [.. list];
-                }, _cancellationTokenSource.Token);
+                    AlarmRecordCol.Add(row);
+                }
             }
             catch (OperationCanceledException)
             {

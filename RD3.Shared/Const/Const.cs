@@ -22,6 +22,6 @@ namespace RD3.Shared
         public static readonly string AgitUnit = "rpm";
         public static readonly int NumericalPrecision = 2;
         public static readonly float MaxPumpFlowRate = 600;
-        public static readonly float MaxPumpFlowCapacity = float.MaxValue;
+        public static readonly float MaxPumpFlowCapacity = 999999999f;
     }
 }

@@ -36,7 +36,7 @@ namespace RD3.Controller
 
         public PumpInfo AcidPumpInfo
         {
-            get 
+            get
             {
                 return AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.Pump == PeristalticPump.AcidPump && t.IsEnable);
             }
@@ -323,8 +323,7 @@ namespace RD3.Controller
                                 return;
                             }
 
-                            string result = File.ReadAllText(FileConst.PidInfoPath);
-                            List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
+                            var pIDInfos = PIDInfoManager.GetInstance().PIDInfos;
                             if (pIDInfos == null)
                             {
                                 HandyControl.Controls.MessageBox.Show("PID调控策略列表为空", "温馨提示");
@@ -725,11 +724,11 @@ namespace RD3.Controller
 
                     if (AcidPumpInfo != null && CurrentDeviceParameter.PHParam.AcidAssociated)
                     {
-                        AcidPumpInfo.IsControlled = AcidPumpInfo.IsControling = true;
+                        AcidPumpInfo.IsControlled = AcidPumpInfo.IsControling = false;
                     }
                     if (BasePumpInfo != null && CurrentDeviceParameter.PHParam.BaseAssociated)
                     {
-                        BasePumpInfo.IsControlled = BasePumpInfo.IsControling = true;
+                        BasePumpInfo.IsControlled = BasePumpInfo.IsControling = false;
                     }
                 }
                 catch (Exception ex)
@@ -752,11 +751,11 @@ namespace RD3.Controller
 
             if (AcidPumpInfo != null && CurrentDeviceParameter.PHParam.AcidAssociated)
             {
-                AcidPumpInfo.IsControlled = AcidPumpInfo.IsControling = true;
+                AcidPumpInfo.IsControlled = AcidPumpInfo.IsControling = false;
             }
             if (BasePumpInfo != null && CurrentDeviceParameter.PHParam.BaseAssociated)
             {
-                BasePumpInfo.IsControlled = BasePumpInfo.IsControling = true;
+                BasePumpInfo.IsControlled = BasePumpInfo.IsControling = false;
             }
         }
     }

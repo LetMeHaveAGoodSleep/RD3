@@ -200,7 +200,7 @@ namespace RD3.Shared
                 SetProperty(ref _isControlled, value);
                 if (value)
                 {
-                    RunningTime_SP = int.MaxValue;
+                    RunningTime_SP = Convert.ToInt32(Const.MaxPumpFlowCapacity);
                     IsControling = true;
                 }
             }

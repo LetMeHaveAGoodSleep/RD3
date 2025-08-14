@@ -66,7 +66,7 @@ namespace RD3.ViewModels
             {
                 _condition = $"where BatchID like '%{e.Info}%' or DateTime like '%{e.Info}%' or Remark like '%{e.Info}%' ";
             }
-           await QueryAuditRecordAsync();
+            await QueryAuditRecordAsync();
         });
 
         public DelegateCommand ReloadDataCommand => new(async () =>
@@ -86,7 +86,7 @@ namespace RD3.ViewModels
         async Task QueryAuditRecordAsync()
         {
             // 取消之前的搜索请求（如果有）
-             _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Cancel();
 
             _cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(60));
 
@@ -101,16 +101,21 @@ namespace RD3.ViewModels
 
             try
             {
-                await Task.Run(() =>
+                var list = await Task.Run(() =>
+                  {
+                      DataTable dataTable = RD3SQLHelper.GetPaginationCount("Audit", _condition);
+                      int dataCount = Convert.ToInt32(dataTable.Rows[0][0]);
+                      PageCount = dataCount / DataCountPerPage + (dataCount % DataCountPerPage != 0 ? 1 : 0);
+                      int startIndex = (PageIndex - 1) * DataCountPerPage + 1;
+                      DataTable data = RD3SQLHelper.GetPaginationData("Audit", _condition, startIndex, DataCountPerPage);
+                      var list = DataTableConverter.ConvertTo<Operation>(data);
+                      return list;
+                  }, _cancellationTokenSource.Token);
+                OperationCol.Clear();
+                foreach (Operation row in list)
                 {
-                    DataTable dataTable = RD3SQLHelper.GetPaginationCount("Audit", _condition);
-                    int dataCount = Convert.ToInt32(dataTable.Rows[0][0]);
-                    PageCount = dataCount / DataCountPerPage + (dataCount % DataCountPerPage != 0 ? 1 : 0);
-                    int startIndex = (PageIndex - 1) * DataCountPerPage + 1;
-                    DataTable data = RD3SQLHelper.GetPaginationData("Audit", _condition, startIndex, DataCountPerPage);
-                    var list = DataTableConverter.ConvertTo<Operation>(data);
-                    OperationCol = [.. list];
-                }, _cancellationTokenSource.Token);
+                    OperationCol.Add(row);
+                }
             }
             catch (OperationCanceledException)
             {
@@ -119,7 +124,7 @@ namespace RD3.ViewModels
             catch (Exception ex)
             {
                 // 处理其他异常
-              HandyControl.Controls.MessageBox.Show($"搜索出错: {ex.Message}","温馨提示");
+                HandyControl.Controls.MessageBox.Show($"搜索出错: {ex.Message}", "温馨提示");
             }
 
 

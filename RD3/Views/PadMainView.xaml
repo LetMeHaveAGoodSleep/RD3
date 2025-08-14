@@ -113,6 +113,32 @@
                                 Text="2025-07-23 17:14:32" />
                         </DockPanel>
                         <Button
+                            Name="btnDOSimulate"
+                            Height="40"
+                            hc:IconElement.Geometry="{StaticResource AskGeometry}"
+                            hc:IconElement.Height="30"
+                            hc:IconElement.Width="30"
+                            materialDesign:RippleAssist.Feedback="#000000"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding DODIYCommand}"
+                            Content="模拟DO"
+                            FontSize="{StaticResource HeadFontSize}"
+                            Foreground="White" />
+                        <Button
+                            Name="btnpHSimulate"
+                            Height="40"
+                            hc:IconElement.Geometry="{StaticResource AskGeometry}"
+                            hc:IconElement.Height="30"
+                            hc:IconElement.Width="30"
+                            materialDesign:RippleAssist.Feedback="#000000"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding pHDIYCommand}"
+                            Content="模拟pH"
+                            FontSize="{StaticResource HeadFontSize}"
+                            Foreground="White" />
+                        <Button
                             Height="40"
                             hc:IconElement.Geometry="{StaticResource GeometryUserCircle}"
                             hc:IconElement.Height="30"

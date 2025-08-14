@@ -108,6 +108,23 @@ namespace RD3.ViewModels
             CurrentDeviceParameter.BatchID = -1;
         });
 
+        public DelegateCommand<string> DODIYCommand => new((string content) =>
+        {
+            string input = Microsoft.VisualBasic.Interaction.InputBox($"请输入溶氧自定义值:", "修改溶氧", "");
+            if (float.TryParse(input, out float value))
+            {
+                AppSession.VirtualDO = value;
+            }
+        });
+
+        public DelegateCommand<string> pHDIYCommand => new((string content) =>
+        {
+            string input = Microsoft.VisualBasic.Interaction.InputBox($"请输入pH自定义值:", "修改pH", "");
+            if (float.TryParse(input, out float value))
+            {
+                AppSession.VirtualpH = value;
+            }
+        });
 
         public DelegateCommand AgitSettingCommand => new(() =>
         {

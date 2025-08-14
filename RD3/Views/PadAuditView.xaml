@@ -63,7 +63,7 @@
             hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
             hc:DataGridAttach.ShowSelectAllButton="False"
             AutoGenerateColumns="False"
-            Background="Transparent"
+            Background="Transparent" EnableColumnVirtualization="True" EnableRowVirtualization="True" VirtualizingPanel.VirtualizationMode="Recycling"
             ColumnWidth="SizeToCells"
             HeadersVisibility="Column"
             IsReadOnly="True"
@@ -71,7 +71,8 @@
             RowHeaderWidth="60"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
-            SelectionMode="Extended">
+            SelectionMode="Extended"
+            VirtualizingPanel.IsVirtualizing="True">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="100"

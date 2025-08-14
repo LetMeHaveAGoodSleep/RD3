@@ -63,6 +63,8 @@
             Background="Transparent"
             CanUserSortColumns="False"
             ColumnWidth="SizeToCells"
+            EnableColumnVirtualization="True"
+            EnableRowVirtualization="True"
             FontSize="{DynamicResource NormalFontSize}"
             HeadersVisibility="Column"
             IsReadOnly="True"
@@ -73,7 +75,9 @@
             ScrollViewer.HorizontalScrollBarVisibility="Visible"
             ScrollViewer.VerticalScrollBarVisibility="Visible"
             SelectionMode="Extended"
-            SelectionUnit="FullRow">
+            SelectionUnit="FullRow"
+            VirtualizingPanel.IsVirtualizing="True"
+            VirtualizingPanel.VirtualizationMode="Recycling">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="80"
