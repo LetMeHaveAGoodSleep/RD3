@@ -64,7 +64,7 @@
             hc:DataGridAttach.ShowRowNumber="True"
             hc:DataGridAttach.ShowSelectAllButton="False"
             AutoGenerateColumns="False"
-            Background="Transparent" VirtualizingPanel.IsVirtualizing="True"
+            Background="Transparent"
             CanUserSortColumns="True"
             ColumnWidth="SizeToCells"
             EnableColumnVirtualization="True"
@@ -78,6 +78,7 @@
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             SelectionMode="Extended"
             Style="{StaticResource DataGridBaseStyle}"
+            VirtualizingPanel.IsVirtualizing="True"
             VirtualizingStackPanel.VirtualizationMode="Recycling">
             <DataGrid.Columns>
                 <DataGridTextColumn

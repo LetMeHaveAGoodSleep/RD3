@@ -21,8 +21,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XZ.OnnxRun", "XZ.OnnxRun\XZ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XZ.SQLite", "XZ.SQLite\XZ.SQLite.csproj", "{EFB11CAA-32DA-4436-B05C-FFFA0F111ABF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomWndow", "C:\Users\Administrator\Downloads\CustomWndow\CustomWndow.csproj", "{FBA650BA-F119-4B36-B21D-B7C6D13DCCFE}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,10 +63,6 @@ Global
 		{EFB11CAA-32DA-4436-B05C-FFFA0F111ABF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFB11CAA-32DA-4436-B05C-FFFA0F111ABF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFB11CAA-32DA-4436-B05C-FFFA0F111ABF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FBA650BA-F119-4B36-B21D-B7C6D13DCCFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FBA650BA-F119-4B36-B21D-B7C6D13DCCFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FBA650BA-F119-4B36-B21D-B7C6D13DCCFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FBA650BA-F119-4B36-B21D-B7C6D13DCCFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
