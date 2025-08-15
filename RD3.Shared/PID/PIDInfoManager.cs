@@ -64,7 +64,7 @@ namespace RD3.Shared
             if (File.Exists(originalFile))
             {
                 File.WriteAllText(newFile,json);
-                File.Move(originalFile, newFile, true);
+                File.Move(newFile, originalFile, true);
                 File.Delete(newFile);
             }
             else

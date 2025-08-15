@@ -78,6 +78,7 @@ namespace RD3
                     break;
                 case SoftwarePlatform.WindowsPad:
                     User user = UserManager.GetInstance().Users?.ToList().Find(t => t.Type == UserType.Admin);
+                    user.DevieceIDs = "G01";
                     if (user != null)
                     {
                         AppSession.CurrentUser = user;
@@ -93,8 +94,15 @@ namespace RD3
             mutex = new Mutex(true, mutexName, out createdNew);
             if (createdNew|| System.Diagnostics.Debugger.IsAttached)
             {
-                //使用CPU高性能模式
-                SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED);
+                try
+                {
+                    //使用CPU高性能模式
+                    SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Error(ex);
+                }
 
                 FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false;
                 DispatcherUnhandledException += App_DispatcherUnhandledException;

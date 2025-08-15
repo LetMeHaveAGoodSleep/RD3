@@ -527,7 +527,7 @@ namespace RD3.ViewModels
             }
 
             DeviceParameterCol = new ObservableCollection<DeviceParameter>(temp);
-            CurrentDeviceParameter = DeviceParameterCol[0];
+            CurrentDeviceParameter = DeviceParameterCol.Count > 0 ? DeviceParameterCol[0] : null;
 
             //    var navigationParameters = new NavigationParameters();
             //    regionManager.Regions[PrismManager.MainViewRegionName].RequestNavigate(

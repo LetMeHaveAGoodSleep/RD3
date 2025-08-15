@@ -342,40 +342,48 @@
                             Canvas.Left="842"
                             Canvas.Top="10"
                             Orientation="Horizontal"
-                            Spacing="15">
+                            Spacing="5">
                             <DockPanel LastChildFill="False">
-                                <materialDesign:PackIcon
-                                    Width="40"
-                                    Height="40"
+                                <Button
+                                    Height="66"
+                                    Padding="15"
+                                    hc:IconElement.Geometry="{StaticResource GeometryAgit}"
+                                    hc:IconElement.Height="36"
+                                    hc:IconElement.Width="36"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Command="{Binding AgitSettingCommand}"
                                     DockPanel.Dock="Bottom"
-                                    Foreground="{DynamicResource FixedGradientBrush}"
-                                    Kind="AlphaMCircle">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding AgitSettingCommand}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </materialDesign:PackIcon>
+                                    Foreground="{DynamicResource FixedGradientBrush}" />
                             </DockPanel>
-                            <TextBox
-                                Width="100"
-                                materialDesign:HintAssist.Hint="转速(rpm)"
-                                IsEnabled="False"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                Text="{Binding CurrentDeviceParameter.Agit, StringFormat={}{0:F0}}" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="100"
+                                    VerticalAlignment="Top"
+                                    materialDesign:HintAssist.Hint="转速(rpm)"
+                                    IsEnabled="False"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                    <TextBox.Text>
+                                        <MultiBinding StringFormat="{}{0:F0} / {1:F0}">
+                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.AgitParam.Agit_PV" />
+                                            <Binding Mode="OneWay" Path="CurrentDeviceParameter.Agit" />
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
                         </hc:UniformSpacingPanel>
                         <!--  关键参数  -->
                         <hc:Divider
                             Canvas.Left="639"
                             Canvas.Top="164"
-                            Width="180"
+                            Width="192"
                             LineStroke="#FF7F7F7F"
                             LineStrokeThickness="2"
                             Orientation="Horizontal" />
                         <hc:Divider
                             Canvas.Left="746"
                             Canvas.Top="95"
-                            Width="75"
+                            Width="85"
                             LineStroke="#FF7F7F7F"
                             LineStrokeThickness="2"
                             Orientation="Horizontal" />
@@ -383,27 +391,35 @@
                             Canvas.Left="842"
                             Canvas.Top="85"
                             Orientation="Horizontal"
-                            Spacing="10">
+                            Spacing="5">
                             <DockPanel LastChildFill="False">
-                                <materialDesign:PackIcon
-                                    Width="40"
-                                    Height="40"
+                                <Button
+                                    Height="66"
+                                    Padding="15"
+                                    hc:IconElement.Geometry="{StaticResource GeometryDO}"
+                                    hc:IconElement.Height="36"
+                                    hc:IconElement.Width="36"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Command="{Binding DOSettingCommand}"
                                     DockPanel.Dock="Bottom"
-                                    Foreground="{DynamicResource FixedGradientBrush}"
-                                    Kind="AlphaDCircle">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding DOSettingCommand}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </materialDesign:PackIcon>
+                                    Foreground="{DynamicResource FixedGradientBrush}" />
                             </DockPanel>
-                            <TextBox
-                                Width="100"
-                                materialDesign:HintAssist.Hint="溶氧(%)"
-                                IsEnabled="False"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                Text="{Binding CurrentDeviceParameter.DO, StringFormat={}{0:F2}}" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="100"
+                                    VerticalAlignment="Top"
+                                    materialDesign:HintAssist.Hint="溶氧(%)"
+                                    IsEnabled="False"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                    <TextBox.Text>
+                                        <MultiBinding StringFormat="{}{0:F2} / {1:F2}">
+                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.DOParam.DO_PV" />
+                                            <Binding Mode="OneWay" Path="CurrentDeviceParameter.DO" />
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
                         </hc:UniformSpacingPanel>
                         <hc:Divider
                             Canvas.Left="740"
@@ -416,32 +432,40 @@
                             Canvas.Left="842"
                             Canvas.Top="150"
                             Orientation="Horizontal"
-                            Spacing="10">
+                            Spacing="5">
                             <DockPanel LastChildFill="False">
-                                <materialDesign:PackIcon
-                                    Width="40"
-                                    Height="40"
+                                <Button
+                                    Height="66"
+                                    Padding="15"
+                                    hc:IconElement.Geometry="{StaticResource GeometrypH}"
+                                    hc:IconElement.Height="36"
+                                    hc:IconElement.Width="36"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Command="{Binding pHSettingCommand}"
                                     DockPanel.Dock="Bottom"
-                                    Foreground="{DynamicResource FixedGradientBrush}"
-                                    Kind="AlphaPCircle">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding pHSettingCommand}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </materialDesign:PackIcon>
+                                    Foreground="{DynamicResource FixedGradientBrush}" />
                             </DockPanel>
-                            <TextBox
-                                Width="100"
-                                materialDesign:HintAssist.Hint="pH"
-                                IsEnabled="False"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                Text="{Binding CurrentDeviceParameter.PH, StringFormat={}{0:F2}}" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="100"
+                                    VerticalAlignment="Top"
+                                    materialDesign:HintAssist.Hint="pH"
+                                    IsEnabled="False"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                    <TextBox.Text>
+                                        <MultiBinding StringFormat="{}{0:F2} / {1:F2}">
+                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.PHParam.PH_PV" />
+                                            <Binding Mode="OneWay" Path="CurrentDeviceParameter.PH" />
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
                         </hc:UniformSpacingPanel>
                         <hc:Divider
                             Canvas.Left="746"
                             Canvas.Top="230"
-                            Width="75"
+                            Width="85"
                             LineStroke="#FF7F7F7F"
                             LineStrokeThickness="2"
                             Orientation="Horizontal" />
@@ -449,27 +473,35 @@
                             Canvas.Left="842"
                             Canvas.Top="215"
                             Orientation="Horizontal"
-                            Spacing="15">
+                            Spacing="5">
                             <DockPanel LastChildFill="False">
-                                <materialDesign:PackIcon
-                                    Width="40"
-                                    Height="40"
+                                <Button
+                                    Height="66"
+                                    Padding="15"
+                                    hc:IconElement.Geometry="{StaticResource GeometryTemp}"
+                                    hc:IconElement.Height="36"
+                                    hc:IconElement.Width="36"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Command="{Binding TempSettingCommand}"
                                     DockPanel.Dock="Bottom"
-                                    Foreground="{DynamicResource FixedGradientBrush}"
-                                    Kind="AlphaTCircle">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                                            <i:InvokeCommandAction Command="{Binding TempSettingCommand}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </materialDesign:PackIcon>
+                                    Foreground="{DynamicResource FixedGradientBrush}" />
                             </DockPanel>
-                            <TextBox
-                                Width="100"
-                                materialDesign:HintAssist.Hint="温度(℃)"
-                                IsEnabled="False"
-                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                Text="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Width="100"
+                                    VerticalAlignment="Top"
+                                    materialDesign:HintAssist.Hint="温度(℃)"
+                                    IsEnabled="False"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                    <TextBox.Text>
+                                        <MultiBinding StringFormat="{}{0:F2} / {1:F2}">
+                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.TempParam.Temp_PV" />
+                                            <Binding Mode="OneWay" Path="CurrentDeviceParameter.Temp" />
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
                         </hc:UniformSpacingPanel>
                         <hc:UniformSpacingPanel
                             Canvas.Left="575"
