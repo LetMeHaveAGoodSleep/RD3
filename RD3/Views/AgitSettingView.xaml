@@ -62,8 +62,15 @@
         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
             <TextBox
                 materialDesign:HintAssist.Hint="设定转速(rpm)"
+                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F0}}" />
+                Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F0}}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
             <TextBox
                 materialDesign:HintAssist.Hint="当前转速(rpm)"
                 IsEnabled="False"
@@ -73,45 +80,33 @@
         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
             <TextBox
                 materialDesign:HintAssist.Hint="转速下限(rpm)"
+                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.AgitParam.LowerLimit, StringFormat={}{0:F0}}" />
+                Text="{Binding CurrentDeviceParameter.AgitParam.LowerLimit, StringFormat={}{0:F0}}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
             <TextBox
                 materialDesign:HintAssist.Hint="转速上限(rpm)"
+                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.AgitParam.UpperLimit, StringFormat={}{0:F0}}" />
+                Text="{Binding CurrentDeviceParameter.AgitParam.UpperLimit, StringFormat={}{0:F0}}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
         </hc:UniformSpacingPanel>
         <ToggleButton
-            Height="35"
-            hc:StatusSwitchElement.HideUncheckedElement="True"
-            IsChecked="{Binding CurrentDeviceParameter.AgitParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+            Width="230"
+            Height="40"
+            materialDesign:HintAssist.Hint="开启"
+            IsChecked="{Binding CurrentDeviceParameter.AgitParam.IsControling}"
             IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-            Style="{StaticResource ToggleButtonCustom}">
-            <hc:StatusSwitchElement.CheckedElement>
-                <Border
-                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                    BorderBrush="{DynamicResource PrimaryBrush}"
-                    BorderThickness="1"
-                    CornerRadius="{StaticResource DefaultCornerRadius}">
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Foreground="{DynamicResource PrimaryBrush}"
-                        Text="关闭" />
-                </Border>
-            </hc:StatusSwitchElement.CheckedElement>
-            <Border
-                Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                Height="35"
-                Background="{DynamicResource PrimaryBrush}"
-                BorderBrush="{DynamicResource PrimaryBrush}"
-                CornerRadius="{StaticResource DefaultCornerRadius}">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Foreground="White"
-                    Text="开启" />
-            </Border>
-        </ToggleButton>
+            Style="{StaticResource MaterialDesignSwitchLightToggleButton}" />
     </hc:UniformSpacingPanel>
 </UserControl>

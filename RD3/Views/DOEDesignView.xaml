@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:helix="http://helix-toolkit.org/wpf"
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -260,6 +261,20 @@
             BorderThickness="2">
             <DockPanel LastChildFill="True">
                 <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='3D视图'}" />
+                <helix:HelixViewport3D
+                    Name="viewport"
+                    DockPanel.Dock="Bottom"
+                    ShowCoordinateSystem="True"
+                    ZoomExtentsWhenLoaded="True">
+                    <helix:HelixViewport3D.Camera>
+                        <PerspectiveCamera LookDirection="5,10,10" UpDirection="0,0,1" />
+                    </helix:HelixViewport3D.Camera>
+                    <ModelVisual3D Content="{Binding Lights}" />
+                    <rd3:ScatterPlotVisual3D
+                        Points="{Binding Data}"
+                        SurfaceBrush="{Binding SurfaceBrush}"
+                        Values="{Binding Values}" />
+                </helix:HelixViewport3D>
             </DockPanel>
         </Border>
     </Grid>

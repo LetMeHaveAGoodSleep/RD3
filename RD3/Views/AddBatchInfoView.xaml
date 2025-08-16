@@ -50,14 +50,26 @@
             Width="200"
             hc:InfoElement.Title="菌种信息"
             Style="{StaticResource TextBoxExtend}"
-            Text="{Binding Strain}" />
+            Text="{Binding Strain}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding OpenNormalKeyBoardCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
         <TextBox
             Name="batchID"
             Width="200"
             hc:InfoElement.Title="测试人员"
             IsEnabled="True"
             Style="{StaticResource TextBoxExtend}"
-            Text="{Binding Tester}" />
+            Text="{Binding Tester}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding OpenNormalKeyBoardCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
         <TextBox
             Name="collectTime"
             Width="200"
@@ -66,7 +78,13 @@
             IsEnabled="True"
             Style="{StaticResource TextBoxExtend}"
             Text="{Binding Remark}"
-            TextWrapping="Wrap" />
+            TextWrapping="Wrap">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                    <i:InvokeCommandAction Command="{Binding OpenNormalKeyBoardCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
         <DockPanel LastChildFill="False">
             <hc:UniformSpacingPanel
                 Margin="0,0,8,0"

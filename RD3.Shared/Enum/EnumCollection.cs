@@ -8,6 +8,21 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
+    public enum KeyBoardType
+    {
+        [Description("全键盘")]
+        Normal,
+        [Description("纯数字键盘")]
+        Number,
+        [Description("数字+符号键盘")]
+        NumberSymbol,
+        [Description("字母键盘")]
+        Letters,
+        [Description("字母+数字键盘")]
+        LettersNumber,
+        [Description("字母+数字+功能键盘")]
+        LettersNumbernoFunctionkeys
+    }
     // 定义逻辑类型（默认为逻辑与）
     public enum LogicType 
     {

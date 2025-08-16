@@ -128,6 +128,11 @@
                             <Binding Path="IsCondition2Met" />
                         </MultiBinding>
                     </TextBox.Visibility>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </TextBox>
                 <TextBox
                     Width="115"
@@ -257,49 +262,33 @@
                         <TextBox
                             materialDesign:HintAssist.Hint="消泡周期(s)"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding PumpInfo.Cycle, StringFormat={}{0:F0}}" />
+                            Text="{Binding PumpInfo.Cycle, StringFormat={}{0:F0}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                         <TextBox
                             Grid.Column="2"
                             materialDesign:HintAssist.Hint="占空比(%)"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding PumpInfo.DutyCycle, StringFormat={}{0:F2}}" />
+                            Text="{Binding PumpInfo.DutyCycle, StringFormat={}{0:F2}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                     </Grid>
                 </hc:UniformSpacingPanel>
                 <ToggleButton
                     Width="230"
-                    Height="35"
-                    hc:StatusSwitchElement.HideUncheckedElement="True"
+                    Height="40"
                     Command="{Binding PumpControlCommand}"
                     IsChecked="{Binding PumpInfo.IsControling, Mode=OneWay}"
                     IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
-                    Style="{StaticResource ToggleButtonCustom}">
-                    <hc:StatusSwitchElement.CheckedElement>
-                        <Border
-                            Width="230"
-                            Height="35"
-                            Background="{DynamicResource PrimaryBrush}"
-                            BorderBrush="{DynamicResource PrimaryBrush}"
-                            CornerRadius="{StaticResource DefaultCornerRadius}">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Foreground="White"
-                                Text="开启" />
-                        </Border>
-                    </hc:StatusSwitchElement.CheckedElement>
-                    <Border
-                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                        Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                        BorderBrush="{DynamicResource PrimaryBrush}"
-                        BorderThickness="1"
-                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Foreground="{DynamicResource PrimaryBrush}"
-                            Text="关闭" />
-                    </Border>
-                </ToggleButton>
+                    Style="{StaticResource MaterialDesignSwitchLightToggleButton}" />
             </hc:UniformSpacingPanel>
         </hc:UniformSpacingPanel>
     </StackPanel>

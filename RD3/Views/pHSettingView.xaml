@@ -111,7 +111,13 @@
                         <TextBox
                             materialDesign:HintAssist.Hint="设定pH"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, StringFormat={}{0:F2}}" />
+                            Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, StringFormat={}{0:F2}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                         <DockPanel Grid.Column="2" LastChildFill="False">
                             <CheckBox
                                 Content="碱(+)"
@@ -152,47 +158,31 @@
                             materialDesign:HintAssist.Hint="pH下限"
                             IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.LowerLimit, StringFormat={}{0:F2}}" />
+                            Text="{Binding CurrentDeviceParameter.PHParam.LowerLimit, StringFormat={}{0:F2}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                         <TextBox
                             Grid.Column="2"
                             materialDesign:HintAssist.Hint="pH上限"
                             IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.UpperLimit, StringFormat={}{0:F2}}" />
+                            Text="{Binding CurrentDeviceParameter.PHParam.UpperLimit, StringFormat={}{0:F2}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                     </Grid>
                     <ToggleButton
                         Width="410"
-                        Height="35"
-                        hc:StatusSwitchElement.HideUncheckedElement="True"
+                        Height="40"
                         IsChecked="{Binding CurrentDeviceParameter.PHParam.IsControling}"
-                        Style="{StaticResource ToggleButtonCustom}">
-                        <hc:StatusSwitchElement.CheckedElement>
-                            <Border
-                                Width="410"
-                                Height="35"
-                                Background="{DynamicResource PrimaryBrush}"
-                                BorderBrush="{DynamicResource PrimaryBrush}"
-                                CornerRadius="{StaticResource DefaultCornerRadius}">
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Foreground="White"
-                                    Text="开启" />
-                            </Border>
-                        </hc:StatusSwitchElement.CheckedElement>
-                        <Border
-                            Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                            Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                            BorderBrush="{DynamicResource PrimaryBrush}"
-                            BorderThickness="1"
-                            CornerRadius="{StaticResource DefaultCornerRadius}">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Foreground="{DynamicResource PrimaryBrush}"
-                                Text="关闭" />
-                        </Border>
-                    </ToggleButton>
+                        Style="{StaticResource MaterialDesignSwitchLightToggleButton}" />
                 </hc:UniformSpacingPanel>
             </DockPanel>
         </GroupBox>
@@ -207,22 +197,46 @@
                             Width="90"
                             materialDesign:HintAssist.Hint="比例P"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.P, StringFormat={}{0:F2}}" />
+                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.P, StringFormat={}{0:F2}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                         <TextBox
                             Width="90"
                             materialDesign:HintAssist.Hint="积分I"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.I, StringFormat={}{0:F2}}" />
+                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.I, StringFormat={}{0:F2}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                         <TextBox
                             Width="90"
                             materialDesign:HintAssist.Hint="微分D"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.D, StringFormat={}{0:F2}}" />
+                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.D, StringFormat={}{0:F2}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                         <TextBox
                             Width="90"
                             materialDesign:HintAssist.Hint="死区"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.deadArea, StringFormat={}{0:F2}}" />
+                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.deadArea, StringFormat={}{0:F2}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                     </hc:UniformSpacingPanel>
                 </GroupBox>
                 <GroupBox Header="碱(+)" Style="{StaticResource GroupBoxTab.Small}">
@@ -231,22 +245,46 @@
                             Width="90"
                             materialDesign:HintAssist.Hint="比例P"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.P, StringFormat={}{0:F2}}" />
+                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.P, StringFormat={}{0:F2}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                         <TextBox
                             Width="90"
                             materialDesign:HintAssist.Hint="积分I"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.I, StringFormat={}{0:F2}}" />
+                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.I, StringFormat={}{0:F2}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                         <TextBox
                             Width="90"
                             materialDesign:HintAssist.Hint="微分D"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.D, StringFormat={}{0:F2}}" />
+                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.D, StringFormat={}{0:F2}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                         <TextBox
                             Width="90"
                             materialDesign:HintAssist.Hint="死区"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.deadArea, StringFormat={}{0:F2}}" />
+                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.deadArea, StringFormat={}{0:F2}}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                     </hc:UniformSpacingPanel>
                 </GroupBox>
             </hc:UniformSpacingPanel>

@@ -399,13 +399,13 @@ namespace RD3.ViewModels
         {
             CameraSettingManager.GetInstance().Save();
 
-            XCloudSDK.XCloudSDK_Device_StopMediaPlay(_hRealPlay);
-            XCloudSDK.XCloudSDK_Device_DevLogout(_deviceInfo);
-
+            //XCloudSDK.XCloudSDK_Device_StopMediaPlay(_hRealPlay);
+            //XCloudSDK.XCloudSDK_Device_DevLogout(_deviceInfo);
+            XCloudSDK.XCloudSDK_Device_DeleteDevsInfo(_deviceInfo);
             _hRealPlay = 0;
             _hUser = 0;
 
-            XCloudSDK.XCloudSDK_UnInit();
+            //XCloudSDK.XCloudSDK_UnInit();
         }
         
         public void OnDialogOpened(IDialogParameters parameters)

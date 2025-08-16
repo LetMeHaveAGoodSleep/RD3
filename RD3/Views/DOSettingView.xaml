@@ -120,7 +120,13 @@
                     FontSize="{StaticResource SubHeadFontSize}"
                     IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}" />
+                    Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
                 <hc:UniformSpacingPanel
                     Grid.Column="2"
                     Orientation="Vertical"
@@ -164,18 +170,36 @@
                         Width="100"
                         hc:InfoElement.Title="{ex:Language Key='采样周期'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.AgitSampleCycle, UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding CurrentDeviceParameter.AgitSampleCycle, UpdateSourceTrigger=LostFocus}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                     <TextBox
                         Width="100"
                         hc:InfoElement.Title="{ex:Language Key='截止频率'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.AgitSampleFrequency, UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding CurrentDeviceParameter.AgitSampleFrequency, UpdateSourceTrigger=LostFocus}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                     <TextBox
                         Width="100"
                         hc:InfoElement.Title="{ex:Language Key='时间常数'}"
                         IsReadOnly="True"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.AgitTimeConstant, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+                        Text="{Binding CurrentDeviceParameter.AgitTimeConstant, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                     <DockPanel LastChildFill="False">
                         <Button
                             Height="30"
@@ -603,13 +627,25 @@
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='转速高限(rpm)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AgitHigh, UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding MidRanging.AgitHigh, UpdateSourceTrigger=LostFocus}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='温度下限(℃)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.TempDOLowerLimit, UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding CurrentDeviceParameter.TempDOLowerLimit, UpdateSourceTrigger=LostFocus}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                 </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <ComboBox
@@ -626,19 +662,37 @@
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='通气下限'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.InitialAir, UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding MidRanging.InitialAir, UpdateSourceTrigger=LostFocus}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='通气上限'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AirUpperLimit, UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding MidRanging.AirUpperLimit, UpdateSourceTrigger=LostFocus}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='补料下限(mL/h)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.FeedDOLowerLimit, UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding CurrentDeviceParameter.FeedDOLowerLimit, UpdateSourceTrigger=LostFocus}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>
@@ -653,13 +707,25 @@
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit, UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit, UpdateSourceTrigger=LostFocus}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                     <TextBox
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
                         Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit, UpdateSourceTrigger=LostFocus}" />
+                        Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit, UpdateSourceTrigger=LostFocus}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
                 </hc:UniformSpacingPanel>
 
                 <GroupBox Header="正向参数" Style="{StaticResource MaterialDesignGroupBox}">
@@ -670,13 +736,25 @@
                                 hc:InfoElement.Title="{ex:Language Key='时间间隔(秒)'}"
                                 DockPanel.Dock="Left"
                                 Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.DirectInterval, UpdateSourceTrigger=LostFocus}" />
+                                Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.DirectInterval, UpdateSourceTrigger=LostFocus}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
                             <TextBox
                                 Width="100"
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='转速步长(rpm)'}"
                                 Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.DirectStep, UpdateSourceTrigger=LostFocus}" />
+                                Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.DirectStep, UpdateSourceTrigger=LostFocus}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
                         </hc:UniformSpacingPanel>
                     </hc:UniformSpacingPanel>
                 </GroupBox>
@@ -701,36 +779,9 @@
             </hc:UniformSpacingPanel>
         </GroupBox>
         <ToggleButton
-            Height="35"
-            hc:StatusSwitchElement.HideUncheckedElement="True"
-            IsChecked="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-            Style="{StaticResource ToggleButtonCustom}">
-            <hc:StatusSwitchElement.CheckedElement>
-                <Border
-                    Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                    Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                    BorderBrush="{DynamicResource PrimaryBrush}"
-                    BorderThickness="1"
-                    CornerRadius="{StaticResource DefaultCornerRadius}">
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Foreground="{DynamicResource PrimaryBrush}"
-                        Text="关闭" />
-                </Border>
-            </hc:StatusSwitchElement.CheckedElement>
-            <Border
-                Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
-                Height="35"
-                Background="{DynamicResource PrimaryBrush}"
-                BorderBrush="{DynamicResource PrimaryBrush}"
-                CornerRadius="{StaticResource DefaultCornerRadius}">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Foreground="White"
-                    Text="开启" />
-            </Border>
-        </ToggleButton>
+            Width="530"
+            Height="40"
+            IsChecked="{Binding CurrentDeviceParameter.DOParam.IsControling}"
+            Style="{StaticResource MaterialDesignSwitchLightToggleButton}" />
     </hc:UniformSpacingPanel>
 </UserControl>

@@ -54,8 +54,7 @@ namespace RD3.ViewModels
 
         public MFCViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += (s, e) =>
+            Thread thread = new Thread(new ThreadStart(() => 
             {
                 while (true)
                 {
@@ -93,11 +92,13 @@ namespace RD3.ViewModels
                     }
                     Thread.Sleep(1000);
                 }
-            };
-            worker.RunWorkerAsync();
+            }));
+            thread.IsBackground = true;
+            thread.Priority = ThreadPriority.BelowNormal;
+            thread.Start();
 
-            BackgroundWorker worker1 = new BackgroundWorker();
-            worker1.DoWork += (s, e) => 
+
+            Thread thread1 = new Thread(new ThreadStart(() =>
             {
                 while (true)
                 {
@@ -116,14 +117,18 @@ namespace RD3.ViewModels
                             Controller.MFCInfo.IsControling = Controller.MFCInfo.IsControling;
                         }
                     }
-                    catch (Exception ex) { }
+                    catch (Exception ex)
+                    {
+                    }
                     finally
                     {
                         Thread.Sleep(1000);
                     }
                 }
-            };
-            worker1.RunWorkerAsync();
+            }));
+            thread1.IsBackground = true;
+            thread1.Priority = ThreadPriority.BelowNormal;
+            thread1.Start();
         }
     }
 }

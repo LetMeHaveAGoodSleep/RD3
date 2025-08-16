@@ -1,4 +1,6 @@
 ﻿using HandyControl.Tools.Extension;
+using HelixToolkit.Wpf;
+using ImTools;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
@@ -12,12 +14,35 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Media3D;
 
 namespace RD3.ViewModels
 {
     public class DOEDesignViewModel : BaseViewModel, IDialogAware
     {
-       public string[] Columns
+        public Point3D[] Data { get; set; }
+
+        public double[] Values { get; set; }
+
+        public Model3DGroup Lights
+        {
+            get
+            {
+                var group = new Model3DGroup();
+                group.Children.Add(new AmbientLight(System.Windows.Media.Colors.White));
+                return group;
+            }
+        }
+
+        public System.Windows.Media.Brush SurfaceBrush
+        {
+            get
+            {
+                return GradientBrushes.RainbowStripes;
+            }
+        }
+
+        public string[] Columns
         {
             get;
             private set;
@@ -95,11 +120,6 @@ namespace RD3.ViewModels
 
         public  DelegateCommand GenerateCommand => new(async () =>
         {
-            //if (SelectedDesignType)
-            //{
-            //    await DialogExtensions.Info("温馨提示", "请选择设计类型!");
-            //    return;
-            //}
             foreach (var item in _designCol)
             {
                 if ((item.Low == 0 && item.High == 0) || item.High < item.Low)
@@ -110,6 +130,8 @@ namespace RD3.ViewModels
             }
 
             GenerateDOEResult();
+
+            Generate3DView();
         });
 
         public DelegateCommand OKCommand => new(async () =>
@@ -221,6 +243,32 @@ namespace RD3.ViewModels
                     }
                     break;
             }
+        }
+
+        private void Generate3DView()
+        {
+            Data = Enumerable.Range(0, 7 * 7 * 7).Select(i => new Point3D(i % 7, (i % 49) / 7, i / 49)).ToArray();
+
+            var rnd = new Random();
+            this.Values = Data.Select(d => rnd.NextDouble()).ToArray();
+
+            //var points = new Point3D[DataSource.Rows.Count];
+            //for (int i = 0; i < DataSource.Rows.Count; i++)
+            //{
+            //    points[i] = new Point3D(
+            //        Convert.ToDouble(DataSource.Rows[i][1]), // X坐标
+            //        Convert.ToDouble(DataSource.Rows[i][2]), // Y坐标
+            //        Convert.ToDouble(DataSource.Rows[i][3])  // Z坐标
+            //    );
+            //}
+            //Data = points;
+
+            //var rnd = new Random();
+            //this.Values = Data.Select(d => rnd.NextDouble()).ToArray();
+
+            RaisePropertyChanged("Data");
+            RaisePropertyChanged("Values");
+            RaisePropertyChanged("SurfaceBrush");
         }
     }
 }

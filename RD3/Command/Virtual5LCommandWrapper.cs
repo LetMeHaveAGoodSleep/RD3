@@ -19,6 +19,8 @@ namespace RD3.Shared
         double old = -1f;
         float mfc1FlowRate = -1f;
         float mfc2FlowRate = -1f;
+        float mfc3FlowRate = -1f;
+        float mfc4FlowRate = -1f;
         int agit = -1;
         float temperature = -1f;
         float pump1FlowRate = -1f;
@@ -95,9 +97,9 @@ namespace RD3.Shared
             realTime.MFC1FlowCapacity = RandomNumberUtil.GetRandomSingle();
             realTime.MFC2FlowRate = mfc2FlowRate == -1 ? RandomNumberUtil.GetRandomSingle() : mfc2FlowRate;
             realTime.MFC2FlowCapacity = RandomNumberUtil.GetRandomSingle();
-            realTime.MFC3FlowRate = RandomNumberUtil.GetRandomSingle();
+            realTime.MFC3FlowRate = mfc3FlowRate == -1 ? RandomNumberUtil.GetRandomSingle() : mfc3FlowRate;
             realTime.MFC3FlowCapacity = RandomNumberUtil.GetRandomSingle();
-            realTime.MFC4FlowRate = RandomNumberUtil.GetRandomSingle();
+            realTime.MFC4FlowRate = mfc4FlowRate == -1 ? RandomNumberUtil.GetRandomSingle() : mfc4FlowRate;
             realTime.MFC4FlowCapacity = RandomNumberUtil.GetRandomSingle();
             realTime.MFC5FlowRate = RandomNumberUtil.GetRandomSingle();
             realTime.MFC5FlowCapacity = RandomNumberUtil.GetRandomSingle();
@@ -473,6 +475,14 @@ namespace RD3.Shared
             else if(param.MFCNo == 2)
             {
                 mfc2FlowRate = param.FlowSpeed;
+            }
+            else if (param.MFCNo == 3)
+            {
+                mfc3FlowRate = param.FlowSpeed;
+            }
+            else if (param.MFCNo == 4)
+            {
+                mfc4FlowRate = param.FlowSpeed;
             }
             return;
         }

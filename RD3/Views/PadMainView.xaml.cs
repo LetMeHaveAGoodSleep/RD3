@@ -36,7 +36,7 @@ namespace RD3.Views
     /// <summary>
     /// PadMainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class PadMainView : HandyControl.Controls.GlowWindow
+    public partial class PadMainView : System.Windows.Window
     {
         Dictionary<string, (Crosshair, ScottPlot.Plottables.Marker, ScottPlot.Plottables.Text)> dicMarker = new Dictionary<string, (Crosshair, Marker, Text)>();
 
@@ -50,6 +50,7 @@ namespace RD3.Views
         {
             InitializeComponent();
             this.Closing += PadMainView_Closing;
+
             tabMenu.SelectionChanged += TabControl_SelectionChanged;
 
             FormattedTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -188,6 +189,7 @@ namespace RD3.Views
                         wpfPlot.Refresh();
                     }
                 });
+                item.TouchMove += Item_TouchMove;
 
                 item.Plot.Add.Palette = new ScottPlot.Palettes.Normal();
 
@@ -267,6 +269,121 @@ namespace RD3.Views
             GraphSetting();
         }
 
+        private void Item_TouchMove(object sender, TouchEventArgs e)
+        {
+            WpfPlot wpfPlot = sender as WpfPlot;
+            wpfPlot.Cursor = Cursors.Arrow;
+            if (!dicMarker.TryGetValue(wpfPlot.Name, out var result))
+            {
+                return;
+            }
+            Crosshair MyCrosshair = result.Item1;
+            ScottPlot.Plottables.Marker MyHighlightMarker = result.Item2;
+            ScottPlot.Plottables.Text MyHighlightText = result.Item3;
+            MyCrosshair.IsVisible = MyHighlightMarker.IsVisible = MyHighlightText.IsVisible = false;
+            // 获取当前控件的 DPI 因子
+            Matrix transformToDevice = PresentationSource.FromVisual(wpfPlot).CompositionTarget.TransformToDevice;
+            double dpiXFactor = transformToDevice.M11;//水平
+            double dpiYFactor = transformToDevice.M22;//垂直
+            TouchPoint mousePosition = e.GetTouchPoint((UIElement)sender);
+            // 考虑 DPI 缩放
+            Pixel mousePixel = new(mousePosition.Position.X, mousePosition.Position.Y);
+            Dictionary<string, DataPoint> nearestPoints = new();
+            foreach (var item in wpfPlot.Plot.PlottableList)
+            {
+                if (item.IsVisible && item is SignalXY signal)
+                {
+                    Coordinates mouseLocation = wpfPlot.Plot.GetCoordinates(mousePixel, wpfPlot.Plot.Axes.Bottom, signal.Axes.YAxis);
+                    DataPoint nearestPoint = signal.Data.GetNearestX(mouseLocation, wpfPlot.Plot.RenderManager.LastRender);
+                    nearestPoints.Add(signal.LegendText, nearestPoint);
+                }
+            }
+
+            bool pointSelected = false;
+            string signLabel = "";
+
+            StringBuilder sb = new StringBuilder();
+            foreach (var point in nearestPoints)
+            {
+                if (point.Value.IsReal)
+                {
+                    if (!pointSelected)
+                    {
+                        sb.AppendLine($"Time:{DateTime.FromOADate(point.Value.X).ToString("yyyy-MM-dd HH:mm:ss")}");
+                        signLabel = point.Key;
+                        pointSelected = true;
+                    }
+                    sb.AppendLine($"{point.Key}:{point.Value.Y.ToString("F2")}");
+                }
+            }
+
+            if (pointSelected)
+            {
+                var scatter = wpfPlot.Plot.PlottableList.Find(c => c is SignalXY signal && signal.IsVisible && signal.LegendText == signLabel);
+                if (scatter != null)
+                {
+                    SignalXY signal = (scatter as SignalXY);
+                    DataPoint point = nearestPoints[signLabel];
+
+                    MyCrosshair.IsVisible = true;
+                    MyCrosshair.Position = point.Coordinates;
+                    MyCrosshair.LineColor = signal.MarkerStyle.FillColor;
+                    MyCrosshair.Axes.YAxis = signal.Axes.YAxis;
+                    MyCrosshair.Axes.XAxis = signal.Axes.XAxis;
+
+                    MyHighlightMarker.IsVisible = true;
+                    MyHighlightMarker.Location = point.Coordinates;
+                    MyHighlightMarker.MarkerStyle.LineColor = signal.MarkerStyle.FillColor;
+                    MyHighlightMarker.Axes.YAxis = signal.Axes.YAxis;
+                    MyHighlightMarker.Axes.XAxis = signal.Axes.XAxis;
+
+                    MyHighlightText.IsVisible = true;
+                    MyHighlightText.Location = point.Coordinates;
+                    MyHighlightText.LabelText = sb.ToString();
+
+                    MyHighlightText.LabelFontColor = signal.MarkerStyle.FillColor;
+                    MyHighlightText.Axes.YAxis = signal.Axes.YAxis;
+                    MyHighlightText.Axes.XAxis = signal.Axes.XAxis;
+
+                    wpfPlot.Refresh();
+                }
+            }
+            if (!pointSelected && MyCrosshair.IsVisible)
+            {
+                MyCrosshair.IsVisible = false;
+                MyHighlightMarker.IsVisible = false;
+                MyHighlightText.IsVisible = false;
+                wpfPlot.Refresh();
+            }
+        }
+
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            const int WM_NCHITTEST = 0x0084;
+            if (msg == WM_NCHITTEST)
+            {
+                // 始终返回非可拖动区域标识
+                handled = true;
+                return (IntPtr)1; // HTNOWHERE
+            }
+            return IntPtr.Zero;
+        }
+
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("dwmapi.dll", PreserveSig = false)]
+        public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
+        private void ForceFullScreen()
+        {
+            var hwnd = new WindowInteropHelper(this).Handle;
+            // 移除WS_THICKFRAME和WS_MAXIMIZEBOX样式
+            SetWindowLong(hwnd, -16, 0x10000000);
+            // 禁用DWM动画
+            int disableAnim = 1;
+            DwmSetWindowAttribute(hwnd, 3, ref disableAnim, sizeof(int));
+        }
 
         /// <summary>
         /// 图表轴等参数配置
@@ -558,35 +675,6 @@ namespace RD3.Views
             });
         }
 
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            const int WM_NCHITTEST = 0x0084;
-            if (msg == WM_NCHITTEST)
-            {
-                // 始终返回非可拖动区域标识
-                handled = true;
-                return (IntPtr)1; // HTNOWHERE
-            }
-            return IntPtr.Zero;
-        }
-
-        [DllImport("user32.dll")]
-        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern int DwmSetWindowAttribute(IntPtr hwnd,int attr,ref int attrValue,int attrSize);
-
-        private void ForceFullScreen()
-        {
-            var hwnd = new WindowInteropHelper(this).Handle;
-            // 移除WS_THICKFRAME和WS_MAXIMIZEBOX样式
-            SetWindowLong(hwnd, -16, 0x10000000);
-            // 禁用DWM动画
-            int disableAnim = 1;
-            DwmSetWindowAttribute(hwnd, 3, ref disableAnim, sizeof(int));
-        }
-
-
         private void RefershPumpMFC()
         {
             pump1.ResumePumpSetting(1);
@@ -650,25 +738,6 @@ namespace RD3.Views
                 {
                     ((PadAuditViewModel)auditView.DataContext).CancelLoadCommand.Execute();
                 }
-            }
-        }
-
-
-        private void WindowCloseEvent(object sender, MouseButtonEventArgs e)
-        {
-            if (AppSession.CurrentUser.Type != Shared.UserType.Admin)
-            {
-                HandyControl.Controls.Growl.WarningGlobal("非管理员不可关闭软件！");
-            }
-            else
-            {
-                if (HandyControl.Controls.MessageBox.Show("确定退出本系统？", "温馨提示", MessageBoxButton.YesNoCancel, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    Application.Current.Shutdown();
-                    Environment.Exit(0);
-                    return;
-                }
-                this.WindowState = WindowState.Maximized;
             }
         }
     }

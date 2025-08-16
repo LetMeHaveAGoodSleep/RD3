@@ -60,8 +60,15 @@
             <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                 <TextBox
                     materialDesign:HintAssist.Hint="设定流量(L/min)"
+                    IsEnabled="{Binding MFCInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding MFCInfo.FlowRate_SP, StringFormat={}{0:F2}}" />
+                    Text="{Binding MFCInfo.FlowRate_SP, StringFormat={}{0:F2}}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
                 <TextBox
                     materialDesign:HintAssist.Hint="当前流量(L/min)"
                     IsEnabled="False"
@@ -70,39 +77,11 @@
             </hc:UniformSpacingPanel>
             <ToggleButton
                 Width="250"
-                Height="35"
-                hc:StatusSwitchElement.HideUncheckedElement="True"
+                Height="40"
                 Command="{Binding MFCControlCommand}"
-                IsChecked="{Binding MFCInfo.IsControling, Mode=OneWay, Converter={StaticResource InverseBooleanConverter}}"
+                IsChecked="{Binding MFCInfo.IsControling}"
                 IsEnabled="{Binding MFCInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
-                Style="{StaticResource ToggleButtonCustom}">
-                <hc:StatusSwitchElement.CheckedElement>
-                    <Border
-                        Width="250"
-                        Height="35"
-                        BorderBrush="{DynamicResource PrimaryBrush}"
-                        BorderThickness="1"
-                        CornerRadius="{StaticResource DefaultCornerRadius}">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Foreground="{DynamicResource PrimaryBrush}"
-                            Text="关闭" />
-                    </Border>
-                </hc:StatusSwitchElement.CheckedElement>
-                <Border
-                    Width="250"
-                    Height="35"
-                    Background="{DynamicResource PrimaryBrush}"
-                    BorderBrush="{DynamicResource PrimaryBrush}"
-                    CornerRadius="{StaticResource DefaultCornerRadius}">
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Foreground="White"
-                        Text="开启" />
-                </Border>
-            </ToggleButton>
+                Style="{StaticResource MaterialDesignSwitchLightToggleButton}" />
         </hc:UniformSpacingPanel>
     </StackPanel>
 </UserControl>

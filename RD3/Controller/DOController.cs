@@ -1167,8 +1167,7 @@ namespace RD3.Controller
                                 Thread.Sleep(1000);
                             }
 
-                            string result = File.ReadAllText(FileConst.PidInfoPath);
-                            List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
+                            var pIDInfos = PIDInfoManager.GetInstance().PIDInfos;
                             if (pIDInfos == null)
                             {
                                 realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
