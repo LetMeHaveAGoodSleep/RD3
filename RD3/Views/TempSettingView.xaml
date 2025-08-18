@@ -2,6 +2,7 @@
     x:Class="RD3.Views.TempSettingView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:RD3.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
@@ -62,7 +63,7 @@
         <GroupBox Header="基础参数" Style="{StaticResource MaterialDesignGroupBox}">
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <TextBox
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         materialDesign:HintAssist.Hint="设定温度(℃)"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -72,7 +73,7 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
+                    </control:TextBoxNoAutoKeyboard>
                     <TextBox
                         Width="100"
                         materialDesign:HintAssist.Hint="当前温度(℃)"
@@ -81,7 +82,7 @@
                         Text="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}" />
                 </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <TextBox
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         materialDesign:HintAssist.Hint="温度下限(℃)"
                         IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
@@ -92,8 +93,8 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
-                    <TextBox
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         materialDesign:HintAssist.Hint="温度上限(℃)"
                         IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
@@ -104,7 +105,7 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
+                    </control:TextBoxNoAutoKeyboard>
                 </hc:UniformSpacingPanel>
                 <ToggleButton
                     Width="210"
@@ -129,7 +130,7 @@
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBox
+                    <control:TextBoxNoAutoKeyboard
                         materialDesign:HintAssist.Hint="比例P"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Text="{Binding CurrentDeviceParameter.TempParam.PIDParam.P, StringFormat={}{0:F2}}">
@@ -138,8 +139,8 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
-                    <TextBox
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
                         Grid.Column="2"
                         materialDesign:HintAssist.Hint="积分I"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -149,8 +150,8 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
-                    <TextBox
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
                         Grid.Row="2"
                         materialDesign:HintAssist.Hint="微分D"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -160,8 +161,8 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
-                    <TextBox
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
                         Grid.Row="2"
                         Grid.Column="2"
                         materialDesign:HintAssist.Hint="系数K"
@@ -172,7 +173,7 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
+                    </control:TextBoxNoAutoKeyboard>
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>

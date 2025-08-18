@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behavior="clr-namespace:RD3.Behaviors"
     xmlns:common="clr-namespace:RD3.Common"
+    xmlns:control="clr-namespace:RD3.Controls"
     xmlns:cv="clr-namespace:RD3.Common.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
@@ -113,7 +114,7 @@
                     <ColumnDefinition Width="5" />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
-                <TextBox
+                <control:TextBoxNoAutoKeyboard
                     materialDesign:HintAssist.HelperText=""
                     materialDesign:HintAssist.Hint="设定溶氧(%)"
                     materialDesign:TextFieldAssist.HasClearButton="True"
@@ -126,7 +127,7 @@
                             <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </TextBox>
+                </control:TextBoxNoAutoKeyboard>
                 <hc:UniformSpacingPanel
                     Grid.Column="2"
                     Orientation="Vertical"
@@ -166,7 +167,7 @@
                             Style="{StaticResource MaterialDesignCheckBox}"
                             ToolTip="转速是否开启滤波" />
                     </DockPanel>
-                    <TextBox
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         hc:InfoElement.Title="{ex:Language Key='采样周期'}"
                         Style="{StaticResource TextBoxExtend}"
@@ -176,8 +177,8 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
-                    <TextBox
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         hc:InfoElement.Title="{ex:Language Key='截止频率'}"
                         Style="{StaticResource TextBoxExtend}"
@@ -187,8 +188,8 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
-                    <TextBox
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         hc:InfoElement.Title="{ex:Language Key='时间常数'}"
                         IsReadOnly="True"
@@ -199,7 +200,7 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
+                    </control:TextBoxNoAutoKeyboard>
                     <DockPanel LastChildFill="False">
                         <Button
                             Height="30"
@@ -622,7 +623,7 @@
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding MidRanging.AgitUpperLimit, UpdateSourceTrigger=LostFocus}"
                         Visibility="Collapsed" />
-                    <TextBox
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='转速高限(rpm)'}"
@@ -633,8 +634,8 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
-                    <TextBox
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='温度下限(℃)'}"
@@ -645,7 +646,7 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
+                    </control:TextBoxNoAutoKeyboard>
                 </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <ComboBox
@@ -657,7 +658,7 @@
                         <ComboBoxItem Content="VVM" />
                         <ComboBoxItem Content="L/min" />
                     </ComboBox>
-                    <TextBox
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='通气下限'}"
@@ -668,8 +669,8 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
-                    <TextBox
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='通气上限'}"
@@ -680,8 +681,8 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
-                    <TextBox
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='补料下限(mL/h)'}"
@@ -692,7 +693,7 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
+                    </control:TextBoxNoAutoKeyboard>
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>
@@ -702,7 +703,7 @@
             Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Cycle}">
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <TextBox
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
@@ -713,8 +714,8 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
-                    <TextBox
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
                         Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
@@ -725,13 +726,13 @@
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </TextBox>
+                    </control:TextBoxNoAutoKeyboard>
                 </hc:UniformSpacingPanel>
 
                 <GroupBox Header="正向参数" Style="{StaticResource MaterialDesignGroupBox}">
                     <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                            <TextBox
+                            <control:TextBoxNoAutoKeyboard
                                 Width="100"
                                 hc:InfoElement.Title="{ex:Language Key='时间间隔(秒)'}"
                                 DockPanel.Dock="Left"
@@ -742,8 +743,8 @@
                                         <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                            </TextBox>
-                            <TextBox
+                            </control:TextBoxNoAutoKeyboard>
+                            <control:TextBoxNoAutoKeyboard
                                 Width="100"
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='转速步长(rpm)'}"
@@ -754,20 +755,20 @@
                                         <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                            </TextBox>
+                            </control:TextBoxNoAutoKeyboard>
                         </hc:UniformSpacingPanel>
                     </hc:UniformSpacingPanel>
                 </GroupBox>
                 <GroupBox Header="反向参数" Style="{StaticResource MaterialDesignGroupBox}">
                     <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                            <TextBox
+                            <control:TextBoxNoAutoKeyboard
                                 Width="100"
                                 hc:InfoElement.Title="{ex:Language Key='时间间隔(秒)'}"
                                 DockPanel.Dock="Left"
                                 Style="{StaticResource TextBoxExtend}"
                                 Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.ReverseInterval, UpdateSourceTrigger=LostFocus}" />
-                            <TextBox
+                            <control:TextBoxNoAutoKeyboard
                                 Width="100"
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='转速步长(rpm)'}"

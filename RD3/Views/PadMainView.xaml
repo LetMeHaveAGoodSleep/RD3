@@ -22,7 +22,7 @@
     FontSize="{StaticResource SubHeadFontSize}"
     ResizeMode="NoResize"
     ShowInTaskbar="True"
-    Topmost="True"
+    Topmost="False"
     UseLayoutRounding="True"
     WindowState="Maximized"
     mc:Ignorable="d">

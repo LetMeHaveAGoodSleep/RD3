@@ -2,6 +2,7 @@
     x:Class="RD3.Views.AgitSettingView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:RD3.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
@@ -60,7 +61,7 @@
         Orientation="Vertical"
         Spacing="10">
         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-            <TextBox
+            <control:TextBoxNoAutoKeyboard
                 materialDesign:HintAssist.Hint="设定转速(rpm)"
                 IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -70,7 +71,7 @@
                         <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-            </TextBox>
+            </control:TextBoxNoAutoKeyboard>
             <TextBox
                 materialDesign:HintAssist.Hint="当前转速(rpm)"
                 IsEnabled="False"
@@ -78,7 +79,7 @@
                 Text="{Binding CurrentDeviceParameter.Agit, StringFormat={}{0:F0}}" />
         </hc:UniformSpacingPanel>
         <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-            <TextBox
+            <control:TextBoxNoAutoKeyboard
                 materialDesign:HintAssist.Hint="转速下限(rpm)"
                 IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -88,8 +89,8 @@
                         <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-            </TextBox>
-            <TextBox
+            </control:TextBoxNoAutoKeyboard>
+            <control:TextBoxNoAutoKeyboard
                 materialDesign:HintAssist.Hint="转速上限(rpm)"
                 IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -99,7 +100,7 @@
                         <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-            </TextBox>
+            </control:TextBoxNoAutoKeyboard>
         </hc:UniformSpacingPanel>
         <ToggleButton
             Width="230"

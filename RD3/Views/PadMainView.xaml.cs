@@ -101,94 +101,94 @@ namespace RD3.Views
 
                 CreatePlotMark(item);
 
-                item.MouseMove += ((sender, e) =>
-                {
-                    WpfPlot wpfPlot = sender as WpfPlot;
-                    wpfPlot.Cursor = Cursors.Arrow;
-                    if (!dicMarker.TryGetValue(wpfPlot.Name, out var result))
-                    {
-                        return;
-                    }
-                    Crosshair MyCrosshair = result.Item1;
-                    ScottPlot.Plottables.Marker MyHighlightMarker = result.Item2;
-                    ScottPlot.Plottables.Text MyHighlightText = result.Item3;
-                    MyCrosshair.IsVisible = MyHighlightMarker.IsVisible = MyHighlightText.IsVisible = false;
-                    // 获取当前控件的 DPI 因子
-                    Matrix transformToDevice = PresentationSource.FromVisual(wpfPlot).CompositionTarget.TransformToDevice;
-                    double dpiXFactor = transformToDevice.M11;//水平
-                    double dpiYFactor = transformToDevice.M22;//垂直
-                    System.Windows.Point mousePosition = e.GetPosition((UIElement)sender);
-                    // 考虑 DPI 缩放
-                    //mousePosition = new System.Windows.Point(mousePosition.X * dpiXFactor, mousePosition.Y * dpiYFactor);
-                    Pixel mousePixel = new(mousePosition.X, mousePosition.Y);
-                    Dictionary<string, DataPoint> nearestPoints = new();
-                    foreach (var item in wpfPlot.Plot.PlottableList)
-                    {
-                        if (item.IsVisible && item is SignalXY signal)
-                        {
-                            Coordinates mouseLocation = wpfPlot.Plot.GetCoordinates(mousePixel, wpfPlot.Plot.Axes.Bottom, signal.Axes.YAxis);
-                            DataPoint nearestPoint = signal.Data.GetNearestX(mouseLocation, wpfPlot.Plot.RenderManager.LastRender);
-                            nearestPoints.Add(signal.LegendText, nearestPoint);
-                        }
-                    }
+                //item.MouseMove += ((sender, e) =>
+                //{
+                //    WpfPlot wpfPlot = sender as WpfPlot;
+                //    wpfPlot.Cursor = Cursors.Arrow;
+                //    if (!dicMarker.TryGetValue(wpfPlot.Name, out var result))
+                //    {
+                //        return;
+                //    }
+                //    Crosshair MyCrosshair = result.Item1;
+                //    ScottPlot.Plottables.Marker MyHighlightMarker = result.Item2;
+                //    ScottPlot.Plottables.Text MyHighlightText = result.Item3;
+                //    MyCrosshair.IsVisible = MyHighlightMarker.IsVisible = MyHighlightText.IsVisible = false;
+                //    // 获取当前控件的 DPI 因子
+                //    Matrix transformToDevice = PresentationSource.FromVisual(wpfPlot).CompositionTarget.TransformToDevice;
+                //    double dpiXFactor = transformToDevice.M11;//水平
+                //    double dpiYFactor = transformToDevice.M22;//垂直
+                //    System.Windows.Point mousePosition = e.GetPosition((UIElement)sender);
+                //    // 考虑 DPI 缩放
+                //    //mousePosition = new System.Windows.Point(mousePosition.X * dpiXFactor, mousePosition.Y * dpiYFactor);
+                //    Pixel mousePixel = new(mousePosition.X, mousePosition.Y);
+                //    Dictionary<string, DataPoint> nearestPoints = new();
+                //    foreach (var item in wpfPlot.Plot.PlottableList)
+                //    {
+                //        if (item.IsVisible && item is SignalXY signal)
+                //        {
+                //            Coordinates mouseLocation = wpfPlot.Plot.GetCoordinates(mousePixel, wpfPlot.Plot.Axes.Bottom, signal.Axes.YAxis);
+                //            DataPoint nearestPoint = signal.Data.GetNearestX(mouseLocation, wpfPlot.Plot.RenderManager.LastRender);
+                //            nearestPoints.Add(signal.LegendText, nearestPoint);
+                //        }
+                //    }
 
-                    bool pointSelected = false;
-                    string signLabel = "";
+                //    bool pointSelected = false;
+                //    string signLabel = "";
 
-                    StringBuilder sb = new StringBuilder();
-                    foreach (var point in nearestPoints)
-                    {
-                        if (point.Value.IsReal)
-                        {
-                            if (!pointSelected)
-                            {
-                                sb.AppendLine($"Time:{DateTime.FromOADate(point.Value.X).ToString("yyyy-MM-dd HH:mm:ss")}");
-                                signLabel = point.Key;
-                                pointSelected = true;
-                            }
-                            sb.AppendLine($"{point.Key}:{point.Value.Y.ToString("F2")}");
-                        }
-                    }
+                //    StringBuilder sb = new StringBuilder();
+                //    foreach (var point in nearestPoints)
+                //    {
+                //        if (point.Value.IsReal)
+                //        {
+                //            if (!pointSelected)
+                //            {
+                //                sb.AppendLine($"Time:{DateTime.FromOADate(point.Value.X).ToString("yyyy-MM-dd HH:mm:ss")}");
+                //                signLabel = point.Key;
+                //                pointSelected = true;
+                //            }
+                //            sb.AppendLine($"{point.Key}:{point.Value.Y.ToString("F2")}");
+                //        }
+                //    }
 
-                    if (pointSelected)
-                    {
-                        var scatter = wpfPlot.Plot.PlottableList.Find(c => c is SignalXY signal && signal.IsVisible && signal.LegendText == signLabel);
-                        if (scatter != null)
-                        {
-                            SignalXY signal = (scatter as SignalXY);
-                            DataPoint point = nearestPoints[signLabel];
+                //    if (pointSelected)
+                //    {
+                //        var scatter = wpfPlot.Plot.PlottableList.Find(c => c is SignalXY signal && signal.IsVisible && signal.LegendText == signLabel);
+                //        if (scatter != null)
+                //        {
+                //            SignalXY signal = (scatter as SignalXY);
+                //            DataPoint point = nearestPoints[signLabel];
 
-                            MyCrosshair.IsVisible = true;
-                            MyCrosshair.Position = point.Coordinates;
-                            MyCrosshair.LineColor = signal.MarkerStyle.FillColor;
-                            MyCrosshair.Axes.YAxis = signal.Axes.YAxis;
-                            MyCrosshair.Axes.XAxis = signal.Axes.XAxis;
+                //            MyCrosshair.IsVisible = true;
+                //            MyCrosshair.Position = point.Coordinates;
+                //            MyCrosshair.LineColor = signal.MarkerStyle.FillColor;
+                //            MyCrosshair.Axes.YAxis = signal.Axes.YAxis;
+                //            MyCrosshair.Axes.XAxis = signal.Axes.XAxis;
 
-                            MyHighlightMarker.IsVisible = true;
-                            MyHighlightMarker.Location = point.Coordinates;
-                            MyHighlightMarker.MarkerStyle.LineColor = signal.MarkerStyle.FillColor;
-                            MyHighlightMarker.Axes.YAxis = signal.Axes.YAxis;
-                            MyHighlightMarker.Axes.XAxis = signal.Axes.XAxis;
+                //            MyHighlightMarker.IsVisible = true;
+                //            MyHighlightMarker.Location = point.Coordinates;
+                //            MyHighlightMarker.MarkerStyle.LineColor = signal.MarkerStyle.FillColor;
+                //            MyHighlightMarker.Axes.YAxis = signal.Axes.YAxis;
+                //            MyHighlightMarker.Axes.XAxis = signal.Axes.XAxis;
 
-                            MyHighlightText.IsVisible = true;
-                            MyHighlightText.Location = point.Coordinates;
-                            MyHighlightText.LabelText = sb.ToString();
+                //            MyHighlightText.IsVisible = true;
+                //            MyHighlightText.Location = point.Coordinates;
+                //            MyHighlightText.LabelText = sb.ToString();
 
-                            MyHighlightText.LabelFontColor = signal.MarkerStyle.FillColor;
-                            MyHighlightText.Axes.YAxis = signal.Axes.YAxis;
-                            MyHighlightText.Axes.XAxis = signal.Axes.XAxis;
+                //            MyHighlightText.LabelFontColor = signal.MarkerStyle.FillColor;
+                //            MyHighlightText.Axes.YAxis = signal.Axes.YAxis;
+                //            MyHighlightText.Axes.XAxis = signal.Axes.XAxis;
 
-                            wpfPlot.Refresh();
-                        }
-                    }
-                    if (!pointSelected && MyCrosshair.IsVisible)
-                    {
-                        MyCrosshair.IsVisible = false;
-                        MyHighlightMarker.IsVisible = false;
-                        MyHighlightText.IsVisible = false;
-                        wpfPlot.Refresh();
-                    }
-                });
+                //            wpfPlot.Refresh();
+                //        }
+                //    }
+                //    if (!pointSelected && MyCrosshair.IsVisible)
+                //    {
+                //        MyCrosshair.IsVisible = false;
+                //        MyHighlightMarker.IsVisible = false;
+                //        MyHighlightText.IsVisible = false;
+                //        wpfPlot.Refresh();
+                //    }
+                //});
                 item.TouchMove += Item_TouchMove;
 
                 item.Plot.Add.Palette = new ScottPlot.Palettes.Normal();

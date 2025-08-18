@@ -2,6 +2,7 @@
     x:Class="RD3.Views.pHSettingView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:RD3.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
@@ -108,7 +109,7 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBox
+                        <control:TextBoxNoAutoKeyboard
                             materialDesign:HintAssist.Hint="设定pH"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                             Text="{Binding CurrentDeviceParameter.PHParam.PH_PV, StringFormat={}{0:F2}}">
@@ -117,7 +118,7 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
+                        </control:TextBoxNoAutoKeyboard>
                         <DockPanel Grid.Column="2" LastChildFill="False">
                             <CheckBox
                                 Content="碱(+)"
@@ -154,7 +155,7 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBox
+                        <control:TextBoxNoAutoKeyboard
                             materialDesign:HintAssist.Hint="pH下限"
                             IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -164,8 +165,8 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
-                        <TextBox
+                        </control:TextBoxNoAutoKeyboard>
+                        <control:TextBoxNoAutoKeyboard
                             Grid.Column="2"
                             materialDesign:HintAssist.Hint="pH上限"
                             IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
@@ -176,7 +177,7 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
+                        </control:TextBoxNoAutoKeyboard>
                     </Grid>
                     <ToggleButton
                         Width="410"
@@ -193,7 +194,7 @@
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                 <GroupBox Header="酸(-)" Style="{StaticResource GroupBoxTab.Small}">
                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                        <TextBox
+                        <control:TextBoxNoAutoKeyboard
                             Width="90"
                             materialDesign:HintAssist.Hint="比例P"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -203,8 +204,8 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
-                        <TextBox
+                        </control:TextBoxNoAutoKeyboard>
+                        <control:TextBoxNoAutoKeyboard
                             Width="90"
                             materialDesign:HintAssist.Hint="积分I"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -214,8 +215,8 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
-                        <TextBox
+                        </control:TextBoxNoAutoKeyboard>
+                        <control:TextBoxNoAutoKeyboard
                             Width="90"
                             materialDesign:HintAssist.Hint="微分D"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -225,8 +226,8 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
-                        <TextBox
+                        </control:TextBoxNoAutoKeyboard>
+                        <control:TextBoxNoAutoKeyboard
                             Width="90"
                             materialDesign:HintAssist.Hint="死区"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -236,12 +237,12 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
+                        </control:TextBoxNoAutoKeyboard>
                     </hc:UniformSpacingPanel>
                 </GroupBox>
                 <GroupBox Header="碱(+)" Style="{StaticResource GroupBoxTab.Small}">
                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                        <TextBox
+                        <control:TextBoxNoAutoKeyboard
                             Width="90"
                             materialDesign:HintAssist.Hint="比例P"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -251,8 +252,8 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
-                        <TextBox
+                        </control:TextBoxNoAutoKeyboard>
+                        <control:TextBoxNoAutoKeyboard
                             Width="90"
                             materialDesign:HintAssist.Hint="积分I"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -262,8 +263,8 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
-                        <TextBox
+                        </control:TextBoxNoAutoKeyboard>
+                        <control:TextBoxNoAutoKeyboard
                             Width="90"
                             materialDesign:HintAssist.Hint="微分D"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -273,8 +274,8 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
-                        <TextBox
+                        </control:TextBoxNoAutoKeyboard>
+                        <control:TextBoxNoAutoKeyboard
                             Width="90"
                             materialDesign:HintAssist.Hint="死区"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -284,7 +285,7 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
+                        </control:TextBoxNoAutoKeyboard>
                     </hc:UniformSpacingPanel>
                 </GroupBox>
             </hc:UniformSpacingPanel>

@@ -547,6 +547,11 @@ namespace RD3.ViewModels
                         PropertyInfo[] propertyInfos = typeof(RealTimeParam).GetProperties().Where(c => c.CanWrite && c.CanRead && (c.PropertyType == typeof(double) || c.PropertyType == typeof(float) || c.PropertyType == typeof(int) || c.PropertyType == typeof(string))).ToArray();
 
                         int index = ClockSupervisor.realDatasDic[CurrentDeviceParameter.Name].Count - 1;
+                        if (index < 0)
+                        {
+                            Thread.Sleep(1000);
+                            continue;
+                        } 
                         var realTimeParam = ClockSupervisor.realDatasDic[CurrentDeviceParameter.Name][index];
                         //方成 开机以后保存罐体初始重量
                         if (!AppSession.DicTankWeight.ContainsKey(CurrentDeviceParameter.Name))

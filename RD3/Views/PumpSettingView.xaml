@@ -2,6 +2,7 @@
     x:Class="RD3.Views.PumpSettingView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:control="clr-namespace:RD3.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
@@ -114,7 +115,7 @@
                 </CheckBox.IsEnabled>
             </CheckBox>
             <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                <TextBox
+                <control:TextBoxNoAutoKeyboard
                     Width="110"
                     materialDesign:HintAssist.HelperText="最大:600 单位:mL/h"
                     materialDesign:HintAssist.Hint="设定流速"
@@ -122,32 +123,32 @@
                     IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     Text="{Binding PumpInfo.FlowRate_SP, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}">
-                    <TextBox.Visibility>
+                    <control:TextBoxNoAutoKeyboard.Visibility>
                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                             <Binding Path="IsCondition1Met" />
                             <Binding Path="IsCondition2Met" />
                         </MultiBinding>
-                    </TextBox.Visibility>
+                    </control:TextBoxNoAutoKeyboard.Visibility>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                             <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                </TextBox>
-                <TextBox
+                </control:TextBoxNoAutoKeyboard>
+                <control:TextBoxNoAutoKeyboard
                     Width="115"
                     materialDesign:HintAssist.HelperText="{Binding PumpInfo.FormattedTime, StringFormat='已运行{0} 单位:秒'}"
                     materialDesign:HintAssist.Hint="运行时间"
                     materialDesign:TextFieldAssist.HasClearButton="True"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     Text="{Binding PumpInfo.RunningTime_SP, StringFormat={}{0:F0}, UpdateSourceTrigger=LostFocus}">
-                    <TextBox.IsEnabled>
+                    <control:TextBoxNoAutoKeyboard.IsEnabled>
                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="PumpInfo.IsControlled" />
                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="PumpInfo.IsConstSpeed" />
                         </MultiBinding>
-                    </TextBox.IsEnabled>
-                </TextBox>
+                    </control:TextBoxNoAutoKeyboard.IsEnabled>
+                </control:TextBoxNoAutoKeyboard>
             </hc:UniformSpacingPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBox
@@ -259,7 +260,7 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBox
+                        <control:TextBoxNoAutoKeyboard
                             materialDesign:HintAssist.Hint="消泡周期(s)"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                             Text="{Binding PumpInfo.Cycle, StringFormat={}{0:F0}}">
@@ -268,8 +269,8 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
-                        <TextBox
+                        </control:TextBoxNoAutoKeyboard>
+                        <control:TextBoxNoAutoKeyboard
                             Grid.Column="2"
                             materialDesign:HintAssist.Hint="占空比(%)"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -279,7 +280,7 @@
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                        </TextBox>
+                        </control:TextBoxNoAutoKeyboard>
                     </Grid>
                 </hc:UniformSpacingPanel>
                 <ToggleButton

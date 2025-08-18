@@ -12,6 +12,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Management;
+using System.Windows.Input;
+using System.Windows;
 
 namespace RD3.ViewModels
 {
@@ -61,10 +63,14 @@ namespace RD3.ViewModels
             DialogHostService = dialogHostService;
         }
 
-        public static void ShowKeyboard(KeyBoardType type = KeyBoardType.Normal, string? title = null)
+        public static void ShowKeyboard(KeyBoardType type = KeyBoardType.Normal, string? title = null, string? left = null, string? top = null)
         {
+            Point screenPos = Mouse.GetPosition(App.Current.MainWindow);
+            left = screenPos.X.ToString();
+            top = screenPos.Y.ToString();
+
             if (string.IsNullOrEmpty(title)) title = "";
-            string arguments = string.Concat("layout=", type.ToString(), " opacity=0.85 multitouch=", MultiTouch, string.IsNullOrEmpty(title) ? "" : string.Concat(" title=", title));
+            string arguments = string.Concat("layout=", type.ToString(), " opacity=0.85 multitouch=", MultiTouch, string.IsNullOrEmpty(title) ? "" : string.Concat(" title=", title), string.IsNullOrEmpty(left) ? "" : string.Concat(" left=", left), string.IsNullOrEmpty(top) ? "" : string.Concat(" top=", top));
             if (type.Equals(ShowingType) && title.Equals(ShowingTitle))
             {
                 try
