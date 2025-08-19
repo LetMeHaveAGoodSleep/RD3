@@ -47,7 +47,7 @@
         Margin="4,0,4,0"
         Orientation="Vertical"
         Spacing="10">
-        <TextBox
+        <control:TextBoxNoAutoKeyboard
             Width="200"
             hc:InfoElement.Title="菌种信息"
             Style="{StaticResource TextBoxExtend}"
@@ -57,9 +57,9 @@
                     <i:InvokeCommandAction Command="{Binding OpenNormalKeyBoardCommand}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </TextBox>
-        <TextBox
-            Name="batchID"
+        </control:TextBoxNoAutoKeyboard>
+        <control:TextBoxNoAutoKeyboard
+            x:Name="batchID"
             Width="200"
             hc:InfoElement.Title="测试人员"
             IsEnabled="True"
@@ -70,9 +70,9 @@
                     <i:InvokeCommandAction Command="{Binding OpenNormalKeyBoardCommand}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </TextBox>
-        <TextBox
-            Name="collectTime"
+        </control:TextBoxNoAutoKeyboard>
+        <control:TextBoxNoAutoKeyboard
+            x:Name="collectTime"
             Width="200"
             Height="100"
             hc:InfoElement.Title="备注"
@@ -85,7 +85,7 @@
                     <i:InvokeCommandAction Command="{Binding OpenNormalKeyBoardCommand}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </TextBox>
+        </control:TextBoxNoAutoKeyboard>
         <DockPanel LastChildFill="False">
             <hc:UniformSpacingPanel
                 Margin="0,0,8,0"

@@ -14,7 +14,7 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
     Width="250"
-    Height="450"
+    Height="500"
     d:DataContext="{d:DesignInstance Type=viewmodels:PumpSettingViewModel}"
     d:DesignHeight="550"
     prism:ViewModelLocator.AutoWireViewModel="True"

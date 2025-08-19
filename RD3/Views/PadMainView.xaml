@@ -41,139 +41,136 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border
-            Height="50"
-            Background="{DynamicResource PrimaryBrush}"
-            DockPanel.Dock="Top">
-            <DockPanel>
+        <Border Height="50" Background="{DynamicResource PrimaryBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
                 <Image
                     Width="117"
                     Height="50"
                     Margin="5,0,0,0"
                     Source="/Images/NewReactor/logo.png" />
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>
-                    <hc:UniformSpacingPanel
-                        Margin="20,0,0,0"
-                        HorizontalAlignment="Center"
-                        Orientation="Horizontal"
-                        Spacing="20">
-                        <Button
-                            Height="36"
-                            hc:IconElement.Geometry="{StaticResource GeometryStart}"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding StartExperimentCommand}"
-                            Content="开始实验"
+                <hc:UniformSpacingPanel
+                    Grid.Column="2"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="10">
+                    <Button
+                        Height="36"
+                        hc:IconElement.Geometry="{StaticResource GeometryStart}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding StartExperimentCommand}"
+                        Content="开始实验"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White"
+                        Visibility="{Binding CurrentDeviceParameter.InExperimenting, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <Button
+                        Height="36"
+                        hc:IconElement.Geometry="{StaticResource GeometryStop}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding EndExperimentCommand}"
+                        Content="结束实验"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White"
+                        Visibility="{Binding CurrentDeviceParameter.InExperimenting, Converter={StaticResource Boolean2VisibilityConverter}}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            Width="320"
+                            VerticalAlignment="Center"
                             FontSize="{StaticResource HeadFontSize}"
                             Foreground="White"
-                            Visibility="{Binding CurrentDeviceParameter.InExperimenting, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                        <Button
-                            Height="36"
-                            hc:IconElement.Geometry="{StaticResource GeometryStop}"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding EndExperimentCommand}"
-                            Content="结束实验"
+                            Text="{Binding CurrentDeviceParameter.FormattedTime, StringFormat='批次运行时间：{0}'}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            Width="250"
+                            VerticalAlignment="Center"
                             FontSize="{StaticResource HeadFontSize}"
                             Foreground="White"
-                            Visibility="{Binding CurrentDeviceParameter.InExperimenting, Converter={StaticResource Boolean2VisibilityConverter}}" />
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Width="320"
-                                VerticalAlignment="Center"
-                                FontSize="{StaticResource HeadFontSize}"
-                                Foreground="White"
-                                Text="{Binding CurrentDeviceParameter.FormattedTime, StringFormat='批次运行时间：{0}'}" />
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Width="250"
-                                VerticalAlignment="Center"
-                                FontSize="{StaticResource HeadFontSize}"
-                                Foreground="White"
-                                Text="{Binding CurrentDeviceParameter.BatchID, StringFormat='批次号：{0}'}" />
-                        </StackPanel>
-                    </hc:UniformSpacingPanel>
-                    <hc:UniformSpacingPanel
-                        Grid.Column="1"
-                        Margin="20,0,0,0"
-                        FlowDirection="LeftToRight"
-                        Orientation="Horizontal"
-                        Spacing="10">
-                        <DockPanel LastChildFill="False">
-                            <TextBlock
-                                Name="FormattedTime"
-                                VerticalAlignment="Center"
-                                FontFamily="{StaticResource IconFont}"
-                                FontSize="{StaticResource LargeFontSize}"
-                                Foreground="White"
-                                Text="2025-07-23 17:14:32" />
-                        </DockPanel>
-                        <Button
-                            Name="btnDOSimulate"
-                            Height="40"
-                            hc:IconElement.Geometry="{StaticResource AskGeometry}"
-                            hc:IconElement.Height="30"
-                            hc:IconElement.Width="30"
-                            materialDesign:RippleAssist.Feedback="#000000"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding DODIYCommand}"
-                            Content="模拟DO"
-                            FontSize="{StaticResource HeadFontSize}"
-                            Foreground="White" />
-                        <Button
-                            Name="btnpHSimulate"
-                            Height="40"
-                            hc:IconElement.Geometry="{StaticResource AskGeometry}"
-                            hc:IconElement.Height="30"
-                            hc:IconElement.Width="30"
-                            materialDesign:RippleAssist.Feedback="#000000"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding pHDIYCommand}"
-                            Content="模拟pH"
-                            FontSize="{StaticResource HeadFontSize}"
-                            Foreground="White" />
-                        <Button
-                            Height="40"
-                            hc:IconElement.Geometry="{StaticResource GeometryUserCircle}"
-                            hc:IconElement.Height="30"
-                            hc:IconElement.Width="30"
-                            materialDesign:RippleAssist.Feedback="#000000"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            FontSize="{StaticResource HeadFontSize}"
-                            Foreground="White" />
-                        <Button
-                            Height="40"
-                            hc:IconElement.Geometry="{StaticResource GeometryArrowCollapseAll}"
-                            hc:IconElement.Height="30"
-                            hc:IconElement.Width="30"
-                            materialDesign:RippleAssist.Feedback="#DD000000"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding MinimizeCommand}"
-                            FontSize="{StaticResource HeadFontSize}"
-                            Foreground="White" />
-                        <Button
-                            Height="40"
-                            hc:IconElement.Geometry="{StaticResource GeometryQuit}"
-                            hc:IconElement.Height="30"
-                            hc:IconElement.Width="30"
-                            materialDesign:RippleAssist.Feedback="#DD000000"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            Command="{Binding ExitCommand}"
-                            FontSize="{StaticResource HeadFontSize}"
-                            Foreground="White" />
-                    </hc:UniformSpacingPanel>
-                </Grid>
-            </DockPanel>
+                            Text="{Binding CurrentDeviceParameter.BatchID, StringFormat='批次号：{0}'}" />
+                    </StackPanel>
+                </hc:UniformSpacingPanel>
+                <hc:UniformSpacingPanel
+                    Grid.Column="4"
+                    FlowDirection="LeftToRight"
+                    Orientation="Horizontal"
+                    Spacing="5">
+                    <DockPanel LastChildFill="False">
+                        <TextBlock
+                            Name="FormattedTime"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource IconFont}"
+                            FontSize="{StaticResource LargeFontSize}"
+                            Foreground="White"
+                            Text="2025-07-23 17:14:32" />
+                    </DockPanel>
+                    <Button
+                        Name="btnDOSimulate"
+                        Height="40"
+                        hc:IconElement.Geometry="{StaticResource AskGeometry}"
+                        hc:IconElement.Height="30"
+                        hc:IconElement.Width="30"
+                        materialDesign:RippleAssist.Feedback="#000000"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding DODIYCommand}"
+                        Content="模拟DO"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White" />
+                    <Button
+                        Name="btnpHSimulate"
+                        Height="40"
+                        hc:IconElement.Geometry="{StaticResource AskGeometry}"
+                        hc:IconElement.Height="30"
+                        hc:IconElement.Width="30"
+                        materialDesign:RippleAssist.Feedback="#000000"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding pHDIYCommand}"
+                        Content="模拟pH"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White" />
+                    <Button
+                        Height="40"
+                        hc:IconElement.Geometry="{StaticResource GeometryUserCircle}"
+                        hc:IconElement.Height="30"
+                        hc:IconElement.Width="30"
+                        materialDesign:RippleAssist.Feedback="#000000"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White" />
+                    <Button
+                        Height="40"
+                        hc:IconElement.Geometry="{StaticResource GeometryArrowCollapseAll}"
+                        hc:IconElement.Height="30"
+                        hc:IconElement.Width="30"
+                        materialDesign:RippleAssist.Feedback="#DD000000"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding MinimizeCommand}"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White" />
+                    <Button
+                        Height="40"
+                        hc:IconElement.Geometry="{StaticResource GeometryQuit}"
+                        hc:IconElement.Height="30"
+                        hc:IconElement.Width="30"
+                        materialDesign:RippleAssist.Feedback="#DD000000"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding ExitCommand}"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White" />
+                </hc:UniformSpacingPanel>
+            </Grid>
         </Border>
         <TabControl
             Name="tabMenu"
@@ -538,7 +535,14 @@
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <WrapPanel Name="ChkGraphList3" Orientation="Horizontal" />
                     </ScrollViewer>
-                    <wpf:WpfPlot Name="wpfPlot3" Grid.Row="2" />
+                    <wpf:WpfPlot
+                        Name="wpfPlot3"
+                        Grid.Row="2"
+                        IsManipulationEnabled="True">
+                        <wpf:WpfPlot.RenderTransform>
+                            <MatrixTransform />
+                        </wpf:WpfPlot.RenderTransform>
+                    </wpf:WpfPlot>
                 </Grid>
             </TabItem>
             <TabItem Name="tabBatch">
