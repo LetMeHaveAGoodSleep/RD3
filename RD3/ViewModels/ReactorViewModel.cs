@@ -1807,917 +1807,917 @@ namespace RD3.ViewModels
 
                 }
                 //级联通气控制
-                else if(deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step)
-                {
-                    e.Result = deviceParameter.Name;
-                    DateTime startTime = DateTime.Now;
-                    var sv = deviceParameter.DOParam.DO_PV;
-                    dicDOFeedIndex[deviceParameter.Name] = dicDOTempIndex[deviceParameter.Name] = dicDOAirIndex[deviceParameter.Name] = dicDOO2Index[deviceParameter.Name] = 0;
+                //else if(deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step)
+                //{
+                //    e.Result = deviceParameter.Name;
+                //    DateTime startTime = DateTime.Now;
+                //    var sv = deviceParameter.DOParam.DO_PV;
+                //    dicDOFeedIndex[deviceParameter.Name] = dicDOTempIndex[deviceParameter.Name] = dicDOAirIndex[deviceParameter.Name] = dicDOO2Index[deviceParameter.Name] = 0;
 
-                    info = null;
-                    lastPid = null;
-                    baseAgit = -1;
-                    lastDODelta = 0;//低通滤波的上个值
-                    factorIndex = 0;//当前执行索引
-                    lastFactorIndex = -1;//当前执行索引
+                //    info = null;
+                //    lastPid = null;
+                //    baseAgit = -1;
+                //    lastDODelta = 0;//低通滤波的上个值
+                //    factorIndex = 0;//当前执行索引
+                //    lastFactorIndex = -1;//当前执行索引
 
-                    deviceParameter.AgitParam.IsControling = true;
-                    AgitRunCommand.Execute(deviceParameter);
+                //    deviceParameter.AgitParam.IsControling = true;
+                //    AgitRunCommand.Execute(deviceParameter);
 
-                    DOAssParam param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                //    DOAssParam param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
 
-                    ObservableCollection<DOControlFactor> collection = [.. param.FactorCol];
+                //    ObservableCollection<DOControlFactor> collection = [.. param.FactorCol];
 
-                    if (collection.Count > 0)
-                    {
-                        if (collection.Contains(DOControlFactor.Air) && deviceParameter.AirParam.IsControling)
-                        {
-                            if (param.Unit == 0)//VVM
-                            {
-                                dicDOAirIndex[deviceParameter.Name] = param.AirCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
-                                 (x.Index == 0 || MathF.Round(param.AirCol[x.Index - 1].StepValue * (realTimeParam.JarWeight - 2000) / 1000, 2) <= realTimeParam.AirFlowSpeed) &&
-                                 (x.Index == param.AirCol.Count - 1 || MathF.Round(param.AirCol[x.Index + 1].StepValue * (realTimeParam.JarWeight - 2000) / 1000, 2) >= realTimeParam.AirFlowSpeed))?.Index ?? -1;
-                            }
-                            else if (param.Unit == 1)//L/min
-                            {
-                                dicDOAirIndex[deviceParameter.Name] = param.AirCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
-                                 (x.Index == 0 || param.AirCol[x.Index - 1].StepValue <= realTimeParam.AirFlowSpeed) &&
-                                 (x.Index == param.AirCol.Count - 1 || param.AirCol[x.Index + 1].StepValue >= realTimeParam.AirFlowSpeed))?.Index ?? -1;
-                            }
+                //    if (collection.Count > 0)
+                //    {
+                //        if (collection.Contains(DOControlFactor.Air) && deviceParameter.AirParam.IsControling)
+                //        {
+                //            if (param.Unit == 0)//VVM
+                //            {
+                //                dicDOAirIndex[deviceParameter.Name] = param.AirCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                //                 (x.Index == 0 || MathF.Round(param.AirCol[x.Index - 1].StepValue * (realTimeParam.JarWeight - 2000) / 1000, 2) <= realTimeParam.AirFlowSpeed) &&
+                //                 (x.Index == param.AirCol.Count - 1 || MathF.Round(param.AirCol[x.Index + 1].StepValue * (realTimeParam.JarWeight - 2000) / 1000, 2) >= realTimeParam.AirFlowSpeed))?.Index ?? -1;
+                //            }
+                //            else if (param.Unit == 1)//L/min
+                //            {
+                //                dicDOAirIndex[deviceParameter.Name] = param.AirCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                //                 (x.Index == 0 || param.AirCol[x.Index - 1].StepValue <= realTimeParam.AirFlowSpeed) &&
+                //                 (x.Index == param.AirCol.Count - 1 || param.AirCol[x.Index + 1].StepValue >= realTimeParam.AirFlowSpeed))?.Index ?? -1;
+                //            }
 
-                            LogHelper.Debug(string.Format("阶梯级联：通气档位为{0}", dicDOAirIndex[deviceParameter.Name] + 1));
-                            AirRunCommand.Execute(deviceParameter);
-                        }
+                //            LogHelper.Debug(string.Format("阶梯级联：通气档位为{0}", dicDOAirIndex[deviceParameter.Name] + 1));
+                //            AirRunCommand.Execute(deviceParameter);
+                //        }
 
-                        if (collection.Contains(DOControlFactor.O2) && deviceParameter.O2Param.IsControling)
-                        {
-                            if (param.Unit == 0)//VVM
-                            {
-                                dicDOO2Index[deviceParameter.Name] = param.O2Col.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
-                                 (x.Index == 0 || MathF.Round(param.O2Col[x.Index - 1].StepValue * (realTimeParam.JarWeight - 2000) / 1000, 2) <= realTimeParam.O2FlowSpeed) &&
-                                 (x.Index == param.O2Col.Count - 1 || MathF.Round(param.O2Col[x.Index + 1].StepValue * (realTimeParam.JarWeight - 2000) / 1000, 2) >= realTimeParam.O2FlowSpeed))?.Index ?? -1;
-                            }
-                            else if (param.Unit == 1)//L/min
-                            {
-                                dicDOO2Index[deviceParameter.Name] = param.O2Col.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
-                                 (x.Index == 0 || param.O2Col[x.Index - 1].StepValue <= realTimeParam.O2FlowSpeed) &&
-                                 (x.Index == param.O2Col.Count - 1 || param.O2Col[x.Index + 1].StepValue >= realTimeParam.O2FlowSpeed))?.Index ?? -1;
-                            }
+                //        if (collection.Contains(DOControlFactor.O2) && deviceParameter.O2Param.IsControling)
+                //        {
+                //            if (param.Unit == 0)//VVM
+                //            {
+                //                dicDOO2Index[deviceParameter.Name] = param.O2Col.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                //                 (x.Index == 0 || MathF.Round(param.O2Col[x.Index - 1].StepValue * (realTimeParam.JarWeight - 2000) / 1000, 2) <= realTimeParam.O2FlowSpeed) &&
+                //                 (x.Index == param.O2Col.Count - 1 || MathF.Round(param.O2Col[x.Index + 1].StepValue * (realTimeParam.JarWeight - 2000) / 1000, 2) >= realTimeParam.O2FlowSpeed))?.Index ?? -1;
+                //            }
+                //            else if (param.Unit == 1)//L/min
+                //            {
+                //                dicDOO2Index[deviceParameter.Name] = param.O2Col.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                //                 (x.Index == 0 || param.O2Col[x.Index - 1].StepValue <= realTimeParam.O2FlowSpeed) &&
+                //                 (x.Index == param.O2Col.Count - 1 || param.O2Col[x.Index + 1].StepValue >= realTimeParam.O2FlowSpeed))?.Index ?? -1;
+                //            }
 
-                            LogHelper.Debug(string.Format("阶梯级联：氧气档位为{0}", dicDOO2Index[deviceParameter.Name] + 1));
-                            O2RunCommand.Execute(deviceParameter);
-                        }
-                    }
+                //            LogHelper.Debug(string.Format("阶梯级联：氧气档位为{0}", dicDOO2Index[deviceParameter.Name] + 1));
+                //            O2RunCommand.Execute(deviceParameter);
+                //        }
+                //    }
 
-                    sleepCount = 5;
-                    while (sleepCount > 0)
-                    {
-                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                        {
-                            dicDOStatus[currentDeviceParameter.Name] = false;
-                            return;
-                        }
-                        while (AppSession.DOPause)
-                        {
-                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                            {
-                                dicDOStatus[currentDeviceParameter.Name] = false;
-                                return;
-                            }
-                            Thread.Sleep(1000);
-                        }
-                        sleepCount--;
-                        Thread.Sleep(1000);
-                    }
+                //    sleepCount = 5;
+                //    while (sleepCount > 0)
+                //    {
+                //        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //        {
+                //            dicDOStatus[currentDeviceParameter.Name] = false;
+                //            return;
+                //        }
+                //        while (AppSession.DOPause)
+                //        {
+                //            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //            {
+                //                dicDOStatus[currentDeviceParameter.Name] = false;
+                //                return;
+                //            }
+                //            Thread.Sleep(1000);
+                //        }
+                //        sleepCount--;
+                //        Thread.Sleep(1000);
+                //    }
 
-                    ResetDOParam(deviceParameter);
+                //    ResetDOParam(deviceParameter);
 
-                    while (true)
-                    {
-                        try
-                        {
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
-                            {
-                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    dicDOStatus[currentDeviceParameter.Name] = false;
-                                    return;
-                                }
-                                while (AppSession.DOPause)
-                                {
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                    {
-                                        dicDOStatus[currentDeviceParameter.Name] = false;
-                                        return;
-                                    }
-                                    Thread.Sleep(1000);
-                                }
-                                Thread.Sleep(1000);
-                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            }
+                //    while (true)
+                //    {
+                //        try
+                //        {
+                //            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //            while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
+                //            {
+                //                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                {
+                //                    dicDOStatus[currentDeviceParameter.Name] = false;
+                //                    return;
+                //                }
+                //                while (AppSession.DOPause)
+                //                {
+                //                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                    {
+                //                        dicDOStatus[currentDeviceParameter.Name] = false;
+                //                        return;
+                //                    }
+                //                    Thread.Sleep(1000);
+                //                }
+                //                Thread.Sleep(1000);
+                //                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //            }
 
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            while (realTimeParam.DO > deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsReverse)
-                            {
-                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    dicDOStatus[currentDeviceParameter.Name] = false;
-                                    return;
-                                }
-                                while (AppSession.DOPause)
-                                {
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                    {
-                                        dicDOStatus[currentDeviceParameter.Name] = false;
-                                        return;
-                                    }
-                                    Thread.Sleep(1000);
-                                }
-                                Thread.Sleep(1000);
-                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            }
+                //            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //            while (realTimeParam.DO > deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsReverse)
+                //            {
+                //                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                {
+                //                    dicDOStatus[currentDeviceParameter.Name] = false;
+                //                    return;
+                //                }
+                //                while (AppSession.DOPause)
+                //                {
+                //                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                    {
+                //                        dicDOStatus[currentDeviceParameter.Name] = false;
+                //                        return;
+                //                    }
+                //                    Thread.Sleep(1000);
+                //                }
+                //                Thread.Sleep(1000);
+                //                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //            }
 
-                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                            {
-                                dicDOStatus[currentDeviceParameter.Name] = false;
-                                return;
-                            }
+                //            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //            {
+                //                dicDOStatus[currentDeviceParameter.Name] = false;
+                //                return;
+                //            }
 
-                            while (AppSession.DOPause)
-                            {
-                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    dicDOStatus[currentDeviceParameter.Name] = false;
-                                    return;
-                                }
+                //            while (AppSession.DOPause)
+                //            {
+                //                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                {
+                //                    dicDOStatus[currentDeviceParameter.Name] = false;
+                //                    return;
+                //                }
 
-                                Thread.Sleep(1000);
-                            }
+                //                Thread.Sleep(1000);
+                //            }
 
-                            string result = File.ReadAllText(FileConst.PidInfoPath);
-                            List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
-                            if (pIDInfos == null)
-                            {
-                                MessageBox.Show("PID调控策略列表为空");
-                                return;
-                            }
+                //            string result = File.ReadAllText(FileConst.PidInfoPath);
+                //            List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
+                //            if (pIDInfos == null)
+                //            {
+                //                MessageBox.Show("PID调控策略列表为空");
+                //                return;
+                //            }
 
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (realTimeParam.DO <= deviceParameter.DOParam.DO_PV)
-                            {
-                                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.deviceID == deviceParameter.Name);
-                            }
-                            else if (realTimeParam.DO >= deviceParameter.DOParam.DO_PV)
-                            {
-                                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.deviceID == deviceParameter.Name);
-                            }
+                //            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //            if (realTimeParam.DO <= deviceParameter.DOParam.DO_PV)
+                //            {
+                //                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.deviceID == deviceParameter.Name);
+                //            }
+                //            else if (realTimeParam.DO >= deviceParameter.DOParam.DO_PV)
+                //            {
+                //                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.deviceID == deviceParameter.Name);
+                //            }
 
-                            if (info == null)
-                            {
-                                MessageBox.Show(string.Format("反应器{0}不存在DO的PID调控策略", deviceParameter.Name));
-                                return;
-                            }
+                //            if (info == null)
+                //            {
+                //                MessageBox.Show(string.Format("反应器{0}不存在DO的PID调控策略", deviceParameter.Name));
+                //                return;
+                //            }
 
-                            if (baseAgit == -1)
-                            {
-                                baseAgit = realTimeParam.Agit;
-                            }
+                //            if (baseAgit == -1)
+                //            {
+                //                baseAgit = realTimeParam.Agit;
+                //            }
 
-                            //如果pid类型变了，pid系数清零 方成
-                            //if (info != null && lastPid != null && info.PidName != lastPid.PidName)
-                            if (info != null && lastPid != null && !info.Equals(lastPid))
-                            {
-                                if (info.PidName != lastPid.PidName)
-                                {
-                                    LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
-                                    baseAgit = deviceParameter.AgitParam.Agit_PV;
-                                }
+                //            //如果pid类型变了，pid系数清零 方成
+                //            //if (info != null && lastPid != null && info.PidName != lastPid.PidName)
+                //            if (info != null && lastPid != null && !info.Equals(lastPid))
+                //            {
+                //                if (info.PidName != lastPid.PidName)
+                //                {
+                //                    LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
+                //                    baseAgit = deviceParameter.AgitParam.Agit_PV;
+                //                }
                                 
-                                ResetDOParam(deviceParameter);
-                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, baseAgit));
-                            }
-                            lastPid = info;
+                //                ResetDOParam(deviceParameter);
+                //                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, baseAgit));
+                //            }
+                //            lastPid = info;
 
-                            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
-                            {
-                                baseAgit = deviceParameter.AgitParam.Agit_PV;
-                                ResetDOParam(deviceParameter);
+                //            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                //            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
+                //            {
+                //                baseAgit = deviceParameter.AgitParam.Agit_PV;
+                //                ResetDOParam(deviceParameter);
 
-                                int count = info.Interval <= 0 ? 1 : info.Interval;
-                                while (count > 0)
-                                {
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                    {
-                                        dicDOStatus[currentDeviceParameter.Name] = false;
-                                        return;
-                                    }
-                                    while (AppSession.DOPause)
-                                    {
-                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                        {
-                                            dicDOStatus[currentDeviceParameter.Name] = false;
-                                            return;
-                                        }
-                                        Thread.Sleep(1000);
-                                    }
-                                    count--;
-                                    Thread.Sleep(1000);
-                                }
-                                continue;
-                            }
+                //                int count = info.Interval <= 0 ? 1 : info.Interval;
+                //                while (count > 0)
+                //                {
+                //                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                    {
+                //                        dicDOStatus[currentDeviceParameter.Name] = false;
+                //                        return;
+                //                    }
+                //                    while (AppSession.DOPause)
+                //                    {
+                //                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                        {
+                //                            dicDOStatus[currentDeviceParameter.Name] = false;
+                //                            return;
+                //                        }
+                //                        Thread.Sleep(1000);
+                //                    }
+                //                    count--;
+                //                    Thread.Sleep(1000);
+                //                }
+                //                continue;
+                //            }
 
-                            dicDOPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
-                            dicDOPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
-                            dicDOPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
-                            dicDOPid[deviceParameter.Name].SetTarget(deviceParameter.DOParam.DO_PV);
+                //            dicDOPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
+                //            dicDOPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
+                //            dicDOPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
+                //            dicDOPid[deviceParameter.Name].SetTarget(deviceParameter.DOParam.DO_PV);
 
-                            LogHelper.Debug(string.Format("反应器{6} 阶梯级联 DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", deviceParameter.DOParam.DO_PV, realTimeParam.DO, info.P, info.I, info.D, info.Interval, deviceParameter.Name));
+                //            LogHelper.Debug(string.Format("反应器{6} 阶梯级联 DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", deviceParameter.DOParam.DO_PV, realTimeParam.DO, info.P, info.I, info.D, info.Interval, deviceParameter.Name));
 
-                            float temp = dicDOPid[deviceParameter.Name].CalculatePositional_DO((float)realTimeParam.DO);
-                            float timeOffset = Convert.ToSingle((DateTime.Now - startTime).TotalMinutes);
-                            temp = GetDoK(timeOffset) * temp;
-                            int tempAgit = Convert.ToInt32(baseAgit + temp);
-                            dicDODelta[deviceParameter.Name] = tempAgit;
-                            if (deviceParameter.DOFilterEnable)
-                            {
-                                //增加低通滤波 
-                                var lowPassDelta = Convert.ToInt32(RCFilter.LowPass(tempAgit, lastDODelta, deviceParameter.AgitSampleCycle, deviceParameter.AgitSampleFrequency));
-                                lastDODelta = lowPassDelta;
-                                dicDODelta[deviceParameter.Name] = lowPassDelta;
-                            }
-                            LogHelper.Debug(string.Format("反应器{0} 阶梯级联 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, baseAgit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
+                //            float temp = dicDOPid[deviceParameter.Name].CalculatePositional_DO((float)realTimeParam.DO);
+                //            float timeOffset = Convert.ToSingle((DateTime.Now - startTime).TotalMinutes);
+                //            temp = GetDoK(timeOffset) * temp;
+                //            int tempAgit = Convert.ToInt32(baseAgit + temp);
+                //            dicDODelta[deviceParameter.Name] = tempAgit;
+                //            if (deviceParameter.DOFilterEnable)
+                //            {
+                //                //增加低通滤波 
+                //                var lowPassDelta = Convert.ToInt32(RCFilter.LowPass(tempAgit, lastDODelta, deviceParameter.AgitSampleCycle, deviceParameter.AgitSampleFrequency));
+                //                lastDODelta = lowPassDelta;
+                //                dicDODelta[deviceParameter.Name] = lowPassDelta;
+                //            }
+                //            LogHelper.Debug(string.Format("反应器{0} 阶梯级联 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, baseAgit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
 
-                            deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.Agit_PV);
+                //            deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
+                //            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.Agit_PV);
 
-                            sleepCount = info.Interval <= 1 ? 1 : info.Interval;
-                            while (sleepCount > 0)
-                            {
-                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    dicDOStatus[currentDeviceParameter.Name] = false;
-                                    return;
-                                }
-                                while (AppSession.DOPause)
-                                {
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                    {
-                                        dicDOStatus[currentDeviceParameter.Name] = false;
-                                        return;
-                                    }
-                                    Thread.Sleep(1000);
-                                }
-                                sleepCount--;
-                                Thread.Sleep(1000);
-                            }
+                //            sleepCount = info.Interval <= 1 ? 1 : info.Interval;
+                //            while (sleepCount > 0)
+                //            {
+                //                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                {
+                //                    dicDOStatus[currentDeviceParameter.Name] = false;
+                //                    return;
+                //                }
+                //                while (AppSession.DOPause)
+                //                {
+                //                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                    {
+                //                        dicDOStatus[currentDeviceParameter.Name] = false;
+                //                        return;
+                //                    }
+                //                    Thread.Sleep(1000);
+                //                }
+                //                sleepCount--;
+                //                Thread.Sleep(1000);
+                //            }
 
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
-                            {
-                                baseAgit = deviceParameter.AgitParam.Agit_PV;
+                //            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
+                //            {
+                //                baseAgit = deviceParameter.AgitParam.Agit_PV;
 
-                                ResetDOParam(deviceParameter);
+                //                ResetDOParam(deviceParameter);
 
-                                int count = info.Interval <= 0 ? 1 : info.Interval;
-                                while (count > 0)
-                                {
-                                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                    {
-                                        dicDOStatus[currentDeviceParameter.Name] = false;
-                                        return;
-                                    }
-                                    while (AppSession.DOPause)
-                                    {
-                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                        {
-                                            dicDOStatus[currentDeviceParameter.Name] = false;
-                                            return;
-                                        }
-                                        Thread.Sleep(1000);
-                                    }
-                                    count--;
-                                    Thread.Sleep(1000);
-                                }
-                                continue;
-                            }
+                //                int count = info.Interval <= 0 ? 1 : info.Interval;
+                //                while (count > 0)
+                //                {
+                //                    if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                    {
+                //                        dicDOStatus[currentDeviceParameter.Name] = false;
+                //                        return;
+                //                    }
+                //                    while (AppSession.DOPause)
+                //                    {
+                //                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                        {
+                //                            dicDOStatus[currentDeviceParameter.Name] = false;
+                //                            return;
+                //                        }
+                //                        Thread.Sleep(1000);
+                //                    }
+                //                    count--;
+                //                    Thread.Sleep(1000);
+                //                }
+                //                continue;
+                //            }
 
-                            if (factorIndex < 0 || collection.Count <= factorIndex)
-                            {
-                                continue;
-                            }
+                //            if (factorIndex < 0 || collection.Count <= factorIndex)
+                //            {
+                //                continue;
+                //            }
 
-                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                            {
-                                dicDOStatus[currentDeviceParameter.Name] = false;
-                                return;
-                            }
+                //            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //            {
+                //                dicDOStatus[currentDeviceParameter.Name] = false;
+                //                return;
+                //            }
 
-                            while (AppSession.DOPause)
-                            {
-                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                {
-                                    dicDOStatus[currentDeviceParameter.Name] = false;
-                                    return;
-                                }
-                                Thread.Sleep(1000);
-                            }
+                //            while (AppSession.DOPause)
+                //            {
+                //                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                {
+                //                    dicDOStatus[currentDeviceParameter.Name] = false;
+                //                    return;
+                //                }
+                //                Thread.Sleep(1000);
+                //            }
 
-                            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
-                            var previousElements = collection.Take(factorIndex);
-                            bool isExistOtherGas = false;//在当前气体之前是否存在气体
-                            switch (collection[factorIndex])
-                            {
-                                case DOControlFactor.Air:
+                //            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
+                //            var previousElements = collection.Take(factorIndex);
+                //            bool isExistOtherGas = false;//在当前气体之前是否存在气体
+                //            switch (collection[factorIndex])
+                //            {
+                //                case DOControlFactor.Air:
 
-                                    if (!deviceParameter.AirParam.IsControling)
-                                    {
-                                        deviceParameter.AirParam.IsControling = true;
-                                        AirRunCommand.Execute(deviceParameter);
-                                    }
+                //                    if (!deviceParameter.AirParam.IsControling)
+                //                    {
+                //                        deviceParameter.AirParam.IsControling = true;
+                //                        AirRunCommand.Execute(deviceParameter);
+                //                    }
 
-                                    //float airFlowSpeed1 = 0f;
-                                    //if (param.Unit == 0)//VVM
-                                    //{
-                                    //    airFlowSpeed1 = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                    //}
-                                    //else if (param.Unit == 1)//L/min
-                                    //{
-                                    //    airFlowSpeed1 = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
-                                    //}
-                                    //realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                    //if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed1) > 0.1)
-                                    //{
-                                    //    deviceParameter.AirParam.FlowSpeed = airFlowSpeed1;
-                                    //    Thread.Sleep(10000);
-                                    //}
+                //                    //float airFlowSpeed1 = 0f;
+                //                    //if (param.Unit == 0)//VVM
+                //                    //{
+                //                    //    airFlowSpeed1 = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                    //}
+                //                    //else if (param.Unit == 1)//L/min
+                //                    //{
+                //                    //    airFlowSpeed1 = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                //                    //}
+                //                    //realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //                    //if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed1) > 0.1)
+                //                    //{
+                //                    //    deviceParameter.AirParam.FlowSpeed = airFlowSpeed1;
+                //                    //    Thread.Sleep(10000);
+                //                    //}
 
-                                    if (param.Unit == 0)//VVM
-                                    {
-                                        initialGas = MathF.Round((float)(param.AirCol[0].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                        maxGas = MathF.Round((float)(param.AirCol[param.AirCol.Count - 1].StepValue * (deviceParameter.JarWeight - 2000) / 1000), 2);
-                                    }
-                                    else if (param.Unit == 1)//L/min
-                                    {
-                                        initialGas = param.AirCol[0].StepValue;
-                                        maxGas = param.AirCol[param.AirCol.Count - 1].StepValue;
-                                    }
+                //                    if (param.Unit == 0)//VVM
+                //                    {
+                //                        initialGas = MathF.Round((float)(param.AirCol[0].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                        maxGas = MathF.Round((float)(param.AirCol[param.AirCol.Count - 1].StepValue * (deviceParameter.JarWeight - 2000) / 1000), 2);
+                //                    }
+                //                    else if (param.Unit == 1)//L/min
+                //                    {
+                //                        initialGas = param.AirCol[0].StepValue;
+                //                        maxGas = param.AirCol[param.AirCol.Count - 1].StepValue;
+                //                    }
 
-                                    isExistOtherGas = previousElements.Where(t => t == DOControlFactor.O2).Count() > 0;
+                //                    isExistOtherGas = previousElements.Where(t => t == DOControlFactor.O2).Count() > 0;
 
-                                    if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
-                                    {
-                                        if (dicDOAirIndex[deviceParameter.Name] > 0)//还存在上一阶梯
-                                        {
-                                            dicDOAirIndex[deviceParameter.Name] -= 1;
+                //                    if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
+                //                    {
+                //                        if (dicDOAirIndex[deviceParameter.Name] > 0)//还存在上一阶梯
+                //                        {
+                //                            dicDOAirIndex[deviceParameter.Name] -= 1;
 
-                                            float airFlowSpeed = 0f;
-                                            if (param.Unit == 0)//VVM
-                                            {
-                                                airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                            }
-                                            else if (param.Unit == 1)//L/min
-                                            {
-                                                airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
-                                            }
-                                            deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                //                            float airFlowSpeed = 0f;
+                //                            if (param.Unit == 0)//VVM
+                //                            {
+                //                                airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                            }
+                //                            else if (param.Unit == 1)//L/min
+                //                            {
+                //                                airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                //                            }
+                //                            deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
 
-                                            if (isExistOtherGas)
-                                            {
-                                                if (dicDOO2Index[deviceParameter.Name] < param.O2Col.Count - 1)//加一档
-                                                {
-                                                    dicDOO2Index[deviceParameter.Name] += 1;
+                //                            if (isExistOtherGas)
+                //                            {
+                //                                if (dicDOO2Index[deviceParameter.Name] < param.O2Col.Count - 1)//加一档
+                //                                {
+                //                                    dicDOO2Index[deviceParameter.Name] += 1;
 
-                                                    float o2FlowSpeed = 0f;
-                                                    if (param.Unit == 0)//VVM
-                                                    {
-                                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                                    }
-                                                    else if (param.Unit == 1)//L/min
-                                                    {
-                                                        o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
-                                                    }
-                                                    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
-                                                    deviceParameter.O2Param.IsControling = true;
-                                                    O2RunCommand.Execute(deviceParameter);
-                                                }
-                                            }
-                                        }
-                                        else if (factorIndex > 0)//非第一因子,所以不需要最低通气
-                                        {
-                                            if (isExistOtherGas)
-                                            {
-                                                deviceParameter.AirParam.FlowSpeed = 0;
+                //                                    float o2FlowSpeed = 0f;
+                //                                    if (param.Unit == 0)//VVM
+                //                                    {
+                //                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                                    }
+                //                                    else if (param.Unit == 1)//L/min
+                //                                    {
+                //                                        o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                //                                    }
+                //                                    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+                //                                    deviceParameter.O2Param.IsControling = true;
+                //                                    O2RunCommand.Execute(deviceParameter);
+                //                                }
+                //                            }
+                //                        }
+                //                        else if (factorIndex > 0)//非第一因子,所以不需要最低通气
+                //                        {
+                //                            if (isExistOtherGas)
+                //                            {
+                //                                deviceParameter.AirParam.FlowSpeed = 0;
 
-                                                if (dicDOO2Index[deviceParameter.Name] < param.O2Col.Count - 1)//加一档
-                                                {
-                                                    dicDOO2Index[deviceParameter.Name] += 1;
+                //                                if (dicDOO2Index[deviceParameter.Name] < param.O2Col.Count - 1)//加一档
+                //                                {
+                //                                    dicDOO2Index[deviceParameter.Name] += 1;
 
-                                                    float o2FlowSpeed = 0f;
-                                                    if (param.Unit == 0)//VVM
-                                                    {
-                                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                                    }
-                                                    else if (param.Unit == 1)//L/min
-                                                    {
-                                                        o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
-                                                    }
-                                                    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
-                                                    deviceParameter.O2Param.IsControling = true;
-                                                    O2RunCommand.Execute(deviceParameter);
-                                                }
-                                            }
+                //                                    float o2FlowSpeed = 0f;
+                //                                    if (param.Unit == 0)//VVM
+                //                                    {
+                //                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                                    }
+                //                                    else if (param.Unit == 1)//L/min
+                //                                    {
+                //                                        o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                //                                    }
+                //                                    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+                //                                    deviceParameter.O2Param.IsControling = true;
+                //                                    O2RunCommand.Execute(deviceParameter);
+                //                                }
+                //                            }
 
-                                            lastFactorIndex = factorIndex;
-                                            factorIndex -= 1;
-                                        }
-                                    }
-                                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
-                                    {
-                                        if (dicDOAirIndex[deviceParameter.Name] < param.AirCol.Count - 1)//还存在下一阶梯
-                                        {
-                                            dicDOAirIndex[deviceParameter.Name] += 1;
+                //                            lastFactorIndex = factorIndex;
+                //                            factorIndex -= 1;
+                //                        }
+                //                    }
+                //                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
+                //                    {
+                //                        if (dicDOAirIndex[deviceParameter.Name] < param.AirCol.Count - 1)//还存在下一阶梯
+                //                        {
+                //                            dicDOAirIndex[deviceParameter.Name] += 1;
 
-                                            float airFlowSpeed = 0f;
-                                            if (param.Unit == 0)//VVM
-                                            {
-                                                airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                            }
-                                            else if (param.Unit == 1)//L/min
-                                            {
-                                                airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
-                                            }
-                                            deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                //                            float airFlowSpeed = 0f;
+                //                            if (param.Unit == 0)//VVM
+                //                            {
+                //                                airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                            }
+                //                            else if (param.Unit == 1)//L/min
+                //                            {
+                //                                airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                //                            }
+                //                            deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
 
-                                            if (isExistOtherGas)
-                                            {
-                                                if (dicDOO2Index[deviceParameter.Name] > 0)
-                                                {
-                                                    dicDOO2Index[deviceParameter.Name] -= 1;
+                //                            if (isExistOtherGas)
+                //                            {
+                //                                if (dicDOO2Index[deviceParameter.Name] > 0)
+                //                                {
+                //                                    dicDOO2Index[deviceParameter.Name] -= 1;
 
-                                                    float o2FlowSpeed = 0f;
-                                                    if (param.Unit == 0)//VVM
-                                                    {
-                                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                                    }
-                                                    else if (param.Unit == 1)//L/min
-                                                    {
-                                                        o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
-                                                    }
-                                                    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
-                                                    deviceParameter.O2Param.IsControling = true;
-                                                    O2RunCommand.Execute(deviceParameter);
-                                                }
-                                                else
-                                                {
-                                                    deviceParameter.O2Param.FlowSpeed = 0;
-                                                    deviceParameter.O2Param.IsControling = true;
-                                                    O2RunCommand.Execute(deviceParameter);
-                                                }
-                                            }
-                                        }
-                                        else if (factorIndex < collection.Count - 1)
-                                        {
-                                            lastFactorIndex = factorIndex;
-                                            factorIndex += 1;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        float airFlowSpeed = 0f;
-                                        if (param.Unit == 0)//VVM
-                                        {
-                                            airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                        }
-                                        else if (param.Unit == 1)//L/min
-                                        {
-                                            airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
-                                        }
-                                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                        if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.05)
-                                        {
-                                            deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
-                                        }
+                //                                    float o2FlowSpeed = 0f;
+                //                                    if (param.Unit == 0)//VVM
+                //                                    {
+                //                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                                    }
+                //                                    else if (param.Unit == 1)//L/min
+                //                                    {
+                //                                        o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                //                                    }
+                //                                    deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+                //                                    deviceParameter.O2Param.IsControling = true;
+                //                                    O2RunCommand.Execute(deviceParameter);
+                //                                }
+                //                                else
+                //                                {
+                //                                    deviceParameter.O2Param.FlowSpeed = 0;
+                //                                    deviceParameter.O2Param.IsControling = true;
+                //                                    O2RunCommand.Execute(deviceParameter);
+                //                                }
+                //                            }
+                //                        }
+                //                        else if (factorIndex < collection.Count - 1)
+                //                        {
+                //                            lastFactorIndex = factorIndex;
+                //                            factorIndex += 1;
+                //                        }
+                //                    }
+                //                    else
+                //                    {
+                //                        float airFlowSpeed = 0f;
+                //                        if (param.Unit == 0)//VVM
+                //                        {
+                //                            airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                        }
+                //                        else if (param.Unit == 1)//L/min
+                //                        {
+                //                            airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                //                        }
+                //                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //                        if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.05)
+                //                        {
+                //                            deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                //                        }
 
-                                        if (isExistOtherGas)
-                                        {
-                                            float o2FlowSpeed = 0f;
-                                            if (param.Unit == 0)//VVM
-                                            {
-                                                o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                            }
-                                            else if (param.Unit == 1)//L/min
-                                            {
-                                                o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
-                                            }
-                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                            if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.05)
-                                            {
-                                                deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+                //                        if (isExistOtherGas)
+                //                        {
+                //                            float o2FlowSpeed = 0f;
+                //                            if (param.Unit == 0)//VVM
+                //                            {
+                //                                o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                            }
+                //                            else if (param.Unit == 1)//L/min
+                //                            {
+                //                                o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                //                            }
+                //                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //                            if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.05)
+                //                            {
+                //                                deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
 
-                                            }
-                                        }
-                                    }
+                //                            }
+                //                        }
+                //                    }
 
-                                    sleepCount = 1;
-                                    while (sleepCount > 0)
-                                    {
-                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                        {
-                                            dicDOStatus[currentDeviceParameter.Name] = false;
-                                            return;
-                                        }
-                                        while (AppSession.DOPause)
-                                        {
-                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                            {
-                                                dicDOStatus[currentDeviceParameter.Name] = false;
-                                                return;
-                                            }
-                                            Thread.Sleep(1000);
-                                        }
-                                        sleepCount--;
-                                        Thread.Sleep(1000);
-                                    }
-                                    break;
-                                case DOControlFactor.O2:
-                                    if (!deviceParameter.O2Param.IsControling)
-                                    {
-                                        deviceParameter.O2Param.IsControling = true;
-                                        O2RunCommand.Execute(deviceParameter);
-                                    }
+                //                    sleepCount = 1;
+                //                    while (sleepCount > 0)
+                //                    {
+                //                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                        {
+                //                            dicDOStatus[currentDeviceParameter.Name] = false;
+                //                            return;
+                //                        }
+                //                        while (AppSession.DOPause)
+                //                        {
+                //                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                            {
+                //                                dicDOStatus[currentDeviceParameter.Name] = false;
+                //                                return;
+                //                            }
+                //                            Thread.Sleep(1000);
+                //                        }
+                //                        sleepCount--;
+                //                        Thread.Sleep(1000);
+                //                    }
+                //                    break;
+                //                case DOControlFactor.O2:
+                //                    if (!deviceParameter.O2Param.IsControling)
+                //                    {
+                //                        deviceParameter.O2Param.IsControling = true;
+                //                        O2RunCommand.Execute(deviceParameter);
+                //                    }
 
-                                    if (param.Unit == 0)//VVM
-                                    {
-                                        initialGas = MathF.Round((float)(param.O2Col[0].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                        maxGas = MathF.Round((float)(param.O2Col[param.O2Col.Count - 1].StepValue * (deviceParameter.JarWeight - 2000) / 1000), 2);
-                                    }
-                                    else if (param.Unit == 1)//L/min
-                                    {
-                                        initialGas = param.O2Col[0].StepValue;
-                                        maxGas = param.O2Col[param.O2Col.Count - 1].StepValue;
-                                    }
+                //                    if (param.Unit == 0)//VVM
+                //                    {
+                //                        initialGas = MathF.Round((float)(param.O2Col[0].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                        maxGas = MathF.Round((float)(param.O2Col[param.O2Col.Count - 1].StepValue * (deviceParameter.JarWeight - 2000) / 1000), 2);
+                //                    }
+                //                    else if (param.Unit == 1)//L/min
+                //                    {
+                //                        initialGas = param.O2Col[0].StepValue;
+                //                        maxGas = param.O2Col[param.O2Col.Count - 1].StepValue;
+                //                    }
 
-                                    isExistOtherGas = previousElements.Where(t => t == DOControlFactor.Air).Count() > 0;
+                //                    isExistOtherGas = previousElements.Where(t => t == DOControlFactor.Air).Count() > 0;
 
-                                    if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
-                                    {
-                                        if (dicDOO2Index[deviceParameter.Name] > 0)//还存在上一阶梯
-                                        {
-                                            dicDOO2Index[deviceParameter.Name] -= 1;
+                //                    if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
+                //                    {
+                //                        if (dicDOO2Index[deviceParameter.Name] > 0)//还存在上一阶梯
+                //                        {
+                //                            dicDOO2Index[deviceParameter.Name] -= 1;
 
-                                            float o2FlowSpeed = 0f;
-                                            if (param.Unit == 0)//VVM
-                                            {
-                                                o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                            }
-                                            else if (param.Unit == 1)//L/min
-                                            {
-                                                o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
-                                            }
-                                            deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+                //                            float o2FlowSpeed = 0f;
+                //                            if (param.Unit == 0)//VVM
+                //                            {
+                //                                o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                            }
+                //                            else if (param.Unit == 1)//L/min
+                //                            {
+                //                                o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                //                            }
+                //                            deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
 
-                                            if (isExistOtherGas)
-                                            {
-                                                if (dicDOAirIndex[deviceParameter.Name] < param.AirCol.Count - 1)//加一档
-                                                {
-                                                    dicDOAirIndex[deviceParameter.Name] += 1;
+                //                            if (isExistOtherGas)
+                //                            {
+                //                                if (dicDOAirIndex[deviceParameter.Name] < param.AirCol.Count - 1)//加一档
+                //                                {
+                //                                    dicDOAirIndex[deviceParameter.Name] += 1;
 
-                                                    float airFlowSpeed = 0f;
-                                                    if (param.Unit == 0)//VVM
-                                                    {
-                                                        airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                                    }
-                                                    else if (param.Unit == 1)//L/min
-                                                    {
-                                                        airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
-                                                    }
-                                                    deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
-                                                    deviceParameter.AirParam.IsControling = true;
-                                                    AirRunCommand.Execute(deviceParameter);
-                                                }
-                                            }
-                                        }
-                                        else if (factorIndex > 0)//非第一因子，不需要最低通气量
-                                        {
-                                            if (isExistOtherGas)
-                                            {
-                                                deviceParameter.O2Param.FlowSpeed = 0;
+                //                                    float airFlowSpeed = 0f;
+                //                                    if (param.Unit == 0)//VVM
+                //                                    {
+                //                                        airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                                    }
+                //                                    else if (param.Unit == 1)//L/min
+                //                                    {
+                //                                        airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                //                                    }
+                //                                    deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                //                                    deviceParameter.AirParam.IsControling = true;
+                //                                    AirRunCommand.Execute(deviceParameter);
+                //                                }
+                //                            }
+                //                        }
+                //                        else if (factorIndex > 0)//非第一因子，不需要最低通气量
+                //                        {
+                //                            if (isExistOtherGas)
+                //                            {
+                //                                deviceParameter.O2Param.FlowSpeed = 0;
 
-                                                if (dicDOAirIndex[deviceParameter.Name] < param.AirCol.Count - 1)//加一档
-                                                {
-                                                    dicDOAirIndex[deviceParameter.Name] += 1;
+                //                                if (dicDOAirIndex[deviceParameter.Name] < param.AirCol.Count - 1)//加一档
+                //                                {
+                //                                    dicDOAirIndex[deviceParameter.Name] += 1;
 
-                                                    float airFlowSpeed = 0f;
-                                                    if (param.Unit == 0)//VVM
-                                                    {
-                                                        airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                                    }
-                                                    else if (param.Unit == 1)//L/min
-                                                    {
-                                                        airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
-                                                    }
-                                                    deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
-                                                    deviceParameter.AirParam.IsControling = true;
-                                                    AirRunCommand.Execute(deviceParameter);
-                                                }
-                                            }
+                //                                    float airFlowSpeed = 0f;
+                //                                    if (param.Unit == 0)//VVM
+                //                                    {
+                //                                        airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                                    }
+                //                                    else if (param.Unit == 1)//L/min
+                //                                    {
+                //                                        airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                //                                    }
+                //                                    deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                //                                    deviceParameter.AirParam.IsControling = true;
+                //                                    AirRunCommand.Execute(deviceParameter);
+                //                                }
+                //                            }
 
-                                            lastFactorIndex = factorIndex;
-                                            factorIndex -= 1;
-                                        }
-                                    }
-                                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
-                                    {
-                                        if (dicDOO2Index[deviceParameter.Name] < param.O2Col.Count - 1)//还存在下一阶梯
-                                        {
-                                            dicDOO2Index[deviceParameter.Name] += 1;
+                //                            lastFactorIndex = factorIndex;
+                //                            factorIndex -= 1;
+                //                        }
+                //                    }
+                //                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
+                //                    {
+                //                        if (dicDOO2Index[deviceParameter.Name] < param.O2Col.Count - 1)//还存在下一阶梯
+                //                        {
+                //                            dicDOO2Index[deviceParameter.Name] += 1;
 
-                                            float o2FlowSpeed = 0f;
-                                            if (param.Unit == 0)//VVM
-                                            {
-                                                o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                            }
-                                            else if (param.Unit == 1)//L/min
-                                            {
-                                                o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
-                                            }
-                                            deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+                //                            float o2FlowSpeed = 0f;
+                //                            if (param.Unit == 0)//VVM
+                //                            {
+                //                                o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                            }
+                //                            else if (param.Unit == 1)//L/min
+                //                            {
+                //                                o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                //                            }
+                //                            deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
 
-                                            if (isExistOtherGas)
-                                            {
-                                                if (dicDOAirIndex[deviceParameter.Name] > 0)
-                                                {
-                                                    dicDOAirIndex[deviceParameter.Name] -= 1;
+                //                            if (isExistOtherGas)
+                //                            {
+                //                                if (dicDOAirIndex[deviceParameter.Name] > 0)
+                //                                {
+                //                                    dicDOAirIndex[deviceParameter.Name] -= 1;
 
-                                                    float airFlowSpeed = 0f;
-                                                    if (param.Unit == 0)//VVM
-                                                    {
-                                                        airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                                    }
-                                                    else if (param.Unit == 1)//L/min
-                                                    {
-                                                        airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
-                                                    }
-                                                    deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
-                                                    deviceParameter.AirParam.IsControling = true;
-                                                    AirRunCommand.Execute(deviceParameter);
-                                                }
-                                                else
-                                                {
-                                                    deviceParameter.AirParam.FlowSpeed = 0;
-                                                    deviceParameter.AirParam.IsControling = true;
-                                                    AirRunCommand.Execute(deviceParameter);
-                                                }
-                                            }
-                                        }
-                                        else if (factorIndex < collection.Count - 1)
-                                        {
-                                            lastFactorIndex = factorIndex;
-                                            factorIndex += 1;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        float o2FlowSpeed = 0f;
-                                        if (param.Unit == 0)//VVM
-                                        {
-                                            o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                        }
-                                        else if (param.Unit == 1)//L/min
-                                        {
-                                            o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
-                                        }
-                                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                        if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.1)
-                                        {
-                                            deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
+                //                                    float airFlowSpeed = 0f;
+                //                                    if (param.Unit == 0)//VVM
+                //                                    {
+                //                                        airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                                    }
+                //                                    else if (param.Unit == 1)//L/min
+                //                                    {
+                //                                        airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                //                                    }
+                //                                    deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                //                                    deviceParameter.AirParam.IsControling = true;
+                //                                    AirRunCommand.Execute(deviceParameter);
+                //                                }
+                //                                else
+                //                                {
+                //                                    deviceParameter.AirParam.FlowSpeed = 0;
+                //                                    deviceParameter.AirParam.IsControling = true;
+                //                                    AirRunCommand.Execute(deviceParameter);
+                //                                }
+                //                            }
+                //                        }
+                //                        else if (factorIndex < collection.Count - 1)
+                //                        {
+                //                            lastFactorIndex = factorIndex;
+                //                            factorIndex += 1;
+                //                        }
+                //                    }
+                //                    else
+                //                    {
+                //                        float o2FlowSpeed = 0f;
+                //                        if (param.Unit == 0)//VVM
+                //                        {
+                //                            o2FlowSpeed = MathF.Round((float)(param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                        }
+                //                        else if (param.Unit == 1)//L/min
+                //                        {
+                //                            o2FlowSpeed = param.O2Col[dicDOO2Index[deviceParameter.Name]].StepValue;
+                //                        }
+                //                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //                        if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.1)
+                //                        {
+                //                            deviceParameter.O2Param.FlowSpeed = o2FlowSpeed;
 
-                                        }
+                //                        }
 
-                                        if (isExistOtherGas)
-                                        {
-                                            float airFlowSpeed = 0f;
-                                            if (param.Unit == 0)//VVM
-                                            {
-                                                airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
-                                            }
-                                            else if (param.Unit == 1)//L/min
-                                            {
-                                                airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
-                                            }
-                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                            if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.1)
-                                            {
-                                                deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
-                                            }
-                                        }
-                                    }
+                //                        if (isExistOtherGas)
+                //                        {
+                //                            float airFlowSpeed = 0f;
+                //                            if (param.Unit == 0)//VVM
+                //                            {
+                //                                airFlowSpeed = MathF.Round((float)(param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                //                            }
+                //                            else if (param.Unit == 1)//L/min
+                //                            {
+                //                                airFlowSpeed = param.AirCol[dicDOAirIndex[deviceParameter.Name]].StepValue;
+                //                            }
+                //                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //                            if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.1)
+                //                            {
+                //                                deviceParameter.AirParam.FlowSpeed = airFlowSpeed;
+                //                            }
+                //                        }
+                //                    }
 
-                                    sleepCount = 1;
-                                    while (sleepCount > 0)
-                                    {
-                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                        {
-                                            dicDOStatus[currentDeviceParameter.Name] = false;
-                                            return;
-                                        }
-                                        while (AppSession.DOPause)
-                                        {
-                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                            {
-                                                dicDOStatus[currentDeviceParameter.Name] = false;
-                                                return;
-                                            }
-                                            Thread.Sleep(1000);
-                                        }
-                                        sleepCount--;
-                                        Thread.Sleep(1000);
-                                    }
-                                    break;
-                                case DOControlFactor.Temp:
-                                    deviceParameter.DORegulationLimit = false;
-                                    if (!deviceParameter.TempParam.IsControling)
-                                    {
-                                        TempRunCommand.Execute(deviceParameter);
-                                        Thread.Sleep(1000);
-                                    }
+                //                    sleepCount = 1;
+                //                    while (sleepCount > 0)
+                //                    {
+                //                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                        {
+                //                            dicDOStatus[currentDeviceParameter.Name] = false;
+                //                            return;
+                //                        }
+                //                        while (AppSession.DOPause)
+                //                        {
+                //                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                            {
+                //                                dicDOStatus[currentDeviceParameter.Name] = false;
+                //                                return;
+                //                            }
+                //                            Thread.Sleep(1000);
+                //                        }
+                //                        sleepCount--;
+                //                        Thread.Sleep(1000);
+                //                    }
+                //                    break;
+                //                case DOControlFactor.Temp:
+                //                    deviceParameter.DORegulationLimit = false;
+                //                    if (!deviceParameter.TempParam.IsControling)
+                //                    {
+                //                        TempRunCommand.Execute(deviceParameter);
+                //                        Thread.Sleep(1000);
+                //                    }
 
-                                    if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
-                                    {
-                                        if (dicDOTempIndex[deviceParameter.Name] > 0)//还存在上一阶梯
-                                        {
-                                            dicDOTempIndex[deviceParameter.Name] -= 1;
+                //                    if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
+                //                    {
+                //                        if (dicDOTempIndex[deviceParameter.Name] > 0)//还存在上一阶梯
+                //                        {
+                //                            dicDOTempIndex[deviceParameter.Name] -= 1;
 
-                                            deviceParameter.TempParam.Temp_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
-                                        }
-                                        else if (factorIndex > 0)
-                                        {
-                                            lastFactorIndex = factorIndex;
-                                            factorIndex -= 1;
+                //                            deviceParameter.TempParam.Temp_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
+                //                        }
+                //                        else if (factorIndex > 0)
+                //                        {
+                //                            lastFactorIndex = factorIndex;
+                //                            factorIndex -= 1;
 
-                                            deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
-                                        }
-                                    }
-                                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
-                                    {
-                                        if (dicDOTempIndex[deviceParameter.Name] < param.TempCol.Count - 1)//还存在下一阶梯
-                                        {
-                                            dicDOTempIndex[deviceParameter.Name] += 1;
+                //                            deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
+                //                        }
+                //                    }
+                //                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
+                //                    {
+                //                        if (dicDOTempIndex[deviceParameter.Name] < param.TempCol.Count - 1)//还存在下一阶梯
+                //                        {
+                //                            dicDOTempIndex[deviceParameter.Name] += 1;
 
-                                            deviceParameter.TempParam.Temp_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
-                                        }
-                                        else if (factorIndex < collection.Count - 1)
-                                        {
-                                            lastFactorIndex = factorIndex;
-                                            factorIndex += 1;
+                //                            deviceParameter.TempParam.Temp_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
+                //                        }
+                //                        else if (factorIndex < collection.Count - 1)
+                //                        {
+                //                            lastFactorIndex = factorIndex;
+                //                            factorIndex += 1;
 
-                                            deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        deviceParameter.TempParam.Temp_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
-                                    }
+                //                            deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
+                //                        }
+                //                    }
+                //                    else
+                //                    {
+                //                        deviceParameter.TempParam.Temp_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
+                //                    }
 
-                                    if (dicDOTempIndex[deviceParameter.Name] <= 0 || dicDOTempIndex[deviceParameter.Name] >= dicDOTempIndex.Count - 1)
-                                    {
-                                        while (true)
-                                        {
-                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                            {
-                                                dicDOStatus[currentDeviceParameter.Name] = false;
-                                                return;
-                                            }
-                                            while (AppSession.DOPause)
-                                            {
-                                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                                {
-                                                    dicDOStatus[currentDeviceParameter.Name] = false;
-                                                    return;
-                                                }
-                                                Thread.Sleep(1000);
-                                            }
-                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                            if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.Temp_PV) <= 0.2)
-                                            {
-                                                break;
-                                            }
-                                            Thread.Sleep(1000);
-                                        }
-                                    }
-                                    break;
-                                case DOControlFactor.Feed:
-                                    if (!deviceParameter.FeedParam1.IsControling)
-                                    {
-                                        if (factorIndex < collection.Count - 1 && lastFactorIndex <= factorIndex)//如果还有下一执行参数，则跳到下一个执行参数
-                                        {
-                                            lastFactorIndex = factorIndex;
-                                            factorIndex += 1;
-                                        }
-                                        else if (factorIndex - 1 > -1 && lastFactorIndex >= factorIndex)
-                                        {
-                                            lastFactorIndex = factorIndex;
-                                            factorIndex -= 1;
-                                        }
-                                    }
+                //                    if (dicDOTempIndex[deviceParameter.Name] <= 0 || dicDOTempIndex[deviceParameter.Name] >= dicDOTempIndex.Count - 1)
+                //                    {
+                //                        while (true)
+                //                        {
+                //                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                            {
+                //                                dicDOStatus[currentDeviceParameter.Name] = false;
+                //                                return;
+                //                            }
+                //                            while (AppSession.DOPause)
+                //                            {
+                //                                if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                                {
+                //                                    dicDOStatus[currentDeviceParameter.Name] = false;
+                //                                    return;
+                //                                }
+                //                                Thread.Sleep(1000);
+                //                            }
+                //                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
+                //                            if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.Temp_PV) <= 0.2)
+                //                            {
+                //                                break;
+                //                            }
+                //                            Thread.Sleep(1000);
+                //                        }
+                //                    }
+                //                    break;
+                //                case DOControlFactor.Feed:
+                //                    if (!deviceParameter.FeedParam1.IsControling)
+                //                    {
+                //                        if (factorIndex < collection.Count - 1 && lastFactorIndex <= factorIndex)//如果还有下一执行参数，则跳到下一个执行参数
+                //                        {
+                //                            lastFactorIndex = factorIndex;
+                //                            factorIndex += 1;
+                //                        }
+                //                        else if (factorIndex - 1 > -1 && lastFactorIndex >= factorIndex)
+                //                        {
+                //                            lastFactorIndex = factorIndex;
+                //                            factorIndex -= 1;
+                //                        }
+                //                    }
 
-                                    if (firstInitFeed)
-                                    {
-                                        deviceParameter.FeedSuspend = true;
-                                        deviceParameter.DOParam.InitialFeed = deviceParameter.FeedParam1.Feed_PV;
-                                        firstInitFeed = false;
-                                    }
+                //                    if (firstInitFeed)
+                //                    {
+                //                        deviceParameter.FeedSuspend = true;
+                //                        deviceParameter.DOParam.InitialFeed = deviceParameter.FeedParam1.Feed_PV;
+                //                        firstInitFeed = false;
+                //                    }
 
-                                    if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
-                                    {
-                                        if (dicDOFeedIndex[deviceParameter.Name] > 0)//还存在上一阶梯
-                                        {
-                                            dicDOFeedIndex[deviceParameter.Name] -= 1;
+                //                    if (dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit)
+                //                    {
+                //                        if (dicDOFeedIndex[deviceParameter.Name] > 0)//还存在上一阶梯
+                //                        {
+                //                            dicDOFeedIndex[deviceParameter.Name] -= 1;
 
-                                            float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
-                                            deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
-                                        }
-                                        else if (factorIndex > 0)
-                                        {
-                                            lastFactorIndex = factorIndex;
-                                            factorIndex -= 1;
+                //                            float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                //                            deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
+                //                        }
+                //                        else if (factorIndex > 0)
+                //                        {
+                //                            lastFactorIndex = factorIndex;
+                //                            factorIndex -= 1;
 
-                                            deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
-                                        }
-                                    }
-                                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
-                                    {
-                                        if (dicDOFeedIndex[deviceParameter.Name] < param.FeedCol.Count - 1)//还存在下一阶梯
-                                        {
-                                            dicDOFeedIndex[deviceParameter.Name] += 1;
+                //                            deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
+                //                        }
+                //                    }
+                //                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
+                //                    {
+                //                        if (dicDOFeedIndex[deviceParameter.Name] < param.FeedCol.Count - 1)//还存在下一阶梯
+                //                        {
+                //                            dicDOFeedIndex[deviceParameter.Name] += 1;
 
-                                            float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
-                                            deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
-                                        }
-                                        else if (factorIndex < collection.Count - 1)
-                                        {
-                                            lastFactorIndex = factorIndex;
-                                            factorIndex += 1;
+                //                            float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                //                            deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
+                //                        }
+                //                        else if (factorIndex < collection.Count - 1)
+                //                        {
+                //                            lastFactorIndex = factorIndex;
+                //                            factorIndex += 1;
 
-                                            deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
-                                        deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
-                                    }
+                //                            deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
+                //                        }
+                //                    }
+                //                    else
+                //                    {
+                //                        float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
+                //                        deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
+                //                    }
 
-                                    PeristalticPump pump = PeristalticPump.FeedPump;
-                                    int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                                    if (pumpNo >= 0)
-                                    {
-                                        var controlParam = new PeristalticPumpControlParam()
-                                        {
-                                            PumpNo = pumpNo,
-                                            Pump = pump,
-                                            ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
-                                            FlowCapacity = Const.MaxPumpFlowCapacity
-                                        };
-                                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, controlParam);
-                                        dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam1.Feed_PV;
-                                    }
-                                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 实际补料{2}", deviceParameter.Name, deviceParameter.DOParam.InitialFeed, deviceParameter.FeedParam1.Feed_PV));
+                //                    PeristalticPump pump = PeristalticPump.FeedPump;
+                //                    int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
+                //                    if (pumpNo >= 0)
+                //                    {
+                //                        var controlParam = new PeristalticPumpControlParam()
+                //                        {
+                //                            PumpNo = pumpNo,
+                //                            Pump = pump,
+                //                            ControlMode = PumpControlMode.Direct,
+                //                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                //                            FlowCapacity = Const.MaxPumpFlowCapacity
+                //                        };
+                //                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, controlParam);
+                //                        dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam1.Feed_PV;
+                //                    }
+                //                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 实际补料{2}", deviceParameter.Name, deviceParameter.DOParam.InitialFeed, deviceParameter.FeedParam1.Feed_PV));
 
-                                    sleepCount = 1;
-                                    while (sleepCount > 0)
-                                    {
-                                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                        {
-                                            dicDOStatus[currentDeviceParameter.Name] = false;
-                                            return;
-                                        }
-                                        while (AppSession.DOPause)
-                                        {
-                                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
-                                            {
-                                                dicDOStatus[currentDeviceParameter.Name] = false;
-                                                return;
-                                            }
-                                            Thread.Sleep(1000);
-                                        }
-                                        sleepCount--;
-                                        Thread.Sleep(1000);
-                                    }
-                                    break;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            LogHelper.Debug(string.Format("DO调整失败：阶梯级联：错误信息：{0}", ex.Message));
-                            Thread.Sleep(AppSession.Interval * 1000);
-                        }
-                    }
-                }
+                //                    sleepCount = 1;
+                //                    while (sleepCount > 0)
+                //                    {
+                //                        if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                        {
+                //                            dicDOStatus[currentDeviceParameter.Name] = false;
+                //                            return;
+                //                        }
+                //                        while (AppSession.DOPause)
+                //                        {
+                //                            if (dicDOWorker[deviceParameter.Name].CancellationPending)
+                //                            {
+                //                                dicDOStatus[currentDeviceParameter.Name] = false;
+                //                                return;
+                //                            }
+                //                            Thread.Sleep(1000);
+                //                        }
+                //                        sleepCount--;
+                //                        Thread.Sleep(1000);
+                //                    }
+                //                    break;
+                //            }
+                //        }
+                //        catch (Exception ex)
+                //        {
+                //            LogHelper.Debug(string.Format("DO调整失败：阶梯级联：错误信息：{0}", ex.Message));
+                //            Thread.Sleep(AppSession.Interval * 1000);
+                //        }
+                //    }
+                //}
             });
             dicDOWorker[currentDeviceParameter.Name].RunWorkerCompleted += ((s, e) =>
             {

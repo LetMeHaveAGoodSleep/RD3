@@ -24,4 +24,5 @@
     <rd3:MultiBoolToVisibilityConverter x:Key="OrBool2VisConverter" Logic="OR" />
     <rd3:MultiVisibilityToVisibilityConverter x:Key="AndVis2VisConverter" Logic="AND" />
     <rd3:MultiVisibilityToVisibilityConverter x:Key="OrVis2VisConverter" Logic="OR" />
+    <rd3:GreaterThanConverter x:Key="GreaterThanConverter" />
 </ResourceDictionary>

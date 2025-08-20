@@ -79,7 +79,6 @@
             <ToggleButton
                 Width="250"
                 Height="40"
-                materialDesign:ToggleButtonAssist.OnContent="开"
                 Command="{Binding MFCControlCommand}"
                 IsChecked="{Binding MFCInfo.IsControling}"
                 IsEnabled="{Binding MFCInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"

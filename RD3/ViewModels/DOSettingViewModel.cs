@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace RD3.ViewModels
 {
@@ -52,60 +53,35 @@ namespace RD3.ViewModels
             set { SetProperty(ref _midRangingCol, value); }
         }
 
-
-        public DelegateCommand AddAirCommand => new(() => 
+        public DelegateCommand DeleteAllFactorCommand => new(() =>
         {
-            Param.AirCol.Add(new CascadeParam() { StepValue= Param.AirCol[Param.AirCol.Count - 1].StepValue });
+            Param.FactorCol.Clear();
+            Param.FactorContent = "执行顺序：" + string.Join("-", Param.FactorCol);
         });
 
-        public DelegateCommand<object> DeleteAirCommand => new((object o) =>
+        public DelegateCommand AddCascadeCommand => new(() =>
         {
-            CascadeParam param = o as CascadeParam;
-            Param.AirCol.Remove(param);
-        });
-
-        public DelegateCommand AddO2Command => new(() =>
-        {
-            Param.O2Col.Add(new CascadeParam()
+            if (Param.CascadeCol.Count > 0)
             {
-                StepValue = Param.O2Col.Count > 0 ? Param.O2Col[Param.O2Col.Count - 1].StepValue : 0.1f
-            });
-        });
-
-        public DelegateCommand<object> DeleteO2Command => new((object o) =>
-        {
-            CascadeParam param = o as CascadeParam;
-            Param.O2Col.Remove(param);
-        });
-
-        public DelegateCommand AddTempCommand => new(() =>
-        {
-            Param.TempCol.Add(new CascadeParam()
+                Param.CascadeCol.Add(new CascadeParam()
+                {
+                    AirFlowRate = Param.CascadeCol[Param.CascadeCol.Count - 1].AirFlowRate,
+                    O2FlowRate = Param.CascadeCol[Param.CascadeCol.Count - 1].O2FlowRate,
+                    Temp = Param.CascadeCol[Param.CascadeCol.Count - 1].Temp,
+                    FeedFlowRate = Param.CascadeCol[Param.CascadeCol.Count - 1].FeedFlowRate,
+                });
+            }
+            else
             {
-                StepValue = Param.TempCol.Count > 0 ? Param.TempCol[Param.TempCol.Count - 1].StepValue : 37f
-            });
+                Param.CascadeCol.Add(new CascadeParam());
+            }
         });
 
-        public DelegateCommand<object> DeleteTempCommand => new((object o) =>
+        public DelegateCommand<object> DeleteCascadeCommand => new((object o) =>
         {
             CascadeParam param = o as CascadeParam;
-            Param.TempCol.Remove(param);
+            Param.CascadeCol.Remove(param);
         });
-
-        public DelegateCommand AddFeedCommand => new(() =>
-        {
-            Param.FeedCol.Add(new CascadeParam()
-            {
-                StepValue = Param.FeedCol.Count > 0 ? Param.FeedCol[Param.FeedCol.Count - 1].StepValue : 80f
-            });
-        });
-
-        public DelegateCommand<object> DeleteFeedCommand => new((object o) =>
-        {
-            CascadeParam param = o as CascadeParam;
-            Param.FeedCol.Remove(param);
-        });
-
 
         public DelegateCommand OKCommand => new(() =>
         {
@@ -115,32 +91,32 @@ namespace RD3.ViewModels
             }
             else
             {
-                Param.AirCol = new ObservableCollection<CascadeParam>(Param.AirCol.OrderBy(t => t.StepValue));
                 DOAssManager.GetInstance().Save(ParamCol);
             }
 
-            DialogParameters Parameters = new DialogParameters { { nameof(DOAssParam), Param }, { nameof(MidRangingParam),MidRanging },{"Flag", CurrentDeviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging } };
+            DialogParameters Parameters = new DialogParameters { { nameof(DOAssParam), Param }, { nameof(MidRangingParam), MidRanging }, { "Flag", CurrentDeviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging } };
             DialogResult dialogResult = new DialogResult(ButtonResult.OK, Parameters);
             RequestClose?.Invoke(dialogResult);
         });
 
-        public DelegateCommand<IList> ChangeFatorCommand => new((IList list) => 
+        public DelegateCommand<IList> ChangeFatorCommand => new((IList list) =>
         {
             switch (CurrentDeviceParameter.DOParam.ControlStrategy)
             {
                 case DOControlStrategy.Step:
                     Param.FactorCol.Clear();
-
+                    ObservableCollection<DOControlFactor> col = [];
                     for (int i = 0; i < list.Count; i++)
                     {
                         foreach (var item in EnumUtil.GetEnumDescriptions<DOControlFactor>())
                         {
                             if (item == (list[i] as TransferItem)?.Content?.ToString())
                             {
-                                Param.FactorCol.Add(EnumUtil.GetEnumByDescription<DOControlFactor>(item));
+                                col.Add(EnumUtil.GetEnumByDescription<DOControlFactor>(item));
                             }
                         }
                     }
+                    Param.FactorCol = col;
 
                     List<string> stringList = list.Cast<object>().Select(item => (item as TransferItem)?.Content?.ToString())
                     .Where(content => content != null).ToList();
@@ -149,17 +125,18 @@ namespace RD3.ViewModels
                     break;
                 case DOControlStrategy.Midranging:
                     MidRanging.FactorCol.Clear();
-
+                    ObservableCollection<DOControlFactor> col1 = [];
                     for (int i = 0; i < list.Count; i++)
                     {
                         foreach (var item in EnumUtil.GetEnumDescriptions<DOControlFactor>())
                         {
                             if (item == (list[i] as TransferItem)?.Content?.ToString())
                             {
-                                MidRanging.FactorCol.Add(EnumUtil.GetEnumByDescription<DOControlFactor>(item));
+                                col1.Add(EnumUtil.GetEnumByDescription<DOControlFactor>(item));
                             }
                         }
                     }
+                    MidRanging.FactorCol = col1;
 
                     stringList = list.Cast<object>().Select(item => (item as TransferItem)?.Content?.ToString())
                      .Where(content => content != null).ToList();
@@ -169,7 +146,7 @@ namespace RD3.ViewModels
             }
         });
 
-        public DelegateCommand PIDSettingCommand => new(() => 
+        public DelegateCommand PIDSettingCommand => new(() =>
         {
             DialogHostService.ShowOnce(nameof(PadDOPIDView), callback =>
             {
@@ -202,7 +179,6 @@ namespace RD3.ViewModels
             }
             else
             {
-                Param.AirCol = new ObservableCollection<CascadeParam>(Param.AirCol.OrderBy(t => t.StepValue));
                 DOAssManager.GetInstance().Save(ParamCol);
             }
         }
@@ -220,7 +196,7 @@ namespace RD3.ViewModels
 
             var list = Param.FactorCol.Select(t => EnumUtil.GetEnumDescription(t)).ToList();
 
-            Param.FactorContent= "执行顺序：" + string.Join("-", list);
+            Param.FactorContent = "执行顺序：" + string.Join("-", list);
 
             MidRangingCol = MidRangingParamManager.GetInstance().MidRangingParamCol;
             MidRanging = MidRangingCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);

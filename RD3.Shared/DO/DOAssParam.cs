@@ -25,6 +25,42 @@ namespace RD3.Shared
             set
             {
                 SetProperty(ref _factorCol, value);
+
+                if (value.Contains(DOControlFactor.Air))
+                {
+                    AirEnable = true;
+                }
+                else
+                {
+                    AirEnable = false;
+                }
+
+                if (value.Contains(DOControlFactor.O2))
+                {
+                    O2Enable = true;
+                }
+                else
+                {
+                    O2Enable = false;
+                }
+
+                if (value.Contains(DOControlFactor.Temp))
+                {
+                    TempEnable = true;
+                }
+                else
+                {
+                    TempEnable = false;
+                }
+
+                if (value.Contains(DOControlFactor.Feed))
+                {
+                    FeedEnable = true;
+                }
+                else
+                {
+                    FeedEnable = false;
+                }
             }
         }
 
@@ -36,55 +72,73 @@ namespace RD3.Shared
             set { SetProperty(ref _factorContent, value); }
         }
 
-        private ObservableCollection<CascadeParam> _airCol = [];
-        public ObservableCollection<CascadeParam> AirCol
+        private ObservableCollection<CascadeParam> _cascadeCol = [];
+        public ObservableCollection<CascadeParam> CascadeCol
         {
-            get => _airCol;
+            get => _cascadeCol;
             set
             {
-                SetProperty(ref _airCol, value);
+                SetProperty(ref _cascadeCol, value);
             }
         }
 
-        private ObservableCollection<CascadeParam> _o2Col = [];
-        public ObservableCollection<CascadeParam> O2Col
+        private bool _airEnable;
+        public bool AirEnable
         {
-            get => _o2Col;
-            set
-            {
-                SetProperty(ref _o2Col, value);
-            }
+            get { return _airEnable; }
+            private set { SetProperty(ref _airEnable, value); }
         }
 
-        private ObservableCollection<CascadeParam> _tempCol = [];
-        public ObservableCollection<CascadeParam> TempCol
+        private bool _o2Enable;
+        public bool O2Enable
         {
-            get => _tempCol;
-            set
-            {
-                SetProperty(ref _tempCol, value);
-            }
+            get { return _o2Enable; }
+            private set { SetProperty(ref _o2Enable, value); }
         }
 
-        private ObservableCollection<CascadeParam> _feedCol = [];
-        public ObservableCollection<CascadeParam> FeedCol
+        private bool _tempEnable;
+        public bool TempEnable
         {
-            get => _feedCol;
-            set
-            {
-                SetProperty(ref _feedCol, value);
-            }
+            get { return _tempEnable; }
+            private set { SetProperty(ref _tempEnable, value); }
+        }
+
+        private bool _feedEnable;
+        public bool FeedEnable
+        {
+            get { return _feedEnable; }
+           private set { SetProperty(ref _feedEnable, value); }
         }
     }
 
-
     public class CascadeParam : BindableBase
     {
-        private float _stepValue;
-        public float StepValue
+        private float _airFlowRate;
+        public float AirFlowRate
         {
-            get => _stepValue;
-            set { SetProperty(ref _stepValue, value); }
+            get => _airFlowRate;
+            set { SetProperty(ref _airFlowRate, value); }
+        }
+
+        private float _o2FlowRate;
+        public float O2FlowRate
+        {
+            get => _o2FlowRate;
+            set { SetProperty(ref _o2FlowRate, value); }
+        }
+
+        private float _temp;
+        public float Temp
+        {
+            get => _temp;
+            set { SetProperty(ref _temp, value); }
+        }
+
+        private float _feedFlowRate;
+        public float FeedFlowRate
+        {
+            get => _feedFlowRate;
+            set { SetProperty(ref _feedFlowRate, value); }
         }
     }
 }

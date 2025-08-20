@@ -99,6 +99,9 @@ namespace RD3.Controller
 
                 int sleepCount = 1;
 
+                int airWaitTime = 0;
+                int o2WaitTime = 0;
+
                 while (AppSession.DOPause)
                 {
                     if (_backgroundWorker.CancellationPending)
@@ -1036,19 +1039,19 @@ namespace RD3.Controller
 
                     if (collection.Count > 0)
                     {
-                        if (collection.Contains(DOControlFactor.Air) && CurrentDeviceParameter.AirParam.IsControling)
+                        if (collection.Contains(DOControlFactor.Air))
                         {
                             if (param.Unit == 0)//VVM
                             {
-                                _airIndex = param.AirCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
-                                 (x.Index == 0 || MathF.Round(param.AirCol[x.Index - 1].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000, 2) <= realTimeParam.AirFlowSpeed) &&
-                                 (x.Index == param.AirCol.Count - 1 || MathF.Round(param.AirCol[x.Index + 1].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000, 2) >= realTimeParam.AirFlowSpeed))?.Index ?? -1;
+                                _airIndex = param.CascadeCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                                 (x.Index == 0 || MathF.Round(param.CascadeCol[x.Index - 1].AirFlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000, 2) <= realTimeParam.AirFlowSpeed) &&
+                                 (x.Index == param.CascadeCol.Count - 1 || MathF.Round(param.CascadeCol[x.Index + 1].AirFlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000, 2) >= realTimeParam.AirFlowSpeed))?.Index ?? -1;
                             }
                             else if (param.Unit == 1)//L/min
                             {
-                                _airIndex = param.AirCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
-                                 (x.Index == 0 || param.AirCol[x.Index - 1].StepValue <= realTimeParam.AirFlowSpeed) &&
-                                 (x.Index == param.AirCol.Count - 1 || param.AirCol[x.Index + 1].StepValue >= realTimeParam.AirFlowSpeed))?.Index ?? -1;
+                                _airIndex = param.CascadeCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                                 (x.Index == 0 || param.CascadeCol[x.Index - 1].AirFlowRate <= realTimeParam.AirFlowSpeed) &&
+                                 (x.Index == param.CascadeCol.Count - 1 || param.CascadeCol[x.Index + 1].AirFlowRate >= realTimeParam.AirFlowSpeed))?.Index ?? -1;
                             }
 
                             LogHelper.Debug(string.Format("阶梯级联：通气档位为{0}", _airIndex + 1));
@@ -1058,19 +1061,19 @@ namespace RD3.Controller
                             }
                         }
 
-                        if (collection.Contains(DOControlFactor.O2) && CurrentDeviceParameter.O2Param.IsControling)
+                        if (collection.Contains(DOControlFactor.O2))
                         {
                             if (param.Unit == 0)//VVM
                             {
-                                _o2Index = param.O2Col.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
-                                 (x.Index == 0 || MathF.Round(param.O2Col[x.Index - 1].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000, 2) <= realTimeParam.O2FlowSpeed) &&
-                                 (x.Index == param.O2Col.Count - 1 || MathF.Round(param.O2Col[x.Index + 1].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000, 2) >= realTimeParam.O2FlowSpeed))?.Index ?? -1;
+                                _o2Index = param.CascadeCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                                 (x.Index == 0 || MathF.Round(param.CascadeCol[x.Index - 1].O2FlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000, 2) <= realTimeParam.O2FlowSpeed) &&
+                                 (x.Index == param.CascadeCol.Count - 1 || MathF.Round(param.CascadeCol[x.Index + 1].O2FlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000, 2) >= realTimeParam.O2FlowSpeed))?.Index ?? -1;
                             }
                             else if (param.Unit == 1)//L/min
                             {
-                                _o2Index = param.O2Col.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
-                                 (x.Index == 0 || param.O2Col[x.Index - 1].StepValue <= realTimeParam.O2FlowSpeed) &&
-                                 (x.Index == param.O2Col.Count - 1 || param.O2Col[x.Index + 1].StepValue >= realTimeParam.O2FlowSpeed))?.Index ?? -1;
+                                _o2Index = param.CascadeCol.Select((value, index) => new { Value = value, Index = index }).FirstOrDefault(x =>
+                                 (x.Index == 0 || param.CascadeCol[x.Index - 1].O2FlowRate <= realTimeParam.O2FlowSpeed) &&
+                                 (x.Index == param.CascadeCol.Count - 1 || param.CascadeCol[x.Index + 1].O2FlowRate >= realTimeParam.O2FlowSpeed))?.Index ?? -1;
                             }
 
                             LogHelper.Debug(string.Format("阶梯级联：氧气档位为{0}", _o2Index + 1));
@@ -1354,13 +1357,13 @@ namespace RD3.Controller
 
                                     if (param.Unit == 0)//VVM
                                     {
-                                        initialGas = MathF.Round((float)(param.AirCol[0].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
-                                        maxGas = MathF.Round((float)(param.AirCol[param.AirCol.Count - 1].StepValue * (CurrentDeviceParameter.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                        initialGas = MathF.Round((float)(param.CascadeCol[0].AirFlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                        maxGas = MathF.Round((float)(param.CascadeCol[param.CascadeCol.Count - 1].AirFlowRate * (CurrentDeviceParameter.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                     }
                                     else if (param.Unit == 1)//L/min
                                     {
-                                        initialGas = param.AirCol[0].StepValue;
-                                        maxGas = param.AirCol[param.AirCol.Count - 1].StepValue;
+                                        initialGas = param.CascadeCol[0].AirFlowRate;
+                                        maxGas = param.CascadeCol[param.CascadeCol.Count - 1].AirFlowRate;
                                     }
 
                                     isExistOtherGas = previousElements.Where(t => t == DOControlFactor.O2).Count() > 0;
@@ -1374,28 +1377,28 @@ namespace RD3.Controller
                                             float airFlowSpeed = 0f;
                                             if (param.Unit == 0)//VVM
                                             {
-                                                airFlowSpeed = MathF.Round((float)(param.AirCol[_airIndex].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                                airFlowSpeed = MathF.Round((float)(param.CascadeCol[_airIndex].AirFlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                             }
                                             else if (param.Unit == 1)//L/min
                                             {
-                                                airFlowSpeed = param.AirCol[_airIndex].StepValue;
+                                                airFlowSpeed = param.CascadeCol[_airIndex].AirFlowRate;
                                             }
                                             MFCAir.FlowRate_SP = airFlowSpeed;
 
                                             if (isExistOtherGas)
                                             {
-                                                if (_o2Index < param.O2Col.Count - 1)//加一档
+                                                if (_o2Index < param.CascadeCol.Count - 1)//加一档
                                                 {
                                                     _o2Index += 1;
 
                                                     float o2FlowSpeed = 0f;
                                                     if (param.Unit == 0)//VVM
                                                     {
-                                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[_o2Index].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                                        o2FlowSpeed = MathF.Round((float)(param.CascadeCol[_o2Index].O2FlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                                     }
                                                     else if (param.Unit == 1)//L/min
                                                     {
-                                                        o2FlowSpeed = param.O2Col[_o2Index].StepValue;
+                                                        o2FlowSpeed = param.CascadeCol[_o2Index].O2FlowRate;
                                                     }
                                                     MFCO2.FlowRate_SP = o2FlowSpeed;
                                                     MFCO2.IsControling = true;
@@ -1408,18 +1411,18 @@ namespace RD3.Controller
                                             {
                                                 MFCAir.FlowRate_SP = 0;
 
-                                                if (_o2Index < param.O2Col.Count - 1)//加一档
+                                                if (_o2Index < param.CascadeCol.Count - 1)//加一档
                                                 {
                                                     _o2Index += 1;
 
                                                     float o2FlowSpeed = 0f;
                                                     if (param.Unit == 0)//VVM
                                                     {
-                                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[_o2Index].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                        o2FlowSpeed = MathF.Round((float)(param.CascadeCol[_o2Index].O2FlowRate * (realTimeParam.JarWeight - 2000) / 1000), 2);
                                                     }
                                                     else if (param.Unit == 1)//L/min
                                                     {
-                                                        o2FlowSpeed = param.O2Col[_o2Index].StepValue;
+                                                        o2FlowSpeed = param.CascadeCol[_o2Index].O2FlowRate;
                                                     }
                                                     MFCO2.FlowRate_SP = o2FlowSpeed;
                                                     MFCO2.IsControling = true;
@@ -1432,18 +1435,18 @@ namespace RD3.Controller
                                     }
                                     else if (_agitDelta >= param.AgitUpperLimit)
                                     {
-                                        if (_airIndex < param.AirCol.Count - 1)//还存在下一阶梯
+                                        if (_airIndex < param.CascadeCol.Count - 1)//还存在下一阶梯
                                         {
                                             _airIndex += 1;
 
                                             float airFlowSpeed = 0f;
                                             if (param.Unit == 0)//VVM
                                             {
-                                                airFlowSpeed = MathF.Round((float)(param.AirCol[_airIndex].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                airFlowSpeed = MathF.Round((float)(param.CascadeCol[_airIndex].AirFlowRate * (realTimeParam.JarWeight - 2000) / 1000), 2);
                                             }
                                             else if (param.Unit == 1)//L/min
                                             {
-                                                airFlowSpeed = param.AirCol[_airIndex].StepValue;
+                                                airFlowSpeed = param.CascadeCol[_airIndex].AirFlowRate;
                                             }
                                             MFCAir.FlowRate_SP = airFlowSpeed;
 
@@ -1456,11 +1459,11 @@ namespace RD3.Controller
                                                     float o2FlowSpeed = 0f;
                                                     if (param.Unit == 0)//VVM
                                                     {
-                                                        o2FlowSpeed = MathF.Round((float)(param.O2Col[_o2Index].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                        o2FlowSpeed = MathF.Round((float)(param.CascadeCol[_o2Index].O2FlowRate * (realTimeParam.JarWeight - 2000) / 1000), 2);
                                                     }
                                                     else if (param.Unit == 1)//L/min
                                                     {
-                                                        o2FlowSpeed = param.O2Col[_o2Index].StepValue;
+                                                        o2FlowSpeed = param.CascadeCol[_o2Index].O2FlowRate;
                                                     }
                                                     MFCO2.FlowRate_SP = o2FlowSpeed;
                                                     MFCO2.IsControling = true;
@@ -1483,11 +1486,11 @@ namespace RD3.Controller
                                         float airFlowSpeed = 0f;
                                         if (param.Unit == 0)//VVM
                                         {
-                                            airFlowSpeed = MathF.Round((float)(param.AirCol[_airIndex].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                            airFlowSpeed = MathF.Round((float)(param.CascadeCol[_airIndex].AirFlowRate * (realTimeParam.JarWeight - 2000) / 1000), 2);
                                         }
                                         else if (param.Unit == 1)//L/min
                                         {
-                                            airFlowSpeed = param.AirCol[_airIndex].StepValue;
+                                            airFlowSpeed = param.CascadeCol[_airIndex].AirFlowRate;
                                         }
                                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                                         if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.05)
@@ -1500,11 +1503,11 @@ namespace RD3.Controller
                                             float o2FlowSpeed = 0f;
                                             if (param.Unit == 0)//VVM
                                             {
-                                                o2FlowSpeed = MathF.Round((float)(param.O2Col[_o2Index].StepValue * (realTimeParam.JarWeight - 2000) / 1000), 2);
+                                                o2FlowSpeed = MathF.Round((float)(param.CascadeCol[_o2Index].O2FlowRate * (realTimeParam.JarWeight - 2000) / 1000), 2);
                                             }
                                             else if (param.Unit == 1)//L/min
                                             {
-                                                o2FlowSpeed = param.O2Col[_o2Index].StepValue;
+                                                o2FlowSpeed = param.CascadeCol[_o2Index].O2FlowRate;
                                             }
                                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                                             if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.05)
@@ -1548,13 +1551,13 @@ namespace RD3.Controller
 
                                     if (param.Unit == 0)//VVM
                                     {
-                                        initialGas = MathF.Round((float)(param.O2Col[0].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
-                                        maxGas = MathF.Round((float)(param.O2Col[param.O2Col.Count - 1].StepValue * (CurrentDeviceParameter.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                        initialGas = MathF.Round((float)(param.CascadeCol[0].O2FlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                        maxGas = MathF.Round((float)(param.CascadeCol[param.CascadeCol.Count - 1].O2FlowRate * (CurrentDeviceParameter.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                     }
                                     else if (param.Unit == 1)//L/min
                                     {
-                                        initialGas = param.O2Col[0].StepValue;
-                                        maxGas = param.O2Col[param.O2Col.Count - 1].StepValue;
+                                        initialGas = param.CascadeCol[0].O2FlowRate;
+                                        maxGas = param.CascadeCol[param.CascadeCol.Count - 1].O2FlowRate;
                                     }
 
                                     isExistOtherGas = previousElements.Where(t => t == DOControlFactor.Air).Count() > 0;
@@ -1568,28 +1571,28 @@ namespace RD3.Controller
                                             float o2FlowSpeed = 0f;
                                             if (param.Unit == 0)//VVM
                                             {
-                                                o2FlowSpeed = MathF.Round((float)(param.O2Col[_o2Index].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                                o2FlowSpeed = MathF.Round((float)(param.CascadeCol[_o2Index].O2FlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                             }
                                             else if (param.Unit == 1)//L/min
                                             {
-                                                o2FlowSpeed = param.O2Col[_o2Index].StepValue;
+                                                o2FlowSpeed = param.CascadeCol[_o2Index].O2FlowRate;
                                             }
                                             MFCO2.FlowRate_SP = o2FlowSpeed;
 
                                             if (isExistOtherGas)
                                             {
-                                                if (_airIndex < param.AirCol.Count - 1)//加一档
+                                                if (_airIndex < param.CascadeCol.Count - 1)//加一档
                                                 {
                                                     _airIndex += 1;
 
                                                     float airFlowSpeed = 0f;
                                                     if (param.Unit == 0)//VVM
                                                     {
-                                                        airFlowSpeed = MathF.Round((float)(param.AirCol[_airIndex].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                                        airFlowSpeed = MathF.Round((float)(param.CascadeCol[_airIndex].AirFlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                                     }
                                                     else if (param.Unit == 1)//L/min
                                                     {
-                                                        airFlowSpeed = param.AirCol[_airIndex].StepValue;
+                                                        airFlowSpeed = param.CascadeCol[_airIndex].AirFlowRate;
                                                     }
                                                     MFCAir.FlowRate_SP = airFlowSpeed;
                                                     MFCAir.IsControling = true;
@@ -1602,18 +1605,18 @@ namespace RD3.Controller
                                             {
                                                 MFCO2.FlowRate_SP = 0;
 
-                                                if (_airIndex < param.AirCol.Count - 1)//加一档
+                                                if (_airIndex < param.CascadeCol.Count - 1)//加一档
                                                 {
                                                     _airIndex += 1;
 
                                                     float airFlowSpeed = 0f;
                                                     if (param.Unit == 0)//VVM
                                                     {
-                                                        airFlowSpeed = MathF.Round((float)(param.AirCol[_airIndex].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                                        airFlowSpeed = MathF.Round((float)(param.CascadeCol[_airIndex].AirFlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                                     }
                                                     else if (param.Unit == 1)//L/min
                                                     {
-                                                        airFlowSpeed = param.AirCol[_airIndex].StepValue;
+                                                        airFlowSpeed = param.CascadeCol[_airIndex].AirFlowRate;
                                                     }
                                                     MFCAir.FlowRate_SP = airFlowSpeed;
                                                     MFCAir.IsControling = true;
@@ -1626,18 +1629,18 @@ namespace RD3.Controller
                                     }
                                     else if (_agitDelta >= param.AgitUpperLimit)
                                     {
-                                        if (_o2Index < param.O2Col.Count - 1)//还存在下一阶梯
+                                        if (_o2Index < param.CascadeCol.Count - 1)//还存在下一阶梯
                                         {
                                             _o2Index += 1;
 
                                             float o2FlowSpeed = 0f;
                                             if (param.Unit == 0)//VVM
                                             {
-                                                o2FlowSpeed = MathF.Round((float)(param.O2Col[_o2Index].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                                o2FlowSpeed = MathF.Round((float)(param.CascadeCol[_o2Index].O2FlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                             }
                                             else if (param.Unit == 1)//L/min
                                             {
-                                                o2FlowSpeed = param.O2Col[_o2Index].StepValue;
+                                                o2FlowSpeed = param.CascadeCol[_o2Index].O2FlowRate;
                                             }
                                             MFCO2.FlowRate_SP = o2FlowSpeed;
 
@@ -1650,11 +1653,11 @@ namespace RD3.Controller
                                                     float airFlowSpeed = 0f;
                                                     if (param.Unit == 0)//VVM
                                                     {
-                                                        airFlowSpeed = MathF.Round((float)(param.AirCol[_airIndex].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                                        airFlowSpeed = MathF.Round((float)(param.CascadeCol[_airIndex].AirFlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                                     }
                                                     else if (param.Unit == 1)//L/min
                                                     {
-                                                        airFlowSpeed = param.AirCol[_airIndex].StepValue;
+                                                        airFlowSpeed = param.CascadeCol[_airIndex].AirFlowRate;
                                                     }
                                                     MFCAir.FlowRate_SP = airFlowSpeed;
                                                     MFCAir.IsControling = true;
@@ -1677,11 +1680,11 @@ namespace RD3.Controller
                                         float o2FlowSpeed = 0f;
                                         if (param.Unit == 0)//VVM
                                         {
-                                            o2FlowSpeed = MathF.Round((float)(param.O2Col[_o2Index].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                            o2FlowSpeed = MathF.Round((float)(param.CascadeCol[_o2Index].O2FlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                         }
                                         else if (param.Unit == 1)//L/min
                                         {
-                                            o2FlowSpeed = param.O2Col[_o2Index].StepValue;
+                                            o2FlowSpeed = param.CascadeCol[_o2Index].O2FlowRate;
                                         }
                                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                                         if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.1)
@@ -1694,11 +1697,11 @@ namespace RD3.Controller
                                             float airFlowSpeed = 0f;
                                             if (param.Unit == 0)//VVM
                                             {
-                                                airFlowSpeed = MathF.Round((float)(param.AirCol[_airIndex].StepValue * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                                airFlowSpeed = MathF.Round((float)(param.CascadeCol[_airIndex].AirFlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                             }
                                             else if (param.Unit == 1)//L/min
                                             {
-                                                airFlowSpeed = param.AirCol[_airIndex].StepValue;
+                                                airFlowSpeed = param.CascadeCol[_airIndex].AirFlowRate;
                                             }
                                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                                             if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.1)
@@ -1743,7 +1746,7 @@ namespace RD3.Controller
                                         {
                                             _tempIndex -= 1;
 
-                                            CurrentDeviceParameter.TempParam.Temp_PV = param.TempCol[_tempIndex].StepValue;
+                                            CurrentDeviceParameter.TempParam.Temp_PV = param.CascadeCol[_tempIndex].Temp;
                                         }
                                         else if (factorIndex > 0)
                                         {
@@ -1755,11 +1758,11 @@ namespace RD3.Controller
                                     }
                                     else if (_agitDelta >= param.AgitUpperLimit)
                                     {
-                                        if (_tempIndex < param.TempCol.Count - 1)//还存在下一阶梯
+                                        if (_tempIndex < param.CascadeCol.Count - 1)//还存在下一阶梯
                                         {
                                             _tempIndex += 1;
 
-                                            CurrentDeviceParameter.TempParam.Temp_PV = param.TempCol[_tempIndex].StepValue;
+                                            CurrentDeviceParameter.TempParam.Temp_PV = param.CascadeCol[_tempIndex].Temp;
                                         }
                                         else if (factorIndex < collection.Count - 1)
                                         {
@@ -1771,10 +1774,10 @@ namespace RD3.Controller
                                     }
                                     else
                                     {
-                                        CurrentDeviceParameter.TempParam.Temp_PV = param.TempCol[_tempIndex].StepValue;
+                                        CurrentDeviceParameter.TempParam.Temp_PV = param.CascadeCol[_tempIndex].Temp;
                                     }
 
-                                    if (_tempIndex <= 0 || _tempIndex >= param.TempCol.Count - 1)
+                                    if (_tempIndex <= 0 || _tempIndex >= param.CascadeCol.Count - 1)
                                     {
                                         while (true)
                                         {
@@ -1835,7 +1838,7 @@ namespace RD3.Controller
                                         {
                                             _feedIndex -= 1;
 
-                                            float coeff = param.FeedCol[_feedIndex].StepValue;
+                                            float coeff = param.CascadeCol[_feedIndex].FeedFlowRate;
                                             FeedPumpInfo.FlowRate_SP = MathF.Round(CurrentDeviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                         }
                                         else if (factorIndex > 0)
@@ -1848,11 +1851,11 @@ namespace RD3.Controller
                                     }
                                     else if (_agitDelta >= param.AgitUpperLimit)
                                     {
-                                        if (_feedIndex < param.FeedCol.Count - 1)//还存在下一阶梯
+                                        if (_feedIndex < param.CascadeCol.Count - 1)//还存在下一阶梯
                                         {
                                             _feedIndex += 1;
 
-                                            float coeff = param.FeedCol[_feedIndex].StepValue;
+                                            float coeff = param.CascadeCol[_feedIndex].FeedFlowRate;
                                             FeedPumpInfo.FlowRate_SP = MathF.Round(CurrentDeviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                         }
                                         else if (factorIndex < collection.Count - 1)
@@ -1865,7 +1868,7 @@ namespace RD3.Controller
                                     }
                                     else
                                     {
-                                        float coeff = param.FeedCol[_feedIndex].StepValue;
+                                        float coeff = param.CascadeCol[_feedIndex].FeedFlowRate;
                                         FeedPumpInfo.FlowRate_SP = MathF.Round(CurrentDeviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                     }
 
