@@ -1,6 +1,8 @@
-﻿using Prism.Mvvm;
+﻿using Newtonsoft.Json;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +47,111 @@ namespace RD3.Shared
         {
             get => _unit;
             set { SetProperty(ref _unit, value); }
+        }
+
+        private ObservableCollection<DOControlFactor> _factorCol = [];
+        public ObservableCollection<DOControlFactor> FactorCol
+        {
+            get => _factorCol;
+            set
+            {
+                SetProperty(ref _factorCol, value);
+            }
+        }
+
+        private string _factorContent;
+        [JsonIgnore]
+        public string FactorContent
+        {
+            get { return _factorContent; }
+            set { SetProperty(ref _factorContent, value); }
+        }
+
+        private bool _airEnable;
+        public bool AirEnable
+        {
+            get { return _airEnable; }
+            set
+            {
+                SetProperty(ref _airEnable, value);
+                if (value)
+                {
+                    if (!FactorCol.Contains(DOControlFactor.Air))
+                    {
+                        FactorCol.Add(DOControlFactor.Air);
+                    }
+                }
+                else
+                {
+                    FactorCol.Remove(DOControlFactor.Air);
+                }
+            }
+        }
+
+        private bool _o2Enable;
+        public bool O2Enable
+        {
+            get { return _o2Enable; }
+            set
+            {
+                SetProperty(ref _o2Enable, value);
+
+                if (value)
+                {
+                    if (!FactorCol.Contains(DOControlFactor.O2))
+                    {
+                        FactorCol.Add(DOControlFactor.O2);
+                    }
+                }
+                else
+                {
+                    FactorCol.Remove(DOControlFactor.O2);
+                }
+            }
+        }
+
+        private bool _tempEnable;
+        public bool TempEnable
+        {
+            get { return _tempEnable; }
+            set
+            {
+                SetProperty(ref _tempEnable, value);
+
+                if (value)
+                {
+                    if (!FactorCol.Contains(DOControlFactor.Temp))
+                    {
+                        FactorCol.Add(DOControlFactor.Temp);
+                    }
+                }
+                else
+                {
+                    FactorCol.Remove(DOControlFactor.Temp);
+                }
+            }
+        }
+
+        private bool _feedEnable;
+        public bool FeedEnable
+        {
+            get { return _feedEnable; }
+            set
+            {
+                SetProperty(ref _feedEnable, value);
+
+                if (value)
+                {
+                    if (!FactorCol.Contains(DOControlFactor.Feed))
+                    {
+                        FactorCol.Add(DOControlFactor.Feed);
+                    }
+                }
+                else
+                {
+                    FactorCol.Remove(DOControlFactor.Feed);
+                }
+            }
         }
     }
 }

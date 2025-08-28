@@ -1,6 +1,6 @@
-﻿using Fpi.Communication.Commands.Config;
-using HandyControl.Controls;
+﻿using HandyControl.Controls;
 using ImTools;
+using MathNet.Symbolics;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
@@ -12,9 +12,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Documents;
 
 namespace RD3.ViewModels
 {
@@ -193,6 +190,42 @@ namespace RD3.ViewModels
             {
                 Param = new();
             }
+
+            //if (Param.FactorCol.Contains(DOControlFactor.Air))
+            //{
+            //    Param.AirEnable = true;
+            //}
+            //else
+            //{
+            //    Param.AirEnable = false;
+            //}
+
+            //if (Param.FactorCol.Contains(DOControlFactor.O2))
+            //{
+            //    Param.O2Enable = true;
+            //}
+            //else
+            //{
+            //    Param.O2Enable = false;
+            //}
+
+            //if (Param.FactorCol.Contains(DOControlFactor.Temp))
+            //{
+            //    Param.TempEnable = true;
+            //}
+            //else
+            //{
+            //    Param.TempEnable = false;
+            //}
+
+            //if (Param.FactorCol.Contains(DOControlFactor.Feed))
+            //{
+            //    Param.FeedEnable = true;
+            //}
+            //else
+            //{
+            //    Param.FeedEnable = false;
+            //}
 
             var list = Param.FactorCol.Select(t => EnumUtil.GetEnumDescription(t)).ToList();
 

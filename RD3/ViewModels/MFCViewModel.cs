@@ -60,34 +60,41 @@ namespace RD3.ViewModels
                 {
                     if (MFCInfo.MFCIndex != -1)
                     {
-                        string deviceID = "G01";
-                        foreach (var item in ClockSupervisor.realDatasDic.Keys)
+                        try
                         {
-                            deviceID = item;
-                            break;
-                        }
-                        if (!ClockSupervisor.realDatasDic.ContainsKey(deviceID) || ClockSupervisor.realDatasDic[deviceID].Count < 1)
-                        {
-                            Thread.Sleep(1000);
-                            continue;
-                        }
-                        int index = ClockSupervisor.realDatasDic[deviceID].Count - 1;
-                        var realTimeParam = ClockSupervisor.realDatasDic[deviceID][index];
+                            string deviceID = "G01";
+                            foreach (var item in ClockSupervisor.realDatasDic.Keys)
+                            {
+                                deviceID = item;
+                                break;
+                            }
+                            if (!ClockSupervisor.realDatasDic.ContainsKey(deviceID) || ClockSupervisor.realDatasDic[deviceID].Count < 1)
+                            {
+                                Thread.Sleep(1000);
+                                continue;
+                            }
+                            int index = ClockSupervisor.realDatasDic[deviceID].Count - 1;
+                            var realTimeParam = ClockSupervisor.realDatasDic[deviceID][index];
 
-                        var type = realTimeParam.GetType();
-                        var properties = type.GetProperties();
-                        foreach (var item in properties.Where(t => t.CanRead && t.CanWrite))
-                        {
-                            if (item.Name == $"MFC{MFCInfo.MFCIndex}FlowRate")
+                            var type = realTimeParam.GetType();
+                            var properties = type.GetProperties();
+                            foreach (var item in properties.Where(t => t.CanRead && t.CanWrite))
                             {
-                                object value = item.GetValue(realTimeParam);
-                                MFCInfo.FlowRate = Convert.ToSingle(value);
+                                if (item.Name == $"MFC{MFCInfo.MFCIndex}FlowRate")
+                                {
+                                    object value = item.GetValue(realTimeParam);
+                                    MFCInfo.FlowRate = Convert.ToSingle(value);
+                                }
+                                else if (item.Name == $"MFC{MFCInfo.MFCIndex}FlowCapacity")
+                                {
+                                    object value = item.GetValue(realTimeParam);
+                                    MFCInfo.FlowCapacity = Convert.ToSingle(value);
+                                }
                             }
-                            else if (item.Name == $"MFC{MFCInfo.MFCIndex}FlowCapacity")
-                            {
-                                object value = item.GetValue(realTimeParam);
-                                MFCInfo.FlowCapacity = Convert.ToSingle(value);
-                            }
+                        }
+                        catch (Exception ex) 
+                        { 
+
                         }
                     }
                     Thread.Sleep(1000);

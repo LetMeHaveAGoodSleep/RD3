@@ -212,35 +212,44 @@
                             Margin="5"
                             Orientation="Vertical"
                             Spacing="10">
-                            <DockPanel LastChildFill="False">
-                                <TextBlock
-                                    DockPanel.Dock="Left"
-                                    FontSize="{StaticResource HeadFontSize}"
-                                    Foreground="{DynamicResource FixedGradientBrush}"
-                                    Text="{Binding Param.FactorContent}" />
-                                <!--<Button
-                                    Height="30"
-                                    hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"
-                                    Command="{Binding DeleteAllFactorCommand}"
-                                    Content="清空选择"
-                                    DockPanel.Dock="Right"
-                                    Foreground="{StaticResource PrimaryBrush}"
-                                    IsEnabled="{Binding Param.CascadeCol.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" />-->
-                            </DockPanel>
-
-                            <TextBlock Foreground="Red" Text="请选择策略的执行参数，执行顺序同选择顺序，转速为执行基本参数，全程执行" />
-                            <DockPanel LastChildFill="True">
-                                <hc:Transfer
-                                    Height="120"
-                                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                                    Style="{StaticResource Transfer.CheckBox.Small}"
-                                    TransferredItemsChanged="Transfer_TransferredItemsChanged">
-                                    <hc:TransferItem Content="空气" />
-                                    <hc:TransferItem Content="氧气" />
-                                    <hc:TransferItem Content="温度" />
-                                    <hc:TransferItem Content="补料" />
-                                </hc:Transfer>
-                            </DockPanel>
+                            <hc:UniformSpacingPanel
+                                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                Orientation="Horizontal"
+                                Spacing="15">
+                                <CheckBox
+                                    materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                                    Content="空气"
+                                    IsChecked="{Binding Param.AirEnable}"
+                                    Style="{StaticResource MaterialDesignCheckBox}" />
+                                <CheckBox
+                                    materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                                    Content="氧气"
+                                    IsChecked="{Binding Param.O2Enable}"
+                                    Style="{StaticResource MaterialDesignCheckBox}" />
+                                <CheckBox
+                                    materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                                    Content="温度"
+                                    IsChecked="{Binding Param.TempEnable}"
+                                    Style="{StaticResource MaterialDesignCheckBox}" />
+                                <CheckBox
+                                    materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                                    Content="补料"
+                                    IsChecked="{Binding Param.FeedEnable}"
+                                    Style="{StaticResource MaterialDesignCheckBox}" />
+                            </hc:UniformSpacingPanel>
+                            <ListBox
+                                Name="listBoxCascadeFactor"
+                                AllowDrop="True"
+                                FontSize="{StaticResource SubHeadFontSize}"
+                                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                ItemsSource="{Binding Param.FactorCol}"
+                                Style="{StaticResource ListBoxCustom}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Margin="5,0,0,5" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                             <DockPanel LastChildFill="False">
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                                     <TextBox
@@ -365,10 +374,10 @@
                                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                                 Visibility="{Binding Source={StaticResource proxy}, Path=Data.TempEnable, Converter={StaticResource Boolean2VisibilityConverter}}" />
                                             <DataGridTextColumn
-                                                Width="80"
+                                                Width="120"
                                                 Binding="{Binding FeedFlowRate}"
                                                 CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                                Header="补料速度"
+                                                Header="补料速率（%）"
                                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                                 Visibility="{Binding Source={StaticResource proxy}, Path=Data.FeedEnable, Converter={StaticResource Boolean2VisibilityConverter}}" />
                                         </DataGrid.Columns>
@@ -388,26 +397,44 @@
                 Margin="5"
                 Orientation="Vertical"
                 Spacing="10">
-                <TextBlock
-                    FontSize="{StaticResource HeadFontSize}"
-                    Foreground="{DynamicResource FixedGradientBrush}"
-                    Text="{Binding MidRanging.FactorContent}" />
-                <TextBlock
-                    DockPanel.Dock="Top"
-                    Foreground="Red"
-                    Text="请选择策略的执行参数，执行顺序同选择顺序，转速为执行基本参数，全程执行" />
-                <DockPanel LastChildFill="True">
-                    <hc:Transfer
-                        Height="120"
-                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                        Style="{StaticResource Transfer.CheckBox.Small}"
-                        TransferredItemsChanged="Transfer_TransferredItemsChanged">
-                        <hc:TransferItem Content="空气" />
-                        <hc:TransferItem Content="氧气" />
-                        <hc:TransferItem Content="温度" />
-                        <hc:TransferItem Content="补料" />
-                    </hc:Transfer>
-                </DockPanel>
+                <hc:UniformSpacingPanel
+                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                    Orientation="Horizontal"
+                    Spacing="15">
+                    <CheckBox
+                        materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                        Content="空气"
+                        IsChecked="{Binding MidRanging.AirEnable}"
+                        Style="{StaticResource MaterialDesignCheckBox}" />
+                    <CheckBox
+                        materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                        Content="氧气"
+                        IsChecked="{Binding MidRanging.O2Enable}"
+                        Style="{StaticResource MaterialDesignCheckBox}" />
+                    <CheckBox
+                        materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                        Content="温度"
+                        IsChecked="{Binding MidRanging.TempEnable}"
+                        Style="{StaticResource MaterialDesignCheckBox}" />
+                    <CheckBox
+                        materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                        Content="补料"
+                        IsChecked="{Binding MidRanging.FeedEnable}"
+                        Style="{StaticResource MaterialDesignCheckBox}" />
+                </hc:UniformSpacingPanel>
+                <ListBox
+                    Name="listBoxMidrangingFactor"
+                    AllowDrop="True"
+                    FontSize="{StaticResource SubHeadFontSize}"
+                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                    ItemsSource="{Binding MidRanging.FactorCol}"
+                    Style="{StaticResource ListBoxCustom}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="5,0,0,5" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <TextBox
                         Width="100"

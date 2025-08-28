@@ -29,5 +29,19 @@ namespace RD3.Shared
                 }
             }
         }
+
+        // 辅助方法：在可视化树中向上查找特定类型的父容器（如ListBoxItem）
+        public static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
+        {
+            do
+            {
+                if (current is T ancestor)
+                {
+                    return ancestor;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            } while (current != null);
+            return null;
+        }
     }
 }

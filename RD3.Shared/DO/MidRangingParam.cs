@@ -39,24 +39,6 @@ namespace RD3.Shared
             set { SetProperty(ref _o2Associated, value); }
         }
 
-        private ObservableCollection<DOControlFactor> _factorCol = [];
-        public ObservableCollection<DOControlFactor> FactorCol
-        {
-            get => _factorCol;
-            set
-            {
-                SetProperty(ref _factorCol, value);
-            }
-        }
-
-        private string _factorContent;
-        [JsonIgnore]
-        public string FactorContent
-        {
-            get { return _factorContent; }
-            set { SetProperty(ref _factorContent, value); }
-        }
-
         private object _reserve1;
         public object Reserve1
         {
