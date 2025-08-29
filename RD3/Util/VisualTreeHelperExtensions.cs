@@ -43,5 +43,53 @@ namespace RD3.Shared
             } while (current != null);
             return null;
         }
+
+        public static ListBoxItem FindTouchedListBoxItem(ListBox listBox, Point touchPoint)
+        {
+            foreach (var item in listBox.Items)
+            {
+                ListBoxItem container = (ListBoxItem)listBox.ItemContainerGenerator.ContainerFromItem(item);
+                if (container != null && container.InputHitTest(touchPoint) != null)
+                {
+                    return container;
+                }
+            }
+            return null;
+        }
+
+        public static int FindNearestIndex(ListBox listBox, Point point)
+        {
+            int nearestIndex = -1;
+            double minDistance = double.MaxValue;
+
+            for (int i = 0; i < listBox.Items.Count; i++)
+            {
+                ListBoxItem item = listBox.ItemContainerGenerator.ContainerFromIndex(i) as ListBoxItem;
+                if (item == null) continue;
+
+                // 获取项的相对位置和渲染边界
+                Point itemPosition = item.TranslatePoint(new Point(0, 0), listBox);
+                Rect itemRect = new Rect(itemPosition, item.RenderSize);
+
+                // 计算鼠标点与当前项中心的垂直距离（主要考虑垂直列表）
+                double centerY = itemRect.Top + itemRect.Height / 2;
+                double distance = Math.Abs(point.Y - centerY);
+
+                // 找到中心点距离鼠标最近的那个项
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    nearestIndex = i;
+                }
+            }
+
+            // 如果拖拽位置在最后一项之后，则返回最后一项的索引+1
+            if (nearestIndex >= 0 && point.Y > ((ListBoxItem)listBox.ItemContainerGenerator.ContainerFromIndex(nearestIndex)).TranslatePoint(new Point(0, 0), listBox).Y + ((ListBoxItem)listBox.ItemContainerGenerator.ContainerFromIndex(nearestIndex)).RenderSize.Height)
+            {
+                nearestIndex++;
+            }
+
+            return nearestIndex;
+        }
     }
 }

@@ -193,6 +193,7 @@ namespace RD3.Shared
             get { return _controlStrategy; }
             set
             {
+                SetProperty(ref _controlStrategy, value);
                 if (value == DOControlStrategy.Cycle)
                 {
                     IsCycle = true;
@@ -201,7 +202,6 @@ namespace RD3.Shared
                 {
                     IsCycle = false;
                 }
-                SetProperty(ref _controlStrategy, value);
             }
         }
 

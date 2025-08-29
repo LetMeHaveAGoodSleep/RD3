@@ -83,7 +83,10 @@ namespace RD3.Shared
                 }
                 else
                 {
-                    FactorCol.Remove(DOControlFactor.Air);
+                    while (FactorCol.Contains(DOControlFactor.Air))
+                    {
+                        FactorCol.Remove(DOControlFactor.Air);
+                    }
                 }
             }
         }
@@ -105,7 +108,10 @@ namespace RD3.Shared
                 }
                 else
                 {
-                    FactorCol.Remove(DOControlFactor.O2);
+                    while (FactorCol.Contains(DOControlFactor.O2))
+                    {
+                        FactorCol.Remove(DOControlFactor.O2);
+                    }
                 }
             }
         }
@@ -127,7 +133,10 @@ namespace RD3.Shared
                 }
                 else
                 {
-                    FactorCol.Remove(DOControlFactor.Temp);
+                    while (FactorCol.Contains(DOControlFactor.Temp))
+                    {
+                        FactorCol.Remove(DOControlFactor.Temp);
+                    }
                 }
             }
         }
@@ -149,7 +158,10 @@ namespace RD3.Shared
                 }
                 else
                 {
-                    FactorCol.Remove(DOControlFactor.Feed);
+                    while (FactorCol.Contains(DOControlFactor.Feed))
+                    {
+                        FactorCol.Remove(DOControlFactor.Feed);
+                    }
                 }
             }
         }

@@ -96,53 +96,6 @@ namespace RD3.ViewModels
             RequestClose?.Invoke(dialogResult);
         });
 
-        public DelegateCommand<IList> ChangeFatorCommand => new((IList list) =>
-        {
-            switch (CurrentDeviceParameter.DOParam.ControlStrategy)
-            {
-                case DOControlStrategy.Step:
-                    Param.FactorCol.Clear();
-                    ObservableCollection<DOControlFactor> col = [];
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        foreach (var item in EnumUtil.GetEnumDescriptions<DOControlFactor>())
-                        {
-                            if (item == (list[i] as TransferItem)?.Content?.ToString())
-                            {
-                                col.Add(EnumUtil.GetEnumByDescription<DOControlFactor>(item));
-                            }
-                        }
-                    }
-                    Param.FactorCol = col;
-
-                    List<string> stringList = list.Cast<object>().Select(item => (item as TransferItem)?.Content?.ToString())
-                    .Where(content => content != null).ToList();
-
-                    Param.FactorContent = "执行顺序：" + string.Join("-", stringList);
-                    break;
-                case DOControlStrategy.Midranging:
-                    MidRanging.FactorCol.Clear();
-                    ObservableCollection<DOControlFactor> col1 = [];
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        foreach (var item in EnumUtil.GetEnumDescriptions<DOControlFactor>())
-                        {
-                            if (item == (list[i] as TransferItem)?.Content?.ToString())
-                            {
-                                col1.Add(EnumUtil.GetEnumByDescription<DOControlFactor>(item));
-                            }
-                        }
-                    }
-                    MidRanging.FactorCol = col1;
-
-                    stringList = list.Cast<object>().Select(item => (item as TransferItem)?.Content?.ToString())
-                     .Where(content => content != null).ToList();
-
-                    MidRanging.FactorContent = "执行顺序：" + string.Join("-", stringList);
-                    break;
-            }
-        });
-
         public DelegateCommand PIDSettingCommand => new(() =>
         {
             DialogHostService.ShowOnce(nameof(PadDOPIDView), callback =>
@@ -152,6 +105,61 @@ namespace RD3.ViewModels
                     return;
                 }
             });
+        });
+
+        public DelegateCommand<DOControlFactor?> FactorUpCommand => new((DOControlFactor? factor) => 
+        {
+            int index = -1;
+            if (!factor.HasValue) return;
+            switch (CurrentDeviceParameter.DOParam.ControlStrategy)
+            {
+                case DOControlStrategy.Step:
+                    index = Param.FactorCol.IndexOf((DOControlFactor)factor);
+                    if (index < 1)
+                    {
+                        return;
+                    }
+                    Param.FactorCol.Remove((DOControlFactor)factor);
+                    Param.FactorCol.Insert(index - 1, (DOControlFactor)factor);
+                    break;
+                case DOControlStrategy.Midranging:
+                    index = MidRanging.FactorCol.IndexOf((DOControlFactor)factor);
+                    if (index < 1)
+                    {
+                        return;
+                    }
+                    MidRanging.FactorCol.Remove((DOControlFactor)factor);
+                    MidRanging.FactorCol.Insert(index - 1, (DOControlFactor)factor);
+                    break;
+            }
+        });
+
+        public DelegateCommand<DOControlFactor?> FactorDownCommand => new((DOControlFactor? factor) => 
+        {
+            int index = -1;
+            if (!factor.HasValue) return;
+            switch (CurrentDeviceParameter.DOParam.ControlStrategy)
+            {
+                case DOControlStrategy.Step:
+                    index = Param.FactorCol.IndexOf((DOControlFactor)factor);
+                    if (index == Param.FactorCol.Count - 1)
+                    {
+                        return;
+                    }
+                    Param.FactorCol.Remove((DOControlFactor)factor);
+                    Param.FactorCol.Insert(index + 1, (DOControlFactor)factor);
+                    break;
+                case DOControlStrategy.Midranging:
+                    Param.FactorCol.Insert(index + 1, (DOControlFactor)factor);
+                    index = MidRanging.FactorCol.IndexOf((DOControlFactor)factor);
+                    if (index == MidRanging.FactorCol.Count - 1)
+                    {
+                        return;
+                    }
+                    MidRanging.FactorCol.Remove((DOControlFactor)factor);
+                    MidRanging.FactorCol.Insert(index + 1, (DOControlFactor)factor);
+                    break;
+            }
         });
 
         public DOSettingViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
@@ -190,42 +198,6 @@ namespace RD3.ViewModels
             {
                 Param = new();
             }
-
-            //if (Param.FactorCol.Contains(DOControlFactor.Air))
-            //{
-            //    Param.AirEnable = true;
-            //}
-            //else
-            //{
-            //    Param.AirEnable = false;
-            //}
-
-            //if (Param.FactorCol.Contains(DOControlFactor.O2))
-            //{
-            //    Param.O2Enable = true;
-            //}
-            //else
-            //{
-            //    Param.O2Enable = false;
-            //}
-
-            //if (Param.FactorCol.Contains(DOControlFactor.Temp))
-            //{
-            //    Param.TempEnable = true;
-            //}
-            //else
-            //{
-            //    Param.TempEnable = false;
-            //}
-
-            //if (Param.FactorCol.Contains(DOControlFactor.Feed))
-            //{
-            //    Param.FeedEnable = true;
-            //}
-            //else
-            //{
-            //    Param.FeedEnable = false;
-            //}
 
             var list = Param.FactorCol.Select(t => EnumUtil.GetEnumDescription(t)).ToList();
 

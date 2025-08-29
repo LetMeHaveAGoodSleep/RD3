@@ -243,10 +243,35 @@
                                 FontSize="{StaticResource SubHeadFontSize}"
                                 IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                                 ItemsSource="{Binding Param.FactorCol}"
-                                Style="{StaticResource ListBoxCustom}">
+                                Style="{StaticResource ListBoxBaseStyle}">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Margin="5,0,0,5" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                        <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                            <hc:UniformSpacingPanel
+                                                Margin="20,0,0,0"
+                                                Orientation="Horizontal"
+                                                Spacing="5">
+                                                <Button
+                                                    Padding="5"
+                                                    hc:IconElement.Geometry="{StaticResource UpGeometry}"
+                                                    hc:IconElement.Width="16"
+                                                    Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Command="{Binding DataContext.FactorUpCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                    CommandParameter="{Binding}"
+                                                    ToolTip="提升执行顺序" />
+                                                <Button
+                                                    Padding="5"
+                                                    hc:IconElement.Geometry="{StaticResource DownGeometry}"
+                                                    hc:IconElement.Width="16"
+                                                    Background="Transparent"
+                                                    BorderThickness="0"
+                                                    Command="{Binding DataContext.FactorDownCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                    CommandParameter="{Binding}"
+                                                    ToolTip="降低执行顺序" />
+                                            </hc:UniformSpacingPanel>
+                                        </StackPanel>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
@@ -428,10 +453,35 @@
                     FontSize="{StaticResource SubHeadFontSize}"
                     IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                     ItemsSource="{Binding MidRanging.FactorCol}"
-                    Style="{StaticResource ListBoxCustom}">
+                    Style="{StaticResource ListBoxBaseStyle}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Margin="5,0,0,5" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                            <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                <hc:UniformSpacingPanel
+                                    Margin="20,0,0,0"
+                                    Orientation="Horizontal"
+                                    Spacing="5">
+                                    <Button
+                                        Padding="5"
+                                        hc:IconElement.Geometry="{StaticResource UpGeometry}"
+                                        hc:IconElement.Width="16"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{Binding DataContext.FactorUpCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                        CommandParameter="{Binding}"
+                                        ToolTip="提升执行顺序" />
+                                    <Button
+                                        Padding="5"
+                                        hc:IconElement.Geometry="{StaticResource DownGeometry}"
+                                        hc:IconElement.Width="16"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{Binding DataContext.FactorDownCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                        CommandParameter="{Binding}"
+                                        ToolTip="降低执行顺序" />
+                                </hc:UniformSpacingPanel>
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

@@ -129,9 +129,9 @@ namespace RD3
             LogHelper.Error(e.Exception + "  " + e.Exception.StackTrace);
             e.Handled = true;
 
-            HandyControl.Controls.MessageBox.Warning("程序出错，请重启软件", "温馨提示");
-            Application.Current.Shutdown();
-            Environment.Exit(0);
+            //HandyControl.Controls.MessageBox.Warning("程序出错，请重启软件", "温馨提示");
+            //Application.Current.Shutdown();
+            //Environment.Exit(0);
         }
 
         public static void LoginOut(IContainerProvider containerProvider)

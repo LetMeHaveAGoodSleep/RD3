@@ -3,6 +3,7 @@ using RD3.Shared;
 using RD3.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,121 +27,11 @@ namespace RD3.Views
         public DOSettingView()
         {
             InitializeComponent();
-
-            // 在构造函数中订阅事件
-            listBoxCascadeFactor.PreviewMouseMove += listBox_PreviewMouseMove;
-            listBoxCascadeFactor.PreviewMouseLeftButtonDown += listBox_PreviewMouseLeftButtonDown;
-            listBoxCascadeFactor.Drop += listBox_Drop;
-
-            listBoxMidrangingFactor.PreviewMouseMove += listBox_PreviewMouseMove;
-            listBoxMidrangingFactor.PreviewMouseLeftButtonDown += listBox_PreviewMouseLeftButtonDown;
-            listBoxMidrangingFactor.Drop += listBox_Drop;
-        }
-
-        private Point _startPoint;
-        private object _draggedItem;
-
-        private void listBox_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (sender is not ListBox listBox)
-            {
-                return;
-            }
-
-            // 1. 记录鼠标按下的起始位置
-            _startPoint = e.GetPosition(null);
-
-            // 2. 获取鼠标下方的ListBoxItem（即被点击的项）
-            var listBoxItem = VisualTreeHelperExtensions.FindAncestor<ListBoxItem>((DependencyObject)e.OriginalSource);
-            if (listBoxItem != null)
-            {
-                // 3. 获取ListBoxItem对应的数据项，并记录为当前被拖拽的项
-                _draggedItem = listBox.ItemContainerGenerator.ItemFromContainer(listBoxItem);
-            }
-        }
-
-        private void listBox_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            if (sender is not ListBox listBox)
-            {
-                return;
-            }
-
-            // 1. 检查鼠标左键是否按下，且是否有被拖拽的项
-            if (e.LeftButton != MouseButtonState.Pressed || _draggedItem == null)
-                return;
-
-            // 2. 获取当前鼠标位置
-            Point currentPoint = e.GetPosition(null);
-            Vector diff = _startPoint - currentPoint;
-
-            // 3. 检查鼠标移动距离是否超过系统最小拖拽距离，避免误操作
-            if (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
-                Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
-            {
-                // 4. 设置允许的拖拽效果（移动）
-                DragDropEffects finalEffect = DragDropEffects.Move;
-
-                // 5. 启动拖拽操作！
-                //    将_draggedItem作为数据传递，finalEffect决定了拖拽图标和允许的操作
-                DragDrop.DoDragDrop(listBox, _draggedItem, finalEffect);
-
-                // 6. 拖拽操作结束后，重置被拖拽的项
-                _draggedItem = null;
-            }
-        }
-
-        private void listBox_Drop(object sender, DragEventArgs e)
-        {
-            if (sender is not ListBox listBox)
-            {
-                return;
-            }
-
-            // 1. 如果数据源不是ObservableCollection或未设置，可在此检查并返回
-            if (listBox.ItemsSource == null)
-                return;
-
-            // 2. 获取拖拽数据中的对象（即我们在DoDragDrop中传递的_draggedItem）
-            object droppedData = e.Data.GetData(typeof(DOControlFactor)); // 将YourDataType替换为你的数据项实际类型
-            if (droppedData == null)
-                return;
-
-            // 3. 获取鼠标当前位置下方的ListBoxItem（即目标位置）
-            var targetListBoxItem = VisualTreeHelperExtensions.FindAncestor<ListBoxItem>((DependencyObject)e.OriginalSource);
-            if (targetListBoxItem == null)
-                return;
-            object targetItem = listBox.ItemContainerGenerator.ItemFromContainer(targetListBoxItem);
-
-            // 4. 获取数据源（假设是ObservableCollection<YourDataType>）
-            var sourceCollection = (System.Collections.ObjectModel.ObservableCollection<DOControlFactor>)listBox.ItemsSource; // 替换YourDataType
-
-            // 5. 记录原索引和目标索引
-            int originalIndex = sourceCollection.IndexOf((DOControlFactor)droppedData);
-            int targetIndex = sourceCollection.IndexOf((DOControlFactor)targetItem);
-
-            // 6. 从原位置移除项
-            sourceCollection.RemoveAt(originalIndex);
-
-            // 7. 插入到新位置（考虑移除项后索引的变化）
-            sourceCollection.Insert(targetIndex, (DOControlFactor)droppedData);
-
-            // 8. （可选）清除拖拽效果
-            e.Effects = DragDropEffects.Move;
-            e.Handled = true; // 标记事件已处理
         }
 
         private void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = e.Row.GetIndex() + 1;  // 从1开始递增
-        }
-
-        private void Transfer_TransferredItemsChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (sender is Transfer transfer)
-            {
-                (this.DataContext as DOSettingViewModel).ChangeFatorCommand.Execute(transfer.TransferredItems);
-            }
         }
     }
 }
