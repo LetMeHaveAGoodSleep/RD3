@@ -1,0 +1,46 @@
+﻿<Window
+    x:Class="RD3.Views.PadLoadingView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:RD3.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="程序加载中..."
+    Width="600"
+    Height="350"
+    Background="Transparent"
+    ResizeMode="NoResize"
+    ShowInTaskbar="True"
+    Topmost="True"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Border
+        Background="#1d2554"
+        BorderBrush="#1d2554"
+        CornerRadius="8">
+        <StackPanel Orientation="Vertical">
+            <controls:WaveAnimation
+                Width="100"
+                Height="50"
+                Margin="0,50,0,0"
+                Color="DarkOrange"
+                Duration="0:0:3.0" />
+            <TextBlock
+                Name="TxtInit"
+                Width="400"
+                Height="130"
+                Padding="10,80,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                FontSize="{DynamicResource MediumFontSize}"
+                Foreground="WhiteSmoke"
+                Text="程序加载中,请稍候......"
+                TextAlignment="Left"
+                TextWrapping="Wrap" />
+        </StackPanel>
+    </Border>
+</Window>

@@ -23,6 +23,7 @@ using System.Threading;
 using System.Windows;
 using System.Xml.Linq;
 using XZ.SQLite;
+using static Microsoft.FSharp.Core.ByRefKinds;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace RD3
@@ -32,6 +33,7 @@ namespace RD3
     /// </summary>
     public partial class App
     {
+        Window secondaryWindow;
         static Mutex mutex;
         bool createdNew;
         EnhancedSqliteBackupService backupService;
@@ -43,10 +45,32 @@ namespace RD3
         const uint ES_CONTINUOUS = 0x80000000;
         const uint ES_SYSTEM_REQUIRED = 0x00000001;
 
+        private void StartNewUIThread()
+        {
+            Thread newUIThread = new Thread(() =>
+            {
+                // 在新线程中创建窗口
+                secondaryWindow = new PadLoadingView(); // 替换为你的实际Window类
+                secondaryWindow.Closed += (d, k) =>
+                {
+                    // 当窗口关闭后马上结束消息循环
+                    System.Windows.Threading.Dispatcher.ExitAllFrames();
+                };
+                secondaryWindow.Show();
+                // 启动消息循环，这将保持窗口响应并阻塞在此处，直到Dispatcher被关闭
+                System.Windows.Threading.Dispatcher.Run();
+            });
 
+            // 必须设置线程为STA模式
+            newUIThread.SetApartmentState(ApartmentState.STA);
+            newUIThread.IsBackground = true; // 可选：设置为后台线程，主线程关闭时它也会自动终止
+            newUIThread.Start();
+        }
 
         protected override Window CreateShell()
         {
+            StartNewUIThread();
+
             switch (platform)
             {
                 case SoftwarePlatform.WindowsPad:
@@ -189,6 +213,14 @@ namespace RD3
                 result = SoftwarePlatform.Default;
             }
 
+            if (secondaryWindow != null)
+            {
+                secondaryWindow.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    secondaryWindow.Close();
+                }));
+            }
+
             switch ((SoftwarePlatform)result)
             {
                 case SoftwarePlatform.Default:
@@ -201,37 +233,30 @@ namespace RD3
                         }
                     });
 
-                    dialog.ShowDialog(nameof(SelfCheckView), callback =>
-                    {
-                        if (callback.Result != ButtonResult.OK)
-                        {
-                            Environment.Exit(0);
-                            return;
-                        }
-                    });
+                    //dialog.ShowDialog(nameof(SelfCheckView), callback =>
+                    //{
+                    //    if (callback.Result != ButtonResult.OK)
+                    //    {
+                    //        Environment.Exit(0);
+                    //        return;
+                    //    }
+                    //});
                     break;
                 case SoftwarePlatform.WindowsPad:
-                    dialog.ShowDialog(nameof(SelfCheckView), callback =>
-                    {
-                        if (callback.Result != ButtonResult.OK)
-                        {
-                            Environment.Exit(0);
-                            return;
-                        }
-                    });
+                    //dialog.ShowDialog(nameof(SelfCheckView), callback =>
+                    //{
+                    //    if (callback.Result != ButtonResult.OK)
+                    //    {
+                    //        Environment.Exit(0);
+                    //        return;
+                    //    }
+                    //});
                     break;
             }
 
             var service = App.Current.MainWindow.DataContext as IConfigureService;
             if (service != null)
                 service.Configure();
-            //初始化加载
-            FunctionManager.GetInstance();
-            //CommandManager.GetInstance();
-            AlarmManager.GetInstance();
-            //AlarmLogger.GetInstance();
-            //DeviceManager.GetInstance();
-
             base.OnInitialized();
         }
 
