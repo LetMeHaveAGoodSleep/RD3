@@ -356,47 +356,111 @@ namespace RD3.Shared
         [Description("pH")]
         pH,
         [Description("温度")]
-        Temperature,
-        [Description("消泡速度")]
-        AF_Flow,
+        Temp,
         [Description("转速")]
-        Agitation,
-        [Description("酸泵速度")]
-        Acid,
-        [Description("碱速度")]
-        Base,
-        [Description("补料速度")]
-        Feed,
-        [Description("通气量")]
-        Air,
-        [Description("通氧量")]
-        O2,
-        [Description("通二氧化碳量")]
-        CO2,
-        [Description("通氮气量")]
-        N2
+        Agit,
+        [Description("泵1流速（ml/h）")]
+        Pump1FlowRate,
+        [Description("泵2流速（ml/h）")]
+        Pump2FlowRate,
+        [Description("泵3流速（ml/h）")]
+        Pump3FlowRate,
+        [Description("泵4流速（ml/h）")]
+        Pump4FlowRate,
+        [Description("泵5流速（ml/h）")]
+        Pump5FlowRate,
+        [Description("泵6流速（ml/h）")]
+        Pump6FlowRate,
+        [Description("泵1流量（mL）")]
+        Pump1Flow,
+        [Description("泵2流量（mL）")]
+        Pump2Flow,
+        [Description("泵3流量（mL）")]
+        Pump3Flow,
+        [Description("泵4流量（mL）")]
+        Pump4Flow,
+        [Description("泵5流量（mL）")]
+        Pump5Flow,
+        [Description("泵6流量（mL）")]
+        Pump6Flow,
+        [Description("MFC1流量（L/min）")]
+        MFC1FlowRate,
+        [Description("MFC2流量（L/min）")]
+        MFC2FlowRate,
+        [Description("MFC3流量（L/min）")]
+        MFC3FlowRate,
+        [Description("MFC4流量（L/min）")]
+        MFC4FlowRate,
+        [Description("MFC5流量（L/min）")]
+        MFC5FlowRate,
     }
 
     public enum DOEResponse
     {
-        [Description("Acid_Flow_PV")]
-        Acid_Flow_PV,
-        [Description("Base_Flow_PV")]
-        Base_Flow_PV,
-        [Description("AF_Flow_PV")]
-        AF_Flow_PV,
-        [Description("Agitation")]
-        Agitation,
-        [Description("Air_Flow_PV")]
-        Air_Flow_PV,
-        [Description("CO2_Flow_PV")]
-        CO2_Flow_PV,
-        [Description("O2_Flow_PV")]
-        O2_Flow_PV,
-        [Description("N2_Flow_PV")]
-        N2_Flow_PV,
-        [Description("PH_PV")]
-        PH_PV,
+        [Description("溶氧")]
+        DO,
+        [Description("pH")]
+        pH,
+        [Description("温度")]
+        Temp,
+        [Description("转速")]
+        Agit,
+        [Description("泵1流速（ml/h）")]
+        Pump1FlowRate,
+        [Description("泵2流速（ml/h）")]
+        Pump2FlowRate,
+        [Description("泵3流速（ml/h）")]
+        Pump3FlowRate,
+        [Description("泵4流速（ml/h）")]
+        Pump4FlowRate,
+        [Description("泵5流速（ml/h）")]
+        Pump5FlowRate,
+        [Description("泵6流速（ml/h）")]
+        Pump6FlowRate,
+        [Description("泵1流量（mL）")]
+        Pump1Flow,
+        [Description("泵2流量（mL）")]
+        Pump2Flow,
+        [Description("泵3流量（mL）")]
+        Pump3Flow,
+        [Description("泵4流量（mL）")]
+        Pump4Flow,
+        [Description("泵5流量（mL）")]
+        Pump5Flow,
+        [Description("泵6流量（mL）")]
+        Pump6Flow,
+        [Description("泵1总量（mL）")]
+        Pump1FlowCapacity,
+        [Description("泵2总量（mL）")]
+        Pump2FlowCapacity,
+        [Description("泵3总量（mL）")]
+        Pump3FlowCapacity,
+        [Description("泵4总量（mL）")]
+        Pump4FlowCapacity,
+        [Description("泵5总量（mL）")]
+        Pump5FlowCapacity,
+        [Description("泵6总量（mL）")]
+        Pump6FlowCapacity,
+        [Description("MFC1流量（L/min）")]
+        MFC1FlowRate,
+        [Description("MFC2流量（L/min）")]
+        MFC2FlowRate,
+        [Description("MFC3流量（L/min）")]
+        MFC3FlowRate,
+        [Description("MFC4流量（L/min）")]
+        MFC4FlowRate,
+        [Description("MFC5流量（L/min）")]
+        MFC5FlowRate,
+        [Description("二氧化碳释放速率")]
+        CER,
+        [Description("摄氧速率")]
+        OUR,
+        [Description("呼吸熵")]
+        RQ,
+        [Description("体积氧传质系数")]
+        KLA,
+        [Description("EPC压力")]
+        EPCPressure,
     }
 
     public enum DOEDesignType
@@ -404,16 +468,47 @@ namespace RD3.Shared
         [Description("全因子设计")]
         FullFactorial,
         [Description("两水平因子设计")]
-       TwoLevelFractionalFactorial,
-        [Description("Plackett-Burman")]
+        TwoLevelFractionalFactorial,
+        [Description("Plackett-Burman设计")]
         Plackett_Burman,
-        [Description("Box-Behnken")]
-        Box_Behnken, 
+        [Description("Box-Behnken设计")]
+        Box_Behnken,
         [Description("中心复合设计")]
         CentralComposite,
-        [Description("拉丁超立方设计")]
-        LatinHypercube, 
+        [Description("拉丁超立方抽样设计")]
+        LatinHypercube,
     }
+
+    public enum ProbDistribution
+    {
+        [Description("无")]
+        None,
+        [Description("正态分布")]
+        Normal,
+        [Description("泊松分布")]
+        Poisson,
+        [Description("指数分布")]
+        Exponential,
+        [Description("贝塔分布")]
+        Beta,
+        [Description("伽马分布")]
+        Gamma,
+    }
+
+    public enum Criterion
+    {
+        [Description("无")]
+        None,
+        [Description("样本点置于区间中心")]
+        Center,
+        [Description("最大化样本点间的最小距离，随机分布")]
+        Maximin,
+        [Description("最大化样本点间的最小距离，置于区间中心")]
+        CenterMaximin,
+        [Description("最小化因子间的最大相关系数")]
+        Correlation,
+    }
+    
 
     public enum DOEAlpha
     {
@@ -421,8 +516,8 @@ namespace RD3.Shared
         Orthogonal,
         [Description("可旋转性")]
         Rotatable,
-        //[Description("球形")]
-        //Spherical
+        [Description("表面中心")]
+        Faced
     }
 
     public enum DOEFace

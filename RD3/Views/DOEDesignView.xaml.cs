@@ -1,5 +1,6 @@
 ﻿using HelixToolkit.Wpf;
 using Prism.Events;
+using RD3.Common;
 using RD3.Common.Events;
 using RD3.Extensions;
 using RD3.ViewModels;
@@ -30,164 +31,232 @@ namespace RD3.Views
         public DOEDesignView(IEventAggregator aggregator)
         {
             InitializeComponent();
-
-            aggregator.ResgiterMessage((MessageModel model) =>
-            {
-                if (model.Model is string[] columns)
-                {
-                    //foreach (var column in columns)
-                    //{
-                    //    // 创建并添加文本列（DataGridTextColumn）
-                    //    DataGridTextColumn textColumn = new DataGridTextColumn();
-                    //    textColumn.Header = column;
-                    //    textColumn.Width = 150;
-                    //    textColumn.Binding = new System.Windows.Data.Binding(column);
-                    //    DataGridResult.Columns.Add(textColumn);
-                    //}
-                }
-                else if (model.Model is DataTable dataSource)
-                {
-                    //DataGridResult.ItemsSource = dataSource.DefaultView;
-                }
-            }, nameof(DOEDesignViewModel));
-
-            //Create3DScatterPlot();
         }
 
-        private void Create3DScatterPlot()
+        public ModelVisual3D CreateScientificAxes(DataTable data, double length = 5, int divider = 5)
         {
-            // 1. 准备示例数据（替换为您的实际数据）
-            var dataPoints = new List<Point3D>
-        {
-            // 格式：new Point3D(pH_SP, DO_SP, S_ALK)
-            new Point3D(7.0, 5.2, 3.0),  // 示例数据点1
-            new Point3D(6.4, 4.8, 2.5),  // 示例数据点2
-            new Point3D(6.0, 5.0, 2.8),  // 示例数据点3
-            // 添加更多数据点...
-        };
+            var group = new ModelVisual3D();
 
-            // 2. 创建3D视口
-            var viewport = new HelixViewport3D
+            double step = length / divider;
+
+            // === 网格面 ===
+            group.Children.Add(CreateXYGrid(length, step, 0));        // XY 面
+            group.Children.Add(CreateXZGrid(length, step, 0));        // XZ 面
+            group.Children.Add(CreateYZGrid(length, step, 0));        // YZ 面
+
+            if (data.Columns.Count > 0)
             {
-                ZoomExtentsWhenLoaded = true,
-                Background = Brushes.White
-            };
-
-            // 3. 添加默认光源
-            viewport.Children.Add(new DefaultLights());
-
-            // 4. 添加红色小球（散点）
-            foreach (var point in dataPoints)
-            {
-                var sphere = new SphereVisual3D
+                // === X轴 ===
+                group.Children.Add(new LinesVisual3D
                 {
-                    Center = point,
-                    Radius = 0.2,  // 控制小球大小
-                    Material = MaterialHelper.CreateMaterial(Colors.Red),
-                    BackMaterial = MaterialHelper.CreateMaterial(Colors.Red)
-                };
-                viewport.Children.Add(sphere);
+                    Color = Colors.Black,
+                    Thickness = 1,
+                    Points = new Point3DCollection
+                {
+                    new Point3D(length,length,0),
+                    new Point3D(0,length,0)
+                }
+                });
+                for (int i = 0; i <= divider; i++)
+                {
+                    double x = i * step;
+                    group.Children.Add(new LinesVisual3D
+                    {
+                        Color = Colors.Black,
+                        Points = new Point3DCollection {
+                new Point3D(length-x,length,0),
+                new Point3D(length-x,length-0.1,0)
             }
+                    });
 
-            // 5. 设置坐标轴
-            // X轴 (pH_SP)
-            var xAxis = new ArrowVisual3D
-            {
-                Point1 = new Point3D(0, 0, 0),
-                Point2 = new Point3D(8, 0, 0),  // 根据数据范围调整
-                Diameter = 0.05,
-                Fill = Brushes.Black
-            };
-            viewport.Children.Add(xAxis);
-            viewport.Children.Add(new TextVisual3D
-            {
-                Text = "pH_SP",
-                Position = new Point3D(8.5, 0, 0),
-                Foreground = Brushes.Black,
-                FontWeight = FontWeights.Bold
-            });
-
-            // Y轴 (DO_SP)
-            var yAxis = new ArrowVisual3D
-            {
-                Point1 = new Point3D(0, 0, 0),
-                Point2 = new Point3D(0, 6, 0),  // 根据数据范围调整
-                Diameter = 0.05,
-                Fill = Brushes.Black
-            };
-            viewport.Children.Add(yAxis);
-            viewport.Children.Add(new TextVisual3D
-            {
-                Text = "DO_SP",
-                Position = new Point3D(0, 6.5, 0),
-                Foreground = Brushes.Black,
-                FontWeight = FontWeights.Bold
-            });
-
-            // Z轴 (S_ALK)
-            var zAxis = new ArrowVisual3D
-            {
-                Point1 = new Point3D(0, 0, 0),
-                Point2 = new Point3D(0, 0, 4),  // 根据数据范围调整
-                Diameter = 0.05,
-                Fill = Brushes.Black
-            };
-            viewport.Children.Add(zAxis);
-            viewport.Children.Add(new TextVisual3D
-            {
-                Text = "S_ALK",
-                Position = new Point3D(0, 0, 4.5),
-                Foreground = Brushes.Black,
-                FontWeight = FontWeights.Bold
-            });
-
-            // 6. 添加刻度标签（X轴示例）
-            for (double x = 0; x <= 8; x += 1)
-            {
-                viewport.Children.Add(new TextVisual3D
+                    // === X轴标签 ===
+                    group.Children.Add(new BillboardTextVisual3D
+                    {
+                        Text = x.ToString(),
+                        Position = new Point3D(length - x, length + 0.5, 0),
+                        Height = 0.5,
+                        FontSize = 20,
+                        Foreground = Brushes.Black,
+                        Transform = new RotateTransform3D(
+                            new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90),
+                            new Point3D(length - x, length + 0.5, 0))  // 旋转中心设为文字位置
+                    });
+                }
+                group.Children.Add(new BillboardTextVisual3D
                 {
-                    Text = x.ToString("F1"),
-                    Position = new Point3D(x, -0.3, -0.3),
+                    Text = data.Columns[0].ColumnName,
+                    Position = new Point3D(length / 2, length + 1, 0),
+                    Height = 0.4,
+                    FontSize = 28,
                     Foreground = Brushes.Black,
-                    Height = 0.2
+                    Transform = new RotateTransform3D(
+                            new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90),
+                            new Point3D(length / 2, length + 1, 0))  // 旋转中心设为文字位置
                 });
             }
 
-            // 7. 添加图例（使用不同颜色表示不同pH值）
-            var legendPoints = new Dictionary<string, Color>
-        {
-            { "7.0", Colors.Red },
-            { "6.4", Colors.DarkRed },
-            { "6.0", Colors.OrangeRed },
-            // 添加更多图例项...
-        };
-
-            double legendY = 7.0;
-            foreach (var item in legendPoints)
+            if (data.Columns.Count > 1)
             {
-                viewport.Children.Add(new TextVisual3D
+                // === Y轴 ===
+                group.Children.Add(new LinesVisual3D
                 {
-                    Text = item.Key,
-                    Position = new Point3D(9, legendY, 0),
-                    Foreground = new SolidColorBrush(item.Value),
-                    FontWeight = FontWeights.Bold,
-                    Height = 0.3
+                    Color = Colors.Black,
+                    Thickness = 1,
+                    Points = new Point3DCollection {
+                new Point3D(length,length,0),
+                new Point3D(length,0,0)
+            }
                 });
-                legendY -= 0.5;
+                for (int i = 0; i <= divider; i++)
+                {
+                    double y = i * step;
+                    group.Children.Add(new LinesVisual3D
+                    {
+                        Color = Colors.Black,
+                        Points = new Point3DCollection {
+                    new Point3D(length,length-y,0),
+                    new Point3D(length-0.1,length-y,0)
+                }
+                    });
+                    // === Y轴标签 (竖排) ===
+                    var text = new BillboardTextVisual3D
+                    {
+                        Text = y.ToString(),
+                        //Position = new Point3D(length + 0.5, length - y, 0),
+                        Position = new Point3D(0, 0, 0),
+                        Height = 0.5,
+                        FontSize = 20,
+                        FontFamily = AppSession.FontFamily,
+                        Foreground = Brushes.Black,
+                        Transform = new RotateTransform3D(
+                            new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90),
+                            new Point3D(length + 0.5, length - y, 0))  // 旋转中心设为文字位置
+                    };
+                    group.Children.Add(text);
+                }
+                var yAxisText = new BillboardTextVisual3D
+                {
+                    Text = data.Columns[1].ColumnName,
+                    FontSize = 28,
+                    Position = new Point3D(length + 1.5, length / 2, 0),
+                    Height = 0.4,
+                    Foreground = Brushes.Black,
+                    Transform = new RotateTransform3D(
+                            new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90),
+                            new Point3D(length + 1.5, length / 2, 0))  // 旋转中心设为文字位置
+                };
+                group.Children.Add(yAxisText);
             }
 
-            // 8. 添加标题
-            viewport.Children.Add(new BillboardTextVisual3D
+            if (data.Columns.Count > 2)
             {
-                Text = "蜘蛛网蛋白的pH值与SP值关系图",
-                Position = new Point3D(4, 8, 0),
-                Foreground = Brushes.Black,
-                FontWeight = FontWeights.Bold,
-                FontSize = 14
-            });
+                // === Z轴 ===
+                group.Children.Add(new LinesVisual3D
+                {
+                    Color = Colors.Black,
+                    Thickness = 1,
+                    Points = new Point3DCollection {
+                new Point3D(length,0,0),
+                new Point3D(length,0,length)
+            }
+                });
+                for (int i = 0; i <= divider; i++)
+                {
+                    double z = i * step;
+                    group.Children.Add(new LinesVisual3D
+                    {
+                        Color = Colors.Black,
+                        Points = new Point3DCollection {
+                    new Point3D(length,0,z),
+                    new Point3D(length-0.1,0,z)
+                }
+                    });
+                    // === Z轴标签 (竖直) ===
+                    group.Children.Add(new BillboardTextVisual3D
+                    {
+                        Text = z.ToString(),
+                        Position = new Point3D(length + 0.5, 0, z),
+                        Height = 0.5,
+                        FontSize = 20,
+                        Foreground = Brushes.Black,
+                        Transform = new RotateTransform3D(
+                            new AxisAngleRotation3D(new Vector3D(0, 1, 0), 0),
+                            new Point3D(length + 0.5, 0, z))
+                    });
+                }
+                group.Children.Add(new BillboardTextVisual3D
+                {
+                    Text = data.Columns[2].ColumnName,
+                    Position = new Point3D(length + 1, 0, length / 2),
+                    Height = 0.4,
+                    FontSize = 28,
+                    Foreground = Brushes.Black,
+                    Transform = new RotateTransform3D(
+                            new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90),
+                            new Point3D(length + 1, 0, length / 2))
+                });
+            }
+            return group;
+        }
 
-            // 9. 将视口添加到窗口
-            Content = viewport;
+        // 红色小球
+        public SphereVisual3D CreateSphere(Point3D position, double radius = 0.2)
+        {
+            return new SphereVisual3D
+            {
+                Center = position,
+                Radius = radius,
+                Material = MaterialHelper.CreateMaterial(Colors.Red)
+            };
+        }
+
+        public ModelVisual3D CreateXYGrid(double size, double step, double z = 0, double thickness = 1)
+        {
+            var grid = new LinesVisual3D
+            {
+                Thickness = thickness,
+                Color = Colors.LightGray,
+            };
+
+            var pts = new Point3DCollection();
+
+            // 竖线（平行Y）
+            for (double x = 0; x <= size + 1e-6; x += step)
+            {
+                pts.Add(new Point3D(x, 0, z));
+                pts.Add(new Point3D(x, size, z));
+            }
+
+            // 横线（平行X）
+            for (double y = 0; y <= size + 1e-6; y += step)
+            {
+                pts.Add(new Point3D(0, y, z));
+                pts.Add(new Point3D(size, y, z));
+            }
+
+            grid.Points = pts;
+
+            var group = new ModelVisual3D();
+            group.Children.Add(grid);
+            return group;
+        }
+
+        public ModelVisual3D CreateXZGrid(double size, double step, double y = 0, double thickness = 1)
+        {
+            var grid = new LinesVisual3D { Thickness = thickness, Color = Colors.LightGray };
+            var pts = new Point3DCollection();
+            for (double x = 0; x <= size + 1e-6; x += step) { pts.Add(new Point3D(x, y, 0)); pts.Add(new Point3D(x, y, size)); }
+            for (double z = 0; z <= size + 1e-6; z += step) { pts.Add(new Point3D(0, y, z)); pts.Add(new Point3D(size, y, z)); }
+            grid.Points = pts; var g = new ModelVisual3D(); g.Children.Add(grid); return g;
+        }
+
+        public ModelVisual3D CreateYZGrid(double size, double step, double x = 0, double thickness = 1)
+        {
+            var grid = new LinesVisual3D { Thickness = thickness, Color = Colors.LightGray };
+            var pts = new Point3DCollection();
+            for (double y = 0; y <= size + 1e-6; y += step) { pts.Add(new Point3D(x, y, 0)); pts.Add(new Point3D(x, y, size)); }
+            for (double z = 0; z <= size + 1e-6; z += step) { pts.Add(new Point3D(x, 0, z)); pts.Add(new Point3D(x, size, z)); }
+            grid.Points = pts; var g = new ModelVisual3D(); g.Children.Add(grid); return g;
         }
 
         private void DataGridDesign_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -221,6 +290,18 @@ namespace RD3.Views
         private void DataGridDesign_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Auto);
+        }
+
+        private void BtnGenerate_Click(object sender, RoutedEventArgs e)
+        {
+            (this.DataContext as DOEDesignViewModel).GenerateCommand.Execute();
+            var data = (this.DataContext as DOEDesignViewModel).DataSource.Copy();
+            if (data.Columns.Count > 0)
+            {
+                data.Columns.RemoveAt(0); // 删除第一列
+            }
+            helixViewport3D.Children.Add(CreateScientificAxes(data));
+            helixViewport3D.Children.Add(CreateSphere(new Point3D(2, 3, 4)));
         }
     }
 }

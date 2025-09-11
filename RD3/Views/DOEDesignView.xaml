@@ -18,6 +18,7 @@
     Height="530"
     d:DataContext="{d:DesignInstance Type=viewmodels:DOEDesignViewModel}"
     rd3:DraggableUserControlAttach.IsDraggable="True"
+    Background="White"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
     TextElement.FontWeight="Regular"
@@ -67,6 +68,22 @@
                 <x:Type TypeName="shared:DOEDesignType" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum3"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shared:ProbDistribution" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum4"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shared:Criterion" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -92,38 +109,77 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </DockPanel>
-                <DockPanel Margin="0,5,0,0" LastChildFill="True">
+                <DockPanel Margin="0,5,0,5" LastChildFill="True">
                     <hc:UniformSpacingPanel
                         DockPanel.Dock="Bottom"
                         Orientation="Vertical"
                         Spacing="10">
                         <DockPanel LastChildFill="False">
                             <TextBox
-                                Width="80"
-                                hc:InfoElement.Title="水平"
+                                Width="100"
+                                hc:InfoElement.Title="生成元"
                                 Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding Level}"
-                                Visibility="{Binding SelectedDesignType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='FullFactorial,Plackett_Burman,LatinHypercube'}" />
-                            <hc:UniformSpacingPanel
-                                DockPanel.Dock="Right"
-                                Orientation="Horizontal"
-                                Spacing="10">
+                                Text="{Binding Generators}"
+                                Visibility="{Binding SelectedDesignType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='TwoLevelFractionalFactorial'}" />
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+                                <TextBox
+                                    Width="100"
+                                    hc:InfoElement.Title="样本数量"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding SampleNumber}"
+                                    Visibility="{Binding SelectedDesignType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='LatinHypercube'}" />
+                                <TextBox
+                                    Width="100"
+                                    hc:InfoElement.Title="迭代次数"
+                                    Style="{StaticResource TextBoxExtend}"
+                                    Text="{Binding Iterations}"
+                                    Visibility="{Binding SelectedDesignType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='LatinHypercube'}" />
+                                <ComboBox
+                                    Width="120"
+                                    hc:InfoElement.Title="概率分布"
+                                    ItemsSource="{Binding Source={StaticResource DataFromEnum3}}"
+                                    SelectedItem="{Binding SelectedDistribution}"
+                                    Style="{StaticResource ComboBoxExtend}"
+                                    Visibility="Collapsed">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <ComboBox
+                                    Width="200"
+                                    hc:InfoElement.Title="生成策略"
+                                    ItemsSource="{Binding Source={StaticResource DataFromEnum4}}"
+                                    SelectedItem="{Binding SelectedCriterion}"
+                                    Style="{StaticResource ComboBoxExtend}"
+                                    Visibility="{Binding SelectedDesignType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='LatinHypercube'}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <TextBox
-                                        Width="60"
+                                        Width="80"
                                         hc:InfoElement.Title="中心点"
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding LowCenterPoint}" />
+                                        Text="{Binding LowCenterPoint}"
+                                        Visibility="{Binding SelectedDesignType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='Box_Behnken,CentralComposite'}" />
                                     <TextBox
                                         Grid.Column="1"
-                                        Width="60"
+                                        Width="80"
                                         hc:InfoElement.Title=" "
                                         Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding HighCenterPoint}" />
+                                        Text="{Binding HighCenterPoint}"
+                                        Visibility="{Binding SelectedDesignType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='CentralComposite'}" />
                                 </Grid>
                                 <ComboBox
                                     Width="120"
@@ -143,7 +199,8 @@
                                     hc:InfoElement.Title="CCD类型"
                                     ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
                                     SelectedItem="{Binding SelectedFace}"
-                                    Style="{StaticResource ComboBoxExtend}">
+                                    Style="{StaticResource ComboBoxExtend}"
+                                    Visibility="{Binding SelectedDesignType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='CentralComposite'}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
@@ -158,12 +215,13 @@
                                 Orientation="Horizontal"
                                 Spacing="5">
                                 <Button
+                                    Name="BtnGenerate"
                                     Width="80"
                                     Height="30"
                                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                     Background="Transparent"
                                     BorderThickness="1"
-                                    Command="{Binding GenerateCommand}"
+                                    Click="BtnGenerate_Click"
                                     Content="{ex:Language Key='构造'}"
                                     ToolTip="Generate" />
                                 <Button
@@ -211,20 +269,20 @@
                                 MinWidth="50"
                                 Binding="{Binding Name}"
                                 CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key=''}"
+                                Header="{ex:Language Key='因子'}"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                 IsReadOnly="True" />
                             <DataGridTextColumn
                                 MinWidth="60"
                                 Binding="{Binding Low}"
                                 CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='Low'}"
+                                Header="{ex:Language Key='低值'}"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                             <DataGridTextColumn
                                 MinWidth="60"
                                 Binding="{Binding High}"
                                 CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                Header="{ex:Language Key='High'}"
+                                Header="{ex:Language Key='高值'}"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         </DataGrid.Columns>
                     </DataGrid>
@@ -259,23 +317,20 @@
             Grid.Column="2"
             BorderBrush="{DynamicResource MaterialDesignDarkSeparatorBackground}"
             BorderThickness="2">
-            <DockPanel LastChildFill="True">
-                <TextBlock DockPanel.Dock="Top" Text="{ex:Language Key='3D视图'}" />
-                <helix:HelixViewport3D
-                    Name="viewport"
-                    DockPanel.Dock="Bottom"
-                    ShowCoordinateSystem="True"
-                    ZoomExtentsWhenLoaded="True">
-                    <helix:HelixViewport3D.Camera>
-                        <PerspectiveCamera LookDirection="5,10,10" UpDirection="0,0,1" />
-                    </helix:HelixViewport3D.Camera>
-                    <ModelVisual3D Content="{Binding Lights}" />
-                    <rd3:ScatterPlotVisual3D
-                        Points="{Binding Data}"
-                        SurfaceBrush="{Binding SurfaceBrush}"
-                        Values="{Binding Values}" />
-                </helix:HelixViewport3D>
-            </DockPanel>
+            <helix:HelixViewport3D
+                Name="helixViewport3D"
+                ShowViewCube="True"
+                ZoomExtentsWhenLoaded="True">
+                <helix:HelixViewport3D.Camera>
+                    <PerspectiveCamera
+                        FieldOfView="45"
+                        LookDirection="0, -18, -13"
+                        NearPlaneDistance="0.1"
+                        Position="3, 22, 16"
+                        UpDirection="0, 0, 1" />
+                </helix:HelixViewport3D.Camera>
+                <helix:DefaultLights />
+            </helix:HelixViewport3D>
         </Border>
     </Grid>
 </UserControl>

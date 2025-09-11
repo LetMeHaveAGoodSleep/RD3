@@ -1,0 +1,140 @@
+﻿<UserControl
+    x:Class="RD3.Views.DOEAnalyse2DView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:rd3="clr-namespace:RD3"
+    xmlns:shared="clr-namespace:RD3.Shared;assembly=RD3.Shared"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+    Width="1000"
+    Height="600"
+    d:DataContext="{d:DesignInstance Type=viewmodels:DOEAnalyse2DViewModel}"
+    rd3:DraggableUserControlAttach.IsDraggable="True"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{DynamicResource TextFontSize}"
+    TextElement.FontWeight="Regular"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextOptions.TextFormattingMode="Ideal"
+    TextOptions.TextRenderingMode="Auto"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ObjectDataProvider
+            x:Key="DataFromEnum1"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shared:Factor" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum2"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shared:DOEResponse" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="True" />
+            <Setter Property="AllowsTransparency" Value="False" />
+            <Setter Property="WindowStyle" Value="ThreeDBorderWindow" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <wpf:WpfPlot Name="wpfPlot" />
+        <DockPanel Grid.Row="2" LastChildFill="False">
+            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                <TextBox
+                    Name="txtPredict"
+                    hc:InfoElement.Title="预测值:"
+                    hc:InfoElement.TitlePlacement="Left"
+                    FontSize="{StaticResource MediumFontSize}"
+                    Foreground="{StaticResource PrimaryBrush}"
+                    IsReadOnly="True"
+                    Style="{StaticResource TextBoxExtend}" />
+                <Button
+                    Name="btnPredictMax"
+                    Click="btnPredictMax_Click"
+                    Content="最大"
+                    Style="{StaticResource ButtonDefault}" />
+                <Button
+                    Name="btnPredictMini"
+                    Click="btnPredictMini_Click"
+                    Content="最小"
+                    Style="{StaticResource ButtonDefault}" />
+            </hc:UniformSpacingPanel>
+        </DockPanel>
+        <hc:UniformSpacingPanel
+            Grid.Row="4"
+            Orientation="Vertical"
+            Spacing="10">
+            <ItemsControl ItemsSource="{Binding Factor2DParams}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="5,5,5,10"
+                            BorderBrush="Gray"
+                            BorderThickness="2"
+                            CornerRadius="8">
+                            <DockPanel LastChildFill="True">
+                                <Border Width="200" Style="{StaticResource BorderGray}">
+                                    <hc:NumericUpDown
+                                        hc:InfoElement.Title="{Binding FactorName}"
+                                        hc:InfoElement.TitlePlacement="Left"
+                                        hc:InfoElement.TitleWidth="70"
+                                        DecimalPlaces="2"
+                                        Increment="{Binding Frequency}"
+                                        Maximum="{Binding Maximum}"
+                                        Minimum="{Binding Minimum}"
+                                        Style="{StaticResource NumericUpDownExtend}"
+                                        ValueChanged="NumericUpDown_ValueChanged"
+                                        Value="{Binding CurrentValue}" />
+                                </Border>
+                                <Border Style="{StaticResource BorderVerticallySplitter}" />
+                                <Border Style="{StaticResource BorderGray}">
+                                    <Slider
+                                        materialDesign:SliderAssist.ToolTipFormat="{}{0:F2}"
+                                        IsSelectionRangeEnabled="True"
+                                        Maximum="{Binding Maximum}"
+                                        Minimum="{Binding Minimum}"
+                                        Style="{StaticResource MaterialDesign3.MaterialDesignDiscreteSlider}"
+                                        TickFrequency="{Binding Frequency}"
+                                        TickPlacement="TopLeft"
+                                        ValueChanged="Slider_ValueChanged"
+                                        Value="{Binding CurrentValue}" />
+                                </Border>
+                            </DockPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </hc:UniformSpacingPanel>
+    </Grid>
+</UserControl>

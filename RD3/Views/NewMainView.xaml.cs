@@ -278,6 +278,10 @@ namespace RD3.Views
                                     }
                                 }
 
+                                if (!ClockSupervisor.realData_time.ContainsKey(device.Name))
+                                {
+                                    return;
+                                }
                                 int cacheCount = ClockSupervisor.realData_time[device.Name].Count;
                                 for (int i = 0; i < cacheCount; i++)
                                 {

@@ -233,14 +233,14 @@ namespace RD3
                         }
                     });
 
-                    //dialog.ShowDialog(nameof(SelfCheckView), callback =>
-                    //{
-                    //    if (callback.Result != ButtonResult.OK)
-                    //    {
-                    //        Environment.Exit(0);
-                    //        return;
-                    //    }
-                    //});
+                    dialog.ShowDialog(nameof(SelfCheckView), callback =>
+                    {
+                        if (callback.Result != ButtonResult.OK)
+                        {
+                            Environment.Exit(0);
+                            return;
+                        }
+                    });
                     break;
                 case SoftwarePlatform.WindowsPad:
                     //dialog.ShowDialog(nameof(SelfCheckView), callback =>
@@ -324,6 +324,8 @@ namespace RD3
             containerRegistry.RegisterDialog<PadCalibrationView, PadCalibrationViewModel>();
             containerRegistry.RegisterDialog<PadConfigurationView, PadConfigurationViewModel>();
             containerRegistry.RegisterDialog<PadDOPIDView, PadDOPIDViewModel>();
+            containerRegistry.RegisterDialog<ChooseDOEAnalyseMethodView, ChooseDOEAnalyseMethodViewModel>();
+            containerRegistry.RegisterDialog<DOEAnalyse2DView, DOEAnalyse2DViewModel>();
             //containerRegistry.RegisterDialogWindow<DialogWindowBase>();
         }
 

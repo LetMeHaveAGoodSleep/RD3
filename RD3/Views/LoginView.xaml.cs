@@ -31,7 +31,10 @@ namespace RD3.Views
             //注册提示消息
             aggregator.ResgiterMessage(arg =>
             {
-                LoginSnakeBar.MessageQueue.Enqueue(arg.Message);
+                Dispatcher.BeginInvoke(() =>
+                {
+                    LoginSnakeBar.MessageQueue.Enqueue(arg.Message);
+                });
             }, nameof(LoginViewModel));
 
             btnClose.Click += (s, e) =>

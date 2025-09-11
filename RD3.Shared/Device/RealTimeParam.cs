@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
-    public class RealTimeParam : BindableBase,ICloneable
+    public class RealTimeParam : BindableBase, ICloneable
     {
         public RealTimeParam()
         {

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -58,7 +59,10 @@ namespace RD3.Views
         {
             InitializationListener agent = (System.Windows.Application.Current as App).Container.Resolve<InitializationListener>();
             LibraryManager.GetInstance().InitAllClass(agent);
-            ClockSupervisor.GetInstance();
+            if (InstrumentSolution.GetInstance().CommunicationProtocol == 1)
+            {
+                ClockSupervisor.GetInstance();
+            }
         }
     }
 }

@@ -87,8 +87,8 @@ namespace RD3.ViewModels
 
         private void LoadConfig()
         {
-            InitializationListener agent = ContainerProvider.Resolve<InitializationListener>();
-            LibraryManager.GetInstance().InitAllClass(agent);
+            //InitializationListener agent = ContainerProvider.Resolve<InitializationListener>();
+            //LibraryManager.GetInstance().InitAllClass(agent);
             ClockSupervisor.GetInstance();
         }
 

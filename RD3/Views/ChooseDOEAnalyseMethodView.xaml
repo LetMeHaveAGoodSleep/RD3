@@ -1,0 +1,60 @@
+﻿<UserControl
+    x:Class="RD3.Views.ChooseDOEAnalyseMethodView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    Width="250"
+    Height="150"
+    d:DataContext="{d:DesignInstance Type=viewmodels:ChooseDOEAnalyseMethodViewModel}"
+    mc:Ignorable="d">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="True" />
+            <Setter Property="AllowsTransparency" Value="False" />
+            <Setter Property="WindowStyle" Value="ThreeDBorderWindow" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <DockPanel Margin="10" LastChildFill="False">
+        <hc:UniformSpacingPanel
+            DockPanel.Dock="Top"
+            Orientation="Vertical"
+            Spacing="10">
+            <RadioButton Content="在3D上查看两因子-响应面数据" IsChecked="{Binding Is3DView}" />
+            <RadioButton Content="在2D上查看所有因素的交互作用" IsChecked="{Binding Is3DView, Converter={StaticResource InverseBooleanConverter}}" />
+        </hc:UniformSpacingPanel>
+        <DockPanel DockPanel.Dock="Bottom" LastChildFill="False">
+            <hc:UniformSpacingPanel
+                HorizontalAlignment="Right"
+                DockPanel.Dock="Left"
+                Spacing="20">
+                <Button
+                    Width="80"
+                    Command="{Binding OKCommand}"
+                    Content="确定"
+                    Style="{StaticResource ButtonPrimary}" />
+                <Button
+                    Width="80"
+                    BorderBrush="{StaticResource PrimaryBrush}"
+                    Command="{Binding CancelCommand}"
+                    Content="取消"
+                    Foreground="{StaticResource PrimaryBrush}" />
+            </hc:UniformSpacingPanel>
+
+        </DockPanel>
+    </DockPanel>
+</UserControl>

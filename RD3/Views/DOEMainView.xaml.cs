@@ -37,7 +37,7 @@ namespace RD3.Views
 
         private void ListboxFactor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.RemovedItems.Count<1 && e.AddedItems.Count < 1) return;
+            if (e.RemovedItems.Count < 1 && e.AddedItems.Count < 1) return;
             foreach (var item in e.RemovedItems)
             {
                 if (((DOEMainViewModel)DataContext).SelectedFactors.Contains((Factor)item))
@@ -45,8 +45,8 @@ namespace RD3.Views
                     ((DOEMainViewModel)DataContext).SelectedFactors.Remove((Factor)item);
                 }
             }
-            
-            foreach (var item in e.AddedItems) 
+
+            foreach (var item in e.AddedItems)
             {
                 if (!((DOEMainViewModel)DataContext).SelectedFactors.Contains((Factor)item))
                 {

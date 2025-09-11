@@ -1,6 +1,8 @@
 ﻿using HandyControl.Tools.Extension;
 using HelixToolkit.Wpf;
 using ImTools;
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Services.Dialogs;
@@ -15,33 +17,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace RD3.ViewModels
 {
     public class DOEDesignViewModel : BaseViewModel, IDialogAware
     {
-        public Point3D[] Data { get; set; }
-
-        public double[] Values { get; set; }
-
-        public Model3DGroup Lights
-        {
-            get
-            {
-                var group = new Model3DGroup();
-                group.Children.Add(new AmbientLight(System.Windows.Media.Colors.White));
-                return group;
-            }
-        }
-
-        public System.Windows.Media.Brush SurfaceBrush
-        {
-            get
-            {
-                return GradientBrushes.RainbowStripes;
-            }
-        }
-
         public string[] Columns
         {
             get;
@@ -62,6 +43,26 @@ namespace RD3.ViewModels
             set { SetProperty(ref _level, value); }
         }
 
+        private string _generators = string.Empty;
+        public string Generators
+        {
+            get => _generators;
+            set { SetProperty(ref _generators, value); }
+        }
+
+        private int _sampleNumber = 0;
+        public int SampleNumber
+        {
+            get => _sampleNumber;
+            set { SetProperty(ref _sampleNumber, value); }
+        }
+
+        private int _iterations = 5;
+        public int Iterations
+        {
+            get => _iterations;
+            set { SetProperty(ref _iterations, value); }
+        }
 
         private int _lowCenterPoint = 2;
         public int LowCenterPoint
@@ -91,6 +92,20 @@ namespace RD3.ViewModels
             set { SetProperty(ref _face, value); }
         }
 
+        private ProbDistribution _selectedDistribution = ProbDistribution.None;
+        public ProbDistribution SelectedDistribution
+        {
+            get => _selectedDistribution;
+            set { SetProperty(ref _selectedDistribution, value); }
+        }
+
+        private Criterion _selectedCriterion = Criterion.None;
+        public Criterion SelectedCriterion
+        {
+            get => _selectedCriterion;
+            set { SetProperty(ref _selectedCriterion, value); }
+        }
+
         private DOEDesignType _selectedDesignType = DOEDesignType.CentralComposite;
         public DOEDesignType SelectedDesignType
         {
@@ -98,14 +113,7 @@ namespace RD3.ViewModels
             set { SetProperty(ref _selectedDesignType, value); }
         }
 
-        //private int _doeIndex = 2;
-        //public int DoeIndex
-        //{
-        //    get => _doeIndex;
-        //    set { SetProperty(ref _doeIndex, value); }
-        //}
-
-        private List<Factor> _selectedFactors = [];
+        private ObservableCollection<Factor> _selectedFactors = [];
 
 
         private ObservableCollection<OrthogonalParam> _designCol = [];
@@ -114,7 +122,6 @@ namespace RD3.ViewModels
             get=> _designCol;
             set => SetProperty(ref _designCol, value);
         }
-
 
         public DelegateCommand CloseCommand => new(() => RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel)));
 
@@ -130,8 +137,6 @@ namespace RD3.ViewModels
             }
 
             GenerateDOEResult();
-
-            Generate3DView();
         });
 
         public DelegateCommand OKCommand => new(async () =>
@@ -143,6 +148,7 @@ namespace RD3.ViewModels
             }
             DialogParameters keyValuePairs = new DialogParameters();
             keyValuePairs.Add("DesignResult", DataSource);
+            keyValuePairs.Add(nameof(DesignCol), DesignCol);
             DialogResult dialogResult = new DialogResult(ButtonResult.OK, keyValuePairs);
             RequestClose?.Invoke(dialogResult);
         });
@@ -169,7 +175,7 @@ namespace RD3.ViewModels
         public void OnDialogOpened(IDialogParameters parameters)
         {
             DesignCol.Clear();
-            _selectedFactors = parameters.GetValue<List<Factor>>("Factors");
+            _selectedFactors = parameters.GetValue<ObservableCollection<Factor>>("Factors");
             if (_selectedFactors == null) return;
             Columns = new string[_selectedFactors.Count + 1];
             Columns[0] = "";
@@ -194,81 +200,50 @@ namespace RD3.ViewModels
 
         private void GenerateDOEResult()
         {
+            Matrix<double> result = null;
             switch (SelectedDesignType)
             {
                 case DOEDesignType.FullFactorial:
-                    List<int> ints = new List<int>();
-                    foreach (var item in DesignCol)
-                    {
-                        ints.Add(Level);
-                    }
-                    var temp = DesignOfExperiments.Fullfact(ints.ToArray());
-                    DataSource = DOEUtil.GenerateCombinationsAsDataTable(DesignCol);
-                    aggregator.SendMessage("", nameof(DOEDesignViewModel), DataSource);
+                    result = DesignOfExperiments.BuildFullFactDesign(DesignCol);
+                    MatrixConvertToDataTable(result);
                     break;
                 case DOEDesignType.TwoLevelFractionalFactorial:
-                    DataSource = DOEUtil.GenerateCombinationsAsDataTable(DesignCol);
-                    aggregator.SendMessage("", nameof(DOEDesignViewModel), DataSource);
+                    result = DesignOfExperiments.BuildFracFactDesign(DesignCol, Generators);
+                    MatrixConvertToDataTable(result);
                     break;
                 case DOEDesignType.Plackett_Burman:
+                    result = DesignOfExperiments.BuildPlackettBurmanDesign(DesignCol);
+                    MatrixConvertToDataTable(result);
                     break;
                 case DOEDesignType.Box_Behnken:
-                    var res1 = DesignOfExperiments.Bbdesign(DesignCol.Count, 1);
+                    result = DesignOfExperiments.BuildBoxBehnkenDesign(DesignCol, LowCenterPoint);
+                    MatrixConvertToDataTable(result);
                     break;
                 case DOEDesignType.CentralComposite:
-                    var res = DOEUtil.BuildCCDDesign(DesignCol, (LowCenterPoint, HighCenterPoint), SelectedAlpha, SelectedFace);
-
-                    // 设置alpha值
-                    double alpha = DOEUtil.CalculateAlpha(DesignCol.Count, SelectedAlpha);
-                    // 步骤一：确定因素数量和水平范围（已在上述代码完成，主要是定义变量存储相关信息）
-                    // 步骤二：构建析因点（基于二水平全因子设计算法构建）
-                    double[,] factorialPoints = DOEUtil.BuildFactorialPoints(DesignCol);
-                    // 步骤三：计算星点（根据传入的alpha值、设计选项以及因素上下限计算星点位置）
-                    double[,] axialPoints = DOEUtil.CalculateAxialPoints(DesignCol, alpha, SelectedFace, LowCenterPoint, HighCenterPoint);
-                    // 步骤四：添加中心点（计算各因素的中心值并构建中心点坐标，考虑多个中心点情况）
-                    double[] centerPoint = DOEUtil.CalculateCenterPoint(DesignCol);
-                    double[,] designMatrix = DOEUtil.GetResult(factorialPoints, axialPoints, centerPoint, HighCenterPoint);
-                    int count = designMatrix.GetLength(0);
-                    int length = designMatrix.GetLength(1);
-                    DataSource.Rows.Clear();
-                    for (int i = 0; i < count; i++)
-                    {
-                        DataRow row = DataSource.NewRow();
-                        row[0] = (i + 1).ToString();
-                        for (int j = 0; j < length; j++)
-                        {
-                            row[j + 1] = Math.Round(designMatrix[i, j], 3);
-                        }
-                        DataSource.Rows.Add(row);
-                    }
+                    result = DesignOfExperiments.BuildCCDDesign(DesignCol, (LowCenterPoint, HighCenterPoint), SelectedAlpha, SelectedFace);
+                    MatrixConvertToDataTable(result);
                     break;
+                case DOEDesignType.LatinHypercube:
+                    result = DesignOfExperiments.BuildLhsDesign(DesignCol, SampleNumber, SelectedDistribution, SelectedCriterion);
+                    MatrixConvertToDataTable(result);
+                    break;
+
             }
         }
 
-        private void Generate3DView()
+        private void MatrixConvertToDataTable(Matrix<double> matrix)
         {
-            Data = Enumerable.Range(0, 7 * 7 * 7).Select(i => new Point3D(i % 7, (i % 49) / 7, i / 49)).ToArray();
-
-            var rnd = new Random();
-            this.Values = Data.Select(d => rnd.NextDouble()).ToArray();
-
-            //var points = new Point3D[DataSource.Rows.Count];
-            //for (int i = 0; i < DataSource.Rows.Count; i++)
-            //{
-            //    points[i] = new Point3D(
-            //        Convert.ToDouble(DataSource.Rows[i][1]), // X坐标
-            //        Convert.ToDouble(DataSource.Rows[i][2]), // Y坐标
-            //        Convert.ToDouble(DataSource.Rows[i][3])  // Z坐标
-            //    );
-            //}
-            //Data = points;
-
-            //var rnd = new Random();
-            //this.Values = Data.Select(d => rnd.NextDouble()).ToArray();
-
-            RaisePropertyChanged("Data");
-            RaisePropertyChanged("Values");
-            RaisePropertyChanged("SurfaceBrush");
+            DataSource.Rows.Clear();
+            for (int i = 0; i < matrix.RowCount; i++)
+            {
+                DataRow row = DataSource.NewRow();
+                row[0] = (i + 1).ToString();
+                for (int j = 0; j < matrix.ColumnCount; j++)
+                {
+                    row[j + 1] = Math.Round(matrix[i, j], 3);
+                }
+                DataSource.Rows.Add(row);
+            }
         }
     }
 }

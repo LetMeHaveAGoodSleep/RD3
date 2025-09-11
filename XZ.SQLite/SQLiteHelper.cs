@@ -12,6 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
 namespace XZ.SQLite
@@ -133,7 +134,7 @@ namespace XZ.SQLite
         public static void CreateTable(string tableName, bool hasAutoIncrementId, string[] columns, Type[] columnTypes)
         {
             //// 设置当前操作的表名
- 
+
             // 创建列定义列表
             var columnDefinitions = new List<string>();
             // 如果需要自动添加ID列
@@ -202,7 +203,7 @@ namespace XZ.SQLite
         /// 索引名不能重复，增加表名
         /// </summary>
         /// <param name="columnName">要创建索引的列名。</param>
-        public static void CreateIndex(string tableName,string columnName)
+        public static void CreateIndex(string tableName, string columnName)
         {
             string sql = $"CREATE INDEX IF NOT EXISTS {columnName}_{tableName} ON {tableName} ({columnName});";
             ExecuteNonQuery(sql);
@@ -252,7 +253,7 @@ namespace XZ.SQLite
         /// </summary>
         /// <param name="values">要插入的值的数组。</param>
         /// <returns>插入操作影响的行数。</returns>
-        public static int Insert(string tableName, string columnNameStr, bool returnID,params object[] values)
+        public static int Insert(string tableName, string columnNameStr, bool returnID, params object[] values)
         {
             // 创建参数列表并初始化
             var parameters = values.Select((value, index) => new SQLiteParameter($"@{index}", value)).ToArray();
@@ -275,7 +276,7 @@ namespace XZ.SQLite
                     command.Parameters.AddRange(parameters);
                     using (var reader = command.ExecuteReader())
                     {
-                        if(reader.Read())
+                        if (reader.Read())
                             id = reader.GetInt32(0);
                     }
                 }
@@ -357,11 +358,11 @@ namespace XZ.SQLite
         /// <param name="value">新的值。</param>
         /// <param name="condition">更新条件。</param>
         /// <returns>更新操作影响的行数。</returns>
-        public static int Updates(string tableName,string[] columnNames, object[] values, string condition)
+        public static int Updates(string tableName, string[] columnNames, object[] values, string condition)
         {
             // 构建更新数据的SQL语句
             string update = string.Empty;
-            for(int i = 0;i< columnNames.Length;i++)
+            for (int i = 0; i < columnNames.Length; i++)
             {
                 update += $"{columnNames[i]} = @{values[i]},";
             }
@@ -509,25 +510,25 @@ namespace XZ.SQLite
         {
             try
             {
-                    try
+                try
+                {
+                    // 使用SQLiteCommand对象执行SQL命令
+                    using (var command = connection.CreateCommand())
                     {
-                        // 使用SQLiteCommand对象执行SQL命令
-                        using (var command = connection.CreateCommand())
+                        command.CommandText = sql;
+                        if (parameters != null)
                         {
-                            command.CommandText = sql;
-                            if (parameters != null)
-                            {
-                                command.Parameters.AddRange(parameters);
-                            }
-
-                            int num = command.ExecuteNonQuery();
-                            return num;
+                            command.Parameters.AddRange(parameters);
                         }
+
+                        int num = command.ExecuteNonQuery();
+                        return num;
                     }
-                    catch
-                    {
-                        throw;
-                    }
+                }
+                catch
+                {
+                    throw;
+                }
             }
             catch (Exception ex)
             {
@@ -575,6 +576,32 @@ namespace XZ.SQLite
             {
                 LogException(ex);
                 return null;
+            }
+            return dataTable;
+        }
+
+        public static DataTable GetDatatableSync(List<string> sqlList)
+        {
+            DataTable dataTable = new DataTable();
+            bool isFirstQuery = true;
+
+            foreach (string sql in sqlList)
+            {
+                if (isFirstQuery)
+                {
+                    dataTable = GetDatatable(sql);
+                    isFirstQuery = false;
+                }
+                else
+                {
+                    // 后续查询追加数据到现有DataTable
+                    DataTable tempTable = GetDatatable(sql);
+                    // 将临时表的数据导入主表
+                    foreach (DataRow row in tempTable.Rows)
+                    {
+                        dataTable.ImportRow(row);
+                    }
+                }
             }
             return dataTable;
         }
@@ -633,6 +660,27 @@ namespace XZ.SQLite
             string errorMessage = $"发生错误：{ex.Message}{Environment.NewLine}{ex.StackTrace}";
             File.AppendAllText("error.log", errorMessage);
         }
+
+        /// <summary>
+        /// 设置SQLite缓存大小
+        /// </summary>
+        /// <param name="cacheSize">缓存大小（负数表示KB，正数表示页数）</param>
+        public static void SetCacheSize(int cacheSize = -40000) // 默认40MB
+        {
+            // 设置缓存大小
+            using (var command = new SQLiteCommand($"PRAGMA cache_size = {cacheSize}", connection))
+            {
+                command.ExecuteNonQuery();
+                Console.WriteLine($"✅ 缓存大小已设置为：{Math.Abs(cacheSize)}KB");
+            }
+
+            // 验证设置是否生效
+            using (var command = new SQLiteCommand("PRAGMA cache_size", connection))
+            {
+                var result = command.ExecuteScalar();
+                Console.WriteLine($"📊 当前缓存大小：{result}");
+            }
+        }
     }
 
     /// <summary>
@@ -640,21 +688,22 @@ namespace XZ.SQLite
     /// </summary>
     public class RD3SQLHelper
     {
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        public static void InitDB()
-        {
-            SQLiteHelper.CreateConnection();//创建数据库链接
-            CreateProjectTable();
-            CreateBatchTable();
-            //CreateRealTimeParamTable();
+            /// <summary>
+            /// 初始化
+            /// </summary>
+            public static void InitDB()
+            {
+                SQLiteHelper.CreateConnection();//创建数据库链接
+                SQLiteHelper.SetCacheSize();
+                CreateProjectTable();
+                CreateBatchTable();
+                //CreateRealTimeParamTable();
 
-            CreateAuditTable();//创建操作日志表
-            CreateAlarmRecordTable();
-        }
+                CreateAuditTable();//创建操作日志表
+                CreateAlarmRecordTable();
+            }
 
-        public static string DataFormat = "yyyy-MM-dd";
+            public static string DataFormat = "yyyy-MM-dd";
         public static string DateTimeFormat = "yyyy-MM-dd mm:ss";
         #region 公用方法
 
