@@ -153,9 +153,9 @@ namespace RD3
             LogHelper.Error(e.Exception + "  " + e.Exception.StackTrace);
             e.Handled = true;
 
-            //HandyControl.Controls.MessageBox.Warning("程序出错，请重启软件", "温馨提示");
-            //Application.Current.Shutdown();
-            //Environment.Exit(0);
+            HandyControl.Controls.MessageBox.Warning("程序出错，请重启软件", "温馨提示");
+            Application.Current.Shutdown();
+            Environment.Exit(0);
         }
 
         public static void LoginOut(IContainerProvider containerProvider)
@@ -326,6 +326,8 @@ namespace RD3
             containerRegistry.RegisterDialog<PadDOPIDView, PadDOPIDViewModel>();
             containerRegistry.RegisterDialog<ChooseDOEAnalyseMethodView, ChooseDOEAnalyseMethodViewModel>();
             containerRegistry.RegisterDialog<DOEAnalyse2DView, DOEAnalyse2DViewModel>();
+            containerRegistry.RegisterDialog<ChooseDOE3DFactorView, ChooseDOE3DFactorViewModel>();
+            containerRegistry.RegisterDialog<DOEAnalyse3DView, DOEAnalyse3DViewModel>();
             //containerRegistry.RegisterDialogWindow<DialogWindowBase>();
         }
 

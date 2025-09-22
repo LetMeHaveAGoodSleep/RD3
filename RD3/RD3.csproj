@@ -189,6 +189,7 @@
     <ProjectReference Include="..\Fpi.Instrument\Fpi.Instrument.csproj" />
     <ProjectReference Include="..\Fpi.Util\Fpi.Util.csproj" />
     <ProjectReference Include="..\Fpi.Xml\Fpi.Xml.csproj" />
+    <ProjectReference Include="..\RD3.Controls\RD3.Controls.csproj" />
     <ProjectReference Include="..\RD3.Shared\RD3.Shared.csproj" />
     <ProjectReference Include="..\XZ.OnnxRun\XZ.OnnxRun.csproj" />
     <ProjectReference Include="..\XZ.SQLite\XZ.SQLite.csproj" />
@@ -196,9 +197,6 @@
   <ItemGroup>
     <Reference Include="HandyControl">
       <HintPath>..\ImportDll\HandyControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Forms">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Windows.Forms.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -345,6 +343,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Themes\iconfont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\DOEAnalyse3DView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Update="App.config">

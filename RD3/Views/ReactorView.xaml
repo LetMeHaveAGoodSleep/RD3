@@ -702,8 +702,7 @@
                                         Width="75"
                                         VerticalAlignment="Center"
                                         hc:InfoElement.Title="{ex:Language Key='转速(rpm)'}"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Validation.ErrorTemplate="{StaticResource ValidationErrorTemplate}">
+                                        Style="{StaticResource TextBoxExtend}">
                                         <TextBox.Text>
                                             <Binding
                                                 Path="CurrentDeviceParameter.AgitParam.Agit_PV"

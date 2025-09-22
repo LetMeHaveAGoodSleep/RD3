@@ -34,7 +34,7 @@
             <ResourceDictionary x:Key="zh_CN" Source="pack://application:,,,/Lang/Lang.zh-CN.xaml" />
             <ResourceDictionary x:Key="en_US" Source="pack://application:,,,/Lang/Lang.en-US.xaml" />
             <!--<SolidColorBrush x:Key="BackGroundBrush" Color="#F5F7FA" />-->
-            <SolidColorBrush x:Key="BackGroundBrush" Color="#F6F8FA" />
+            <SolidColorBrush x:Key="BackGroundBrush" Color="#EDEDED" />
             <SolidColorBrush x:Key="PrimaryBorderBrush" Color="LightGray" />
             <SolidColorBrush x:Key="ControlFixedModeBrush" Color="#F5D462" />
             <SolidColorBrush x:Key="ControlAssociatedModeBrush" Color="#99CBFF" />
@@ -132,224 +132,20 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            <ControlTemplate x:Key="ValidationErrorTemplate">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        Margin="0,0,20,0"
-                        Foreground="Red"
-                        Text="{Binding [0].ErrorContent}" />
-                    <!--  显示控件本身  -->
-                    <AdornedElementPlaceholder />
-                </StackPanel>
-            </ControlTemplate>
-
-            <!--  自定义错误模板（红色 × + 悬停提示）  -->
-            <ControlTemplate x:Key="InlineErrorTemplate">
-                <DockPanel LastChildFill="True">
-                    <!--  错误图标（红色 ×）  -->
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        DockPanel.Dock="Left"
-                        Foreground="Red"
-                        Text="✖"
-                        Visibility="{Binding ElementName=adornedElement, Path=AdornedElement.(Validation.HasError), Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <!--  悬停时显示错误信息  -->
-                        <TextBlock.ToolTip>
-                            <ToolTip
-                                Content="{Binding [0].ErrorContent}"
-                                Foreground="Red"
-                                Placement="Right" />
-                        </TextBlock.ToolTip>
-                    </TextBlock>
-                    <!--  原控件  -->
-                    <AdornedElementPlaceholder Name="adornedElement" />
-                </DockPanel>
-            </ControlTemplate>
-
-            <DataTemplate x:Key="CustomListBoxTemplate">
-                <TextBlock Foreground="Red" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
-            </DataTemplate>
 
             <FontFamily x:Key="IconFont">pack://application:,,,/Themes/#iconfont</FontFamily>
 
-            <Style TargetType="TextBlock">
+            <!--<Style TargetType="TextBlock">
                 <Setter Property="Text" Value="{Binding Path=Text, RelativeSource={RelativeSource Self}, Converter={StaticResource DynamicFormatConverter}}" />
-            </Style>
+            </Style>-->
 
             <!--  全局TextBox样式  -->
+            <!--
             <Style TargetType="TextBox">
                 <Setter Property="Text" Value="{Binding Path=Text, RelativeSource={RelativeSource Self}, Converter={StaticResource DynamicFormatConverter}, UpdateSourceTrigger=LostFocus}" />
-            </Style>
-
-            <!--<Style TargetType="{x:Type views:DialogWindowBase}">
-                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
-                <Setter Property="Background" Value="White" />
-                <Setter Property="BorderBrush" Value="#FF0874AA" />
-                <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="IsTabStop" Value="False" />
-                <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
-                <Setter Property="UseLayoutRounding" Value="True" />
-                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
-                <Setter Property="WindowStyle" Value="SingleBorderWindow" />
-                <Setter Property="WindowChrome.WindowChrome">
-                    <Setter.Value>
-                        <WindowChrome
-                            CornerRadius="0"
-                            GlassFrameThickness="1"
-                            NonClientFrameEdges="None"
-                            UseAeroCaptionButtons="False" />
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type views:DialogWindowBase}">
-                            <Border
-                                x:Name="WindowBorder"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
-                                <Grid x:Name="LayoutRoot">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
-                                    </Grid.RowDefinitions>
-                                    <Grid
-                                        x:Name="PART_WindowTitleGrid"
-                                        Grid.Row="0"
-                                        Height="26.4"
-                                        Background="{TemplateBinding BorderBrush}">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel Orientation="Horizontal">
-
-                                            <Button
-                                                Width="{x:Static SystemParameters.SmallIconWidth}"
-                                                Height="{x:Static SystemParameters.SmallIconHeight}"
-                                                Margin="7,0,5,0"
-                                                VerticalAlignment="Center"
-                                                Content="{TemplateBinding Icon}"
-                                                IsTabStop="False"
-                                                WindowChrome.IsHitTestVisibleInChrome="True">
-                                                <Button.Template>
-                                                    <ControlTemplate TargetType="{x:Type Button}">
-                                                        <Image Source="{TemplateBinding Content}" />
-                                                    </ControlTemplate>
-                                                </Button.Template>
-                                                <i:Interaction.Triggers>
-                                                    <i:EventTrigger EventName="Click">
-                                                        <i:InvokeCommandAction Command="{x:Static SystemCommands.ShowSystemMenuCommand}" />
-                                                    </i:EventTrigger>
-                                                    <i:EventTrigger EventName="MouseDoubleClick">
-                                                        <i:InvokeCommandAction Command="{x:Static SystemCommands.CloseWindowCommand}" />
-                                                    </i:EventTrigger>
-                                                </i:Interaction.Triggers>
-                                            </Button>
-                                            <ContentControl
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Content="{TemplateBinding Title}"
-                                                FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSize}}"
-                                                Foreground="White"
-                                                IsTabStop="False" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            x:Name="WindowCommandButtonsStackPanel"
-                                            Grid.Column="1"
-                                            Margin="0,-1,-1,0"
-                                            HorizontalAlignment="Right"
-                                            VerticalAlignment="Stretch"
-                                            Background="Transparent"
-                                            Orientation="Horizontal"
-                                            WindowChrome.IsHitTestVisibleInChrome="True">
-                                            <Button
-                                                x:Name="Minimize"
-                                                Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}"
-                                                ContentTemplate="{StaticResource MinimizeWhite}"
-                                                IsTabStop="False"
-                                                Style="{StaticResource CaptionButtonStyle}"
-                                                ToolTip="Minimize"
-                                                WindowChrome.IsHitTestVisibleInChrome="True" />
-                                            <Grid Margin="1,0,1,0">
-                                                <Button
-                                                    x:Name="Restore"
-                                                    Command="{Binding Source={x:Static SystemCommands.RestoreWindowCommand}}"
-                                                    ContentTemplate="{StaticResource RestoreWhite}"
-                                                    IsTabStop="False"
-                                                    Style="{StaticResource CaptionButtonStyle}"
-                                                    ToolTip="Restore"
-                                                    Visibility="Collapsed"
-                                                    WindowChrome.IsHitTestVisibleInChrome="True" />
-                                                <Button
-                                                    x:Name="Maximize"
-                                                    Command="{Binding Source={x:Static SystemCommands.MaximizeWindowCommand}}"
-                                                    ContentTemplate="{StaticResource MaximizeWhite}"
-                                                    IsTabStop="False"
-                                                    Style="{StaticResource CaptionButtonStyle}"
-                                                    ToolTip="Maximize"
-                                                    WindowChrome.IsHitTestVisibleInChrome="True" />
-                                            </Grid>
-                                            <Button
-                                                x:Name="Close"
-                                                Background="Red"
-                                                Command="{Binding Source={x:Static SystemCommands.CloseWindowCommand}}"
-                                                ContentTemplate="{StaticResource CloseWhite}"
-                                                IsTabStop="False"
-                                                Style="{StaticResource CaptionButtonStyle}"
-                                                ToolTip="Close"
-                                                WindowChrome.IsHitTestVisibleInChrome="True" />
-                                        </StackPanel>
-                                    </Grid>
-                                    <AdornerDecorator Grid.Row="1" KeyboardNavigation.IsTabStop="False">
-                                        <ContentPresenter
-                                            x:Name="MainContentPresenter"
-                                            Content="{TemplateBinding Content}"
-                                            KeyboardNavigation.TabNavigation="Cycle" />
-                                    </AdornerDecorator>
-                                    <ResizeGrip
-                                        x:Name="ResizeGrip"
-                                        Grid.Row="1"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom"
-                                        IsTabStop="False"
-                                        Visibility="Hidden"
-                                        WindowChrome.ResizeGripDirection="BottomRight" />
-                                </Grid>
-                            </Border>
-
-
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsActive" Value="False">
-                                    <Setter Property="BorderBrush" Value="#FF6F7785" />
-                                </Trigger>
-                                <Trigger Property="WindowState" Value="Maximized">
-                                    <Setter TargetName="Maximize" Property="Visibility" Value="Collapsed" />
-                                    <Setter TargetName="Restore" Property="Visibility" Value="Visible" />
-                                    <Setter TargetName="LayoutRoot" Property="Margin" Value="7" />
-                                </Trigger>
-                                <Trigger Property="WindowState" Value="Normal">
-                                    <Setter TargetName="Maximize" Property="Visibility" Value="Visible" />
-                                    <Setter TargetName="Restore" Property="Visibility" Value="Collapsed" />
-                                </Trigger>
-                                <Trigger Property="ResizeMode" Value="NoResize">
-                                    <Setter TargetName="Minimize" Property="Visibility" Value="Collapsed" />
-                                    <Setter TargetName="Maximize" Property="Visibility" Value="Collapsed" />
-                                    <Setter TargetName="Restore" Property="Visibility" Value="Collapsed" />
-                                </Trigger>
-
-                                <MultiTrigger>
-                                    <MultiTrigger.Conditions>
-                                        <Condition Property="ResizeMode" Value="CanResizeWithGrip" />
-                                        <Condition Property="WindowState" Value="Normal" />
-                                    </MultiTrigger.Conditions>
-                                    <Setter TargetName="ResizeGrip" Property="Visibility" Value="Visible" />
-                                </MultiTrigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
             </Style>-->
+
+
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

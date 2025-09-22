@@ -78,15 +78,16 @@
                     FontSize="{StaticResource MediumFontSize}"
                     Foreground="{StaticResource PrimaryBrush}"
                     IsReadOnly="True"
-                    Style="{StaticResource TextBoxExtend}" />
+                    Style="{StaticResource TextBoxExtend}"
+                    Text="{Binding Prediction, StringFormat={}{0:F2}}" />
                 <Button
                     Name="btnPredictMax"
-                    Click="btnPredictMax_Click"
+                    Command="{Binding PredictMaxCommand}"
                     Content="最大"
                     Style="{StaticResource ButtonDefault}" />
                 <Button
                     Name="btnPredictMini"
-                    Click="btnPredictMini_Click"
+                    Command="{Binding PredictMinCommand}"
                     Content="最小"
                     Style="{StaticResource ButtonDefault}" />
             </hc:UniformSpacingPanel>

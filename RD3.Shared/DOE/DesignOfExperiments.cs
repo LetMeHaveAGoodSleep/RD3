@@ -95,7 +95,7 @@ namespace RD3.Shared
                 for (int col = 0; col < matrix.ColumnCount; col++)
                 {
                     // 获取当前位置的水平索引（转换为整数）
-                    int levelIndex = (int)matrix[row, col];
+                    int levelIndex = (int)matrix[row, col] < 0 ? 0 : 1;
                     // 映射到实际水平值
                     result[row, col] = list[col][levelIndex];
                 }
@@ -702,11 +702,35 @@ namespace RD3.Shared
         {
             // 1. 解析生成器字符串，提取因子项（去除空字符串）
             // 使用正则分割处理包含+-符号的项，例如将"a b -ab"分割为["a", "b", "ab"]
-            var splitPattern = new Regex(@"\-?\s?\+?");
-            var terms = splitPattern.Split(gen)
-                                   .Where(item => !string.IsNullOrWhiteSpace(item))
-                                   .Select(item => item.Trim())
-                                   .ToList();
+            if (string.IsNullOrWhiteSpace(gen))
+                throw new ArgumentException("生成器字符串不能为空", nameof(gen));
+
+            // 1. 解析生成器字符串，提取因子项和符号
+            var splitBySpace = gen.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var terms = new List<string>();
+            var signs = new List<int>(); // 1为正，-1为负
+
+            foreach (var item in splitBySpace)
+            {
+                var trimmed = item.Trim();
+                if (string.IsNullOrEmpty(trimmed)) continue;
+
+                if (trimmed.StartsWith("-"))
+                {
+                    terms.Add(trimmed.Substring(1));
+                    signs.Add(-1);
+                }
+                else if (trimmed.StartsWith("+"))
+                {
+                    terms.Add(trimmed.Substring(1));
+                    signs.Add(1);
+                }
+                else
+                {
+                    terms.Add(trimmed);
+                    signs.Add(1);
+                }
+            }
 
             if (terms.Count == 0)
             {
@@ -723,9 +747,6 @@ namespace RD3.Shared
                                                 .Where(x => x.len != 1)
                                                 .Select(x => x.idx)
                                                 .ToList();
-
-            // 3. 解析运算符（+/-）的位置
-            var splitBySpace = gen.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             var positiveIndices = Grep(splitBySpace, "+"); // 包含"+"的项索引
             var negativeIndices = Grep(splitBySpace, "-"); // 包含"-"的项索引
 

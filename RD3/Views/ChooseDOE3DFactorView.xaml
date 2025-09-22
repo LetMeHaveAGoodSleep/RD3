@@ -1,0 +1,109 @@
+﻿<UserControl
+    x:Class="RD3.Views.ChooseDOE3DFactorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    Width="auto"
+    Height="300"
+    d:DataContext="{d:DesignInstance Type=viewmodels:ChooseDOE3DFactorViewModel}"
+    mc:Ignorable="d">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterScreen" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="True" />
+            <Setter Property="AllowsTransparency" Value="False" />
+            <Setter Property="WindowStyle" Value="ThreeDBorderWindow" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Border
+                BorderBrush="LightGray"
+                BorderThickness="2"
+                CornerRadius="4">
+                <DockPanel LastChildFill="True">
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        DockPanel.Dock="Top"
+                        Text="X轴:" />
+                    <ListBox
+                        Width="130"
+                        ItemsSource="{Binding DoeColunms}"
+                        SelectedItem="{Binding XParameter}"
+                        SelectionMode="Single"
+                        Style="{StaticResource MaterialDesignNavigationPrimaryListBox}" />
+                </DockPanel>
+            </Border>
+            <Border Style="{StaticResource BorderVerticallySplitter}" />
+            <Border
+                BorderBrush="LightGray"
+                BorderThickness="2"
+                CornerRadius="4">
+                <DockPanel LastChildFill="True">
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        DockPanel.Dock="Top"
+                        Text="Y轴:" />
+                    <ListBox
+                        Width="130"
+                        ItemsSource="{Binding DoeColunms}"
+                        SelectedItem="{Binding YParameter}"
+                        SelectionMode="Single"
+                        Style="{StaticResource MaterialDesignNavigationPrimaryListBox}" />
+                </DockPanel>
+            </Border>
+            <Border Style="{StaticResource BorderVerticallySplitter}" />
+            <Border
+                BorderBrush="LightGray"
+                BorderThickness="2"
+                CornerRadius="4">
+                <DockPanel LastChildFill="True">
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        DockPanel.Dock="Top"
+                        Text="Z轴:" />
+                    <ListBox
+                        Width="130"
+                        ItemsSource="{Binding DoeColunms}"
+                        SelectedItem="{Binding ZParameter}"
+                        SelectionMode="Single"
+                        Style="{StaticResource MaterialDesignNavigationPrimaryListBox}" />
+                </DockPanel>
+            </Border>
+        </StackPanel>
+        <DockPanel Grid.Row="2" LastChildFill="False">
+            <hc:UniformSpacingPanel DockPanel.Dock="Right" Spacing="10">
+                <Button
+                    Width="80"
+                    Command="{Binding OKCommand}"
+                    Content="确定"
+                    Style="{StaticResource ButtonPrimary}" />
+                <Button
+                    Width="80"
+                    BorderBrush="{StaticResource PrimaryBrush}"
+                    Command="{Binding CancelCommand}"
+                    Content="取消"
+                    Foreground="{StaticResource PrimaryBrush}" />
+            </hc:UniformSpacingPanel>
+        </DockPanel>
+    </Grid>
+</UserControl>

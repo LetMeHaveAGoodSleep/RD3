@@ -1,7 +1,13 @@
-﻿using Prism.Ioc;
+﻿using DryIoc;
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
+using Prism.Commands;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using RD3.Common;
+using RD3.Shared;
+using RD3.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using static RD3.Shared.QuadraticSurfaceLM;
 
 namespace RD3.ViewModels
 {
@@ -30,6 +37,38 @@ namespace RD3.ViewModels
             get => _designCol;
             set => SetProperty(ref _designCol, value);
         }
+
+        private double _prediction;
+        public double Prediction
+        {
+            get { return _prediction; }
+            set
+            {
+                SetProperty(ref _prediction, value);
+            }
+        }
+
+        public List<string> Terms = [];
+
+        public Vector<double> FitCoefficient = Vector<double>.Build.Dense(1, 0.0);
+
+        public DelegateCommand PredictMaxCommand => new(() =>
+        {
+            for (int i = 0; i < Factor2DParams.Count; i++)
+            {
+                Factor2DParams[i].CurrentValue = Factor2DParams[i].Maximum;
+            }
+            //Prediction = maxValue;
+        });
+
+        public DelegateCommand PredictMinCommand => new(() =>
+        {
+            for (int i = 0; i < Factor2DParams.Count; i++)
+            {
+                Factor2DParams[i].CurrentValue = Factor2DParams[i].Minimum;
+            }
+            //Prediction = minValue;
+        });
 
         public DOEAnalyse2DViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
@@ -126,7 +165,5 @@ namespace RD3.ViewModels
             get => _frequency;
             set => SetProperty(ref _frequency, value);
         }
-
-        
     }
 }

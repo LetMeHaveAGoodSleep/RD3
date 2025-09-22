@@ -210,7 +210,6 @@ namespace RD3.ViewModels
                     {
                         try
                         {
-
                             if (lastDeviceParameter != null)
                             {
                                 if (!lastDeviceParameter.InExperimenting && CurrentDeviceParameter.InExperimenting)

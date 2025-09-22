@@ -64,14 +64,14 @@ namespace RD3.ViewModels
             set { SetProperty(ref _iterations, value); }
         }
 
-        private int _lowCenterPoint = 2;
+        private int _lowCenterPoint = 3;
         public int LowCenterPoint
         {
             get => _lowCenterPoint;
             set { SetProperty(ref _lowCenterPoint, value); }
         }
 
-        private int _highCenterPoint = 2;
+        private int _highCenterPoint = 3;
         public int HighCenterPoint
         {
             get => _highCenterPoint;
@@ -85,7 +85,7 @@ namespace RD3.ViewModels
             set { SetProperty(ref _alpha, value); }
         }
 
-        private DOEFace _face = DOEFace.Circumscribed;
+        private DOEFace _face = DOEFace.Faced;
         public DOEFace SelectedFace
         {
             get => _face;
@@ -204,28 +204,70 @@ namespace RD3.ViewModels
             switch (SelectedDesignType)
             {
                 case DOEDesignType.FullFactorial:
-                    result = DesignOfExperiments.BuildFullFactDesign(DesignCol);
-                    MatrixConvertToDataTable(result);
+                    try 
+                    {
+                        result = DesignOfExperiments.BuildFullFactDesign(DesignCol);
+                        MatrixConvertToDataTable(result);
+                    } 
+                    catch (Exception ex) 
+                    { 
+                        HandyControl.Controls.MessageBox.Warning(ex.Message, "温馨提示"); 
+                    }
                     break;
                 case DOEDesignType.TwoLevelFractionalFactorial:
-                    result = DesignOfExperiments.BuildFracFactDesign(DesignCol, Generators);
-                    MatrixConvertToDataTable(result);
+                    try 
+                    {
+                        result = DesignOfExperiments.BuildFracFactDesign(DesignCol, Generators);
+                        MatrixConvertToDataTable(result);
+                    } 
+                    catch (Exception ex) 
+                    { 
+                        HandyControl.Controls.MessageBox.Warning(ex.Message, "温馨提示"); 
+                    }
                     break;
                 case DOEDesignType.Plackett_Burman:
-                    result = DesignOfExperiments.BuildPlackettBurmanDesign(DesignCol);
-                    MatrixConvertToDataTable(result);
+                    try 
+                    {
+                        result = DesignOfExperiments.BuildPlackettBurmanDesign(DesignCol);
+                        MatrixConvertToDataTable(result);
+                    } 
+                    catch (Exception ex) 
+                    { 
+                        HandyControl.Controls.MessageBox.Warning(ex.Message, "温馨提示");
+                    }
                     break;
                 case DOEDesignType.Box_Behnken:
-                    result = DesignOfExperiments.BuildBoxBehnkenDesign(DesignCol, LowCenterPoint);
-                    MatrixConvertToDataTable(result);
+                    try 
+                    {
+                        result = DesignOfExperiments.BuildBoxBehnkenDesign(DesignCol, LowCenterPoint);
+                        MatrixConvertToDataTable(result);
+                    } 
+                    catch (Exception ex) 
+                    { 
+                        HandyControl.Controls.MessageBox.Warning(ex.Message, "温馨提示"); 
+                    }
                     break;
                 case DOEDesignType.CentralComposite:
-                    result = DesignOfExperiments.BuildCCDDesign(DesignCol, (LowCenterPoint, HighCenterPoint), SelectedAlpha, SelectedFace);
-                    MatrixConvertToDataTable(result);
+                    try 
+                    {
+                        result = DesignOfExperiments.BuildCCDDesign(DesignCol, (LowCenterPoint, HighCenterPoint), SelectedAlpha, SelectedFace);
+                        MatrixConvertToDataTable(result);
+                    } 
+                    catch (Exception ex) 
+                    { 
+                        HandyControl.Controls.MessageBox.Warning(ex.Message, "温馨提示"); 
+                    }
                     break;
                 case DOEDesignType.LatinHypercube:
-                    result = DesignOfExperiments.BuildLhsDesign(DesignCol, SampleNumber, SelectedDistribution, SelectedCriterion);
-                    MatrixConvertToDataTable(result);
+                    try 
+                    {
+                        result = DesignOfExperiments.BuildLhsDesign(DesignCol, SampleNumber, SelectedDistribution, SelectedCriterion);
+                        MatrixConvertToDataTable(result);
+                    } 
+                    catch (Exception ex) 
+                    { 
+                        HandyControl.Controls.MessageBox.Warning(ex.Message, "温馨提示"); 
+                    }
                     break;
 
             }

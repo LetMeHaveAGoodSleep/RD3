@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -122,36 +123,19 @@ namespace RD3.ViewModels
             {
                 if (callback.Result != ButtonResult.OK)
                 {
-                    DoeColunms = [];
-                    ParameterPairs = [];
                     return;
                 }
                 DesignCol = callback.Parameters.GetValue<ObservableCollection<OrthogonalParam>>(nameof(DesignCol));
                 DataDesign = callback.Parameters.GetValue<DataTable>("DesignResult");
 
-                var copyData = DataDesign.Clone();
-                copyData.Columns.Add("Response");
-                copyData.Columns.Add("Reactor");
-                copyData.Rows.Clear();
-                foreach (DataRow item in DataDesign.Rows)
+                var copyTable = DataDesign.Copy();
+                copyTable.Columns.Add("Response");
+                copyTable.Columns.Add("Reactor");
+                foreach (DataColumn item in copyTable.Columns)
                 {
-                    DataRow dataRow = copyData.NewRow();
-                    foreach (DataColumn item1 in copyData.Columns)
-                    {
-                        foreach (DataColumn column in DataDesign.Columns)
-                        {
-                            if (column.ColumnName == item1.ColumnName)
-                            {
-                                dataRow[item1] = item[column];
-                                break;
-                            }
-                        }
-                        item1.ReadOnly = true;
-                    }
-                    copyData.Rows.Add(dataRow);
+                    item.ReadOnly = item.ColumnName == "Response" ? false : true;
                 }
-                DataResult = copyData;
-
+                DataResult = copyTable.Copy();
                 DoeColunms.Clear();
                 DoeColunms.AddRange(SelectedFactors.Select(f => f.ToString()).ToList());
                 DoeColunms.Add("Response");
@@ -240,35 +224,23 @@ namespace RD3.ViewModels
                         DataDesign = JsonConvert.DeserializeObject<DataTable>(mergedArray[0].ToString());
                         ParameterPairs = JsonConvert.DeserializeObject<ObservableCollection<DOEParameterPair>>(mergedArray[1].ToString());
                     }
-                    var copyData = DataDesign.Clone();
-                    copyData.Columns.Add("Response",typeof(double));
-                    copyData.Columns.Add("Reactor");
-                    copyData.Rows.Clear();
-                    foreach (DataRow item in DataDesign.Rows)
+                    var copyTable = DataDesign.Copy();
+                    copyTable.Columns.Add("Response");
+                    copyTable.Columns.Add("Reactor");
+                    foreach (DataColumn item in copyTable.Columns)
                     {
-                        DataRow dataRow = copyData.NewRow();
-                        foreach (DataColumn item1 in copyData.Columns)
-                        {
-                            foreach (DataColumn column in DataDesign.Columns)
-                            {
-                                if (column.ColumnName == item1.ColumnName)
-                                {
-                                    dataRow[item1] = item[column];
-                                    break;
-                                }
-                            }
-                            item1.ReadOnly = true;
-                        }
-                        copyData.Rows.Add(dataRow);
+                        item.ReadOnly = item.ColumnName == "Response" ? false : true;
                     }
-                    DataResult = copyData;
+                    DataResult = copyTable.Copy();
                     DoeColunms.Clear();
                     SelectedFactors.Clear();
                     foreach (DOEParameterPair item in ParameterPairs)
                     {
+                        if (item.IsResponse) continue;
                         DoeColunms.Add(item.Param1);
                         SelectedFactors.Add((Factor)Enum.Parse(typeof(Factor), item.Param2));
                     }
+                    DesignEnable = SelectedFactors.Count > 0 ? true : false;
                 }
                 catch (Exception ex)
                 {
@@ -287,10 +259,7 @@ namespace RD3.ViewModels
             {
                 if (callback.Result != ButtonResult.OK) return;
                 SelectedDevices = callback.Parameters.GetValue<List<Device>>("Reactors");
-                foreach (DataColumn column in DataResult.Columns) 
-                {
-                    column.ReadOnly = false;
-                }
+                DataResult.Columns["Reactor"].ReadOnly = false;
                 for (int i = 0; i < DataResult.Rows.Count; i++)
                 {
                     DataRow row = DataResult.Rows[i];
@@ -303,11 +272,23 @@ namespace RD3.ViewModels
                         row["Reactor"] = SelectedDevices[i].Name;
                     }
                 }
-                foreach (DataColumn column in DataResult.Columns)
-                {
-                    column.ReadOnly = true;
-                }
+                DataResult.Columns["Reactor"].ReadOnly = true;
             });
+        });
+
+        public DelegateCommand ControlReactorCommand => new(() => 
+        {
+            List<string> list = [];
+            foreach (DataRow row in DataResult.Rows)
+            {
+                string reactor=row["Reactor"]?.ToString();
+                if (!list.Contains(reactor))
+                {
+                    list.Add(row["Reactor"]?.ToString());
+                    SetCommand(row);
+                }
+            }
+            HandyControl.Controls.MessageBox.Info($"反应器[{string.Join(",", list)}]已成功下发控制指令", "温馨提示");
         });
 
         public DelegateCommand GetResultCommand => new(async () =>
@@ -333,32 +314,92 @@ namespace RD3.ViewModels
                       sqlList.Add(sql);
                   }
                   DataTable dataTable = SQLiteHelper.GetDatatableSync(sqlList);
-                  DataResult.Columns["Response"].ReadOnly = false;
+                  string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Response.txt";
+                  var resultList = File.ReadAllLines(filePath)
+                    .Select(line => line.Trim())
+                    .Where(line => !string.IsNullOrEmpty(line))
+                    .Select(line => double.TryParse(line, out double num) ? num : 0)
+                    .Where(num => !double.IsNaN(num))
+                    .ToList();
                   for (int i = 0; i < DataResult.Rows.Count; i++)
                   {
                       if (i > dataTable.Rows.Count - 1)
                       {
-                          DataResult.Rows[i]["Response"] = RandomNumberUtil.GetRandomDouble(10, 100);
+                          DataResult.Rows[i]["Response"] = resultList[i];
                       }
                       else
                       {
                           DataResult.Rows[i]["Response"] = dataTable.Rows[i][resPair.Param2];
                       }
                   }
-                  DataResult.Columns["Response"].ReadOnly = true;
+                  //DataResult.Columns["Response"].ReadOnly = true;
               });
 
         });
 
         public DelegateCommand AnalyseCommand => new(() =>
         {
+            //string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Response.txt";
+            //var lines = DataResult.AsEnumerable()
+            //                    .Select(row => row.Field<object>("Response")?.ToString() ?? string.Empty);
+
+            //// 一次性写入所有行
+            //File.WriteAllLines(filePath, lines, Encoding.UTF8); // 同样建议指定编码
             DialogHostService.ShowOnce(nameof(ChooseDOEAnalyseMethodView), callback => 
             {
                 if (callback.Result != ButtonResult.OK) return;
                 bool is3DView = callback.Parameters.GetValue<bool>("Is3DView");
                 if (is3DView)
                 {
+                    DialogParameters keyValuePairs = new DialogParameters()
+                    {
+                        {nameof(DoeColunms),DoeColunms },
+                    };
+                    DialogHostService.ShowOnce(nameof(ChooseDOE3DFactorView), keyValuePairs, callback =>
+                    {
+                        if (callback.Result != ButtonResult.OK) return;
+                        var axesParams = callback.Parameters.GetValue<List<string>>("AxesParams");
+                        var xFactor = DesignCol.FindFirst(t => t.Name == axesParams[0]);
+                        var yFactor = DesignCol.FindFirst(t => t.Name == axesParams[1]);
 
+                        Factor2DParam[] factor2DParams = new Factor2DParam[2];
+                        Factor2DParam xParam = new Factor2DParam()
+                        {
+                            FactorName = xFactor.Name,
+                            Minimum = xFactor.Low,
+                            Maximum = xFactor.High,
+                            CurrentValue = xFactor.Low,
+                            Frequency = (xFactor.High - xFactor.Low) / 100
+                        };
+                        Factor2DParam yParam = new Factor2DParam()
+                        {
+                            FactorName = yFactor.Name,
+                            Minimum = yFactor.Low,
+                            Maximum = yFactor.High,
+                            CurrentValue = yFactor.Low,
+                            Frequency = (yFactor.High - yFactor.Low) / 100
+                        };
+                        factor2DParams[0] = xParam;
+                        factor2DParams[1] = yParam;
+                        DataTable dataTable = DataResult.Copy();
+                        for (int i = dataTable.Columns.Count - 1; i >= 0; i--)
+                        {
+                            var col = dataTable.Columns[i];
+                            if (col.ColumnName != "Response" && col.ColumnName != xParam.FactorName && col.ColumnName != yParam.FactorName)
+                            {
+                                dataTable.Columns.Remove(col);
+                            }
+                        }
+                        DialogParameters keyValuePairs = new DialogParameters()
+                        {
+                            {"Result",dataTable },
+                            {nameof(Factor2DParam),factor2DParams }
+                        };
+                        DialogHostService.ShowOnce(nameof(DOEAnalyse3DView), keyValuePairs, callback =>
+                        {
+
+                        });
+                    });
                 }
                 else
                 {
@@ -396,6 +437,61 @@ namespace RD3.ViewModels
         public void OnDialogOpened(IDialogParameters parameters)
         {
 
+        }
+
+        private void SetCommand(DataRow dataRow)
+        {
+            var reactor = dataRow["Reactor"]?.ToString();
+            var deviceParameter = AnalysisSolution.GetInstance().ReactorCol.FindFirst(t => t.ReactorName == reactor);
+            if (deviceParameter == null)
+            {
+                return;
+            }
+            foreach (var item in DesignCol)
+            {
+                Enum.TryParse(item.Name, true, out Factor factor);
+                switch (factor)
+                {
+                    //写对应的控制代码
+                    case Factor.DO:
+                        deviceParameter.DOParam.DO_PV = Convert.ToSingle(dataRow[factor.ToString()]);
+                        deviceParameter.DOParam.IsControling = true;
+                        break;
+                    case Factor.pH:
+                        deviceParameter.PHParam.PH_PV = Convert.ToSingle(dataRow[factor.ToString()]);
+                        deviceParameter.PHParam.IsControling = true;
+                        break;
+                    case Factor.Temp:
+                        deviceParameter.TempParam.Temp_PV = Convert.ToSingle(dataRow[factor.ToString()]);
+                        deviceParameter.TempParam.IsControling = true;
+                        break;
+                    case Factor.Agit:
+                        deviceParameter.AgitParam.Agit_PV = Convert.ToInt32(dataRow[factor.ToString()]);
+                        deviceParameter.AgitParam.IsControling = true;
+                        break;
+                    case Factor.Pump1FlowRate:
+                        var pumpInfo = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.DeviceID == deviceParameter.Name && t.PumpIndex == 1);
+                        if (pumpInfo == null) return;
+                        try
+                        {
+                            pumpInfo.FlowRate_SP = Math.Clamp(Convert.ToSingle(dataRow[factor.ToString()]), 0, Const.MaxPumpFlowRate);
+                            var param = new PeristalticPumpControlParam()
+                            {
+                                PumpNo = pumpInfo.PumpIndex,
+                                Pump = pumpInfo.Pump,
+                                ControlMode = PumpControlMode.Direct,
+                                FlowSpeed = pumpInfo.FlowRate_SP,
+                                FlowCapacity = int.MaxValue
+                            };
+                            InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(pumpInfo.DeviceID, param);
+                        }
+                        catch (Exception ex)
+                        {
+                            LogHelper.Debug($"泵{pumpInfo.PumpIndex}设置流速出错" + ex.Message);
+                        }
+                        break;
+                }
+            }
         }
     }
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Markup;
 using System.Windows.Media;
+using XZ.SQLite;
 
 namespace RD3.Common
 {
@@ -24,6 +25,10 @@ namespace RD3.Common
         public static string LanguageName { get; set; } = Const.CHNLanguage;
 
         public static Batch CurrentBatch { get; set; }
+
+        public static List<RD3Batch> SelectedBatches { get; set; }
+
+        public static TimeInterval BatchTimeInterval { get; set; } = TimeInterval.Second;
 
         public static DateTime ResgistrationTime { get; set; }
 

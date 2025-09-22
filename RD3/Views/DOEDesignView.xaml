@@ -2,6 +2,7 @@
     x:Class="RD3.Views.DOEDesignView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:RD3.Controls;assembly=RD3.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
@@ -41,6 +42,7 @@
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Opacity" Value="1" />
             <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="FontFamily" Value="Noto Sans SC" />
         </Style>
     </prism:Dialog.WindowStyle>
     <UserControl.Resources>
@@ -176,7 +178,7 @@
                                     <TextBox
                                         Grid.Column="1"
                                         Width="80"
-                                        hc:InfoElement.Title=" "
+                                        hc:InfoElement.Title="星点"
                                         Style="{StaticResource TextBoxExtend}"
                                         Text="{Binding HighCenterPoint}"
                                         Visibility="{Binding SelectedDesignType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='CentralComposite'}" />
@@ -211,6 +213,7 @@
                         </DockPanel>
                         <DockPanel LastChildFill="False">
                             <hc:UniformSpacingPanel
+                                Margin="0,5,0,0"
                                 DockPanel.Dock="Right"
                                 Orientation="Horizontal"
                                 Spacing="5">
@@ -244,7 +247,6 @@
                                     ToolTip="Cancel" />
                             </hc:UniformSpacingPanel>
                         </DockPanel>
-
                     </hc:UniformSpacingPanel>
                     <DataGrid
                         Name="DataGridDesign"
@@ -317,20 +319,10 @@
             Grid.Column="2"
             BorderBrush="{DynamicResource MaterialDesignDarkSeparatorBackground}"
             BorderThickness="2">
-            <helix:HelixViewport3D
-                Name="helixViewport3D"
-                ShowViewCube="True"
-                ZoomExtentsWhenLoaded="True">
-                <helix:HelixViewport3D.Camera>
-                    <PerspectiveCamera
-                        FieldOfView="45"
-                        LookDirection="0, -18, -13"
-                        NearPlaneDistance="0.1"
-                        Position="3, 22, 16"
-                        UpDirection="0, 0, 1" />
-                </helix:HelixViewport3D.Camera>
-                <helix:DefaultLights />
-            </helix:HelixViewport3D>
+            <controls:HelixSphereView
+                x:Name="helixSphereView"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch" />
         </Border>
     </Grid>
 </UserControl>

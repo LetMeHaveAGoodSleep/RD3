@@ -23,6 +23,17 @@ namespace RD3.ViewModels
 {
     public class CompareBatchViewModel : BaseViewModel, IDialogAware
     {
+        private TimeInterval _selectedTimeInterval = TimeInterval.Second;
+        public TimeInterval SelectedTimeInterval
+        {
+            get=> _selectedTimeInterval;
+            set 
+            {
+                SetProperty(ref _selectedTimeInterval, value);
+                AppSession.BatchTimeInterval = value;
+            }
+        }
+
         public List<RD3Batch> batches;
 
         private readonly IDialogService dialogService;
@@ -65,13 +76,43 @@ namespace RD3.ViewModels
 
         public void OnDialogClosed()
         {
-
+            AppSession.SelectedBatches = [];
+            AppSession.BatchTimeInterval = TimeInterval.Second;
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
             batches = parameters.GetValue<List<RD3Batch>>("Batches");
-            //aggregator.SendMessage("", nameof(CompareBatchViewModel), batches);
+            double maxDay = 0;
+            foreach (RD3Batch batch in batches)
+            {
+                try
+                {
+                    
+                    string createTime = SQLiteHelper.GetValue(RD3SQLHelper.BatchTable, "createTime", $"ID ={batch.ID}")?.ToString();
+                    string endDateTime = SQLiteHelper.GetValue(RD3SQLHelper.BatchTable, "endDateTime", $"ID ={batch.ID}")?.ToString();
+                    DateTime.TryParse(createTime, out var time1);
+                    if (!DateTime.TryParse(endDateTime, out var time2))
+                    {
+                        time2 = DateTime.Now;
+                    }
+                    var totalDay = (time2 - time1).TotalDays;
+                    maxDay = totalDay > maxDay ? totalDay : maxDay;
+                }
+                catch (Exception ex)
+                {
+                    continue;
+                }
+            }
+            if (maxDay > 100)
+            {
+                SelectedTimeInterval = TimeInterval.Hour;
+            }
+            else if (maxDay > 1)
+            {
+                SelectedTimeInterval = TimeInterval.Minute;
+            }
+            AppSession.SelectedBatches = batches;
         }
     }
 }

@@ -55,5 +55,21 @@ namespace RD3.Views
             }
             ((DOEMainViewModel)DataContext).DesignEnable = true;
         }
+
+        private void dataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            // 通过 DataTable 索引器绑定，TwoWay + 实时写回
+            if (e.Column is DataGridTextColumn textCol)
+            {
+                textCol.Binding = new Binding($"[{e.PropertyName}]")
+                {
+                    Mode = e.Column.IsReadOnly ? BindingMode.OneWay : BindingMode.TwoWay,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                    ValidatesOnDataErrors = true,
+                    NotifyOnSourceUpdated = true
+                };
+                textCol.IsReadOnly = e.Column.IsReadOnly;
+            }
+        }
     }
 }

@@ -8,6 +8,20 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
+    public enum TimeInterval
+    {
+        [Description("秒")]
+        Second = 1,
+
+        [Description("分钟")]
+        Minute = 60, // 1分钟 = 60秒
+
+        [Description("小时")]
+        Hour = 3600, // 1小时 = 60分钟 = 3600秒
+
+        [Description("天")]
+        Day = 86400 // 1天 = 24小时 = 86400秒
+    }
     public enum KeyBoardType
     {
         [Description("全键盘")]
@@ -417,18 +431,6 @@ namespace RD3.Shared
         Pump5FlowRate,
         [Description("泵6流速（ml/h）")]
         Pump6FlowRate,
-        [Description("泵1流量（mL）")]
-        Pump1Flow,
-        [Description("泵2流量（mL）")]
-        Pump2Flow,
-        [Description("泵3流量（mL）")]
-        Pump3Flow,
-        [Description("泵4流量（mL）")]
-        Pump4Flow,
-        [Description("泵5流量（mL）")]
-        Pump5Flow,
-        [Description("泵6流量（mL）")]
-        Pump6Flow,
         [Description("泵1总量（mL）")]
         Pump1FlowCapacity,
         [Description("泵2总量（mL）")]
@@ -461,6 +463,12 @@ namespace RD3.Shared
         KLA,
         [Description("EPC压力")]
         EPCPressure,
+        [Description("X传感器")]
+        XSensor,
+        [Description("自定义1")]
+        Diy1,
+        [Description("自定义2")]
+        Diy2,
     }
 
     public enum DOEDesignType
