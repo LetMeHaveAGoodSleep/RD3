@@ -87,37 +87,6 @@ namespace RD3.Views
             InitializeComponent();
 
             aggregator = eventAggregator;
-
-            bool isSelectd = true;
-
-            foreach (var item in InstrumentSolution.GetInstance().Instruments)
-            {
-                if (!AppSession.CurrentUser.DevieceIDs.Contains(item.id)) continue;
-
-                TreeViewItem treeViewItem = new TreeViewItem();
-                treeViewItem.IsSelected = isSelectd;
-                treeViewItem.Tag = item.id;
-                treeViewItem.Header = item.id;
-                TreeReactor.Items.Add(treeViewItem);
-                if (isSelectd)
-                {
-                    isSelectd = false;
-                }
-            }
-        }
-
-        private void TreeReactor_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            TreeView treeView = sender as TreeView;
-            if (treeView.SelectedItem != null)
-            {
-                TreeViewItem item = treeView.SelectedItem as TreeViewItem;
-                ((CalibrateViewModel)DataContext).SelectedReactor = item.Tag?.ToString();
-            }
-            else
-            {
-                ((CalibrateViewModel)DataContext).SelectedReactor = string.Empty;
-            }
         }
     }
 }

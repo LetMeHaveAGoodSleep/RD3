@@ -60,15 +60,26 @@
         </Style>
     </prism:Dialog.WindowStyle>
     <DockPanel LastChildFill="True">
-        <TreeView
-            Name="TreeReactor"
-            Width="120"
-            Margin="5"
-            DockPanel.Dock="Left"
-            ScrollViewer.HorizontalScrollBarVisibility="Visible"
-            ScrollViewer.VerticalScrollBarVisibility="Visible"
-            SelectedItemChanged="TreeReactor_SelectedItemChanged"
-            Style="{StaticResource TreeViewBaseStyle}" />
+        <Border
+            BorderBrush="{StaticResource BorderBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource DefaultCornerRadius}"
+            DockPanel.Dock="Left">
+            <ListBox
+                Name="ListReactor"
+                Width="150"
+                FontSize="{StaticResource SubHeadFontSize}"
+                ItemsSource="{Binding ReactorCol}"
+                SelectedItem="{Binding SelectedReactor}"
+                SelectionMode="Single"
+                Style="{StaticResource MaterialDesignNavigationPrimaryListBox}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
         <hc:UniformSpacingPanel
             Margin="5"
             Orientation="Vertical"
@@ -307,6 +318,17 @@
                             IsEnabled="False"
                             Style="{StaticResource TextBoxExtend}"
                             Text="{Binding StatusCode}" />
+                        <TextBox
+                            Width="160"
+                            hc:InfoElement.Title="{ex:Language Key='状态描述'}"
+                            hc:InfoElement.TitlePlacement="Top"
+                            BorderBrush="{DynamicResource PrimaryBrush}"
+                            Foreground="Red"
+                            IsEnabled="False"
+                            Style="{StaticResource TextBoxExtend}"
+                            Text="{Binding StatusDescription}"
+                            ToolTip="{Binding StatusDescription}"
+                            Visibility="{Binding SensorType, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='pH,DO'}" />
                     </hc:UniformSpacingPanel>
                 </hc:UniformSpacingPanel>
             </GroupBox>
