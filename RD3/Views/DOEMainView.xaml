@@ -74,6 +74,15 @@
                     Height="30"
                     HorizontalAlignment="Left"
                     hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                    hc:IconElement.Geometry="{StaticResource GeometryEdit}"
+                    Background="Transparent"
+                    BorderThickness="1"
+                    Command="{Binding EditFactorCommand}"
+                    Content="{ex:Language Key='编辑因子'}" />
+                <Button
+                    Height="30"
+                    HorizontalAlignment="Left"
+                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                     hc:IconElement.Geometry="{StaticResource GeometryChoose}"
                     Background="Transparent"
                     BorderThickness="1"

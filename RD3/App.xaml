@@ -132,20 +132,7 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-
             <FontFamily x:Key="IconFont">pack://application:,,,/Themes/#iconfont</FontFamily>
-
-            <!--<Style TargetType="TextBlock">
-                <Setter Property="Text" Value="{Binding Path=Text, RelativeSource={RelativeSource Self}, Converter={StaticResource DynamicFormatConverter}}" />
-            </Style>-->
-
-            <!--  全局TextBox样式  -->
-            <!--
-            <Style TargetType="TextBox">
-                <Setter Property="Text" Value="{Binding Path=Text, RelativeSource={RelativeSource Self}, Converter={StaticResource DynamicFormatConverter}, UpdateSourceTrigger=LostFocus}" />
-            </Style>-->
-
-
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>

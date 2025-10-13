@@ -1819,5 +1819,54 @@
 				</commandExtend>
 			</commandExtends>
 		</commandDesc>
+		<commandDesc>
+			<id>RWPT100LocationCheckSetting</id>
+			<name>读写PT100位置检测配置</name>
+			<commandCode>0x21</commandCode>
+			<timeOut>3000</timeOut>
+			<tryTimes>3</tryTimes>
+			<commandExtends>
+				<commandExtend>
+					<id>0x55</id>
+					<name>Read</name>
+				</commandExtend>
+				<commandExtend>
+					<id>0xee</id>
+					<name>ReadWrite</name>
+					<parameters>
+						<param>
+							<id>Enable</id>
+							<name>使能</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				<commandExtend>
+					<id>0x88</id>
+					<name>WriteResponse</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>写回应</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+				<commandExtend>
+					<id>0xff</id>
+					<name>CommunicationError</name>
+					<parameters>
+						<param>
+							<id>ResponseValue</id>
+							<name>通讯错误</name>
+							<type>byte</type>
+							<length>1</length>
+						</param>
+					</parameters>
+				</commandExtend>
+			</commandExtends>
+		</commandDesc>
     </commandDescs>
 </commandManager>

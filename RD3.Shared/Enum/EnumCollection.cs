@@ -8,6 +8,22 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
+    public enum TecControlMode
+    {
+        [Description("关闭")]
+        Close,
+        [Description("PID控制")]
+        PIDControl,
+        [Description("PWM控制")]
+        PWMControl,
+        [Description("PID参数自整定")]
+        PIDSelfTuning,
+        [Description("TEC测试")]
+        TecTest,
+        [Description("快速控制")]
+        QuickControl = 0xf1,
+    }
+
     public enum TimeInterval
     {
         [Description("秒")]
@@ -580,7 +596,9 @@ namespace RD3.Shared
 
     public enum PumpControlMode
     {
+        [Description("正转")]
         Direct = 1,
+        [Description("反转")]
         Reverse
     }
 

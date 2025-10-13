@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -653,5 +654,18 @@ namespace RD3.Shared
         {
             return;
         }
+
+        #region 0x21 读写PT100位置检测配置
+
+        public bool GetPT100LocationCheckSetting(string insID)
+        {
+            return true;
+        }
+
+        public void SetPT100LocationCheckSetting(string insID, bool isEnabled)
+        {
+            return;
+        }
+        #endregion
     }
 }

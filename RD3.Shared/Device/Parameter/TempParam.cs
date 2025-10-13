@@ -85,6 +85,14 @@ namespace RD3.Shared
             set { SetProperty(ref _isEnable, value); }
         }
 
+        private TecControlMode _tecControlMode = TecControlMode.Close;
+        public TecControlMode TecControlMode
+        {
+            get { return _tecControlMode; }
+            set { SetProperty(ref _tecControlMode, value); }
+        }
+        
+
         private bool _cooling;
         public bool Cooling
         {

@@ -49,7 +49,8 @@ namespace RD3.Shared
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
                     param.Temp_PV = recvCommand.GetSingle(ParamId_5L.RWTempParam_ReadWrite_Temp);
-                    param.IsEnable = recvCommand.GetByte(ParamId_5L.RWTempParam_ReadWrite_Enable) == 0x00 ? false : true;
+                    //param.IsEnable = recvCommand.GetByte(ParamId_5L.RWTempParam_ReadWrite_Enable) == 0x00 ? false : true;
+                    param.TecControlMode= (TecControlMode)recvCommand.GetByte(ParamId_5L.RWTempParam_ReadWrite_Enable);
                 }
             }
             catch (Exception ex)
@@ -68,7 +69,7 @@ namespace RD3.Shared
             try
             {
                 sendCommand.SetValue(ParamId_5L.RWTempParam_ReadWrite_Temp, tempParam.Temp_PV);
-                sendCommand.SetValue(ParamId_5L.RWTempParam_ReadWrite_Enable, tempParam.IsEnable == true ? 0x01 : 0x00);
+                sendCommand.SetValue(ParamId_5L.RWTempParam_ReadWrite_Enable, (byte)tempParam.TecControlMode);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {
@@ -1813,6 +1814,52 @@ namespace RD3.Shared
             try
             {
                 sendCommand.SetValue(ParamId_5L.RWMagneticBaseStatus_ReadWrite_ControlStatus, status);
+                RecvCommand recvCommand = Send(insID, sendCommand);
+                if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
+                {
+                    throw new Exception("设置失败");
+                }
+            }
+            catch (Exception ex)
+            {
+                // 获取当前方法名并记录日志
+                var methodName = new StackTrace().GetFrame(0).GetMethod().Name;
+                LogHelper.Debug($"Error in method {methodName}: {ex}");
+
+            }
+        }
+        #endregion
+
+        #region 0x21 读写PT100位置检测配置
+
+        public bool GetPT100LocationCheckSetting(string insID)
+        {
+            bool isEnabled = false;
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWPT100LocationCheckSetting, CommandExtendId.Read);
+            try
+            {
+                RecvCommand recvCommand = Send(insID, sendCommand);
+                if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
+                {
+                    isEnabled = recvCommand.GetByte(ParamId_5L.RWPT100LocationCheckSetting_ReadWrite_Enable) == 0x00 ? false : true;
+                }
+            }
+            catch (Exception ex)
+            {
+                // 获取当前方法名并记录日志
+                var methodName = new StackTrace().GetFrame(0).GetMethod().Name;
+                LogHelper.Debug($"Error in method {methodName}: {ex}");
+
+            }
+            return isEnabled;
+        }
+
+        public void SetPT100LocationCheckSetting(string insID, bool isEnabled)
+        {
+            SendCommand sendCommand = new SendCommand(CommandId_5L.RWPT100LocationCheckSetting, CommandExtendId.Write);
+            try
+            {
+                sendCommand.SetValue(ParamId_5L.RWPT100LocationCheckSetting_ReadWrite_Enable, isEnabled);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {

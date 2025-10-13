@@ -26,6 +26,12 @@ namespace RD3.ViewModels
 {
     public class MCUDebugViewModel : BaseViewModel,IDialogAware
     {
+        private bool _pt100LoactionCheckEnable = true;
+        public bool PT100LocationCheckEnable
+        {
+            get { return _pt100LoactionCheckEnable; }
+            set { SetProperty(ref _pt100LoactionCheckEnable, value); }
+        }
 
         private SubscriptionToken token = null;
 
@@ -674,6 +680,10 @@ namespace RD3.ViewModels
                 {
                     SelectedMagneticBaseStatus = (MagneticBaseStatus)InstrumentSolution.GetInstance().CommandWrapper.GetMagneticBase(SelectedInstrument?.id);
                 }
+                else if (commandText == "33")
+                {
+                    PT100LocationCheckEnable = InstrumentSolution.GetInstance().CommandWrapper.GetPT100LocationCheckSetting(SelectedInstrument?.id);
+                }
             }
             catch (Exception ex)
             {
@@ -1011,6 +1021,17 @@ namespace RD3.ViewModels
                         try
                         {
                             InstrumentSolution.GetInstance().CommandWrapper.SetMagneticBase(SelectedInstrument?.id, (byte)SelectedMagneticBaseStatus);
+                        }
+                        catch (Exception ex) { }
+                    }
+                }
+                else if (commandText == "32")
+                {
+                    foreach (var SelectedInstrument in SelectedInstruments)
+                    {
+                        try
+                        {
+                            InstrumentSolution.GetInstance().CommandWrapper.SetPT100LocationCheckSetting(SelectedInstrument?.id, PT100LocationCheckEnable);
                         }
                         catch (Exception ex) { }
                     }

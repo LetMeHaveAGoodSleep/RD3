@@ -416,6 +416,11 @@ namespace RD3.ViewModels
             });
         });
 
+        public DelegateCommand EditFactorCommand=>new (()=>
+        {
+
+        });
+
         public DOEMainViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
         }

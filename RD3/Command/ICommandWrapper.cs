@@ -301,10 +301,16 @@ namespace RD3.Shared
         void SetEPCPressure(string insID, float pressure);
         #endregion
 
-        #region 0x1e 读写设置磁吸底座状态
+        #region 0x20 读写设置磁吸底座状态
         byte GetMagneticBase(string insID);
 
         void SetMagneticBase(string insID, byte status);
+        #endregion
+
+        #region 0x21 读写PT100位置检测配置
+        bool GetPT100LocationCheckSetting(string insID);
+
+        void SetPT100LocationCheckSetting(string insID, bool isEnabled);
         #endregion
     }
 }

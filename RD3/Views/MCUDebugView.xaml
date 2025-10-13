@@ -136,7 +136,14 @@
                 <x:Type TypeName="share:MagneticBaseStatus" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-
+        <ObjectDataProvider
+            x:Key="DataFromEnum12"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:TecControlMode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -176,10 +183,21 @@
                                             hc:InfoElement.Title="{ex:Language Key='温度设定值'}"
                                             Style="{StaticResource TextBoxExtend}"
                                             Text="{Binding TempParam.Temp_PV}" />
-                                        <CheckBox
+                                        <hc:ComboBox
+                                            Width="120"
+                                            hc:InfoElement.Title="{ex:Language Key='控制模式'}"
+                                            ItemsSource="{Binding Source={StaticResource DataFromEnum12}}"
+                                            SelectedItem="{Binding TempParam.TecControlMode}">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </hc:ComboBox>
+                                        <!--<CheckBox
                                             Margin="0,15,0,0"
                                             Content="温度使能"
-                                            IsChecked="{Binding TempParam.IsEnable}" />
+                                            IsChecked="{Binding TempParam.IsEnable}" />-->
                                         <!--<TextBox
                                             Width="100"
                                             hc:InfoElement.Title="{ex:Language Key='Lower limit'}"
@@ -1612,6 +1630,28 @@
                                         hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                                         Command="{Binding SetCommand}"
                                         CommandParameter="32"
+                                        Content="{ex:Language Key='Set'}" />
+                                </hc:UniformSpacingPanel>
+                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                    <CheckBox
+                                        Margin="0,15,0,0"
+                                        Content="PT100位置检测使能"
+                                        IsChecked="{Binding PT100LocationCheckEnable}" />
+                                    <Button
+                                        Width="80"
+                                        Height="30"
+                                        Margin="0,20,0,0"
+                                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                        Command="{Binding ReadCommand}"
+                                        CommandParameter="33"
+                                        Content="{ex:Language Key='Read'}" />
+                                    <Button
+                                        Width="80"
+                                        Height="30"
+                                        Margin="0,20,0,0"
+                                        hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
+                                        Command="{Binding SetCommand}"
+                                        CommandParameter="33"
                                         Content="{ex:Language Key='Set'}" />
                                 </hc:UniformSpacingPanel>
                             </hc:UniformSpacingPanel>

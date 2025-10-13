@@ -328,6 +328,7 @@ namespace RD3
             containerRegistry.RegisterDialog<DOEAnalyse2DView, DOEAnalyse2DViewModel>();
             containerRegistry.RegisterDialog<ChooseDOE3DFactorView, ChooseDOE3DFactorViewModel>();
             containerRegistry.RegisterDialog<DOEAnalyse3DView, DOEAnalyse3DViewModel>();
+            containerRegistry.RegisterDialog<DOEFactorView, DOEFactorViewModel>(); 
             //containerRegistry.RegisterDialogWindow<DialogWindowBase>();
         }
 

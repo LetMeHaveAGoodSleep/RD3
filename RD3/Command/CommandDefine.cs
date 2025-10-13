@@ -1105,6 +1105,11 @@ namespace RD3
         /// </summary>
         public const string RWMagneticBaseStatus = "RWMagneticBaseStatus";
 
+        /// <summary>
+        /// 读写PT100位置检测配置
+        /// </summary>
+        public const string RWPT100LocationCheckSetting = "RWPT100LocationCheckSetting";
+
 
     }
 
@@ -1993,6 +1998,21 @@ namespace RD3
         /// 通讯错误
         /// </summary>
         public const int RWMagneticBaseStatus_CommunicationError_ResponseValue = 0x17FF00;
+
+        /// <summary>
+        /// 使能
+        /// </summary>
+        public const int RWPT100LocationCheckSetting_ReadWrite_Enable = 0x18EE00;
+
+        /// <summary>
+        /// 写回应
+        /// </summary>
+        public const int RWPT100LocationCheckSetting_WriteResponse_ResponseValue = 0x188800;
+
+        /// <summary>
+        /// 通讯错误
+        /// </summary>
+        public const int RWPT100LocationCheckSetting_CommunicationError_ResponseValue = 0x18FF00;
 
     }
 }

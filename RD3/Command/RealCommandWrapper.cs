@@ -1811,5 +1811,18 @@ namespace RD3.Shared
             return;
         }
         #endregion
+
+        #region 0x21 读写PT100位置检测配置
+
+        public bool GetPT100LocationCheckSetting(string insID)
+        {
+            return true;
+        }
+
+        public void SetPT100LocationCheckSetting(string insID, bool isEnabled)
+        {
+            return;
+        }
+        #endregion
     }
 }
