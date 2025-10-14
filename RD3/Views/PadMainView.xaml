@@ -535,14 +535,7 @@
                     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <WrapPanel Name="ChkGraphList3" Orientation="Horizontal" />
                     </ScrollViewer>
-                    <wpf:WpfPlot
-                        Name="wpfPlot3"
-                        Grid.Row="2"
-                        IsManipulationEnabled="True">
-                        <wpf:WpfPlot.RenderTransform>
-                            <MatrixTransform />
-                        </wpf:WpfPlot.RenderTransform>
-                    </wpf:WpfPlot>
+                    <wpf:WpfPlot Name="wpfPlot3" Grid.Row="2" />
                 </Grid>
             </TabItem>
             <TabItem Name="tabBatch">

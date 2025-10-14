@@ -24,6 +24,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Threading;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
@@ -35,6 +36,16 @@ namespace RD3.ViewModels
         BackgroundWorker worker;
         BackgroundWorker worker1;
         BackgroundWorker worker2;
+
+        Dictionary<int, string> dicpHAlarmCode = new Dictionary<int, string>();
+        Dictionary<int, string> dicDOAlarmCode = new Dictionary<int, string>();
+
+        private string _statusDescription;
+        public string StatusDescription
+        {
+            get => _statusDescription;
+            set { SetProperty(ref _statusDescription, value); }
+        }
 
         private SensorType_5L _sensorType = SensorType_5L.PT100;
         public SensorType_5L SensorType
@@ -354,6 +365,44 @@ namespace RD3.ViewModels
 
         public PadCalibrationViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
+            dicpHAlarmCode.Add(0x0001, "CP1(零点)pH校准值超范围");
+            dicpHAlarmCode.Add(0x0002, "CP1(零点)无匹配标准");
+            dicpHAlarmCode.Add(0x0004, "CP1(零点)温度值低");
+            dicpHAlarmCode.Add(0x0008, "CP1(零点)温度值高");
+            dicpHAlarmCode.Add(0x0010, "CP1(零点)温度不稳定");
+            dicpHAlarmCode.Add(0x0020, "CP1(零点)斜率过低");
+            dicpHAlarmCode.Add(0x0040, "CP1(零点)斜率过高");
+            dicpHAlarmCode.Add(0x0080, "CP1(零点)pH电压不稳定");
+            dicpHAlarmCode.Add(0x0100, "CP2(满点)pH校准值超范围");
+            dicpHAlarmCode.Add(0x0200, "CP2(满点)无匹配标准");
+            dicpHAlarmCode.Add(0x0400, "CP2(满点)温度值低");
+            dicpHAlarmCode.Add(0x0800, "CP2(满点)温度值高");
+            dicpHAlarmCode.Add(0x1000, "CP2(满点)温度不稳定");
+            dicpHAlarmCode.Add(0x2000, "CP2(满点)电压过低");
+            dicpHAlarmCode.Add(0x4000, "CP2(满点)电压过高");
+            dicpHAlarmCode.Add(0x8000, "CP2(满点)pH电压不稳定");
+            dicpHAlarmCode.Add(0x10000, "稳定时间不足");
+            dicpHAlarmCode.Add(0x20000, "膜帽质量低于35，需要更换膜帽");
+
+            dicDOAlarmCode.Add(0x0001, "CP1(零点)溶氧校准值低");
+            dicDOAlarmCode.Add(0x0002, "CP1(零点)溶氧校准值高");
+            dicDOAlarmCode.Add(0x0004, "CP1(零点)温度值低");
+            dicDOAlarmCode.Add(0x0008, "CP1(零点)温度值高");
+            dicDOAlarmCode.Add(0x0010, "CP1(零点)温度不稳定");
+            dicDOAlarmCode.Add(0x0020, "CP1(零点)相位值低");
+            dicDOAlarmCode.Add(0x0040, "CP1(零点)相位值高");
+            dicDOAlarmCode.Add(0x0080, "相位不稳定");
+            dicDOAlarmCode.Add(0x0100, "CP2(满点)溶氧校准值低");
+            dicDOAlarmCode.Add(0x0200, "CP2(满点)溶氧校准值高");
+            dicDOAlarmCode.Add(0x0400, "CP2(满点)温度值低");
+            dicDOAlarmCode.Add(0x0800, "CP2(满点)温度值高");
+            dicDOAlarmCode.Add(0x1000, "CP2(满点)温度不稳定");
+            dicDOAlarmCode.Add(0x2000, "CP2(满点)相位值低");
+            dicDOAlarmCode.Add(0x4000, "CP2(满点)相位值高");
+            dicDOAlarmCode.Add(0x8000, "CP2(满点)相位值不稳定");
+            dicDOAlarmCode.Add(0x10000, "稳定时间不足");
+            dicDOAlarmCode.Add(0x20000, "膜帽质量低于35，需要更换膜帽");
+
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
             worker.WorkerSupportsCancellation = true;
@@ -449,6 +498,165 @@ namespace RD3.ViewModels
                         Coefficient = param.Coefficient;
                         Bias = param.Bias;
                         StatusCode = param.StatusCode;
+                        if (SensorType == SensorType_5L.pH || SensorType == SensorType_5L.DO)
+                        {
+                            if (StatusCode == 0)
+                            {
+                                StatusDescription = "空闲";
+                            }
+                            else if (StatusCode == -1)
+                            {
+                                StatusDescription = "零点校准中";
+                            }
+                            else if (StatusCode == -2)
+                            {
+                                StatusDescription = "满点校准中";
+                            }
+                            else if (StatusCode == -11)
+                            {
+                                StatusDescription = "零点校准失败";
+                            }
+                            else if (StatusCode == -12)
+                            {
+                                StatusDescription = "满点校准失败";
+                            }
+                            else if (StatusCode == -21)
+                            {
+                                StatusDescription = "零点校准成功";
+                            }
+                            else if (StatusCode == -22)
+                            {
+                                StatusDescription = "满点校准成功";
+                            }
+                            else
+                            {
+                                switch (SensorType)
+                                {
+                                    case SensorType_5L.pH:
+                                        var pHSetting = InstrumentSolution.GetInstance().CommandWrapper.GetMCUSensorTypeSetting(SelectedReactor, 1);
+                                        if (pHSetting.Item2 == 1)//希尔曼-模拟
+                                        {
+                                            StatusDescription = "";
+                                        }
+                                        else if (pHSetting.Item2 == 2)//希尔曼-数字
+                                        {
+                                            List<int> existAlarmCodes = [];
+                                            foreach (var item in dicpHAlarmCode.Keys)
+                                            {
+                                                if ((StatusCode & item) != 0)
+                                                {
+                                                    existAlarmCodes.Add(item);
+                                                }
+                                            }
+                                            if (existAlarmCodes.Count < 1)
+                                            {
+                                                StatusDescription = "";
+                                            }
+                                            else
+                                            {
+                                                List<string> alarmDescriptions = [];
+                                                foreach (var item in existAlarmCodes)
+                                                {
+                                                    alarmDescriptions.Add(dicpHAlarmCode[item]);
+                                                }
+                                                StatusDescription = string.Join(",", alarmDescriptions);
+                                            }
+                                        }
+                                        else if (pHSetting.Item2 == 3)//微基-模拟
+                                        {
+                                            StatusDescription = "";
+                                        }
+                                        else if (pHSetting.Item2 == 4)//微基-数字
+                                        {
+                                            //整型报警 17、18、19、20、21、22
+                                            if (StatusCode == 17)
+                                            {
+                                                StatusDescription = "零点超出范围";
+                                            }
+                                            else if (StatusCode == 18)
+                                            {
+                                                StatusDescription = "斜率超出范围";
+                                            }
+                                            else if (StatusCode == 19)
+                                            {
+                                                StatusDescription = "读值不稳定";
+                                            }
+                                            else if (StatusCode == 20)
+                                            {
+                                                StatusDescription = "读值超出范围";
+                                            }
+                                            else if (StatusCode == 21)
+                                            {
+                                                StatusDescription = "超出判断范围";
+                                            }
+                                            else if (StatusCode == 22)
+                                            {
+                                                StatusDescription = "两点值相同";
+                                            }
+                                        }
+                                        break;
+                                    case SensorType_5L.DO:
+                                        var doSetting = InstrumentSolution.GetInstance().CommandWrapper.GetMCUSensorTypeSetting(SelectedReactor, 1);
+                                        if (doSetting.Item2 == 1)//希尔曼-数字
+                                        {
+                                            List<int> existAlarmCodes = [];
+                                            foreach (var item in dicDOAlarmCode.Keys)
+                                            {
+                                                if ((StatusCode & item) != 0)
+                                                {
+                                                    existAlarmCodes.Add(item);
+                                                }
+                                            }
+                                            if (existAlarmCodes.Count < 1)
+                                            {
+                                                StatusDescription = "";
+                                            }
+                                            else
+                                            {
+                                                List<string> alarmDescriptions = [];
+                                                foreach (var item in existAlarmCodes)
+                                                {
+                                                    alarmDescriptions.Add(dicDOAlarmCode[item]);
+                                                }
+                                                StatusDescription = string.Join(",", alarmDescriptions);
+                                            }
+                                        }
+                                        else if (doSetting.Item2 == 2)//微基-数字
+                                        {
+                                            //整型报警 17、18、19、20、21、22
+                                            if (StatusCode == 17)
+                                            {
+                                                StatusDescription = "零点超出范围";
+                                            }
+                                            else if (StatusCode == 18)
+                                            {
+                                                StatusDescription = "斜率超出范围";
+                                            }
+                                            else if (StatusCode == 19)
+                                            {
+                                                StatusDescription = "读值不稳定";
+                                            }
+                                            else if (StatusCode == 20)
+                                            {
+                                                StatusDescription = "读值超出范围";
+                                            }
+                                            else if (StatusCode == 21)
+                                            {
+                                                StatusDescription = "超出判断范围";
+                                            }
+                                            else if (StatusCode == 22)
+                                            {
+                                                StatusDescription = "两点值相同";
+                                            }
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            StatusDescription = "";
+                        }
                     }
                     catch (Exception ex)
                     {

@@ -209,7 +209,7 @@
                 </hc:UniformSpacingPanel>
                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                     <ComboBox
-                        Width="120"
+                        Width="100"
                         VerticalAlignment="Center"
                         hc:InfoElement.Title="{ex:Language Key='校准模式'}"
                         BorderBrush="{DynamicResource PrimaryBrush}"
@@ -220,14 +220,14 @@
                         <ComboBoxItem Content="两点校准" />
                     </ComboBox>
                     <TextBox
-                        Width="120"
+                        Width="80"
                         hc:InfoElement.Title="{ex:Language Key='当前值'}"
                         BorderBrush="{DynamicResource PrimaryBrush}"
                         IsEnabled="False"
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding CurrentValue}" />
                     <TextBox
-                        Width="120"
+                        Width="80"
                         hc:InfoElement.Title="{ex:Language Key='校准点1'}"
                         BorderBrush="{DynamicResource PrimaryBrush}"
                         IsEnabled="{Binding Calibrate1Enabled}"
@@ -235,7 +235,7 @@
                         Text="{Binding CaliPoint1}" />
                     <DockPanel LastChildFill="False">
                         <Button
-                            Width="80"
+                            Width="70"
                             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                             BorderBrush="{StaticResource PrimaryBrush}"
                             Command="{Binding CalibrateSensorCommand}"
@@ -246,7 +246,7 @@
                             Style="{StaticResource ButtonPrimary}" />
                     </DockPanel>
                     <TextBox
-                        Width="120"
+                        Width="80"
                         hc:InfoElement.Title="{ex:Language Key='校准点2'}"
                         BorderBrush="{DynamicResource PrimaryBrush}"
                         IsEnabled="{Binding Calibrate2Enabled}"
@@ -254,7 +254,7 @@
                         Text="{Binding CaliPoint2}" />
                     <DockPanel LastChildFill="False">
                         <Button
-                            Width="80"
+                            Width="70"
                             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                             BorderBrush="{StaticResource PrimaryBrush}"
                             Command="{Binding CalibrateSensorCommand}"
@@ -265,26 +265,34 @@
                             Style="{StaticResource ButtonPrimary}" />
                     </DockPanel>
                     <TextBox
-                        Width="120"
+                        Width="80"
                         hc:InfoElement.Title="{ex:Language Key='传感器系数'}"
                         BorderBrush="{DynamicResource PrimaryBrush}"
                         IsEnabled="False"
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding Coefficient}" />
                     <TextBox
-                        Width="120"
+                        Width="80"
                         hc:InfoElement.Title="{ex:Language Key='传感器偏置'}"
                         BorderBrush="{DynamicResource PrimaryBrush}"
                         IsEnabled="False"
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding Bias}" />
                     <TextBox
-                        Width="120"
+                        Width="80"
                         hc:InfoElement.Title="{ex:Language Key='状态码'}"
                         BorderBrush="{DynamicResource PrimaryBrush}"
                         IsEnabled="False"
                         Style="{StaticResource TextBoxExtend}"
                         Text="{Binding StatusCode}" />
+                    <TextBox
+                        Width="300"
+                        hc:InfoElement.Title="{ex:Language Key='状态描述'}"
+                        BorderBrush="{DynamicResource PrimaryBrush}"
+                        Foreground="Red"
+                        IsEnabled="False"
+                        Style="{StaticResource TextBoxExtend}"
+                        Text="{Binding StatusDescription}" />
                 </hc:UniformSpacingPanel>
             </hc:UniformSpacingPanel>
         </GroupBox>
@@ -340,7 +348,7 @@
                         Text="{Binding Pump1Param.TheoreticalVolume, UpdateSourceTrigger=LostFocus}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                             Command="{Binding CalibratePumpCommand}"
@@ -369,7 +377,7 @@
                         Text="{Binding Pump1Param.RealVolume, UpdateSourceTrigger=PropertyChanged}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="3,1"
@@ -378,7 +386,7 @@
                     </DockPanel>
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="255,1"
@@ -400,7 +408,7 @@
                         Text="{Binding Pump1Param.Coefficient, UpdateSourceTrigger=LostFocus}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="0,1"
@@ -458,7 +466,7 @@
                         Text="{Binding Pump2Param.TheoreticalVolume, UpdateSourceTrigger=LostFocus}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                             Command="{Binding CalibratePumpCommand}"
@@ -487,7 +495,7 @@
                         Text="{Binding Pump2Param.RealVolume, UpdateSourceTrigger=PropertyChanged}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="3,2"
@@ -496,7 +504,7 @@
                     </DockPanel>
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="255,2"
@@ -518,7 +526,7 @@
                         Text="{Binding Pump2Param.Coefficient, UpdateSourceTrigger=LostFocus}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="0,2"
@@ -576,7 +584,7 @@
                         Text="{Binding Pump3Param.TheoreticalVolume, UpdateSourceTrigger=LostFocus}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                             Command="{Binding CalibratePumpCommand}"
@@ -605,7 +613,7 @@
                         Text="{Binding Pump3Param.RealVolume, UpdateSourceTrigger=PropertyChanged}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="3,3"
@@ -614,7 +622,7 @@
                     </DockPanel>
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="255,3"
@@ -636,7 +644,7 @@
                         Text="{Binding Pump3Param.Coefficient, UpdateSourceTrigger=LostFocus}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="0,3"
@@ -694,7 +702,7 @@
                         Text="{Binding Pump4Param.TheoreticalVolume, UpdateSourceTrigger=LostFocus}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                             Command="{Binding CalibratePumpCommand}"
@@ -723,7 +731,7 @@
                         Text="{Binding Pump4Param.RealVolume, UpdateSourceTrigger=PropertyChanged}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="3,4"
@@ -732,7 +740,7 @@
                     </DockPanel>
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="255,4"
@@ -754,7 +762,7 @@
                         Text="{Binding Pump4Param.Coefficient, UpdateSourceTrigger=LostFocus}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="0,4"
@@ -812,7 +820,7 @@
                         Text="{Binding Pump5Param.TheoreticalVolume, UpdateSourceTrigger=LostFocus}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                             Command="{Binding CalibratePumpCommand}"
@@ -841,7 +849,7 @@
                         Text="{Binding Pump5Param.RealVolume, UpdateSourceTrigger=PropertyChanged}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="3,5"
@@ -850,7 +858,7 @@
                     </DockPanel>
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="255,5"
@@ -872,7 +880,7 @@
                         Text="{Binding Pump5Param.Coefficient, UpdateSourceTrigger=LostFocus}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="0,5"
@@ -930,7 +938,7 @@
                         Text="{Binding Pump6Param.TheoreticalVolume, UpdateSourceTrigger=LostFocus}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
                             Command="{Binding CalibratePumpCommand}"
@@ -959,7 +967,7 @@
                         Text="{Binding Pump6Param.RealVolume, UpdateSourceTrigger=PropertyChanged}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="3,6"
@@ -968,7 +976,7 @@
                     </DockPanel>
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="255,6"
@@ -990,7 +998,7 @@
                         Text="{Binding Pump6Param.Coefficient, UpdateSourceTrigger=LostFocus}" />
                     <DockPanel>
                         <Button
-                            Width="80"
+                            Width="70"
                             VerticalAlignment="Bottom"
                             Command="{Binding CalibratePumpCommand}"
                             CommandParameter="0,6"

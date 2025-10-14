@@ -150,7 +150,7 @@ namespace RD3
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            LogHelper.Error(e.Exception + "  " + e.Exception.StackTrace);
+            LogHelper.Fatal(e.Exception + "  " + e.Exception.StackTrace);
             e.Handled = true;
 
             HandyControl.Controls.MessageBox.Warning("程序出错，请重启软件", "温馨提示");

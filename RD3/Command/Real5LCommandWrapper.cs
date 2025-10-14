@@ -486,289 +486,289 @@ namespace RD3.Shared
                     }
                     #endregion
 
-                    //foreach (var item in EnumUtil.GetEnumValues<PeristalticPump>())
-                    //{
-                    //    int pumpIndex = PumpMFCUtil.GetPumpIndex(insID, item);
-                    //    switch (item)
-                    //    {
-                    //        case PeristalticPump.AcidPump:
-                    //            if (pumpIndex == 1)
-                    //            {
-                    //                realTimeParam.AcidFlowSpeed = realTimeParam.Pump1FlowRate;
-                    //                realTimeParam.AcidFlowCapacity = realTimeParam.Pump1FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 2)
-                    //            {
-                    //                realTimeParam.AcidFlowSpeed = realTimeParam.Pump2FlowRate;
-                    //                realTimeParam.AcidFlowCapacity = realTimeParam.Pump2FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 3)
-                    //            {
-                    //                realTimeParam.AcidFlowSpeed = realTimeParam.Pump3FlowRate;
-                    //                realTimeParam.AcidFlowCapacity = realTimeParam.Pump3FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 4)
-                    //            {
-                    //                realTimeParam.AcidFlowSpeed = realTimeParam.Pump4FlowRate;
-                    //                realTimeParam.AcidFlowCapacity = realTimeParam.Pump4FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 5)
-                    //            {
-                    //                realTimeParam.AcidFlowSpeed = realTimeParam.Pump5FlowRate;
-                    //                realTimeParam.AcidFlowCapacity = realTimeParam.Pump5FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 6)
-                    //            {
-                    //                realTimeParam.AcidFlowSpeed = realTimeParam.Pump6FlowRate;
-                    //                realTimeParam.AcidFlowCapacity = realTimeParam.Pump6FlowCapacity;
-                    //            }
-                    //            break;
-                    //        case PeristalticPump.BasePump:
-                    //            if (pumpIndex == 1)
-                    //            {
-                    //                realTimeParam.BaseFlowSpeed = realTimeParam.Pump1FlowRate;
-                    //                realTimeParam.BaseFlowCapacity = realTimeParam.Pump1FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 2)
-                    //            {
-                    //                realTimeParam.BaseFlowSpeed = realTimeParam.Pump2FlowRate;
-                    //                realTimeParam.BaseFlowCapacity = realTimeParam.Pump2FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 3)
-                    //            {
-                    //                realTimeParam.BaseFlowSpeed = realTimeParam.Pump3FlowRate;
-                    //                realTimeParam.BaseFlowCapacity = realTimeParam.Pump3FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 4)
-                    //            {
-                    //                realTimeParam.BaseFlowSpeed = realTimeParam.Pump4FlowRate;
-                    //                realTimeParam.BaseFlowCapacity = realTimeParam.Pump4FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 5)
-                    //            {
-                    //                realTimeParam.BaseFlowSpeed = realTimeParam.Pump5FlowRate;
-                    //                realTimeParam.BaseFlowCapacity = realTimeParam.Pump5FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 6)
-                    //            {
-                    //                realTimeParam.BaseFlowSpeed = realTimeParam.Pump6FlowRate;
-                    //                realTimeParam.BaseFlowCapacity = realTimeParam.Pump6FlowCapacity;
-                    //            }
-                    //            break;
-                    //        case PeristalticPump.FeedPump:
-                    //            if (pumpIndex == 1)
-                    //            {
-                    //                realTimeParam.FeedFlowSpeed = realTimeParam.Pump1FlowRate;
-                    //                realTimeParam.FeedFlowCapacity = realTimeParam.Pump1FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 2)
-                    //            {
-                    //                realTimeParam.FeedFlowSpeed = realTimeParam.Pump2FlowRate;
-                    //                realTimeParam.FeedFlowCapacity = realTimeParam.Pump2FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 3)
-                    //            {
-                    //                realTimeParam.FeedFlowSpeed = realTimeParam.Pump3FlowRate;
-                    //                realTimeParam.FeedFlowCapacity = realTimeParam.Pump3FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 4)
-                    //            {
-                    //                realTimeParam.FeedFlowSpeed = realTimeParam.Pump4FlowRate;
-                    //                realTimeParam.FeedFlowCapacity = realTimeParam.Pump4FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 5)
-                    //            {
-                    //                realTimeParam.FeedFlowSpeed = realTimeParam.Pump5FlowRate;
-                    //                realTimeParam.FeedFlowCapacity = realTimeParam.Pump5FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 6)
-                    //            {
-                    //                realTimeParam.FeedFlowSpeed = realTimeParam.Pump6FlowRate;
-                    //                realTimeParam.FeedFlowCapacity = realTimeParam.Pump6FlowCapacity;
-                    //            }
-                    //            break;
-                    //        case PeristalticPump.AFPump:
-                    //            if (pumpIndex == 1)
-                    //            {
-                    //                realTimeParam.AFFlowSpeed = realTimeParam.Pump1FlowRate;
-                    //                realTimeParam.AFFlowCapacity = realTimeParam.Pump1FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 2)
-                    //            {
-                    //                realTimeParam.AFFlowSpeed = realTimeParam.Pump2FlowRate;
-                    //                realTimeParam.AFFlowCapacity = realTimeParam.Pump2FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 3)
-                    //            {
-                    //                realTimeParam.AFFlowSpeed = realTimeParam.Pump3FlowRate;
-                    //                realTimeParam.AFFlowCapacity = realTimeParam.Pump3FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 4)
-                    //            {
-                    //                realTimeParam.AFFlowSpeed = realTimeParam.Pump4FlowRate;
-                    //                realTimeParam.AFFlowCapacity = realTimeParam.Pump4FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 5)
-                    //            {
-                    //                realTimeParam.AFFlowSpeed = realTimeParam.Pump5FlowRate;
-                    //                realTimeParam.AFFlowCapacity = realTimeParam.Pump5FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 6)
-                    //            {
-                    //                realTimeParam.AFFlowSpeed = realTimeParam.Pump6FlowRate;
-                    //                realTimeParam.AFFlowCapacity = realTimeParam.Pump6FlowCapacity;
-                    //            }
-                    //            break;
-                    //        case PeristalticPump.Feed2Pump:
-                    //            if (pumpIndex == 1)
-                    //            {
-                    //                realTimeParam.Feed2FlowSpeed = realTimeParam.Pump1FlowRate;
-                    //                realTimeParam.Feed2FlowCapacity = realTimeParam.Pump1FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 2)
-                    //            {
-                    //                realTimeParam.Feed2FlowSpeed = realTimeParam.Pump2FlowRate;
-                    //                realTimeParam.Feed2FlowCapacity = realTimeParam.Pump2FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 3)
-                    //            {
-                    //                realTimeParam.Feed2FlowSpeed = realTimeParam.Pump3FlowRate;
-                    //                realTimeParam.Feed2FlowCapacity = realTimeParam.Pump3FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 4)
-                    //            {
-                    //                realTimeParam.Feed2FlowSpeed = realTimeParam.Pump4FlowRate;
-                    //                realTimeParam.Feed2FlowCapacity = realTimeParam.Pump4FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 5)
-                    //            {
-                    //                realTimeParam.Feed2FlowSpeed = realTimeParam.Pump5FlowRate;
-                    //                realTimeParam.Feed2FlowCapacity = realTimeParam.Pump5FlowCapacity;
-                    //            }
-                    //            else if (pumpIndex == 6)
-                    //            {
-                    //                realTimeParam.Feed2FlowSpeed = realTimeParam.Pump6FlowRate;
-                    //                realTimeParam.Feed2FlowCapacity = realTimeParam.Pump6FlowCapacity;
-                    //            }
-                    //            break;
-                    //    }
-                    //}
+                    foreach (var item in EnumUtil.GetEnumValues<PeristalticPump>())
+                    {
+                        int pumpIndex = PumpMFCUtil.GetPumpIndex(insID, item);
+                        switch (item)
+                        {
+                            case PeristalticPump.AcidPump:
+                                if (pumpIndex == 1)
+                                {
+                                    realTimeParam.AcidFlowSpeed = realTimeParam.Pump1FlowRate;
+                                    realTimeParam.AcidFlowCapacity = realTimeParam.Pump1FlowCapacity;
+                                }
+                                else if (pumpIndex == 2)
+                                {
+                                    realTimeParam.AcidFlowSpeed = realTimeParam.Pump2FlowRate;
+                                    realTimeParam.AcidFlowCapacity = realTimeParam.Pump2FlowCapacity;
+                                }
+                                else if (pumpIndex == 3)
+                                {
+                                    realTimeParam.AcidFlowSpeed = realTimeParam.Pump3FlowRate;
+                                    realTimeParam.AcidFlowCapacity = realTimeParam.Pump3FlowCapacity;
+                                }
+                                else if (pumpIndex == 4)
+                                {
+                                    realTimeParam.AcidFlowSpeed = realTimeParam.Pump4FlowRate;
+                                    realTimeParam.AcidFlowCapacity = realTimeParam.Pump4FlowCapacity;
+                                }
+                                else if (pumpIndex == 5)
+                                {
+                                    realTimeParam.AcidFlowSpeed = realTimeParam.Pump5FlowRate;
+                                    realTimeParam.AcidFlowCapacity = realTimeParam.Pump5FlowCapacity;
+                                }
+                                else if (pumpIndex == 6)
+                                {
+                                    realTimeParam.AcidFlowSpeed = realTimeParam.Pump6FlowRate;
+                                    realTimeParam.AcidFlowCapacity = realTimeParam.Pump6FlowCapacity;
+                                }
+                                break;
+                            case PeristalticPump.BasePump:
+                                if (pumpIndex == 1)
+                                {
+                                    realTimeParam.BaseFlowSpeed = realTimeParam.Pump1FlowRate;
+                                    realTimeParam.BaseFlowCapacity = realTimeParam.Pump1FlowCapacity;
+                                }
+                                else if (pumpIndex == 2)
+                                {
+                                    realTimeParam.BaseFlowSpeed = realTimeParam.Pump2FlowRate;
+                                    realTimeParam.BaseFlowCapacity = realTimeParam.Pump2FlowCapacity;
+                                }
+                                else if (pumpIndex == 3)
+                                {
+                                    realTimeParam.BaseFlowSpeed = realTimeParam.Pump3FlowRate;
+                                    realTimeParam.BaseFlowCapacity = realTimeParam.Pump3FlowCapacity;
+                                }
+                                else if (pumpIndex == 4)
+                                {
+                                    realTimeParam.BaseFlowSpeed = realTimeParam.Pump4FlowRate;
+                                    realTimeParam.BaseFlowCapacity = realTimeParam.Pump4FlowCapacity;
+                                }
+                                else if (pumpIndex == 5)
+                                {
+                                    realTimeParam.BaseFlowSpeed = realTimeParam.Pump5FlowRate;
+                                    realTimeParam.BaseFlowCapacity = realTimeParam.Pump5FlowCapacity;
+                                }
+                                else if (pumpIndex == 6)
+                                {
+                                    realTimeParam.BaseFlowSpeed = realTimeParam.Pump6FlowRate;
+                                    realTimeParam.BaseFlowCapacity = realTimeParam.Pump6FlowCapacity;
+                                }
+                                break;
+                            case PeristalticPump.FeedPump:
+                                if (pumpIndex == 1)
+                                {
+                                    realTimeParam.FeedFlowSpeed = realTimeParam.Pump1FlowRate;
+                                    realTimeParam.FeedFlowCapacity = realTimeParam.Pump1FlowCapacity;
+                                }
+                                else if (pumpIndex == 2)
+                                {
+                                    realTimeParam.FeedFlowSpeed = realTimeParam.Pump2FlowRate;
+                                    realTimeParam.FeedFlowCapacity = realTimeParam.Pump2FlowCapacity;
+                                }
+                                else if (pumpIndex == 3)
+                                {
+                                    realTimeParam.FeedFlowSpeed = realTimeParam.Pump3FlowRate;
+                                    realTimeParam.FeedFlowCapacity = realTimeParam.Pump3FlowCapacity;
+                                }
+                                else if (pumpIndex == 4)
+                                {
+                                    realTimeParam.FeedFlowSpeed = realTimeParam.Pump4FlowRate;
+                                    realTimeParam.FeedFlowCapacity = realTimeParam.Pump4FlowCapacity;
+                                }
+                                else if (pumpIndex == 5)
+                                {
+                                    realTimeParam.FeedFlowSpeed = realTimeParam.Pump5FlowRate;
+                                    realTimeParam.FeedFlowCapacity = realTimeParam.Pump5FlowCapacity;
+                                }
+                                else if (pumpIndex == 6)
+                                {
+                                    realTimeParam.FeedFlowSpeed = realTimeParam.Pump6FlowRate;
+                                    realTimeParam.FeedFlowCapacity = realTimeParam.Pump6FlowCapacity;
+                                }
+                                break;
+                            case PeristalticPump.AFPump:
+                                if (pumpIndex == 1)
+                                {
+                                    realTimeParam.AFFlowSpeed = realTimeParam.Pump1FlowRate;
+                                    realTimeParam.AFFlowCapacity = realTimeParam.Pump1FlowCapacity;
+                                }
+                                else if (pumpIndex == 2)
+                                {
+                                    realTimeParam.AFFlowSpeed = realTimeParam.Pump2FlowRate;
+                                    realTimeParam.AFFlowCapacity = realTimeParam.Pump2FlowCapacity;
+                                }
+                                else if (pumpIndex == 3)
+                                {
+                                    realTimeParam.AFFlowSpeed = realTimeParam.Pump3FlowRate;
+                                    realTimeParam.AFFlowCapacity = realTimeParam.Pump3FlowCapacity;
+                                }
+                                else if (pumpIndex == 4)
+                                {
+                                    realTimeParam.AFFlowSpeed = realTimeParam.Pump4FlowRate;
+                                    realTimeParam.AFFlowCapacity = realTimeParam.Pump4FlowCapacity;
+                                }
+                                else if (pumpIndex == 5)
+                                {
+                                    realTimeParam.AFFlowSpeed = realTimeParam.Pump5FlowRate;
+                                    realTimeParam.AFFlowCapacity = realTimeParam.Pump5FlowCapacity;
+                                }
+                                else if (pumpIndex == 6)
+                                {
+                                    realTimeParam.AFFlowSpeed = realTimeParam.Pump6FlowRate;
+                                    realTimeParam.AFFlowCapacity = realTimeParam.Pump6FlowCapacity;
+                                }
+                                break;
+                            case PeristalticPump.Feed2Pump:
+                                if (pumpIndex == 1)
+                                {
+                                    realTimeParam.Feed2FlowSpeed = realTimeParam.Pump1FlowRate;
+                                    realTimeParam.Feed2FlowCapacity = realTimeParam.Pump1FlowCapacity;
+                                }
+                                else if (pumpIndex == 2)
+                                {
+                                    realTimeParam.Feed2FlowSpeed = realTimeParam.Pump2FlowRate;
+                                    realTimeParam.Feed2FlowCapacity = realTimeParam.Pump2FlowCapacity;
+                                }
+                                else if (pumpIndex == 3)
+                                {
+                                    realTimeParam.Feed2FlowSpeed = realTimeParam.Pump3FlowRate;
+                                    realTimeParam.Feed2FlowCapacity = realTimeParam.Pump3FlowCapacity;
+                                }
+                                else if (pumpIndex == 4)
+                                {
+                                    realTimeParam.Feed2FlowSpeed = realTimeParam.Pump4FlowRate;
+                                    realTimeParam.Feed2FlowCapacity = realTimeParam.Pump4FlowCapacity;
+                                }
+                                else if (pumpIndex == 5)
+                                {
+                                    realTimeParam.Feed2FlowSpeed = realTimeParam.Pump5FlowRate;
+                                    realTimeParam.Feed2FlowCapacity = realTimeParam.Pump5FlowCapacity;
+                                }
+                                else if (pumpIndex == 6)
+                                {
+                                    realTimeParam.Feed2FlowSpeed = realTimeParam.Pump6FlowRate;
+                                    realTimeParam.Feed2FlowCapacity = realTimeParam.Pump6FlowCapacity;
+                                }
+                                break;
+                        }
+                    }
 
-                    //foreach (var item in EnumUtil.GetEnumValues<GasType>())
-                    //{
-                    //    int mfcIndex = PumpMFCUtil.GetMFCIndex(insID, item);
-                    //    switch (item)
-                    //    {
-                    //        case GasType.Air:
-                    //            if (mfcIndex == 1)
-                    //            {
-                    //                realTimeParam.AirFlowSpeed = realTimeParam.MFC1FlowRate;
-                    //                realTimeParam.AirFlowCapacity = realTimeParam.MFC1FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 2)
-                    //            {
-                    //                realTimeParam.AirFlowSpeed = realTimeParam.MFC2FlowRate;
-                    //                realTimeParam.AirFlowCapacity = realTimeParam.MFC2FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 3)
-                    //            {
-                    //                realTimeParam.AirFlowSpeed = realTimeParam.MFC3FlowRate;
-                    //                realTimeParam.AirFlowCapacity = realTimeParam.MFC3FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 4)
-                    //            {
-                    //                realTimeParam.AirFlowSpeed = realTimeParam.MFC4FlowRate;
-                    //                realTimeParam.AirFlowCapacity = realTimeParam.MFC4FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 5)
-                    //            {
-                    //                realTimeParam.AirFlowSpeed = realTimeParam.MFC5FlowRate;
-                    //                realTimeParam.AirFlowCapacity = realTimeParam.MFC5FlowCapacity;
-                    //            }
-                    //            break;
-                    //        case GasType.O2:
-                    //            if (mfcIndex == 1)
-                    //            {
-                    //                realTimeParam.O2FlowSpeed = realTimeParam.MFC1FlowRate;
-                    //                realTimeParam.O2FlowCapacity = realTimeParam.MFC1FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 2)
-                    //            {
-                    //                realTimeParam.O2FlowSpeed = realTimeParam.MFC2FlowRate;
-                    //                realTimeParam.O2FlowCapacity = realTimeParam.MFC2FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 3)
-                    //            {
-                    //                realTimeParam.O2FlowSpeed = realTimeParam.MFC3FlowRate;
-                    //                realTimeParam.O2FlowCapacity = realTimeParam.MFC3FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 4)
-                    //            {
-                    //                realTimeParam.O2FlowSpeed = realTimeParam.MFC4FlowRate;
-                    //                realTimeParam.O2FlowCapacity = realTimeParam.MFC4FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 5)
-                    //            {
-                    //                realTimeParam.O2FlowSpeed = realTimeParam.MFC5FlowRate;
-                    //                realTimeParam.O2FlowCapacity = realTimeParam.MFC5FlowCapacity;
-                    //            }
-                    //            break;
-                    //        case GasType.CO2:
-                    //            if (mfcIndex == 1)
-                    //            {
-                    //                realTimeParam.CO2FlowSpeed = realTimeParam.MFC1FlowRate;
-                    //                realTimeParam.CO2FlowCapacity = realTimeParam.MFC1FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 2)
-                    //            {
-                    //                realTimeParam.CO2FlowSpeed = realTimeParam.MFC2FlowRate;
-                    //                realTimeParam.CO2FlowCapacity = realTimeParam.MFC2FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 3)
-                    //            {
-                    //                realTimeParam.CO2FlowSpeed = realTimeParam.MFC3FlowRate;
-                    //                realTimeParam.CO2FlowCapacity = realTimeParam.MFC3FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 4)
-                    //            {
-                    //                realTimeParam.CO2FlowSpeed = realTimeParam.MFC4FlowRate;
-                    //                realTimeParam.CO2FlowCapacity = realTimeParam.MFC4FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 5)
-                    //            {
-                    //                realTimeParam.CO2FlowSpeed = realTimeParam.MFC5FlowRate;
-                    //                realTimeParam.CO2FlowCapacity = realTimeParam.MFC5FlowCapacity;
-                    //            }
-                    //            break;
-                    //        case GasType.N2:
-                    //            if (mfcIndex == 1)
-                    //            {
-                    //                realTimeParam.N2FlowSpeed = realTimeParam.MFC1FlowRate;
-                    //                realTimeParam.N2FlowCapacity = realTimeParam.MFC1FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 2)
-                    //            {
-                    //                realTimeParam.N2FlowSpeed = realTimeParam.MFC2FlowRate;
-                    //                realTimeParam.N2FlowCapacity = realTimeParam.MFC2FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 3)
-                    //            {
-                    //                realTimeParam.N2FlowSpeed = realTimeParam.MFC3FlowRate;
-                    //                realTimeParam.N2FlowCapacity = realTimeParam.MFC3FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 4)
-                    //            {
-                    //                realTimeParam.N2FlowSpeed = realTimeParam.MFC4FlowRate;
-                    //                realTimeParam.N2FlowCapacity = realTimeParam.MFC4FlowCapacity;
-                    //            }
-                    //            else if (mfcIndex == 5)
-                    //            {
-                    //                realTimeParam.N2FlowSpeed = realTimeParam.MFC5FlowRate;
-                    //                realTimeParam.N2FlowCapacity = realTimeParam.MFC5FlowCapacity;
-                    //            }
-                    //            break;
-                    //    }
-                    //}
+                    foreach (var item in EnumUtil.GetEnumValues<GasType>())
+                    {
+                        int mfcIndex = PumpMFCUtil.GetMFCIndex(insID, item);
+                        switch (item)
+                        {
+                            case GasType.Air:
+                                if (mfcIndex == 1)
+                                {
+                                    realTimeParam.AirFlowSpeed = realTimeParam.MFC1FlowRate;
+                                    realTimeParam.AirFlowCapacity = realTimeParam.MFC1FlowCapacity;
+                                }
+                                else if (mfcIndex == 2)
+                                {
+                                    realTimeParam.AirFlowSpeed = realTimeParam.MFC2FlowRate;
+                                    realTimeParam.AirFlowCapacity = realTimeParam.MFC2FlowCapacity;
+                                }
+                                else if (mfcIndex == 3)
+                                {
+                                    realTimeParam.AirFlowSpeed = realTimeParam.MFC3FlowRate;
+                                    realTimeParam.AirFlowCapacity = realTimeParam.MFC3FlowCapacity;
+                                }
+                                else if (mfcIndex == 4)
+                                {
+                                    realTimeParam.AirFlowSpeed = realTimeParam.MFC4FlowRate;
+                                    realTimeParam.AirFlowCapacity = realTimeParam.MFC4FlowCapacity;
+                                }
+                                else if (mfcIndex == 5)
+                                {
+                                    realTimeParam.AirFlowSpeed = realTimeParam.MFC5FlowRate;
+                                    realTimeParam.AirFlowCapacity = realTimeParam.MFC5FlowCapacity;
+                                }
+                                break;
+                            case GasType.O2:
+                                if (mfcIndex == 1)
+                                {
+                                    realTimeParam.O2FlowSpeed = realTimeParam.MFC1FlowRate;
+                                    realTimeParam.O2FlowCapacity = realTimeParam.MFC1FlowCapacity;
+                                }
+                                else if (mfcIndex == 2)
+                                {
+                                    realTimeParam.O2FlowSpeed = realTimeParam.MFC2FlowRate;
+                                    realTimeParam.O2FlowCapacity = realTimeParam.MFC2FlowCapacity;
+                                }
+                                else if (mfcIndex == 3)
+                                {
+                                    realTimeParam.O2FlowSpeed = realTimeParam.MFC3FlowRate;
+                                    realTimeParam.O2FlowCapacity = realTimeParam.MFC3FlowCapacity;
+                                }
+                                else if (mfcIndex == 4)
+                                {
+                                    realTimeParam.O2FlowSpeed = realTimeParam.MFC4FlowRate;
+                                    realTimeParam.O2FlowCapacity = realTimeParam.MFC4FlowCapacity;
+                                }
+                                else if (mfcIndex == 5)
+                                {
+                                    realTimeParam.O2FlowSpeed = realTimeParam.MFC5FlowRate;
+                                    realTimeParam.O2FlowCapacity = realTimeParam.MFC5FlowCapacity;
+                                }
+                                break;
+                            case GasType.CO2:
+                                if (mfcIndex == 1)
+                                {
+                                    realTimeParam.CO2FlowSpeed = realTimeParam.MFC1FlowRate;
+                                    realTimeParam.CO2FlowCapacity = realTimeParam.MFC1FlowCapacity;
+                                }
+                                else if (mfcIndex == 2)
+                                {
+                                    realTimeParam.CO2FlowSpeed = realTimeParam.MFC2FlowRate;
+                                    realTimeParam.CO2FlowCapacity = realTimeParam.MFC2FlowCapacity;
+                                }
+                                else if (mfcIndex == 3)
+                                {
+                                    realTimeParam.CO2FlowSpeed = realTimeParam.MFC3FlowRate;
+                                    realTimeParam.CO2FlowCapacity = realTimeParam.MFC3FlowCapacity;
+                                }
+                                else if (mfcIndex == 4)
+                                {
+                                    realTimeParam.CO2FlowSpeed = realTimeParam.MFC4FlowRate;
+                                    realTimeParam.CO2FlowCapacity = realTimeParam.MFC4FlowCapacity;
+                                }
+                                else if (mfcIndex == 5)
+                                {
+                                    realTimeParam.CO2FlowSpeed = realTimeParam.MFC5FlowRate;
+                                    realTimeParam.CO2FlowCapacity = realTimeParam.MFC5FlowCapacity;
+                                }
+                                break;
+                            case GasType.N2:
+                                if (mfcIndex == 1)
+                                {
+                                    realTimeParam.N2FlowSpeed = realTimeParam.MFC1FlowRate;
+                                    realTimeParam.N2FlowCapacity = realTimeParam.MFC1FlowCapacity;
+                                }
+                                else if (mfcIndex == 2)
+                                {
+                                    realTimeParam.N2FlowSpeed = realTimeParam.MFC2FlowRate;
+                                    realTimeParam.N2FlowCapacity = realTimeParam.MFC2FlowCapacity;
+                                }
+                                else if (mfcIndex == 3)
+                                {
+                                    realTimeParam.N2FlowSpeed = realTimeParam.MFC3FlowRate;
+                                    realTimeParam.N2FlowCapacity = realTimeParam.MFC3FlowCapacity;
+                                }
+                                else if (mfcIndex == 4)
+                                {
+                                    realTimeParam.N2FlowSpeed = realTimeParam.MFC4FlowRate;
+                                    realTimeParam.N2FlowCapacity = realTimeParam.MFC4FlowCapacity;
+                                }
+                                else if (mfcIndex == 5)
+                                {
+                                    realTimeParam.N2FlowSpeed = realTimeParam.MFC5FlowRate;
+                                    realTimeParam.N2FlowCapacity = realTimeParam.MFC5FlowCapacity;
+                                }
+                                break;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -1859,7 +1859,7 @@ namespace RD3.Shared
             SendCommand sendCommand = new SendCommand(CommandId_5L.RWPT100LocationCheckSetting, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId_5L.RWPT100LocationCheckSetting_ReadWrite_Enable, isEnabled);
+                sendCommand.SetValue(ParamId_5L.RWPT100LocationCheckSetting_ReadWrite_Enable, isEnabled == true ? 0x01 : 0x00);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {

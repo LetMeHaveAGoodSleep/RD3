@@ -1614,7 +1614,13 @@
                                         Width="150"
                                         hc:InfoElement.Title="{ex:Language Key='磁吸底座控制状态'}"
                                         ItemsSource="{Binding Source={StaticResource DataFromEnum11}}"
-                                        SelectedItem="{Binding SelectedMagneticBaseStatus}" />
+                                        SelectedItem="{Binding SelectedMagneticBaseStatus}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </hc:ComboBox>
                                     <Button
                                         Width="80"
                                         Height="30"

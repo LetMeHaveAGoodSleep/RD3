@@ -100,6 +100,11 @@ namespace RD3.ViewModels
                 return;
             }
 
+            if (HandyControl.Controls.MessageBox.Show("确定要结束当前批次吗？", "温馨提示", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
             string content = string.Format("批次结束，批次ID为{0}", CurrentDeviceParameter.BatchID);
             RD3SQLHelper.EndBatch(CurrentDeviceParameter.BatchID, DateTime.Now);
             RD3SQLHelper.AddAuditRecord(CurrentDeviceParameter?.Name, CurrentDeviceParameter.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);

@@ -347,6 +347,7 @@ namespace RD3.ViewModels
                         {
                             RD3Device device = item as RD3Device;
                             int index = ClockSupervisor.realDatasDic[device.Name].Count - 1;
+                            if (index < 0) continue;
                             var realTimeParam = ClockSupervisor.realDatasDic[device.Name][index];
                             //方成 开机以后保存罐体初始重量
                             if (device.Status == "Running")
