@@ -664,5 +664,13 @@ namespace RD3.Views
                 }
             }
         }
+
+        private void ButtonStartExperiment_Click(object sender, RoutedEventArgs e)
+        {
+            if (tabMenu.SelectedItem == tabBatch)
+            {
+                batchView.Refresh();
+            }
+        }
     }
 }

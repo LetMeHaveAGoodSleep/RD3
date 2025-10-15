@@ -66,29 +66,28 @@ namespace RD3.ViewModels
         public DelegateCommand PumpControlCommand => new(() => 
         {
             //关闭泵
-            if (PumpInfo.IsControling)
+            if (!PumpInfo.IsControling)
             {
-                PumpInfo.IsControling = false;
-                return;
-            }
-            if (PumpInfo.FlowRate_SP <= 0)
-            {
-                HandyControl.Controls.MessageBox.Warning("流速必须大于0", "温馨提示");
                 return;
             }
 
             PumpInfo.FlowRate_SP = Math.Clamp(PumpInfo.FlowRate_SP, 0, Const.MaxPumpFlowRate);
             if (PumpInfo.Pump != PeristalticPump.FeedPump && PumpInfo.Pump != PeristalticPump.Feed2Pump)
             {
+                if (PumpInfo.FlowRate_SP <= 0)
+                {
+                    PumpInfo.IsControling = false;
+                    HandyControl.Controls.MessageBox.Warning("流速必须大于0", "温馨提示");
+                    return;
+                }
+
                 if (PumpInfo.RunningTime_SP <= 0 && !PumpInfo.IsConstSpeed)
                 {
+                    PumpInfo.IsControling = false;
                     HandyControl.Controls.MessageBox.Warning("运行时间必须大于0", "温馨提示");
                     return;
                 }
-                PumpInfo.IsControling = true;
-                return;
             }
-            PumpInfo.IsControling = true;
         });
 
         public DelegateCommand<DeviceParameter> AFSettingCommand => new((DeviceParameter device) =>

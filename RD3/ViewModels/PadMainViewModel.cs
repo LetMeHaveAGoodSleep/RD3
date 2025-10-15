@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using XZ.SQLite;
 
 namespace RD3.ViewModels
@@ -36,6 +37,26 @@ namespace RD3.ViewModels
             set
             {
                 SetProperty(ref _selectedMenuIndex, value);
+            }
+        }
+
+        private bool _connected = false;
+        public bool Connected
+        {
+            get => _connected;
+            set
+            {
+                SetProperty(ref _connected, value);
+            }
+        }
+
+        private bool _connecting = false;
+        public bool Connecting
+        {
+            get => _connecting;
+            set
+            {
+                SetProperty(ref _connecting, value);
             }
         }
 
@@ -73,7 +94,7 @@ namespace RD3.ViewModels
                 {
                     createTime = dt.ToString("yyyy-MM-dd HH:mm:ss"),
                     devieceID = CurrentDeviceParameter.Name,
-                    statue = (int)RD3BatchStatue.Running,
+                    statue = RD3BatchStatue.Running,
                     startDateTime = dt.ToString("yyyy-MM-dd HH:mm:ss"),
                     createUser = AppSession.CurrentUser.UserName,
                     Strain = tuple.Item1,
@@ -154,11 +175,11 @@ namespace RD3.ViewModels
             DialogHostService.ShowOnce(nameof(TempSettingView), callback => { });
         });
 
-
         public DelegateCommand MinimizeCommand => new(() =>
         {
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
         });
+
         public DelegateCommand ExitCommand => new(() =>
         {
             if (AppSession.CurrentUser.Type != Shared.UserType.Admin)
@@ -178,6 +199,29 @@ namespace RD3.ViewModels
 
         });
 
+        public DelegateCommand ReconnectCommand => new(() => 
+        {
+            try
+            {
+                Pipe pipe = PortManager.GetInstance().FindSendPipe(CurrentDeviceParameter.Name);
+                if (pipe == null || pipe.Connected) return;
+                Connecting = true;
+                Task.Run(() =>
+                {
+                    pipe.Open();
+                    Connected = pipe.Connected;
+                    Connecting = false;
+                    if (!Connected)
+                    {
+                        HandyControl.Controls.MessageBox.Warning("连接失败", "温馨提示");
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+            }
+        });
+
         public PadMainViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
 
@@ -190,6 +234,27 @@ namespace RD3.ViewModels
                 AnalysisSolution.GetInstance().ReactorCol.Add(new DeviceParameter() { Name = "G01" });
             }
             CurrentDeviceParameter = AnalysisSolution.GetInstance().ReactorCol[0];
+
+            Thread threadPipe = new Thread(new ThreadStart(() =>
+            {
+                while (true)
+                {
+                    Pipe pipe = PortManager.GetInstance().pipes[CurrentDeviceParameter.Name] as Pipe;
+                    if (pipe != null)
+                    {
+                        Connected = pipe.Connected;
+                    }
+                    else
+                    {
+                        Connected = false;
+                    }
+                    Thread.Sleep(5000);
+                }
+
+            }));
+            threadPipe.IsBackground = true;
+            threadPipe.Priority = ThreadPriority.Lowest;
+            threadPipe.Start();
 
             DeviceExperimentHistoryData data = new DeviceExperimentHistoryData()
             {

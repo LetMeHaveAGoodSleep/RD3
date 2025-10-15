@@ -2895,6 +2895,7 @@ namespace RD3.Controller
                         #region 单次定量
                         if (PumpInfo.FlowCapacity_SP <= 0)
                         {
+                            HandyControl.Controls.MessageBox.Warning("设定体积必须大于0", "温馨提示");
                             return;
                         }
                         SetCommand(PumpInfo.FlowRate_SP, PumpInfo.FlowCapacity_SP);

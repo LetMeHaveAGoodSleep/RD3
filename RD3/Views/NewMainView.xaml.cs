@@ -1018,7 +1018,7 @@ namespace RD3.Views
                     {
                         createTime = dt.ToString("yyyy-MM-dd HH:mm:ss"),
                         devieceID = device.Name,
-                        statue = (int)RD3BatchStatue.Running,
+                        statue = RD3BatchStatue.Running,
                         startDateTime = dt.ToString("yyyy-MM-dd HH:mm:ss"),
                         createUser = AppSession.CurrentUser.UserName,
                         Strain = tuple.Item1,
@@ -1071,7 +1071,7 @@ namespace RD3.Views
             string result = File.ReadAllText(fileName);
             RD3Batch batch = CustomApp.JsonHelper.StringToObject<RD3Batch>(result);
             batch.endDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            batch.statue = (long)RD3BatchStatue.Complete;
+            batch.statue = RD3BatchStatue.Complete;
             File.WriteAllText(fileName, JsonConvert.SerializeObject(batch));
 
             RD3SQLHelper.UpdataBatch(batch);

@@ -148,7 +148,6 @@ namespace RD3.ViewModels
 
         public DelegateCommand ReloadDataCommand => new(() => InitBatchInfos());
 
-        string hisDataDir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData";
         public NewBatchViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
             

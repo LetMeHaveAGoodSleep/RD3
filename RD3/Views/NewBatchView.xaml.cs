@@ -65,18 +65,6 @@ namespace RD3.Views
             List<RD3Batch> batches = new List<RD3Batch>();
             batches.Add(o as RD3Batch);
             ((NewBatchViewModel)this.DataContext)?.CompareCommand.Execute(batches);
-
-            //if (dataGrid1.SelectedItems.Count > 0)
-            //{
-            //    List<RD3Batch> batches = new List<RD3Batch>();
-            //    //1弹出选数据//2显示
-            //    foreach (var item in dataGrid1.SelectedItems)
-            //    {
-            //        batches.Add(item as RD3Batch);
-            //        break;
-            //    }
-            //((NewBatchViewModel)this.DataContext)?.CompareCommand.Execute(batches);
-            //}
         }
         private void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
@@ -84,6 +72,11 @@ namespace RD3.Views
             {
                 return;
             }
+            if (HandyControl.Controls.MessageBox.Show("确定要删除当前批次吗？", "温馨提示", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
             List<RD3Batch> list = dataGrid1.SelectedItems.Cast<RD3Batch>().ToList();
             ((NewBatchViewModel)this.DataContext)?.DeleteCommand.Execute(list);
         }
@@ -201,6 +194,11 @@ namespace RD3.Views
                 batches.Add(item as RD3Batch);
             }
             ((NewBatchViewModel)this.DataContext)?.CompareCommand.Execute(batches);
+        }
+
+        public void Refresh()
+        {
+            ((NewBatchViewModel)this.DataContext)?.ReloadDataCommand.Execute();
         }
     }
 }

@@ -65,6 +65,7 @@
                         hc:IconElement.Geometry="{StaticResource GeometryStart}"
                         Background="Transparent"
                         BorderThickness="0"
+                        Click="ButtonStartExperiment_Click"
                         Command="{Binding StartExperimentCommand}"
                         Content="开始实验"
                         FontSize="{StaticResource HeadFontSize}"
@@ -197,6 +198,38 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Canvas>
+                        <StackPanel
+                            Canvas.Left="0"
+                            Canvas.Top="0"
+                            Margin="5"
+                            Orientation="Horizontal">
+                            <Button
+                                materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                materialDesign:ButtonProgressAssist.Value="-1"
+                                Content="连接中..."
+                                Foreground="White"
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                Visibility="{Binding Connecting, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <Button
+                                Height="60"
+                                Padding="15"
+                                hc:IconElement.Geometry="{StaticResource GeometryNetworkReconnect}"
+                                hc:IconElement.Height="30"
+                                hc:IconElement.Width="30"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding ReconnectCommand}"
+                                DockPanel.Dock="Bottom"
+                                Foreground="{DynamicResource FixedGradientBrush}">
+                                <Button.Visibility>
+                                    <MultiBinding Converter="{StaticResource AndBool2VisConverter}">
+                                        <Binding Converter="{StaticResource InverseBooleanConverter}" Path="Connected" />
+                                        <Binding Converter="{StaticResource InverseBooleanConverter}" Path="Connecting" />
+                                    </MultiBinding>
+                                </Button.Visibility>
+                            </Button>
+                        </StackPanel>
                         <Image
                             Canvas.Left="500"
                             Canvas.Top="40"
@@ -561,6 +594,18 @@
                             Width="40"
                             Height="40"
                             HorizontalAlignment="Center"
+                            Kind="TimelineClockOutline" />
+                        <TextBlock HorizontalAlignment="Center" Text="顺控" />
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Width="auto" Height="auto">
+                        <materialDesign:PackIcon
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
                             Kind="Apps" />
                         <TextBlock HorizontalAlignment="Center" Text="设置" />
                     </StackPanel>
@@ -614,18 +659,6 @@
                     x:Name="auditView"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top" />
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel Width="auto" Height="auto">
-                        <materialDesign:PackIcon
-                            Width="40"
-                            Height="40"
-                            HorizontalAlignment="Center"
-                            Kind="TimelineClockOutline" />
-                        <TextBlock HorizontalAlignment="Center" Text="顺控" />
-                    </StackPanel>
-                </TabItem.Header>
             </TabItem>
         </TabControl>
     </Grid>

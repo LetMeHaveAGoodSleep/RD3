@@ -114,7 +114,7 @@
                     </MultiBinding>
                 </CheckBox.IsEnabled>
             </CheckBox>
-            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
+            <WrapPanel Orientation="Horizontal">
                 <control:TextBoxNoAutoKeyboard
                     Width="110"
                     materialDesign:HintAssist.HelperText="最大:600 单位:mL/h"
@@ -123,12 +123,6 @@
                     IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     Text="{Binding PumpInfo.FlowRate_SP, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}">
-                    <control:TextBoxNoAutoKeyboard.Visibility>
-                        <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
-                            <Binding Path="IsCondition1Met" />
-                            <Binding Path="IsCondition2Met" />
-                        </MultiBinding>
-                    </control:TextBoxNoAutoKeyboard.Visibility>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                             <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
@@ -136,7 +130,8 @@
                     </i:Interaction.Triggers>
                 </control:TextBoxNoAutoKeyboard>
                 <control:TextBoxNoAutoKeyboard
-                    Width="115"
+                    Width="110"
+                    Margin="10,0,0,0"
                     materialDesign:HintAssist.HelperText="{Binding PumpInfo.FormattedTime, StringFormat='已运行{0} 单位:秒'}"
                     materialDesign:HintAssist.Hint="运行时间"
                     materialDesign:TextFieldAssist.HasClearButton="True"
@@ -148,18 +143,22 @@
                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="PumpInfo.IsConstSpeed" />
                         </MultiBinding>
                     </control:TextBoxNoAutoKeyboard.IsEnabled>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </control:TextBoxNoAutoKeyboard>
-            </hc:UniformSpacingPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBox
+                <control:TextBoxNoAutoKeyboard
                     Width="110"
+                    Margin="0,20,0,0"
                     materialDesign:HintAssist.HelperText="单位:mL"
                     materialDesign:HintAssist.Hint="设定体积"
                     materialDesign:TextFieldAssist.HasClearButton="True"
                     IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     Text="{Binding PumpInfo.FlowCapacity_SP, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}">
-                    <TextBox.Visibility>
+                    <control:TextBoxNoAutoKeyboard.Visibility>
                         <MultiBinding Converter="{StaticResource AndBool2VisConverter}">
                             <Binding
                                 Converter="{StaticResource EnumToBoolConverter}"
@@ -170,11 +169,14 @@
                                 ConverterParameter="Quantitative"
                                 Path="PumpInfo.FeedMode" />
                         </MultiBinding>
-                    </TextBox.Visibility>
-                </TextBox>
-
-            </StackPanel>
-
+                    </control:TextBoxNoAutoKeyboard.Visibility>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </control:TextBoxNoAutoKeyboard>
+            </WrapPanel>
             <hc:UniformSpacingPanel Orientation="Vertical" Spacing="20">
                 <Grid Visibility="{Binding PumpInfo.Pump, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='FeedPump,Feed2Pump'}">
                     <Grid.ColumnDefinitions>
@@ -184,6 +186,7 @@
                     </Grid.ColumnDefinitions>
                     <ComboBox
                         Height="60"
+                        Margin="5,0,0,0"
                         materialDesign:ComboBoxAssist.ShowSelectedItem="True"
                         materialDesign:HintAssist.Hint="补料策略"
                         IsEnabled="{Binding PumpInfo.IsControling, Converter={StaticResource InverseBooleanConverter}}"
@@ -199,7 +202,7 @@
                     <DockPanel
                         Grid.Column="2"
                         LastChildFill="False"
-                        Visibility="{Binding PumpInfo.FeedMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='Polynomial,Exponential,DO_stat_Speed,pH_stat_Speed,DO_stat_Volume,pH_stat_Volume,Quantitative'}">
+                        Visibility="{Binding PumpInfo.FeedMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter='Polynomial,Exponential,DO_stat_Speed,pH_stat_Speed,DO_stat_Volume,pH_stat_Volume,Cycle'}">
                         <Button
                             Height="40"
                             hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
@@ -287,7 +290,7 @@
                     Width="230"
                     Height="40"
                     Command="{Binding PumpControlCommand}"
-                    IsChecked="{Binding PumpInfo.IsControling, Mode=OneWay}"
+                    IsChecked="{Binding PumpInfo.IsControling, Mode=TwoWay}"
                     IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
                     Style="{StaticResource MaterialDesignSwitchLightToggleButton}" />
             </hc:UniformSpacingPanel>

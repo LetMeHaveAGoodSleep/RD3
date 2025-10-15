@@ -51,6 +51,7 @@
         </Grid.RowDefinitions>
         <Button
             HorizontalAlignment="Right"
+            hc:IconElement.Geometry="{StaticResource DeleteGeometry}"
             Click="ButtonDelete_Click"
             Content="删除数据"
             Style="{StaticResource ButtonPrimary}" />
@@ -104,8 +105,8 @@
                     Header="创建者"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
-                    Width="60"
-                    Binding="{Binding Status}"
+                    Width="80"
+                    Binding="{Binding statue, Converter={StaticResource EnumToStringConverter}}"
                     CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="状态"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />

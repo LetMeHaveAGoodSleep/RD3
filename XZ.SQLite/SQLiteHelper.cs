@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Data.SQLite;
@@ -13,6 +14,7 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Script.Serialization;
 
 namespace XZ.SQLite
@@ -765,23 +767,28 @@ namespace XZ.SQLite
         }
         /// <summary>
         /// 设置属性值
+        /// 优化：根据数据类型转换值
         /// </summary>
         /// <param name="propertys"></param>
         /// <param name="reader"></param>
         /// <param name="obj"></param>
         private static void SetPropertyInfoValue(PropertyInfo[] propertys, SQLiteDataReader reader,object obj)
         {
-            foreach (var item in propertys)
+            foreach (var item in propertys.Where(c => c.CanWrite))
             {
                 object value = reader[item.Name];
-                if (value != DBNull.Value)
+                if (value == DBNull.Value)
                 {
-                    item.SetValue(obj, reader[item.Name]);
+                    item.SetValue(obj, default);
+                    continue;
+                }
+                if (item.PropertyType.IsEnum)
+                {
+                    item.SetValue(obj, Enum.Parse(item.PropertyType, value.ToString()));
                 }
                 else
                 {
-                    if(item.PropertyType == typeof(string))
-                        item.SetValue(obj, "");
+                    item.SetValue(obj, Convert.ChangeType(value, item.PropertyType));
                 }
             }
         }
@@ -1217,7 +1224,7 @@ namespace XZ.SQLite
         public long projectID { set; get; }//实验ID
         public string devieceID { set; get; }//设备ID
         public string labTarget { set; get; }//实验目的
-        public long statue { set; get; }//批次运行状态
+        public RD3BatchStatue statue { set; get; }//批次运行状态
         public string startDateTime { set; get; }//开始时间
         public string endDateTime { set; get; }//结束时间
         public string Strain
@@ -1232,9 +1239,13 @@ namespace XZ.SQLite
 
     public enum RD3BatchStatue
     {
+        [Description("空闲")]
         Availble = 0,//空闲
+        [Description("运行中")]
         Running =1,//运行
+        [Description("中断")]
         Disrupt‌ = 2,//中断
+        [Description("完成")]
         Complete = 3//完成
     }
 

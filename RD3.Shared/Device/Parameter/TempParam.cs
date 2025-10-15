@@ -10,7 +10,7 @@ namespace RD3.Shared
 {
     public class TempParam : BindableBase, IAuditRecord,ICloneable
     {
-        private float _temp_PV = 0f;
+        private float _temp_PV = 37f;
         public float Temp_PV
         {
             get { return _temp_PV; }
@@ -38,14 +38,14 @@ namespace RD3.Shared
             set { SetProperty(ref _alarmUpperLimit, value); }
         }
 
-        private float _lowerLimit;
+        private float _lowerLimit = 25;
         public float LowerLimit
         {
             get { return _lowerLimit; }
             set { SetProperty(ref _lowerLimit, value); }
         }
 
-        private float _upperLimit;
+        private float _upperLimit = 75;
         public float UpperLimit
         {
             get { return _upperLimit; }
@@ -82,7 +82,18 @@ namespace RD3.Shared
         public bool IsEnable
         {
             get { return _isEnable; }
-            set { SetProperty(ref _isEnable, value); }
+            set 
+            {
+                SetProperty(ref _isEnable, value);
+                if (value)
+                {
+                    TecControlMode = TecControlMode.PIDControl;
+                }
+                else
+                {
+                    TecControlMode = TecControlMode.Close;
+                }
+            }
         }
 
         private TecControlMode _tecControlMode = TecControlMode.Close;
