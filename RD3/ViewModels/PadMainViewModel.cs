@@ -127,7 +127,7 @@ namespace RD3.ViewModels
             }
 
             string content = string.Format("批次结束，批次ID为{0}", CurrentDeviceParameter.BatchID);
-            RD3SQLHelper.EndBatch(CurrentDeviceParameter.BatchID, DateTime.Now);
+            RD3SQLHelper.EndBatch(CurrentDeviceParameter.BatchID, (int)RD3BatchStatue.Complete, DateTime.Now);
             RD3SQLHelper.AddAuditRecord(CurrentDeviceParameter?.Name, CurrentDeviceParameter.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
 
             CurrentDeviceParameter.InExperimenting = false;
@@ -204,8 +204,17 @@ namespace RD3.ViewModels
             try
             {
                 Pipe pipe = PortManager.GetInstance().FindSendPipe(CurrentDeviceParameter.Name);
-                if (pipe == null || pipe.Connected) return;
-                Connecting = true;
+                if (pipe == null)
+                {
+                    HandyControl.Controls.MessageBox.Warning("未找到反应器", "温馨提示");
+                    return;
+                }
+                else if (pipe.Connected)
+                {
+                    HandyControl.Controls.MessageBox.Info("反应器已连接", "温馨提示");
+                    return;
+                }
+                    Connecting = true;
                 Task.Run(() =>
                 {
                     pipe.Open();
@@ -213,7 +222,7 @@ namespace RD3.ViewModels
                     Connecting = false;
                     if (!Connected)
                     {
-                        HandyControl.Controls.MessageBox.Warning("连接失败", "温馨提示");
+                        HandyControl.Controls.MessageBox.Warning("反应器连接失败", "温馨提示");
                     }
                 });
             }

@@ -20,7 +20,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:PadMainViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     FontSize="{StaticResource SubHeadFontSize}"
-    ResizeMode="NoResize"
+    ResizeMode="CanMinimize"
     ShowInTaskbar="True"
     Topmost="False"
     UseLayoutRounding="True"
@@ -375,6 +375,23 @@
                             Orientation="Horizontal"
                             Spacing="5">
                             <DockPanel LastChildFill="False">
+                                <hc:Badge
+                                    BadgeMargin="5,5"
+                                    Status="Processing"
+                                    Style="{StaticResource BadgeSuccess}"
+                                    Visibility="{Binding CurrentDeviceParameter.AgitParam.IsControling, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Button
+                                        Height="66"
+                                        Padding="15"
+                                        hc:IconElement.Geometry="{StaticResource GeometryAgit}"
+                                        hc:IconElement.Height="36"
+                                        hc:IconElement.Width="36"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{Binding AgitSettingCommand}"
+                                        DockPanel.Dock="Bottom"
+                                        Foreground="{DynamicResource FixedGradientBrush}" />
+                                </hc:Badge>
                                 <Button
                                     Height="66"
                                     Padding="15"
@@ -385,7 +402,8 @@
                                     BorderThickness="0"
                                     Command="{Binding AgitSettingCommand}"
                                     DockPanel.Dock="Bottom"
-                                    Foreground="{DynamicResource FixedGradientBrush}" />
+                                    Foreground="{DynamicResource FixedGradientBrush}"
+                                    Visibility="{Binding CurrentDeviceParameter.AgitParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                             </DockPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox
@@ -424,6 +442,23 @@
                             Orientation="Horizontal"
                             Spacing="5">
                             <DockPanel LastChildFill="False">
+                                <hc:Badge
+                                    BadgeMargin="5,5"
+                                    Status="Processing"
+                                    Style="{StaticResource BadgeSuccess}"
+                                    Visibility="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Button
+                                        Height="66"
+                                        Padding="15"
+                                        hc:IconElement.Geometry="{StaticResource GeometryDO}"
+                                        hc:IconElement.Height="36"
+                                        hc:IconElement.Width="36"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{Binding DOSettingCommand}"
+                                        DockPanel.Dock="Bottom"
+                                        Foreground="{DynamicResource FixedGradientBrush}" />
+                                </hc:Badge>
                                 <Button
                                     Height="66"
                                     Padding="15"
@@ -434,7 +469,8 @@
                                     BorderThickness="0"
                                     Command="{Binding DOSettingCommand}"
                                     DockPanel.Dock="Bottom"
-                                    Foreground="{DynamicResource FixedGradientBrush}" />
+                                    Foreground="{DynamicResource FixedGradientBrush}"
+                                    Visibility="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                             </DockPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox
@@ -465,6 +501,23 @@
                             Orientation="Horizontal"
                             Spacing="5">
                             <DockPanel LastChildFill="False">
+                                <hc:Badge
+                                    BadgeMargin="5,5"
+                                    Status="Processing"
+                                    Style="{StaticResource BadgeSuccess}"
+                                    Visibility="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Button
+                                        Height="66"
+                                        Padding="15"
+                                        hc:IconElement.Geometry="{StaticResource GeometrypH}"
+                                        hc:IconElement.Height="36"
+                                        hc:IconElement.Width="36"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{Binding pHSettingCommand}"
+                                        DockPanel.Dock="Bottom"
+                                        Foreground="{DynamicResource FixedGradientBrush}" />
+                                </hc:Badge>
                                 <Button
                                     Height="66"
                                     Padding="15"
@@ -475,7 +528,8 @@
                                     BorderThickness="0"
                                     Command="{Binding pHSettingCommand}"
                                     DockPanel.Dock="Bottom"
-                                    Foreground="{DynamicResource FixedGradientBrush}" />
+                                    Foreground="{DynamicResource FixedGradientBrush}"
+                                    Visibility="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                             </DockPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox
@@ -506,6 +560,23 @@
                             Orientation="Horizontal"
                             Spacing="5">
                             <DockPanel LastChildFill="False">
+                                <hc:Badge
+                                    BadgeMargin="5,5"
+                                    Status="Processing"
+                                    Style="{StaticResource BadgeSuccess}"
+                                    Visibility="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                    <Button
+                                        Height="66"
+                                        Padding="15"
+                                        hc:IconElement.Geometry="{StaticResource GeometryTemp}"
+                                        hc:IconElement.Height="36"
+                                        hc:IconElement.Width="36"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Command="{Binding TempSettingCommand}"
+                                        DockPanel.Dock="Bottom"
+                                        Foreground="{DynamicResource FixedGradientBrush}" />
+                                </hc:Badge>
                                 <Button
                                     Height="66"
                                     Padding="15"
@@ -516,7 +587,8 @@
                                     BorderThickness="0"
                                     Command="{Binding TempSettingCommand}"
                                     DockPanel.Dock="Bottom"
-                                    Foreground="{DynamicResource FixedGradientBrush}" />
+                                    Foreground="{DynamicResource FixedGradientBrush}"
+                                    Visibility="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
                             </DockPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox

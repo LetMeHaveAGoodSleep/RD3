@@ -17,10 +17,9 @@ namespace RD3
             if (value == null || parameter == null)
                 return false;
 
-            string targetValue = parameter.ToString();
-            string sourceValue = value.ToString();
-
-            return !sourceValue.Equals(targetValue, StringComparison.OrdinalIgnoreCase);
+            var currentEnum = value.ToString();
+            var enumStrings = parameter.ToString().Split(',').Select(s => s.Trim());
+            return !enumStrings.Contains(currentEnum);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

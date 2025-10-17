@@ -53,14 +53,14 @@ namespace RD3.Shared
             set { SetProperty(ref _pHControlMode, value); }
         }
 
-        private float _lowerLimit;
+        private float _lowerLimit = 0;
         public float LowerLimit
         {
             get { return _lowerLimit; }
             set { SetProperty(ref _lowerLimit, value); }
         }
 
-        private float _upperLimit;
+        private float _upperLimit = 14;
         public float UpperLimit
         {
             get { return _upperLimit; }

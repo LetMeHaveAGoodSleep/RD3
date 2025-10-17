@@ -164,7 +164,7 @@ namespace RD3.ViewModels
                             }
                             else if (PumpInfo.IsControling)
                             {
-                                if (PumpInfo.RunningTime <= PumpInfo.RunningTime_SP - 1 || PumpInfo.IsConstSpeed)
+                                if (PumpInfo.RunningTime <= PumpInfo.RunningTime_SP * 60f - 1 || PumpInfo.IsConstSpeed)
                                 {
                                     PumpInfo.RunningTime += 1;
                                 }

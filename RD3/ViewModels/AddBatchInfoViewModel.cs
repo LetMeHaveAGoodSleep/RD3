@@ -15,21 +15,21 @@ namespace RD3.ViewModels
 {
     public class AddBatchInfoViewModel : BaseViewModel, IDialogAware
     {
-        private string _strain;
+        private string _strain = "菌种信息";
         public string Strain
         {
             get { return _strain; }
             set { SetProperty(ref _strain, value); }
         }
 
-        private string _tester;
+        private string _tester = "测试人员";
         public string Tester
         {
             get { return _tester; }
             set { SetProperty(ref _tester, value); }
         }
 
-        private string _remark;
+        private string _remark = "备注";
         public string Remark
         {
             get { return _remark; }

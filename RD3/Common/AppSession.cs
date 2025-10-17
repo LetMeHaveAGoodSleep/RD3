@@ -24,7 +24,7 @@ namespace RD3.Common
 
         public static string LanguageName { get; set; } = Const.CHNLanguage;
 
-        public static Batch CurrentBatch { get; set; }
+        public static RD3Batch CurrentBatch { get; set; }
 
         public static List<RD3Batch> SelectedBatches { get; set; }
 

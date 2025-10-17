@@ -1120,9 +1120,9 @@ namespace XZ.SQLite
         /// 结束批次实验
         /// </summary>
         /// <returns></returns>
-        public static bool EndBatch(int batchID, DateTime time)
+        public static bool EndBatch(int batchID,int status, DateTime time)
         {
-            string sql = $"UPDATE {BatchTable} set endDateTime = '{time}' where ID = {batchID}";
+            string sql = $"UPDATE {BatchTable} set endDateTime = '{time}',statue = {status} where ID = {batchID}";
             int row = SQLiteHelper.ExecuteNonQuery(sql);
             return row > 0;
         }

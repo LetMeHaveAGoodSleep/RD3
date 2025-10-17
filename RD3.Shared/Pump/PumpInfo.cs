@@ -21,11 +21,11 @@ namespace RD3.Shared
             set { SetProperty(ref _flowRate_SP, value); }
         }
 
-        private int _runningTime_SP;
+        private float _runningTime_SP = 1;
         /// <summary>
         /// 运行时间设定值
         /// </summary>
-        public int RunningTime_SP
+        public float RunningTime_SP
         {
             get => _runningTime_SP;
             set { SetProperty(ref _runningTime_SP, value); }
@@ -81,7 +81,7 @@ namespace RD3.Shared
                     TimeSpan ts = TimeSpan.FromSeconds(value);
                     FormattedTime = ts.ToString(@"hh\:mm\:ss");
 
-                    if (value >= RunningTime_SP && !IsConstSpeed)
+                    if (value >= RunningTime_SP * 60 && !IsConstSpeed)
                     {
                         IsControling = false;
                     }

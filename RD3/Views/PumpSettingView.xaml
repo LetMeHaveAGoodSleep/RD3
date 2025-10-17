@@ -117,10 +117,9 @@
             <WrapPanel Orientation="Horizontal">
                 <control:TextBoxNoAutoKeyboard
                     Width="110"
-                    materialDesign:HintAssist.HelperText="最大:600 单位:mL/h"
+                    materialDesign:HintAssist.HelperText="{Binding Source={x:Static share:Const.MaxPumpFlowRate}, StringFormat='最大:{0} 单位:mL/h'}"
                     materialDesign:HintAssist.Hint="设定流速"
                     materialDesign:TextFieldAssist.HasClearButton="True"
-                    IsEnabled="{Binding PumpInfo.IsControlled, Converter={StaticResource InverseBooleanConverter}}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     Text="{Binding PumpInfo.FlowRate_SP, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}">
                     <i:Interaction.Triggers>
@@ -128,12 +127,18 @@
                             <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
+                    <control:TextBoxNoAutoKeyboard.IsEnabled>
+                        <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
+                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="PumpInfo.IsControlled" />
+                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="PumpInfo.IsControling" />
+                        </MultiBinding>
+                    </control:TextBoxNoAutoKeyboard.IsEnabled>
                 </control:TextBoxNoAutoKeyboard>
                 <control:TextBoxNoAutoKeyboard
                     Width="110"
-                    Margin="10,0,0,0"
-                    materialDesign:HintAssist.HelperText="{Binding PumpInfo.FormattedTime, StringFormat='已运行{0} 单位:秒'}"
-                    materialDesign:HintAssist.Hint="运行时间"
+                    Margin="5,0,0,0"
+                    materialDesign:HintAssist.HelperText="{Binding PumpInfo.FormattedTime, StringFormat='已运行:{0}'}"
+                    materialDesign:HintAssist.Hint="运行时间(分钟)"
                     materialDesign:TextFieldAssist.HasClearButton="True"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     Text="{Binding PumpInfo.RunningTime_SP, StringFormat={}{0:F0}, UpdateSourceTrigger=LostFocus}">
@@ -141,6 +146,11 @@
                         <MultiBinding Converter="{StaticResource MultiBoolToBoolConverter}">
                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="PumpInfo.IsControlled" />
                             <Binding Converter="{StaticResource InverseBooleanConverter}" Path="PumpInfo.IsConstSpeed" />
+                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="PumpInfo.IsControling" />
+                            <Binding
+                                Converter="{StaticResource EnumToInverseBoolConverter}"
+                                ConverterParameter="FeedPump,Feed2Pump"
+                                Path="PumpInfo.Pump" />
                         </MultiBinding>
                     </control:TextBoxNoAutoKeyboard.IsEnabled>
                     <i:Interaction.Triggers>
@@ -151,7 +161,7 @@
                 </control:TextBoxNoAutoKeyboard>
                 <control:TextBoxNoAutoKeyboard
                     Width="110"
-                    Margin="0,20,0,0"
+                    Margin="0,10,0,0"
                     materialDesign:HintAssist.HelperText="单位:mL"
                     materialDesign:HintAssist.Hint="设定体积"
                     materialDesign:TextFieldAssist.HasClearButton="True"

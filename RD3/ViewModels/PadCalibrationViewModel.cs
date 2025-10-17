@@ -771,7 +771,7 @@ namespace RD3.ViewModels
                     if (prop.Name == $"Pump{i}Param")
                     {
                         pumpCorrectParam = (PumpCorrectParam)value;
-                        pumpCorrectParam.Coefficient = pumpCorrectParam.Speed = pumpCorrectParam.Time = pumpCorrectParam.Weigh = pumpCorrectParam.Density = 0;
+                        pumpCorrectParam.Coefficient = pumpCorrectParam.Speed = pumpCorrectParam.Time = pumpCorrectParam.Weigh = 0;
                     }
                 }
             }

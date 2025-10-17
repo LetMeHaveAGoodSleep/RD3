@@ -88,6 +88,17 @@ namespace RD3.ViewModels
                     return;
                 }
             }
+            else if (PumpInfo.Pump == PeristalticPump.FeedPump || PumpInfo.Pump == PeristalticPump.Feed2Pump)
+            {
+                if (PumpInfo.FeedMode == FeedControlMode.Quantitative)
+                {
+                    if (PumpInfo.FlowCapacity_SP <= 0)
+                    {
+                        HandyControl.Controls.MessageBox.Warning("设定体积必须大于0", "温馨提示");
+                        return;
+                    }
+                }
+            }
         });
 
         public DelegateCommand<DeviceParameter> AFSettingCommand => new((DeviceParameter device) =>
