@@ -40,9 +40,11 @@ namespace RD3.Views
     /// </summary>
     public partial class PadMainView : System.Windows.Window
     {
-        private int _activeTouches = 0;
-        private (Point, Point) _previousTouchPoints;
-        private double _previousDistance;
+        // 记录手势状态的变量
+        private bool _isPinching = false; // 是否处于双指手势中
+        private double _initialDistance; // 手势开始时的双指距离（唯一基准）
+        private Point _initialCenter; // 手势开始时的双指中心（缩放原点）
+        private double _lastZoomRatio = 1.0; // 上一帧的总缩放比例（用于计算增量）
 
         Crosshair MyCrosshair;
         Marker MyHighlightMarker;
@@ -176,23 +178,72 @@ namespace RD3.Views
 
             wpfPlot3.TouchDown += (s, e) => 
             {
-                _activeTouches++;
-                UpdateTouchState(e);
+                var allTouches = wpfPlot3.TouchesOver.ToList();
+                if (allTouches.Count == 2)
+                {
+                    _isPinching = true;
+                    // 记录手势开始时的双指位置
+                    var points = allTouches.Select(td => td.GetTouchPoint(wpfPlot3).Position).ToArray();
+                    _initialDistance = CalculateDistance(points[0], points[1]);
+                    _initialCenter = new Point(
+                        (points[0].X + points[1].X) / 2,
+                        (points[0].Y + points[1].Y) / 2);
+                    _lastZoomRatio = 1.0; // 重置缩放比例基准
+                    wpfPlot3.Plot.Title($"x1:{points[0].X},y1:{points[0].Y},x2:{points[1].X},y2:{points[1].Y}");
+                }
+                else
+                {
+                    _isPinching = false;
+                }
                 e.Handled = true;
             };
             wpfPlot3.TouchMove += (s, e) => 
             {
-                if (_activeTouches == 2)
+                if (!_isPinching) return;
+
+                var allTouches = wpfPlot3.TouchesOver.ToList();
+                if (allTouches.Count != 2)
                 {
-                    UpdateTouchState(e);
-                    ApplyPinchZoom();
+                    _isPinching = false;
+                    return;
+                }
+
+                // 获取当前双指位置，计算与初始距离的总比例
+                var points = allTouches.Select(td => td.GetTouchPoint(wpfPlot3).Position).ToArray();
+                double currentDistance = CalculateDistance(points[0], points[1]);
+                double totalZoomRatio = currentDistance / _initialDistance; // 始终与初始距离比较
+
+                // 计算当前帧与上一帧的缩放差异（增量）
+                double ratioDelta = totalZoomRatio / _lastZoomRatio;
+                double fraction =  ratioDelta;
+                wpfPlot3.Plot.Title($"init:{_initialDistance.ToString("F2")},current:{currentDistance.ToString("F2")},totalZoomRatio:{totalZoomRatio.ToString("F2")},lastZoomRatio:{_lastZoomRatio.ToString("F2")},fraction:{fraction}");
+                // 过滤微小变化（避免抖动）
+                if (ratioDelta < 0.98 || ratioDelta > 1.02)
+                {
+                    // 转换初始中心为像素坐标（固定用手势开始时的中心作为缩放原点）
+                    Pixel centerPixel = new(
+                        (float)(_initialCenter.X * wpfPlot3.DisplayScale),
+                        (float)(_initialCenter.Y * wpfPlot3.DisplayScale));
+
+                    // 应用增量缩放（基于与初始距离的累计变化）
+                    MouseAxisManipulation.MouseWheelZoom(
+                        plot: wpfPlot3.Plot,
+                        fracX: fraction,
+                        fracY: fraction,
+                        centerPixel,
+                         true);
+
+                    wpfPlot3.Refresh();
+                    _lastZoomRatio = totalZoomRatio; // 更新上一帧比例，用于下次计算
+
                 }
                 e.Handled = true;
             };
-            wpfPlot3.TouchUp += (s, e) => 
+            wpfPlot3.TouchUp += (s, e) =>
             {
-                _activeTouches--;
+                _isPinching = false;
                 e.Handled = true;
+                wpfPlot3.Plot.Title("End");
             };
 
             DateTime startDateTime = DateTime.Now;
@@ -289,44 +340,6 @@ namespace RD3.Views
             }
 
             GraphSetting();
-        }
-
-        private void UpdateTouchState(TouchEventArgs e)
-        {
-            var touches = e.GetIntermediateTouchPoints(wpfPlot3);
-            if (touches.Count >= 2)
-            {
-                _previousTouchPoints = (touches[0].Position, touches[1].Position);
-                _previousDistance = CalculateDistance(_previousTouchPoints.Item1, _previousTouchPoints.Item2);
-            }
-        }
-
-        private void ApplyPinchZoom()
-        {
-            var currentTouches = wpfPlot3.TouchesOver;
-            if (currentTouches.Count() != 2) return;
-
-            var points = currentTouches.Select(td => td.GetTouchPoint(wpfPlot3).Position).ToArray();
-            double currentDistance = CalculateDistance(points[0], points[1]);
-
-            // 计算缩放比例（基于前后距离变化）
-            double zoomFactor = currentDistance / _previousDistance;
-            if (zoomFactor < 0.95 || zoomFactor > 1.05) // 忽略微小变化
-            {
-                // 计算双指中心点（作为缩放中心）
-                Point center = new(
-                    (points[0].X + points[1].X) / 2,
-                    (points[0].Y + points[1].Y) / 2);
-                Pixel centerPixel = new((float)(center.X * wpfPlot3.DisplayScale), (float)(center.Y * wpfPlot3.DisplayScale));
-
-                // 应用缩放（使用现有鼠标滚轮缩放逻辑）
-                double fracX = zoomFactor > 1 ? 0.85 : 1.15; // 缩放系数
-                double fracY = fracX;
-                MouseAxisManipulation.MouseWheelZoom(wpfPlot3.Plot, fracX, fracY, centerPixel, true);
-                wpfPlot3.Refresh();
-
-                _previousDistance = currentDistance;
-            }
         }
 
         // 计算两点距离

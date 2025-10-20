@@ -625,7 +625,7 @@
                             Height="40"
                             HorizontalAlignment="Center"
                             Kind="ChartBellCurveCumulative" />
-                        <TextBlock HorizontalAlignment="Center" Text="图表" />
+                        <TextBlock HorizontalAlignment="Center" Text="曲线" />
                     </StackPanel>
                 </TabItem.Header>
                 <Grid Name="GridMain" Margin="5">
