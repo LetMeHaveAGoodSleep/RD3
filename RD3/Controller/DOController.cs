@@ -166,6 +166,8 @@ namespace RD3.Controller
                     lastFactorIndex = -1;//当前执行索引
 
                     MidRangingParam param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
+                    param.AgitLowerLimit = CurrentDeviceParameter.AgitParam.LowerLimit;
+                    param.AgitUpperLimit = CurrentDeviceParameter.AgitParam.UpperLimit;
                     realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                     CurrentDeviceParameter.AgitParam.Agit_PV = Math.Clamp(realTimeParam.Agit, CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
                     CurrentDeviceParameter.AgitParam.IsControling = true;
@@ -920,15 +922,8 @@ namespace RD3.Controller
                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                         if (realTimeParam.DO < CurrentDeviceParameter.DOParam.DO_PV)
                         {
-                            CurrentDeviceParameter.AgitParam.Agit_PV += CurrentDeviceParameter.DOParam.AgitCycle.DirectStep;
-                            if (CurrentDeviceParameter.AgitParam.Agit_PV < CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit)
-                            {
-                                CurrentDeviceParameter.AgitParam.Agit_PV = CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit;
-                            }
-                            else if (CurrentDeviceParameter.AgitParam.Agit_PV > CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit)
-                            {
-                                CurrentDeviceParameter.AgitParam.Agit_PV = CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit;
-                            }
+                            int temp = CurrentDeviceParameter.AgitParam.Agit_PV + CurrentDeviceParameter.DOParam.AgitCycle.DirectStep;
+                            CurrentDeviceParameter.AgitParam.Agit_PV = Math.Clamp(temp, CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit, CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit);
                             InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.Agit_PV);
 
                             int count = CurrentDeviceParameter.DOParam.AgitCycle.DirectInterval;
@@ -1012,6 +1007,8 @@ namespace RD3.Controller
                     CurrentDeviceParameter.AgitParam.IsControling = true;
 
                     DOAssParam param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
+                    param.AgitLowerLimit = CurrentDeviceParameter.AgitParam.LowerLimit;
+                    param.AgitUpperLimit = CurrentDeviceParameter.AgitParam.UpperLimit;
 
                     ObservableCollection<DOControlFactor> collection = [.. param.FactorCol];
 
@@ -1264,7 +1261,7 @@ namespace RD3.Controller
                             }
                             LogHelper.Debug(string.Format("反应器{0} 阶梯级联 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", CurrentDeviceParameter.Name, baseAgit, temp, tempAgit, _agitDelta));
 
-                            CurrentDeviceParameter.AgitParam.Agit_PV = (int)(_agitDelta >= param.AgitUpperLimit ? param.AgitUpperLimit : _agitDelta <= param.AgitLowerLimit ? param.AgitLowerLimit : _agitDelta);
+                            CurrentDeviceParameter.AgitParam.Agit_PV = (int)Math.Clamp(_agitDelta, CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
                             InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.Agit_PV);
 
                             sleepCount = info.Interval <= 1 ? 1 : info.Interval;
