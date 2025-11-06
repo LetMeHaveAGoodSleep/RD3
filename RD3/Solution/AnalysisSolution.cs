@@ -95,10 +95,6 @@ namespace RD3
             }
             string jsonContent = AESEncryption.DecryptFile(filePath);
             ReactorCol = JsonConvert.DeserializeObject<ObservableCollection<DeviceParameter>>(jsonContent);
-            if (ReactorCol != null && ReactorCol.Count > 1)
-            {
-                ReactorCol = new ObservableCollection<DeviceParameter>(ReactorCol.OrderBy(t => t.SerialNumber));
-            }
         }
 
         private void LoadPumpSetting()

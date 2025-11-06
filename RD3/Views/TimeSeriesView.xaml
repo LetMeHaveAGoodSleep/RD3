@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:behavior="clr-namespace:RD3.Behaviors"
     xmlns:common="clr-namespace:RD3.Common"
+    xmlns:control="clr-namespace:RD3.Controls"
     xmlns:cv="clr-namespace:RD3.Common.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
@@ -18,14 +19,13 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
-    Width="800"
+    Width="450"
     Height="500"
     d:DataContext="{d:DesignInstance Type=vm:TimeSeriesViewModel}"
-    d:DesignHeight="450"
-    d:DesignWidth="600"
-    Background="{StaticResource BackGroundBrush}"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Background="{StaticResource RegionBackgroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
-    TextElement.FontSize="{DynamicResource TextFontSize}"
+    TextElement.FontSize="{DynamicResource SubHeadFontSize}"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextOptions.TextFormattingMode="Ideal"
@@ -44,7 +44,7 @@
             <Setter Property="AllowsTransparency" Value="False" />
             <Setter Property="WindowStyle" Value="SingleBorderWindow" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource RegionBackgroundBrush}" />
             <Setter Property="Opacity" Value="1" />
             <Setter Property="Icon" Value="../Assets/logo.png" />
         </Style>
@@ -55,156 +55,161 @@
             MethodName="GetValues"
             ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="shared:FeedTimer" />
+                <x:Type TypeName="shared:TimeUnit" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>
-    <Grid Margin="5">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <DockPanel Margin="5" LastChildFill="False">
-            <hc:UniformSpacingPanel Spacing="10">
-                <ComboBox
-                    Width="100"
-                    hc:InfoElement.Title="{ex:Language Key='Timer'}"
-                    DockPanel.Dock="Left"
-                    FontSize="{DynamicResource SubHeadFontSize}"
-                    ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
-                    SelectedItem="{Binding TimeSeries.Timer}"
-                    Style="{StaticResource ComboBoxExtend}" />
-                <DockPanel LastChildFill="False">
-                    <Button
-                        Name="BtnAddRow"
-                        Height="30"
-                        VerticalAlignment="Bottom"
-                        hc:IconElement.Geometry="{StaticResource GeometryAdd}"
-                        Command="{Binding AddCommand}"
-                        Content="新增"
-                        Foreground="{StaticResource PrimaryBrush}" />
-                </DockPanel>
-                <DockPanel LastChildFill="False">
-                    <Button
-                        Name="BtnDeleteRow"
-                        Height="30"
-                        VerticalAlignment="Bottom"
-                        hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"
-                        Command="{Binding DeleteCommand}"
-                        CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}"
-                        Content="删除"
-                        Foreground="{StaticResource PrimaryBrush}" />
-                </DockPanel>
-                <DockPanel LastChildFill="False">
-                    <Button
-                        Height="30"
-                        VerticalAlignment="Bottom"
-                        hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"
-                        Command="{Binding DeleteAllCommand}"
-                        Content="清空序列"
-                        Foreground="{StaticResource PrimaryBrush}" />
-                </DockPanel>
-            </hc:UniformSpacingPanel>
-
-            <DockPanel DockPanel.Dock="Right">
-                <Button
+        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+            <ComboBox
+                Width="120"
+                materialDesign:HintAssist.Hint="控制方式"
+                ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+                SelectedItem="{Binding CurrentDeviceParameter.PHParam.ControlMode}"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <control:TextBoxNoAutoKeyboard
+                Width="120"
+                materialDesign:HintAssist.Hint="设定值"
+                materialDesign:TextFieldAssist.HasClearButton="True"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding CurrentDeviceParameter.PHParam.SP}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </control:TextBoxNoAutoKeyboard>
+        </hc:UniformSpacingPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <ComboBox
+                Width="120"
+                Margin="0,0,25,0"
+                materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                materialDesign:HintAssist.Hint="时间单位"
+                SelectedItem="{Binding TimeSeries.Timer}"
+                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <StackPanel Margin="0,0,20,0" Orientation="Vertical">
+                <RadioButton
                     Width="80"
-                    VerticalAlignment="Bottom"
-                    Background="{StaticResource PrimaryBrush}"
-                    BorderBrush="{StaticResource PrimaryBrush}"
-                    Command="{Binding RefershCommand}"
-                    Content="刷新"
-                    Foreground="White" />
-                <Button
+                    Margin="5"
+                    Content="相对时间"
+                    IsChecked="{Binding TimeSeries.TimeType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=RelativeTime}" />
+                <RadioButton
                     Width="80"
-                    Margin="5,0,0,0"
-                    VerticalAlignment="Bottom"
-                    Background="{StaticResource PrimaryBrush}"
-                    BorderBrush="{StaticResource PrimaryBrush}"
-                    Command="{Binding SaveCommand}"
-                    Content="保存"
-                    Foreground="White"
-                    Visibility="Collapsed" />
-                <Button
-                    Width="120"
-                    Margin="5,0,0,0"
-                    VerticalAlignment="Bottom"
-                    Background="{StaticResource PrimaryBrush}"
-                    BorderBrush="{StaticResource PrimaryBrush}"
-                    Command="{Binding CopyCommand}"
-                    Content="复制至其他反应器"
-                    Foreground="White" />
-            </DockPanel>
-        </DockPanel>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300" />
-                <ColumnDefinition Width="5" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <DataGrid
-                Name="dataGrid"
-                hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
-                hc:DataGridAttach.ShowSelectAllButton="False"
-                AutoGenerateColumns="False"
-                Background="{StaticResource DefaultBrush}"
-                CanUserAddRows="False"
-                CanUserSortColumns="False"
-                ColumnWidth="SizeToHeader"
-                GridLinesVisibility="All"
-                HeadersVisibility="Column"
-                HorizontalGridLinesBrush="LightGray"
-                IsReadOnly="False"
-                ItemsSource="{Binding TimeSeries.TimeSeriesItemCol}"
-                LoadingRow="DataGrid_LoadingRow"
-                RowHeaderWidth="0"
-                ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                ScrollViewer.VerticalScrollBarVisibility="Auto"
-                SelectionMode="Single"
-                SelectionUnit="FullRow"
-                VerticalGridLinesBrush="LightGray">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn
-                        Width="60"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                        Header="序号"
-                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=Header}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn
-                        Width="100"
-                        Binding="{Binding Time}"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                        Header="时间"
-                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                    <DataGridTextColumn
-                        x:Name="xm"
-                        Width="100"
-                        Binding="{Binding Value}"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                        Header="溶氧(%)"
-                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                    <!--<DataGridTextColumn
-                        Width="100"
-                        Binding="{Binding Remark}"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                        Header="备注"
-                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />-->
-                </DataGrid.Columns>
-            </DataGrid>
-            <GridSplitter
-                Grid.Column="1"
-                Width="5"
-                VerticalAlignment="Stretch"
-                Background="LightGray"
-                Cursor="SizeWE" />
-            <wpf:WpfPlot Name="wpfPlot" Grid.Column="2" />
-        </Grid>
-
-
+                    Margin="5"
+                    Content="绝对时间"
+                    IsChecked="{Binding TimeSeries.TimeType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=AbsoluteTime}" />
+            </StackPanel>
+            <TextBlock
+                Width="180"
+                Height="40"
+                VerticalAlignment="Center"
+                Text="{Binding RunningInfo}" />
+        </StackPanel>
+        <hc:UniformSpacingPanel
+            Grid.Row="2"
+            Orientation="Horizontal"
+            Spacing="10">
+            <Button
+                Width="80"
+                Height="30"
+                Command="{Binding AddCommand}"
+                Content="添加新行"
+                Style="{StaticResource PrimaryCommonButton}" />
+            <Button
+                Width="80"
+                Height="30"
+                Command="{Binding InsertCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=SelectedItem}"
+                Content="插入新行"
+                IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=SelectedItem, Converter={StaticResource ObjectIsNullConverter}}"
+                Style="{StaticResource PrimaryCommonButton}" />
+            <Button
+                Width="80"
+                Height="30"
+                Command="{Binding DeleteCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=SelectedItem}"
+                Content="删除数据"
+                IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=SelectedItem, Converter={StaticResource ObjectIsNullConverter}}"
+                Style="{StaticResource PrimaryCommonButton}" />
+            <Button
+                Width="80"
+                Height="30"
+                Click="btnCopyTo_Click"
+                Content="复制时序"
+                Style="{StaticResource PrimaryCommonButton}" />
+        </hc:UniformSpacingPanel>
+        <DataGrid
+            x:Name="dataGrid"
+            Grid.Row="3"
+            AlternatingRowBackground="Gray"
+            AutoGenerateColumns="False"
+            CanUserDeleteRows="True"
+            CanUserSortColumns="False"
+            ColumnHeaderHeight="35"
+            ColumnWidth="SizeToHeader"
+            GridLinesVisibility="None"
+            HeadersVisibility="Column"
+            IsReadOnly="False"
+            ItemsSource="{Binding TimeSeries.TimeSeriesItemCol}"
+            RowHeight="35"
+            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            SelectionMode="Single"
+            SelectionUnit="FullRow">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn
+                    Width="60"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="序号"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=Header}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn
+                    x:Name="col_time"
+                    Width="145"
+                    Binding="{Binding StartTime}"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="{Binding TimeSeries.TimeType, Converter={StaticResource EnumToStringConverter}, StringFormat='开始时间({0})'}"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    x:Name="col_endtime"
+                    Width="145"
+                    Binding="{Binding EndTime}"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="{Binding TimeSeries.TimeType, Converter={StaticResource EnumToStringConverter}, StringFormat='结束时间({0})'}"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+                <DataGridTextColumn
+                    x:Name="xm"
+                    Width="80"
+                    Binding="{Binding Value}"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                    Header="目标值"
+                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

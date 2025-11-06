@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
-    public class GasParam : BindableBase, ICloneable
+    public class GasParam : BasicParam
     {
         private int _mfcNo = -1;
         public int MFCNo
@@ -23,38 +23,15 @@ namespace RD3.Shared
             set { SetProperty(ref _gasType, value); }
         }
 
-        private ControlMode _controlMode = ControlMode.Enable;
-        public ControlMode ControlMode
-        {
-            get { return _controlMode; }
-            set { SetProperty(ref _controlMode, value); }
-        }
-
         private float _flowSpeed;
         public float FlowSpeed
         {
             get => _flowSpeed;
-            set { SetProperty(ref _flowSpeed, value); }
-        }
-
-        private float _flowFlowCapacity;
-        public float FlowFlowCapacity
-        {
-            get => _flowFlowCapacity;
-            set { SetProperty(ref _flowFlowCapacity, value); }
-        }
-
-        private bool _isControling = false;
-        public bool IsControling
-        {
-            get { return _isControling; }
-            set { SetProperty(ref _isControling, value); }
-        }
-
-        public object Clone()
-        {
-            var clonedObject = ObjectCloner.DeepCopy(this);
-            return clonedObject;
+            set 
+            { 
+                SetProperty(ref _flowSpeed, value);
+                SP = value;
+            }
         }
     }
 }

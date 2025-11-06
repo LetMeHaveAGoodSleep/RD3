@@ -12,11 +12,14 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using XZ.SQLite;
 
 namespace RD3.Controller
 {
     public class pHController
     {
+        private DateTime _tsStartTime;
+
         private float _pHSP = -1;
 
         private float _delta = 0f;
@@ -28,6 +31,11 @@ namespace RD3.Controller
         private IntelligentPHController _intelligentPHController = new IntelligentPHController();
 
         private BackgroundWorker _backgroundWorker;
+
+        private Thread _tsThread;
+
+        // 线程退出标志（必须用 volatile 修饰）
+        private static volatile bool _shouldStop = false;
 
         public DeviceParameter CurrentDeviceParameter
         {
@@ -333,11 +341,11 @@ namespace RD3.Controller
 
                             RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
 
-                            if (realTimeParam.PH >= deviceParameter.PHParam.PH_PV)
+                            if (realTimeParam.PH >= deviceParameter.PHParam.SP)
                             {
                                 info = pIDInfos.FindFirst(t => t.PidName.Contains("PH_酸") && t.deviceID == deviceParameter.Name);
                             }
-                            else if (realTimeParam.PH <= deviceParameter.PHParam.PH_PV)
+                            else if (realTimeParam.PH <= deviceParameter.PHParam.SP)
                             {
                                 info = pIDInfos.FindFirst(t => t.PidName.Contains("PH_碱") && t.deviceID == deviceParameter.Name);
                             }
@@ -364,10 +372,10 @@ namespace RD3.Controller
                             _pidController.SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold);
                             _pidController.SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
                             _pidController.SetIntegralLimits(-20, 20);
-                            _pidController.SetTarget(deviceParameter.PHParam.PH_PV);
+                            _pidController.SetTarget(deviceParameter.PHParam.SP);
 
-                            LogHelper.Debug(string.Format("反应器{5},PH预设值：{0}，PH当前值：{4}，P：{1}，I：{2}，D：{3}", deviceParameter.PHParam.PH_PV, info.P, info.I, info.D, realTimeParam.PH, deviceParameter.Name));
-                            if (realTimeParam.PH >= deviceParameter.PHParam.PH_PV - info.deadArea && realTimeParam.PH <= deviceParameter.PHParam.PH_PV + info.deadArea)
+                            LogHelper.Debug(string.Format("反应器{5},PH预设值：{0}，PH当前值：{4}，P：{1}，I：{2}，D：{3}", deviceParameter.PHParam.SP, info.P, info.I, info.D, realTimeParam.PH, deviceParameter.Name));
+                            if (realTimeParam.PH >= deviceParameter.PHParam.SP - info.deadArea && realTimeParam.PH <= deviceParameter.PHParam.SP + info.deadArea)
                             {
                                 CloseAcidBase();
 
@@ -519,8 +527,8 @@ namespace RD3.Controller
                                                 index1 += 1;
                                                 if (index1 >= 120)
                                                 {
-                                                    deviceParameter.BaseParam.Base_PV = 0;
-                                                    deviceParameter.AcidParam.Acid_PV = 0;
+                                                    deviceParameter.BaseParam.SP = 0;
+                                                    deviceParameter.AcidParam.SP = 0;
                                                 }
                                             }
                                             double offset = currentpH - workpH;
@@ -593,8 +601,8 @@ namespace RD3.Controller
                                             index1 += 1;
                                             if (index1 >= 120)
                                             {
-                                                deviceParameter.BaseParam.Base_PV = 0;
-                                                deviceParameter.AcidParam.Acid_PV = 0;
+                                                deviceParameter.BaseParam.SP = 0;
+                                                deviceParameter.AcidParam.SP = 0;
                                             }
                                         }
                                         if (Math.Abs(currentpH - workpH) < 1)
@@ -629,8 +637,8 @@ namespace RD3.Controller
                                         index1 += 1;
                                         if (index1 >= 120)
                                         {
-                                            deviceParameter.BaseParam.Base_PV = 0;
-                                            deviceParameter.AcidParam.Acid_PV = 0;
+                                            deviceParameter.BaseParam.SP = 0;
+                                            deviceParameter.AcidParam.SP = 0;
                                         }
                                     }
                                     steady = phIsSteady(lastpH, currentpH);//判断是否稳定
@@ -656,7 +664,7 @@ namespace RD3.Controller
 
                     _intelligentPHController = new IntelligentPHController()
                     {
-                        TargetPH = deviceParameter.PHParam.PH_PV
+                        TargetPH = deviceParameter.PHParam.SP
                     };
 
                     while (true)
@@ -666,7 +674,7 @@ namespace RD3.Controller
                             _workerWorking = false;
                             return;
                         }
-                        _intelligentPHController.TargetPH = deviceParameter.PHParam.PH_PV;
+                        _intelligentPHController.TargetPH = deviceParameter.PHParam.SP;
                         PropertyMapper.Map(deviceParameter.AdaptivepHParameter, _intelligentPHController);
 
                         var realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -676,7 +684,7 @@ namespace RD3.Controller
                             if (isAlkali)//加碱
                             {
                                 int waitSeconds = AddBaseByFlowCapacity((float)volume, AppSession.DefaultPumpFlowRate, deviceParameter.PHParam.BaseAssociated);
-                                LogHelper.Debug(string.Format("反应器{0},PH预设值：{1}，PH当前值：{2}，体积：{3}", deviceParameter.Name, deviceParameter.PHParam.PH_PV, realTimeParam.PH, volume));
+                                LogHelper.Debug(string.Format("反应器{0},PH预设值：{1}，PH当前值：{2}，体积：{3}", deviceParameter.Name, deviceParameter.PHParam.SP, realTimeParam.PH, volume));
                                 while (waitSeconds > 0 && !InstrumentSolution.GetInstance().IsSimulation)
                                 {
                                     if (_backgroundWorker.CancellationPending)
@@ -691,7 +699,7 @@ namespace RD3.Controller
                             else//加酸
                             {
                                 int waitSeconds = AddAcidByFlowCapacity((float)volume, AppSession.DefaultPumpFlowRate, deviceParameter.PHParam.AcidAssociated);
-                                LogHelper.Debug(string.Format("反应器{0},PH预设值：{1}，PH当前值：{2}，体积：{3}", deviceParameter.Name, deviceParameter.PHParam.PH_PV, realTimeParam.PH, volume));
+                                LogHelper.Debug(string.Format("反应器{0},PH预设值：{1}，PH当前值：{2}，体积：{3}", deviceParameter.Name, deviceParameter.PHParam.SP, realTimeParam.PH, volume));
                                 while (waitSeconds > 0 && !InstrumentSolution.GetInstance().IsSimulation)
                                 {
                                     if (_backgroundWorker.CancellationPending)
@@ -757,6 +765,78 @@ namespace RD3.Controller
             {
                 BasePumpInfo.IsControlled = BasePumpInfo.IsControling = false;
             }
+        }
+
+
+        private int GetTSIndex(double span)
+        {
+            int index = -1;
+            var col = CurrentDeviceParameter.PHParam.TimeSeries.TimeSeriesItemCol;
+            for (int i = 0; i < col.Count; i++)
+            {
+                if (span >= col[i].StartTime && span < col[i].EndTime)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            return index;
+        }
+        /// <summary>
+        /// 绝对时间：当前时间
+        /// 相对时间：批次开始时间
+        /// </summary>
+        public void StartTimeSeriesWork()
+        {
+            this._tsStartTime = DateTime.Now;
+            if (CurrentDeviceParameter.PHParam.TimeSeries.TimeType == TimeType.RelativeTime)
+            {
+                if (CurrentDeviceParameter.BatchID < 1)
+                {
+                    _tsStartTime = DateTime.Now;
+                }
+                else
+                {
+                    var batch = RD3SQLHelper.QueryBatchByID(CurrentDeviceParameter.BatchID);
+                    _tsStartTime = Convert.ToDateTime(batch.startDateTime);
+                }
+            }
+            _shouldStop = true; // 设置退出标志
+            _tsThread?.Join(); // 等待线程结束
+            _tsThread = new Thread(() =>
+            {
+                if (CurrentDeviceParameter.PHParam.TimeSeries.TimeSeriesItemCol.Count < 1)
+                {
+                    LogHelper.Debug($"{CurrentDeviceParameter.Name}的pH时间序列为空");
+                    return;
+                }
+
+                double spanMinutes = (DateTime.Now - _tsStartTime).TotalMinutes;
+                double lastTime = CurrentDeviceParameter.PHParam.TimeSeries.TimeSeriesItemCol[CurrentDeviceParameter.PHParam.TimeSeries.TimeSeriesItemCol.Count - 1].EndTime;
+                switch (CurrentDeviceParameter.PHParam.TimeSeries.Timer)
+                {
+                    case TimeUnit.Hour:
+                        lastTime *= 60;
+                        break;
+                    case TimeUnit.Day:
+                        lastTime *= 60 * 24;
+                        break;
+                }
+                if (spanMinutes > lastTime)
+                {
+                    LogHelper.Debug($"{CurrentDeviceParameter.Name}的pH时间序列执行完成");
+                    return;
+                }
+                LogHelper.Debug($"{CurrentDeviceParameter.Name}的pH时间序列开始");
+                while (!_shouldStop) // 检查退出标志
+                {
+
+                    Thread.Sleep(500);
+                }
+            });
+            _tsThread.Priority = ThreadPriority.Lowest;
+            _tsThread.IsBackground = true;
+            _tsThread.Start();
         }
     }
 }

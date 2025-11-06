@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Ioc;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using RD3.Common;
 using RD3.Shared;
@@ -13,11 +14,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace RD3.ViewModels
 {
     public class pHSettingViewModel : BaseViewModel, IDialogAware
     {
+        private readonly IRegionManager _regionManager;
+
         public DeviceParameter CurrentDeviceParameter
         {
             get { return AnalysisSolution.GetInstance().ReactorCol[0]; }
@@ -47,8 +52,9 @@ namespace RD3.ViewModels
             });
         });
 
-        public pHSettingViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
+        public pHSettingViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService, IRegionManager regionManager) : base(containerProvider, dialogHostService)
         {
+            _regionManager = regionManager;
         }
 
         public string Title => "pH设置";
@@ -82,6 +88,8 @@ namespace RD3.ViewModels
                 basePID = CurrentDeviceParameter.PHParam.BasePID;
             }
             PIDInfoManager.GetInstance().Save();
+
+            
         }
 
         public void OnDialogOpened(IDialogParameters parameters)
@@ -119,6 +127,20 @@ namespace RD3.ViewModels
                 }
                 CurrentDeviceParameter.PHParam.BasePID = basePID;
             }
+        }
+
+
+        public DelegateCommand OpenCommand => new(() => NavigateToTimeSeries());
+        private void NavigateToTimeSeries()
+        {
+            // 方式 2：带参数导航（传递参数给目标 ViewModel）
+            var parameters = new NavigationParameters();
+            parameters.Add(nameof(TimeSeries), CurrentDeviceParameter.PHParam.TimeSeries);
+            _regionManager.RegisterViewWithRegion("TimeSeriesRegion", typeof(TimeSeriesView));
+            _regionManager.Regions["TimeSeriesRegion"].RequestNavigate(nameof(TimeSeriesView), callback =>
+            {
+                var a = ContainerProvider.Resolve<TimeSeriesView>();
+            });
         }
     }
 }

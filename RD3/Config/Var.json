@@ -78,5 +78,5 @@
   "minphspeed": "0.5",
   "IsFilterWave": "False",
   "FeedInterval": 300,
-  "SoftwarePlatform": 0
+  "SoftwarePlatform": 1
 }

@@ -587,7 +587,7 @@
                                         hc:InfoElement.Title="{ex:Language Key='溶氧(%)'}"
                                         Style="{StaticResource TextBoxExtend}">
                                         <TextBox.Text>
-                                            <Binding Path="CurrentDeviceParameter.DOParam.DO_PV" UpdateSourceTrigger="LostFocus">
+                                            <Binding Path="CurrentDeviceParameter.DOParam.SP" UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
                                                     <!--<rd3:NumericRangeRule Max="{x:Static share:Const.MaxDO}" ValidatesOnTargetUpdated="True" />-->
                                                 </Binding.ValidationRules>
@@ -705,7 +705,7 @@
                                         Style="{StaticResource TextBoxExtend}">
                                         <TextBox.Text>
                                             <Binding
-                                                Path="CurrentDeviceParameter.AgitParam.Agit_PV"
+                                                Path="CurrentDeviceParameter.AgitParam.SP"
                                                 StringFormat="{}{0:F0}"
                                                 UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
@@ -908,7 +908,7 @@
                                         hc:InfoElement.Title="{ex:Language Key='pH'}"
                                         Style="{StaticResource TextBoxExtend}">
                                         <TextBox.Text>
-                                            <Binding Path="CurrentDeviceParameter.PHParam.PH_PV" UpdateSourceTrigger="LostFocus">
+                                            <Binding Path="CurrentDeviceParameter.PHParam.SP" UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
                                                     <!--<hc:RegexRule Type="PDouble" />-->
                                                 </Binding.ValidationRules>
@@ -1024,7 +1024,7 @@
                                         hc:InfoElement.Title="{ex:Language Key='酸(mL/h)'}"
                                         Style="{StaticResource TextBoxExtend}">
                                         <TextBox.Text>
-                                            <Binding Path="CurrentDeviceParameter.AcidParam.Acid_PV" UpdateSourceTrigger="LostFocus">
+                                            <Binding Path="CurrentDeviceParameter.AcidParam.SP" UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
                                                     <!--<hc:RegexRule Type="PDouble" />-->
                                                 </Binding.ValidationRules>
@@ -1096,7 +1096,7 @@
                                         hc:InfoElement.Title="{ex:Language Key='碱(mL/h)'}"
                                         Style="{StaticResource TextBoxExtend}">
                                         <TextBox.Text>
-                                            <Binding Path="CurrentDeviceParameter.BaseParam.Base_PV" UpdateSourceTrigger="LostFocus">
+                                            <Binding Path="CurrentDeviceParameter.BaseParam.SP" UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
                                                     <!--<hc:RegexRule Type="PDouble" />-->
                                                 </Binding.ValidationRules>
@@ -1182,7 +1182,7 @@
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
                                     <TextBox.Text>
-                                        <Binding Path="CurrentDeviceParameter.TempParam.Temp_PV" UpdateSourceTrigger="LostFocus">
+                                        <Binding Path="CurrentDeviceParameter.TempParam.SP" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
                                                 <!--<hc:RegexRule Type="PDouble" />-->
                                             </Binding.ValidationRules>
@@ -1233,13 +1233,6 @@
                                             Text="关闭" />
                                     </Border>
                                 </ToggleButton>
-                                <StackPanel
-                                    VerticalAlignment="Bottom"
-                                    Orientation="Vertical"
-                                    Visibility="Collapsed">
-                                    <CheckBox Content="制冷(-)" IsChecked="{Binding CurrentDeviceParameter.TempParam.Cooling}" />
-                                    <CheckBox Content="加热(+)" IsChecked="{Binding CurrentDeviceParameter.TempParam.Heating}" />
-                                </StackPanel>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox
@@ -1261,7 +1254,7 @@
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
                                     <TextBox.Text>
-                                        <Binding Path="CurrentDeviceParameter.FeedParam1.Feed_PV" UpdateSourceTrigger="LostFocus">
+                                        <Binding Path="CurrentDeviceParameter.FeedParam1.SP" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
                                                 <!--<hc:RegexRule Type="PDouble" />-->
                                             </Binding.ValidationRules>
@@ -1361,19 +1354,6 @@
                                     CommandParameter="FeedPump"
                                     Content="总量清零"
                                     Style="{StaticResource ButtonPrimary}" />
-                                <StackPanel
-                                    VerticalAlignment="Bottom"
-                                    Orientation="Vertical"
-                                    Visibility="Collapsed">
-                                    <CheckBox
-                                        Content="DO异常关联"
-                                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsEmergency}"
-                                        IsEnabled="{Binding CurrentDeviceParameter.FeedParam1.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
-                                    <CheckBox
-                                        Content="PH异常关联"
-                                        IsChecked="{Binding CurrentDeviceParameter.PHParam.IsEmergency}"
-                                        IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
-                                </StackPanel>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox
@@ -1395,7 +1375,7 @@
                                         </ContextMenu>
                                     </TextBox.ContextMenu>
                                     <TextBox.Text>
-                                        <Binding Path="CurrentDeviceParameter.FeedParam2.Feed_PV" UpdateSourceTrigger="LostFocus">
+                                        <Binding Path="CurrentDeviceParameter.FeedParam2.SP" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
                                                 <!--<hc:RegexRule Type="PDouble" />-->
                                             </Binding.ValidationRules>
@@ -1495,19 +1475,6 @@
                                     CommandParameter="Feed2Pump"
                                     Content="总量清零"
                                     Style="{StaticResource ButtonPrimary}" />
-                                <StackPanel
-                                    VerticalAlignment="Bottom"
-                                    Orientation="Vertical"
-                                    Visibility="Collapsed">
-                                    <CheckBox
-                                        Content="DO异常关联"
-                                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsEmergency}"
-                                        IsEnabled="{Binding CurrentDeviceParameter.FeedParam2.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
-                                    <CheckBox
-                                        Content="PH异常关联"
-                                        IsChecked="{Binding CurrentDeviceParameter.PHParam.IsEmergency}"
-                                        IsEnabled="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" />
-                                </StackPanel>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <TextBox
@@ -1516,7 +1483,7 @@
                                     hc:InfoElement.Title="{ex:Language Key='消泡(mL/h)'}"
                                     Style="{StaticResource TextBoxExtend}">
                                     <TextBox.Text>
-                                        <Binding Path="CurrentDeviceParameter.AFParam.AF_PV" UpdateSourceTrigger="LostFocus">
+                                        <Binding Path="CurrentDeviceParameter.AFParam.SP" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
                                                 <!--<hc:RegexRule Type="PDouble" />-->
                                             </Binding.ValidationRules>

@@ -8,8 +8,6 @@ namespace RD3.Shared
 {
     public interface IAuditRecord
     {
-        public AuditModule Module { get; }
-
-        //public AuditAction AuditAction { get;}
+        public void Record();
     }
 }

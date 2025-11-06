@@ -146,14 +146,10 @@ namespace RD3.Shared
 
     public enum ControlMode
     {
-        Enable,
-        Associated,
-        Disable,
+        [Description("恒定控制")]
+        Constant,
+        [Description("时间序列")]
         TimeSeries,
-        Funtion,
-        Cycle,
-        Polynomial,
-        Exponential
     }
 
     public enum PHControlMode
@@ -301,6 +297,23 @@ namespace RD3.Shared
         Temp
     }
 
+    public enum TimeSeriesParameter
+    {
+        DO,
+        Air,
+        Agit,
+        PH,
+        Temp
+    }
+
+    public enum TimeType
+    {
+        [Description("相对时间")]
+        RelativeTime,
+        [Description("绝对时间")]
+        AbsoluteTime
+    }
+
     public enum OpenMode
     {
         View,
@@ -357,10 +370,13 @@ namespace RD3.Shared
         Fatal = 4,
     }
 
-    public enum FeedTimer
+    public enum TimeUnit
     {
+        [Description("天")]
         Day = 86400,
+        [Description("小时")]
         Hour = 3600,
+        [Description("分钟")]
         Minute = 60
     }
 

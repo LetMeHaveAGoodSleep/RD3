@@ -1,6 +1,7 @@
 ﻿using Fpi.Communication.Commands.Config;
 using Prism.Commands;
 using Prism.Ioc;
+using Prism.Regions;
 using Prism.Services.Dialogs;
 using RD3.Common;
 using RD3.Extensions;
@@ -18,9 +19,20 @@ using System.Windows;
 
 namespace RD3.ViewModels
 {
-    public class TimeSeriesViewModel : BaseViewModel, IDialogAware
+    public class TimeSeriesViewModel : BaseViewModel, INavigationAware
     {
-        private ExperimentParameter experimentParameter;
+        private ExperimentParameter _experimentParameter = ExperimentParameter.DO;
+        private string _runningInfo = string.Empty;
+        public string RunningInfo
+        {
+            get => _runningInfo;
+            set
+            {
+                SetProperty(ref _runningInfo, value);
+            }
+        }
+
+        private TimeSeriesParameter _timeSeriesParameter;
 
         private BackgroundWorker backgroundWorker = new BackgroundWorker();
 
@@ -36,45 +48,53 @@ namespace RD3.ViewModels
 
         public DelegateCommand SaveCommand => new(() => 
         {
-            TimeSeries.TimeSeriesItemCol = new ObservableCollection<TimeSeriesItem>(TimeSeries.TimeSeriesItemCol.OrderBy(t => t.Time));
-            RequestClose?.Invoke(new DialogResult(ButtonResult.OK, new DialogParameters
-            {
-                { nameof(TimeSeries), TimeSeries }
-            }));
+            TimeSeries.TimeSeriesItemCol = new ObservableCollection<TimeSeriesItem>(TimeSeries.TimeSeriesItemCol.OrderBy(t => new { t.StartTime, t.EndTime }));
         });
         public DelegateCommand RefershCommand => new(() =>
         {
-            TimeSeries.TimeSeriesItemCol = new ObservableCollection<TimeSeriesItem>(TimeSeries.TimeSeriesItemCol.OrderBy(t => t.Time));
+            TimeSeries.TimeSeriesItemCol = new ObservableCollection<TimeSeriesItem>(TimeSeries.TimeSeriesItemCol.OrderBy(t => new { t.StartTime, t.EndTime }));
             aggregator.SendMessage("", nameof(TimeSeriesView), TimeSeries.TimeSeriesItemCol);
-            //RequestClose?.Invoke(new DialogResult(ButtonResult.OK, new DialogParameters
-            //{
-            //    { nameof(TimeSeries), TimeSeries }
-            //}));
         });
 
         public DelegateCommand CopyCommand => new(() => 
         {
-            TimeSeries.TimeSeriesItemCol = new ObservableCollection<TimeSeriesItem>(TimeSeries.TimeSeriesItemCol.OrderBy(t => t.Time));
-            if (TimeSeries.TimeSeriesItemCol.GroupBy(x => x.Time).Any(g => g.Count() > 1))
+            TimeSeries.TimeSeriesItemCol = new ObservableCollection<TimeSeriesItem>(TimeSeries.TimeSeriesItemCol.OrderBy(t => new { t.StartTime, t.EndTime }));
+            if (TimeSeries.TimeSeriesItemCol.GroupBy(x => new { x.StartTime, x.EndTime }).Any(g => g.Count() > 1))
             {
                 MessageBox.Show("存在相同的时间项", "温馨提示");
                 return ;
             }
-            AnalysisSolution.GetInstance().EventPublisher.PublishTimeSeries((experimentParameter, TimeSeries));
-            //aggregator.SendMessage(experimentParameter.ToString(), nameof(TimeSeriesViewModel), TimeSeries.Clone());
+            AnalysisSolution.GetInstance().EventPublisher.PublishTimeSeries((_experimentParameter, TimeSeries));
         });
 
         public DelegateCommand AddCommand => new(() =>
         {
             RefershCommand.Execute();
-            double time = 1;
+            double startTime = 0;
+            double endTime = 1;
             double value = 1;
             if (TimeSeries.TimeSeriesItemCol.Count > 0)
             {
-                time = TimeSeries.TimeSeriesItemCol[TimeSeries.TimeSeriesItemCol.Count - 1].Time + 1;
+                startTime = TimeSeries.TimeSeriesItemCol.Last().EndTime;
+                endTime = startTime + 30;
                 value = TimeSeries.TimeSeriesItemCol[TimeSeries.TimeSeriesItemCol.Count - 1].Value;
             }
-            TimeSeries.TimeSeriesItemCol.Add(new TimeSeriesItem() { Time = time, Value = value });
+            TimeSeries.TimeSeriesItemCol.Add(new TimeSeriesItem() { StartTime = startTime, EndTime = endTime, Value = value });
+        });
+
+        public DelegateCommand<object> InsertCommand => new((object o) =>
+        {
+            TimeSeriesItem item = o as TimeSeriesItem;
+            double startTime = 0;
+            double endTime = 1;
+            double value = 1;
+            if (TimeSeries.TimeSeriesItemCol.Count > 0)
+            {
+                startTime = TimeSeries.TimeSeriesItemCol.Last().EndTime;
+                endTime = startTime + 30;
+                value = TimeSeries.TimeSeriesItemCol[TimeSeries.TimeSeriesItemCol.Count - 1].Value;
+            }
+            TimeSeries.TimeSeriesItemCol.Add(new TimeSeriesItem() { StartTime = startTime, EndTime = endTime, Value = value });
         });
 
         public DelegateCommand<object> DeleteCommand => new((object o) =>
@@ -90,88 +110,22 @@ namespace RD3.ViewModels
 
         public TimeSeriesViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
-            backgroundWorker.WorkerSupportsCancellation = true;
-            backgroundWorker.WorkerReportsProgress = true;
-            backgroundWorker.DoWork += ((sender, e) => 
-            {
-                while (true)
-                {
-                    try
-                    {
-                        var worker = (BackgroundWorker)sender;
-                        if (worker.CancellationPending)
-                        { // 检查取消请求
-                            e.Cancel = true;
-                            return;
-                        }
 
-                        if (TimeSeries != null && TimeSeries.TimeSeriesItemCol != null && TimeSeries.TimeSeriesItemCol.Count > 0)
-                        {
-                            TimeSeries.TimeSeriesItemCol = new ObservableCollection<TimeSeriesItem>(TimeSeries.TimeSeriesItemCol.OrderBy(t => t.Time));
-                            aggregator.SendMessage("", nameof(TimeSeriesView), TimeSeries.TimeSeriesItemCol);
-                        }
-
-                        Thread.Sleep(500);
-                    }
-                    catch (Exception ex)
-                    {
-                        LogHelper.Debug(string.Format("DO调整失败，错误信息：{0}", ex.Message));
-                        Thread.Sleep(500);
-                    }
-                }
-            });
-
-            //backgroundWorker.RunWorkerAsync();
         }
 
-        public string Title { get; set; }
-
-        public event Action<IDialogResult> RequestClose;
-
-        public bool CanCloseDialog()
+        public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            if (TimeSeries.TimeSeriesItemCol.GroupBy(x => x.Time).Any(g => g.Count() > 1))
-            {
-                MessageBox.Show("存在相同的时间项", "温馨提示");
-                return false;
-            }
+            
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
             return true;
         }
 
-        public void OnDialogClosed()
+        public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            SaveCommand.Execute();
-        }
-
-        public void OnDialogOpened(IDialogParameters parameters)
-        {
-            TimeSeries = parameters.GetValue<TimeSeries>(nameof(TimeSeries));
-            string name = parameters.GetValue<string>("Name");
-            experimentParameter = parameters.GetValue<ExperimentParameter>(nameof(ExperimentParameter));
-
-            //string title = experimentParameter.ToString() == "DO" ? "DO(%)" : experimentParameter.ToString();
-            string title = GetTitle(experimentParameter);
-            Title = "时间序列-" + experimentParameter.ToString();
-
-            aggregator.SendMessage("", nameof(TimeSeriesView), TimeSeries.TimeSeriesItemCol);
-            aggregator.SendMessage("", "TimeSeriesView1", title);
-        }
-
-        private string GetTitle(ExperimentParameter parameter)
-        {
-            string title = string.Empty;
-            //Dictionary<object, string> reverseDict = GraphConfig.GetAllValue().ToDictionary(x => x.Value, x => x.Key);
-            Dictionary<string, string> reverseDict = GraphConfig.GetAllValue();
-            reverseDict.TryGetValueIgnoreCase(experimentParameter.ToString(), out var temp);
-            if (!string.IsNullOrWhiteSpace(GraphUnitConfig.GetValue(temp).ToString()))
-            {
-                title = temp + "(" + GraphUnitConfig.GetValue(temp) + ")";
-            }
-            else
-            {
-                title = temp;
-            }
-            return title;
+            
         }
     }
 }

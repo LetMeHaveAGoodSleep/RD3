@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="HelixSurfaceView.xaml.cs">
+    <Compile Update="3DView\HelixSurfaceView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

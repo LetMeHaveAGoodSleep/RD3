@@ -772,12 +772,12 @@ namespace RD3.ViewModels
                             });
                         }
 
-                        if (deviceParameter.DOParam.DO_PV != lastDevice.DOParam.DO_PV)
+                        if (deviceParameter.DOParam.SP != lastDevice.DOParam.SP)
                         {
                             Task.Run(() =>
                             {
                                 StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("DO预设值从{0}变更为{1}", lastDevice.DOParam.DO_PV, deviceParameter.DOParam.DO_PV);
+                                string content = string.Format("DO预设值从{0}变更为{1}", lastDevice.DOParam.SP, deviceParameter.DOParam.SP);
                                 sb.AppendLine(content);
                                 RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
                             });
@@ -807,12 +807,12 @@ namespace RD3.ViewModels
 
                         if (!deviceParameter.DOParam.IsControling)
                         {
-                            if (deviceParameter.AgitParam.Agit_PV != lastDevice.AgitParam.Agit_PV)
+                            if (deviceParameter.AgitParam.SP != lastDevice.AgitParam.SP)
                             {
                                 Task.Run(() =>
                                 {
                                     StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("转速预设值从{0}变更为{1}", lastDevice.AgitParam.Agit_PV, deviceParameter.AgitParam.Agit_PV);
+                                    string content = string.Format("转速预设值从{0}变更为{1}", lastDevice.AgitParam.SP, deviceParameter.AgitParam.SP);
                                     sb.AppendLine(content);
                                     RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
                                 });
@@ -910,12 +910,12 @@ namespace RD3.ViewModels
 
                         #region PH
 
-                        if (deviceParameter.PHParam.PH_PV != lastDevice.PHParam.PH_PV)
+                        if (deviceParameter.PHParam.SP != lastDevice.PHParam.SP)
                         {
                             Task.Run(() =>
                             {
                                 StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("PH预设值从{0}变更为{1}", lastDevice.PHParam.PH_PV, deviceParameter.PHParam.PH_PV);
+                                string content = string.Format("PH预设值从{0}变更为{1}", lastDevice.PHParam.SP, deviceParameter.PHParam.SP);
                                 sb.AppendLine(content);
                                 RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
                             });
@@ -945,28 +945,28 @@ namespace RD3.ViewModels
 
                         if (!deviceParameter.PHParam.IsControling)
                         {
-                            if (deviceParameter.AcidParam.Acid_PV != lastDevice.AcidParam.Acid_PV)
+                            if (deviceParameter.AcidParam.SP != lastDevice.AcidParam.SP)
                             {
                                 Task.Run(() =>
                                 {
                                     string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                     string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                     StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("酸泵预设值从{0}变更为{1}", lastDevice.AcidParam.Acid_PV, deviceParameter.AcidParam.Acid_PV);
+                                    string content = string.Format("酸泵预设值从{0}变更为{1}", lastDevice.AcidParam.SP, deviceParameter.AcidParam.SP);
                                     sb.AppendLine(content);
     
                                     RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
                                 });
                             }
 
-                            if (deviceParameter.BaseParam.Base_PV != lastDevice.BaseParam.Base_PV)
+                            if (deviceParameter.BaseParam.SP != lastDevice.BaseParam.SP)
                             {
                                 Task.Run(() =>
                                 {
                                     string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                     string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                     StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("碱泵预设值从{0}变更为{1}", lastDevice.BaseParam.Base_PV, deviceParameter.BaseParam.Base_PV);
+                                    string content = string.Format("碱泵预设值从{0}变更为{1}", lastDevice.BaseParam.SP, deviceParameter.BaseParam.SP);
                                     sb.AppendLine(content);
     
                                     RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
@@ -1032,14 +1032,14 @@ namespace RD3.ViewModels
                         #endregion
 
                         #region 温度
-                        if (deviceParameter.TempParam.Temp_PV != lastDevice.TempParam.Temp_PV)
+                        if (deviceParameter.TempParam.SP != lastDevice.TempParam.SP)
                         {
                             Task.Run(() =>
                             {
                                 string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                 string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                 StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("温度预设值从{0}变更为{1}", lastDevice.TempParam.Temp_PV, deviceParameter.TempParam.Temp_PV);
+                                string content = string.Format("温度预设值从{0}变更为{1}", lastDevice.TempParam.SP, deviceParameter.TempParam.SP);
                                 sb.AppendLine(content);
 
                                 RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
@@ -1078,14 +1078,14 @@ namespace RD3.ViewModels
                         #region 补料
 
                         //只有常数时候才记录预设值变更
-                        if ((deviceParameter.FeedParam1.Feed_PV != lastDevice.FeedParam1.Feed_PV) && (deviceParameter.FeedParam1.FeedIndex == lastDevice.FeedParam1.Feed_PV && deviceParameter.FeedParam1.FeedIndex == 1))
+                        if ((deviceParameter.FeedParam1.SP != lastDevice.FeedParam1.SP) && (deviceParameter.FeedParam1.FeedIndex == lastDevice.FeedParam1.SP && deviceParameter.FeedParam1.FeedIndex == 1))
                         {
                             Task.Run(() =>
                             {
                                 string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                 string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                 StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("补料预设值从{0}变更为{1}", lastDevice.FeedParam1.Feed_PV, deviceParameter.FeedParam1.Feed_PV);
+                                string content = string.Format("补料预设值从{0}变更为{1}", lastDevice.FeedParam1.SP, deviceParameter.FeedParam1.SP);
                                 sb.AppendLine(content);
 
                                 RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
@@ -1207,14 +1207,14 @@ namespace RD3.ViewModels
                         #endregion
 
                         #region 消泡
-                        if (deviceParameter.AFParam.AF_PV != lastDevice.AFParam.AF_PV)
+                        if (deviceParameter.AFParam.SP != lastDevice.AFParam.SP)
                         {
                             Task.Run(() =>
                             {
                                 string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                 string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                 StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("消泡预设值从{0}变更为{1}", lastDevice.AFParam.AF_PV, deviceParameter.AFParam.AF_PV);
+                                string content = string.Format("消泡预设值从{0}变更为{1}", lastDevice.AFParam.SP, deviceParameter.AFParam.SP);
                                 sb.AppendLine(content);
 
                                 RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);

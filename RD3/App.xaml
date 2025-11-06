@@ -20,8 +20,7 @@
                     PrimaryColor="Teal"
                     SecondaryColor="Amber" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/SkinLocal.xaml" />
                 <ResourceDictionary Source="Themes/WaveAnimation.xaml" />
                 <ResourceDictionary Source="Themes/Sizes.xaml" />
                 <ResourceDictionary Source="Themes/Converters.xaml" />
@@ -40,7 +39,196 @@
             <SolidColorBrush x:Key="ControlAssociatedModeBrush" Color="#99CBFF" />
             <SolidColorBrush x:Key="ControlDisabledModeBrush" Color="#D4D7DE" />
             <!--  定义字体资源  -->
-            <FontFamily x:Key="AppFontFamily">SimSun</FontFamily>
+            <FontFamily x:Key="AppFontFamily">微软雅黑</FontFamily>
+            <!--  新添加 Start  -->
+            <LinearGradientBrush x:Key="PrimaryGradientBackground" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0.0" Color="#008080" />
+                <GradientStop Offset="0.1" Color="#008989" />
+                <GradientStop Offset="0.2" Color="#009191" />
+                <GradientStop Offset="0.3" Color="#009a9a" />
+                <GradientStop Offset="0.4" Color="#00a2a2" />
+                <GradientStop Offset="0.5" Color="#00abab" />
+                <GradientStop Offset="0.6" Color="#00b3b3" />
+                <GradientStop Offset="0.7" Color="#00bcbc" />
+                <GradientStop Offset="0.8" Color="#00c4c4" />
+                <GradientStop Offset="1.0" Color="#00cdcd" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="RainbowGradientBackground" StartPoint="0,0.5" EndPoint="1,0.5">
+                <GradientStop Offset="0.0" Color="#FF0000" />
+                <!--  红色  -->
+                <GradientStop Offset="0.16" Color="#FF7F00" />
+                <!--  橙色  -->
+                <GradientStop Offset="0.33" Color="#FFFF00" />
+                <!--  黄色  -->
+                <GradientStop Offset="0.5" Color="#00FF00" />
+                <!--  绿色  -->
+                <GradientStop Offset="0.66" Color="#0000FF" />
+                <!--  蓝色  -->
+                <GradientStop Offset="0.83" Color="#4B0082" />
+                <!--  靛蓝色  -->
+                <GradientStop Offset="1.0" Color="#9400D3" />
+                <!--  紫色  -->
+            </LinearGradientBrush>
+            <Color x:Key="Primary100">#c8e6c9</Color>
+            <Color x:Key="Primary200">#a5d6a7</Color>
+            <LinearGradientBrush x:Key="SelectedBursh" StartPoint="0,0" EndPoint="1,0">
+                <GradientStop Offset="0" Color="{StaticResource Primary100}" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="GradientMask" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0" Color="#dddddd" />
+                <GradientStop Offset="1" Color="#cccccc" />
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="CardBackgroundBrush" Color="#ccdede" />
+            <SolidColorBrush x:Key="RegionBackgroundBrush" Color="#E7EFF0" />
+            <SolidColorBrush x:Key="RegionToolBarBrush" Color="#f3f7f8" />
+            <SolidColorBrush x:Key="CompanyBrush" Color="#f48b35" />
+            <SolidColorBrush x:Key="CustomPrimaryBrush" Color="{StaticResource PrimaryColor}" />
+            <Style
+                x:Key="PrimaryQuickButton"
+                BasedOn="{StaticResource ButtonBaseStyle}"
+                TargetType="Button">
+                <Setter Property="Background" Value="White" />
+                <Setter Property="Foreground" Value="Gray" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="BorderBrush" Value="LightGray" />
+                <Setter Property="hc:BorderElement.CornerRadius" Value="16" />
+                <Setter Property="FontSize" Value="{StaticResource SubHeadFontSize}" />
+                <Setter Property="FontFamily" Value="微软雅黑" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{StaticResource CustomPrimaryBrush}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource CustomPrimaryBrush}" />
+                        <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Opacity" Value="0.7" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Background" Value="LightGray" />
+                        <Setter Property="Foreground" Value="Gray" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style
+                x:Key="RadioButtonCustomPrimary"
+                BasedOn="{StaticResource RadioButtonSameAsButtonBaseStyle}"
+                TargetType="RadioButton">
+                <Setter Property="Foreground" Value="Gray" />
+                <Setter Property="hc:BorderElement.CornerRadius" Value="8" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{StaticResource CustomPrimaryBrush}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource CustomPrimaryBrush}" />
+                        <Setter Property="Opacity" Value="0.7" />
+                        <Setter Property="Foreground" Value="White" />
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Background" Value="{StaticResource CustomPrimaryBrush}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource CustomPrimaryBrush}" />
+                        <Setter Property="Foreground" Value="White" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.4" />
+                        <Setter Property="Foreground" Value="DarkGray" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="BorderHighlight" TargetType="Border">
+                <Setter Property="Background" Value="#ffffff" />
+                <Setter Property="BorderBrush" Value="LightGray" />
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="{x:Static system:Boolean.TrueString}">
+                        <Setter Property="Background" Value="{StaticResource CustomPrimaryBrush}" />
+                        <Setter Property="BorderBrush" Value="{StaticResource CustomPrimaryBrush}" />
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect
+                                    BlurRadius="10"
+                                    Opacity="0.5"
+                                    ShadowDepth="0"
+                                    Color="{StaticResource PrimaryColor}" />
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="Tag" Value="{x:Static system:Boolean.FalseString}">
+                        <Setter Property="Background" Value="#ffffff" />
+                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="Tag" Value="{x:Static system:Boolean.FalseString}" />
+                            <Condition Property="IsMouseOver" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="OpacityMask" Value="{DynamicResource SelectedBursh}" />
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect
+                                    BlurRadius="20"
+                                    Opacity="0.5"
+                                    ShadowDepth="1"
+                                    Color="{StaticResource PrimaryColor}" />
+                            </Setter.Value>
+                        </Setter>
+                    </MultiTrigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="Tag" Value="{x:Static system:Boolean.TrueString}" />
+                            <Condition Property="IsMouseOver" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="OpacityMask" Value="{DynamicResource SelectedBursh}" />
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect
+                                    BlurRadius="20"
+                                    Opacity="0.5"
+                                    ShadowDepth="1"
+                                    Color="{StaticResource PrimaryColor}" />
+                            </Setter.Value>
+                        </Setter>
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style
+                x:Key="PrimaryCommonButton"
+                BasedOn="{StaticResource ButtonPrimary}"
+                TargetType="Button">
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
+                <Setter Property="FontFamily" Value="微软雅黑" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="Opacity" Value="0.7" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Background" Value="LightGray" />
+                        <Setter Property="BorderBrush" Value="LightGray" />
+                        <Setter Property="Foreground" Value="Gray" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style
+                x:Key="SecondaryCommonButton"
+                BasedOn="{StaticResource ButtonDefault}"
+                TargetType="Button">
+                <Setter Property="Foreground" Value="{StaticResource CustomPrimaryBrush}" />
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
+                <Setter Property="FontFamily" Value="微软雅黑" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
+                        <Setter Property="Foreground" Value="{StaticResource CustomPrimaryBrush}" />
+                        <Setter Property="Opacity" Value="0.7" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Background" Value="LightGray" />
+                        <Setter Property="BorderBrush" Value="LightGray" />
+                        <Setter Property="Foreground" Value="Gray" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <!--  新添加 End  -->
             <Style x:Key="BorderCard" TargetType="{x:Type Border}">
                 <Setter Property="Border.CornerRadius" Value="8" />
                 <Setter Property="Border.Padding" Value="5" />
@@ -87,6 +275,11 @@
                 BasedOn="{StaticResource DataGridColumnHeaderStyle}"
                 TargetType="DataGridColumnHeader">
                 <Setter Property="HorizontalContentAlignment" Value="Left" />
+                <Setter Property="Foreground" Value="Gray" />
+                <Setter Property="FontFamily" Value="{DynamicResource AppFontFamily}" />
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
+                <Setter Property="BorderBrush" Value="gray" />
+                <Setter Property="BorderThickness" Value="0.2" />
             </Style>
             <Style
                 x:Key="DataGridCenterColumnHeaderStyle"
@@ -94,29 +287,45 @@
                 TargetType="DataGridColumnHeader">
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="Foreground" Value="Gray" />
-                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontFamily" Value="{DynamicResource AppFontFamily}" />
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
+                <Setter Property="BorderBrush" Value="gray" />
+                <Setter Property="BorderThickness" Value="0.2" />
             </Style>
             <Style
                 x:Key="DataGridCenterRowHeaderStyle"
                 BasedOn="{StaticResource DataGridRowHeaderStyle}"
                 TargetType="DataGridRowHeader">
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="Gray" />
+                <Setter Property="FontFamily" Value="{DynamicResource AppFontFamily}" />
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
+                <Setter Property="BorderBrush" Value="gray" />
+                <Setter Property="BorderThickness" Value="0.2" />
             </Style>
             <Style
                 x:Key="DataGridTextLeftCellStyle"
                 BasedOn="{StaticResource DataGridCellStyle}"
                 TargetType="DataGridCell">
                 <Setter Property="HorizontalContentAlignment" Value="Left" />
-                <Setter Property="Background" Value="Transparent" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="Gray" />
+                <Setter Property="FontFamily" Value="{DynamicResource AppFontFamily}" />
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
+                <Setter Property="BorderBrush" Value="gray" />
+                <Setter Property="BorderThickness" Value="0.2" />
             </Style>
             <Style
                 x:Key="DataGridTextCenterCellStyle"
                 BasedOn="{StaticResource DataGridCellStyle}"
                 TargetType="DataGridCell">
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
-                <Setter Property="Background" Value="Transparent" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="Gray" />
+                <Setter Property="FontFamily" Value="{DynamicResource AppFontFamily}" />
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
+                <Setter Property="BorderBrush" Value="gray" />
+                <Setter Property="BorderThickness" Value="0.2" />
             </Style>
             <Style x:Key="CustomBorderStyle" TargetType="Border">
                 <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />

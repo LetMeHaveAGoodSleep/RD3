@@ -48,7 +48,7 @@ namespace RD3.Shared
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
-                    param.Temp_PV = recvCommand.GetSingle(ParamId_5L.RWTempParam_ReadWrite_Temp);
+                    param.SP = recvCommand.GetSingle(ParamId_5L.RWTempParam_ReadWrite_Temp);
                     //param.IsEnable = recvCommand.GetByte(ParamId_5L.RWTempParam_ReadWrite_Enable) == 0x00 ? false : true;
                     param.TecControlMode= (TecControlMode)recvCommand.GetByte(ParamId_5L.RWTempParam_ReadWrite_Enable);
                 }
@@ -68,7 +68,7 @@ namespace RD3.Shared
             SendCommand sendCommand = new SendCommand(CommandId_5L.RWTempParam, CommandExtendId.Write);
             try
             {
-                sendCommand.SetValue(ParamId_5L.RWTempParam_ReadWrite_Temp, tempParam.Temp_PV);
+                sendCommand.SetValue(ParamId_5L.RWTempParam_ReadWrite_Temp, tempParam.SP);
                 sendCommand.SetValue(ParamId_5L.RWTempParam_ReadWrite_Enable, (byte)tempParam.TecControlMode);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)

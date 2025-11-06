@@ -546,7 +546,7 @@ namespace RD3.ViewModels
                 }
                 else if (commandText == "2")
                 {
-                    AgitParam.Agit_PV = InstrumentSolution.GetInstance().CommandWrapper.GetAgitSpeed(SelectedInstrument?.id);
+                    AgitParam.SP = InstrumentSolution.GetInstance().CommandWrapper.GetAgitSpeed(SelectedInstrument?.id);
                 }
                 else if (commandText == "3")
                 {
@@ -723,7 +723,7 @@ namespace RD3.ViewModels
                     {
                         try
                         {
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(SelectedInstrument?.id, AgitParam.Agit_PV);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(SelectedInstrument?.id, AgitParam.SP);
                         }
                         catch (Exception ex)
                         {

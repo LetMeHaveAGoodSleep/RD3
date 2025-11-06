@@ -71,7 +71,7 @@ namespace RD3.ViewModels
                 InstrumentSolution.GetInstance().CommandWrapper.SetGasSpeed(MFCInfo.DeviceID, gasParam);
                 return;
             }
-            if (MFCInfo.FlowRate_SP <= 0)
+            if (MFCInfo.FlowRate_SP < 0)
             {
                 MFCInfo.IsControling = false;
                 HandyControl.Controls.MessageBox.Warning("流量必须大于0", "温馨提示");

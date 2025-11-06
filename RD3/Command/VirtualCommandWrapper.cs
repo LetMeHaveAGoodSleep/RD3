@@ -461,7 +461,7 @@ namespace RD3.Shared
 
         public TempParam GetTempSetting(string insID)
         {
-            return new TempParam() { Temp_PV = 37, LowerLimit = 0.1f, UpperLimit = 0.2f };
+            return new TempParam() { SP = 37, LowerLimit = 0.1f, UpperLimit = 0.2f };
         }
 
         public void SetAgitSpeed(string insID, int speed)
@@ -550,7 +550,7 @@ namespace RD3.Shared
 
         public void SetTempSetting(string insID, TempParam tempParam)
         {
-            temperature = tempParam.Temp_PV;
+            temperature = tempParam.SP;
             return;
         }
 

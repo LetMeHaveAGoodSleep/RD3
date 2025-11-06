@@ -506,7 +506,6 @@ namespace RD3.ViewModels
                 DeviceParameter device = new()
                 {
                     Name = reactor.Name,
-                    SerialNumber = i + 1,
                 };
                 //加载 消泡参数
                 if (File.Exists(FileConst.DefoamingPath))

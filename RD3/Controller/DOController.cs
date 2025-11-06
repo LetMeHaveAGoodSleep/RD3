@@ -83,8 +83,8 @@ namespace RD3.Controller
             {
                 _workerWorking = true;
 
-                CurrentDeviceParameter.FeedSuspend = CurrentDeviceParameter.IsDOLimit = CurrentDeviceParameter.DORegulationLimit = false;
-                CurrentDeviceParameter.DOParam.InitialTemp = CurrentDeviceParameter.TempParam.Temp_PV;
+                CurrentDeviceParameter.FeedSuspend = false;
+                CurrentDeviceParameter.DOParam.InitialTemp = CurrentDeviceParameter.TempParam.SP;
                 e.Result = CurrentDeviceParameter.Name;
 
                 float maxGas = 0;//用于通气量的总和
@@ -114,7 +114,7 @@ namespace RD3.Controller
                 }
 
                 RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                while (realTimeParam.DO < CurrentDeviceParameter.DOParam.DO_PV && !CurrentDeviceParameter.DOParam.IsDirect)
+                while (realTimeParam.DO < CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsDirect)
                 {
                     if (_backgroundWorker.CancellationPending)
                     {
@@ -135,7 +135,7 @@ namespace RD3.Controller
                 }
 
                 realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                while (realTimeParam.DO > CurrentDeviceParameter.DOParam.DO_PV && !CurrentDeviceParameter.DOParam.IsReverse)
+                while (realTimeParam.DO > CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsReverse)
                 {
                     if (_backgroundWorker.CancellationPending)
                     {
@@ -169,7 +169,7 @@ namespace RD3.Controller
                     param.AgitLowerLimit = CurrentDeviceParameter.AgitParam.LowerLimit;
                     param.AgitUpperLimit = CurrentDeviceParameter.AgitParam.UpperLimit;
                     realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                    CurrentDeviceParameter.AgitParam.Agit_PV = Math.Clamp(realTimeParam.Agit, CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
+                    CurrentDeviceParameter.AgitParam.SP = Math.Clamp(realTimeParam.Agit, CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
                     CurrentDeviceParameter.AgitParam.IsControling = true;
 
                     ObservableCollection<DOControlFactor> collection = [.. param.FactorCol];
@@ -254,7 +254,7 @@ namespace RD3.Controller
                         try
                         {
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                            while (realTimeParam.DO < CurrentDeviceParameter.DOParam.DO_PV && !CurrentDeviceParameter.DOParam.IsDirect)
+                            while (realTimeParam.DO < CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsDirect)
                             {
                                 if (_backgroundWorker.CancellationPending)
                                 {
@@ -275,7 +275,7 @@ namespace RD3.Controller
                             }
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                            while (realTimeParam.DO > CurrentDeviceParameter.DOParam.DO_PV && !CurrentDeviceParameter.DOParam.IsReverse)
+                            while (realTimeParam.DO > CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsReverse)
                             {
                                 if (_backgroundWorker.CancellationPending)
                                 {
@@ -311,17 +311,15 @@ namespace RD3.Controller
 
                                 Thread.Sleep(1000);
                             }
-
-                            string result = File.ReadAllText(FileConst.PidInfoPath);
-                            List<PIDInfo> pIDInfos = JsonConvert.DeserializeObject<List<PIDInfo>>(result);
+                            var pIDInfos = PIDInfoManager.GetInstance().PIDInfos;
                             if (pIDInfos == null)
                             {
                                 realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                                if (realTimeParam.DO <= CurrentDeviceParameter.DOParam.DO_PV)
+                                if (realTimeParam.DO <= CurrentDeviceParameter.DOParam.SP)
                                 {
                                     info = new PIDInfo() { Factor = PIDFactor.DO_Dircet, P = 5, I = 0.005f, D = 20, Threshold = 1000, maxSpeed = 1000 };
                                 }
-                                else if (realTimeParam.DO >= CurrentDeviceParameter.DOParam.DO_PV)
+                                else if (realTimeParam.DO >= CurrentDeviceParameter.DOParam.SP)
                                 {
                                     info = new PIDInfo() { Factor = PIDFactor.DO_Reverse, P = 5, I = 0.005f, D = 20, Threshold = 1000, maxSpeed = 1000 };
                                 }
@@ -329,11 +327,11 @@ namespace RD3.Controller
                             else
                             {
                                 realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                                if (realTimeParam.DO <= CurrentDeviceParameter.DOParam.DO_PV)
+                                if (realTimeParam.DO <= CurrentDeviceParameter.DOParam.SP)
                                 {
                                     info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.deviceID == CurrentDeviceParameter.Name);
                                 }
-                                else if (realTimeParam.DO >= CurrentDeviceParameter.DOParam.DO_PV)
+                                else if (realTimeParam.DO >= CurrentDeviceParameter.DOParam.SP)
                                 {
                                     info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.deviceID == CurrentDeviceParameter.Name);
                                 }
@@ -350,9 +348,9 @@ namespace RD3.Controller
                                 if (info.PidName != lastPid.PidName)
                                 {
                                     LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, CurrentDeviceParameter.Name));
-                                    baseAgit = CurrentDeviceParameter.AgitParam.Agit_PV;
+                                    baseAgit = CurrentDeviceParameter.AgitParam.SP;
                                 }
-                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", CurrentDeviceParameter.Name, realTimeParam.Agit, CurrentDeviceParameter.AgitParam.Agit_PV, baseAgit));
+                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", CurrentDeviceParameter.Name, realTimeParam.Agit, CurrentDeviceParameter.AgitParam.SP, baseAgit));
 
                                 ResetDOParam(CurrentDeviceParameter);
                             }
@@ -362,9 +360,9 @@ namespace RD3.Controller
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
 
-                            if (Math.Abs(realTimeParam.DO - CurrentDeviceParameter.DOParam.DO_PV) <= info.deadArea)
+                            if (Math.Abs(realTimeParam.DO - CurrentDeviceParameter.DOParam.SP) <= info.deadArea)
                             {
-                                baseAgit = CurrentDeviceParameter.AgitParam.Agit_PV;
+                                baseAgit = CurrentDeviceParameter.AgitParam.SP;
                                 ResetDOParam(CurrentDeviceParameter);
 
                                 int count = info.Interval <= 0 ? 1 : info.Interval;
@@ -393,9 +391,9 @@ namespace RD3.Controller
                             _agitPIDController.SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
                             _agitPIDController.SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
                             _agitPIDController.SetIntegralLimits(-2000, 2000);
-                            _agitPIDController.SetTarget(CurrentDeviceParameter.DOParam.DO_PV);
+                            _agitPIDController.SetTarget(CurrentDeviceParameter.DOParam.SP);
 
-                            LogHelper.Debug(string.Format("反应器{6} Mid-Ranging DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", CurrentDeviceParameter.DOParam.DO_PV, realTimeParam.DO, info.P, info.I, info.D, info.Interval, CurrentDeviceParameter.Name));
+                            LogHelper.Debug(string.Format("反应器{6} Mid-Ranging DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", CurrentDeviceParameter.DOParam.SP, realTimeParam.DO, info.P, info.I, info.D, info.Interval, CurrentDeviceParameter.Name));
 
                             float temp = _agitPIDController.CalculatePositional_DO((float)realTimeParam.DO);
                             int tempAgit = Convert.ToInt32(baseAgit + temp);
@@ -411,8 +409,8 @@ namespace RD3.Controller
 
                             LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", CurrentDeviceParameter.Name, baseAgit, temp, tempAgit, _agitDelta));
 
-                            CurrentDeviceParameter.AgitParam.Agit_PV = Math.Clamp((int)_agitDelta,CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.Agit_PV);
+                            CurrentDeviceParameter.AgitParam.SP = Math.Clamp((int)_agitDelta,CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.SP);
 
                             sleepCount = info.Interval <= 0 ? 1 : info.Interval;
                             while (sleepCount > 0)
@@ -436,9 +434,9 @@ namespace RD3.Controller
                             }
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                            if (Math.Abs(realTimeParam.DO - CurrentDeviceParameter.DOParam.DO_PV) <= info.deadArea)
+                            if (Math.Abs(realTimeParam.DO - CurrentDeviceParameter.DOParam.SP) <= info.deadArea)
                             {
-                                baseAgit = CurrentDeviceParameter.AgitParam.Agit_PV;
+                                baseAgit = CurrentDeviceParameter.AgitParam.SP;
 
                                 ResetDOParam(CurrentDeviceParameter);
 
@@ -465,7 +463,7 @@ namespace RD3.Controller
                                 continue;
                             }
 
-                            if (CurrentDeviceParameter.AgitParam.Agit_PV > param.AgitHigh && factorIndex == -1)
+                            if (CurrentDeviceParameter.AgitParam.SP > param.AgitHigh && factorIndex == -1)
                             {
                                 LogHelper.Debug($"到达设定转速高限:{param.AgitHigh}");
                                 lastFactorIndex = factorIndex;
@@ -666,7 +664,7 @@ namespace RD3.Controller
                                     }
                                     break;
                                 case DOControlFactor.Temp:
-                                    CurrentDeviceParameter.DORegulationLimit = false;
+                                    
                                     if (!CurrentDeviceParameter.TempParam.IsControling)
                                     {
                                         AnalysisSolution.GetInstance().TempController.StartWork();
@@ -674,7 +672,7 @@ namespace RD3.Controller
                                     }
                                     if (firstInitTemp)
                                     {
-                                        CurrentDeviceParameter.DOParam.InitialTemp = CurrentDeviceParameter.TempParam.Temp_PV;
+                                        CurrentDeviceParameter.DOParam.InitialTemp = CurrentDeviceParameter.TempParam.SP;
                                         firstInitTemp = false;
                                     }
 
@@ -689,7 +687,7 @@ namespace RD3.Controller
                                     pIDController.SetIntegralLimits(-2000, 2000);
                                     pIDController.SetTarget(param.AgitHigh);
                                     float increment = pIDController.CalculateIncremental(_agitDelta);
-                                    float currentTemp = CurrentDeviceParameter.TempParam.Temp_PV + increment;
+                                    float currentTemp = CurrentDeviceParameter.TempParam.SP + increment;
                                     if (currentTemp <= CurrentDeviceParameter.TempDOLowerLimit)
                                     {
                                         if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
@@ -707,7 +705,7 @@ namespace RD3.Controller
                                         }
                                     }
                                     currentTemp = currentTemp <= CurrentDeviceParameter.TempDOLowerLimit ? CurrentDeviceParameter.TempDOLowerLimit : currentTemp >= CurrentDeviceParameter.DOParam.InitialTemp ? CurrentDeviceParameter.DOParam.InitialTemp : currentTemp;
-                                    CurrentDeviceParameter.TempParam.Temp_PV = MathF.Round(currentTemp, 2);
+                                    CurrentDeviceParameter.TempParam.SP = MathF.Round(currentTemp, 2);
                                     LogHelper.Debug(string.Format("反应器{0} 起始温度{1} 单次delta{2} 实际温度{3}", CurrentDeviceParameter.Name, CurrentDeviceParameter.DOParam.InitialTemp, increment, currentTemp));
                                     sleepCount = info1.Interval <= 0 ? 1 : info1.Interval;
                                     while (sleepCount > 0)
@@ -730,7 +728,7 @@ namespace RD3.Controller
                                         Thread.Sleep(1000);
                                     }
 
-                                    if (CurrentDeviceParameter.TempParam.Temp_PV <= CurrentDeviceParameter.TempDOLowerLimit || CurrentDeviceParameter.TempParam.Temp_PV >= CurrentDeviceParameter.DOParam.InitialTemp)
+                                    if (CurrentDeviceParameter.TempParam.SP <= CurrentDeviceParameter.TempDOLowerLimit || CurrentDeviceParameter.TempParam.SP >= CurrentDeviceParameter.DOParam.InitialTemp)
                                     {
                                         while (true)
                                         {
@@ -749,7 +747,7 @@ namespace RD3.Controller
                                                 Thread.Sleep(1000);
                                             }
                                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                                            if (Math.Abs(realTimeParam.Temp - CurrentDeviceParameter.TempParam.Temp_PV) <= 0.2)
+                                            if (Math.Abs(realTimeParam.Temp - CurrentDeviceParameter.TempParam.SP) <= 0.2)
                                             {
                                                 break;
                                             }
@@ -861,7 +859,7 @@ namespace RD3.Controller
                     while (true)
                     {
                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                        while (realTimeParam.DO < CurrentDeviceParameter.DOParam.DO_PV && !CurrentDeviceParameter.DOParam.IsDirect)
+                        while (realTimeParam.DO < CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsDirect)
                         {
                             if (_backgroundWorker.CancellationPending)
                             {
@@ -882,7 +880,7 @@ namespace RD3.Controller
                         }
 
                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                        while (realTimeParam.DO > CurrentDeviceParameter.DOParam.DO_PV && !CurrentDeviceParameter.DOParam.IsReverse)
+                        while (realTimeParam.DO > CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsReverse)
                         {
                             if (_backgroundWorker.CancellationPending)
                             {
@@ -920,11 +918,11 @@ namespace RD3.Controller
                         }
 
                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                        if (realTimeParam.DO < CurrentDeviceParameter.DOParam.DO_PV)
+                        if (realTimeParam.DO < CurrentDeviceParameter.DOParam.SP)
                         {
-                            int temp = CurrentDeviceParameter.AgitParam.Agit_PV + CurrentDeviceParameter.DOParam.AgitCycle.DirectStep;
-                            CurrentDeviceParameter.AgitParam.Agit_PV = Math.Clamp(temp, CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit, CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit);
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.Agit_PV);
+                            int temp = CurrentDeviceParameter.AgitParam.SP + CurrentDeviceParameter.DOParam.AgitCycle.DirectStep;
+                            CurrentDeviceParameter.AgitParam.SP = Math.Clamp(temp, CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit, CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.SP);
 
                             int count = CurrentDeviceParameter.DOParam.AgitCycle.DirectInterval;
                             int index = 0;
@@ -949,19 +947,19 @@ namespace RD3.Controller
                                 Thread.Sleep(1000);
                             }
                         }
-                        else if (realTimeParam.DO > CurrentDeviceParameter.DOParam.DO_PV)
+                        else if (realTimeParam.DO > CurrentDeviceParameter.DOParam.SP)
                         {
-                            CurrentDeviceParameter.AgitParam.Agit_PV -= CurrentDeviceParameter.DOParam.AgitCycle.ReverseStep;
+                            CurrentDeviceParameter.AgitParam.SP -= CurrentDeviceParameter.DOParam.AgitCycle.ReverseStep;
 
-                            if (CurrentDeviceParameter.AgitParam.Agit_PV < CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit)
+                            if (CurrentDeviceParameter.AgitParam.SP < CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit)
                             {
-                                CurrentDeviceParameter.AgitParam.Agit_PV = CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit;
+                                CurrentDeviceParameter.AgitParam.SP = CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit;
                             }
-                            else if (CurrentDeviceParameter.AgitParam.Agit_PV > CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit)
+                            else if (CurrentDeviceParameter.AgitParam.SP > CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit)
                             {
-                                CurrentDeviceParameter.AgitParam.Agit_PV = CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit;
+                                CurrentDeviceParameter.AgitParam.SP = CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit;
                             }
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.Agit_PV);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.SP);
 
                             int count = CurrentDeviceParameter.DOParam.AgitCycle.ReverseInterval;
                             int index = 0;
@@ -994,7 +992,7 @@ namespace RD3.Controller
                 {
                     e.Result = CurrentDeviceParameter.Name;
                     DateTime startTime = DateTime.Now;
-                    var sv = CurrentDeviceParameter.DOParam.DO_PV;
+                    var sv = CurrentDeviceParameter.DOParam.SP;
                     _feedIndex = _tempIndex = _airIndex = _o2Index = 0;
 
                     info = null;
@@ -1109,7 +1107,7 @@ namespace RD3.Controller
                         try
                         {
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                            while (realTimeParam.DO < CurrentDeviceParameter.DOParam.DO_PV && !CurrentDeviceParameter.DOParam.IsDirect)
+                            while (realTimeParam.DO < CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsDirect)
                             {
                                 if (_backgroundWorker.CancellationPending)
                                 {
@@ -1130,7 +1128,7 @@ namespace RD3.Controller
                             }
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                            while (realTimeParam.DO > CurrentDeviceParameter.DOParam.DO_PV && !CurrentDeviceParameter.DOParam.IsReverse)
+                            while (realTimeParam.DO > CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsReverse)
                             {
                                 if (_backgroundWorker.CancellationPending)
                                 {
@@ -1171,22 +1169,22 @@ namespace RD3.Controller
                             if (pIDInfos == null)
                             {
                                 realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                                if (realTimeParam.DO <= CurrentDeviceParameter.DOParam.DO_PV)
+                                if (realTimeParam.DO <= CurrentDeviceParameter.DOParam.SP)
                                 {
                                     info = new PIDInfo() { Factor = PIDFactor.DO_Dircet, P = 5, I = 0.005f, D = 20, Threshold = 1000, maxSpeed = 1000 };
                                 }
-                                else if (realTimeParam.DO >= CurrentDeviceParameter.DOParam.DO_PV)
+                                else if (realTimeParam.DO >= CurrentDeviceParameter.DOParam.SP)
                                 {
                                     info = new PIDInfo() { Factor = PIDFactor.DO_Reverse, P = 5, I = 0.005f, D = 20, Threshold = 1000, maxSpeed = 1000 };
                                 }
                             }
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                            if (realTimeParam.DO <= CurrentDeviceParameter.DOParam.DO_PV)
+                            if (realTimeParam.DO <= CurrentDeviceParameter.DOParam.SP)
                             {
                                 info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.deviceID == CurrentDeviceParameter.Name);
                             }
-                            else if (realTimeParam.DO >= CurrentDeviceParameter.DOParam.DO_PV)
+                            else if (realTimeParam.DO >= CurrentDeviceParameter.DOParam.SP)
                             {
                                 info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.deviceID == CurrentDeviceParameter.Name);
                             }
@@ -1202,19 +1200,19 @@ namespace RD3.Controller
                                 if (info.PidName != lastPid.PidName)
                                 {
                                     LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, CurrentDeviceParameter.Name));
-                                    baseAgit = CurrentDeviceParameter.AgitParam.Agit_PV;
+                                    baseAgit = CurrentDeviceParameter.AgitParam.SP;
                                 }
 
                                 ResetDOParam(CurrentDeviceParameter);
-                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", CurrentDeviceParameter.Name, realTimeParam.Agit, CurrentDeviceParameter.AgitParam.Agit_PV, baseAgit));
+                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", CurrentDeviceParameter.Name, realTimeParam.Agit, CurrentDeviceParameter.AgitParam.SP, baseAgit));
                             }
                             lastPid = info;
 
                             param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                            if (Math.Abs(realTimeParam.DO - CurrentDeviceParameter.DOParam.DO_PV) <= info.deadArea)
+                            if (Math.Abs(realTimeParam.DO - CurrentDeviceParameter.DOParam.SP) <= info.deadArea)
                             {
-                                baseAgit = CurrentDeviceParameter.AgitParam.Agit_PV;
+                                baseAgit = CurrentDeviceParameter.AgitParam.SP;
                                 ResetDOParam(CurrentDeviceParameter);
 
                                 int count = info.Interval <= 0 ? 1 : info.Interval;
@@ -1243,9 +1241,9 @@ namespace RD3.Controller
                             _agitPIDController.SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
                             _agitPIDController.SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
                             _agitPIDController.SetIntegralLimits(-2000, 2000);
-                            _agitPIDController.SetTarget(CurrentDeviceParameter.DOParam.DO_PV);
+                            _agitPIDController.SetTarget(CurrentDeviceParameter.DOParam.SP);
 
-                            LogHelper.Debug(string.Format("反应器{6} 阶梯级联 DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", CurrentDeviceParameter.DOParam.DO_PV, realTimeParam.DO, info.P, info.I, info.D, info.Interval, CurrentDeviceParameter.Name));
+                            LogHelper.Debug(string.Format("反应器{6} 阶梯级联 DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", CurrentDeviceParameter.DOParam.SP, realTimeParam.DO, info.P, info.I, info.D, info.Interval, CurrentDeviceParameter.Name));
 
                             float temp = _agitPIDController.CalculatePositional_DO((float)realTimeParam.DO);
                             float timeOffset = Convert.ToSingle((DateTime.Now - startTime).TotalMinutes);
@@ -1261,8 +1259,8 @@ namespace RD3.Controller
                             }
                             LogHelper.Debug(string.Format("反应器{0} 阶梯级联 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", CurrentDeviceParameter.Name, baseAgit, temp, tempAgit, _agitDelta));
 
-                            CurrentDeviceParameter.AgitParam.Agit_PV = (int)Math.Clamp(_agitDelta, CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.Agit_PV);
+                            CurrentDeviceParameter.AgitParam.SP = (int)Math.Clamp(_agitDelta, CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.SP);
 
                             sleepCount = info.Interval <= 1 ? 1 : info.Interval;
                             while (sleepCount > 0)
@@ -1286,9 +1284,9 @@ namespace RD3.Controller
                             }
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                            if (Math.Abs(realTimeParam.DO - CurrentDeviceParameter.DOParam.DO_PV) <= info.deadArea)
+                            if (Math.Abs(realTimeParam.DO - CurrentDeviceParameter.DOParam.SP) <= info.deadArea)
                             {
-                                baseAgit = CurrentDeviceParameter.AgitParam.Agit_PV;
+                                baseAgit = CurrentDeviceParameter.AgitParam.SP;
 
                                 ResetDOParam(CurrentDeviceParameter);
 
@@ -1730,7 +1728,6 @@ namespace RD3.Controller
                                     }
                                     break;
                                 case DOControlFactor.Temp:
-                                    CurrentDeviceParameter.DORegulationLimit = false;
                                     if (!CurrentDeviceParameter.TempParam.IsControling)
                                     {
                                         AnalysisSolution.GetInstance().TempController.StartWork();
@@ -1743,14 +1740,14 @@ namespace RD3.Controller
                                         {
                                             _tempIndex -= 1;
 
-                                            CurrentDeviceParameter.TempParam.Temp_PV = param.CascadeCol[_tempIndex].Temp;
+                                            CurrentDeviceParameter.TempParam.SP = param.CascadeCol[_tempIndex].Temp;
                                         }
                                         else if (factorIndex > 0)
                                         {
                                             lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
 
-                                            CurrentDeviceParameter.TempParam.Temp_PV = CurrentDeviceParameter.DOParam.InitialTemp;
+                                            CurrentDeviceParameter.TempParam.SP = CurrentDeviceParameter.DOParam.InitialTemp;
                                         }
                                     }
                                     else if (_agitDelta >= param.AgitUpperLimit)
@@ -1759,19 +1756,19 @@ namespace RD3.Controller
                                         {
                                             _tempIndex += 1;
 
-                                            CurrentDeviceParameter.TempParam.Temp_PV = param.CascadeCol[_tempIndex].Temp;
+                                            CurrentDeviceParameter.TempParam.SP = param.CascadeCol[_tempIndex].Temp;
                                         }
                                         else if (factorIndex < collection.Count - 1)
                                         {
                                             lastFactorIndex = factorIndex;
                                             factorIndex += 1;
 
-                                            CurrentDeviceParameter.TempParam.Temp_PV = CurrentDeviceParameter.DOParam.InitialTemp;
+                                            CurrentDeviceParameter.TempParam.SP = CurrentDeviceParameter.DOParam.InitialTemp;
                                         }
                                     }
                                     else
                                     {
-                                        CurrentDeviceParameter.TempParam.Temp_PV = param.CascadeCol[_tempIndex].Temp;
+                                        CurrentDeviceParameter.TempParam.SP = param.CascadeCol[_tempIndex].Temp;
                                     }
 
                                     if (_tempIndex <= 0 || _tempIndex >= param.CascadeCol.Count - 1)
@@ -1793,7 +1790,7 @@ namespace RD3.Controller
                                                 Thread.Sleep(1000);
                                             }
                                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
-                                            if (Math.Abs(realTimeParam.Temp - CurrentDeviceParameter.TempParam.Temp_PV) <= 0.2)
+                                            if (Math.Abs(realTimeParam.Temp - CurrentDeviceParameter.TempParam.SP) <= 0.2)
                                             {
                                                 break;
                                             }
@@ -1923,7 +1920,6 @@ namespace RD3.Controller
                         return;
                     }
                     CurrentDeviceParameter.DOParam.IsControling = false;
-                    CurrentDeviceParameter.DORegulationLimit = false;
                     CurrentDeviceParameter.FeedSuspend = false;
 
                     if (MFCAir != null)
@@ -1965,7 +1961,7 @@ namespace RD3.Controller
                             var param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
                             if (param.FactorCol.Contains(DOControlFactor.Temp))
                             {
-                                CurrentDeviceParameter.TempParam.Temp_PV = CurrentDeviceParameter.DOParam.InitialTemp;
+                                CurrentDeviceParameter.TempParam.SP = CurrentDeviceParameter.DOParam.InitialTemp;
                             }
                         }
                         else if (CurrentDeviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step)
@@ -1973,7 +1969,7 @@ namespace RD3.Controller
                             var param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
                             if (param.FactorCol.Contains(DOControlFactor.Temp))
                             {
-                                CurrentDeviceParameter.TempParam.Temp_PV = CurrentDeviceParameter.DOParam.InitialTemp;
+                                CurrentDeviceParameter.TempParam.SP = CurrentDeviceParameter.DOParam.InitialTemp;
                             }
                         }
                     }
@@ -2003,8 +1999,6 @@ namespace RD3.Controller
 
         private void ResetDOParam(DeviceParameter deviceParameter)
         {
-            deviceParameter.IsDOLimit = false;
-            deviceParameter.DORegulationLimit = false;
             _agitPIDController.Reset();
             _agitDelta = 0;
             _airPIDController.Reset();

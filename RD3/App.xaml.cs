@@ -285,7 +285,7 @@ namespace RD3
             containerRegistry.RegisterDialog<CameraImageView, CameraImageViewModel>();
             containerRegistry.RegisterDialog<ReactorView, ReactorViewModel>();
             containerRegistry.RegisterSingleton<ReactorViewModel>();
-            containerRegistry.RegisterDialog<TimeSeriesView, TimeSeriesViewModel>();
+            containerRegistry.RegisterForNavigation<TimeSeriesView>();
             containerRegistry.RegisterDialog<PumpMFCView, PumpMFCViewModel>();
             containerRegistry.RegisterDialog<CompareBatchView, CompareBatchViewModel>();
             containerRegistry.RegisterDialog<AddOffLineDataView, AddOffLineDataViewModel>();

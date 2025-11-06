@@ -13,20 +13,13 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RD3.Shared
 {
-    public class DeviceParameter : RealTimeParam, ICloneable
+    public class DeviceParameter : RealTimeParam
     {
         private string _name;
         public string Name
         {
             get { return _name; }
             set { SetProperty(ref _name, value); }
-        }
-
-        private int _serialNumber;
-        public int SerialNumber
-        {
-            get { return _serialNumber; }
-            set { SetProperty(ref _serialNumber, value); }
         }
 
         private bool _inExperimenting = false;
@@ -58,7 +51,7 @@ namespace RD3.Shared
 
         private int _experimentTime;
         /// <summary>
-        ///实验时间实际值
+        ///批次实验实际值
         /// </summary>
         public int ExperimentTime
         {
@@ -129,97 +122,81 @@ namespace RD3.Shared
         }
 
 
-        private TempParam _tempParam = new();
+        private TempParam _tempParam = new() { IsAuditing = true };
         public TempParam TempParam
         {
             get { return _tempParam; }
             set { SetProperty(ref _tempParam, value); }
         }
 
-        private PHParam _pHParam = new();
+        private PHParam _pHParam = new() { IsAuditing = true };
         public PHParam PHParam
         {
             get { return _pHParam; }
             set { SetProperty(ref _pHParam, value); }
         }
 
-        private DOParam _dOParam = new();
+        private DOParam _dOParam = new() { IsAuditing = true };
         public DOParam DOParam
         {
             get { return _dOParam; }
             set { SetProperty(ref _dOParam, value); }
         }
 
-        private bool _isDOLimit = false;
-        [JsonIgnore]
-        public bool IsDOLimit
-        {
-            get { return _isDOLimit; }
-            set { SetProperty(ref _isDOLimit, value); }
-        }
-
-        private AgitParam _agitParam = new();
+        private AgitParam _agitParam = new() { IsAuditing = true };
         public AgitParam AgitParam
         {
             get { return _agitParam; }
             set { SetProperty(ref _agitParam, value); }
         }
 
-        private BaseParam _baseParam = new();
+        private BaseParam _baseParam = new() { IsAuditing = true };
         public BaseParam BaseParam
         {
             get { return _baseParam; }
             set { SetProperty(ref _baseParam, value); }
         }
 
-        private AcidParam _acidParam = new();
+        private AcidParam _acidParam = new() { IsAuditing = true };
         public AcidParam AcidParam
         {
             get { return _acidParam; }
             set { SetProperty(ref _acidParam, value); }
         }
 
-        private AFParam _aFParam = new();
+        private AFParam _aFParam = new() { IsAuditing = true };
         public AFParam AFParam
         {
             get { return _aFParam; }
             set { SetProperty(ref _aFParam, value); }
         }
 
-        private GasParam _airParam = new();
+        private GasParam _airParam = new() { IsAuditing = true };
         public GasParam AirParam
         {
             get { return _airParam; }
             set { SetProperty(ref _airParam, value); }
         }
 
-        private GasParam _cO2Param = new();
+        private GasParam _cO2Param = new() { IsAuditing = true };
         public GasParam CO2Param
         {
             get { return _cO2Param; }
             set { SetProperty(ref _cO2Param, value); }
         }
 
-        private GasParam _o2Param = new();
+        private GasParam _o2Param = new() { IsAuditing = true };
         public GasParam O2Param
         {
             get { return _o2Param; }
             set { SetProperty(ref _o2Param, value); }
         }
 
-        private GasParam _n2Param = new();
+        private GasParam _n2Param = new() { IsAuditing = true };
         public GasParam N2Param
         {
             get { return _n2Param; }
             set { SetProperty(ref _n2Param, value); }
-        }
-
-        private PumpMFCSetting _pumpMFCSetting = new();
-        [JsonIgnore]
-        public PumpMFCSetting PumpMFCSetting
-        {
-            get => _pumpMFCSetting;
-            set { SetProperty(ref _pumpMFCSetting, value); }
         }
 
         DefoamingSetting _defoamingSetting = new DefoamingSetting();
@@ -229,14 +206,14 @@ namespace RD3.Shared
             set { SetProperty(ref _defoamingSetting, value); }
         }
 
-        FeedParam _feedParam1 = new FeedParam() { Index = 1 };
+        FeedParam _feedParam1 = new FeedParam() { Index = 1, IsAuditing = true };
         public FeedParam FeedParam1
         {
             get => _feedParam1;
             set { SetProperty(ref _feedParam1, value); }
         }
 
-        FeedParam _feedParam2 = new FeedParam() { Index = 2 };
+        FeedParam _feedParam2 = new FeedParam() { Index = 2, IsAuditing = true };
         public FeedParam FeedParam2
         {
             get => _feedParam2;
@@ -244,18 +221,13 @@ namespace RD3.Shared
         }
 
         private bool _doFilterEnable = false;
+        /// <summary>
+        /// DO值是否滤波
+        /// </summary>
         public bool DOFilterEnable
         {
             get => _doFilterEnable;
             set { SetProperty(ref _doFilterEnable, value); }
-        }
-
-        private bool _doRegulationLimit = false;
-        [JsonIgnore]
-        public bool DORegulationLimit
-        {
-            get => _doRegulationLimit;
-            set { SetProperty(ref _doRegulationLimit, value); }
         }
 
         private bool _feedSuspend = false;
@@ -284,6 +256,9 @@ namespace RD3.Shared
         }
 
         private float _agitSampleCycle = 1f;
+        /// <summary>
+        /// DO滤波的参数
+        /// </summary>
         public float AgitSampleCycle
         {
             get => _agitSampleCycle;
@@ -294,6 +269,9 @@ namespace RD3.Shared
         }
 
         private float _agitSampleFrequency = Convert.ToSingle(1.0f / (2 * Math.PI * Math.Max(1, 0.001)));
+        /// <summary>
+        /// DO滤波的频率
+        /// </summary>
         public float AgitSampleFrequency
         {
             get => _agitSampleFrequency;
@@ -305,6 +283,9 @@ namespace RD3.Shared
         }
 
         private float _agitTimeConstant = 1f;
+        /// <summary>
+        /// DO滤波的时间常数
+        /// </summary>
         public float AgitTimeConstant
         {
             get => _agitTimeConstant;
@@ -312,16 +293,13 @@ namespace RD3.Shared
         }
 
         private AdaptivepHParameter _adaptivepHParameter = new AdaptivepHParameter();
+        /// <summary>
+        /// pH自适应调节参数
+        /// </summary>
         public AdaptivepHParameter AdaptivepHParameter
         {
             get => _adaptivepHParameter;
             private set { SetProperty(ref _adaptivepHParameter, value); }
-        }
-
-        public object Clone()
-        {
-            var clonedObject = ObjectCloner.DeepCopy(this);
-            return clonedObject;
         }
     }
 }

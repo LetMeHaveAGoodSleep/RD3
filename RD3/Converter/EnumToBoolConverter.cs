@@ -25,10 +25,14 @@ namespace RD3
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null || !bool.TryParse(value.ToString(), out var flag) || !flag)
+            {
+                return Binding.DoNothing;
+            }
             object enumValue;
             try
             {
-                enumValue = Enum.Parse(targetType, parameter.ToString());
+                enumValue = Enum.Parse(targetType, parameter?.ToString());
                 if (enumValue != null)
                 {
                     return enumValue;

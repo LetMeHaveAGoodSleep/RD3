@@ -255,7 +255,7 @@ namespace RD3.Shared
             if (pumpNo > -1)
             {
                 rF = rF >= prob.FMax ? prob.FMax : rF <= prob.FMin ? prob.FMin : rF;
-                deviceParameter.FeedParam1.Feed_PV = rF;
+                deviceParameter.FeedParam1.SP = rF;
                 PeristalticPumpControlParam param = new PeristalticPumpControlParam()
                 {
                     PumpNo = pumpNo,

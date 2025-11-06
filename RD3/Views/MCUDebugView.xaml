@@ -182,7 +182,7 @@
                                             Width="100"
                                             hc:InfoElement.Title="{ex:Language Key='温度设定值'}"
                                             Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding TempParam.Temp_PV}" />
+                                            Text="{Binding TempParam.SP}" />
                                         <hc:ComboBox
                                             Width="120"
                                             hc:InfoElement.Title="{ex:Language Key='控制模式'}"
@@ -230,7 +230,7 @@
                                             Width="100"
                                             hc:InfoElement.Title="{ex:Language Key='转速设定值'}"
                                             Style="{StaticResource TextBoxExtend}"
-                                            Text="{Binding AgitParam.Agit_PV}" />
+                                            Text="{Binding AgitParam.SP}" />
                                         <Button
                                             Width="80"
                                             Height="30"

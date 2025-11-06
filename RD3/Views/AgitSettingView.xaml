@@ -65,7 +65,7 @@
                 materialDesign:HintAssist.Hint="设定转速(rpm)"
                 IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.AgitParam.Agit_PV, StringFormat={}{0:F0}}">
+                Text="{Binding CurrentDeviceParameter.AgitParam.SP, StringFormat={}{0:F0}}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                         <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
@@ -106,8 +106,9 @@
             Width="230"
             Height="40"
             materialDesign:HintAssist.Hint="开启"
+            materialDesign:ToggleSwitchBehavior.EnableAutoOffset="True"
             IsChecked="{Binding CurrentDeviceParameter.AgitParam.IsControling}"
             IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-            Style="{StaticResource MaterialDesignSwitchLightToggleButton}" />
+            Style="{StaticResource MaterialDesignSwitchLightToggleButton}" Cursor="Hand" />
     </hc:UniformSpacingPanel>
 </UserControl>

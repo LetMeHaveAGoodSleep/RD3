@@ -67,7 +67,7 @@
                         Width="100"
                         materialDesign:HintAssist.Hint="设定温度(℃)"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.TempParam.Temp_PV, StringFormat={}{0:F2}}">
+                        Text="{Binding CurrentDeviceParameter.TempParam.SP, StringFormat={}{0:F2}}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />

@@ -414,7 +414,7 @@
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                                     <TextBox.Text>
                                         <MultiBinding StringFormat="{}{0:F0} / {1:F0}">
-                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.AgitParam.Agit_PV" />
+                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.AgitParam.SP" />
                                             <Binding Mode="OneWay" Path="CurrentDeviceParameter.Agit" />
                                         </MultiBinding>
                                     </TextBox.Text>
@@ -481,7 +481,7 @@
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                                     <TextBox.Text>
                                         <MultiBinding StringFormat="{}{0:F2} / {1:F2}">
-                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.DOParam.DO_PV" />
+                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.DOParam.SP" />
                                             <Binding Mode="OneWay" Path="CurrentDeviceParameter.DO" />
                                         </MultiBinding>
                                     </TextBox.Text>
@@ -540,7 +540,7 @@
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                                     <TextBox.Text>
                                         <MultiBinding StringFormat="{}{0:F2} / {1:F2}">
-                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.PHParam.PH_PV" />
+                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.PHParam.SP" />
                                             <Binding Mode="OneWay" Path="CurrentDeviceParameter.PH" />
                                         </MultiBinding>
                                     </TextBox.Text>
@@ -599,7 +599,7 @@
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}">
                                     <TextBox.Text>
                                         <MultiBinding StringFormat="{}{0:F2} / {1:F2}">
-                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.TempParam.Temp_PV" />
+                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.TempParam.SP" />
                                             <Binding Mode="OneWay" Path="CurrentDeviceParameter.Temp" />
                                         </MultiBinding>
                                     </TextBox.Text>

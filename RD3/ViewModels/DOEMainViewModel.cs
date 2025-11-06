@@ -459,19 +459,19 @@ namespace RD3.ViewModels
                 {
                     //写对应的控制代码
                     case Factor.DO:
-                        deviceParameter.DOParam.DO_PV = Convert.ToSingle(dataRow[factor.ToString()]);
+                        deviceParameter.DOParam.SP = Convert.ToSingle(dataRow[factor.ToString()]);
                         deviceParameter.DOParam.IsControling = true;
                         break;
                     case Factor.pH:
-                        deviceParameter.PHParam.PH_PV = Convert.ToSingle(dataRow[factor.ToString()]);
+                        deviceParameter.PHParam.SP = Convert.ToSingle(dataRow[factor.ToString()]);
                         deviceParameter.PHParam.IsControling = true;
                         break;
                     case Factor.Temp:
-                        deviceParameter.TempParam.Temp_PV = Convert.ToSingle(dataRow[factor.ToString()]);
+                        deviceParameter.TempParam.SP = Convert.ToSingle(dataRow[factor.ToString()]);
                         deviceParameter.TempParam.IsControling = true;
                         break;
                     case Factor.Agit:
-                        deviceParameter.AgitParam.Agit_PV = Convert.ToInt32(dataRow[factor.ToString()]);
+                        deviceParameter.AgitParam.SP = Convert.ToInt32(dataRow[factor.ToString()]);
                         deviceParameter.AgitParam.IsControling = true;
                         break;
                     case Factor.Pump1FlowRate:

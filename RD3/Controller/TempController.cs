@@ -42,9 +42,9 @@ namespace RD3.Controller
                 try
                 {
                     CurrentDeviceParameter.TempParam.IsEnable = true;
-                    CurrentDeviceParameter.TempParam.Temp_PV = Math.Clamp(CurrentDeviceParameter.TempParam.Temp_PV, CurrentDeviceParameter.TempParam.LowerLimit, CurrentDeviceParameter.TempParam.UpperLimit);
+                    CurrentDeviceParameter.TempParam.SP = Math.Clamp(CurrentDeviceParameter.TempParam.SP, CurrentDeviceParameter.TempParam.LowerLimit, CurrentDeviceParameter.TempParam.UpperLimit);
                     InstrumentSolution.GetInstance().CommandWrapper.SetTempSetting(CurrentDeviceParameter.Name, CurrentDeviceParameter.TempParam);
-                    _tempSP = CurrentDeviceParameter.TempParam.Temp_PV;
+                    _tempSP = CurrentDeviceParameter.TempParam.SP;
                 }
                 catch (Exception ex)
                 {
@@ -59,12 +59,12 @@ namespace RD3.Controller
                     }
                     try
                     {
-                        if (_tempSP != CurrentDeviceParameter.TempParam.Temp_PV || CurrentDeviceParameter.TempParam.Temp_PV < CurrentDeviceParameter.TempParam.LowerLimit || CurrentDeviceParameter.TempParam.Temp_PV > CurrentDeviceParameter.TempParam.UpperLimit)
+                        if (_tempSP != CurrentDeviceParameter.TempParam.SP || CurrentDeviceParameter.TempParam.SP < CurrentDeviceParameter.TempParam.LowerLimit || CurrentDeviceParameter.TempParam.SP > CurrentDeviceParameter.TempParam.UpperLimit)
                         {
                             CurrentDeviceParameter.TempParam.IsEnable = true;
-                            CurrentDeviceParameter.TempParam.Temp_PV = Math.Clamp(CurrentDeviceParameter.TempParam.Temp_PV, CurrentDeviceParameter.TempParam.LowerLimit, CurrentDeviceParameter.TempParam.UpperLimit);
+                            CurrentDeviceParameter.TempParam.SP = Math.Clamp(CurrentDeviceParameter.TempParam.SP, CurrentDeviceParameter.TempParam.LowerLimit, CurrentDeviceParameter.TempParam.UpperLimit);
                             InstrumentSolution.GetInstance().CommandWrapper.SetTempSetting(CurrentDeviceParameter.Name, CurrentDeviceParameter.TempParam);
-                            _tempSP = CurrentDeviceParameter.AgitParam.Agit_PV;
+                            _tempSP = CurrentDeviceParameter.AgitParam.SP;
                         }
                     }
                     catch (Exception ex)

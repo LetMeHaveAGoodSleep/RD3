@@ -9,76 +9,41 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
-    public class AgitParam : BindableBase,ICloneable
+    public class AgitParam : BasicParam
     {
-        private int _agit_PV = 0;
-        public int Agit_PV
+        private int _sp = 0;
+        /// <summary>
+        /// 预设值
+        /// </summary>
+        public new int SP
         {
-            get { return _agit_PV; }
-            set 
-            {
-                SetProperty(ref _agit_PV, value);
-            }
+            get { return _sp; }
+            set { SetProperty(ref _sp, value); }
         }
 
-        private float _alarmLowerLimit;
-        public float AlarmLowerLimit
-        {
-            get { return _alarmLowerLimit; }
-            set { SetProperty(ref _alarmLowerLimit, value); }
-        }
-
-        private float _alarmUpperLimit;
-        public float AlarmUpperLimit
-        {
-            get { return _alarmUpperLimit; }
-            set { SetProperty(ref _alarmUpperLimit, value); }
-        }
-
-        private ControlMode _controlMode = ControlMode.Enable;
-        public ControlMode ControlMode
-        {
-            get { return _controlMode; }
-            set { SetProperty(ref _controlMode, value); }
-        }
-
-        private int _lowerLimit;
-        public int LowerLimit
+        private int _lowerLimit = 0;
+        /// <summary>
+        /// 下限
+        /// </summary>
+        public new int LowerLimit
         {
             get { return _lowerLimit; }
             set { SetProperty(ref _lowerLimit, value); }
         }
 
-        private int _upperLimit = 1200;
-        public int UpperLimit
+        private int _upperLimit = 100;
+        /// <summary>
+        /// 上限
+        /// </summary>
+        public new  int UpperLimit
         {
             get { return _upperLimit; }
             set { SetProperty(ref _upperLimit, value); }
         }
-
-        private bool _lastIsControling = false;
-        [JsonIgnore]
-        public bool LastIsControling
+        public AgitParam()
         {
-            get { return _lastIsControling; }
-            private set { SetProperty(ref _lastIsControling, value); }
-        }
-
-        private bool _isControling = false;
-        public bool IsControling
-        {
-            get { return _isControling; }
-            set 
-            {
-                LastIsControling = _isControling;
-                SetProperty(ref _isControling, value); 
-            }
-        }
-
-        public object Clone()
-        {
-            var clonedObject = ObjectCloner.DeepCopy(this);
-            return clonedObject;
+            LowerLimit = 0;
+            UpperLimit = Const.MaxAgit;
         }
     }
 }

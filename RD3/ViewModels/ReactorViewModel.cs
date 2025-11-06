@@ -330,7 +330,7 @@ namespace RD3.ViewModels
 
 
                     #region 溶氧
-                    CurrentDeviceParameter.AgitParam.Agit_PV = 0;
+                    CurrentDeviceParameter.AgitParam.SP = 0;
                     CurrentDeviceParameter.AirParam.FlowSpeed = 0;
                     CurrentDeviceParameter.O2Param.FlowSpeed = 0;
                     CurrentDeviceParameter.DOParam.IsControling = false;
@@ -339,7 +339,7 @@ namespace RD3.ViewModels
                     CurrentDeviceParameter.O2Param.IsControling = false;
                     Task.Run(() =>
                     {
-                        CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.Agit_PV);
+                        CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.SP);
                         int mfcNo = PumpMFCUtil.GetMFCIndex(CurrentDeviceParameter.Name, GasType.Air);
                         if (mfcNo >= 0)
                         {
@@ -369,9 +369,9 @@ namespace RD3.ViewModels
 
                     #region PH
                     CurrentDeviceParameter.PHParam.IsControling = false;
-                    CurrentDeviceParameter.BaseParam.Base_PV = 0;
+                    CurrentDeviceParameter.BaseParam.SP = 0;
                     CurrentDeviceParameter.BaseParam.IsControling = false;
-                    CurrentDeviceParameter.AcidParam.Acid_PV = 0;
+                    CurrentDeviceParameter.AcidParam.SP = 0;
                     CurrentDeviceParameter.AcidParam.IsControling = false;
                     Task.Run(() =>
                     {
@@ -383,7 +383,7 @@ namespace RD3.ViewModels
                                 PumpNo = pumpNo,
                                 Pump = PeristalticPump.BasePump,
                                 ControlMode = PumpControlMode.Direct,
-                                FlowSpeed = CurrentDeviceParameter.BaseParam.Base_PV,
+                                FlowSpeed = CurrentDeviceParameter.BaseParam.SP,
                                 FlowCapacity = 0
                             };
                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, param1);
@@ -397,7 +397,7 @@ namespace RD3.ViewModels
                                 PumpNo = pumpNo1,
                                 Pump = PeristalticPump.AcidPump,
                                 ControlMode = PumpControlMode.Direct,
-                                FlowSpeed = CurrentDeviceParameter.AcidParam.Acid_PV,
+                                FlowSpeed = CurrentDeviceParameter.AcidParam.SP,
                                 FlowCapacity = 0
                             };
                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, param);
@@ -407,7 +407,7 @@ namespace RD3.ViewModels
 
                     #region 补料
                     CurrentDeviceParameter.FeedParam1.IsControling = false;
-                    CurrentDeviceParameter.FeedParam1.Feed_PV = 0;
+                    CurrentDeviceParameter.FeedParam1.SP = 0;
                     Task.Run(() =>
                     {
                         int pumpNo = PumpMFCUtil.GetPumpIndex(CurrentDeviceParameter.Name, PeristalticPump.FeedPump);
@@ -418,7 +418,7 @@ namespace RD3.ViewModels
                                 PumpNo = pumpNo,
                                 Pump = PeristalticPump.FeedPump,
                                 ControlMode = PumpControlMode.Direct,
-                                FlowSpeed = CurrentDeviceParameter.FeedParam1.Feed_PV,
+                                FlowSpeed = CurrentDeviceParameter.FeedParam1.SP,
                                 FlowCapacity = 0
                             };
                             CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, param);
@@ -429,7 +429,7 @@ namespace RD3.ViewModels
                     #region 消泡
                     CurrentDeviceParameter.AFParam.AutoDefoaming = false;
                     CurrentDeviceParameter.AFParam.IsControling = false;
-                    CurrentDeviceParameter.AFParam.AF_PV = 0;
+                    CurrentDeviceParameter.AFParam.SP = 0;
                     Task.Run(() =>
                     {
                         int pumpNo = PumpMFCUtil.GetPumpIndex(CurrentDeviceParameter.Name, PeristalticPump.AFPump);
@@ -440,7 +440,7 @@ namespace RD3.ViewModels
                                 PumpNo = pumpNo,
                                 Pump = PeristalticPump.AFPump,
                                 ControlMode = PumpControlMode.Direct,
-                                FlowSpeed = CurrentDeviceParameter.AFParam.AF_PV,
+                                FlowSpeed = CurrentDeviceParameter.AFParam.SP,
                                 FlowCapacity = 0
                             };
                             CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, param1);
@@ -520,12 +520,12 @@ namespace RD3.ViewModels
             }
             else
             {
-                currentDeviceParameter.DOParam.ControlMode = currentDeviceParameter.DOParam.ControlMode == ControlMode.TimeSeries ? ControlMode.Enable : ControlMode.TimeSeries;
+                currentDeviceParameter.DOParam.ControlMode = currentDeviceParameter.DOParam.ControlMode == ControlMode.TimeSeries ? ControlMode.Constant : ControlMode.TimeSeries;
             }
 
             switch (currentDeviceParameter.DOParam.ControlMode)
             {
-                case ControlMode.Enable:
+                case ControlMode.Constant:
                     if (dicDOTimeWorker[currentDeviceParameter.Name] != null && dicDOTimeWorker[currentDeviceParameter.Name].IsBusy)
                     {
                         dicDOTimeWorker[currentDeviceParameter.Name].CancelAsync();
@@ -537,7 +537,7 @@ namespace RD3.ViewModels
                     {
                         if (dicDOTimeWorker[currentDeviceParameter.Name] != null && dicDOTimeWorker[currentDeviceParameter.Name].IsBusy)
                         {
-                            currentDeviceParameter.DOParam.ControlMode = ControlMode.Enable;
+                            currentDeviceParameter.DOParam.ControlMode = ControlMode.Constant;
                             dicDOTimeWorker[currentDeviceParameter.Name].CancelAsync();
                             return;
                         }
@@ -547,7 +547,7 @@ namespace RD3.ViewModels
                     {
                         if (dicDOTimeWorker[currentDeviceParameter.Name] != null && dicDOTimeWorker[currentDeviceParameter.Name].IsBusy)
                         {
-                            currentDeviceParameter.DOParam.ControlMode = ControlMode.Enable;
+                            currentDeviceParameter.DOParam.ControlMode = ControlMode.Constant;
                             dicDOTimeWorker[currentDeviceParameter.Name].CancelAsync();
                             return;
                         }
@@ -583,19 +583,19 @@ namespace RD3.ViewModels
                                     float time = 0;
                                     switch (deviceParameter.DOParam.TimeSeries.Timer)
                                     {
-                                        case FeedTimer.Minute:
-                                            time = Convert.ToSingle(item.Time);
+                                        case TimeUnit.Minute:
+                                            //time = Convert.ToSingle(item.Time);
                                             break;
-                                        case FeedTimer.Hour:
-                                            time = Convert.ToSingle(item.Time * 60);
+                                        case TimeUnit.Hour:
+                                            //time = Convert.ToSingle(item.Time * 60);
                                             break;
-                                        case FeedTimer.Day:
-                                            time = Convert.ToSingle(item.Time * 60 * 24);
+                                        case TimeUnit.Day:
+                                            //time = Convert.ToSingle(item.Time * 60 * 24);
                                             break;
                                     }
                                     if (timeOffset <= time)
                                     {
-                                        deviceParameter.DOParam.DO_PV = (float)item.Value;
+                                        deviceParameter.DOParam.SP = (float)item.Value;
                                         break;
                                     }
                                 }
@@ -615,7 +615,7 @@ namespace RD3.ViewModels
                         backgroundWorker = null;
 
                         var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == currentDeviceParameter.Name);
-                        deviceParameter.DOParam.ControlMode = ControlMode.Enable;
+                        deviceParameter.DOParam.ControlMode = ControlMode.Constant;
                     });
                     dicDOTimeWorker[currentDeviceParameter.Name].RunWorkerAsync();
                     break;
@@ -645,12 +645,12 @@ namespace RD3.ViewModels
             }
             else
             {
-                currentDeviceParameter.PHParam.ControlMode = currentDeviceParameter.PHParam.ControlMode == ControlMode.TimeSeries ? ControlMode.Enable : ControlMode.TimeSeries;
+                currentDeviceParameter.PHParam.ControlMode = currentDeviceParameter.PHParam.ControlMode == ControlMode.TimeSeries ? ControlMode.Constant : ControlMode.TimeSeries;
             }
 
             switch (currentDeviceParameter.PHParam.ControlMode)
             {
-                case ControlMode.Enable:
+                case ControlMode.Constant:
                     if (dicPHTimeWorker[currentDeviceParameter.Name] != null && dicPHTimeWorker[currentDeviceParameter.Name].IsBusy)
                     {
                         dicPHTimeWorker[currentDeviceParameter.Name].CancelAsync();
@@ -662,7 +662,7 @@ namespace RD3.ViewModels
                     {
                         if (dicPHTimeWorker[currentDeviceParameter.Name] != null && dicPHTimeWorker[currentDeviceParameter.Name].IsBusy)
                         {
-                            currentDeviceParameter.PHParam.ControlMode = ControlMode.Enable;
+                            currentDeviceParameter.PHParam.ControlMode = ControlMode.Constant;
                             dicPHTimeWorker[currentDeviceParameter.Name].CancelAsync();
                             return;
                         }
@@ -672,7 +672,7 @@ namespace RD3.ViewModels
                     {
                         if (dicPHTimeWorker[currentDeviceParameter.Name] != null && dicPHTimeWorker[currentDeviceParameter.Name].IsBusy)
                         {
-                            currentDeviceParameter.PHParam.ControlMode = ControlMode.Enable;
+                            currentDeviceParameter.PHParam.ControlMode = ControlMode.Constant;
                             dicPHTimeWorker[currentDeviceParameter.Name].CancelAsync();
                             return;
                         }
@@ -708,19 +708,19 @@ namespace RD3.ViewModels
                                     float time = 0;
                                     switch (deviceParameter.PHParam.TimeSeries.Timer)
                                     {
-                                        case FeedTimer.Minute:
-                                            time = Convert.ToSingle(item.Time);
+                                        case TimeUnit.Minute:
+                                            //time = Convert.ToSingle(item.Time);
                                             break;
-                                        case FeedTimer.Hour:
-                                            time = Convert.ToSingle(item.Time * 60);
+                                        case TimeUnit.Hour:
+                                            //time = Convert.ToSingle(item.Time * 60);
                                             break;
-                                        case FeedTimer.Day:
-                                            time = Convert.ToSingle(item.Time * 60 * 24);
+                                        case TimeUnit.Day:
+                                            //time = Convert.ToSingle(item.Time * 60 * 24);
                                             break;
                                     }
                                     if (timeOffset <= time)
                                     {
-                                        deviceParameter.PHParam.PH_PV = (float)item.Value;
+                                        deviceParameter.PHParam.SP = (float)item.Value;
                                         break;
                                     }
                                 }
@@ -740,7 +740,7 @@ namespace RD3.ViewModels
                         backgroundWorker = null;
 
                         var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == currentDeviceParameter.Name);
-                        deviceParameter.PHParam.ControlMode = ControlMode.Enable;
+                        deviceParameter.PHParam.ControlMode = ControlMode.Constant;
                     });
                     dicPHTimeWorker[currentDeviceParameter.Name].RunWorkerAsync();
                     break;
@@ -756,11 +756,11 @@ namespace RD3.ViewModels
             }
             else
             {
-                currentDeviceParameter.TempParam.ControlMode = currentDeviceParameter.TempParam.ControlMode == ControlMode.TimeSeries ? ControlMode.Enable : ControlMode.TimeSeries;
+                currentDeviceParameter.TempParam.ControlMode = currentDeviceParameter.TempParam.ControlMode == ControlMode.TimeSeries ? ControlMode.Constant : ControlMode.TimeSeries;
             }
             switch (currentDeviceParameter.TempParam.ControlMode)
             {
-                case ControlMode.Enable:
+                case ControlMode.Constant:
                     if (dicTempTimeWorker[currentDeviceParameter.Name] != null && dicTempTimeWorker[currentDeviceParameter.Name].IsBusy)
                     {
                         dicTempTimeWorker[currentDeviceParameter.Name].CancelAsync();
@@ -772,7 +772,7 @@ namespace RD3.ViewModels
                     {
                         if (dicTempTimeWorker[currentDeviceParameter.Name] != null && dicTempTimeWorker[currentDeviceParameter.Name].IsBusy)
                         {
-                            currentDeviceParameter.TempParam.ControlMode = ControlMode.Enable;
+                            currentDeviceParameter.TempParam.ControlMode = ControlMode.Constant;
                             dicTempTimeWorker[currentDeviceParameter.Name].CancelAsync();
                             return;
                         }
@@ -782,7 +782,7 @@ namespace RD3.ViewModels
                     {
                         if (dicTempTimeWorker[currentDeviceParameter.Name] != null && dicTempTimeWorker[currentDeviceParameter.Name].IsBusy)
                         {
-                            currentDeviceParameter.TempParam.ControlMode = ControlMode.Enable;
+                            currentDeviceParameter.TempParam.ControlMode = ControlMode.Constant;
                             dicTempTimeWorker[currentDeviceParameter.Name].CancelAsync();
                             return;
                         }
@@ -818,19 +818,19 @@ namespace RD3.ViewModels
                                     float time = 0;
                                     switch (deviceParameter.TempParam.TimeSeries.Timer)
                                     {
-                                        case FeedTimer.Minute:
-                                            time = Convert.ToSingle(item.Time);
+                                        case TimeUnit.Minute:
+                                            //time = Convert.ToSingle(item.Time);
                                             break;
-                                        case FeedTimer.Hour:
-                                            time = Convert.ToSingle(item.Time * 60);
+                                        case TimeUnit.Hour:
+                                            //time = Convert.ToSingle(item.Time * 60);
                                             break;
-                                        case FeedTimer.Day:
-                                            time = Convert.ToSingle(item.Time * 60 * 24);
+                                        case TimeUnit.Day:
+                                            //time = Convert.ToSingle(item.Time * 60 * 24);
                                             break;
                                     }
                                     if (timeOffset <= time)
                                     {
-                                        deviceParameter.TempParam.Temp_PV = (float)item.Value;
+                                        deviceParameter.TempParam.SP = (float)item.Value;
                                         break;
                                     }
                                 }
@@ -850,7 +850,7 @@ namespace RD3.ViewModels
                         backgroundWorker = null;
 
                         var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == currentDeviceParameter.Name);
-                        deviceParameter.TempParam.ControlMode = ControlMode.Enable;
+                        deviceParameter.TempParam.ControlMode = ControlMode.Constant;
                     });
                     dicTempTimeWorker[currentDeviceParameter.Name].RunWorkerAsync();
                     break;
@@ -888,8 +888,6 @@ namespace RD3.ViewModels
         /// </summary>
         private void ResetDOParam(DeviceParameter deviceParameter)
         {
-            deviceParameter.IsDOLimit = false;
-            deviceParameter.DORegulationLimit = false;
             dicDOPid[deviceParameter.Name].Reset();
             dicDODelta[deviceParameter.Name] = 0;
             dicDOAirPid[deviceParameter.Name].Reset();
@@ -933,8 +931,8 @@ namespace RD3.ViewModels
 
                 var deviceParameter = DeviceParameterCol.FindFirst(t => t.Name == currentDeviceParameter.Name);
 
-                deviceParameter.FeedSuspend = deviceParameter.IsDOLimit = deviceParameter.DORegulationLimit = false;
-                deviceParameter.DOParam.InitialTemp = deviceParameter.TempParam.Temp_PV;
+                deviceParameter.FeedSuspend = false;
+                deviceParameter.DOParam.InitialTemp = deviceParameter.TempParam.SP;
                 e.Result = deviceParameter.Name;
 
                 float maxGas = 0;//用于通气量的总和
@@ -961,7 +959,7 @@ namespace RD3.ViewModels
                 }
 
                 RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
+                while (realTimeParam.DO < deviceParameter.DOParam.SP && !deviceParameter.DOParam.IsDirect)
                 {
                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                     {
@@ -982,7 +980,7 @@ namespace RD3.ViewModels
                 }
 
                 realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                while (realTimeParam.DO > deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsReverse)
+                while (realTimeParam.DO > deviceParameter.DOParam.SP && !deviceParameter.DOParam.IsReverse)
                 {
                     if (dicDOWorker[deviceParameter.Name].CancellationPending)
                     {
@@ -1015,7 +1013,7 @@ namespace RD3.ViewModels
                     MidRangingParam param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                     realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
                     deviceParameter.AgitParam.IsControling = true;
-                    deviceParameter.AgitParam.Agit_PV = realTimeParam.Agit >= param.AgitLowerLimit ? realTimeParam.Agit <= param.AgitUpperLimit ? realTimeParam.Agit : param.AgitUpperLimit : param.AgitLowerLimit;
+                    deviceParameter.AgitParam.SP = realTimeParam.Agit >= param.AgitLowerLimit ? realTimeParam.Agit <= param.AgitUpperLimit ? realTimeParam.Agit : param.AgitUpperLimit : param.AgitLowerLimit;
                     AgitRunCommand.Execute(deviceParameter);
 
                     ObservableCollection<DOControlFactor> collection = [.. param.FactorCol];
@@ -1073,7 +1071,7 @@ namespace RD3.ViewModels
                         try
                         {
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
+                            while (realTimeParam.DO < deviceParameter.DOParam.SP && !deviceParameter.DOParam.IsDirect)
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
@@ -1094,7 +1092,7 @@ namespace RD3.ViewModels
                             }
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            while (realTimeParam.DO > deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsReverse)
+                            while (realTimeParam.DO > deviceParameter.DOParam.SP && !deviceParameter.DOParam.IsReverse)
                             {
                                 if (dicDOWorker[deviceParameter.Name].CancellationPending)
                                 {
@@ -1139,11 +1137,11 @@ namespace RD3.ViewModels
                                 return;
                             }
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (realTimeParam.DO <= deviceParameter.DOParam.DO_PV)
+                            if (realTimeParam.DO <= deviceParameter.DOParam.SP)
                             {
                                 info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.deviceID == deviceParameter.Name);
                             }
-                            else if (realTimeParam.DO >= deviceParameter.DOParam.DO_PV)
+                            else if (realTimeParam.DO >= deviceParameter.DOParam.SP)
                             {
                                 info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.deviceID == deviceParameter.Name);
                             }
@@ -1166,9 +1164,9 @@ namespace RD3.ViewModels
                                 if (info.PidName != lastPid.PidName)
                                 {
                                     LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
-                                    baseAgit = deviceParameter.AgitParam.Agit_PV;
+                                    baseAgit = deviceParameter.AgitParam.SP;
                                 }
-                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, baseAgit));
+                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.SP, baseAgit));
 
                                 ResetDOParam(deviceParameter);
                             }
@@ -1178,9 +1176,9 @@ namespace RD3.ViewModels
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
 
-                            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
+                            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.SP) <= info.deadArea)
                             {
-                                baseAgit = deviceParameter.AgitParam.Agit_PV;
+                                baseAgit = deviceParameter.AgitParam.SP;
                                 ResetDOParam(deviceParameter);
 
                                 int count = info.Interval <= 0 ? 1 : info.Interval;
@@ -1209,9 +1207,9 @@ namespace RD3.ViewModels
                             dicDOPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
                             dicDOPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
                             dicDOPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
-                            dicDOPid[deviceParameter.Name].SetTarget(deviceParameter.DOParam.DO_PV);
+                            dicDOPid[deviceParameter.Name].SetTarget(deviceParameter.DOParam.SP);
 
-                            LogHelper.Debug(string.Format("反应器{6} Mid-Ranging DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", deviceParameter.DOParam.DO_PV, realTimeParam.DO, info.P, info.I, info.D, info.Interval, deviceParameter.Name));
+                            LogHelper.Debug(string.Format("反应器{6} Mid-Ranging DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", deviceParameter.DOParam.SP, realTimeParam.DO, info.P, info.I, info.D, info.Interval, deviceParameter.Name));
 
                             float temp = dicDOPid[deviceParameter.Name].CalculatePositional_DO((float)realTimeParam.DO);
                             int tempAgit = Convert.ToInt32(baseAgit + temp);
@@ -1227,8 +1225,8 @@ namespace RD3.ViewModels
 
                             LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, baseAgit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
 
-                            deviceParameter.AgitParam.Agit_PV = Math.Clamp(dicDODelta[deviceParameter.Name], deviceParameter.AgitParam.LowerLimit, deviceParameter.AgitParam.UpperLimit);
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.Agit_PV);
+                            deviceParameter.AgitParam.SP = Math.Clamp(dicDODelta[deviceParameter.Name], deviceParameter.AgitParam.LowerLimit, deviceParameter.AgitParam.UpperLimit);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.SP);
 
                             sleepCount = info.Interval <= 0 ? 1 : info.Interval;
                             while (sleepCount > 0)
@@ -1252,9 +1250,9 @@ namespace RD3.ViewModels
                             }
 
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
+                            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.SP) <= info.deadArea)
                             {
-                                baseAgit = deviceParameter.AgitParam.Agit_PV;
+                                baseAgit = deviceParameter.AgitParam.SP;
 
                                 ResetDOParam(deviceParameter);
 
@@ -1281,7 +1279,7 @@ namespace RD3.ViewModels
                                 continue;
                             }
 
-                            if (deviceParameter.AgitParam.Agit_PV > param.AgitHigh && factorIndex == -1)
+                            if (deviceParameter.AgitParam.SP > param.AgitHigh && factorIndex == -1)
                             {
                                 LogHelper.Debug($"到达设定转速高限:{param.AgitHigh}");
                                 lastFactorIndex= factorIndex;
@@ -1474,7 +1472,6 @@ namespace RD3.ViewModels
                                     }
                                     break;
                                 case DOControlFactor.Temp:
-                                    deviceParameter.DORegulationLimit = false;
                                     if (!deviceParameter.TempParam.IsControling)
                                     {
                                         TempRunCommand.Execute(deviceParameter);
@@ -1482,7 +1479,7 @@ namespace RD3.ViewModels
                                     }
                                     if (firstInitTemp)
                                     {
-                                        deviceParameter.DOParam.InitialTemp = deviceParameter.TempParam.Temp_PV;
+                                        deviceParameter.DOParam.InitialTemp = deviceParameter.TempParam.SP;
                                         firstInitTemp = false;
                                     }
 
@@ -1497,7 +1494,7 @@ namespace RD3.ViewModels
                                     pIDController.SetIntegralLimits(-2000, 2000);
                                     pIDController.SetTarget(param.AgitHigh);
                                     float increment = pIDController.CalculateIncremental(dicDODelta[deviceParameter.Name]);
-                                    float currentTemp = deviceParameter.TempParam.Temp_PV + increment;
+                                    float currentTemp = deviceParameter.TempParam.SP + increment;
                                     if (currentTemp <= deviceParameter.TempDOLowerLimit)
                                     {
                                         if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
@@ -1515,7 +1512,7 @@ namespace RD3.ViewModels
                                         }
                                     }
                                     currentTemp = currentTemp <= deviceParameter.TempDOLowerLimit ? deviceParameter.TempDOLowerLimit : currentTemp >=  deviceParameter.DOParam.InitialTemp ?  deviceParameter.DOParam.InitialTemp : currentTemp;
-                                    deviceParameter.TempParam.Temp_PV = MathF.Round(currentTemp, 2);
+                                    deviceParameter.TempParam.SP = MathF.Round(currentTemp, 2);
                                     LogHelper.Debug(string.Format("反应器{0} 起始温度{1} 单次delta{2} 实际温度{3}", deviceParameter.Name,  deviceParameter.DOParam.InitialTemp, increment, currentTemp));
                                     sleepCount = info1.Interval <= 0 ? 1 : info1.Interval;
                                     while (sleepCount > 0)
@@ -1538,7 +1535,7 @@ namespace RD3.ViewModels
                                         Thread.Sleep(1000);
                                     }
 
-                                    if (deviceParameter.TempParam.Temp_PV <= deviceParameter.TempDOLowerLimit || deviceParameter.TempParam.Temp_PV >=  deviceParameter.DOParam.InitialTemp)
+                                    if (deviceParameter.TempParam.SP <= deviceParameter.TempDOLowerLimit || deviceParameter.TempParam.SP >=  deviceParameter.DOParam.InitialTemp)
                                     {
                                         while (true)
                                         {
@@ -1557,7 +1554,7 @@ namespace RD3.ViewModels
                                                 Thread.Sleep(1000);
                                             }
                                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                                            if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.Temp_PV) <= 0.2)
+                                            if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.SP) <= 0.2)
                                             {
                                                 break;
                                             }
@@ -1583,7 +1580,7 @@ namespace RD3.ViewModels
                                     if (firstInitFeed)
                                     {
                                         deviceParameter.FeedSuspend = true;
-                                        deviceParameter.DOParam.InitialFeed = deviceParameter.FeedParam1.Feed_PV;
+                                        deviceParameter.DOParam.InitialFeed = deviceParameter.FeedParam1.SP;
                                         firstInitFeed = false;
                                     }
                                     QPIDController controller = new QPIDController();
@@ -1597,7 +1594,7 @@ namespace RD3.ViewModels
                                     controller.SetIntegralLimits(-2000, 2000);
                                     controller.SetTarget(param.AgitHigh);
                                     float incrementFeed = controller.CalculateIncremental(dicDODelta[deviceParameter.Name]);
-                                    float currentFeed = deviceParameter.FeedParam1.Feed_PV + incrementFeed;
+                                    float currentFeed = deviceParameter.FeedParam1.SP + incrementFeed;
                                     if (currentFeed <= deviceParameter.FeedDOLowerLimit)
                                     {
                                         if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
@@ -1615,7 +1612,7 @@ namespace RD3.ViewModels
                                         }
                                     }
                                     currentFeed = currentFeed <= deviceParameter.FeedDOLowerLimit ? deviceParameter.FeedDOLowerLimit : currentFeed >=  deviceParameter.DOParam.InitialFeed ?  deviceParameter.DOParam.InitialFeed : currentFeed;
-                                    deviceParameter.FeedParam1.Feed_PV = MathF.Round(currentFeed, 2);
+                                    deviceParameter.FeedParam1.SP = MathF.Round(currentFeed, 2);
                                     PeristalticPump pump = PeristalticPump.FeedPump;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -1625,11 +1622,11 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, controlParam);
-                                        dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam1.Feed_PV;
+                                        dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam1.SP;
                                     }
                                     LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 单次delta{2} 实际补料{3}", deviceParameter.Name,  deviceParameter.DOParam.InitialFeed, incrementFeed, currentFeed));
                                     sleepCount = info1.Interval <= 0 ? 1 : info1.Interval;
@@ -1671,7 +1668,7 @@ namespace RD3.ViewModels
                     while (true)
                     {
                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                        while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
+                        while (realTimeParam.DO < deviceParameter.DOParam.SP && !deviceParameter.DOParam.IsDirect)
                         {
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
@@ -1692,7 +1689,7 @@ namespace RD3.ViewModels
                         }
 
                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                        while (realTimeParam.DO > deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsReverse)
+                        while (realTimeParam.DO > deviceParameter.DOParam.SP && !deviceParameter.DOParam.IsReverse)
                         {
                             if (dicDOWorker[deviceParameter.Name].CancellationPending)
                             {
@@ -1730,18 +1727,18 @@ namespace RD3.ViewModels
                         }
 
                         realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                        if (realTimeParam.DO < deviceParameter.DOParam.DO_PV)
+                        if (realTimeParam.DO < deviceParameter.DOParam.SP)
                         {
-                            deviceParameter.AgitParam.Agit_PV += deviceParameter.DOParam.AgitCycle.DirectStep;
-                            if (deviceParameter.AgitParam.Agit_PV < deviceParameter.DOParam.AgitCycle.LowerLimit)
+                            deviceParameter.AgitParam.SP += deviceParameter.DOParam.AgitCycle.DirectStep;
+                            if (deviceParameter.AgitParam.SP < deviceParameter.DOParam.AgitCycle.LowerLimit)
                             {
-                                deviceParameter.AgitParam.Agit_PV = deviceParameter.DOParam.AgitCycle.LowerLimit;
+                                deviceParameter.AgitParam.SP = deviceParameter.DOParam.AgitCycle.LowerLimit;
                             }
-                            else if (deviceParameter.AgitParam.Agit_PV > deviceParameter.DOParam.AgitCycle.UpperLimit)
+                            else if (deviceParameter.AgitParam.SP > deviceParameter.DOParam.AgitCycle.UpperLimit)
                             {
-                                deviceParameter.AgitParam.Agit_PV = deviceParameter.DOParam.AgitCycle.UpperLimit;
+                                deviceParameter.AgitParam.SP = deviceParameter.DOParam.AgitCycle.UpperLimit;
                             }
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.Agit_PV);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.SP);
 
                             int count = deviceParameter.DOParam.AgitCycle.DirectInterval;
                             int index = 0;
@@ -1766,19 +1763,19 @@ namespace RD3.ViewModels
                                 Thread.Sleep(1000);
                             }
                         }
-                        else if (realTimeParam.DO > deviceParameter.DOParam.DO_PV)
+                        else if (realTimeParam.DO > deviceParameter.DOParam.SP)
                         {
-                            deviceParameter.AgitParam.Agit_PV -= deviceParameter.DOParam.AgitCycle.ReverseStep;
+                            deviceParameter.AgitParam.SP -= deviceParameter.DOParam.AgitCycle.ReverseStep;
 
-                            if (deviceParameter.AgitParam.Agit_PV < deviceParameter.DOParam.AgitCycle.LowerLimit)
+                            if (deviceParameter.AgitParam.SP < deviceParameter.DOParam.AgitCycle.LowerLimit)
                             {
-                                deviceParameter.AgitParam.Agit_PV = deviceParameter.DOParam.AgitCycle.LowerLimit;
+                                deviceParameter.AgitParam.SP = deviceParameter.DOParam.AgitCycle.LowerLimit;
                             }
-                            else if (deviceParameter.AgitParam.Agit_PV > deviceParameter.DOParam.AgitCycle.UpperLimit)
+                            else if (deviceParameter.AgitParam.SP > deviceParameter.DOParam.AgitCycle.UpperLimit)
                             {
-                                deviceParameter.AgitParam.Agit_PV = deviceParameter.DOParam.AgitCycle.UpperLimit;
+                                deviceParameter.AgitParam.SP = deviceParameter.DOParam.AgitCycle.UpperLimit;
                             }
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.Agit_PV);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.SP);
 
                             int count = deviceParameter.DOParam.AgitCycle.ReverseInterval;
                             int index = 0;
@@ -1811,7 +1808,7 @@ namespace RD3.ViewModels
                 //{
                 //    e.Result = deviceParameter.Name;
                 //    DateTime startTime = DateTime.Now;
-                //    var sv = deviceParameter.DOParam.DO_PV;
+                //    var sv = deviceParameter.DOParam.SP;
                 //    dicDOFeedIndex[deviceParameter.Name] = dicDOTempIndex[deviceParameter.Name] = dicDOAirIndex[deviceParameter.Name] = dicDOO2Index[deviceParameter.Name] = 0;
 
                 //    info = null;
@@ -1897,7 +1894,7 @@ namespace RD3.ViewModels
                 //        try
                 //        {
                 //            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                //            while (realTimeParam.DO < deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsDirect)
+                //            while (realTimeParam.DO < deviceParameter.DOParam.SP && !deviceParameter.DOParam.IsDirect)
                 //            {
                 //                if (dicDOWorker[deviceParameter.Name].CancellationPending)
                 //                {
@@ -1918,7 +1915,7 @@ namespace RD3.ViewModels
                 //            }
 
                 //            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                //            while (realTimeParam.DO > deviceParameter.DOParam.DO_PV && !deviceParameter.DOParam.IsReverse)
+                //            while (realTimeParam.DO > deviceParameter.DOParam.SP && !deviceParameter.DOParam.IsReverse)
                 //            {
                 //                if (dicDOWorker[deviceParameter.Name].CancellationPending)
                 //                {
@@ -1964,11 +1961,11 @@ namespace RD3.ViewModels
                 //            }
 
                 //            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                //            if (realTimeParam.DO <= deviceParameter.DOParam.DO_PV)
+                //            if (realTimeParam.DO <= deviceParameter.DOParam.SP)
                 //            {
                 //                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.deviceID == deviceParameter.Name);
                 //            }
-                //            else if (realTimeParam.DO >= deviceParameter.DOParam.DO_PV)
+                //            else if (realTimeParam.DO >= deviceParameter.DOParam.SP)
                 //            {
                 //                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.deviceID == deviceParameter.Name);
                 //            }
@@ -1991,19 +1988,19 @@ namespace RD3.ViewModels
                 //                if (info.PidName != lastPid.PidName)
                 //                {
                 //                    LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, deviceParameter.Name));
-                //                    baseAgit = deviceParameter.AgitParam.Agit_PV;
+                //                    baseAgit = deviceParameter.AgitParam.SP;
                 //                }
                                 
                 //                ResetDOParam(deviceParameter);
-                //                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.Agit_PV, baseAgit));
+                //                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", deviceParameter.Name, realTimeParam.Agit, deviceParameter.AgitParam.SP, baseAgit));
                 //            }
                 //            lastPid = info;
 
                 //            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                 //            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                //            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
+                //            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.SP) <= info.deadArea)
                 //            {
-                //                baseAgit = deviceParameter.AgitParam.Agit_PV;
+                //                baseAgit = deviceParameter.AgitParam.SP;
                 //                ResetDOParam(deviceParameter);
 
                 //                int count = info.Interval <= 0 ? 1 : info.Interval;
@@ -2032,9 +2029,9 @@ namespace RD3.ViewModels
                 //            dicDOPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
                 //            dicDOPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
                 //            dicDOPid[deviceParameter.Name].SetIntegralLimits(-2000, 2000);
-                //            dicDOPid[deviceParameter.Name].SetTarget(deviceParameter.DOParam.DO_PV);
+                //            dicDOPid[deviceParameter.Name].SetTarget(deviceParameter.DOParam.SP);
 
-                //            LogHelper.Debug(string.Format("反应器{6} 阶梯级联 DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", deviceParameter.DOParam.DO_PV, realTimeParam.DO, info.P, info.I, info.D, info.Interval, deviceParameter.Name));
+                //            LogHelper.Debug(string.Format("反应器{6} 阶梯级联 DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", deviceParameter.DOParam.SP, realTimeParam.DO, info.P, info.I, info.D, info.Interval, deviceParameter.Name));
 
                 //            float temp = dicDOPid[deviceParameter.Name].CalculatePositional_DO((float)realTimeParam.DO);
                 //            float timeOffset = Convert.ToSingle((DateTime.Now - startTime).TotalMinutes);
@@ -2050,8 +2047,8 @@ namespace RD3.ViewModels
                 //            }
                 //            LogHelper.Debug(string.Format("反应器{0} 阶梯级联 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", deviceParameter.Name, baseAgit, temp, tempAgit, dicDODelta[deviceParameter.Name]));
 
-                //            deviceParameter.AgitParam.Agit_PV = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
-                //            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.Agit_PV);
+                //            deviceParameter.AgitParam.SP = dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit ? param.AgitUpperLimit : dicDODelta[deviceParameter.Name] <= param.AgitLowerLimit ? param.AgitLowerLimit : dicDODelta[deviceParameter.Name];
+                //            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, deviceParameter.AgitParam.SP);
 
                 //            sleepCount = info.Interval <= 1 ? 1 : info.Interval;
                 //            while (sleepCount > 0)
@@ -2075,9 +2072,9 @@ namespace RD3.ViewModels
                 //            }
 
                 //            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                //            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.DO_PV) <= info.deadArea)
+                //            if (Math.Abs(realTimeParam.DO - deviceParameter.DOParam.SP) <= info.deadArea)
                 //            {
-                //                baseAgit = deviceParameter.AgitParam.Agit_PV;
+                //                baseAgit = deviceParameter.AgitParam.SP;
 
                 //                ResetDOParam(deviceParameter);
 
@@ -2551,14 +2548,14 @@ namespace RD3.ViewModels
                 //                        {
                 //                            dicDOTempIndex[deviceParameter.Name] -= 1;
 
-                //                            deviceParameter.TempParam.Temp_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
+                //                            deviceParameter.TempParam.SP = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
                 //                        }
                 //                        else if (factorIndex > 0)
                 //                        {
                 //                            lastFactorIndex = factorIndex;
                 //                            factorIndex -= 1;
 
-                //                            deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
+                //                            deviceParameter.TempParam.SP = deviceParameter.DOParam.InitialTemp;
                 //                        }
                 //                    }
                 //                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
@@ -2567,19 +2564,19 @@ namespace RD3.ViewModels
                 //                        {
                 //                            dicDOTempIndex[deviceParameter.Name] += 1;
 
-                //                            deviceParameter.TempParam.Temp_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
+                //                            deviceParameter.TempParam.SP = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
                 //                        }
                 //                        else if (factorIndex < collection.Count - 1)
                 //                        {
                 //                            lastFactorIndex = factorIndex;
                 //                            factorIndex += 1;
 
-                //                            deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
+                //                            deviceParameter.TempParam.SP = deviceParameter.DOParam.InitialTemp;
                 //                        }
                 //                    }
                 //                    else
                 //                    {
-                //                        deviceParameter.TempParam.Temp_PV = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
+                //                        deviceParameter.TempParam.SP = param.TempCol[dicDOTempIndex[deviceParameter.Name]].StepValue;
                 //                    }
 
                 //                    if (dicDOTempIndex[deviceParameter.Name] <= 0 || dicDOTempIndex[deviceParameter.Name] >= dicDOTempIndex.Count - 1)
@@ -2601,7 +2598,7 @@ namespace RD3.ViewModels
                 //                                Thread.Sleep(1000);
                 //                            }
                 //                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
-                //                            if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.Temp_PV) <= 0.2)
+                //                            if (Math.Abs(realTimeParam.Temp - deviceParameter.TempParam.SP) <= 0.2)
                 //                            {
                 //                                break;
                 //                            }
@@ -2627,7 +2624,7 @@ namespace RD3.ViewModels
                 //                    if (firstInitFeed)
                 //                    {
                 //                        deviceParameter.FeedSuspend = true;
-                //                        deviceParameter.DOParam.InitialFeed = deviceParameter.FeedParam1.Feed_PV;
+                //                        deviceParameter.DOParam.InitialFeed = deviceParameter.FeedParam1.SP;
                 //                        firstInitFeed = false;
                 //                    }
 
@@ -2638,14 +2635,14 @@ namespace RD3.ViewModels
                 //                            dicDOFeedIndex[deviceParameter.Name] -= 1;
 
                 //                            float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
-                //                            deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
+                //                            deviceParameter.FeedParam1.SP = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                 //                        }
                 //                        else if (factorIndex > 0)
                 //                        {
                 //                            lastFactorIndex = factorIndex;
                 //                            factorIndex -= 1;
 
-                //                            deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
+                //                            deviceParameter.FeedParam1.SP = deviceParameter.DOParam.InitialFeed;
                 //                        }
                 //                    }
                 //                    else if (dicDODelta[deviceParameter.Name] >= param.AgitUpperLimit)
@@ -2655,20 +2652,20 @@ namespace RD3.ViewModels
                 //                            dicDOFeedIndex[deviceParameter.Name] += 1;
 
                 //                            float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
-                //                            deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
+                //                            deviceParameter.FeedParam1.SP = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                 //                        }
                 //                        else if (factorIndex < collection.Count - 1)
                 //                        {
                 //                            lastFactorIndex = factorIndex;
                 //                            factorIndex += 1;
 
-                //                            deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
+                //                            deviceParameter.FeedParam1.SP = deviceParameter.DOParam.InitialFeed;
                 //                        }
                 //                    }
                 //                    else
                 //                    {
                 //                        float coeff = param.FeedCol[dicDOFeedIndex[deviceParameter.Name]].StepValue;
-                //                        deviceParameter.FeedParam1.Feed_PV = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
+                //                        deviceParameter.FeedParam1.SP = MathF.Round(deviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                 //                    }
 
                 //                    PeristalticPump pump = PeristalticPump.FeedPump;
@@ -2680,13 +2677,13 @@ namespace RD3.ViewModels
                 //                            PumpNo = pumpNo,
                 //                            Pump = pump,
                 //                            ControlMode = PumpControlMode.Direct,
-                //                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                //                            FlowSpeed = deviceParameter.FeedParam1.SP,
                 //                            FlowCapacity = Const.MaxPumpFlowCapacity
                 //                        };
                 //                        InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, controlParam);
-                //                        dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam1.Feed_PV;
+                //                        dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam1.SP;
                 //                    }
-                //                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 实际补料{2}", deviceParameter.Name, deviceParameter.DOParam.InitialFeed, deviceParameter.FeedParam1.Feed_PV));
+                //                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 实际补料{2}", deviceParameter.Name, deviceParameter.DOParam.InitialFeed, deviceParameter.FeedParam1.SP));
 
                 //                    sleepCount = 1;
                 //                    while (sleepCount > 0)
@@ -2730,7 +2727,6 @@ namespace RD3.ViewModels
                         return;
                     }
                     deviceParameter.DOParam.IsControling = false;
-                    deviceParameter.DORegulationLimit = false;
                     deviceParameter.FeedSuspend = false;
 
                     if (deviceParameter.TempParam.IsControling)
@@ -2740,7 +2736,7 @@ namespace RD3.ViewModels
                             var param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                             if (param.FactorCol.Contains(DOControlFactor.Temp))
                             {
-                                deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
+                                deviceParameter.TempParam.SP = deviceParameter.DOParam.InitialTemp;
                             }
                         }
                         else if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step)
@@ -2748,7 +2744,7 @@ namespace RD3.ViewModels
                             var param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                             if (param.FactorCol.Contains(DOControlFactor.Temp))
                             {
-                                deviceParameter.TempParam.Temp_PV = deviceParameter.DOParam.InitialTemp;
+                                deviceParameter.TempParam.SP = deviceParameter.DOParam.InitialTemp;
                             }
                         }
                     }
@@ -2760,7 +2756,7 @@ namespace RD3.ViewModels
                             var param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                             if (param.FactorCol.Contains(DOControlFactor.Temp))
                             {
-                                deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
+                                deviceParameter.FeedParam1.SP = deviceParameter.DOParam.InitialFeed;
                             }
                         }
                         else if (deviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step)
@@ -2768,7 +2764,7 @@ namespace RD3.ViewModels
                             var param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == deviceParameter.Name);
                             if (param.FactorCol.Contains(DOControlFactor.Temp))
                             {
-                                deviceParameter.FeedParam1.Feed_PV = deviceParameter.DOParam.InitialFeed;
+                                deviceParameter.FeedParam1.SP = deviceParameter.DOParam.InitialFeed;
                             }
                         }
                     }
@@ -2820,8 +2816,8 @@ namespace RD3.ViewModels
                     {
                         try
                         {
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, currentDeviceParameter.AgitParam.Agit_PV);
-                            dicAgitSP[currentDeviceParameter.Name] = currentDeviceParameter.AgitParam.Agit_PV;
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(currentDeviceParameter.Name, currentDeviceParameter.AgitParam.SP);
+                            dicAgitSP[currentDeviceParameter.Name] = currentDeviceParameter.AgitParam.SP;
                         }
                         catch (Exception ex)
                         {
@@ -2839,10 +2835,10 @@ namespace RD3.ViewModels
                             }
                             try
                             {
-                                if (dicAgitSP[deviceParameter.Name] != deviceParameter.AgitParam.Agit_PV)
+                                if (dicAgitSP[deviceParameter.Name] != deviceParameter.AgitParam.SP)
                                 {
-                                    InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(deviceParameter.Name, deviceParameter.AgitParam.Agit_PV);
-                                    dicAgitSP[deviceParameter.Name] = deviceParameter.AgitParam.Agit_PV;
+                                    InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(deviceParameter.Name, deviceParameter.AgitParam.SP);
+                                    dicAgitSP[deviceParameter.Name] = deviceParameter.AgitParam.SP;
                                 }
                             }
                             catch (Exception ex)
@@ -3125,8 +3121,8 @@ namespace RD3.ViewModels
         /// <param name="BaseAssociated"></param>
         private void AddBase(DeviceParameter deviceParameter, double pump, bool BaseAssociated)
         {
-            deviceParameter.AcidParam.Acid_PV = 0;
-            deviceParameter.BaseParam.Base_PV = 0;
+            deviceParameter.AcidParam.SP = 0;
+            deviceParameter.BaseParam.SP = 0;
             PeristalticPumpControlParam param1 = new PeristalticPumpControlParam();
 
             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.AcidPump);
@@ -3160,7 +3156,7 @@ namespace RD3.ViewModels
                 var hour = 120.0f / 3600.0f;
                 var flowRate = MathF.Round(volume / hour, Const.NumericalPrecision);
                 flowRate = flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : flowRate;
-                deviceParameter.BaseParam.Base_PV = flowRate;
+                deviceParameter.BaseParam.SP = flowRate;
                 int pumpNo2 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.BasePump);
                 if (pumpNo2 >= 0)
                 {
@@ -3169,7 +3165,7 @@ namespace RD3.ViewModels
                         PumpNo = pumpNo2,
                         Pump = PeristalticPump.BasePump,
                         ControlMode = PumpControlMode.Direct,
-                        FlowSpeed = deviceParameter.BaseParam.Base_PV,
+                        FlowSpeed = deviceParameter.BaseParam.SP,
                         FlowCapacity = volume
                     };
                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -3185,8 +3181,8 @@ namespace RD3.ViewModels
         /// <param name="BaseAssociated"></param>
         private void AddAcid(DeviceParameter deviceParameter, double pump, bool AcidAssociated)
         {
-            deviceParameter.AcidParam.Acid_PV = 0;
-            deviceParameter.BaseParam.Base_PV = 0;
+            deviceParameter.AcidParam.SP = 0;
+            deviceParameter.BaseParam.SP = 0;
             PeristalticPumpControlParam param1 = new PeristalticPumpControlParam();
 
             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.BasePump);
@@ -3220,7 +3216,7 @@ namespace RD3.ViewModels
                 var hour = 120.0f / 3600.0f;
                 var flowRate = MathF.Round(volume / hour, Const.NumericalPrecision);
                 flowRate = flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : flowRate;
-                deviceParameter.AcidParam.Acid_PV = flowRate;
+                deviceParameter.AcidParam.SP = flowRate;
 
                 int pumpNo2 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.AcidPump);
                 if (pumpNo2 >= 0)
@@ -3275,7 +3271,7 @@ namespace RD3.ViewModels
                 {
                     try
                     {
-                        currentDeviceParameter.AcidParam.Acid_PV = 0;
+                        currentDeviceParameter.AcidParam.SP = 0;
                         currentDeviceParameter.AcidParam.IsControling = false;
                         int pumpNo = PumpMFCUtil.GetPumpIndex(currentDeviceParameter.Name, PeristalticPump.AcidPump);
                         if (pumpNo >= 0)
@@ -3285,13 +3281,13 @@ namespace RD3.ViewModels
                                 PumpNo = pumpNo,
                                 Pump = PeristalticPump.AcidPump,
                                 ControlMode = PumpControlMode.Direct,
-                                FlowSpeed = currentDeviceParameter.AcidParam.Acid_PV,
+                                FlowSpeed = currentDeviceParameter.AcidParam.SP,
                                 FlowCapacity = 0
                             };
                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(currentDeviceParameter.Name, param);
                         }
 
-                        currentDeviceParameter.BaseParam.Base_PV = 0;
+                        currentDeviceParameter.BaseParam.SP = 0;
                         currentDeviceParameter.BaseParam.IsControling = false;
                         int pumpNo1 = PumpMFCUtil.GetPumpIndex(currentDeviceParameter.Name, PeristalticPump.BasePump);
                         if (pumpNo1 >= 0)
@@ -3301,7 +3297,7 @@ namespace RD3.ViewModels
                                 PumpNo = pumpNo1,
                                 Pump = PeristalticPump.BasePump,
                                 ControlMode = PumpControlMode.Direct,
-                                FlowSpeed = currentDeviceParameter.BaseParam.Base_PV,
+                                FlowSpeed = currentDeviceParameter.BaseParam.SP,
                                 FlowCapacity = 0
                             };
                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(currentDeviceParameter.Name, param1);
@@ -3330,7 +3326,7 @@ namespace RD3.ViewModels
                 e.Result = deviceParameter.Name;
                 if (deviceParameter.PHParam.PHControlMode == PHControlMode.PID)
                 {
-                    //dicPHPid[currentDeviceParameter.Name].SetTarget(currentDeviceParameter.PHParam.PH_PV);//PH的预设值可能会自动控制途中更改 方成
+                    //dicPHPid[currentDeviceParameter.Name].SetTarget(currentDeviceParameter.PHParam.SP);//PH的预设值可能会自动控制途中更改 方成
                     deviceParameter.BaseParam.IsControling = deviceParameter.AcidParam.IsControling = true;
                     PIDInfo info = null;
                     PIDInfo lastPid = null;
@@ -3355,11 +3351,11 @@ namespace RD3.ViewModels
 
                             RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
 
-                            if (realTimeParam.PH >= deviceParameter.PHParam.PH_PV)
+                            if (realTimeParam.PH >= deviceParameter.PHParam.SP)
                             {
                                 info = pIDInfos.FindFirst(t => t.PidName.Contains("PH_酸") && t.deviceID == deviceParameter.Name);
                             }
-                            else if (realTimeParam.PH <= deviceParameter.PHParam.PH_PV)
+                            else if (realTimeParam.PH <= deviceParameter.PHParam.SP)
                             {
                                 info = pIDInfos.FindFirst(t => t.PidName.Contains("PH_碱") && t.deviceID == deviceParameter.Name);
                             }
@@ -3387,12 +3383,12 @@ namespace RD3.ViewModels
                             dicPHPid[deviceParameter.Name].SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold);
                             dicPHPid[deviceParameter.Name].SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
                             dicPHPid[deviceParameter.Name].SetIntegralLimits(-20, 20);
-                            dicPHPid[deviceParameter.Name].SetTarget(deviceParameter.PHParam.PH_PV);
+                            dicPHPid[deviceParameter.Name].SetTarget(deviceParameter.PHParam.SP);
 
-                            LogHelper.Debug(string.Format("反应器{5},PH预设值：{0}，PH当前值：{4}，P：{1}，I：{2}，D：{3}", deviceParameter.PHParam.PH_PV, info.P, info.I, info.D, realTimeParam.PH, deviceParameter.Name));
-                            if (realTimeParam.PH >= deviceParameter.PHParam.PH_PV - info.deadArea && realTimeParam.PH <= deviceParameter.PHParam.PH_PV + info.deadArea)
+                            LogHelper.Debug(string.Format("反应器{5},PH预设值：{0}，PH当前值：{4}，P：{1}，I：{2}，D：{3}", deviceParameter.PHParam.SP, info.P, info.I, info.D, realTimeParam.PH, deviceParameter.Name));
+                            if (realTimeParam.PH >= deviceParameter.PHParam.SP - info.deadArea && realTimeParam.PH <= deviceParameter.PHParam.SP + info.deadArea)
                             {
-                                deviceParameter.AcidParam.Acid_PV = 0;
+                                deviceParameter.AcidParam.SP = 0;
 
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.AcidPump);
                                 if (pumpNo >= 0)
@@ -3402,13 +3398,13 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = PeristalticPump.AcidPump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.AcidParam.Acid_PV,
+                                        FlowSpeed = deviceParameter.AcidParam.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                 }
 
-                                deviceParameter.BaseParam.Base_PV = 0;
+                                deviceParameter.BaseParam.SP = 0;
                                 int pumpNo1 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.BasePump);
                                 if (pumpNo1 >= 0)
                                 {
@@ -3417,7 +3413,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo1,
                                         Pump = PeristalticPump.BasePump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.BaseParam.Base_PV,
+                                        FlowSpeed = deviceParameter.BaseParam.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param1);
@@ -3448,7 +3444,7 @@ namespace RD3.ViewModels
                             LogHelper.Debug(string.Format("{1} PH 总Delta:{0} 单次Delta:{2}", dicPHDelta[deviceParameter.Name], deviceParameter.Name, temp));
                             if (dicPHDelta[deviceParameter.Name] < 0)//酸泵
                             {
-                                deviceParameter.BaseParam.Base_PV = 0;
+                                deviceParameter.BaseParam.SP = 0;
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.BasePump);
                                 if (pumpNo >= 0)
                                 {
@@ -3457,7 +3453,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = PeristalticPump.BasePump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.BaseParam.Base_PV,
+                                        FlowSpeed = deviceParameter.BaseParam.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param1);
@@ -3465,7 +3461,7 @@ namespace RD3.ViewModels
 
                                 if (deviceParameter.PHParam.AcidAssociated)
                                 {
-                                    deviceParameter.AcidParam.Acid_PV = Math.Abs(dicPHDelta[deviceParameter.Name]) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : Math.Abs(dicPHDelta[deviceParameter.Name]);
+                                    deviceParameter.AcidParam.SP = Math.Abs(dicPHDelta[deviceParameter.Name]) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : Math.Abs(dicPHDelta[deviceParameter.Name]);
                                     int pumpNo1 = PumpMFCUtil.GetPumpIndex(CurrentDeviceParameter.Name, PeristalticPump.AcidPump);
                                     if (pumpNo1 >= 0)
                                     {
@@ -3474,7 +3470,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo1,
                                             Pump = PeristalticPump.AcidPump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.AcidParam.Acid_PV,
+                                            FlowSpeed = deviceParameter.AcidParam.SP,
                                             FlowCapacity = 100
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -3483,7 +3479,7 @@ namespace RD3.ViewModels
                             }
                             else if (dicPHDelta[deviceParameter.Name] > 0)//碱泵
                             {
-                                deviceParameter.AcidParam.Acid_PV = 0;
+                                deviceParameter.AcidParam.SP = 0;
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.AcidPump);
                                 if (pumpNo >= 0)
                                 {
@@ -3492,7 +3488,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = PeristalticPump.AcidPump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.AcidParam.Acid_PV,
+                                        FlowSpeed = deviceParameter.AcidParam.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param1);
@@ -3503,13 +3499,13 @@ namespace RD3.ViewModels
                                     int pumpNo1 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.BasePump);
                                     if (pumpNo1 >= 0)
                                     {
-                                        deviceParameter.BaseParam.Base_PV = Math.Abs(dicPHDelta[deviceParameter.Name]) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : Math.Abs(dicPHDelta[deviceParameter.Name]);
+                                        deviceParameter.BaseParam.SP = Math.Abs(dicPHDelta[deviceParameter.Name]) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : Math.Abs(dicPHDelta[deviceParameter.Name]);
                                         PeristalticPumpControlParam param = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo1,
                                             Pump = PeristalticPump.BasePump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.BaseParam.Base_PV,
+                                            FlowSpeed = deviceParameter.BaseParam.SP,
                                             FlowCapacity = 100
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -3634,8 +3630,8 @@ namespace RD3.ViewModels
                                                 index1 += 1;
                                                 if (index1 >= 120)
                                                 {
-                                                    deviceParameter.BaseParam.Base_PV = 0;
-                                                    deviceParameter.AcidParam.Acid_PV = 0;
+                                                    deviceParameter.BaseParam.SP = 0;
+                                                    deviceParameter.AcidParam.SP = 0;
                                                 }
                                             }
                                             double offset = currentpH - workpH;
@@ -3708,8 +3704,8 @@ namespace RD3.ViewModels
                                             index1 += 1;
                                             if (index1 >= 120)
                                             {
-                                                deviceParameter.BaseParam.Base_PV = 0;
-                                                deviceParameter.AcidParam.Acid_PV = 0;
+                                                deviceParameter.BaseParam.SP = 0;
+                                                deviceParameter.AcidParam.SP = 0;
                                             }
                                         }
                                         if (Math.Abs(currentpH - workpH) < 1)
@@ -3744,8 +3740,8 @@ namespace RD3.ViewModels
                                         index1 += 1;
                                         if (index1 >= 120)
                                         {
-                                            deviceParameter.BaseParam.Base_PV = 0;
-                                            deviceParameter.AcidParam.Acid_PV = 0;
+                                            deviceParameter.BaseParam.SP = 0;
+                                            deviceParameter.AcidParam.SP = 0;
                                         }
                                     }
                                     steady = phIsSteady(lastpH, currentpH);//判断是否稳定
@@ -3771,7 +3767,7 @@ namespace RD3.ViewModels
 
                     dicPHController[deviceParameter.Name] = new IntelligentPHController()
                     {
-                        TargetPH = deviceParameter.PHParam.PH_PV
+                        TargetPH = deviceParameter.PHParam.SP
                     };
 
                     while (true)
@@ -3781,7 +3777,7 @@ namespace RD3.ViewModels
                             dicPHStatus[currentDeviceParameter.Name] = false;
                             return;
                         }
-                        dicPHController[deviceParameter.Name].TargetPH = deviceParameter.PHParam.PH_PV;
+                        dicPHController[deviceParameter.Name].TargetPH = deviceParameter.PHParam.SP;
                         PropertyMapper.Map(deviceParameter.AdaptivepHParameter, dicPHController[deviceParameter.Name]);
 
                         var realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceParameter.Name);
@@ -3790,7 +3786,7 @@ namespace RD3.ViewModels
                         {
                             if (isAlkali)//加碱
                             {
-                                deviceParameter.AcidParam.Acid_PV = 0;
+                                deviceParameter.AcidParam.SP = 0;
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.AcidPump);
                                 if (pumpNo >= 0)
                                 {
@@ -3799,7 +3795,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = PeristalticPump.AcidPump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.AcidParam.Acid_PV,
+                                        FlowSpeed = deviceParameter.AcidParam.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -3810,19 +3806,19 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.BasePump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.BaseParam.Base_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.BaseParam.SP = AppSession.DefaultPumpFlowRate;
                                         param = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = PeristalticPump.BasePump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.BaseParam.Base_PV,
+                                            FlowSpeed = deviceParameter.BaseParam.SP,
                                             FlowCapacity = (float)volume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                        LogHelper.Debug(string.Format("反应器{0},PH预设值：{1}，PH当前值：{2}，体积：{3}", deviceParameter.Name, deviceParameter.PHParam.PH_PV, realTimeParam.PH, volume));
+                                        LogHelper.Debug(string.Format("反应器{0},PH预设值：{1}，PH当前值：{2}，体积：{3}", deviceParameter.Name, deviceParameter.PHParam.SP, realTimeParam.PH, volume));
 
-                                        int count = Convert.ToInt32(Math.Ceiling(volume * 3600 / deviceParameter.BaseParam.Base_PV));
+                                        int count = Convert.ToInt32(Math.Ceiling(volume * 3600 / deviceParameter.BaseParam.SP));
                                         while (count > 0 && !InstrumentSolution.GetInstance().IsSimulation)
                                         {
                                             if (dicPHWorker[deviceParameter.Name].CancellationPending)
@@ -3838,7 +3834,7 @@ namespace RD3.ViewModels
                             }
                             else//加酸
                             {
-                                deviceParameter.BaseParam.Base_PV = 0;
+                                deviceParameter.BaseParam.SP = 0;
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.BasePump);
                                 if (pumpNo >= 0)
                                 {
@@ -3847,7 +3843,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = PeristalticPump.BasePump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.BaseParam.Base_PV,
+                                        FlowSpeed = deviceParameter.BaseParam.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -3855,7 +3851,7 @@ namespace RD3.ViewModels
 
                                 if (deviceParameter.PHParam.AcidAssociated)
                                 {
-                                    deviceParameter.AcidParam.Acid_PV = AppSession.DefaultPumpFlowRate;
+                                    deviceParameter.AcidParam.SP = AppSession.DefaultPumpFlowRate;
                                     pumpNo = PumpMFCUtil.GetPumpIndex(CurrentDeviceParameter.Name, PeristalticPump.AcidPump);
                                     if (pumpNo >= 0)
                                     {
@@ -3864,13 +3860,13 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = PeristalticPump.AcidPump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.AcidParam.Acid_PV,
+                                            FlowSpeed = deviceParameter.AcidParam.SP,
                                             FlowCapacity = (float)volume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                        LogHelper.Debug(string.Format("反应器{0},PH预设值：{1}，PH当前值：{2}，体积：{3}", deviceParameter.Name, deviceParameter.PHParam.PH_PV, realTimeParam.PH, volume));
+                                        LogHelper.Debug(string.Format("反应器{0},PH预设值：{1}，PH当前值：{2}，体积：{3}", deviceParameter.Name, deviceParameter.PHParam.SP, realTimeParam.PH, volume));
 
-                                        int count = Convert.ToInt32(Math.Ceiling(volume * 3600 / deviceParameter.AcidParam.Acid_PV));
+                                        int count = Convert.ToInt32(Math.Ceiling(volume * 3600 / deviceParameter.AcidParam.SP));
                                         while (count > 0 && !InstrumentSolution.GetInstance().IsSimulation)
                                         {
                                             if (dicPHWorker[deviceParameter.Name].CancellationPending)
@@ -3887,7 +3883,7 @@ namespace RD3.ViewModels
                         }
                         else
                         {
-                            deviceParameter.AcidParam.Acid_PV = 0;
+                            deviceParameter.AcidParam.SP = 0;
                             deviceParameter.AcidParam.IsControling = false;
                             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.AcidPump);
                             if (pumpNo >= 0)
@@ -3897,13 +3893,13 @@ namespace RD3.ViewModels
                                     PumpNo = pumpNo,
                                     Pump = PeristalticPump.AcidPump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = deviceParameter.AcidParam.Acid_PV,
+                                    FlowSpeed = deviceParameter.AcidParam.SP,
                                     FlowCapacity = 0
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                             }
 
-                            deviceParameter.BaseParam.Base_PV = 0;
+                            deviceParameter.BaseParam.SP = 0;
                             deviceParameter.BaseParam.IsControling = false;
                             pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.BasePump);
                             if (pumpNo >= 0)
@@ -3913,7 +3909,7 @@ namespace RD3.ViewModels
                                     PumpNo = pumpNo,
                                     Pump = PeristalticPump.BasePump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = deviceParameter.BaseParam.Base_PV,
+                                    FlowSpeed = deviceParameter.BaseParam.SP,
                                     FlowCapacity = 0
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -3941,10 +3937,10 @@ namespace RD3.ViewModels
                         return;
                     }
 
-                    deviceParameter.BaseParam.Base_PV = 0;
+                    deviceParameter.BaseParam.SP = 0;
                     deviceParameter.BaseParam.IsControling = false;
 
-                    deviceParameter.AcidParam.Acid_PV = 0;
+                    deviceParameter.AcidParam.SP = 0;
                     deviceParameter.AcidParam.IsControling = false;
                     Task.Run(() =>
                     {
@@ -3958,7 +3954,7 @@ namespace RD3.ViewModels
                                     PumpNo = pumpNo,
                                     Pump = PeristalticPump.BasePump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = deviceParameter.BaseParam.Base_PV,
+                                    FlowSpeed = deviceParameter.BaseParam.SP,
                                     FlowCapacity = 0
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param1);
@@ -3972,7 +3968,7 @@ namespace RD3.ViewModels
                                     PumpNo = pumpNo1,
                                     Pump = PeristalticPump.AcidPump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = deviceParameter.AcidParam.Acid_PV,
+                                    FlowSpeed = deviceParameter.AcidParam.SP,
                                     FlowCapacity = 0
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -4027,11 +4023,11 @@ namespace RD3.ViewModels
                                     PumpNo = pumpNo,
                                     Pump = PeristalticPump.AcidPump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = (float)currentDeviceParameter.AcidParam.Acid_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)currentDeviceParameter.AcidParam.Acid_PV,
+                                    FlowSpeed = (float)currentDeviceParameter.AcidParam.SP >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)currentDeviceParameter.AcidParam.SP,
                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(currentDeviceParameter.Name, param);
-                                dicAcidSP[currentDeviceParameter.Name] = currentDeviceParameter.AcidParam.Acid_PV;
+                                dicAcidSP[currentDeviceParameter.Name] = currentDeviceParameter.AcidParam.SP;
                             }
                         }
                         catch (Exception ex)
@@ -4049,7 +4045,7 @@ namespace RD3.ViewModels
                             }
                             try
                             {
-                                if (dicAcidSP[deviceParameter.Name] != deviceParameter.AcidParam.Acid_PV)
+                                if (dicAcidSP[deviceParameter.Name] != deviceParameter.AcidParam.SP)
                                 {
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.AcidPump);
                                     if (pumpNo >= 0)
@@ -4059,11 +4055,11 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = PeristalticPump.AcidPump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.AcidParam.Acid_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.AcidParam.Acid_PV,
+                                            FlowSpeed = (float)deviceParameter.AcidParam.SP >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.AcidParam.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                        dicAcidSP[deviceParameter.Name] = deviceParameter.AcidParam.Acid_PV;
+                                        dicAcidSP[deviceParameter.Name] = deviceParameter.AcidParam.SP;
                                     }
                                 }
                             }
@@ -4141,11 +4137,11 @@ namespace RD3.ViewModels
                             PumpNo = pumpNo,
                             Pump = PeristalticPump.BasePump,
                             ControlMode = PumpControlMode.Direct,
-                            FlowSpeed = (float)currentDeviceParameter.BaseParam.Base_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)currentDeviceParameter.BaseParam.Base_PV,
+                            FlowSpeed = (float)currentDeviceParameter.BaseParam.SP >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)currentDeviceParameter.BaseParam.SP,
                             FlowCapacity = Const.MaxPumpFlowCapacity
                         };
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(currentDeviceParameter.Name, param);
-                        dicBaseSP[currentDeviceParameter.Name] = currentDeviceParameter.BaseParam.Base_PV;
+                        dicBaseSP[currentDeviceParameter.Name] = currentDeviceParameter.BaseParam.SP;
                     }
 
                     dicBaseWorker[currentDeviceParameter.Name] = new BackgroundWorker();
@@ -4164,7 +4160,7 @@ namespace RD3.ViewModels
                             }
                             try
                             {
-                                if (dicBaseSP[deviceParameter.Name] != deviceParameter.BaseParam.Base_PV)
+                                if (dicBaseSP[deviceParameter.Name] != deviceParameter.BaseParam.SP)
                                 {
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.BasePump);
                                     if (pumpNo >= 0)
@@ -4174,11 +4170,11 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = PeristalticPump.BasePump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.BaseParam.Base_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.BaseParam.Base_PV,
+                                            FlowSpeed = (float)deviceParameter.BaseParam.SP >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.BaseParam.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                        dicBaseSP[deviceParameter.Name] = deviceParameter.BaseParam.Base_PV;
+                                        dicBaseSP[deviceParameter.Name] = deviceParameter.BaseParam.SP;
                                     }
                                 }
                             }
@@ -4268,7 +4264,7 @@ namespace RD3.ViewModels
                             currentDeviceParameter.TempParam.IsEnable = true;
                             //InstrumentSolution.GetInstance().CommandWrapper.SetFunctionControlMode(currentDeviceParameter.Name, ControlObject.Temperature, SwitchMode.Open);
                             InstrumentSolution.GetInstance().CommandWrapper.SetTempSetting(currentDeviceParameter.Name, currentDeviceParameter.TempParam);
-                            dicTempSP[currentDeviceParameter.Name] = currentDeviceParameter.TempParam.Temp_PV;
+                            dicTempSP[currentDeviceParameter.Name] = currentDeviceParameter.TempParam.SP;
                         }
                         catch (Exception ex)
                         {
@@ -4285,11 +4281,11 @@ namespace RD3.ViewModels
                             }
                             try
                             {
-                                if (dicTempSP[deviceParameter.Name] != deviceParameter.TempParam.Temp_PV)
+                                if (dicTempSP[deviceParameter.Name] != deviceParameter.TempParam.SP)
                                 {
                                     deviceParameter.TempParam.IsEnable = true;
                                     InstrumentSolution.GetInstance().CommandWrapper.SetTempSetting(deviceParameter.Name, deviceParameter.TempParam);
-                                    dicTempSP[deviceParameter.Name] = deviceParameter.TempParam.Temp_PV;
+                                    dicTempSP[deviceParameter.Name] = deviceParameter.TempParam.SP;
                                 }
                             }
                             catch (Exception ex)
@@ -4402,11 +4398,11 @@ namespace RD3.ViewModels
                             PumpNo = pumpNo,
                             Pump = pump,
                             ControlMode = PumpControlMode.Direct,
-                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.FeedParam1.Feed_PV,
+                            FlowSpeed = (float)deviceParameter.FeedParam1.SP >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.FeedParam1.SP,
                             FlowCapacity = Const.MaxPumpFlowCapacity
                         };
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                        dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam1.Feed_PV;
+                        dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam1.SP;
                     }
 
                     var worker = (BackgroundWorker)s;
@@ -4418,7 +4414,7 @@ namespace RD3.ViewModels
                             {
                                 return;
                             }
-                            if (dicFeed1SP[deviceParameter.Name] != deviceParameter.FeedParam1.Feed_PV)
+                            if (dicFeed1SP[deviceParameter.Name] != deviceParameter.FeedParam1.SP)
                             {
                                 pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                 if (pumpNo >= 0)
@@ -4428,12 +4424,12 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.FeedParam1.Feed_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : deviceParameter.FeedParam1.Feed_PV,
+                                        FlowSpeed = deviceParameter.FeedParam1.SP >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : deviceParameter.FeedParam1.SP,
                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                 }
-                                dicFeed1SP[CurrentDeviceParameter.Name] = deviceParameter.FeedParam1.Feed_PV;
+                                dicFeed1SP[CurrentDeviceParameter.Name] = deviceParameter.FeedParam1.SP;
                             }
 
                             Thread.Sleep(1000);
@@ -4452,7 +4448,7 @@ namespace RD3.ViewModels
                     {
                         deviceParameter.FeedParam1.IsControling = false;
                         //如果是常量，补料预设值不重置
-                        //deviceParameter.FeedParam1.Feed_PV = 0;  
+                        //deviceParameter.FeedParam1.SP = 0;  
                     }
                     Task.Run(() =>
                     {
@@ -4539,7 +4535,7 @@ namespace RD3.ViewModels
                             double feed = Math.Round(a * Math.Pow(diff, 2) + b * diff + c, 2);
 
                             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                            deviceParameter.FeedParam1.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
+                            deviceParameter.FeedParam1.SP = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
                             if (pumpNo >= 0)
                             {
                                 param = new PeristalticPumpControlParam()
@@ -4547,7 +4543,7 @@ namespace RD3.ViewModels
                                     PumpNo = pumpNo,
                                     Pump = pump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -4583,13 +4579,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                         param = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = deviceParameter.FeedParam1.SP,
                                             FlowCapacity = 0
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -4670,7 +4666,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam1.IsControling = false;
-                        deviceParameter.FeedParam1.Feed_PV = 0;
+                        deviceParameter.FeedParam1.SP = 0;
                     }
                     Task.Run(() =>
                     {
@@ -4756,13 +4752,13 @@ namespace RD3.ViewModels
                             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                             if (pumpNo >= 0)
                             {
-                                deviceParameter.FeedParam1.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
+                                deviceParameter.FeedParam1.SP = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
                                 param = new PeristalticPumpControlParam()
                                 {
                                     PumpNo = pumpNo,
                                     Pump = pump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -4797,13 +4793,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                         param = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = deviceParameter.FeedParam1.SP,
                                             FlowCapacity = 0
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -4884,7 +4880,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam1.IsControling = false;
-                        deviceParameter.FeedParam1.Feed_PV = 0;
+                        deviceParameter.FeedParam1.SP = 0;
                     }
                     Task.Run(() =>
                     {
@@ -4993,7 +4989,7 @@ namespace RD3.ViewModels
                             switch (f.InfoType)
                             {
                                 case "Constant":
-                                    deviceParameter.FeedParam1.Feed_PV = f.A >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : f.A;
+                                    deviceParameter.FeedParam1.SP = f.A >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : f.A;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -5002,7 +4998,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -5036,13 +5032,13 @@ namespace RD3.ViewModels
                                         pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo >= 0)
                                         {
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                             param = new PeristalticPumpControlParam()
                                             {
                                                 PumpNo = pumpNo,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                                FlowSpeed = deviceParameter.FeedParam1.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -5113,7 +5109,7 @@ namespace RD3.ViewModels
                                     double calcTimeOffset = Math.Round(calcTotalSeconds / 3600, 2);
                                     double feed = Math.Round(a * Math.Pow(calcTimeOffset, 2) + b * calcTimeOffset + c, 2);
 
-                                    deviceParameter.FeedParam1.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
+                                    deviceParameter.FeedParam1.SP = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
                                     int pumpNo1 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo1 >= 0)
                                     {
@@ -5121,7 +5117,7 @@ namespace RD3.ViewModels
                                         {
                                             PumpNo = pumpNo1,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -5157,13 +5153,13 @@ namespace RD3.ViewModels
                                         pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo >= 0)
                                         {
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                             param = new PeristalticPumpControlParam()
                                             {
                                                 PumpNo = pumpNo,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                                FlowSpeed = deviceParameter.FeedParam1.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -5234,7 +5230,7 @@ namespace RD3.ViewModels
                                     double calcTimeOffset1 = Math.Round(calcTotalSeconds / 3600, 2);
                                     double feed1 = Math.Round(f1 * Math.Exp(μ * calcTimeOffset1), 2);
 
-                                    deviceParameter.FeedParam1.Feed_PV = (float)feed1 >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)feed1;
+                                    deviceParameter.FeedParam1.SP = (float)feed1 >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)feed1;
                                     int pumpNo2 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo2 >= 0)
                                     {
@@ -5243,7 +5239,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo2,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -5279,13 +5275,13 @@ namespace RD3.ViewModels
                                         pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo >= 0)
                                         {
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                             param = new PeristalticPumpControlParam()
                                             {
                                                 PumpNo = pumpNo,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                                FlowSpeed = deviceParameter.FeedParam1.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -5355,7 +5351,7 @@ namespace RD3.ViewModels
                                     {
                                         if (f.IsConstant)
                                         {
-                                            deviceParameter.FeedParam1.Feed_PV = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
+                                            deviceParameter.FeedParam1.SP = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -5364,7 +5360,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -5382,7 +5378,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                            deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -5390,7 +5386,7 @@ namespace RD3.ViewModels
                                                 {
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -5408,7 +5404,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                            deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -5417,7 +5413,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -5444,7 +5440,7 @@ namespace RD3.ViewModels
                                     {
                                         if (f.IsConstant)
                                         {
-                                            deviceParameter.FeedParam1.Feed_PV = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
+                                            deviceParameter.FeedParam1.SP = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -5453,7 +5449,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -5471,7 +5467,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                            deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -5480,7 +5476,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -5498,7 +5494,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                            deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -5507,7 +5503,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -5532,7 +5528,7 @@ namespace RD3.ViewModels
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                         int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo3 >= 0)
                                         {
@@ -5541,7 +5537,7 @@ namespace RD3.ViewModels
                                                 PumpNo = pumpNo3,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -5556,7 +5552,7 @@ namespace RD3.ViewModels
                                     {
                                         if (f.IsConstant)
                                         {
-                                            deviceParameter.FeedParam1.Feed_PV = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
+                                            deviceParameter.FeedParam1.SP = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -5565,7 +5561,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -5583,7 +5579,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                            deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -5592,7 +5588,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -5610,7 +5606,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                            deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -5619,7 +5615,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -5646,7 +5642,7 @@ namespace RD3.ViewModels
                                     {
                                         if (f.IsConstant)
                                         {
-                                            deviceParameter.FeedParam1.Feed_PV = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
+                                            deviceParameter.FeedParam1.SP = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -5655,7 +5651,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -5673,7 +5669,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                            deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -5682,7 +5678,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -5700,7 +5696,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                            deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -5709,7 +5705,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -5734,7 +5730,7 @@ namespace RD3.ViewModels
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                         int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo9 >= 0)
                                         {
@@ -5743,7 +5739,7 @@ namespace RD3.ViewModels
                                                 PumpNo = pumpNo9,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -5761,11 +5757,11 @@ namespace RD3.ViewModels
                                             float flow = float.Parse(f.B);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                                deviceParameter.FeedParam1.SP = 0;
                                             }
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
@@ -5775,20 +5771,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp1 = 1;
-                                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam1.SP > 0)
                                             {
-                                                temp1 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                                temp1 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp1;
-                                            float speed1 = deviceParameter.FeedParam1.Feed_PV;
+                                            float speed1 = deviceParameter.FeedParam1.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -5814,13 +5810,13 @@ namespace RD3.ViewModels
                                             pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = speed1;
+                                                deviceParameter.FeedParam1.SP = speed1;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = remainingVolume1
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -5838,7 +5834,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                         }
                                         else if (f.IsPolynomial)
                                         {
@@ -5853,11 +5849,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                                deviceParameter.FeedParam1.SP = 0;
                                             }
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
@@ -5867,20 +5863,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp2 = 1;
-                                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam1.SP > 0)
                                             {
-                                                temp2 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                                temp2 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp2;
-                                            float speed2 = deviceParameter.FeedParam1.Feed_PV;
+                                            float speed2 = deviceParameter.FeedParam1.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -5906,13 +5902,13 @@ namespace RD3.ViewModels
                                             pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = speed2;
+                                                deviceParameter.FeedParam1.SP = speed2;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = remainingVolume2
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -5930,7 +5926,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                         }
                                         else if (f.IsExp)
                                         {
@@ -5945,11 +5941,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                                deviceParameter.FeedParam1.SP = 0;
                                             }
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
@@ -5959,20 +5955,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp3 = 1;
-                                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam1.SP > 0)
                                             {
-                                                temp3 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                                temp3 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp3;
-                                            float speed3 = deviceParameter.FeedParam1.Feed_PV;
+                                            float speed3 = deviceParameter.FeedParam1.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -5998,13 +5994,13 @@ namespace RD3.ViewModels
                                             pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = speed3;
+                                                deviceParameter.FeedParam1.SP = speed3;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = remainingVolume3
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -6022,7 +6018,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                         }
 
                                         statTotalSeconds += 1;
@@ -6048,11 +6044,11 @@ namespace RD3.ViewModels
                                             float flow = float.Parse(f.D);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                                deviceParameter.FeedParam1.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -6062,20 +6058,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp4 = 1;
-                                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam1.SP > 0)
                                             {
-                                                temp4 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                                temp4 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp4;
-                                            float speed4 = deviceParameter.FeedParam1.Feed_PV;
+                                            float speed4 = deviceParameter.FeedParam1.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -6101,13 +6097,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = speed4;
+                                                deviceParameter.FeedParam1.SP = speed4;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = remainingVolume4
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -6125,7 +6121,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                         }
                                         else if (f.IsPolynomial)
                                         {
@@ -6140,11 +6136,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                                deviceParameter.FeedParam1.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -6154,20 +6150,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp5 = 1;
-                                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam1.SP > 0)
                                             {
-                                                temp5 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                                temp5 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp5;
-                                            float speed5 = deviceParameter.FeedParam1.Feed_PV;
+                                            float speed5 = deviceParameter.FeedParam1.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -6193,13 +6189,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = speed5;
+                                                deviceParameter.FeedParam1.SP = speed5;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = remainingVolume5
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -6217,7 +6213,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                         }
                                         else if (f.IsExp)
                                         {
@@ -6232,11 +6228,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                                deviceParameter.FeedParam1.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -6246,20 +6242,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp6 = 1;
-                                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam1.SP > 0)
                                             {
-                                                temp6 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                                temp6 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp6;
-                                            float speed6 = deviceParameter.FeedParam1.Feed_PV;
+                                            float speed6 = deviceParameter.FeedParam1.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -6285,13 +6281,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = speed6;
+                                                deviceParameter.FeedParam1.SP = speed6;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = remainingVolume6
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -6309,7 +6305,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                         }
 
                                         int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
@@ -6328,7 +6324,7 @@ namespace RD3.ViewModels
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                         int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo9 >= 0)
                                         {
@@ -6337,7 +6333,7 @@ namespace RD3.ViewModels
                                                 PumpNo = pumpNo9,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -6353,11 +6349,11 @@ namespace RD3.ViewModels
                                             float flow = float.Parse(f.B);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                                deviceParameter.FeedParam1.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -6367,20 +6363,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp7 = 1;
-                                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam1.SP > 0)
                                             {
-                                                temp7 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                                temp7 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp7;
-                                            float speed7 = deviceParameter.FeedParam1.Feed_PV;
+                                            float speed7 = deviceParameter.FeedParam1.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -6406,13 +6402,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = speed7;
+                                                deviceParameter.FeedParam1.SP = speed7;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = remainingVolume7
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -6430,7 +6426,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                         }
                                         else if (f.IsPolynomial)
                                         {
@@ -6445,11 +6441,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                                deviceParameter.FeedParam1.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -6459,20 +6455,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp8 = 1;
-                                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam1.SP > 0)
                                             {
-                                                temp8 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                                temp8 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp8;
-                                            float speed8 = deviceParameter.FeedParam1.Feed_PV;
+                                            float speed8 = deviceParameter.FeedParam1.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -6498,13 +6494,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = speed8;
+                                                deviceParameter.FeedParam1.SP = speed8;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = remainingVolume8
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -6522,7 +6518,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                         }
                                         else if (f.IsExp)
                                         {
@@ -6537,11 +6533,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                                deviceParameter.FeedParam1.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -6551,20 +6547,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp9 = 1;
-                                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam1.SP > 0)
                                             {
-                                                temp9 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                                temp9 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp9;
-                                            float speed9 = deviceParameter.FeedParam1.Feed_PV;
+                                            float speed9 = deviceParameter.FeedParam1.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -6590,13 +6586,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = speed9;
+                                                deviceParameter.FeedParam1.SP = speed9;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = remainingVolume9
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -6614,7 +6610,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                         }
 
                                         statTotalSeconds += 1;
@@ -6640,11 +6636,11 @@ namespace RD3.ViewModels
                                             float flow = float.Parse(f.D);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                                deviceParameter.FeedParam1.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -6654,20 +6650,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp10 = 1;
-                                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam1.SP > 0)
                                             {
-                                                temp10 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                                temp10 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp10;
-                                            float speed10 = deviceParameter.FeedParam1.Feed_PV;
+                                            float speed10 = deviceParameter.FeedParam1.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -6693,13 +6689,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = speed10;
+                                                deviceParameter.FeedParam1.SP = speed10;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = remainingVolume10
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -6717,7 +6713,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                         }
                                         else if (f.IsPolynomial)
                                         {
@@ -6732,11 +6728,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                                deviceParameter.FeedParam1.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -6746,20 +6742,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp11 = 1;
-                                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam1.SP > 0)
                                             {
-                                                temp11 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                                temp11 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp11;
-                                            float speed11 = deviceParameter.FeedParam1.Feed_PV;
+                                            float speed11 = deviceParameter.FeedParam1.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -6785,13 +6781,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = speed11;
+                                                deviceParameter.FeedParam1.SP = speed11;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = remainingVolume11
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -6809,7 +6805,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                         }
                                         else if (f.IsExp)
                                         {
@@ -6824,11 +6820,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                                deviceParameter.FeedParam1.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -6838,20 +6834,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp12 = 1;
-                                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam1.SP > 0)
                                             {
-                                                temp12 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                                temp12 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp12;
-                                            float speed12 = deviceParameter.FeedParam1.Feed_PV;
+                                            float speed12 = deviceParameter.FeedParam1.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -6877,13 +6873,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam1.Feed_PV = speed12;
+                                                deviceParameter.FeedParam1.SP = speed12;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                     FlowCapacity = remainingVolume12
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -6901,7 +6897,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                         }
 
                                         statTotalSeconds += 1;
@@ -6922,7 +6918,7 @@ namespace RD3.ViewModels
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                         int pumpNo8 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo8 >= 0)
                                         {
@@ -6931,7 +6927,7 @@ namespace RD3.ViewModels
                                                 PumpNo = pumpNo8,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -6947,7 +6943,7 @@ namespace RD3.ViewModels
                                         continue;
                                     }
                                     float.TryParse(f.B, out var b1);
-                                    deviceParameter.FeedParam1.Feed_PV = b1;
+                                    deviceParameter.FeedParam1.SP = b1;
                                     int pumpNo10 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo10 >= 0)
                                     {
@@ -6956,7 +6952,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo10,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = deviceParameter.FeedParam1.SP,
                                             FlowCapacity = f.A
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param10);
@@ -6964,8 +6960,8 @@ namespace RD3.ViewModels
                                     QuantitativeFinish = true;
 
 
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
-                                    int temp = Convert.ToInt32(Math.Ceiling(f.A / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                    float speed = deviceParameter.FeedParam1.SP;
+                                    int temp = Convert.ToInt32(Math.Ceiling(f.A / deviceParameter.FeedParam1.SP * 3600));
                                     int count10 = temp;
                                     while (count10 > 0)
                                     {
@@ -6992,13 +6988,13 @@ namespace RD3.ViewModels
                                     pumpNo10 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo10 >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo10,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7016,7 +7012,7 @@ namespace RD3.ViewModels
                                         }
                                     }
 
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                     break;
                                 case "Cycle":
                                     try
@@ -7026,16 +7022,16 @@ namespace RD3.ViewModels
 
                                         if (f.A <= 0 || !float.TryParse(f.B, out var paramB) || paramB <= 0 || f.C <= 0 || !float.TryParse(f.D, out var paramD) || paramD <= 0)
                                         {
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                             continue;
                                         }
                                         int pumpNo11 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo11 < 0)
                                         {
-                                            deviceParameter.FeedParam1.Feed_PV = 0;
+                                            deviceParameter.FeedParam1.SP = 0;
                                             continue;
                                         }
-                                        deviceParameter.FeedParam1.Feed_PV = f.C;
+                                        deviceParameter.FeedParam1.SP = f.C;
                                         if (pumpNo11 >= 0)
                                         {
                                             PeristalticPumpControlParam param11 = new PeristalticPumpControlParam()
@@ -7043,15 +7039,15 @@ namespace RD3.ViewModels
                                                 PumpNo = pumpNo11,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                                FlowSpeed = deviceParameter.FeedParam1.SP,
                                                 FlowCapacity = paramD
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param11);
                                         }
 
-                                        int temp11 = Convert.ToInt32(Math.Ceiling(paramD / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        int temp11 = Convert.ToInt32(Math.Ceiling(paramD / deviceParameter.FeedParam1.SP * 3600));
                                         int count11 = temp11;
-                                        float speed11 = deviceParameter.FeedParam1.Feed_PV;
+                                        float speed11 = deviceParameter.FeedParam1.SP;
                                         while (count11 > 0)
                                         {
                                             if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -7079,13 +7075,13 @@ namespace RD3.ViewModels
                                         pumpNo11 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo11 >= 0)
                                         {
-                                            deviceParameter.FeedParam1.Feed_PV = speed11;
+                                            deviceParameter.FeedParam1.SP = speed11;
                                             PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                             {
                                                 PumpNo = pumpNo11,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                                FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                                 FlowCapacity = remainingVolume11
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7105,7 +7101,7 @@ namespace RD3.ViewModels
 
                                         totalMinutes = costCycleSeconds / 60f;
 
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
 
                                         double diff = f.A - totalMinutes;
                                         if (diff > 0)
@@ -7145,7 +7141,7 @@ namespace RD3.ViewModels
                                     }
                                     break;
                                 default:
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                     int pumpNo7 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo7 >= 0)
                                     {
@@ -7154,7 +7150,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo7,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = deviceParameter.FeedParam1.SP,
                                             FlowCapacity = 0
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param7);
@@ -7176,7 +7172,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam1.IsControling = false;
-                        deviceParameter.FeedParam1.Feed_PV = 0;
+                        deviceParameter.FeedParam1.SP = 0;
                     }
                     Task.Run(() =>
                     {
@@ -7248,7 +7244,7 @@ namespace RD3.ViewModels
                             {
                                 if (f.IsConstant)
                                 {
-                                    deviceParameter.FeedParam1.Feed_PV = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
+                                    deviceParameter.FeedParam1.SP = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -7257,7 +7253,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7275,7 +7271,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                    deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -7284,7 +7280,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7302,7 +7298,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                    deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -7311,7 +7307,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7336,7 +7332,7 @@ namespace RD3.ViewModels
                             {
                                 if (f.IsConstant)
                                 {
-                                    deviceParameter.FeedParam1.Feed_PV = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
+                                    deviceParameter.FeedParam1.SP = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -7345,7 +7341,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7363,7 +7359,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                    deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -7372,7 +7368,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7390,7 +7386,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                    deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -7399,7 +7395,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7422,7 +7418,7 @@ namespace RD3.ViewModels
                             }
                             else
                             {
-                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                deviceParameter.FeedParam1.SP = 0;
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                 if (pumpNo >= 0)
                                 {
@@ -7431,7 +7427,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                        FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -7451,7 +7447,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam1.IsControling = false;
-                        deviceParameter.FeedParam1.Feed_PV = 0;
+                        deviceParameter.FeedParam1.SP = 0;
                     }
 
                     Task.Run(() =>
@@ -7524,7 +7520,7 @@ namespace RD3.ViewModels
                             {
                                 if (f.IsConstant)
                                 {
-                                    deviceParameter.FeedParam1.Feed_PV = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
+                                    deviceParameter.FeedParam1.SP = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -7533,7 +7529,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7551,7 +7547,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                    deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -7560,7 +7556,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7578,7 +7574,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                    deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -7587,7 +7583,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7611,7 +7607,7 @@ namespace RD3.ViewModels
                             {
                                 if (f.IsConstant)
                                 {
-                                    deviceParameter.FeedParam1.Feed_PV = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
+                                    deviceParameter.FeedParam1.SP = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -7620,7 +7616,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7638,7 +7634,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                    deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -7647,7 +7643,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7665,7 +7661,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                    deviceParameter.FeedParam1.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam1.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -7674,7 +7670,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7696,7 +7692,7 @@ namespace RD3.ViewModels
                             }
                             else
                             {
-                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                deviceParameter.FeedParam1.SP = 0;
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                 if (pumpNo >= 0)
                                 {
@@ -7705,7 +7701,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                        FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -7729,7 +7725,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam1.IsControling = false;
-                        deviceParameter.FeedParam1.Feed_PV = 0;
+                        deviceParameter.FeedParam1.SP = 0;
                     }
 
                     Task.Run(() =>
@@ -7805,11 +7801,11 @@ namespace RD3.ViewModels
                                     float flow = float.Parse(f.B);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -7819,20 +7815,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam1.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                                    float speed = deviceParameter.FeedParam1.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -7856,13 +7852,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7877,7 +7873,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                 }
                                 else if (f.IsPolynomial)
                                 {
@@ -7892,11 +7888,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -7906,20 +7902,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam1.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? temp : temp;
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                                    float speed = deviceParameter.FeedParam1.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -7943,13 +7939,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -7964,7 +7960,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                 }
                                 else if (f.IsExp)
                                 {
@@ -7979,11 +7975,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -7993,20 +7989,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam1.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                                    float speed = deviceParameter.FeedParam1.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -8030,13 +8026,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -8051,7 +8047,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                 }
 
                                 totalSeconds += 1;
@@ -8075,11 +8071,11 @@ namespace RD3.ViewModels
                                     float flow = float.Parse(f.D);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -8089,20 +8085,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam1.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                                    float speed = deviceParameter.FeedParam1.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -8126,13 +8122,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -8147,7 +8143,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                 }
                                 else if (f.IsPolynomial)
                                 {
@@ -8162,11 +8158,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -8176,20 +8172,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam1.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                                    float speed = deviceParameter.FeedParam1.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -8213,13 +8209,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -8234,7 +8230,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                 }
                                 else if (f.IsExp)
                                 {
@@ -8249,11 +8245,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -8263,20 +8259,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam1.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                                    float speed = deviceParameter.FeedParam1.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -8300,13 +8296,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -8321,7 +8317,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                 }
 
                                 totalSeconds += 1;
@@ -8340,7 +8336,7 @@ namespace RD3.ViewModels
                             }
                             else
                             {
-                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                deviceParameter.FeedParam1.SP = 0;
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                 if (pumpNo >= 0)
                                 {
@@ -8349,7 +8345,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                        FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -8371,7 +8367,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam1.IsControling = false;
-                        deviceParameter.FeedParam1.Feed_PV = 0;
+                        deviceParameter.FeedParam1.SP = 0;
                     }
 
                     Task.Run(() =>
@@ -8447,11 +8443,11 @@ namespace RD3.ViewModels
                                     float flow = float.Parse(f.B);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -8461,20 +8457,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam1.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                                    float speed = deviceParameter.FeedParam1.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -8498,13 +8494,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -8519,7 +8515,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                 }
                                 else if (f.IsPolynomial)
                                 {
@@ -8534,11 +8530,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -8548,20 +8544,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam1.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                                    float speed = deviceParameter.FeedParam1.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -8585,13 +8581,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -8606,7 +8602,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                 }
                                 else if (f.IsExp)
                                 {
@@ -8621,11 +8617,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -8635,20 +8631,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam1.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                                    float speed = deviceParameter.FeedParam1.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -8672,13 +8668,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -8693,7 +8689,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                 }
 
                                 totalSeconds += 1;
@@ -8717,11 +8713,11 @@ namespace RD3.ViewModels
                                     float flow = float.Parse(f.D);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -8731,20 +8727,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam1.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                                    float speed = deviceParameter.FeedParam1.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -8768,13 +8764,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -8789,7 +8785,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                 }
                                 else if (f.IsPolynomial)
                                 {
@@ -8804,11 +8800,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -8818,20 +8814,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam1.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                                    float speed = deviceParameter.FeedParam1.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -8855,13 +8851,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -8876,7 +8872,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                 }
                                 else if (f.IsExp)
                                 {
@@ -8891,11 +8887,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam1.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = 0;
+                                        deviceParameter.FeedParam1.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -8905,20 +8901,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam1.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam1.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                                    float speed = deviceParameter.FeedParam1.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -8942,13 +8938,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam1.Feed_PV = speed;
+                                        deviceParameter.FeedParam1.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -8963,7 +8959,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam1.Feed_PV = 0;
+                                    deviceParameter.FeedParam1.SP = 0;
                                 }
 
                                 totalSeconds += 1;
@@ -8982,7 +8978,7 @@ namespace RD3.ViewModels
                             }
                             else
                             {
-                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                deviceParameter.FeedParam1.SP = 0;
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                 if (pumpNo >= 0)
                                 {
@@ -8991,7 +8987,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                        FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -9012,7 +9008,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam1.IsControling = false;
-                        deviceParameter.FeedParam1.Feed_PV = 0;
+                        deviceParameter.FeedParam1.SP = 0;
                     }
 
                     Task.Run(() =>
@@ -9068,18 +9064,18 @@ namespace RD3.ViewModels
                             PumpNo = pumpNo,
                             Pump = pump,
                             ControlMode = PumpControlMode.Direct,
-                            FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                            FlowSpeed = deviceParameter.FeedParam1.SP,
                             FlowCapacity = deviceParameter.FeedParam1.Feed_Total
                         };
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                     }
 
                     int count = 0;
-                    if (deviceParameter.FeedParam1.Feed_PV > 0)
+                    if (deviceParameter.FeedParam1.SP > 0)
                     {
-                        count = Convert.ToInt32(Math.Ceiling(deviceParameter.FeedParam1.Feed_Total / deviceParameter.FeedParam1.Feed_PV * 3600));
+                        count = Convert.ToInt32(Math.Ceiling(deviceParameter.FeedParam1.Feed_Total / deviceParameter.FeedParam1.SP * 3600));
                     }
-                    float speed = deviceParameter.FeedParam1.Feed_PV;
+                    float speed = deviceParameter.FeedParam1.SP;
                     while (count > 0)
                     {
                         if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -9103,13 +9099,13 @@ namespace RD3.ViewModels
                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                     if (pumpNo >= 0)
                     {
-                        deviceParameter.FeedParam1.Feed_PV = speed;
+                        deviceParameter.FeedParam1.SP = speed;
                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                         {
                             PumpNo = pumpNo,
                             Pump = pump,
                             ControlMode = PumpControlMode.Direct,
-                            FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                            FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                             FlowCapacity = remainingVolume
                         };
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -9201,16 +9197,16 @@ namespace RD3.ViewModels
                             }
                             if (f.A <= 0 || !float.TryParse(f.B, out var b) || b <= 0 || f.C <= 0 || !float.TryParse(f.D, out var d) || d <= 0)
                             {
-                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                deviceParameter.FeedParam1.SP = 0;
                                 continue;
                             }
                             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                             if (pumpNo < 0)
                             {
-                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                deviceParameter.FeedParam1.SP = 0;
                                 continue;
                             }
-                            deviceParameter.FeedParam1.Feed_PV = f.C;
+                            deviceParameter.FeedParam1.SP = f.C;
                             if (pumpNo >= 0)
                             {
                                 PeristalticPumpControlParam param11 = new PeristalticPumpControlParam()
@@ -9218,18 +9214,18 @@ namespace RD3.ViewModels
                                     PumpNo = pumpNo,
                                     Pump = pump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = deviceParameter.FeedParam1.Feed_PV,
+                                    FlowSpeed = deviceParameter.FeedParam1.SP,
                                     FlowCapacity = d
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param11);
                             }
 
                             int count = 1;
-                            if (deviceParameter.FeedParam1.Feed_PV > 0)
+                            if (deviceParameter.FeedParam1.SP > 0)
                             {
-                                count = Convert.ToInt32(Math.Ceiling(d / deviceParameter.FeedParam1.Feed_PV * 3600));
+                                count = Convert.ToInt32(Math.Ceiling(d / deviceParameter.FeedParam1.SP * 3600));
                             }
-                            float speed = deviceParameter.FeedParam1.Feed_PV;
+                            float speed = deviceParameter.FeedParam1.SP;
                             while (count > 0)
                             {
                                 if (dicFeed1Worker[deviceParameter.Name].CancellationPending)
@@ -9254,13 +9250,13 @@ namespace RD3.ViewModels
                             pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                             if (pumpNo >= 0)
                             {
-                                deviceParameter.FeedParam1.Feed_PV = speed;
+                                deviceParameter.FeedParam1.SP = speed;
                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                 {
                                     PumpNo = pumpNo,
                                     Pump = pump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = (float)deviceParameter.FeedParam1.Feed_PV,
+                                    FlowSpeed = (float)deviceParameter.FeedParam1.SP,
                                     FlowCapacity = remainingVolume
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -9278,7 +9274,7 @@ namespace RD3.ViewModels
 
                             totalMinutes = costCycleSeconds / 60d;
                             double diff = f.A - totalMinutes;
-                            deviceParameter.FeedParam1.Feed_PV = 0;
+                            deviceParameter.FeedParam1.SP = 0;
                             if (diff > 0)
                             {
                                 int count12 = Convert.ToInt32(diff * 60);
@@ -9318,7 +9314,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam1.IsControling = false;
-                        deviceParameter.FeedParam1.Feed_PV = 0;
+                        deviceParameter.FeedParam1.SP = 0;
                     }
                     Task.Run(() =>
                     {
@@ -9434,11 +9430,11 @@ namespace RD3.ViewModels
                             PumpNo = pumpNo,
                             Pump = pump,
                             ControlMode = PumpControlMode.Direct,
-                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.FeedParam2.Feed_PV,
+                            FlowSpeed = (float)deviceParameter.FeedParam2.SP >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.FeedParam2.SP,
                             FlowCapacity = Const.MaxPumpFlowCapacity
                         };
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                        dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam2.Feed_PV;
+                        dicFeed1SP[deviceParameter.Name] = deviceParameter.FeedParam2.SP;
                     }
 
                     var worker = (BackgroundWorker)s;
@@ -9450,7 +9446,7 @@ namespace RD3.ViewModels
                             {
                                 return;
                             }
-                            if (dicFeed1SP[deviceParameter.Name] != deviceParameter.FeedParam2.Feed_PV)
+                            if (dicFeed1SP[deviceParameter.Name] != deviceParameter.FeedParam2.SP)
                             {
                                 pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                 if (pumpNo >= 0)
@@ -9460,12 +9456,12 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = deviceParameter.FeedParam2.Feed_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : deviceParameter.FeedParam2.Feed_PV,
+                                        FlowSpeed = deviceParameter.FeedParam2.SP >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : deviceParameter.FeedParam2.SP,
                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
                                 }
-                                dicFeed1SP[CurrentDeviceParameter.Name] = deviceParameter.FeedParam2.Feed_PV;
+                                dicFeed1SP[CurrentDeviceParameter.Name] = deviceParameter.FeedParam2.SP;
                             }
 
                             Thread.Sleep(1000);
@@ -9484,7 +9480,7 @@ namespace RD3.ViewModels
                     {
                         deviceParameter.FeedParam2.IsControling = false;
                         //如果是常量，补料预设值不重置
-                        //deviceParameter.FeedParam2.Feed_PV = 0;  
+                        //deviceParameter.FeedParam2.SP = 0;  
                     }
                     Task.Run(() =>
                     {
@@ -9571,7 +9567,7 @@ namespace RD3.ViewModels
                             double feed = Math.Round(a * Math.Pow(diff, 2) + b * diff + c, 2);
 
                             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
-                            deviceParameter.FeedParam2.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
+                            deviceParameter.FeedParam2.SP = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
                             if (pumpNo >= 0)
                             {
                                 param = new PeristalticPumpControlParam()
@@ -9579,7 +9575,7 @@ namespace RD3.ViewModels
                                     PumpNo = pumpNo,
                                     Pump = pump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -9615,13 +9611,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                         param = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = deviceParameter.FeedParam2.SP,
                                             FlowCapacity = 0
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -9702,7 +9698,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam2.IsControling = false;
-                        deviceParameter.FeedParam2.Feed_PV = 0;
+                        deviceParameter.FeedParam2.SP = 0;
                     }
                     Task.Run(() =>
                     {
@@ -9788,13 +9784,13 @@ namespace RD3.ViewModels
                             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                             if (pumpNo >= 0)
                             {
-                                deviceParameter.FeedParam2.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
+                                deviceParameter.FeedParam2.SP = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
                                 param = new PeristalticPumpControlParam()
                                 {
                                     PumpNo = pumpNo,
                                     Pump = pump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -9829,13 +9825,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                         param = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = deviceParameter.FeedParam2.SP,
                                             FlowCapacity = 0
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -9916,7 +9912,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam2.IsControling = false;
-                        deviceParameter.FeedParam2.Feed_PV = 0;
+                        deviceParameter.FeedParam2.SP = 0;
                     }
                     Task.Run(() =>
                     {
@@ -10025,7 +10021,7 @@ namespace RD3.ViewModels
                             switch (f.InfoType)
                             {
                                 case "Constant":
-                                    deviceParameter.FeedParam2.Feed_PV = f.A >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : f.A;
+                                    deviceParameter.FeedParam2.SP = f.A >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : f.A;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -10034,7 +10030,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -10068,13 +10064,13 @@ namespace RD3.ViewModels
                                         pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo >= 0)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                             param = new PeristalticPumpControlParam()
                                             {
                                                 PumpNo = pumpNo,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                                FlowSpeed = deviceParameter.FeedParam2.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -10145,7 +10141,7 @@ namespace RD3.ViewModels
                                     double calcTimeOffset = Math.Round(calcTotalSeconds / 3600, 2);
                                     double feed = Math.Round(a * Math.Pow(calcTimeOffset, 2) + b * calcTimeOffset + c, 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
+                                    deviceParameter.FeedParam2.SP = (float)feed >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)feed;
                                     int pumpNo1 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo1 >= 0)
                                     {
@@ -10153,7 +10149,7 @@ namespace RD3.ViewModels
                                         {
                                             PumpNo = pumpNo1,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -10189,13 +10185,13 @@ namespace RD3.ViewModels
                                         pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo >= 0)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                             param = new PeristalticPumpControlParam()
                                             {
                                                 PumpNo = pumpNo,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                                FlowSpeed = deviceParameter.FeedParam2.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -10266,7 +10262,7 @@ namespace RD3.ViewModels
                                     double calcTimeOffset1 = Math.Round(calcTotalSeconds / 3600, 2);
                                     double feed1 = Math.Round(f1 * Math.Exp(μ * calcTimeOffset1), 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)feed1 >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)feed1;
+                                    deviceParameter.FeedParam2.SP = (float)feed1 >= AppSession.DefaultPumpFlowRate ? AppSession.DefaultPumpFlowRate : (float)feed1;
                                     int pumpNo2 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo2 >= 0)
                                     {
@@ -10275,7 +10271,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo2,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -10311,13 +10307,13 @@ namespace RD3.ViewModels
                                         pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo >= 0)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                             param = new PeristalticPumpControlParam()
                                             {
                                                 PumpNo = pumpNo,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                                FlowSpeed = deviceParameter.FeedParam2.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -10387,7 +10383,7 @@ namespace RD3.ViewModels
                                     {
                                         if (f.IsConstant)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
+                                            deviceParameter.FeedParam2.SP = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -10396,7 +10392,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -10414,7 +10410,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -10422,7 +10418,7 @@ namespace RD3.ViewModels
                                                 {
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -10440,7 +10436,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -10449,7 +10445,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -10476,7 +10472,7 @@ namespace RD3.ViewModels
                                     {
                                         if (f.IsConstant)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
+                                            deviceParameter.FeedParam2.SP = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -10485,7 +10481,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -10503,7 +10499,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -10512,7 +10508,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
@@ -10530,7 +10526,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -10539,7 +10535,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -10564,7 +10560,7 @@ namespace RD3.ViewModels
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                         int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo3 >= 0)
                                         {
@@ -10573,7 +10569,7 @@ namespace RD3.ViewModels
                                                 PumpNo = pumpNo3,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -10588,7 +10584,7 @@ namespace RD3.ViewModels
                                     {
                                         if (f.IsConstant)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
+                                            deviceParameter.FeedParam2.SP = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -10597,7 +10593,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -10615,7 +10611,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -10624,7 +10620,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -10642,7 +10638,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -10651,7 +10647,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -10678,7 +10674,7 @@ namespace RD3.ViewModels
                                     {
                                         if (f.IsConstant)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
+                                            deviceParameter.FeedParam2.SP = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -10687,7 +10683,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -10705,7 +10701,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramD > 0 ? offset - paramD : 0;
                                             double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -10714,7 +10710,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -10732,7 +10728,7 @@ namespace RD3.ViewModels
                                             double diff = offset - paramC > 0 ? offset - paramC : 0;
                                             double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                            deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                            deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
@@ -10741,7 +10737,7 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = Const.MaxPumpFlowCapacity
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -10766,7 +10762,7 @@ namespace RD3.ViewModels
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                         int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo9 >= 0)
                                         {
@@ -10775,7 +10771,7 @@ namespace RD3.ViewModels
                                                 PumpNo = pumpNo9,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -10793,11 +10789,11 @@ namespace RD3.ViewModels
                                             float flow = float.Parse(f.B);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                                deviceParameter.FeedParam2.SP = 0;
                                             }
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
@@ -10807,20 +10803,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp1 = 1;
-                                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam2.SP > 0)
                                             {
-                                                temp1 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                                temp1 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp1;
-                                            float speed1 = deviceParameter.FeedParam2.Feed_PV;
+                                            float speed1 = deviceParameter.FeedParam2.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -10846,13 +10842,13 @@ namespace RD3.ViewModels
                                             pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = speed1;
+                                                deviceParameter.FeedParam2.SP = speed1;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = remainingVolume1
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -10870,7 +10866,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                         }
                                         else if (f.IsPolynomial)
                                         {
@@ -10885,11 +10881,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                                deviceParameter.FeedParam2.SP = 0;
                                             }
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
@@ -10899,20 +10895,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp2 = 1;
-                                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam2.SP > 0)
                                             {
-                                                temp2 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                                temp2 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp2;
-                                            float speed2 = deviceParameter.FeedParam2.Feed_PV;
+                                            float speed2 = deviceParameter.FeedParam2.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -10938,13 +10934,13 @@ namespace RD3.ViewModels
                                             pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = speed2;
+                                                deviceParameter.FeedParam2.SP = speed2;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = remainingVolume2
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -10962,7 +10958,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                         }
                                         else if (f.IsExp)
                                         {
@@ -10977,11 +10973,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                                deviceParameter.FeedParam2.SP = 0;
                                             }
                                             int pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
@@ -10991,20 +10987,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp3 = 1;
-                                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam2.SP > 0)
                                             {
-                                                temp3 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                                temp3 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp3;
-                                            float speed3 = deviceParameter.FeedParam2.Feed_PV;
+                                            float speed3 = deviceParameter.FeedParam2.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -11030,13 +11026,13 @@ namespace RD3.ViewModels
                                             pumpNo3 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo3 >= 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = speed3;
+                                                deviceParameter.FeedParam2.SP = speed3;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo3,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = remainingVolume3
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -11054,7 +11050,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                         }
 
                                         statTotalSeconds += 1;
@@ -11080,11 +11076,11 @@ namespace RD3.ViewModels
                                             float flow = float.Parse(f.D);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                                deviceParameter.FeedParam2.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -11094,20 +11090,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp4 = 1;
-                                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam2.SP > 0)
                                             {
-                                                temp4 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                                temp4 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp4;
-                                            float speed4 = deviceParameter.FeedParam2.Feed_PV;
+                                            float speed4 = deviceParameter.FeedParam2.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -11133,13 +11129,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = speed4;
+                                                deviceParameter.FeedParam2.SP = speed4;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = remainingVolume4
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -11157,7 +11153,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                         }
                                         else if (f.IsPolynomial)
                                         {
@@ -11172,11 +11168,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                                deviceParameter.FeedParam2.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -11186,20 +11182,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp5 = 1;
-                                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam2.SP > 0)
                                             {
-                                                temp5 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                                temp5 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp5;
-                                            float speed5 = deviceParameter.FeedParam2.Feed_PV;
+                                            float speed5 = deviceParameter.FeedParam2.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -11225,13 +11221,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = speed5;
+                                                deviceParameter.FeedParam2.SP = speed5;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = remainingVolume5
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -11249,7 +11245,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                         }
                                         else if (f.IsExp)
                                         {
@@ -11264,11 +11260,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                                deviceParameter.FeedParam2.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -11278,20 +11274,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp6 = 1;
-                                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam2.SP > 0)
                                             {
-                                                temp6 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                                temp6 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp6;
-                                            float speed6 = deviceParameter.FeedParam2.Feed_PV;
+                                            float speed6 = deviceParameter.FeedParam2.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -11317,13 +11313,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = speed6;
+                                                deviceParameter.FeedParam2.SP = speed6;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = remainingVolume6
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -11341,7 +11337,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                         }
 
                                         int count5 = f.TriggerInterval < 1 ? 1 : f.TriggerInterval / 1;
@@ -11360,7 +11356,7 @@ namespace RD3.ViewModels
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                         int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo9 >= 0)
                                         {
@@ -11369,7 +11365,7 @@ namespace RD3.ViewModels
                                                 PumpNo = pumpNo9,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -11385,11 +11381,11 @@ namespace RD3.ViewModels
                                             float flow = float.Parse(f.B);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                                deviceParameter.FeedParam2.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -11399,20 +11395,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp7 = 1;
-                                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam2.SP > 0)
                                             {
-                                                temp7 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                                temp7 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp7;
-                                            float speed7 = deviceParameter.FeedParam2.Feed_PV;
+                                            float speed7 = deviceParameter.FeedParam2.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -11438,13 +11434,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = speed7;
+                                                deviceParameter.FeedParam2.SP = speed7;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = remainingVolume7
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -11462,7 +11458,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                         }
                                         else if (f.IsPolynomial)
                                         {
@@ -11477,11 +11473,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                                deviceParameter.FeedParam2.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -11491,20 +11487,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp8 = 1;
-                                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam2.SP > 0)
                                             {
-                                                temp8 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                                temp8 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp8;
-                                            float speed8 = deviceParameter.FeedParam2.Feed_PV;
+                                            float speed8 = deviceParameter.FeedParam2.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -11530,13 +11526,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = speed8;
+                                                deviceParameter.FeedParam2.SP = speed8;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = remainingVolume8
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -11554,7 +11550,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                         }
                                         else if (f.IsExp)
                                         {
@@ -11569,11 +11565,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                                deviceParameter.FeedParam2.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -11583,20 +11579,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp9 = 1;
-                                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam2.SP > 0)
                                             {
-                                                temp9 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                                temp9 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp9;
-                                            float speed9 = deviceParameter.FeedParam2.Feed_PV;
+                                            float speed9 = deviceParameter.FeedParam2.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -11622,13 +11618,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = speed9;
+                                                deviceParameter.FeedParam2.SP = speed9;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = remainingVolume9
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -11646,7 +11642,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                         }
 
                                         statTotalSeconds += 1;
@@ -11672,11 +11668,11 @@ namespace RD3.ViewModels
                                             float flow = float.Parse(f.D);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                                deviceParameter.FeedParam2.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -11686,20 +11682,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp10 = 1;
-                                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam2.SP > 0)
                                             {
-                                                temp10 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                                temp10 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp10;
-                                            float speed10 = deviceParameter.FeedParam2.Feed_PV;
+                                            float speed10 = deviceParameter.FeedParam2.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -11725,13 +11721,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = speed10;
+                                                deviceParameter.FeedParam2.SP = speed10;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = remainingVolume10
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -11749,7 +11745,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                         }
                                         else if (f.IsPolynomial)
                                         {
@@ -11764,11 +11760,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                                deviceParameter.FeedParam2.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -11778,20 +11774,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp11 = 1;
-                                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam2.SP > 0)
                                             {
-                                                temp11 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                                temp11 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp11;
-                                            float speed11 = deviceParameter.FeedParam2.Feed_PV;
+                                            float speed11 = deviceParameter.FeedParam2.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -11817,13 +11813,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = speed11;
+                                                deviceParameter.FeedParam2.SP = speed11;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = remainingVolume11
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -11841,7 +11837,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                         }
                                         else if (f.IsExp)
                                         {
@@ -11856,11 +11852,11 @@ namespace RD3.ViewModels
                                             double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                             if (flow > 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                                deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                             }
                                             else
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                                deviceParameter.FeedParam2.SP = 0;
                                             }
                                             int pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
@@ -11870,20 +11866,20 @@ namespace RD3.ViewModels
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = (float)flow
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                             }
 
                                             int temp12 = 1;
-                                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                            if (deviceParameter.FeedParam2.SP > 0)
                                             {
-                                                temp12 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                                temp12 = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                             }
                                             bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                             int count2 = flag2 == true ? 1 : temp12;
-                                            float speed12 = deviceParameter.FeedParam2.Feed_PV;
+                                            float speed12 = deviceParameter.FeedParam2.SP;
                                             while (count2 > 0)
                                             {
                                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -11909,13 +11905,13 @@ namespace RD3.ViewModels
                                             pumpNo9 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                             if (pumpNo9 >= 0)
                                             {
-                                                deviceParameter.FeedParam2.Feed_PV = speed12;
+                                                deviceParameter.FeedParam2.SP = speed12;
                                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                                 {
                                                     PumpNo = pumpNo9,
                                                     Pump = pump,
                                                     ControlMode = PumpControlMode.Direct,
-                                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                     FlowCapacity = remainingVolume12
                                                 };
                                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -11933,7 +11929,7 @@ namespace RD3.ViewModels
                                                 }
 
                                             }
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                         }
 
                                         statTotalSeconds += 1;
@@ -11954,7 +11950,7 @@ namespace RD3.ViewModels
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                         int pumpNo8 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo8 >= 0)
                                         {
@@ -11963,7 +11959,7 @@ namespace RD3.ViewModels
                                                 PumpNo = pumpNo8,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                 FlowCapacity = 0
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -11979,7 +11975,7 @@ namespace RD3.ViewModels
                                         continue;
                                     }
                                     float.TryParse(f.B, out var b1);
-                                    deviceParameter.FeedParam2.Feed_PV = b1;
+                                    deviceParameter.FeedParam2.SP = b1;
                                     int pumpNo10 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo10 >= 0)
                                     {
@@ -11988,7 +11984,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo10,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = deviceParameter.FeedParam2.SP,
                                             FlowCapacity = f.A
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param10);
@@ -11996,8 +11992,8 @@ namespace RD3.ViewModels
                                     QuantitativeFinish = true;
 
 
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
-                                    int temp = Convert.ToInt32(Math.Ceiling(f.A / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                    float speed = deviceParameter.FeedParam2.SP;
+                                    int temp = Convert.ToInt32(Math.Ceiling(f.A / deviceParameter.FeedParam2.SP * 3600));
                                     int count10 = temp;
                                     while (count10 > 0)
                                     {
@@ -12024,13 +12020,13 @@ namespace RD3.ViewModels
                                     pumpNo10 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo10 >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo10,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12048,7 +12044,7 @@ namespace RD3.ViewModels
                                         }
                                     }
 
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                     break;
                                 case "Cycle":
                                     try
@@ -12058,16 +12054,16 @@ namespace RD3.ViewModels
 
                                         if (f.A <= 0 || !float.TryParse(f.B, out var paramB) || paramB <= 0 || f.C <= 0 || !float.TryParse(f.D, out var paramD) || paramD <= 0)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                             continue;
                                         }
                                         int pumpNo11 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo11 < 0)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = 0;
+                                            deviceParameter.FeedParam2.SP = 0;
                                             continue;
                                         }
-                                        deviceParameter.FeedParam2.Feed_PV = f.C;
+                                        deviceParameter.FeedParam2.SP = f.C;
                                         if (pumpNo11 >= 0)
                                         {
                                             PeristalticPumpControlParam param11 = new PeristalticPumpControlParam()
@@ -12075,15 +12071,15 @@ namespace RD3.ViewModels
                                                 PumpNo = pumpNo11,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                                FlowSpeed = deviceParameter.FeedParam2.SP,
                                                 FlowCapacity = paramD
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param11);
                                         }
 
-                                        int temp11 = Convert.ToInt32(Math.Ceiling(paramD / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        int temp11 = Convert.ToInt32(Math.Ceiling(paramD / deviceParameter.FeedParam2.SP * 3600));
                                         int count11 = temp11;
-                                        float speed11 = deviceParameter.FeedParam2.Feed_PV;
+                                        float speed11 = deviceParameter.FeedParam2.SP;
                                         while (count11 > 0)
                                         {
                                             if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -12111,13 +12107,13 @@ namespace RD3.ViewModels
                                         pumpNo11 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                         if (pumpNo11 >= 0)
                                         {
-                                            deviceParameter.FeedParam2.Feed_PV = speed11;
+                                            deviceParameter.FeedParam2.SP = speed11;
                                             PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                             {
                                                 PumpNo = pumpNo11,
                                                 Pump = pump,
                                                 ControlMode = PumpControlMode.Direct,
-                                                FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                                FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                                 FlowCapacity = remainingVolume11
                                             };
                                             InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12137,7 +12133,7 @@ namespace RD3.ViewModels
 
                                         totalMinutes = costCycleSeconds / 60f;
 
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
 
                                         double diff = f.A - totalMinutes;
                                         if (diff > 0)
@@ -12177,7 +12173,7 @@ namespace RD3.ViewModels
                                     }
                                     break;
                                 default:
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                     int pumpNo7 = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo7 >= 0)
                                     {
@@ -12186,7 +12182,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo7,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = deviceParameter.FeedParam2.SP,
                                             FlowCapacity = 0
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param7);
@@ -12208,7 +12204,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam2.IsControling = false;
-                        deviceParameter.FeedParam2.Feed_PV = 0;
+                        deviceParameter.FeedParam2.SP = 0;
                     }
                     Task.Run(() =>
                     {
@@ -12280,7 +12276,7 @@ namespace RD3.ViewModels
                             {
                                 if (f.IsConstant)
                                 {
-                                    deviceParameter.FeedParam2.Feed_PV = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
+                                    deviceParameter.FeedParam2.SP = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -12289,7 +12285,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12307,7 +12303,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -12316,7 +12312,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12334,7 +12330,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -12343,7 +12339,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12368,7 +12364,7 @@ namespace RD3.ViewModels
                             {
                                 if (f.IsConstant)
                                 {
-                                    deviceParameter.FeedParam2.Feed_PV = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
+                                    deviceParameter.FeedParam2.SP = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -12377,7 +12373,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12395,7 +12391,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -12404,7 +12400,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12422,7 +12418,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -12431,7 +12427,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12454,7 +12450,7 @@ namespace RD3.ViewModels
                             }
                             else
                             {
-                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                deviceParameter.FeedParam2.SP = 0;
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                 if (pumpNo >= 0)
                                 {
@@ -12463,7 +12459,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                        FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -12483,7 +12479,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam2.IsControling = false;
-                        deviceParameter.FeedParam2.Feed_PV = 0;
+                        deviceParameter.FeedParam2.SP = 0;
                     }
 
                     Task.Run(() =>
@@ -12556,7 +12552,7 @@ namespace RD3.ViewModels
                             {
                                 if (f.IsConstant)
                                 {
-                                    deviceParameter.FeedParam2.Feed_PV = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
+                                    deviceParameter.FeedParam2.SP = float.Parse(f.B) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.B);
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -12565,7 +12561,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12583,7 +12579,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -12592,7 +12588,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12610,7 +12606,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -12619,7 +12615,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12643,7 +12639,7 @@ namespace RD3.ViewModels
                             {
                                 if (f.IsConstant)
                                 {
-                                    deviceParameter.FeedParam2.Feed_PV = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
+                                    deviceParameter.FeedParam2.SP = float.Parse(f.D) >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : float.Parse(f.D);
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -12652,7 +12648,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12670,7 +12666,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramD > 0 ? offset - paramD : 0;
                                     double flowRate = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -12679,7 +12675,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12697,7 +12693,7 @@ namespace RD3.ViewModels
                                     double diff = offset - paramC > 0 ? offset - paramC : 0;
                                     double flowRate = Math.Round(paramA * Math.Exp(paramB * diff), 2);
 
-                                    deviceParameter.FeedParam2.Feed_PV = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
+                                    deviceParameter.FeedParam2.SP = (float)flowRate >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)flowRate;
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
@@ -12706,7 +12702,7 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12728,7 +12724,7 @@ namespace RD3.ViewModels
                             }
                             else
                             {
-                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                deviceParameter.FeedParam2.SP = 0;
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                 if (pumpNo >= 0)
                                 {
@@ -12737,7 +12733,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                        FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -12761,7 +12757,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam2.IsControling = false;
-                        deviceParameter.FeedParam2.Feed_PV = 0;
+                        deviceParameter.FeedParam2.SP = 0;
                     }
 
                     Task.Run(() =>
@@ -12837,11 +12833,11 @@ namespace RD3.ViewModels
                                     float flow = float.Parse(f.B);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -12851,20 +12847,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam2.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                                    float speed = deviceParameter.FeedParam2.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -12888,13 +12884,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12909,7 +12905,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                 }
                                 else if (f.IsPolynomial)
                                 {
@@ -12924,11 +12920,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -12938,20 +12934,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam2.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? temp : temp;
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                                    float speed = deviceParameter.FeedParam2.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -12975,13 +12971,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -12996,7 +12992,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                 }
                                 else if (f.IsExp)
                                 {
@@ -13011,11 +13007,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -13025,20 +13021,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam2.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                                    float speed = deviceParameter.FeedParam2.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -13062,13 +13058,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -13083,7 +13079,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                 }
 
                                 totalSeconds += 1;
@@ -13107,11 +13103,11 @@ namespace RD3.ViewModels
                                     float flow = float.Parse(f.D);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -13121,20 +13117,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam2.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                                    float speed = deviceParameter.FeedParam2.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -13158,13 +13154,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -13179,7 +13175,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                 }
                                 else if (f.IsPolynomial)
                                 {
@@ -13194,11 +13190,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -13208,20 +13204,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam2.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                                    float speed = deviceParameter.FeedParam2.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -13245,13 +13241,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -13266,7 +13262,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                 }
                                 else if (f.IsExp)
                                 {
@@ -13281,11 +13277,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -13295,20 +13291,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam2.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                                    float speed = deviceParameter.FeedParam2.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -13332,13 +13328,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -13353,7 +13349,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                 }
 
                                 totalSeconds += 1;
@@ -13372,7 +13368,7 @@ namespace RD3.ViewModels
                             }
                             else
                             {
-                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                deviceParameter.FeedParam2.SP = 0;
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                 if (pumpNo >= 0)
                                 {
@@ -13381,7 +13377,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                        FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -13403,7 +13399,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam2.IsControling = false;
-                        deviceParameter.FeedParam2.Feed_PV = 0;
+                        deviceParameter.FeedParam2.SP = 0;
                     }
 
                     Task.Run(() =>
@@ -13479,11 +13475,11 @@ namespace RD3.ViewModels
                                     float flow = float.Parse(f.B);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -13493,20 +13489,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam2.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                                    float speed = deviceParameter.FeedParam2.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -13530,13 +13526,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -13551,7 +13547,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                 }
                                 else if (f.IsPolynomial)
                                 {
@@ -13566,11 +13562,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -13580,20 +13576,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam2.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                                    float speed = deviceParameter.FeedParam2.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -13617,13 +13613,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -13638,7 +13634,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                 }
                                 else if (f.IsExp)
                                 {
@@ -13653,11 +13649,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -13667,20 +13663,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam2.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                                    float speed = deviceParameter.FeedParam2.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -13704,13 +13700,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -13725,7 +13721,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                 }
 
                                 totalSeconds += 1;
@@ -13749,11 +13745,11 @@ namespace RD3.ViewModels
                                     float flow = float.Parse(f.D);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -13763,20 +13759,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam2.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                                    float speed = deviceParameter.FeedParam2.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -13800,13 +13796,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -13821,7 +13817,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                 }
                                 else if (f.IsPolynomial)
                                 {
@@ -13836,11 +13832,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Pow(diff, 2) + paramB * diff + paramC, 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -13850,20 +13846,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam2.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                                    float speed = deviceParameter.FeedParam2.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -13887,13 +13883,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -13908,7 +13904,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                 }
                                 else if (f.IsExp)
                                 {
@@ -13923,11 +13919,11 @@ namespace RD3.ViewModels
                                     double flow = Math.Round(paramA * Math.Exp(paramB * diff), 2);
                                     if (flow > 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = AppSession.DefaultPumpFlowRate;
+                                        deviceParameter.FeedParam2.SP = AppSession.DefaultPumpFlowRate;
                                     }
                                     else
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = 0;
+                                        deviceParameter.FeedParam2.SP = 0;
                                     }
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
@@ -13937,20 +13933,20 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = (float)flow
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                                     }
 
                                     int temp = 1;
-                                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                                    if (deviceParameter.FeedParam2.SP > 0)
                                     {
-                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                        temp = Convert.ToInt32(Math.Ceiling(flow / deviceParameter.FeedParam2.SP * 3600));
                                     }
                                     bool flag2 = Convert.ToBoolean(VarConfig.GetValue("IsSimulation")?.ToString());
                                     int count = flag2 == true ? 1 : temp;
-                                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                                    float speed = deviceParameter.FeedParam2.SP;
                                     while (count > 0)
                                     {
                                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -13974,13 +13970,13 @@ namespace RD3.ViewModels
                                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                     if (pumpNo >= 0)
                                     {
-                                        deviceParameter.FeedParam2.Feed_PV = speed;
+                                        deviceParameter.FeedParam2.SP = speed;
                                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                         {
                                             PumpNo = pumpNo,
                                             Pump = pump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                             FlowCapacity = remainingVolume
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -13995,7 +13991,7 @@ namespace RD3.ViewModels
                                             Thread.Sleep(1000);
                                         }
                                     }
-                                    deviceParameter.FeedParam2.Feed_PV = 0;
+                                    deviceParameter.FeedParam2.SP = 0;
                                 }
 
                                 totalSeconds += 1;
@@ -14014,7 +14010,7 @@ namespace RD3.ViewModels
                             }
                             else
                             {
-                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                deviceParameter.FeedParam2.SP = 0;
                                 int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                                 if (pumpNo >= 0)
                                 {
@@ -14023,7 +14019,7 @@ namespace RD3.ViewModels
                                         PumpNo = pumpNo,
                                         Pump = pump,
                                         ControlMode = PumpControlMode.Direct,
-                                        FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                        FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                         FlowCapacity = 0
                                     };
                                     InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param8);
@@ -14044,7 +14040,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam2.IsControling = false;
-                        deviceParameter.FeedParam2.Feed_PV = 0;
+                        deviceParameter.FeedParam2.SP = 0;
                     }
 
                     Task.Run(() =>
@@ -14100,18 +14096,18 @@ namespace RD3.ViewModels
                             PumpNo = pumpNo,
                             Pump = pump,
                             ControlMode = PumpControlMode.Direct,
-                            FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                            FlowSpeed = deviceParameter.FeedParam2.SP,
                             FlowCapacity = deviceParameter.FeedParam2.Feed_Total
                         };
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
                     }
 
                     int count = 0;
-                    if (deviceParameter.FeedParam2.Feed_PV > 0)
+                    if (deviceParameter.FeedParam2.SP > 0)
                     {
-                        count = Convert.ToInt32(Math.Ceiling(deviceParameter.FeedParam2.Feed_Total / deviceParameter.FeedParam2.Feed_PV * 3600));
+                        count = Convert.ToInt32(Math.Ceiling(deviceParameter.FeedParam2.Feed_Total / deviceParameter.FeedParam2.SP * 3600));
                     }
-                    float speed = deviceParameter.FeedParam2.Feed_PV;
+                    float speed = deviceParameter.FeedParam2.SP;
                     while (count > 0)
                     {
                         if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -14135,13 +14131,13 @@ namespace RD3.ViewModels
                     pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                     if (pumpNo >= 0)
                     {
-                        deviceParameter.FeedParam2.Feed_PV = speed;
+                        deviceParameter.FeedParam2.SP = speed;
                         PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                         {
                             PumpNo = pumpNo,
                             Pump = pump,
                             ControlMode = PumpControlMode.Direct,
-                            FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                            FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                             FlowCapacity = remainingVolume
                         };
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -14233,16 +14229,16 @@ namespace RD3.ViewModels
                             }
                             if (f.A <= 0 || !float.TryParse(f.B, out var b) || b <= 0 || f.C <= 0 || !float.TryParse(f.D, out var d) || d <= 0)
                             {
-                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                deviceParameter.FeedParam2.SP = 0;
                                 continue;
                             }
                             int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                             if (pumpNo < 0)
                             {
-                                deviceParameter.FeedParam2.Feed_PV = 0;
+                                deviceParameter.FeedParam2.SP = 0;
                                 continue;
                             }
-                            deviceParameter.FeedParam2.Feed_PV = f.C;
+                            deviceParameter.FeedParam2.SP = f.C;
                             if (pumpNo >= 0)
                             {
                                 PeristalticPumpControlParam param11 = new PeristalticPumpControlParam()
@@ -14250,18 +14246,18 @@ namespace RD3.ViewModels
                                     PumpNo = pumpNo,
                                     Pump = pump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = deviceParameter.FeedParam2.Feed_PV,
+                                    FlowSpeed = deviceParameter.FeedParam2.SP,
                                     FlowCapacity = d
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param11);
                             }
 
                             int count = 1;
-                            if (deviceParameter.FeedParam2.Feed_PV > 0)
+                            if (deviceParameter.FeedParam2.SP > 0)
                             {
-                                count = Convert.ToInt32(Math.Ceiling(d / deviceParameter.FeedParam2.Feed_PV * 3600));
+                                count = Convert.ToInt32(Math.Ceiling(d / deviceParameter.FeedParam2.SP * 3600));
                             }
-                            float speed = deviceParameter.FeedParam2.Feed_PV;
+                            float speed = deviceParameter.FeedParam2.SP;
                             while (count > 0)
                             {
                                 if (dicFeed2Worker[deviceParameter.Name].CancellationPending)
@@ -14286,13 +14282,13 @@ namespace RD3.ViewModels
                             pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, pump);
                             if (pumpNo >= 0)
                             {
-                                deviceParameter.FeedParam2.Feed_PV = speed;
+                                deviceParameter.FeedParam2.SP = speed;
                                 PeristalticPumpControlParam param4 = new PeristalticPumpControlParam()
                                 {
                                     PumpNo = pumpNo,
                                     Pump = pump,
                                     ControlMode = PumpControlMode.Direct,
-                                    FlowSpeed = (float)deviceParameter.FeedParam2.Feed_PV,
+                                    FlowSpeed = (float)deviceParameter.FeedParam2.SP,
                                     FlowCapacity = remainingVolume
                                 };
                                 InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param4);
@@ -14310,7 +14306,7 @@ namespace RD3.ViewModels
 
                             totalMinutes = costCycleSeconds / 60d;
                             double diff = f.A - totalMinutes;
-                            deviceParameter.FeedParam2.Feed_PV = 0;
+                            deviceParameter.FeedParam2.SP = 0;
                             if (diff > 0)
                             {
                                 int count12 = Convert.ToInt32(diff * 60);
@@ -14350,7 +14346,7 @@ namespace RD3.ViewModels
                     if (deviceParameter != null)
                     {
                         deviceParameter.FeedParam2.IsControling = false;
-                        deviceParameter.FeedParam2.Feed_PV = 0;
+                        deviceParameter.FeedParam2.SP = 0;
                     }
                     Task.Run(() =>
                     {
@@ -14413,11 +14409,11 @@ namespace RD3.ViewModels
                             PumpNo = pumpNo,
                             Pump = PeristalticPump.AFPump,
                             ControlMode = PumpControlMode.Direct,
-                            FlowSpeed = (float)CurrentDeviceParameter.AFParam.AF_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)CurrentDeviceParameter.AFParam.AF_PV,
+                            FlowSpeed = (float)CurrentDeviceParameter.AFParam.SP >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)CurrentDeviceParameter.AFParam.SP,
                             FlowCapacity = Const.MaxPumpFlowCapacity
                         };
                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, param);
-                        dicAFSP[CurrentDeviceParameter.Name] = CurrentDeviceParameter.AFParam.AF_PV;
+                        dicAFSP[CurrentDeviceParameter.Name] = CurrentDeviceParameter.AFParam.SP;
                     }
 
                     dicAFWorker[CurrentDeviceParameter.Name] = new BackgroundWorker();
@@ -14436,7 +14432,7 @@ namespace RD3.ViewModels
                             }
                             try
                             {
-                                if (dicAFSP[deviceParameter.Name] != deviceParameter.AFParam.AF_PV)
+                                if (dicAFSP[deviceParameter.Name] != deviceParameter.AFParam.SP)
                                 {
                                     int pumpNo = PumpMFCUtil.GetPumpIndex(deviceParameter.Name, PeristalticPump.AFPump);
                                     if (pumpNo >= 0)
@@ -14446,11 +14442,11 @@ namespace RD3.ViewModels
                                             PumpNo = pumpNo,
                                             Pump = PeristalticPump.AFPump,
                                             ControlMode = PumpControlMode.Direct,
-                                            FlowSpeed = (float)deviceParameter.AFParam.AF_PV >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.AFParam.AF_PV,
+                                            FlowSpeed = (float)deviceParameter.AFParam.SP >= Const.MaxPumpFlowRate ? Const.MaxPumpFlowRate : (float)deviceParameter.AFParam.SP,
                                             FlowCapacity = Const.MaxPumpFlowCapacity
                                         };
                                         InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(deviceParameter.Name, param);
-                                        dicAFSP[deviceParameter.Name] = deviceParameter.AFParam.AF_PV;
+                                        dicAFSP[deviceParameter.Name] = deviceParameter.AFParam.SP;
                                     }
                                 }
                             }
@@ -14514,7 +14510,7 @@ namespace RD3.ViewModels
                     SensorEnable = currentDeviceParameter.AFParam.AutoDefoaming,
                     Cycle = Convert.ToInt32(CurrentDeviceParameter.AFParam.Cycle),
                     TimeRatio = currentDeviceParameter.AFParam.DutyCycle,
-                    FlowSpeed = currentDeviceParameter.AFParam.AF_PV
+                    FlowSpeed = currentDeviceParameter.AFParam.SP
                 };
                 InstrumentSolution.GetInstance().CommandWrapper.SetAutoDefoamingSetting(currentDeviceParameter.Name, param);
             }
@@ -14765,7 +14761,6 @@ namespace RD3.ViewModels
                     device = new()
                     {
                         Name = reactor.Name,
-                        SerialNumber = i + 1
                     };
                 }
                 DeviceParameterCol.Add(device);
@@ -14939,57 +14934,12 @@ namespace RD3.ViewModels
             BackgroundWorker background = new BackgroundWorker();
             background.DoWork += (s, e) =>
             {
-                Type type = CurrentDeviceParameter.PumpMFCSetting.GetType();
-                PropertyInfo[] properties = type.GetProperties();
-
                 while (true)
                 {
                     if (isWindowOpen)
                     {
                         DeviceExperimentHistoryData dataSource = GraphDataSourceList.Find(t => t.DeviceName == CurrentDeviceParameter.Name);
                         AnalysisSolution.GetInstance().EventPublisher.PublishRealTimeData(dataSource);
-                    }
-
-                    try
-                    {
-                        var dictionary = PumpMFCConfig.GetValue(CurrentDeviceParameter.Name);
-                        if (dictionary != null)
-                        {
-
-                            for (int i = 1; i < 7; i++)
-                            {
-                                foreach (PropertyInfo prop in properties.Where(t => t.CanWrite && t.CanRead))
-                                {
-                                    if (prop.Name == $"Pump{i}")
-                                    {
-                                        var temp = dictionary[$"Pump{i}"];
-                                        if (Enum.TryParse(typeof(PeristalticPump), temp, out var result))
-                                        {
-                                            prop.SetValue(CurrentDeviceParameter.PumpMFCSetting, (PeristalticPump)result);
-                                        }
-                                    }
-                                }
-                            }
-
-                            for (int i = 1; i < 5; i++)
-                            {
-                                foreach (PropertyInfo prop in properties.Where(t => t.CanWrite && t.CanRead))
-                                {
-                                    if (prop.Name == $"MFC{i}")
-                                    {
-                                        var temp = dictionary[$"MFC{i}"];
-                                        if (Enum.TryParse(typeof(GasType), temp, out var result))
-                                        {
-                                            prop.SetValue(CurrentDeviceParameter.PumpMFCSetting, (GasType)result);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
                     }
 
                     Thread.Sleep(1000);
@@ -15106,14 +15056,14 @@ namespace RD3.ViewModels
                                 });
                             }
 
-                            if (deviceParameter.DOParam.DO_PV != lastDevice.DOParam.DO_PV)
+                            if (deviceParameter.DOParam.SP != lastDevice.DOParam.SP)
                             {
                                 Task.Run(() =>
                                 {
                                     string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                     string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                     StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("DO预设值从{0}变更为{1}", lastDevice.DOParam.DO_PV, deviceParameter.DOParam.DO_PV);
+                                    string content = string.Format("DO预设值从{0}变更为{1}", lastDevice.DOParam.SP, deviceParameter.DOParam.SP);
                                     sb.AppendLine(content);
                                     File.AppendAllText(fileNme, sb.ToString());
                                     RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
@@ -15150,14 +15100,14 @@ namespace RD3.ViewModels
 
                             if (!deviceParameter.DOParam.IsControling)
                             {
-                                if (deviceParameter.AgitParam.Agit_PV != lastDevice.AgitParam.Agit_PV)
+                                if (deviceParameter.AgitParam.SP != lastDevice.AgitParam.SP)
                                 {
                                     Task.Run(() =>
                                     {
                                         string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                         string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                         StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                        string content = string.Format("转速预设值从{0}变更为{1}", lastDevice.AgitParam.Agit_PV, deviceParameter.AgitParam.Agit_PV);
+                                        string content = string.Format("转速预设值从{0}变更为{1}", lastDevice.AgitParam.SP, deviceParameter.AgitParam.SP);
                                         sb.AppendLine(content);
                                         File.AppendAllText(fileNme, sb.ToString());
                                         RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
@@ -15280,14 +15230,14 @@ namespace RD3.ViewModels
 
                             #region PH
 
-                            if (deviceParameter.PHParam.PH_PV != lastDevice.PHParam.PH_PV)
+                            if (deviceParameter.PHParam.SP != lastDevice.PHParam.SP)
                             {
                                 Task.Run(() =>
                                 {
                                     string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                     string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                     StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("PH预设值从{0}变更为{1}", lastDevice.PHParam.PH_PV, deviceParameter.PHParam.PH_PV);
+                                    string content = string.Format("PH预设值从{0}变更为{1}", lastDevice.PHParam.SP, deviceParameter.PHParam.SP);
                                     sb.AppendLine(content);
                                     File.AppendAllText(fileNme, sb.ToString());
                                     RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
@@ -15324,28 +15274,28 @@ namespace RD3.ViewModels
 
                             if (!deviceParameter.PHParam.IsControling)
                             {
-                                if (deviceParameter.AcidParam.Acid_PV != lastDevice.AcidParam.Acid_PV)
+                                if (deviceParameter.AcidParam.SP != lastDevice.AcidParam.SP)
                                 {
                                     Task.Run(() =>
                                     {
                                         string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                         string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                         StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                        string content = string.Format("酸泵预设值从{0}变更为{1}", lastDevice.AcidParam.Acid_PV, deviceParameter.AcidParam.Acid_PV);
+                                        string content = string.Format("酸泵预设值从{0}变更为{1}", lastDevice.AcidParam.SP, deviceParameter.AcidParam.SP);
                                         sb.AppendLine(content);
                                         File.AppendAllText(fileNme, sb.ToString());
                                         RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
                                     });
                                 }
 
-                                if (deviceParameter.BaseParam.Base_PV != lastDevice.BaseParam.Base_PV)
+                                if (deviceParameter.BaseParam.SP != lastDevice.BaseParam.SP)
                                 {
                                     Task.Run(() =>
                                     {
                                         string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                         string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                         StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                        string content = string.Format("碱泵预设值从{0}变更为{1}", lastDevice.BaseParam.Base_PV, deviceParameter.BaseParam.Base_PV);
+                                        string content = string.Format("碱泵预设值从{0}变更为{1}", lastDevice.BaseParam.SP, deviceParameter.BaseParam.SP);
                                         sb.AppendLine(content);
                                         File.AppendAllText(fileNme, sb.ToString());
                                         RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
@@ -15411,14 +15361,14 @@ namespace RD3.ViewModels
                             #endregion
 
                             #region 温度
-                            if (deviceParameter.TempParam.Temp_PV != lastDevice.TempParam.Temp_PV)
+                            if (deviceParameter.TempParam.SP != lastDevice.TempParam.SP)
                             {
                                 Task.Run(() =>
                                 {
                                     string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                     string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                     StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("温度预设值从{0}变更为{1}", lastDevice.TempParam.Temp_PV, deviceParameter.TempParam.Temp_PV);
+                                    string content = string.Format("温度预设值从{0}变更为{1}", lastDevice.TempParam.SP, deviceParameter.TempParam.SP);
                                     sb.AppendLine(content);
                                     File.AppendAllText(fileNme, sb.ToString());
                                     RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
@@ -15457,14 +15407,14 @@ namespace RD3.ViewModels
                             #region 补料
 
                             //只有常数时候才记录预设值变更
-                            if ((deviceParameter.FeedParam1.Feed_PV != lastDevice.FeedParam1.Feed_PV) && (deviceParameter.FeedParam1.FeedIndex == lastDevice.FeedParam1.Feed_PV && deviceParameter.FeedParam1.FeedIndex == 1))
+                            if ((deviceParameter.FeedParam1.SP != lastDevice.FeedParam1.SP) && (deviceParameter.FeedParam1.FeedIndex == lastDevice.FeedParam1.SP && deviceParameter.FeedParam1.FeedIndex == 1))
                             {
                                 Task.Run(() =>
                                 {
                                     string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                     string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                     StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("补料预设值从{0}变更为{1}", lastDevice.FeedParam1.Feed_PV, deviceParameter.FeedParam1.Feed_PV);
+                                    string content = string.Format("补料预设值从{0}变更为{1}", lastDevice.FeedParam1.SP, deviceParameter.FeedParam1.SP);
                                     sb.AppendLine(content);
                                     File.AppendAllText(fileNme, sb.ToString());
                                     RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
@@ -15586,14 +15536,14 @@ namespace RD3.ViewModels
                             #endregion
 
                             #region 消泡
-                            if (deviceParameter.AFParam.AF_PV != lastDevice.AFParam.AF_PV)
+                            if (deviceParameter.AFParam.SP != lastDevice.AFParam.SP)
                             {
                                 Task.Run(() =>
                                 {
                                     string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
                                     string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
                                     StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("消泡预设值从{0}变更为{1}", lastDevice.AFParam.AF_PV, deviceParameter.AFParam.AF_PV);
+                                    string content = string.Format("消泡预设值从{0}变更为{1}", lastDevice.AFParam.SP, deviceParameter.AFParam.SP);
                                     sb.AppendLine(content);
                                     File.AppendAllText(fileNme, sb.ToString());
                                     RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
@@ -15721,9 +15671,9 @@ namespace RD3.ViewModels
                             ScreenParam screenParam = new ScreenParam()
                             {
                                 PhAuto = item.PHParam.IsControling,
-                                PH = item.PHParam.PH_PV,
+                                PH = item.PHParam.SP,
                                 DOAuto = item.DOParam.IsControling,
-                                DO = item.DOParam.DO_PV
+                                DO = item.DOParam.SP
                             };
                             CommandWrapper.SetSettingSync(item.Name, screenParam);
                         }

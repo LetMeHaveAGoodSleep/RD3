@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <!--  合并自定义颜色  -->
+        <ResourceDictionary Source="ColorsLocal.xaml" />
+        <!--  合并HandyControl的基础样式  -->
+        <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

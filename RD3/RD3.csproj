@@ -176,7 +176,6 @@
     <PackageReference Include="HelixToolkit.Wpf" Version="2.27.3" />
     <PackageReference Include="LayUI.Wpf.Extensions" Version="1.0.2.240505" />
     <PackageReference Include="log4net" Version="3.2.0" />
-    <PackageReference Include="MaterialDesignThemes" Version="5.3.0" />
     <PackageReference Include="MathNet.Symbolics" Version="0.25.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
@@ -197,6 +196,12 @@
   <ItemGroup>
     <Reference Include="HandyControl">
       <HintPath>..\ImportDll\HandyControl.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors">
+      <HintPath>..\ImportDll\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf">
+      <HintPath>..\ImportDll\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

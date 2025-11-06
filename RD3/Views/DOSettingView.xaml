@@ -106,7 +106,7 @@
                     FontSize="{StaticResource SubHeadFontSize}"
                     IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding CurrentDeviceParameter.DOParam.DO_PV, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}">
+                    Text="{Binding CurrentDeviceParameter.DOParam.SP, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                             <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
@@ -377,13 +377,24 @@
                                                     </DataTemplate>
                                                 </DataGridTemplateColumn.CellTemplate>
                                             </DataGridTemplateColumn>
-                                            <DataGridTextColumn
+                                            <DataGridTemplateColumn
                                                 Width="80"
-                                                Binding="{Binding AirFlowRate}"
                                                 CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                                 Header="通气量"
                                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                                                Visibility="{Binding Source={StaticResource proxy}, Path=Data.AirEnable, Converter={StaticResource Boolean2VisibilityConverter}}" />
+                                                Visibility="{Binding Source={StaticResource proxy}, Path=Data.AirEnable, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                                <DataGridTemplateColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <control:TextBoxNoAutoKeyboard Style="{StaticResource TextBoxExtend}" Text="{Binding AirFlowRate}">
+                                                            <i:Interaction.Triggers>
+                                                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                                                </i:EventTrigger>
+                                                            </i:Interaction.Triggers>
+                                                        </control:TextBoxNoAutoKeyboard>
+                                                    </DataTemplate>
+                                                </DataGridTemplateColumn.CellTemplate>
+                                            </DataGridTemplateColumn>
                                             <DataGridTextColumn
                                                 Width="80"
                                                 Binding="{Binding O2FlowRate}"
@@ -644,13 +655,25 @@
                                 hc:InfoElement.Title="{ex:Language Key='时间间隔(秒)'}"
                                 DockPanel.Dock="Left"
                                 Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.ReverseInterval, UpdateSourceTrigger=LostFocus}" />
+                                Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.ReverseInterval, UpdateSourceTrigger=LostFocus}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </control:TextBoxNoAutoKeyboard>
                             <control:TextBoxNoAutoKeyboard
                                 Width="100"
                                 VerticalAlignment="Center"
                                 hc:InfoElement.Title="{ex:Language Key='转速步长(rpm)'}"
                                 Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.ReverseStep, UpdateSourceTrigger=LostFocus}" />
+                                Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.ReverseStep, UpdateSourceTrigger=LostFocus}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </control:TextBoxNoAutoKeyboard>
                         </hc:UniformSpacingPanel>
                     </hc:UniformSpacingPanel>
                 </GroupBox>

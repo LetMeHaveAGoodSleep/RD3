@@ -41,9 +41,9 @@ namespace RD3.Controller
             {
                 try
                 {
-                    CurrentDeviceParameter.AgitParam.Agit_PV = Math.Clamp(CurrentDeviceParameter.AgitParam.Agit_PV, CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
-                    InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.Agit_PV);
-                    _agitSP = CurrentDeviceParameter.AgitParam.Agit_PV;
+                    CurrentDeviceParameter.AgitParam.SP = Math.Clamp(CurrentDeviceParameter.AgitParam.SP, CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
+                    InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.SP);
+                    _agitSP = CurrentDeviceParameter.AgitParam.SP;
                 }
                 catch (Exception ex)
                 {
@@ -58,11 +58,11 @@ namespace RD3.Controller
                     }
                     try
                     {
-                        if (_agitSP != CurrentDeviceParameter.AgitParam.Agit_PV || CurrentDeviceParameter.AgitParam.Agit_PV < CurrentDeviceParameter.AgitParam.LowerLimit || CurrentDeviceParameter.AgitParam.Agit_PV > CurrentDeviceParameter.AgitParam.UpperLimit)
+                        if (_agitSP != CurrentDeviceParameter.AgitParam.SP || CurrentDeviceParameter.AgitParam.SP < CurrentDeviceParameter.AgitParam.LowerLimit || CurrentDeviceParameter.AgitParam.SP > CurrentDeviceParameter.AgitParam.UpperLimit)
                         {
-                            CurrentDeviceParameter.AgitParam.Agit_PV = Math.Clamp(CurrentDeviceParameter.AgitParam.Agit_PV, CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.Agit_PV);
-                            _agitSP = CurrentDeviceParameter.AgitParam.Agit_PV;
+                            CurrentDeviceParameter.AgitParam.SP = Math.Clamp(CurrentDeviceParameter.AgitParam.SP, CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.SP);
+                            _agitSP = CurrentDeviceParameter.AgitParam.SP;
                         }
                     }
                     catch (Exception ex)

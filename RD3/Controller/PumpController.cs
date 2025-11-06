@@ -3007,7 +3007,7 @@ namespace RD3.Controller
 
                                 totalMinutes = costCycleSeconds / 60d;
                                 double diff = f.A - totalMinutes;
-                                deviceParameter.FeedParam1.Feed_PV = 0;
+                                deviceParameter.FeedParam1.SP = 0;
                                 if (diff > 0)
                                 {
                                     int count12 = Convert.ToInt32(diff * 60);
