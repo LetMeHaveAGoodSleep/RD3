@@ -447,7 +447,7 @@ namespace RD3.ViewModels
         private void SetCommand(DataRow dataRow)
         {
             var reactor = dataRow["Reactor"]?.ToString();
-            var deviceParameter = AnalysisSolution.GetInstance().ReactorCol.FindFirst(t => t.ReactorName == reactor);
+            var deviceParameter = AnalysisSolution.GetInstance().FermentorCol.FindFirst(t => t.Device.Name == reactor).Device;
             if (deviceParameter == null)
             {
                 return;
@@ -475,7 +475,7 @@ namespace RD3.ViewModels
                         deviceParameter.AgitParam.IsControling = true;
                         break;
                     case Factor.Pump1FlowRate:
-                        var pumpInfo = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.DeviceID == deviceParameter.Name && t.PumpIndex == 1);
+                        var pumpInfo = AnalysisSolution.GetInstance().CurrentFermentor.Device.PumpInfoCol.FindFirst(t => t.DeviceID == deviceParameter.Name && t.PumpIndex == 1);
                         if (pumpInfo == null) return;
                         try
                         {

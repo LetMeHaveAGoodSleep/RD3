@@ -39,7 +39,7 @@ namespace RD3.ViewModels
             AdaptivepHParameter = parameters.GetValue<AdaptivepHParameter>(nameof(AdaptivepHParameter));
             if (AdaptivepHParameter == null && InstrumentSolution.GetInstance().CommunicationProtocol == 1)
             {
-                AdaptivepHParameter = AnalysisSolution.GetInstance().ReactorCol[0].AdaptivepHParameter;
+                AdaptivepHParameter = AnalysisSolution.GetInstance().CurrentFermentor.Device.AdaptivepHParameter;
             }
         }
 

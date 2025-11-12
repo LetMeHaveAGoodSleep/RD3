@@ -94,11 +94,11 @@ namespace RD3.ViewModels
             try
             {
                 int.TryParse(str, out int index);
-                PumpInfo pumpInfo = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.PumpIndex == index);
+                PumpInfo pumpInfo = AnalysisSolution.GetInstance().CurrentFermentor.Device.PumpInfoCol.FindFirst(t => t.PumpIndex == index);
                 if (pumpInfo == null) return;
                 if (pumpInfo.Pump != PeristalticPump.None)
                 {
-                    int count = AnalysisSolution.GetInstance().PumpInfoCol.Count(t => t.Pump == pumpInfo.Pump);
+                    int count = AnalysisSolution.GetInstance().CurrentFermentor.Device.PumpInfoCol.Count(t => t.Pump == pumpInfo.Pump);
                     if (count > 1)
                     {
                         HandyControl.Controls.MessageBox.Info($"已存在{EnumUtil.GetEnumDescription(pumpInfo.Pump)}泵", "温馨提示");
@@ -118,11 +118,11 @@ namespace RD3.ViewModels
             try
             {
                 int.TryParse(str, out int index);
-                MFCInfo mfcInfo = AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.MFCIndex == index);
+                MFCInfo mfcInfo = AnalysisSolution.GetInstance().CurrentFermentor.Device.MFCInfoCol.FindFirst(t => t.MFCIndex == index);
                 if (mfcInfo == null) return;
                 if (mfcInfo.Gas != GasType.Unset)
                 {
-                    int count = AnalysisSolution.GetInstance().MFCInfoCol.Count(t => t.Gas == mfcInfo.Gas);
+                    int count = AnalysisSolution.GetInstance().CurrentFermentor.Device.MFCInfoCol.Count(t => t.Gas == mfcInfo.Gas);
                     if (count > 1)
                     {
                         HandyControl.Controls.MessageBox.Info($"已存在{EnumUtil.GetEnumDescription(mfcInfo.Gas)}MFC", "温馨提示");
@@ -139,17 +139,17 @@ namespace RD3.ViewModels
 
         public PadConfigurationViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
-            PumpInfo1 = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.PumpIndex == 1);
-            PumpInfo2 = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.PumpIndex == 2);
-            PumpInfo3 = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.PumpIndex == 3);
-            PumpInfo4 = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.PumpIndex == 4);
-            PumpInfo5 = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.PumpIndex == 5);
-            PumpInfo6 = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.PumpIndex == 6);
+            PumpInfo1 = AnalysisSolution.GetInstance().CurrentFermentor.Device.PumpInfoCol.FindFirst(t => t.PumpIndex == 1);
+            PumpInfo2 = AnalysisSolution.GetInstance().CurrentFermentor.Device.PumpInfoCol.FindFirst(t => t.PumpIndex == 2);
+            PumpInfo3 = AnalysisSolution.GetInstance().CurrentFermentor.Device.PumpInfoCol.FindFirst(t => t.PumpIndex == 3);
+            PumpInfo4 = AnalysisSolution.GetInstance().CurrentFermentor.Device.PumpInfoCol.FindFirst(t => t.PumpIndex == 4);
+            PumpInfo5 = AnalysisSolution.GetInstance().CurrentFermentor.Device.PumpInfoCol.FindFirst(t => t.PumpIndex == 5);
+            PumpInfo6 = AnalysisSolution.GetInstance().CurrentFermentor.Device.PumpInfoCol.FindFirst(t => t.PumpIndex == 6);
 
-            MFCInfo1 = AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.MFCIndex == 1);
-            MFCInfo2 = AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.MFCIndex == 2);
-            MFCInfo3 = AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.MFCIndex == 3);
-            MFCInfo4 = AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.MFCIndex == 4);
+            MFCInfo1 = AnalysisSolution.GetInstance().CurrentFermentor.Device.MFCInfoCol.FindFirst(t => t.MFCIndex == 1);
+            MFCInfo2 = AnalysisSolution.GetInstance().CurrentFermentor.Device.MFCInfoCol.FindFirst(t => t.MFCIndex == 2);
+            MFCInfo3 = AnalysisSolution.GetInstance().CurrentFermentor.Device.MFCInfoCol.FindFirst(t => t.MFCIndex == 3);
+            MFCInfo4 = AnalysisSolution.GetInstance().CurrentFermentor.Device.MFCInfoCol.FindFirst(t => t.MFCIndex == 4);
         }
 
         public string Title => "设备配置";

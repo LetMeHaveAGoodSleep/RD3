@@ -27,6 +27,15 @@ namespace RD3.Views
         public DOSettingView()
         {
             InitializeComponent();
+            this.Loaded += UserControl_Loaded;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is DOSettingViewModel settingViewModel && tsView.DataContext is TimeSeriesViewModel timeSeriesViewModel)
+            {
+                timeSeriesViewModel.BasicParam = settingViewModel.BasicParam;
+            }
         }
 
         private void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)

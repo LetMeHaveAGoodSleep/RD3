@@ -138,7 +138,7 @@ namespace RD3.Shared
             bool flag = Convert.ToBoolean(VarConfig.GetValue("IsFilterWave")?.ToString());
             if (flag)
             {
-                var device = AnalysisSolution.GetInstance().ReactorCol.FindFirst(t => t.Name == insID);
+                var device = AnalysisSolution.GetInstance().FermentorCol.FindFirst(t => t.Device.Name == insID).Device;
                 realTime.Agit = Convert.ToInt32(RCFilter.LowPass(realTime.Agit, realTime.LastAgit, device.AgitSampleCycle, device.AgitSampleFrequency));
                 realTime.LastAgit = realTime.Agit;
 

@@ -12,14 +12,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace RD3.ViewModels
 {
     public class DOSettingViewModel : BaseViewModel, IDialogAware
     {
+        private BasicParam _basicParam;
+        public BasicParam BasicParam
+        {
+            get => _basicParam;
+            set { SetProperty(ref _basicParam, value); }
+        }
+
         public DeviceParameter CurrentDeviceParameter
         {
-            get { return AnalysisSolution.GetInstance().ReactorCol[0]; }
+            get { return AnalysisSolution.GetInstance().CurrentFermentor.Device; }
         }
 
         private DOAssParam _param = new DOAssParam();
@@ -162,9 +170,37 @@ namespace RD3.ViewModels
             }
         });
 
+        public DelegateCommand OpenCommand => new(() =>
+        {
+            if (BasicParam.TimeSeries.TimeSeriesItemCol.Count < 1 && BasicParam.ControlMode == ControlMode.TimeSeries)
+            {
+                HandyControl.Controls.MessageBox.Warning($"{CurrentDeviceParameter.Name}的溶氧时间序列为空", "温馨提示");
+                return;
+            }
+            if (!CheckTimeSeries())
+            {
+                return;
+            }
+            if (HandyControl.Controls.MessageBox.Show($"是否开启溶氧控制？", "温馨提示", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+            {
+                return;
+            }
+            BasicParam.IsControling = true;
+        });
+
+        public DelegateCommand CloseCommand => new(() =>
+        {
+            if (HandyControl.Controls.MessageBox.Show($"是否停止溶氧控制？", "温馨提示", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+            {
+                return;
+            }
+            BasicParam.IsControling = false;
+            BasicParam.TimeSeries.RunningInfo = string.Empty;
+        });
+
         public DOSettingViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
-
+            BasicParam = CurrentDeviceParameter.DOParam;
         }
 
         public string Title { get; set; }
@@ -173,7 +209,7 @@ namespace RD3.ViewModels
 
         public bool CanCloseDialog()
         {
-            return true;
+            return CheckTimeSeries();
         }
 
         public void OnDialogClosed()
@@ -213,6 +249,29 @@ namespace RD3.ViewModels
             var list1 = MidRanging.FactorCol.Select(t => EnumUtil.GetEnumDescription(t)).ToList();
 
             MidRanging.FactorContent = "执行顺序：" + string.Join("-", list1);
+        }
+
+        private bool CheckTimeSeries()
+        {
+            bool flag = true;
+            var items = BasicParam.TimeSeries.TimeSeriesItemCol;
+            for (int i = 0; i < items.Count; i++)
+            {
+                var item = items[i];
+                if (item.StartTime >= item.EndTime)
+                {
+                    HandyControl.Controls.MessageBox.Warning($"时间序列第{i + 1}行：开始时间应该小于结束时间", "温馨提示");
+                    flag = false;
+                    break;
+                }
+                if (item.Value < BasicParam.LowerLimit || item.Value > BasicParam.UpperLimit)
+                {
+                    HandyControl.Controls.MessageBox.Warning($"时间序列第{i + 1}行：目标值应该处于{BasicParam.LowerLimit}和{BasicParam.UpperLimit}之间", "温馨提示");
+                    flag = false;
+                    break;
+                }
+            }
+            return flag;
         }
     }
 }

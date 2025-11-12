@@ -238,12 +238,7 @@ namespace RD3.ViewModels
 
         public void Configure()
         {
-            if (AnalysisSolution.GetInstance().ReactorCol.Count < 1)
-            {
-                AnalysisSolution.GetInstance().ReactorCol.Add(new DeviceParameter() { Name = "G01" });
-            }
-            CurrentDeviceParameter = AnalysisSolution.GetInstance().ReactorCol[0];
-
+            CurrentDeviceParameter = AnalysisSolution.GetInstance().CurrentFermentor.Device;
             Thread threadPipe = new Thread(new ThreadStart(() =>
             {
                 while (true)
@@ -493,11 +488,19 @@ namespace RD3.ViewModels
 
                         if (!CurrentDeviceParameter.TempParam.LastIsControling && CurrentDeviceParameter.TempParam.IsControling)
                         {
-                            AnalysisSolution.GetInstance().TempController.StartWork();
+                            if (CurrentDeviceParameter.TempParam.ControlMode == ControlMode.TimeSeries)
+                            {
+                                AnalysisSolution.GetInstance().CurrentFermentor.TempController.StartTimeSeriesWork();
+                            }
+                            AnalysisSolution.GetInstance().CurrentFermentor.TempController.StartWork();
                         }
                         else if (!CurrentDeviceParameter.TempParam.IsControling && CurrentDeviceParameter.TempParam.LastIsControling)
                         {
-                            AnalysisSolution.GetInstance().TempController.StopWork();
+                            if (CurrentDeviceParameter.TempParam.ControlMode == ControlMode.TimeSeries)
+                            {
+                                AnalysisSolution.GetInstance().CurrentFermentor.TempController.StopTimeSeriesWork();
+                            }
+                            AnalysisSolution.GetInstance().CurrentFermentor.TempController.StopWork();
                         }
                         CurrentDeviceParameter.TempParam.IsControling = CurrentDeviceParameter.TempParam.IsControling;
                     }
@@ -527,11 +530,24 @@ namespace RD3.ViewModels
 
                         if (!CurrentDeviceParameter.AgitParam.LastIsControling && CurrentDeviceParameter.AgitParam.IsControling)
                         {
-                            AnalysisSolution.GetInstance().AgitController.StartWork();
+                            if (CurrentDeviceParameter.DOParam.IsControling)
+                            {
+                                CurrentDeviceParameter.AgitParam.IsAuditing = false;
+                                CurrentDeviceParameter.AgitParam.ControlMode = ControlMode.Constant;
+                            }
+                            if (CurrentDeviceParameter.AgitParam.ControlMode == ControlMode.TimeSeries)
+                            {
+                                AnalysisSolution.GetInstance().CurrentFermentor.AgitController.StartTimeSeriesWork();
+                            }
+                            AnalysisSolution.GetInstance().CurrentFermentor.AgitController.StartWork();
                         }
                         else if (!CurrentDeviceParameter.AgitParam.IsControling && CurrentDeviceParameter.AgitParam.LastIsControling)
                         {
-                            AnalysisSolution.GetInstance().AgitController.StopWork();
+                            if (CurrentDeviceParameter.AgitParam.ControlMode == ControlMode.TimeSeries)
+                            {
+                                AnalysisSolution.GetInstance().CurrentFermentor.AgitController.StopTimeSeriesWork();
+                            }
+                            AnalysisSolution.GetInstance().CurrentFermentor.AgitController.StopWork();
                         }
                         CurrentDeviceParameter.AgitParam.IsControling = CurrentDeviceParameter.AgitParam.IsControling;
                     }
@@ -560,11 +576,19 @@ namespace RD3.ViewModels
 
                         if (!CurrentDeviceParameter.DOParam.LastIsControling && CurrentDeviceParameter.DOParam.IsControling)
                         {
-                            AnalysisSolution.GetInstance().DOController.StartWork();
+                            if (CurrentDeviceParameter.DOParam.ControlMode == ControlMode.TimeSeries)
+                            {
+                                AnalysisSolution.GetInstance().CurrentFermentor.DOController.StartTimeSeriesWork();
+                            }
+                            AnalysisSolution.GetInstance().CurrentFermentor.DOController.StartWork();
                         }
                         else if (!CurrentDeviceParameter.DOParam.IsControling && CurrentDeviceParameter.DOParam.LastIsControling)
                         {
-                            AnalysisSolution.GetInstance().DOController.StopWork();
+                            if (CurrentDeviceParameter.DOParam.ControlMode == ControlMode.TimeSeries)
+                            {
+                                AnalysisSolution.GetInstance().CurrentFermentor.DOController.StopTimeSeriesWork();
+                            }
+                            AnalysisSolution.GetInstance().CurrentFermentor.DOController.StopWork();
                         }
                         CurrentDeviceParameter.DOParam.IsControling = CurrentDeviceParameter.DOParam.IsControling;
                     }
@@ -593,11 +617,19 @@ namespace RD3.ViewModels
 
                         if (!CurrentDeviceParameter.PHParam.LastIsControling && CurrentDeviceParameter.PHParam.IsControling)
                         {
-                            AnalysisSolution.GetInstance().pHController.StartWork();
+                            if (CurrentDeviceParameter.PHParam.ControlMode == ControlMode.TimeSeries)
+                            {
+                                AnalysisSolution.GetInstance().CurrentFermentor.pHController.StartTimeSeriesWork();
+                            }
+                            AnalysisSolution.GetInstance().CurrentFermentor.pHController.StartWork();
                         }
                         else if (!CurrentDeviceParameter.PHParam.IsControling && CurrentDeviceParameter.PHParam.LastIsControling)
                         {
-                            AnalysisSolution.GetInstance().pHController.StopWork();
+                            if (CurrentDeviceParameter.PHParam.ControlMode == ControlMode.TimeSeries)
+                            {
+                                AnalysisSolution.GetInstance().CurrentFermentor.pHController.StopTimeSeriesWork();
+                            }
+                            AnalysisSolution.GetInstance().CurrentFermentor.pHController.StopWork();
                         }
                         CurrentDeviceParameter.PHParam.IsControling = CurrentDeviceParameter.PHParam.IsControling;
                     }

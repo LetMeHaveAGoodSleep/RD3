@@ -15,34 +15,26 @@ using System.Threading.Tasks;
 
 namespace RD3
 {
-    public class AnalysisSolution:IDisposable
+    public class AnalysisSolution : IDisposable
     {
-        public AgitController AgitController { get; private set; }
+        private Fermentor _currentFermentor;
+        public Fermentor CurrentFermentor
+        {
+            get => _currentFermentor;
+            set => _currentFermentor = value;
+        }
 
-        public DOController DOController { get; private set; }
+        //public ObservableCollection<DeviceParameter> ReactorCol
+        //{
+        //    get;
+        //    private set;
+        //} = new ObservableCollection<DeviceParameter>();
 
-        public TempController TempController { get; private set; }
-
-        public pHController pHController { get; private set; }
-        
-
-        public ObservableCollection<DeviceParameter> ReactorCol
+        public ObservableCollection<Fermentor> FermentorCol
         {
             get;
             private set;
-        } = new ObservableCollection<DeviceParameter>();
-
-        public ObservableCollection<PumpInfo> PumpInfoCol
-        {
-            get;
-            private set;
-        } = new ObservableCollection<PumpInfo>();
-
-        public ObservableCollection<MFCInfo> MFCInfoCol
-        {
-            get;
-            private set;
-        } = new ObservableCollection<MFCInfo>();
+        } = new ObservableCollection<Fermentor>();
 
         public EventPublisher EventPublisher { get; private set; } = new EventPublisher();
 
@@ -53,10 +45,13 @@ namespace RD3
         {
             LoadSetting();
 
-            AgitController = new();
-            DOController = new();
-            TempController = new();
-            pHController = new();
+            if (FermentorCol == null || FermentorCol.Count < 1)
+            {
+                var device = new DeviceParameter(GeneratePumpSetting(), GenerateMFCSetting()) { Name = "G01"};
+                var instance = Fermentor.GetInstance(device);
+                FermentorCol.Add(instance);
+            }
+            CurrentFermentor = FermentorCol.FirstOrDefault();
         }
 
         public static AnalysisSolution GetInstance()
@@ -77,8 +72,8 @@ namespace RD3
         private void LoadSetting()
         {
             LoadReactor();
-            LoadPumpSetting();
-            LoadMFCSetting();
+            //LoadPumpSetting();
+            //LoadMFCSetting();
         }
 
         private void LoadReactor()
@@ -94,56 +89,60 @@ namespace RD3
                 return;
             }
             string jsonContent = AESEncryption.DecryptFile(filePath);
-            ReactorCol = JsonConvert.DeserializeObject<ObservableCollection<DeviceParameter>>(jsonContent);
+            FermentorCol = JsonConvert.DeserializeObject<ObservableCollection<Fermentor>>(jsonContent);
         }
 
-        private void LoadPumpSetting()
+        private ObservableCollection<PumpInfo> GeneratePumpSetting()
         {
+            ObservableCollection<PumpInfo> col = new ObservableCollection<PumpInfo>();
             string filePath = FileConst.PumpInfoPath;
             if (!File.Exists(filePath))
             {
-                return;
+                return col;
             }
             string jsonContent = AESEncryption.DecryptFile(filePath);
-            PumpInfoCol = JsonConvert.DeserializeObject<ObservableCollection<PumpInfo>>(jsonContent);
-            if (PumpInfoCol != null && PumpInfoCol.Count > 1)
+            col = JsonConvert.DeserializeObject<ObservableCollection<PumpInfo>>(jsonContent);
+            if (col != null && col.Count > 1)
             {
-                PumpInfoCol = new ObservableCollection<PumpInfo>(PumpInfoCol.OrderBy(t => t.PumpIndex));
+                col = new ObservableCollection<PumpInfo>(col.OrderBy(t => t.PumpIndex));
             }
+            return col;
         }
 
-        private void LoadMFCSetting()
+        private ObservableCollection<MFCInfo> GenerateMFCSetting()
         {
+            ObservableCollection<MFCInfo> col = new ObservableCollection<MFCInfo>();
             string filePath = FileConst.MFCInfoPath;
             if (!File.Exists(filePath))
             {
-                return;
+                return col;
             }
             string jsonContent = AESEncryption.DecryptFile(filePath);
-            MFCInfoCol = JsonConvert.DeserializeObject<ObservableCollection<MFCInfo>>(jsonContent);
-            if (MFCInfoCol != null && MFCInfoCol.Count > 1)
+            col = JsonConvert.DeserializeObject<ObservableCollection<MFCInfo>>(jsonContent);
+            if (col != null && col.Count > 1)
             {
-                MFCInfoCol = new ObservableCollection<MFCInfo>(MFCInfoCol.OrderBy(t => t.MFCIndex));
+                col = new ObservableCollection<MFCInfo>(col.OrderBy(t => t.MFCIndex));
             }
+            return col;
         }
 
         public void SaveAllSetting()
         {
             SaveReactorSetting();
-            SavePumpSetting();
-            SaveMFCSetting();
+            //SavePumpSetting();
+            //SaveMFCSetting();
         }
 
-        public void SaveReactorSetting(ObservableCollection<DeviceParameter> dataList = null)
+        public void SaveReactorSetting(ObservableCollection<Fermentor> dataList = null)
         {
             lock (_lock1)
             {
-                if (dataList != null && !dataList.Equals(ReactorCol))
+                if (dataList != null && !dataList.Equals(FermentorCol))
                 {
-                    ReactorCol = dataList;
+                    FermentorCol = dataList;
                 }
-                ReactorCol = [.. ReactorCol.DistinctBy(t => t.Name)];
-                string json = JsonConvert.SerializeObject(ReactorCol);
+                FermentorCol = [.. FermentorCol.DistinctBy(t => t.Device.Name)];
+                string json = JsonConvert.SerializeObject(FermentorCol);
                 string filePath = string.Format(FileConst.ReactorParamPath, AppSession.CurrentUser?.UserName?.ToString());
                 string dir = string.Format(FileConst.ReactorParamDir, AppSession.CurrentUser?.UserName?.ToString());
                 if (!Directory.Exists(dir))
@@ -167,50 +166,50 @@ namespace RD3
             }
         }
 
-        public void SavePumpSetting(ObservableCollection<PumpInfo> dataList = null)
-        {
-            if (dataList != null && !dataList.Equals(PumpInfoCol))
-            {
-                PumpInfoCol = dataList;
-            }
-            string json = JsonConvert.SerializeObject(PumpInfoCol);
+        //public void SavePumpSetting(ObservableCollection<PumpInfo> dataList = null)
+        //{
+        //    if (dataList != null && !dataList.Equals(PumpInfoCol))
+        //    {
+        //        PumpInfoCol = dataList;
+        //    }
+        //    string json = JsonConvert.SerializeObject(PumpInfoCol);
 
-            string originalFile = FileConst.PumpInfoPath;
-            string newFile = Path.Combine(FileConst.ConfigDirectory, Path.GetFileNameWithoutExtension(originalFile) + Guid.NewGuid().ToString("N") + Path.GetExtension(originalFile));
-            // 检查文件是否存在并重命名
-            if (File.Exists(originalFile))
-            {
-                File.WriteAllText(newFile, json);
-                File.Move(newFile, originalFile, true);
-                File.Delete(newFile);
-            }
-            else
-            {
-                File.WriteAllText(originalFile, json);
-            }
-        }
+        //    string originalFile = FileConst.PumpInfoPath;
+        //    string newFile = Path.Combine(FileConst.ConfigDirectory, Path.GetFileNameWithoutExtension(originalFile) + Guid.NewGuid().ToString("N") + Path.GetExtension(originalFile));
+        //    // 检查文件是否存在并重命名
+        //    if (File.Exists(originalFile))
+        //    {
+        //        File.WriteAllText(newFile, json);
+        //        File.Move(newFile, originalFile, true);
+        //        File.Delete(newFile);
+        //    }
+        //    else
+        //    {
+        //        File.WriteAllText(originalFile, json);
+        //    }
+        //}
 
-        public void SaveMFCSetting(ObservableCollection<MFCInfo> dataList = null)
-        {
-            if (dataList != null && !dataList.Equals(MFCInfoCol))
-            {
-                MFCInfoCol = dataList;
-            }
-            string json = JsonConvert.SerializeObject(MFCInfoCol);
-            string originalFile = FileConst.MFCInfoPath;
-            string newFile = Path.Combine(FileConst.ConfigDirectory, Path.GetFileNameWithoutExtension(originalFile) + Guid.NewGuid().ToString("N") + Path.GetExtension(originalFile));
-            // 检查文件是否存在并重命名
-            if (File.Exists(originalFile))
-            {
-                File.WriteAllText(newFile, json);
-                File.Move(newFile, originalFile, true);
-                File.Delete(newFile);
-            }
-            else
-            {
-                File.WriteAllText(originalFile, json);
-            }
-        }
+        //public void SaveMFCSetting(ObservableCollection<MFCInfo> dataList = null)
+        //{
+        //    if (dataList != null && !dataList.Equals(MFCInfoCol))
+        //    {
+        //        MFCInfoCol = dataList;
+        //    }
+        //    string json = JsonConvert.SerializeObject(MFCInfoCol);
+        //    string originalFile = FileConst.MFCInfoPath;
+        //    string newFile = Path.Combine(FileConst.ConfigDirectory, Path.GetFileNameWithoutExtension(originalFile) + Guid.NewGuid().ToString("N") + Path.GetExtension(originalFile));
+        //    // 检查文件是否存在并重命名
+        //    if (File.Exists(originalFile))
+        //    {
+        //        File.WriteAllText(newFile, json);
+        //        File.Move(newFile, originalFile, true);
+        //        File.Delete(newFile);
+        //    }
+        //    else
+        //    {
+        //        File.WriteAllText(originalFile, json);
+        //    }
+        //}
 
         public void SavePumpMFCToOld(string reactorName)
         {
@@ -219,18 +218,18 @@ namespace RD3
             {
                 dictionary = new Dictionary<string, string>();
             }
-
+            var fermentor = FermentorCol.FindFirst(t => t.Device.Name == reactorName);
             Type type = this.GetType();
             PropertyInfo[] properties = type.GetProperties();
             for (int i = 1; i < 7; i++)
             {
-                PumpInfo pumpInfo = PumpInfoCol.FindFirst(t => t.PumpIndex == i);
+                PumpInfo pumpInfo = fermentor.Device.PumpInfoCol.FindFirst(t => t.PumpIndex == i);
                 if (pumpInfo == null) continue;
                 dictionary[$"Pump{i}"] = pumpInfo.Pump.ToString();
             }
             for (int i = 1; i < 4; i++)
             {
-                MFCInfo mfcInfo = MFCInfoCol.FindFirst(t => t.MFCIndex == i);
+                MFCInfo mfcInfo = fermentor.Device.MFCInfoCol.FindFirst(t => t.MFCIndex == i);
                 if (mfcInfo == null) continue;
                 dictionary[$"MFC{i}"] = mfcInfo.Gas.ToString();
             }

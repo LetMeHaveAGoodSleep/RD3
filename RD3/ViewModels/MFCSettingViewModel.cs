@@ -84,7 +84,7 @@ namespace RD3.ViewModels
 
         public MFCSettingViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
-            CurrentDeviceParameter = AnalysisSolution.GetInstance().ReactorCol[0];
+            CurrentDeviceParameter = AnalysisSolution.GetInstance().FermentorCol[0].Device;
 
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += (s, e) =>

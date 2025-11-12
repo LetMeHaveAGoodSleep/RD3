@@ -18,7 +18,7 @@ namespace RD3.Controller
 
         public DeviceParameter CurrentDeviceParameter
         {
-            get { return AnalysisSolution.GetInstance().ReactorCol[0]; }
+            get { return AnalysisSolution.GetInstance().CurrentFermentor.Device; }
         }
 
         private MFCInfo _mfcInfo;

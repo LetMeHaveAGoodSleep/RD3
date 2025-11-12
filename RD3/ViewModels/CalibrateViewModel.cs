@@ -786,10 +786,10 @@ namespace RD3.ViewModels
 
             ResetPumpInfo();
 
-            foreach (var item in AnalysisSolution.GetInstance().ReactorCol)
+            foreach (var item in AnalysisSolution.GetInstance().FermentorCol)
             {
-                if (!AppSession.CurrentUser.DevieceIDs.Contains(item.Name)) continue;
-                ReactorCol.Add(item.Name);
+                if (!AppSession.CurrentUser.DevieceIDs.Contains(item.Device.Name)) continue;
+                ReactorCol.Add(item.Device.Name);
             }
             SelectedReactor = ReactorCol.Count > 0 ? ReactorCol[0] : "";
         }

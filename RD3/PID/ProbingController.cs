@@ -314,9 +314,9 @@ namespace RD3.Shared
         {
             if (deviceParameter == null)
             {
-                foreach (var item in AnalysisSolution.GetInstance().ReactorCol.Where(t => t.Name == prob?.DeviceID))
+                foreach (var item in AnalysisSolution.GetInstance().FermentorCol.Where(t => t.Device.Name == prob?.DeviceID))
                 {
-                    deviceParameter = item.Clone() as DeviceParameter;
+                    deviceParameter = item.Device.Clone() as DeviceParameter;
                     break;
                 }
             }

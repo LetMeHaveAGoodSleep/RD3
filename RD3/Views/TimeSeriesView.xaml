@@ -19,13 +19,14 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
-    Width="450"
-    Height="500"
+    Width="400"
+    Height="auto"
+    MinHeight="500"
     d:DataContext="{d:DesignInstance Type=vm:TimeSeriesViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="{StaticResource RegionBackgroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
-    TextElement.FontSize="{DynamicResource SubHeadFontSize}"
+    TextElement.FontSize="{DynamicResource NormalFontSize}"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextOptions.TextFormattingMode="Ideal"
@@ -58,20 +59,27 @@
                 <x:Type TypeName="shared:TimeUnit" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider
+            x:Key="DataFromEnum1"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="shared:ControlMode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
-            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="20">
+        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="30">
             <ComboBox
                 Width="120"
                 materialDesign:HintAssist.Hint="控制方式"
-                ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
-                SelectedItem="{Binding CurrentDeviceParameter.PHParam.ControlMode}"
+                IsEnabled="{Binding BasicParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
+                SelectedItem="{Binding BasicParam.ControlMode}"
                 Style="{StaticResource MaterialDesignFloatingHintComboBox}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -83,133 +91,213 @@
                 Width="120"
                 materialDesign:HintAssist.Hint="设定值"
                 materialDesign:TextFieldAssist.HasClearButton="True"
+                IsEnabled="{Binding BasicParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Constant}"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.PHParam.SP}">
+                Text="{Binding BasicParam.SP}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                         <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </control:TextBoxNoAutoKeyboard>
-        </hc:UniformSpacingPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <ComboBox
-                Width="120"
-                Margin="0,0,25,0"
-                materialDesign:ComboBoxAssist.ShowSelectedItem="True"
-                materialDesign:HintAssist.Hint="时间单位"
-                SelectedItem="{Binding TimeSeries.Timer}"
-                Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <StackPanel Margin="0,0,20,0" Orientation="Vertical">
-                <RadioButton
+            <DockPanel LastChildFill="False">
+                <Button
                     Width="80"
-                    Margin="5"
-                    Content="相对时间"
-                    IsChecked="{Binding TimeSeries.TimeType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=RelativeTime}" />
-                <RadioButton
-                    Width="80"
-                    Margin="5"
-                    Content="绝对时间"
-                    IsChecked="{Binding TimeSeries.TimeType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=AbsoluteTime}" />
-            </StackPanel>
-            <TextBlock
-                Width="180"
-                Height="40"
-                VerticalAlignment="Center"
-                Text="{Binding RunningInfo}" />
-        </StackPanel>
-        <hc:UniformSpacingPanel
-            Grid.Row="2"
-            Orientation="Horizontal"
-            Spacing="10">
-            <Button
-                Width="80"
-                Height="30"
-                Command="{Binding AddCommand}"
-                Content="添加新行"
-                Style="{StaticResource PrimaryCommonButton}" />
-            <Button
-                Width="80"
-                Height="30"
-                Command="{Binding InsertCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=SelectedItem}"
-                Content="插入新行"
-                IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=SelectedItem, Converter={StaticResource ObjectIsNullConverter}}"
-                Style="{StaticResource PrimaryCommonButton}" />
-            <Button
-                Width="80"
-                Height="30"
-                Command="{Binding DeleteCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=SelectedItem}"
-                Content="删除数据"
-                IsEnabled="{Binding RelativeSource={RelativeSource AncestorType=DataGrid}, Path=SelectedItem, Converter={StaticResource ObjectIsNullConverter}}"
-                Style="{StaticResource PrimaryCommonButton}" />
-            <Button
-                Width="80"
-                Height="30"
-                Click="btnCopyTo_Click"
-                Content="复制时序"
-                Style="{StaticResource PrimaryCommonButton}" />
+                    Content="确认修改"
+                    DockPanel.Dock="Bottom"
+                    IsEnabled="{Binding BasicParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Constant}"
+                    Style="{StaticResource ButtonDashedPrimary}" />
+            </DockPanel>
         </hc:UniformSpacingPanel>
-        <DataGrid
-            x:Name="dataGrid"
-            Grid.Row="3"
-            AlternatingRowBackground="Gray"
-            AutoGenerateColumns="False"
-            CanUserDeleteRows="True"
-            CanUserSortColumns="False"
-            ColumnHeaderHeight="35"
-            ColumnWidth="SizeToHeader"
-            GridLinesVisibility="None"
-            HeadersVisibility="Column"
-            IsReadOnly="False"
-            ItemsSource="{Binding TimeSeries.TimeSeriesItemCol}"
-            RowHeight="35"
-            ScrollViewer.HorizontalScrollBarVisibility="Auto"
-            ScrollViewer.VerticalScrollBarVisibility="Auto"
-            SelectionMode="Single"
-            SelectionUnit="FullRow">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn
-                    Width="60"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="序号"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                    <DataGridTemplateColumn.CellTemplate>
+        <Grid Grid.Row="1" IsEnabled="{Binding BasicParam.ControlMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=TimeSeries}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <ComboBox
+                    Width="120"
+                    Margin="0,0,25,0"
+                    materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                    materialDesign:HintAssist.Hint="时间单位"
+                    IsEnabled="{Binding BasicParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                    ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
+                    SelectedItem="{Binding BasicParam.TimeSeries.Timer}"
+                    Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                    <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=Header}" />
+                            <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
                         </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn
-                    x:Name="col_time"
-                    Width="145"
-                    Binding="{Binding StartTime}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="{Binding TimeSeries.TimeType, Converter={StaticResource EnumToStringConverter}, StringFormat='开始时间({0})'}"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    x:Name="col_endtime"
-                    Width="145"
-                    Binding="{Binding EndTime}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="{Binding TimeSeries.TimeType, Converter={StaticResource EnumToStringConverter}, StringFormat='结束时间({0})'}"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-                <DataGridTextColumn
-                    x:Name="xm"
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <StackPanel
+                    Margin="0,0,10,0"
+                    IsEnabled="{Binding BasicParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                    Orientation="Vertical">
+                    <RadioButton
+                        Width="80"
+                        Margin="5"
+                        Content="相对时间"
+                        IsChecked="{Binding BasicParam.TimeSeries.TimeType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=RelativeTime}"
+                        ToolTip="相对时间：开启批次实验以后，以批次实验开始时间为起始时间；&#x0a;未开启批次实验，以当前时间为起始时间" />
+                    <RadioButton
+                        Width="80"
+                        Margin="5"
+                        Content="绝对时间"
+                        IsChecked="{Binding BasicParam.TimeSeries.TimeType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=AbsoluteTime}"
+                        ToolTip="绝对时间：以当前时间为起始时间" />
+                </StackPanel>
+                <TextBlock
+                    Width="150"
+                    Height="45"
+                    FontSize="{StaticResource TextFontSize}"
+                    FontStyle="Italic"
+                    Foreground="Gray"
+                    Text="{Binding BasicParam.TimeSeries.RunningInfo}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+            <hc:UniformSpacingPanel
+                Grid.Row="1"
+                Orientation="Horizontal"
+                Spacing="10">
+                <Button
                     Width="80"
-                    Binding="{Binding Value}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                    Header="目标值"
-                    HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
-            </DataGrid.Columns>
-        </DataGrid>
+                    Height="30"
+                    Command="{Binding AddCommand}"
+                    Content="添加新行"
+                    Style="{StaticResource PrimaryCommonButton}">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{StaticResource BooleanArr2BooleanConverter}">
+                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="BasicParam.IsControling" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+                <Button
+                    Width="80"
+                    Height="30"
+                    Command="{Binding InsertCommand}"
+                    CommandParameter="{Binding SelectedItem, ElementName=dataGrid}"
+                    Content="插入新行"
+                    Style="{StaticResource PrimaryCommonButton}">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{StaticResource BooleanArr2BooleanConverter}">
+                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="BasicParam.IsControling" />
+                            <Binding
+                                Converter="{StaticResource ObjectIsNullConverter}"
+                                ElementName="dataGrid"
+                                Path="SelectedItem" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+                <Button
+                    Width="80"
+                    Height="30"
+                    Command="{Binding DeleteCommand}"
+                    CommandParameter="{Binding SelectedItem, ElementName=dataGrid}"
+                    Content="删除数据"
+                    Style="{StaticResource PrimaryCommonButton}">
+                    <Button.IsEnabled>
+                        <MultiBinding Converter="{StaticResource BooleanArr2BooleanConverter}">
+                            <Binding Converter="{StaticResource InverseBooleanConverter}" Path="BasicParam.IsControling" />
+                            <Binding
+                                Converter="{StaticResource ObjectIsNullConverter}"
+                                ElementName="dataGrid"
+                                Path="SelectedItem" />
+                        </MultiBinding>
+                    </Button.IsEnabled>
+                </Button>
+                <Button
+                    Width="140"
+                    Height="30"
+                    Click="btnCopyTo_Click"
+                    Content="复制至其他反应器"
+                    Style="{StaticResource PrimaryCommonButton}"
+                    Visibility="Collapsed" />
+            </hc:UniformSpacingPanel>
+            <DataGrid
+                x:Name="dataGrid"
+                Grid.Row="2"
+                AutoGenerateColumns="False"
+                CanUserDeleteRows="True"
+                CanUserSortColumns="False"
+                ColumnHeaderHeight="35"
+                ColumnWidth="SizeToHeader"
+                HeadersVisibility="Column"
+                IsEnabled="{Binding BasicParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                IsReadOnly="False"
+                ItemsSource="{Binding BasicParam.TimeSeries.TimeSeriesItemCol}"
+                LoadingRow="DataGrid_LoadingRow"
+                RowHeight="35"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                SelectionMode="Single"
+                SelectionUnit="FullRow">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn
+                        Width="60"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="序号"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=Header}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="120"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="开始时间"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <control:TextBoxNoAutoKeyboard Style="{StaticResource DataTextBoxStyle}" Text="{Binding StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.OpenNumberKeyBoardCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </control:TextBoxNoAutoKeyboard>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="120"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="结束时间"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <control:TextBoxNoAutoKeyboard Style="{StaticResource DataTextBoxStyle}" Text="{Binding EndTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.OpenNumberKeyBoardCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </control:TextBoxNoAutoKeyboard>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn
+                        Width="80"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                        Header="目标值"
+                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <control:TextBoxNoAutoKeyboard Style="{StaticResource DataTextBoxStyle}" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding DataContext.OpenNumberKeyBoardCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </control:TextBoxNoAutoKeyboard>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </UserControl>

@@ -12,7 +12,8 @@ namespace RD3
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return object.ReferenceEquals(value, null);
+            if (value == null) return false;
+            return !object.ReferenceEquals(value, null);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

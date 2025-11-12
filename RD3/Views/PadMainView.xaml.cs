@@ -610,7 +610,7 @@ namespace RD3.Views
                         {
                             continue;
                         }
-                        Dictionary<string, string> reverseDict1 = PumpMFCConfig.GetValue(AnalysisSolution.GetInstance().ReactorCol[0].Name);
+                        Dictionary<string, string> reverseDict1 = PumpMFCConfig.GetValue(AnalysisSolution.GetInstance().FermentorCol[0].Device.Name);
                         for (int i = 0; i < count; i++)
                         {
                             try

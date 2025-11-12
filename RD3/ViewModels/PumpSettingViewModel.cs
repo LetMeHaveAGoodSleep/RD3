@@ -39,7 +39,7 @@ namespace RD3.ViewModels
             {
                 if (PumpInfo.Pump != PeristalticPump.None)
                 {
-                    int count = AnalysisSolution.GetInstance().PumpInfoCol.Count(t => t.Pump == PumpInfo.Pump);
+                    int count = AnalysisSolution.GetInstance().CurrentFermentor.Device.PumpInfoCol.Count(t => t.Pump == PumpInfo.Pump);
                     if (count > 1)
                     {
                         HandyControl.Controls.MessageBox.Info($"已存在{EnumUtil.GetEnumDescription(PumpInfo.Pump)}泵", "温馨提示");
@@ -178,7 +178,7 @@ namespace RD3.ViewModels
 
         public PumpSettingViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
-            CurrentDeviceParameter = AnalysisSolution.GetInstance().ReactorCol[0];
+            CurrentDeviceParameter = AnalysisSolution.GetInstance().CurrentFermentor.Device;
         }
 
         public string Title => "蠕动泵设置";

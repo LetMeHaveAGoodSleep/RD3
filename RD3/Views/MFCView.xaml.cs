@@ -37,7 +37,7 @@ namespace RD3.Views
         {
             mfcIndex = index;
             var vm = this.DataContext as MFCViewModel;
-            var mfcInfo = AnalysisSolution.GetInstance().MFCInfoCol.FindFirst(t => t.MFCIndex == index);
+            var mfcInfo = AnalysisSolution.GetInstance().CurrentFermentor.Device.MFCInfoCol.FindFirst(t => t.MFCIndex == index);
             vm.MFCInfo = mfcInfo;
         }
     }

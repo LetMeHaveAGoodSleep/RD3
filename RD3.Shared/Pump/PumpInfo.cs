@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
-    public class PumpInfo : PumpSetting, ICloneable
+    public class PumpInfo : PumpSetting
     {
         private float _flowRate_SP;
         /// <summary>
@@ -235,12 +235,6 @@ namespace RD3.Shared
             {
                 SetProperty(ref _feedMode, value);
             }
-        }
-
-        public object Clone()
-        {
-            var clonedObject = ObjectCloner.DeepCopy(this);
-            return clonedObject;
         }
     }
 }

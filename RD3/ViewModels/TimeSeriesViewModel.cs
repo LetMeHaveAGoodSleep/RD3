@@ -19,113 +19,67 @@ using System.Windows;
 
 namespace RD3.ViewModels
 {
-    public class TimeSeriesViewModel : BaseViewModel, INavigationAware
+    public class TimeSeriesViewModel : BaseViewModel
     {
-        private ExperimentParameter _experimentParameter = ExperimentParameter.DO;
-        private string _runningInfo = string.Empty;
-        public string RunningInfo
+        private BasicParam _basicParam;
+        public BasicParam BasicParam
         {
-            get => _runningInfo;
-            set
-            {
-                SetProperty(ref _runningInfo, value);
-            }
+            get => _basicParam;
+            set { SetProperty(ref _basicParam, value); }
         }
 
-        private TimeSeriesParameter _timeSeriesParameter;
-
-        private BackgroundWorker backgroundWorker = new BackgroundWorker();
-
-        private TimeSeries _timeSeries = new TimeSeries();
-        public TimeSeries TimeSeries
+        public void Sort()
         {
-            get => _timeSeries;
-            set
-            {
-                SetProperty(ref _timeSeries, value);
-            }
+            BasicParam.TimeSeries.TimeSeriesItemCol = new ObservableCollection<TimeSeriesItem>(
+    BasicParam.TimeSeries.TimeSeriesItemCol.OrderBy(t => t.StartTime).ThenBy(t => t.EndTime));
         }
 
-        public DelegateCommand SaveCommand => new(() => 
+        public DelegateCommand CopyCommand => new(() =>
         {
-            TimeSeries.TimeSeriesItemCol = new ObservableCollection<TimeSeriesItem>(TimeSeries.TimeSeriesItemCol.OrderBy(t => new { t.StartTime, t.EndTime }));
-        });
-        public DelegateCommand RefershCommand => new(() =>
-        {
-            TimeSeries.TimeSeriesItemCol = new ObservableCollection<TimeSeriesItem>(TimeSeries.TimeSeriesItemCol.OrderBy(t => new { t.StartTime, t.EndTime }));
-            aggregator.SendMessage("", nameof(TimeSeriesView), TimeSeries.TimeSeriesItemCol);
-        });
-
-        public DelegateCommand CopyCommand => new(() => 
-        {
-            TimeSeries.TimeSeriesItemCol = new ObservableCollection<TimeSeriesItem>(TimeSeries.TimeSeriesItemCol.OrderBy(t => new { t.StartTime, t.EndTime }));
-            if (TimeSeries.TimeSeriesItemCol.GroupBy(x => new { x.StartTime, x.EndTime }).Any(g => g.Count() > 1))
+            BasicParam.TimeSeries.TimeSeriesItemCol = new ObservableCollection<TimeSeriesItem>(BasicParam.TimeSeries.TimeSeriesItemCol.OrderBy(t => new { t.StartTime, t.EndTime }));
+            if (BasicParam.TimeSeries.TimeSeriesItemCol.GroupBy(x => new { x.StartTime, x.EndTime }).Any(g => g.Count() > 1))
             {
-                MessageBox.Show("存在相同的时间项", "温馨提示");
-                return ;
+                HandyControl.Controls.MessageBox.Warning("存在相同的时间项", "温馨提示");
+                return;
             }
-            AnalysisSolution.GetInstance().EventPublisher.PublishTimeSeries((_experimentParameter, TimeSeries));
         });
 
         public DelegateCommand AddCommand => new(() =>
         {
-            RefershCommand.Execute();
+            Sort();
             double startTime = 0;
             double endTime = 1;
-            double value = 1;
-            if (TimeSeries.TimeSeriesItemCol.Count > 0)
+            double value = BasicParam.LowerLimit;
+            if (BasicParam.TimeSeries.TimeSeriesItemCol.Count > 0)
             {
-                startTime = TimeSeries.TimeSeriesItemCol.Last().EndTime;
+                startTime = BasicParam.TimeSeries.TimeSeriesItemCol.Last().EndTime;
                 endTime = startTime + 30;
-                value = TimeSeries.TimeSeriesItemCol[TimeSeries.TimeSeriesItemCol.Count - 1].Value;
+                value = BasicParam.TimeSeries.TimeSeriesItemCol[BasicParam.TimeSeries.TimeSeriesItemCol.Count - 1].Value;
             }
-            TimeSeries.TimeSeriesItemCol.Add(new TimeSeriesItem() { StartTime = startTime, EndTime = endTime, Value = value });
+            BasicParam.TimeSeries.TimeSeriesItemCol.Add(new TimeSeriesItem() { StartTime = startTime, EndTime = endTime, Value = value });
+            Sort();
         });
 
         public DelegateCommand<object> InsertCommand => new((object o) =>
         {
             TimeSeriesItem item = o as TimeSeriesItem;
-            double startTime = 0;
-            double endTime = 1;
-            double value = 1;
-            if (TimeSeries.TimeSeriesItemCol.Count > 0)
-            {
-                startTime = TimeSeries.TimeSeriesItemCol.Last().EndTime;
-                endTime = startTime + 30;
-                value = TimeSeries.TimeSeriesItemCol[TimeSeries.TimeSeriesItemCol.Count - 1].Value;
-            }
-            TimeSeries.TimeSeriesItemCol.Add(new TimeSeriesItem() { StartTime = startTime, EndTime = endTime, Value = value });
+            TimeSeriesItem copy = item.Clone() as TimeSeriesItem;
+            int index = 0;
+            index = BasicParam.TimeSeries.TimeSeriesItemCol.IndexOf(item);
+            BasicParam.TimeSeries.TimeSeriesItemCol.Insert(index, copy);
+            Sort();
         });
 
         public DelegateCommand<object> DeleteCommand => new((object o) =>
         {
             TimeSeriesItem item = o as TimeSeriesItem;
-            TimeSeries.TimeSeriesItemCol.Remove(item);
-            RefershCommand.Execute();
-        });
-        public DelegateCommand DeleteAllCommand => new(() =>
-        {
-            TimeSeries.TimeSeriesItemCol.Clear();
+            BasicParam.TimeSeries.TimeSeriesItemCol.Remove(item);
+            Sort();
         });
 
         public TimeSeriesViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
 
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            
         }
     }
 }

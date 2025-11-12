@@ -200,7 +200,7 @@ namespace RD3.ViewModels
         {
             get 
             {
-                return AnalysisSolution.GetInstance().ReactorCol[0]?.Name;
+                return AnalysisSolution.GetInstance().CurrentFermentor.Device.Name;
             }
         }
 

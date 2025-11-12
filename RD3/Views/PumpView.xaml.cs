@@ -39,7 +39,7 @@ namespace RD3.Views
         {
             pumpIndex = index;
             var vm = this.DataContext as PumpViewModel;
-            var pumpInfo = AnalysisSolution.GetInstance().PumpInfoCol.FindFirst(t => t.PumpIndex == index);
+            var pumpInfo = AnalysisSolution.GetInstance().CurrentFermentor.Device.PumpInfoCol.FindFirst(t => t.PumpIndex == index);
             vm.PumpInfo = pumpInfo;
         }
     }

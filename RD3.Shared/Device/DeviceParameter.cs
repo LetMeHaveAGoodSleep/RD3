@@ -15,6 +15,14 @@ namespace RD3.Shared
 {
     public class DeviceParameter : RealTimeParam
     {
+
+        public DeviceParameter(ObservableCollection<PumpInfo> pumpInfos, ObservableCollection<MFCInfo> mFCInfos)
+        {
+            PumpInfoCol = pumpInfos;
+            MFCInfoCol = mFCInfos;
+        }
+        public DeviceParameter()
+        { }
         private string _name;
         public string Name
         {
@@ -122,42 +130,54 @@ namespace RD3.Shared
         }
 
 
-        private TempParam _tempParam = new() { IsAuditing = true };
+        private TempParam _tempParam = new() { IsAuditing = true,ModuleName="温度" };
         public TempParam TempParam
         {
             get { return _tempParam; }
             set { SetProperty(ref _tempParam, value); }
         }
 
-        private PHParam _pHParam = new() { IsAuditing = true };
+        private PHParam _pHParam = new() { IsAuditing = true, ModuleName = "pH" };
         public PHParam PHParam
         {
             get { return _pHParam; }
             set { SetProperty(ref _pHParam, value); }
         }
 
-        private DOParam _dOParam = new() { IsAuditing = true };
+        private DOParam _dOParam = new() { IsAuditing = true, ModuleName = "溶氧" };
         public DOParam DOParam
         {
             get { return _dOParam; }
             set { SetProperty(ref _dOParam, value); }
         }
 
-        private AgitParam _agitParam = new() { IsAuditing = true };
+        private AgitParam _agitParam = new() { IsAuditing = true, ModuleName = "转速" };
         public AgitParam AgitParam
         {
             get { return _agitParam; }
             set { SetProperty(ref _agitParam, value); }
         }
 
-        private BaseParam _baseParam = new() { IsAuditing = true };
+        public ObservableCollection<PumpInfo> PumpInfoCol
+        {
+            get;
+            private set;
+        } = new ObservableCollection<PumpInfo>();
+
+        public ObservableCollection<MFCInfo> MFCInfoCol
+        {
+            get;
+            private set;
+        } = new ObservableCollection<MFCInfo>();
+
+        private BaseParam _baseParam = new() { IsAuditing = true, ModuleName = "碱" };
         public BaseParam BaseParam
         {
             get { return _baseParam; }
             set { SetProperty(ref _baseParam, value); }
         }
 
-        private AcidParam _acidParam = new() { IsAuditing = true };
+        private AcidParam _acidParam = new() { IsAuditing = true, ModuleName = "酸" };
         public AcidParam AcidParam
         {
             get { return _acidParam; }
@@ -171,28 +191,28 @@ namespace RD3.Shared
             set { SetProperty(ref _aFParam, value); }
         }
 
-        private GasParam _airParam = new() { IsAuditing = true };
+        private GasParam _airParam = new() { IsAuditing = true, ModuleName = "空气" };
         public GasParam AirParam
         {
             get { return _airParam; }
             set { SetProperty(ref _airParam, value); }
         }
 
-        private GasParam _cO2Param = new() { IsAuditing = true };
+        private GasParam _cO2Param = new() { IsAuditing = true, ModuleName = "二氧化碳" };
         public GasParam CO2Param
         {
             get { return _cO2Param; }
             set { SetProperty(ref _cO2Param, value); }
         }
 
-        private GasParam _o2Param = new() { IsAuditing = true };
+        private GasParam _o2Param = new() { IsAuditing = true, ModuleName = "氧气" };
         public GasParam O2Param
         {
             get { return _o2Param; }
             set { SetProperty(ref _o2Param, value); }
         }
 
-        private GasParam _n2Param = new() { IsAuditing = true };
+        private GasParam _n2Param = new() { IsAuditing = true, ModuleName = "氮气" };
         public GasParam N2Param
         {
             get { return _n2Param; }
@@ -206,14 +226,14 @@ namespace RD3.Shared
             set { SetProperty(ref _defoamingSetting, value); }
         }
 
-        FeedParam _feedParam1 = new FeedParam() { Index = 1, IsAuditing = true };
+        FeedParam _feedParam1 = new FeedParam() { Index = 1, IsAuditing = true, ModuleName = "补料1" };
         public FeedParam FeedParam1
         {
             get => _feedParam1;
             set { SetProperty(ref _feedParam1, value); }
         }
 
-        FeedParam _feedParam2 = new FeedParam() { Index = 2, IsAuditing = true };
+        FeedParam _feedParam2 = new FeedParam() { Index = 2, IsAuditing = true, ModuleName = "补料2" };
         public FeedParam FeedParam2
         {
             get => _feedParam2;

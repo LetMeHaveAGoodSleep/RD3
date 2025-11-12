@@ -13,31 +13,13 @@
     xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
-    Width="250"
-    Height="450"
-    d:DataContext="{d:DesignInstance Type=viewmodels:PumpSettingViewModel}"
+    Width="800"
+    Height="550"
+    d:DataContext="{d:DesignInstance Type=viewmodels:AgitSettingViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
-    Background="{StaticResource BackGroundBrush}"
+    Background="{StaticResource RegionBackgroundBrush}"
     FontSize="{StaticResource SubHeadFontSize}"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <ObjectDataProvider
-            x:Key="DataFromEnum"
-            MethodName="GetValues"
-            ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="share:PeristalticPump" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-        <ObjectDataProvider
-            x:Key="DataFromEnum1"
-            MethodName="GetValues"
-            ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="share:FeedControlMode" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-    </UserControl.Resources>
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
             <Setter Property="SizeToContent" Value="WidthAndHeight" />
@@ -51,64 +33,113 @@
             <Setter Property="AllowsTransparency" Value="False" />
             <Setter Property="WindowStyle" Value="SingleBorderWindow" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource RegionBackgroundBrush}" />
             <Setter Property="Opacity" Value="1" />
             <Setter Property="Icon" Value="../Assets/logo.png" />
         </Style>
     </prism:Dialog.WindowStyle>
-    <hc:UniformSpacingPanel
-        Margin="10"
-        Orientation="Vertical"
-        Spacing="10">
-        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-            <control:TextBoxNoAutoKeyboard
-                materialDesign:HintAssist.Hint="设定转速(rpm)"
-                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.AgitParam.SP, StringFormat={}{0:F0}}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </control:TextBoxNoAutoKeyboard>
-            <TextBox
-                materialDesign:HintAssist.Hint="当前转速(rpm)"
-                IsEnabled="False"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.Agit, StringFormat={}{0:F0}}" />
-        </hc:UniformSpacingPanel>
-        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-            <control:TextBoxNoAutoKeyboard
-                materialDesign:HintAssist.Hint="转速下限(rpm)"
-                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.AgitParam.LowerLimit, StringFormat={}{0:F0}}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </control:TextBoxNoAutoKeyboard>
-            <control:TextBoxNoAutoKeyboard
-                materialDesign:HintAssist.Hint="转速上限(rpm)"
-                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.AgitParam.UpperLimit, StringFormat={}{0:F0}}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </control:TextBoxNoAutoKeyboard>
-        </hc:UniformSpacingPanel>
-        <ToggleButton
-            Width="230"
-            Height="40"
-            materialDesign:HintAssist.Hint="开启"
-            materialDesign:ToggleSwitchBehavior.EnableAutoOffset="True"
-            IsChecked="{Binding CurrentDeviceParameter.AgitParam.IsControling}"
-            IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-            Style="{StaticResource MaterialDesignSwitchLightToggleButton}" Cursor="Hand" />
-    </hc:UniformSpacingPanel>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <local:TimeSeriesView
+            x:Name="tsView"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
+        <GridSplitter
+            Grid.Column="1"
+            Width="5"
+            Background="LightGray"
+            IsEnabled="False" />
+        <Grid Grid.Column="2" Margin="5,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <WrapPanel Name="panelMethod" />
+            <hc:UniformSpacingPanel
+                Grid.Row="1"
+                Orientation="Vertical"
+                Spacing="15">
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <control:TextBoxNoAutoKeyboard
+                        Width="120"
+                        materialDesign:HintAssist.Hint="转速下限(rpm)"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding CurrentDeviceParameter.AgitParam.LowerLimit, StringFormat={}{0:F0}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <control:TextBoxNoAutoKeyboard.IsEnabled>
+                            <MultiBinding Converter="{StaticResource BooleanArr2BooleanConverter}">
+                                <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AgitParam.IsControling" />
+                                <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
+                            </MultiBinding>
+                        </control:TextBoxNoAutoKeyboard.IsEnabled>
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
+                        Width="120"
+                        materialDesign:HintAssist.Hint="转速上限(rpm)"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding CurrentDeviceParameter.AgitParam.UpperLimit, StringFormat={}{0:F0}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <control:TextBoxNoAutoKeyboard.IsEnabled>
+                            <MultiBinding Converter="{StaticResource BooleanArr2BooleanConverter}">
+                                <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AgitParam.IsControling" />
+                                <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
+                            </MultiBinding>
+                        </control:TextBoxNoAutoKeyboard.IsEnabled>
+                    </control:TextBoxNoAutoKeyboard>
+                </hc:UniformSpacingPanel>
+            </hc:UniformSpacingPanel>
+            <hc:SimplePanel
+                x:Name="panelContent"
+                Grid.Row="2"
+                Margin="0,10,0,0" />
+            <DockPanel Grid.Row="4" LastChildFill="False">
+                <hc:UniformSpacingPanel
+                    DockPanel.Dock="Right"
+                    Orientation="Horizontal"
+                    Spacing="10">
+                    <Button
+                        Width="90"
+                        Height="40"
+                        Command="{Binding OpenCommand}"
+                        Content="启动控制"
+                        Style="{StaticResource PrimaryCommonButton}">
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource BooleanArr2BooleanConverter}">
+                                <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.AgitParam.IsControling" />
+                                <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+                    <Button
+                        Width="90"
+                        Height="40"
+                        Command="{Binding CloseCommand}"
+                        Content="停止控制"
+                        Style="{StaticResource SecondaryCommonButton}">
+                        <Button.IsEnabled>
+                            <MultiBinding Converter="{StaticResource BooleanArr2BooleanConverter}">
+                                <Binding Path="CurrentDeviceParameter.AgitParam.IsControling" />
+                                <Binding Converter="{StaticResource InverseBooleanConverter}" Path="CurrentDeviceParameter.DOParam.IsControling" />
+                            </MultiBinding>
+                        </Button.IsEnabled>
+                    </Button>
+                </hc:UniformSpacingPanel>
+            </DockPanel>
+        </Grid>
+    </Grid>
 </UserControl>

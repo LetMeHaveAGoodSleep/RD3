@@ -25,7 +25,7 @@ namespace RD3.Shared
             set { SetProperty(ref _agitLowerLimit, value); }
         }
 
-        private int _gasWaitTime = 120;
+        private int _gasWaitTime = 2;
         public int GasWaitTime
         {
             get => _gasWaitTime;

@@ -25,6 +25,13 @@ namespace RD3.Shared
             set { SetProperty(ref _initialTemp, value); }
         }
 
+        private bool _isCycle = true;
+        public bool IsCycle
+        {
+            get { return _isCycle; }
+            set { SetProperty(ref _isCycle, value); }
+        }
+
         private bool _isDirect = true;
         public bool IsDirect
         {

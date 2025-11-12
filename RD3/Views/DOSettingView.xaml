@@ -19,14 +19,13 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:vm="clr-namespace:RD3.ViewModels"
     xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
-    Width="550"
-    Height="650"
+    Width="800"
+    Height="550"
     d:DataContext="{d:DesignInstance Type=vm:DOSettingViewModel}"
-    Background="{StaticResource BackGroundBrush}"
+    Background="{StaticResource RegionBackgroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
-    TextElement.FontSize="{DynamicResource TextFontSize}"
+    TextElement.FontSize="{DynamicResource SubHeadFontSize}"
     TextElement.FontWeight="Regular"
-    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextOptions.TextFormattingMode="Ideal"
     TextOptions.TextRenderingMode="Auto"
     mc:Ignorable="d">
@@ -43,7 +42,7 @@
             <Setter Property="AllowsTransparency" Value="False" />
             <Setter Property="WindowStyle" Value="SingleBorderWindow" />
             <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Setter Property="Background" Value="{StaticResource BackGroundBrush}" />
+            <Setter Property="Background" Value="{StaticResource RegionBackgroundBrush}" />
             <Setter Property="Opacity" Value="1" />
             <Setter Property="Icon" Value="../Assets/logo.png" />
         </Style>
@@ -63,626 +62,730 @@
             TargetType="hc:Transfer" />
         <rd3:BindingProxy x:Key="proxy" Data="{Binding Param}" />
     </UserControl.Resources>
-    <hc:UniformSpacingPanel
-        Margin="10"
-        Orientation="Vertical"
-        Spacing="10">
-        <hc:UniformSpacingPanel
-            IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-            Orientation="Horizontal"
-            Spacing="10">
-            <RadioButton
-                Content="{ex:Language Key='阶梯级联'}"
-                FontSize="{StaticResource MediumFontSize}"
-                IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Step}"
-                Style="{StaticResource RadioButtonBaseStyle}" />
-            <RadioButton
-                Content="{ex:Language Key='中位级联'}"
-                FontSize="{StaticResource MediumFontSize}"
-                IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Midranging}"
-                Style="{StaticResource RadioButtonBaseStyle}" />
-            <RadioButton
-                Content="{ex:Language Key='周期控制'}"
-                FontSize="{StaticResource MediumFontSize}"
-                IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Cycle}"
-                Style="{StaticResource RadioButtonBaseStyle}" />
-        </hc:UniformSpacingPanel>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="5" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
+    <!--<TabControl Style="{StaticResource TabControlSliding}">
+        <TabItem Header=""
+    </TabControl>-->
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <local:TimeSeriesView
+            x:Name="tsView"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top" />
+        <GridSplitter
+            Grid.Column="1"
+            Width="5"
+            Background="LightGray"
+            IsEnabled="False" />
+        <Grid Grid.Column="2" Margin="5,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <WrapPanel Name="panelMethod" IsEnabled="{Binding BasicParam.IsControling, Converter={StaticResource InverseBooleanConverter}}">
+                <RadioButton
+                    Width="90"
+                    Height="35"
+                    Margin="0,5,5,5"
+                    Content="{ex:Language Key='阶梯级联'}"
+                    IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Step}"
+                    Style="{StaticResource RadioButtonCustomPrimary}" />
+                <RadioButton
+                    Width="90"
+                    Height="35"
+                    Margin="5"
+                    Content="{ex:Language Key='中位级联'}"
+                    IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Midranging}"
+                    Style="{StaticResource RadioButtonCustomPrimary}" />
+                <RadioButton
+                    Width="90"
+                    Height="35"
+                    Margin="5"
+                    Content="{ex:Language Key='周期控制'}"
+                    IsChecked="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Cycle}"
+                    Style="{StaticResource RadioButtonCustomPrimary}" />
+            </WrapPanel>
+            <hc:UniformSpacingPanel
+                Grid.Row="1"
+                IsEnabled="{Binding BasicParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                Orientation="Horizontal"
+                Spacing="10">
                 <control:TextBoxNoAutoKeyboard
-                    materialDesign:HintAssist.HelperText=""
-                    materialDesign:HintAssist.Hint="设定溶氧(%)"
+                    Width="90"
+                    materialDesign:HintAssist.Hint="DO下限"
                     materialDesign:TextFieldAssist.HasClearButton="True"
-                    FontSize="{StaticResource SubHeadFontSize}"
                     IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding CurrentDeviceParameter.DOParam.SP, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}">
+                    Text="{Binding CurrentDeviceParameter.DOParam.LowerLimit, StringFormat={}{0:F2}}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                             <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </control:TextBoxNoAutoKeyboard>
-                <hc:UniformSpacingPanel
-                    Grid.Column="2"
-                    Orientation="Vertical"
-                    Spacing="10">
+                <control:TextBoxNoAutoKeyboard
+                    Width="90"
+                    materialDesign:HintAssist.Hint="DO上限"
+                    materialDesign:TextFieldAssist.HasClearButton="True"
+                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding CurrentDeviceParameter.DOParam.UpperLimit, StringFormat={}{0:F2}}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </control:TextBoxNoAutoKeyboard>
+                <StackPanel Orientation="Vertical">
                     <CheckBox
+                        Margin="5"
                         Content="正向(+)"
-                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsDirect}"
-                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                        Style="{StaticResource MaterialDesignCheckBox}" />
+                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsDirect}" />
                     <CheckBox
+                        Margin="5"
                         Content="反向(-)"
-                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsReverse}"
-                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                        Style="{StaticResource MaterialDesignCheckBox}" />
-                </hc:UniformSpacingPanel>
-            </Grid>
-            <TextBox
-                Grid.Column="2"
-                materialDesign:HintAssist.HelperText=""
-                materialDesign:HintAssist.Hint="当前溶氧(%)"
-                FontSize="{StaticResource SubHeadFontSize}"
-                IsEnabled="False"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Text="{Binding CurrentDeviceParameter.DO, StringFormat={}{0:F2}, UpdateSourceTrigger=LostFocus}" />
-        </Grid>
-        <GroupBox
-            Header="基础参数"
-            Style="{StaticResource MaterialDesignGroupBox}"
-            Visibility="{Binding CurrentDeviceParameter.DOParam.IsCycle, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="15">
-                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <DockPanel LastChildFill="False">
-                        <CheckBox
-                            Content="滤波开关"
-                            DockPanel.Dock="Bottom"
-                            IsChecked="{Binding CurrentDeviceParameter.DOFilterEnable}"
-                            Style="{StaticResource MaterialDesignCheckBox}"
-                            ToolTip="转速是否开启滤波" />
-                    </DockPanel>
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        hc:InfoElement.Title="{ex:Language Key='采样周期'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.AgitSampleCycle, UpdateSourceTrigger=LostFocus}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        hc:InfoElement.Title="{ex:Language Key='截止频率'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.AgitSampleFrequency, UpdateSourceTrigger=LostFocus}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        hc:InfoElement.Title="{ex:Language Key='时间常数'}"
-                        IsReadOnly="True"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.AgitTimeConstant, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                    <DockPanel LastChildFill="False">
-                        <Button
-                            Height="30"
-                            hc:IconElement.Geometry="{StaticResource GeometryLookDetail}"
-                            Background="Transparent"
-                            BorderThickness="1"
-                            Command="{Binding PIDSettingCommand}"
-                            Content="PID设置"
-                            DockPanel.Dock="Bottom"
-                            Foreground="Gray" />
-                    </DockPanel>
-                </hc:UniformSpacingPanel>
+                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsReverse}" />
+                </StackPanel>
+                <DockPanel LastChildFill="False">
+                    <Button
+                        hc:IconElement.Geometry="{StaticResource GeometryPID}"
+                        Command="{Binding PIDSettingCommand}"
+                        Content="PID设置"
+                        DockPanel.Dock="Bottom"
+                        Style="{StaticResource ButtonDashedPrimary}" />
+                </DockPanel>
             </hc:UniformSpacingPanel>
-        </GroupBox>
-        <hc:ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <GroupBox
-                MaxHeight="450"
-                Header="阶梯级联策略参数"
-                Style="{StaticResource MaterialDesignGroupBox}"
-                Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Step}">
-                <TabControl Style="{StaticResource TabControlInLine}">
-                    <TabItem Header="基础参数">
-                        <hc:UniformSpacingPanel
-                            Margin="5"
-                            Orientation="Vertical"
-                            Spacing="10">
-                            <hc:UniformSpacingPanel
-                                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                                Orientation="Horizontal"
-                                Spacing="15">
-                                <CheckBox
-                                    materialDesign:CheckBoxAssist.CheckBoxSize="24"
-                                    Content="空气"
-                                    IsChecked="{Binding Param.AirEnable}"
-                                    Style="{StaticResource MaterialDesignCheckBox}" />
-                                <CheckBox
-                                    materialDesign:CheckBoxAssist.CheckBoxSize="24"
-                                    Content="氧气"
-                                    IsChecked="{Binding Param.O2Enable}"
-                                    Style="{StaticResource MaterialDesignCheckBox}" />
-                                <CheckBox
-                                    materialDesign:CheckBoxAssist.CheckBoxSize="24"
-                                    Content="温度"
-                                    IsChecked="{Binding Param.TempEnable}"
-                                    Style="{StaticResource MaterialDesignCheckBox}" />
-                                <CheckBox
-                                    materialDesign:CheckBoxAssist.CheckBoxSize="24"
-                                    Content="补料"
-                                    IsChecked="{Binding Param.FeedEnable}"
-                                    Style="{StaticResource MaterialDesignCheckBox}" />
-                            </hc:UniformSpacingPanel>
-                            <ListBox
-                                Name="listBoxCascadeFactor"
-                                AllowDrop="True"
-                                FontSize="{StaticResource SubHeadFontSize}"
-                                IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                                ItemsSource="{Binding Param.FactorCol}"
-                                Style="{StaticResource ListBoxBaseStyle}">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
-                                            <hc:UniformSpacingPanel
-                                                Margin="20,0,0,0"
-                                                Orientation="Horizontal"
-                                                Spacing="5">
-                                                <Button
-                                                    Padding="5"
-                                                    hc:IconElement.Geometry="{StaticResource UpGeometry}"
-                                                    hc:IconElement.Width="16"
-                                                    Background="Transparent"
-                                                    BorderThickness="0"
-                                                    Command="{Binding DataContext.FactorUpCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                                    CommandParameter="{Binding}"
-                                                    ToolTip="提升执行顺序" />
-                                                <Button
-                                                    Padding="5"
-                                                    hc:IconElement.Geometry="{StaticResource DownGeometry}"
-                                                    hc:IconElement.Width="16"
-                                                    Background="Transparent"
-                                                    BorderThickness="0"
-                                                    Command="{Binding DataContext.FactorDownCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                                    CommandParameter="{Binding}"
-                                                    ToolTip="降低执行顺序" />
-                                            </hc:UniformSpacingPanel>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                            <DockPanel LastChildFill="False">
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                                    <TextBox
-                                        Width="100"
-                                        VerticalAlignment="Center"
-                                        hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding Param.AgitLowerLimit, UpdateSourceTrigger=LostFocus}"
-                                        Visibility="Collapsed" />
-                                    <TextBox
-                                        Width="100"
-                                        VerticalAlignment="Center"
-                                        hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding Param.AgitUpperLimit, UpdateSourceTrigger=LostFocus}"
-                                        Visibility="Collapsed" />
-                                    <ComboBox
-                                        Width="100"
-                                        hc:InfoElement.Title="{ex:Language Key='气体单位'}"
-                                        DockPanel.Dock="Left"
-                                        SelectedIndex="{Binding Param.Unit}"
-                                        Style="{StaticResource ComboBoxExtend}">
-                                        <ComboBoxItem Content="VVM" />
-                                        <ComboBoxItem Content="L/min" />
-                                    </ComboBox>
-                                    <TextBox
-                                        Width="120"
-                                        VerticalAlignment="Center"
-                                        hc:InfoElement.Title="气体维持时间(秒)"
-                                        Style="{StaticResource TextBoxExtend}"
-                                        Text="{Binding Param.GasWaitTime, UpdateSourceTrigger=LostFocus}"
-                                        Visibility="Collapsed" />
-                                </hc:UniformSpacingPanel>
-                            </DockPanel>
-                        </hc:UniformSpacingPanel>
-                    </TabItem>
-                    <TabItem Header="级联参数">
-                        <hc:ScrollViewer
-                            Margin="5"
-                            HorizontalScrollBarVisibility="Auto"
-                            VerticalScrollBarVisibility="Auto">
-                            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="5">
-                                <hc:UniformSpacingPanel
-                                    DockPanel.Dock="Left"
-                                    Orientation="Horizontal"
-                                    Spacing="5">
-                                    <DockPanel LastChildFill="False">
-                                        <Button
-                                            Height="30"
-                                            VerticalAlignment="Bottom"
-                                            hc:IconElement.Geometry="{StaticResource GeometryAdd}"
-                                            Command="{Binding AddCascadeCommand}"
-                                            Content="新增"
-                                            Foreground="{StaticResource PrimaryBrush}"
-                                            IsEnabled="{Binding Param.FactorCol.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" />
-                                    </DockPanel>
-                                    <DockPanel LastChildFill="False">
-                                        <Button
-                                            Height="30"
-                                            VerticalAlignment="Bottom"
-                                            hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"
-                                            Command="{Binding DeleteCascadeCommand}"
-                                            CommandParameter="{Binding ElementName=gridCascade, Path=SelectedItem}"
-                                            Content="删除"
-                                            Foreground="{StaticResource PrimaryBrush}"
-                                            IsEnabled="{Binding Param.FactorCol.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" />
-                                    </DockPanel>
-                                </hc:UniformSpacingPanel>
-                                <hc:ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                    <DataGrid
-                                        Name="gridCascade"
-                                        hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
-                                        hc:DataGridAttach.ShowSelectAllButton="False"
-                                        AutoGenerateColumns="False"
-                                        Background="{StaticResource DefaultBrush}"
-                                        CanUserAddRows="False"
-                                        CanUserSortColumns="False"
-                                        ColumnWidth="SizeToHeader"
-                                        GridLinesVisibility="All"
-                                        HeadersVisibility="Column"
-                                        HorizontalGridLinesBrush="LightGray"
-                                        IsReadOnly="False"
-                                        ItemsSource="{Binding Param.CascadeCol}"
-                                        LoadingRow="DataGrid_LoadingRow"
-                                        RowHeight="40"
-                                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                                        ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                        SelectionMode="Single"
-                                        SelectionUnit="FullRow"
-                                        VerticalGridLinesBrush="LightGray">
-                                        <DataGrid.Columns>
-                                            <DataGridTemplateColumn
-                                                Width="60"
-                                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                                Header="序号"
-                                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=Header}" />
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTemplateColumn
-                                                Width="80"
-                                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                                Header="通气量"
-                                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                                                Visibility="{Binding Source={StaticResource proxy}, Path=Data.AirEnable, Converter={StaticResource Boolean2VisibilityConverter}}">
-                                                <DataGridTemplateColumn.CellTemplate>
-                                                    <DataTemplate>
-                                                        <control:TextBoxNoAutoKeyboard Style="{StaticResource TextBoxExtend}" Text="{Binding AirFlowRate}">
-                                                            <i:Interaction.Triggers>
-                                                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                                                                </i:EventTrigger>
-                                                            </i:Interaction.Triggers>
-                                                        </control:TextBoxNoAutoKeyboard>
-                                                    </DataTemplate>
-                                                </DataGridTemplateColumn.CellTemplate>
-                                            </DataGridTemplateColumn>
-                                            <DataGridTextColumn
-                                                Width="80"
-                                                Binding="{Binding O2FlowRate}"
-                                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                                Header="氧气量"
-                                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                                                Visibility="{Binding Source={StaticResource proxy}, Path=Data.O2Enable, Converter={StaticResource Boolean2VisibilityConverter}}" />
-                                            <DataGridTextColumn
-                                                Width="80"
-                                                Binding="{Binding Temp}"
-                                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                                Header="温度"
-                                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                                                Visibility="{Binding Source={StaticResource proxy}, Path=Data.TempEnable, Converter={StaticResource Boolean2VisibilityConverter}}" />
-                                            <DataGridTextColumn
-                                                Width="120"
-                                                Binding="{Binding FeedFlowRate}"
-                                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
-                                                Header="补料速率（%）"
-                                                HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
-                                                Visibility="{Binding Source={StaticResource proxy}, Path=Data.FeedEnable, Converter={StaticResource Boolean2VisibilityConverter}}" />
-                                        </DataGrid.Columns>
-                                    </DataGrid>
-                                </hc:ScrollViewer>
-                            </hc:UniformSpacingPanel>
-                        </hc:ScrollViewer>
-                    </TabItem>
-                </TabControl>
+            <GroupBox Style="{StaticResource GroupBoxTab}" Visibility="Collapsed">
+                <GroupBox.Header>
+                    <CheckBox
+                        HorizontalAlignment="Center"
+                        Content="正向(+)"
+                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsDirect}" />
+                </GroupBox.Header>
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <control:TextBoxNoAutoKeyboard
+                        Width="70"
+                        materialDesign:HintAssist.Hint="比例P"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.DirectPID.P, StringFormat={}{0:F2}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
+                        Width="70"
+                        materialDesign:HintAssist.Hint="积分I"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.DirectPID.I, StringFormat={}{0:F2}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
+                        Width="70"
+                        materialDesign:HintAssist.Hint="微分D"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.DirectPID.D, StringFormat={}{0:F2}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
+                        Width="70"
+                        materialDesign:HintAssist.Hint="死区"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.DirectPID.deadArea, StringFormat={}{0:F2}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </control:TextBoxNoAutoKeyboard>
+                </hc:UniformSpacingPanel>
             </GroupBox>
-        </hc:ScrollViewer>
-        <GroupBox
-            Header="中位控制策略参数"
-            Style="{StaticResource MaterialDesignGroupBox}"
-            Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Midranging}">
-            <hc:UniformSpacingPanel
-                Margin="5"
-                Orientation="Vertical"
-                Spacing="10">
-                <hc:UniformSpacingPanel
-                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                    Orientation="Horizontal"
-                    Spacing="15">
+            <GroupBox Style="{StaticResource GroupBoxTab}" Visibility="Collapsed">
+                <GroupBox.Header>
                     <CheckBox
-                        materialDesign:CheckBoxAssist.CheckBoxSize="24"
-                        Content="空气"
-                        IsChecked="{Binding MidRanging.AirEnable}"
-                        Style="{StaticResource MaterialDesignCheckBox}" />
-                    <CheckBox
-                        materialDesign:CheckBoxAssist.CheckBoxSize="24"
-                        Content="氧气"
-                        IsChecked="{Binding MidRanging.O2Enable}"
-                        Style="{StaticResource MaterialDesignCheckBox}" />
-                    <CheckBox
-                        materialDesign:CheckBoxAssist.CheckBoxSize="24"
-                        Content="温度"
-                        IsChecked="{Binding MidRanging.TempEnable}"
-                        Style="{StaticResource MaterialDesignCheckBox}" />
-                    <CheckBox
-                        materialDesign:CheckBoxAssist.CheckBoxSize="24"
-                        Content="补料"
-                        IsChecked="{Binding MidRanging.FeedEnable}"
-                        Style="{StaticResource MaterialDesignCheckBox}" />
+                        HorizontalAlignment="Center"
+                        Content="反向(-)"
+                        IsChecked="{Binding CurrentDeviceParameter.DOParam.IsReverse}" />
+                </GroupBox.Header>
+                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                    <control:TextBoxNoAutoKeyboard
+                        Width="70"
+                        materialDesign:HintAssist.Hint="比例P"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.ReversePID.P, StringFormat={}{0:F2}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
+                        Width="70"
+                        materialDesign:HintAssist.Hint="积分I"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.ReversePID.I, StringFormat={}{0:F2}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
+                        Width="70"
+                        materialDesign:HintAssist.Hint="微分D"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.ReversePID.D, StringFormat={}{0:F2}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </control:TextBoxNoAutoKeyboard>
+                    <control:TextBoxNoAutoKeyboard
+                        Width="70"
+                        materialDesign:HintAssist.Hint="死区"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding CurrentDeviceParameter.DOParam.ReversePID.deadArea, StringFormat={}{0:F2}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </control:TextBoxNoAutoKeyboard>
                 </hc:UniformSpacingPanel>
-                <ListBox
-                    Name="listBoxMidrangingFactor"
-                    AllowDrop="True"
-                    FontSize="{StaticResource SubHeadFontSize}"
-                    IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                    ItemsSource="{Binding MidRanging.FactorCol}"
-                    Style="{StaticResource ListBoxBaseStyle}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
-                                <TextBlock VerticalAlignment="Center" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+            </GroupBox>
+            <hc:SimplePanel
+                x:Name="panelContent"
+                Grid.Row="2"
+                Margin="0,10,0,0">
+                <hc:ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                    <GroupBox
+                        MaxHeight="450"
+                        Style="{StaticResource GroupBoxTab}"
+                        Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Step}">
+                        <GroupBox.Header>
+                            <TextBlock Foreground="Gray" Text="阶梯级联策略参数" />
+                        </GroupBox.Header>
+                        <TabControl Style="{StaticResource TabControlInLine}">
+                            <TabItem Header="基础参数">
                                 <hc:UniformSpacingPanel
-                                    Margin="20,0,0,0"
-                                    Orientation="Horizontal"
-                                    Spacing="5">
-                                    <Button
-                                        Padding="5"
-                                        hc:IconElement.Geometry="{StaticResource UpGeometry}"
-                                        hc:IconElement.Width="16"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Command="{Binding DataContext.FactorUpCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                        CommandParameter="{Binding}"
-                                        ToolTip="提升执行顺序" />
-                                    <Button
-                                        Padding="5"
-                                        hc:IconElement.Geometry="{StaticResource DownGeometry}"
-                                        hc:IconElement.Width="16"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Command="{Binding DataContext.FactorDownCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                        CommandParameter="{Binding}"
-                                        ToolTip="降低执行顺序" />
+                                    Margin="5"
+                                    Orientation="Vertical"
+                                    Spacing="10">
+                                    <StackPanel IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}" Orientation="Horizontal">
+                                        <CheckBox
+                                            Margin="5"
+                                            materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                                            Content="空气"
+                                            IsChecked="{Binding Param.AirEnable}"
+                                            Style="{StaticResource MaterialDesignCheckBox}" />
+                                        <CheckBox
+                                            Margin="5"
+                                            materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                                            Content="氧气"
+                                            IsChecked="{Binding Param.O2Enable}"
+                                            Style="{StaticResource MaterialDesignCheckBox}" />
+                                        <CheckBox
+                                            Margin="5"
+                                            materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                                            Content="温度"
+                                            IsChecked="{Binding Param.TempEnable}"
+                                            Style="{StaticResource MaterialDesignCheckBox}" />
+                                        <CheckBox
+                                            Margin="5"
+                                            materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                                            Content="补料"
+                                            IsChecked="{Binding Param.FeedEnable}"
+                                            Style="{StaticResource MaterialDesignCheckBox}" />
+                                    </StackPanel>
+                                    <ListBox
+                                        Name="listBoxCascadeFactor"
+                                        AllowDrop="True"
+                                        FontSize="{StaticResource SubHeadFontSize}"
+                                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                        ItemsSource="{Binding Param.FactorCol}"
+                                        Style="{StaticResource ListBoxBaseStyle}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                                    <hc:UniformSpacingPanel
+                                                        Margin="20,0,0,0"
+                                                        Orientation="Horizontal"
+                                                        Spacing="5">
+                                                        <Button
+                                                            Padding="5"
+                                                            hc:IconElement.Geometry="{StaticResource UpGeometry}"
+                                                            hc:IconElement.Width="16"
+                                                            Background="Transparent"
+                                                            BorderThickness="0"
+                                                            Command="{Binding DataContext.FactorUpCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                            CommandParameter="{Binding}"
+                                                            ToolTip="提升执行顺序" />
+                                                        <Button
+                                                            Padding="5"
+                                                            hc:IconElement.Geometry="{StaticResource DownGeometry}"
+                                                            hc:IconElement.Width="16"
+                                                            Background="Transparent"
+                                                            BorderThickness="0"
+                                                            Command="{Binding DataContext.FactorDownCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                            CommandParameter="{Binding}"
+                                                            ToolTip="降低执行顺序" />
+                                                    </hc:UniformSpacingPanel>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <hc:UniformSpacingPanel
+                                        IsEnabled="{Binding BasicParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                        Orientation="Horizontal"
+                                        Spacing="10">
+                                        <ComboBox
+                                            Width="100"
+                                            materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                                            materialDesign:HintAssist.Hint="气体单位"
+                                            SelectedIndex="{Binding Param.Unit}"
+                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                            <ComboBoxItem Content="VVM" />
+                                            <ComboBoxItem Content="L/min" />
+                                        </ComboBox>
+                                        <TextBox
+                                            Width="100"
+                                            VerticalAlignment="Center"
+                                            materialDesign:HintAssist.HelperText="单位:分钟"
+                                            materialDesign:HintAssist.Hint="持续时间"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            Text="{Binding Param.GasWaitTime, UpdateSourceTrigger=LostFocus}" />
+                                    </hc:UniformSpacingPanel>
                                 </hc:UniformSpacingPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <TextBox
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AgitLowerLimit, UpdateSourceTrigger=LostFocus}"
-                        Visibility="Collapsed" />
-                    <TextBox
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AgitUpperLimit, UpdateSourceTrigger=LostFocus}"
-                        Visibility="Collapsed" />
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='转速高限(rpm)'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AgitHigh, UpdateSourceTrigger=LostFocus}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='温度下限(℃)'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.TempDOLowerLimit, UpdateSourceTrigger=LostFocus}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                </hc:UniformSpacingPanel>
-                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <ComboBox
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='单位'}"
-                        SelectedIndex="{Binding MidRanging.Unit}"
-                        Style="{StaticResource ComboBoxExtend}">
-                        <ComboBoxItem Content="VVM" />
-                        <ComboBoxItem Content="L/min" />
-                    </ComboBox>
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='通气下限'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.InitialAir, UpdateSourceTrigger=LostFocus}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='通气上限'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding MidRanging.AirUpperLimit, UpdateSourceTrigger=LostFocus}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='补料下限(mL/h)'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.FeedDOLowerLimit, UpdateSourceTrigger=LostFocus}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                </hc:UniformSpacingPanel>
-            </hc:UniformSpacingPanel>
-        </GroupBox>
-        <GroupBox
-            Header="周期参数"
-            Style="{StaticResource MaterialDesignGroupBox}"
-            Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Cycle}">
-            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
-                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='转速下限(rpm)'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit, UpdateSourceTrigger=LostFocus}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        VerticalAlignment="Center"
-                        hc:InfoElement.Title="{ex:Language Key='转速上限(rpm)'}"
-                        Style="{StaticResource TextBoxExtend}"
-                        Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit, UpdateSourceTrigger=LostFocus}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                </hc:UniformSpacingPanel>
-
-                <GroupBox Header="正向参数" Style="{StaticResource MaterialDesignGroupBox}">
-                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                            <control:TextBoxNoAutoKeyboard
-                                Width="100"
-                                hc:InfoElement.Title="{ex:Language Key='时间间隔(秒)'}"
-                                DockPanel.Dock="Left"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.DirectInterval, UpdateSourceTrigger=LostFocus}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </control:TextBoxNoAutoKeyboard>
-                            <control:TextBoxNoAutoKeyboard
-                                Width="100"
-                                VerticalAlignment="Center"
-                                hc:InfoElement.Title="{ex:Language Key='转速步长(rpm)'}"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.DirectStep, UpdateSourceTrigger=LostFocus}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </control:TextBoxNoAutoKeyboard>
+                            </TabItem>
+                            <TabItem Header="级联参数">
+                                <hc:ScrollViewer
+                                    Margin="5"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    VerticalScrollBarVisibility="Auto">
+                                    <hc:UniformSpacingPanel
+                                        IsEnabled="{Binding BasicParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                                        Orientation="Vertical"
+                                        Spacing="5">
+                                        <hc:UniformSpacingPanel
+                                            DockPanel.Dock="Left"
+                                            Orientation="Horizontal"
+                                            Spacing="5">
+                                            <DockPanel LastChildFill="False">
+                                                <Button
+                                                    Height="30"
+                                                    VerticalAlignment="Bottom"
+                                                    hc:IconElement.Geometry="{StaticResource GeometryAdd}"
+                                                    Command="{Binding AddCascadeCommand}"
+                                                    Content="新增"
+                                                    Foreground="{StaticResource PrimaryBrush}"
+                                                    IsEnabled="{Binding Param.FactorCol.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" />
+                                            </DockPanel>
+                                            <DockPanel LastChildFill="False">
+                                                <Button
+                                                    Height="30"
+                                                    VerticalAlignment="Bottom"
+                                                    hc:IconElement.Geometry="{StaticResource DeleteFillCircleGeometry}"
+                                                    Command="{Binding DeleteCascadeCommand}"
+                                                    CommandParameter="{Binding ElementName=gridCascade, Path=SelectedItem}"
+                                                    Content="删除"
+                                                    Foreground="{StaticResource PrimaryBrush}"
+                                                    IsEnabled="{Binding Param.FactorCol.Count, Converter={StaticResource GreaterThanConverter}, ConverterParameter=0}" />
+                                            </DockPanel>
+                                        </hc:UniformSpacingPanel>
+                                        <hc:ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                            <DataGrid
+                                                Name="gridCascade"
+                                                hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
+                                                hc:DataGridAttach.ShowSelectAllButton="False"
+                                                AutoGenerateColumns="False"
+                                                CanUserAddRows="False"
+                                                CanUserSortColumns="False"
+                                                ColumnWidth="SizeToHeader"
+                                                GridLinesVisibility="All"
+                                                HeadersVisibility="Column"
+                                                HorizontalGridLinesBrush="LightGray"
+                                                IsReadOnly="False"
+                                                ItemsSource="{Binding Param.CascadeCol}"
+                                                LoadingRow="DataGrid_LoadingRow"
+                                                RowHeight="35"
+                                                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                                SelectionMode="Single"
+                                                SelectionUnit="FullRow"
+                                                VerticalGridLinesBrush="LightGray">
+                                                <DataGrid.Columns>
+                                                    <DataGridTemplateColumn
+                                                        Width="auto"
+                                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                        Header="序号"
+                                                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}, Path=Header}" />
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn
+                                                        Width="auto"
+                                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                        Header="空气"
+                                                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                                                        Visibility="{Binding Source={StaticResource proxy}, Path=Data.AirEnable, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <control:TextBoxNoAutoKeyboard Style="{StaticResource DataTextBoxStyle}" Text="{Binding AirFlowRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                                            <i:InvokeCommandAction Command="{Binding DataContext.OpenNumberKeyBoardCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </control:TextBoxNoAutoKeyboard>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn
+                                                        Width="auto"
+                                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                        Header="氧气"
+                                                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                                                        Visibility="{Binding Source={StaticResource proxy}, Path=Data.O2Enable, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <control:TextBoxNoAutoKeyboard Style="{StaticResource DataTextBoxStyle}" Text="{Binding O2FlowRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                                            <i:InvokeCommandAction Command="{Binding DataContext.OpenNumberKeyBoardCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </control:TextBoxNoAutoKeyboard>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn
+                                                        Width="auto"
+                                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                        Header="温度"
+                                                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                                                        Visibility="{Binding Source={StaticResource proxy}, Path=Data.TempEnable, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <control:TextBoxNoAutoKeyboard Style="{StaticResource DataTextBoxStyle}" Text="{Binding Temp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                                            <i:InvokeCommandAction Command="{Binding DataContext.OpenNumberKeyBoardCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </control:TextBoxNoAutoKeyboard>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                    <DataGridTemplateColumn
+                                                        Width="auto"
+                                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                        Header="补料速率（%）"
+                                                        HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
+                                                        Visibility="{Binding Source={StaticResource proxy}, Path=Data.FeedEnable, Converter={StaticResource Boolean2VisibilityConverter}}">
+                                                        <DataGridTemplateColumn.CellTemplate>
+                                                            <DataTemplate>
+                                                                <control:TextBoxNoAutoKeyboard Style="{StaticResource DataTextBoxStyle}" Text="{Binding FeedFlowRate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                                    <i:Interaction.Triggers>
+                                                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                                                            <i:InvokeCommandAction Command="{Binding DataContext.OpenNumberKeyBoardCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" />
+                                                                        </i:EventTrigger>
+                                                                    </i:Interaction.Triggers>
+                                                                </control:TextBoxNoAutoKeyboard>
+                                                            </DataTemplate>
+                                                        </DataGridTemplateColumn.CellTemplate>
+                                                    </DataGridTemplateColumn>
+                                                </DataGrid.Columns>
+                                            </DataGrid>
+                                        </hc:ScrollViewer>
+                                    </hc:UniformSpacingPanel>
+                                </hc:ScrollViewer>
+                            </TabItem>
+                        </TabControl>
+                    </GroupBox>
+                </hc:ScrollViewer>
+                <GroupBox Style="{StaticResource GroupBoxTab}" Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Midranging}">
+                    <GroupBox.Header>
+                        <TextBlock Foreground="Gray" Text="中位级联策略参数" />
+                    </GroupBox.Header>
+                    <hc:UniformSpacingPanel
+                        Margin="5"
+                        Orientation="Vertical"
+                        Spacing="5">
+                        <hc:UniformSpacingPanel
+                            IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                            Orientation="Horizontal"
+                            Spacing="15">
+                            <CheckBox
+                                materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                                Content="空气"
+                                IsChecked="{Binding MidRanging.AirEnable}"
+                                Style="{StaticResource MaterialDesignCheckBox}" />
+                            <CheckBox
+                                materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                                Content="氧气"
+                                IsChecked="{Binding MidRanging.O2Enable}"
+                                Style="{StaticResource MaterialDesignCheckBox}" />
+                            <CheckBox
+                                materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                                Content="温度"
+                                IsChecked="{Binding MidRanging.TempEnable}"
+                                Style="{StaticResource MaterialDesignCheckBox}" />
+                            <CheckBox
+                                materialDesign:CheckBoxAssist.CheckBoxSize="24"
+                                Content="补料"
+                                IsChecked="{Binding MidRanging.FeedEnable}"
+                                Style="{StaticResource MaterialDesignCheckBox}" />
+                        </hc:UniformSpacingPanel>
+                        <ListBox
+                            Name="listBoxMidrangingFactor"
+                            AllowDrop="True"
+                            FontSize="{StaticResource SubHeadFontSize}"
+                            IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                            ItemsSource="{Binding MidRanging.FactorCol}"
+                            Style="{StaticResource ListBoxBaseStyle}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                        <TextBlock VerticalAlignment="Center" Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                        <hc:UniformSpacingPanel
+                                            Margin="20,0,0,0"
+                                            Orientation="Horizontal"
+                                            Spacing="5">
+                                            <Button
+                                                Padding="5"
+                                                hc:IconElement.Geometry="{StaticResource UpGeometry}"
+                                                hc:IconElement.Width="16"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Command="{Binding DataContext.FactorUpCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                CommandParameter="{Binding}"
+                                                ToolTip="提升执行顺序" />
+                                            <Button
+                                                Padding="5"
+                                                hc:IconElement.Geometry="{StaticResource DownGeometry}"
+                                                hc:IconElement.Width="16"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Command="{Binding DataContext.FactorDownCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                CommandParameter="{Binding}"
+                                                ToolTip="降低执行顺序" />
+                                        </hc:UniformSpacingPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <hc:UniformSpacingPanel
+                            IsEnabled="{Binding BasicParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                            Orientation="Vertical"
+                            Spacing="15">
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <control:TextBoxNoAutoKeyboard
+                                    Width="100"
+                                    materialDesign:HintAssist.HelperText="单位:rpm"
+                                    materialDesign:HintAssist.Hint="转速高限"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding MidRanging.AgitHigh, UpdateSourceTrigger=LostFocus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </control:TextBoxNoAutoKeyboard>
+                                <control:TextBoxNoAutoKeyboard
+                                    Width="100"
+                                    materialDesign:HintAssist.HelperText="单位:℃"
+                                    materialDesign:HintAssist.Hint="温度下限"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding CurrentDeviceParameter.TempDOLowerLimit, UpdateSourceTrigger=LostFocus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </control:TextBoxNoAutoKeyboard>
+                                <control:TextBoxNoAutoKeyboard
+                                    Width="100"
+                                    materialDesign:HintAssist.HelperText="单位:mL/h"
+                                    materialDesign:HintAssist.Hint="补料下限"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding CurrentDeviceParameter.FeedDOLowerLimit, UpdateSourceTrigger=LostFocus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </control:TextBoxNoAutoKeyboard>
+                            </hc:UniformSpacingPanel>
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <ComboBox
+                                    Width="100"
+                                    materialDesign:ComboBoxAssist.ShowSelectedItem="True"
+                                    materialDesign:HintAssist.Hint="气体单位"
+                                    SelectedIndex="{Binding MidRanging.Unit}"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                    <ComboBoxItem Content="VVM" />
+                                    <ComboBoxItem Content="L/min" />
+                                </ComboBox>
+                                <control:TextBoxNoAutoKeyboard
+                                    Width="100"
+                                    materialDesign:HintAssist.Hint="气体下限"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding MidRanging.InitialAir, UpdateSourceTrigger=LostFocus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </control:TextBoxNoAutoKeyboard>
+                                <control:TextBoxNoAutoKeyboard
+                                    Width="100"
+                                    materialDesign:HintAssist.Hint="气体上限"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding MidRanging.AirUpperLimit, UpdateSourceTrigger=LostFocus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </control:TextBoxNoAutoKeyboard>
+                            </hc:UniformSpacingPanel>
                         </hc:UniformSpacingPanel>
                     </hc:UniformSpacingPanel>
                 </GroupBox>
-                <GroupBox Header="反向参数" Style="{StaticResource MaterialDesignGroupBox}">
-                    <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
-                        <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                            <control:TextBoxNoAutoKeyboard
-                                Width="100"
-                                hc:InfoElement.Title="{ex:Language Key='时间间隔(秒)'}"
-                                DockPanel.Dock="Left"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.ReverseInterval, UpdateSourceTrigger=LostFocus}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </control:TextBoxNoAutoKeyboard>
-                            <control:TextBoxNoAutoKeyboard
-                                Width="100"
-                                VerticalAlignment="Center"
-                                hc:InfoElement.Title="{ex:Language Key='转速步长(rpm)'}"
-                                Style="{StaticResource TextBoxExtend}"
-                                Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.ReverseStep, UpdateSourceTrigger=LostFocus}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </control:TextBoxNoAutoKeyboard>
-                        </hc:UniformSpacingPanel>
+                <hc:UniformSpacingPanel
+                    IsEnabled="{Binding BasicParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                    Orientation="Vertical"
+                    Spacing="10"
+                    Visibility="{Binding CurrentDeviceParameter.DOParam.ControlStrategy, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=Cycle}">
+                    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                        <control:TextBoxNoAutoKeyboard
+                            Width="100"
+                            materialDesign:HintAssist.Hint="转速下限"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit, UpdateSourceTrigger=LostFocus}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </control:TextBoxNoAutoKeyboard>
+                        <control:TextBoxNoAutoKeyboard
+                            Width="100"
+                            materialDesign:HintAssist.Hint="转速上限"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit, UpdateSourceTrigger=LostFocus}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </control:TextBoxNoAutoKeyboard>
                     </hc:UniformSpacingPanel>
-                </GroupBox>
-            </hc:UniformSpacingPanel>
-        </GroupBox>
-        <ToggleButton
-            Width="530"
-            Height="40"
-            IsChecked="{Binding CurrentDeviceParameter.DOParam.IsControling}"
-            Style="{StaticResource MaterialDesignSwitchLightToggleButton}" />
-    </hc:UniformSpacingPanel>
+                    <GroupBox Style="{StaticResource GroupBoxTab}">
+                        <GroupBox.Header>
+                            <TextBlock Foreground="Gray" Text="转速(+)" />
+                        </GroupBox.Header>
+                        <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <control:TextBoxNoAutoKeyboard
+                                    Width="100"
+                                    materialDesign:HintAssist.Hint="间隔(秒)"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.DirectInterval, UpdateSourceTrigger=LostFocus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </control:TextBoxNoAutoKeyboard>
+                                <control:TextBoxNoAutoKeyboard
+                                    Width="100"
+                                    materialDesign:HintAssist.Hint="转速步长(+)"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.DirectStep, UpdateSourceTrigger=LostFocus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </control:TextBoxNoAutoKeyboard>
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </GroupBox>
+                    <GroupBox Style="{StaticResource GroupBoxTab}">
+                        <GroupBox.Header>
+                            <TextBlock Foreground="Gray" Text="转速(-)" />
+                        </GroupBox.Header>
+                        <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
+                            <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
+                                <control:TextBoxNoAutoKeyboard
+                                    Width="100"
+                                    materialDesign:HintAssist.Hint="间隔(秒)"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.ReverseInterval, UpdateSourceTrigger=LostFocus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </control:TextBoxNoAutoKeyboard>
+                                <control:TextBoxNoAutoKeyboard
+                                    Width="100"
+                                    materialDesign:HintAssist.Hint="转速步长(-)"
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    Text="{Binding CurrentDeviceParameter.DOParam.AgitCycle.ReverseStep, UpdateSourceTrigger=LostFocus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </control:TextBoxNoAutoKeyboard>
+                            </hc:UniformSpacingPanel>
+                        </hc:UniformSpacingPanel>
+                    </GroupBox>
+                </hc:UniformSpacingPanel>
+            </hc:SimplePanel>
+            <DockPanel Grid.Row="4" LastChildFill="False">
+                <hc:UniformSpacingPanel
+                    DockPanel.Dock="Right"
+                    Orientation="Horizontal"
+                    Spacing="10">
+                    <Button
+                        Width="90"
+                        Height="40"
+                        Command="{Binding OpenCommand}"
+                        Content="启动控制"
+                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                        Style="{StaticResource PrimaryCommonButton}" />
+                    <Button
+                        Width="90"
+                        Height="40"
+                        Command="{Binding CloseCommand}"
+                        Content="停止控制"
+                        IsEnabled="{Binding CurrentDeviceParameter.DOParam.IsControling}"
+                        Style="{StaticResource SecondaryCommonButton}" />
+                </hc:UniformSpacingPanel>
+            </DockPanel>
+        </Grid>
+    </Grid>
 </UserControl>

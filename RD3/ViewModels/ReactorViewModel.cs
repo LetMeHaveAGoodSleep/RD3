@@ -14752,9 +14752,9 @@ namespace RD3.ViewModels
             {
                 Device reactor = ReactorCol[i];
                 DeviceParameter device = null;
-                if (AnalysisSolution.GetInstance().ReactorCol != null && AnalysisSolution.GetInstance().ReactorCol.Count > 1)
+                if (AnalysisSolution.GetInstance().FermentorCol != null && AnalysisSolution.GetInstance().FermentorCol.Count > 1)
                 {
-                    device = AnalysisSolution.GetInstance().ReactorCol.FindFirst(t => t.Name == reactor.Name);
+                    device = AnalysisSolution.GetInstance().FermentorCol.FindFirst(t => t.Device.Name == reactor.Name).Device;
                 }
                 if (device == null)
                 {
@@ -15685,7 +15685,7 @@ namespace RD3.ViewModels
 
                     Task.Run(() =>
                     {
-                        AnalysisSolution.GetInstance().SaveReactorSetting(DeviceParameterCol);//保存设置
+                        //AnalysisSolution.GetInstance().SaveReactorSetting(DeviceParameterCol);//保存设置
                     });
                     Thread.Sleep(1000);
                 }

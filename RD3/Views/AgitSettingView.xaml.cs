@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RD3.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,16 @@ namespace RD3.Views
         public AgitSettingView()
         {
             InitializeComponent();
+
+            this.Loaded += UserControl_Loaded;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext is AgitSettingViewModel settingViewModel && tsView.DataContext is TimeSeriesViewModel timeSeriesViewModel)
+            {
+                timeSeriesViewModel.BasicParam = settingViewModel.BasicParam;
+            }
         }
     }
 }

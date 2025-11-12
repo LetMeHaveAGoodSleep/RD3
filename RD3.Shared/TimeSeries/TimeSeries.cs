@@ -4,35 +4,49 @@ using RD3.Shared.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
-    public class TimeSeries : BindableBase, ICloneable
+    public class TimeSeries : AuditParam
     {
         public TimeSeries()
         {
+            ModuleName = "时间序列";
+        }
+
+        private string _runningInfo = string.Empty;
+        public string RunningInfo
+        {
+            get => _runningInfo;
+            set
+            {
+                SetProperty(ref _runningInfo, value);
+            }
         }
 
         private TimeType _timeType = TimeType.RelativeTime;
+        [Description("时间参照类型")]
         public TimeType TimeType
         {
             get => _timeType;
             set
             {
-                SetProperty(ref _timeType, value);
+                SetPropertyWithAudit(ref _timeType, value);
             }
         }
 
         private TimeUnit _timer = TimeUnit.Hour;
+        [Description("时间单位")]
         public TimeUnit Timer
         {
             get => _timer;
             set
             {
-                SetProperty(ref _timer, value);
+                SetPropertyWithAudit(ref _timer, value);
             }
         }
 
@@ -41,11 +55,6 @@ namespace RD3.Shared
         {
             get { return _timeSeriesItemCol; }
             set { SetProperty(ref _timeSeriesItemCol, value); }
-        }
-
-        public object Clone()
-        {
-            return CloneUtil.Clone(this);
         }
     }
 
@@ -94,7 +103,8 @@ namespace RD3.Shared
 
         public object Clone()
         {
-            return CloneUtil.Clone(this);
+            var clonedObject = ObjectCloner.DeepCopy(this);
+            return clonedObject;
         }
     }
 }

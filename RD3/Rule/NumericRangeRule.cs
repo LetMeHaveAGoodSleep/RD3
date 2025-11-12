@@ -10,12 +10,12 @@ namespace RD3
 {
     public class NumericRangeRule : ValidationRule
     {
-        public double Min { get; set; } = 0;
-        public double Max { get; set; } = 100;
+        public float Min { get; set; } = 0;
+        public float Max { get; set; } = 100;
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if (value == null || !double.TryParse(value.ToString(), out double numericValue))
+            if (value == null || !float.TryParse(value.ToString(), out float numericValue))
                 return new ValidationResult(false, "必须输入数字");
 
             if (numericValue < Min || numericValue > Max)

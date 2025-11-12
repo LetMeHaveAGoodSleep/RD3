@@ -41,7 +41,7 @@ namespace RD3.ViewModels
 
         public DeviceParameter CurrentDeviceParameter
         {
-            get { return AnalysisSolution.GetInstance().ReactorCol[0]; }
+            get { return AnalysisSolution.GetInstance().CurrentFermentor.Device; }
         }
 
 

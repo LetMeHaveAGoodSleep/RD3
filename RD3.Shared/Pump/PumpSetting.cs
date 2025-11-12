@@ -4,7 +4,7 @@ using System;
 
 namespace RD3.Shared
 {
-    public class PumpSetting : BindableBase, ICloneable
+    public class PumpSetting : AuditParam
     {
         private string _deviceID = "G01";
         public string DeviceID
@@ -65,12 +65,6 @@ namespace RD3.Shared
         {
             get => _isEnable;
             set { SetProperty(ref _isEnable, value); }
-        }
-
-        public object Clone()
-        {
-            var clonedObject = ObjectCloner.DeepCopy(this);
-            return clonedObject;
         }
     }
 }
