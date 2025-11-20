@@ -16,9 +16,11 @@ namespace RD3.Controller
 
         private BackgroundWorker _backgroundWorker;
 
+        private DeviceParameter _currentDeviceParameter;
         public DeviceParameter CurrentDeviceParameter
         {
-            get { return AnalysisSolution.GetInstance().CurrentFermentor.Device; }
+            get => _currentDeviceParameter;
+            private set => _currentDeviceParameter = value;
         }
 
         private MFCInfo _mfcInfo;
@@ -30,6 +32,13 @@ namespace RD3.Controller
 
         public MFCController()
         {
+            if (_currentDeviceParameter == null)
+                _currentDeviceParameter = AnalysisSolution.GetInstance().CurrentFermentor.Device;
+        }
+
+        public MFCController(DeviceParameter deviceParameter)
+        {
+            _currentDeviceParameter = deviceParameter;
         }
 
         public void StartWork()

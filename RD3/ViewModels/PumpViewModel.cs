@@ -35,6 +35,7 @@ namespace RD3.ViewModels
             set 
             { 
                 SetProperty(ref _pumpInfo, value);
+                Controller = new();
                 Controller.PumpInfo = value;
             }
         }
@@ -57,8 +58,10 @@ namespace RD3.ViewModels
             });
         });
 
-        public DelegateCommand PumpClearCommand => new(() =>
+        public DelegateCommand<RoutedEventArgs> PumpClearCommand => new((RoutedEventArgs e) =>
         {
+            e.Handled = true;
+
             if (HandyControl.Controls.MessageBox.Show($"确定清除泵{PumpInfo.PumpIndex}的累计量?", "温馨提示", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
             {
                 return;

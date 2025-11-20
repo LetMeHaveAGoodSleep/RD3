@@ -9,44 +9,64 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:system="clr-namespace:System;assembly=netstandard"
     xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    Width="345"
+    Height="45"
     d:DataContext="{d:DesignInstance Type=viewmodels:MFCViewModel}"
-    d:DesignHeight="50"
-    d:DesignWidth="200"
     prism:ViewModelLocator.AutoWireViewModel="True"
     FontSize="{StaticResource SubHeadFontSize}"
+    Foreground="Black"
+    Visibility="{Binding MFCInfo.IsEnable, Converter={StaticResource Boolean2VisibilityConverter}}"
     mc:Ignorable="d">
-    <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="15">
-        <DockPanel LastChildFill="False">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseUp">
+            <i:InvokeCommandAction Command="{Binding MFCSettingCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Border
+        x:Name="borderMain"
+        CornerRadius="24"
+        Style="{StaticResource BorderHighlight}"
+        Tag="{Binding MFCInfo.RunningStr}">
+        <StackPanel Margin="8,0,8,0" Orientation="Horizontal">
             <Image
-                Width="29"
-                DockPanel.Dock="Bottom"
-                Source="/Images/NewReactor/阀（开）.png"
-                Visibility="{Binding MFCInfo.IsEnable, Converter={StaticResource Boolean2VisibilityConverter}}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseLeftButtonDown">
-                        <i:InvokeCommandAction Command="{Binding MFCSettingCommand}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Image>
-            <Image
-                Width="29"
-                DockPanel.Dock="Bottom"
-                Source="/Images/NewReactor/阀（关）.png"
-                Visibility="{Binding MFCInfo.IsEnable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-        </DockPanel>
-        <TextBox
-            Width="80"
-            materialDesign:HintAssist.Hint="流量(L/min)"
-            IsEnabled="False"
-            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-            Text="{Binding MFCInfo.FlowRate, StringFormat={}{0:F2}}" />
-        <StackPanel Orientation="Horizontal">
+                x:Name="mfcState"
+                Width="21"
+                Height="16"
+                Source="/Images/Index/GasEnable.png" />
             <TextBlock
-                Width="70"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                Text="{Binding MFCInfo.GasName}" />
+                x:Name="txtMfcName"
+                Width="45"
+                Margin="8,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="{StaticResource SubHeadFontSize}"
+                Text="{Binding MFCInfo.GasName}"
+                TextWrapping="WrapWithOverflow" />
+            <Border
+                Width="55"
+                Height="25"
+                Background="LightGray"
+                CornerRadius="4">
+                <TextBlock
+                    x:Name="txtMfcFlowrate_sp"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="{StaticResource SubHeadFontSize}"
+                    Foreground="Black"
+                    Text="{Binding MFCInfo.FlowRate_SP}" />
+            </Border>
+            <TextBlock
+                x:Name="txtMfcFlowrate"
+                Width="50"
+                Margin="5,0,0,0"
+                VerticalAlignment="Center"
+                Text="{Binding MFCInfo.FlowRate}" />
+            <TextBlock
+                Margin="3,0,0,0"
+                VerticalAlignment="Center"
+                Text="L/min" />
         </StackPanel>
-    </hc:UniformSpacingPanel>
+    </Border>
 </UserControl>

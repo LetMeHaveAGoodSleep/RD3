@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Newtonsoft.Json;
+using Prism.Mvvm;
 using RD3.Shared;
 using RD3.Shared.Util;
 using System;
@@ -19,6 +20,7 @@ namespace RD3.Shared
         }
 
         private string _runningInfo = string.Empty;
+        [JsonIgnore]
         public string RunningInfo
         {
             get => _runningInfo;

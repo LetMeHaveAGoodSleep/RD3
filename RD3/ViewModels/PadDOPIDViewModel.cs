@@ -34,7 +34,7 @@ namespace RD3.ViewModels
 
         public void OnDialogClosed()
         {
-            var dircetPID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.deviceID == CurrentDeviceParameter.Name && t.Factor == PIDFactor.DO_Dircet);
+            var dircetPID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.DeviceId == CurrentDeviceParameter.Name && t.Factor == PIDFactor.DO_Dircet);
             if (dircetPID == null)
             {
                 PIDInfoManager.GetInstance().PIDInfos.Add(CurrentDeviceParameter.DOParam.DirectPID);
@@ -44,7 +44,7 @@ namespace RD3.ViewModels
                 dircetPID = CurrentDeviceParameter.DOParam.DirectPID;
             }
 
-            var reversePID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.deviceID == CurrentDeviceParameter.Name && t.Factor == PIDFactor.DO_Reverse);
+            var reversePID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.DeviceId == CurrentDeviceParameter.Name && t.Factor == PIDFactor.DO_Reverse);
             if (reversePID == null)
             {
                 PIDInfoManager.GetInstance().PIDInfos.Add(CurrentDeviceParameter.DOParam.ReversePID);
@@ -60,16 +60,18 @@ namespace RD3.ViewModels
         {
             if (CurrentDeviceParameter.DOParam.DirectPID == null)
             {
-                var dircetPID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.deviceID == CurrentDeviceParameter.Name && t.Factor == PIDFactor.DO_Dircet);
+                var dircetPID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.DeviceId == CurrentDeviceParameter.Name && t.Factor == PIDFactor.DO_Dircet);
                 if (dircetPID == null)
                 {
                     dircetPID = new PIDInfo()
                     {
-                        deviceID = CurrentDeviceParameter.Name,
+                        DeviceId = CurrentDeviceParameter.Name,
                         Factor = PIDFactor.DO_Dircet,
                         Interval = 1,
-                        maxSpeed = Const.MaxAgit,
-                        Threshold = 100
+                        MaxSpeed = Const.MaxAgit,
+                        Threshold = 100,
+                        ModuleName = "正向PID",
+                        CreateUser = AppSession.CurrentUser.UserName
                     };
                 }
                 CurrentDeviceParameter.DOParam.DirectPID = dircetPID;
@@ -77,16 +79,18 @@ namespace RD3.ViewModels
 
             if (CurrentDeviceParameter.DOParam.ReversePID == null)
             {
-                var reversePID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.deviceID == CurrentDeviceParameter.Name && t.Factor == PIDFactor.DO_Reverse);
+                var reversePID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.DeviceId == CurrentDeviceParameter.Name && t.Factor == PIDFactor.DO_Reverse);
                 if (reversePID == null)
                 {
                     reversePID = new PIDInfo()
                     {
-                        deviceID = CurrentDeviceParameter.Name,
+                        DeviceId = CurrentDeviceParameter.Name,
                         Factor = PIDFactor.DO_Reverse,
                         Interval = 1,
-                        maxSpeed = Const.MaxAgit,
-                        Threshold = 100
+                        MaxSpeed = Const.MaxAgit,
+                        Threshold = 100,
+                        ModuleName = "反向PID",
+                        CreateUser = AppSession.CurrentUser.UserName
                     };
                 }
                 CurrentDeviceParameter.DOParam.ReversePID = reversePID;

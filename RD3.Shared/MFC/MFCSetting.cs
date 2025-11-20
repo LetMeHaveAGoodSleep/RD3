@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace RD3.Shared
 {
-    public class MFCSetting : BindableBase, ICloneable
+    public class MFCSetting : AuditParam
     {
         private string _deviceID = "G01";
         public string DeviceID
@@ -26,13 +27,14 @@ namespace RD3.Shared
         }
 
         private GasType _gas = GasType.Air;
+        [Description("MFC用途")]
         public GasType Gas
         {
             get => _gas;
             set
             {
                 GasName = EnumUtil.GetEnumDescription(value);
-                SetProperty(ref _gas, value);
+                SetPropertyWithAudit(ref _gas, value);
             }
         }
 
@@ -51,15 +53,11 @@ namespace RD3.Shared
         }
 
         private bool _isEnable = false;
+        [Description("是否使能")]
         public bool IsEnable
         {
             get => _isEnable;
-            set { SetProperty(ref _isEnable, value); }
-        }
-
-        public object Clone()
-        {
-            return CloneUtil.Clone(this);
+            set { SetPropertyWithAudit(ref _isEnable, value); }
         }
     }
 }

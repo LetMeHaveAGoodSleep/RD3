@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Prism.Mvvm;
 using System;
+using System.ComponentModel;
 
 namespace RD3.Shared
 {
@@ -21,13 +22,14 @@ namespace RD3.Shared
         }
 
         private PeristalticPump _pump = PeristalticPump.None;
+        [Description("泵用途")]
         public PeristalticPump Pump
         {
             get => _pump;
             set
             {
                 PumpName = EnumUtil.GetEnumDescription(value);
-                SetProperty(ref _pump, value);
+                SetPropertyWithAudit(ref _pump, value);
             }
         }
 
@@ -47,20 +49,23 @@ namespace RD3.Shared
         }
 
         private bool _isWeigh = true;
+        [Description("是否称重")]
         public bool IsWeigh
         {
             get => _isWeigh;
-            set { SetProperty(ref _isWeigh, value); }
+            set { SetPropertyWithAudit(ref _isWeigh, value); }
         }
 
         private WeightIndex _weighIndex =  WeightIndex.Unset;
+        [Description("称选择")]
         public WeightIndex WeighIndex
         {
             get => _weighIndex;
-            set { SetProperty(ref _weighIndex, value); }
+            set { SetPropertyWithAudit(ref _weighIndex, value); }
         }
 
         private bool _isEnable = false;
+        [Description("是否启用")]
         public bool IsEnable
         {
             get => _isEnable;

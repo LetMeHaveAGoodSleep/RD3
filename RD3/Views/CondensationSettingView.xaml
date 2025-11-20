@@ -1,0 +1,80 @@
+﻿<UserControl
+    x:Class="RD3.Views.CondensationSettingView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:vm="clr-namespace:RD3.ViewModels"
+    Width="800"
+    Height="550"
+    d:DataContext="{d:DesignInstance Type=vm:CondensationSettingViewModel}"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Background="{StaticResource RegionBackgroundBrush}"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{StaticResource SubHeadFontSize}"
+    mc:Ignorable="d">
+    <prism:Dialog.WindowStyle>
+        <Style TargetType="Window">
+            <Setter Property="SizeToContent" Value="WidthAndHeight" />
+            <Setter Property="ResizeMode" Value="NoResize" />
+            <Setter Property="prism:Dialog.WindowStartupLocation" Value="CenterOwner" />
+            <Setter Property="Width" Value="{Binding FormWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding FormHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Left" Value="{Binding LeftLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Top" Value="{Binding TopLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="ShowInTaskbar" Value="True" />
+            <Setter Property="AllowsTransparency" Value="False" />
+            <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+            <Setter Property="WindowState" Value="{Binding FormState, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Background" Value="{StaticResource RegionBackgroundBrush}" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="Icon" Value="../Assets/logo.png" />
+        </Style>
+    </prism:Dialog.WindowStyle>
+    <Grid Margin="10" HorizontalAlignment="Left">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBox
+                Width="120"
+                Margin="0,0,30,0"
+                materialDesign:HintAssist.Hint="冷凝温度（℃）"
+                materialDesign:TextFieldAssist.HasClearButton="True"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                Text="{Binding CurrentDeviceParameter.CondensationParam.SP}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <StackPanel VerticalAlignment="Bottom">
+                <hc:UniformSpacingPanel HorizontalAlignment="Right" Spacing="10">
+                    <Button
+                        x:Name="btn_start"
+                        Width="80"
+                        Height="30"
+                        Command="{Binding StartCommand}"
+                        Content="启动控制"
+                        IsEnabled="{Binding CurrentDeviceParameter.CondensationParam.Enable, Converter={StaticResource InverseBooleanConverter}}"
+                        Style="{StaticResource PrimaryCommonButton}" />
+                    <Button
+                        Width="80"
+                        Height="30"
+                        Command="{Binding StopCommand}"
+                        Content="停止控制"
+                        IsEnabled="{Binding CurrentDeviceParameter.CondensationParam.Enable}"
+                        Style="{StaticResource SecondaryCommonButton}" />
+                </hc:UniformSpacingPanel>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

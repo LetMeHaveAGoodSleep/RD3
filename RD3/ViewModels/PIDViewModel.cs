@@ -107,9 +107,7 @@ namespace RD3.ViewModels
         /// </summary>
         public DelegateCommand SaveCommand => new(() => 
         {
-            //string result = CustomApp.JsonHelper.ObjectToString(PidInfos.ToList());
-            //File.WriteAllText(FileConst.PidInfoPath,result);
-            PidInfos = new ObservableCollection<PIDInfo>(PidInfos.OrderBy(t => t.deviceID));
+            PidInfos = new ObservableCollection<PIDInfo>(PidInfos.OrderBy(t => t.DeviceId));
             string json = JsonConvert.SerializeObject(PidInfos);
             File.Delete(FileConst.PidInfoPath);
             File.WriteAllText(FileConst.PidInfoPath, json);

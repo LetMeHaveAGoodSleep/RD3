@@ -3,20 +3,12 @@
   "WorkspaceRootPath": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EFB11CAA-32DA-4436-B05C-FFFA0F111ABF}|XZ.SQLite\\XZ.SQLite.csproj|d:\\20250415-001\\rd3 - \u65B0\u7248\u672C\\xz.sqlite\\enhancedsqlitebackupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EFB11CAA-32DA-4436-B05C-FFFA0F111ABF}|XZ.SQLite\\XZ.SQLite.csproj|solutionrelative:xz.sqlite\\enhancedsqlitebackupservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3 - \u65B0\u7248\u672C\\rd3\\config\\var.json||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\var.json||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3 - \u65B0\u7248\u672C\\rd3\\views\\padmainview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\padmainview.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3 - \u65B0\u7248\u672C\\rd3\\views\\padmainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\padmainview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3 - \u65B0\u7248\u672C\\rd3\\hdb\\agitctrlview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\hdb\\agitctrlview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3 - \u65B0\u7248\u672C\\rd3\\views\\padindexview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\padindexview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -28,10 +20,6 @@
           "DockedWidth": 200,
           "SelectedChildIndex": 6,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
@@ -50,56 +38,35 @@
             },
             {
               "$type": "Bookmark",
+              "Name": "ST:0:0:{57d563b6-44a5-47df-85be-f4199ad6b651}"
+            },
+            {
+              "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "EnhancedSqliteBackupService.cs",
-              "DocumentMoniker": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\XZ.SQLite\\EnhancedSqliteBackupService.cs",
-              "RelativeDocumentMoniker": "XZ.SQLite\\EnhancedSqliteBackupService.cs",
-              "ToolTip": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\XZ.SQLite\\EnhancedSqliteBackupService.cs",
-              "RelativeToolTip": "XZ.SQLite\\EnhancedSqliteBackupService.cs",
-              "ViewState": "AgIAAI4AAAAAAAAAAAA5wKEAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T02:55:11.435Z",
+              "Title": "Var.json",
+              "DocumentMoniker": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Config\\Var.json",
+              "RelativeDocumentMoniker": "RD3\\Config\\Var.json",
+              "ToolTip": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Config\\Var.json",
+              "RelativeToolTip": "RD3\\Config\\Var.json",
+              "ViewState": "AgIAADYAAAAAAAAAAADwv1AAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-20T03:19:08.16Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "PadMainView.xaml.cs",
-              "DocumentMoniker": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Views\\PadMainView.xaml.cs",
-              "RelativeDocumentMoniker": "RD3\\Views\\PadMainView.xaml.cs",
-              "ToolTip": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Views\\PadMainView.xaml.cs",
-              "RelativeToolTip": "RD3\\Views\\PadMainView.xaml.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAAAswDAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T02:45:00.889Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AgitCtrlView.xaml",
-              "DocumentMoniker": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\HDB\\AgitCtrlView.xaml",
-              "RelativeDocumentMoniker": "RD3\\HDB\\AgitCtrlView.xaml",
-              "ToolTip": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\HDB\\AgitCtrlView.xaml",
-              "RelativeToolTip": "RD3\\HDB\\AgitCtrlView.xaml",
+              "Title": "PadIndexView.xaml",
+              "DocumentMoniker": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Views\\PadIndexView.xaml",
+              "RelativeDocumentMoniker": "RD3\\Views\\PadIndexView.xaml",
+              "ToolTip": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Views\\PadIndexView.xaml",
+              "RelativeToolTip": "RD3\\Views\\PadIndexView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-31T02:38:26.902Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PadMainView.xaml",
-              "DocumentMoniker": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Views\\PadMainView.xaml",
-              "RelativeDocumentMoniker": "RD3\\Views\\PadMainView.xaml",
-              "ToolTip": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Views\\PadMainView.xaml",
-              "RelativeToolTip": "RD3\\Views\\PadMainView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-30T02:20:45.122Z",
+              "WhenOpened": "2025-11-18T09:09:12.593Z",
               "EditorCaption": ""
             }
           ]

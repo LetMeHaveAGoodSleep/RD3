@@ -67,12 +67,12 @@ namespace RD3.Views
             PIDInfo pid = dataGrid.CurrentCell.Item as PIDInfo;
             if (button.Content.ToString() == "手动")
             {
-                pid.SetExcuteType("自动");
+                pid.SetExecuteType("自动");
                 button.Content = "自动";
             }
             else
             {
-                pid.SetExcuteType("手动");
+                pid.SetExecuteType("手动");
                 button.Content = "手动";
             }
         }

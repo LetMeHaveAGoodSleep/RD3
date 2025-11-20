@@ -52,7 +52,7 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>
-    <Border Background="{StaticResource BackGroundBrush}" CornerRadius="{StaticResource DefaultCornerRadius}">
+    <Border Background="{StaticResource RegionBackgroundBrush}" CornerRadius="{StaticResource DefaultCornerRadius}">
         <Grid Margin="5">
             <Grid.RowDefinitions>
                 <!--  操作按钮  -->
@@ -92,7 +92,6 @@
                 hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
                 hc:DataGridAttach.ShowSelectAllButton="False"
                 AutoGenerateColumns="False"
-                Background="{StaticResource DefaultBrush}"
                 CanUserAddRows="False"
                 CanUserSortColumns="False"
                 ColumnWidth="SizeToHeader"
@@ -111,7 +110,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn
                         Width="80"
-                        Binding="{Binding deviceID}"
+                        Binding="{Binding DeviceId}"
                         CanUserSort="False"
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="反应器"
@@ -198,7 +197,7 @@
                         IsReadOnly="False" />
                     <DataGridTextColumn
                         Width="100"
-                        Binding="{Binding deadArea}"
+                        Binding="{Binding DeadArea}"
                         CanUserSort="False"
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="死区"
@@ -206,7 +205,7 @@
                         IsReadOnly="False" />
                     <DataGridTextColumn
                         Width="100"
-                        Binding="{Binding maxSpeed}"
+                        Binding="{Binding MaxSpeed}"
                         CanUserSort="False"
                         CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="上限"
@@ -218,13 +217,6 @@
                         Header="模式"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         Visibility="Collapsed">
-                        <!--<DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
-                                    <Button Content="手动" Name="btnExcuteType" Width="0" Click="btnExcuteType_Click"/>
-                                </hc:UniformSpacingPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>-->
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="5">
@@ -232,7 +224,7 @@
                                         Name="btnExcuteType"
                                         Width="70"
                                         Click="btnExcuteType_Click"
-                                        Content="{Binding excuteType}" />
+                                        Content="{Binding ExecuteType}" />
                                 </hc:UniformSpacingPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

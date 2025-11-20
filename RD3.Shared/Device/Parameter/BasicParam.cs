@@ -24,7 +24,7 @@ namespace RD3.Shared
             {
                 float oldValue = _sp;
                 // 先更新值（便于触发验证）
-                if (SetProperty(ref _sp, value))
+                if (SetPropertyWithAudit(ref _sp, value))
                 {
                     // 验证失败时恢复旧值
                     if (!string.IsNullOrEmpty(this[nameof(SP)]))
@@ -69,6 +69,7 @@ namespace RD3.Shared
         }
 
         private ControlMode _controlMode = ControlMode.Constant;
+        [Description("控制方式")]
         public ControlMode ControlMode
         {
             get { return _controlMode; }
@@ -94,7 +95,7 @@ namespace RD3.Shared
         }
 
         private bool _isControling = false;
-        [Description("控制状态")]
+        [Description("是否开启控制")]
         public bool IsControling
         {
             get { return _isControling; }

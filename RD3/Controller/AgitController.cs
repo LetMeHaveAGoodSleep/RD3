@@ -25,14 +25,16 @@ namespace RD3.Controller
 
         private BackgroundWorker _backgroundWorker;
 
+        private DeviceParameter _currentDeviceParameter;
         public DeviceParameter CurrentDeviceParameter
         {
-            get { return AnalysisSolution.GetInstance().CurrentFermentor.Device; }
+            get => _currentDeviceParameter;
+            private set => _currentDeviceParameter = value;
         }
 
-        public AgitController()
+        public AgitController(DeviceParameter deviceParameter)
         {
-
+            _currentDeviceParameter = deviceParameter;
         }
 
         public void StartWork()

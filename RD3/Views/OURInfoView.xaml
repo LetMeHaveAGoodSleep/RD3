@@ -1,0 +1,59 @@
+﻿<UserControl
+    x:Class="RD3.Views.OURInfoView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:system="clr-namespace:System;assembly=netstandard"
+    xmlns:vm="clr-namespace:RD3.ViewModels"
+    Width="270"
+    Height="45"
+    d:DataContext="{d:DesignInstance Type=vm:OURInfoViewModel}"
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Background="Transparent"
+    TextElement.FontFamily="{DynamicResource AppFontFamily}"
+    TextElement.FontSize="{StaticResource NormalFontSize}"
+    mc:Ignorable="d">
+    <Border
+        x:Name="borderMain"
+        CornerRadius="24"
+        Style="{StaticResource BorderHighlight}">
+        <StackPanel
+            Margin="8,0,8,0"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
+            <Image
+                x:Name="ourState"
+                Width="15"
+                Height="22"
+                Source="/Images/Index/OUR.png" />
+            <TextBlock
+                Width="40"
+                Margin="16,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="{StaticResource SubHeadFontSize}"
+                Text="OUR" />
+            <Border
+                Width="60"
+                Height="25"
+                Margin="10,0,0,0"
+                Background="#dee3e4"
+                CornerRadius="4"
+                Visibility="Collapsed" />
+            <TextBlock
+                Width="75"
+                Margin="10,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="{StaticResource SubHeadFontSize}"
+                Text="{Binding CurrentDeviceParameter.OUR}" />
+            <TextBlock
+                Margin="3,0,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Text="mmol/L/h" />
+        </StackPanel>
+    </Border>
+</UserControl>

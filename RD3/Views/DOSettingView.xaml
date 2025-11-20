@@ -62,9 +62,6 @@
             TargetType="hc:Transfer" />
         <rd3:BindingProxy x:Key="proxy" Data="{Binding Param}" />
     </UserControl.Resources>
-    <!--<TabControl Style="{StaticResource TabControlSliding}">
-        <TabItem Header=""
-    </TabControl>-->
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
@@ -206,7 +203,7 @@
                         Width="70"
                         materialDesign:HintAssist.Hint="死区"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.DOParam.DirectPID.deadArea, StringFormat={}{0:F2}}">
+                        Text="{Binding CurrentDeviceParameter.DOParam.DirectPID.DeadArea, StringFormat={}{0:F2}}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
@@ -260,7 +257,7 @@
                         Width="70"
                         materialDesign:HintAssist.Hint="死区"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.DOParam.ReversePID.deadArea, StringFormat={}{0:F2}}">
+                        Text="{Binding CurrentDeviceParameter.DOParam.ReversePID.DeadArea, StringFormat={}{0:F2}}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                 <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />

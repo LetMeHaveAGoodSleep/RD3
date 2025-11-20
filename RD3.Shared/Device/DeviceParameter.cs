@@ -15,11 +15,13 @@ namespace RD3.Shared
 {
     public class DeviceParameter : RealTimeParam
     {
-
         public DeviceParameter(ObservableCollection<PumpInfo> pumpInfos, ObservableCollection<MFCInfo> mFCInfos)
         {
             PumpInfoCol = pumpInfos;
             MFCInfoCol = mFCInfos;
+
+            PumpInfoCol.ToList().ForEach(pump => pump.IsAuditing = true);
+            MFCInfoCol.ToList().ForEach(mfc => mfc.IsAuditing = true);
         }
         public DeviceParameter()
         { }
@@ -128,7 +130,6 @@ namespace RD3.Shared
             get => _ip;
             set { SetProperty(ref _ip, value); }
         }
-
 
         private TempParam _tempParam = new() { IsAuditing = true,ModuleName="温度" };
         public TempParam TempParam
@@ -239,6 +240,21 @@ namespace RD3.Shared
             get => _feedParam2;
             set { SetProperty(ref _feedParam2, value); }
         }
+
+        CondensationParam _condensationParam =new CondensationParam() { IsAuditing = true, ModuleName = "冷凝" };
+        public CondensationParam CondensationParam
+        {
+            get => _condensationParam;
+            set { SetProperty(ref _condensationParam, value); }
+        }
+
+        EPCParam _epcParam = new EPCParam() { IsAuditing = true, ModuleName = "EPC" };
+        public EPCParam EPCParam
+        {
+            get => _epcParam;
+            set { SetProperty(ref _epcParam, value); }
+        }
+        
 
         private bool _doFilterEnable = false;
         /// <summary>

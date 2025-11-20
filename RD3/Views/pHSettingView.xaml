@@ -154,7 +154,7 @@
                             Width="70"
                             materialDesign:HintAssist.Hint="死区"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.deadArea, StringFormat={}{0:F2}}">
+                            Text="{Binding CurrentDeviceParameter.PHParam.AcidPID.DeadArea, StringFormat={}{0:F2}}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
@@ -208,7 +208,7 @@
                             Width="70"
                             materialDesign:HintAssist.Hint="死区"
                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.deadArea, StringFormat={}{0:F2}}">
+                            Text="{Binding CurrentDeviceParameter.PHParam.BasePID.DeadArea, StringFormat={}{0:F2}}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
                                     <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />

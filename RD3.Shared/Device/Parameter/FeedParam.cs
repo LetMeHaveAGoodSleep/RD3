@@ -2,6 +2,7 @@
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +12,11 @@ namespace RD3.Shared
     public class FeedParam : BasicParam
     {
         private float _feed_Total = 0f;
+        [Description("补料预设量")]
         public float Feed_Total
         {
             get { return _feed_Total; }
-            set { SetProperty(ref _feed_Total, value); }
+            set { SetPropertyWithAudit(ref _feed_Total, value); }
         }
 
         private string _feedName = $"补料1(mL/h)";
@@ -54,6 +56,7 @@ namespace RD3.Shared
         ///  定量
         ///  周期
         /// </summary>
+        [Description("补料策略")]
         public int FeedIndex
         {
             get { return _feedIndex; }
@@ -67,25 +70,27 @@ namespace RD3.Shared
                 {
                     IsTotal = false;
                 }
-                SetProperty(ref _feedIndex, value);
+                SetPropertyWithAudit(ref _feedIndex, value);
             }
         }
 
         private FeedControlMode _feedMode = FeedControlMode.ConstantSpeed;
+        [Description("补料策略")]
         public FeedControlMode FeedMode
         {
             get { return _feedMode; }
             set
             {
-                SetProperty(ref _feedMode, value);
+                SetPropertyWithAudit(ref _feedMode, value);
             }
         }
 
         private bool _isTotal = false;
+        [Description("是否定量补料")]
         public bool IsTotal
         {
             get { return _isTotal; }
-            set { SetProperty(ref _isTotal, value); }
+            set { SetPropertyWithAudit(ref _isTotal, value); }
         }
     }
 }

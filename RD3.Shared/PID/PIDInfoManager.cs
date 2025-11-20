@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,7 +41,16 @@ namespace RD3.Shared
         void LoadPIDInfo()
         {
             string jsonContent = AESEncryption.DecryptFile(FileConst.PidInfoPath);
-            PIDInfos = JsonConvert.DeserializeObject<ObservableCollection<PIDInfo>>(jsonContent);
+            // 配置忽略大小写
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver
+                {
+                    // 忽略大小写匹配
+                    NamingStrategy = new CamelCaseNamingStrategy { OverrideSpecifiedNames = true }
+                }
+            };
+            PIDInfos = JsonConvert.DeserializeObject<ObservableCollection<PIDInfo>>(jsonContent, settings);
             var array = EnumUtil.GetEnumDescriptions<PIDFactor>();
             foreach (PIDInfo pidInfo in PIDInfos)
             {

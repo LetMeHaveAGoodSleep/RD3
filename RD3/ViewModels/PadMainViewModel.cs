@@ -190,6 +190,9 @@ namespace RD3.ViewModels
             {
                 if (HandyControl.Controls.MessageBox.Show("确定退出本系统？", "温馨提示", MessageBoxButton.YesNoCancel, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
+                    SQLiteHelper.Close();
+                    AnalysisSolution.GetInstance().SaveReactorSetting();
+
                     Application.Current.Shutdown();
                     Environment.Exit(0);
                     return;
@@ -275,39 +278,39 @@ namespace RD3.ViewModels
             _graphDataSourceList.Add(data);
 
 
-            Thread thread = new Thread(new ThreadStart(() =>
-            {
-                while (true)
-                {
-                    DeviceParameter lastDeviceParameter = null;
-                    while (true)
-                    {
-                        try
-                        {
-                            if (lastDeviceParameter != null)
-                            {
-                                if (!lastDeviceParameter.InExperimenting && CurrentDeviceParameter.InExperimenting)
-                                {
-                                    CurrentDeviceParameter.ExperimentTime = 0;
-                                }
-                                else if (CurrentDeviceParameter.InExperimenting)
-                                {
-                                    CurrentDeviceParameter.ExperimentTime += 1;
-                                }
-                            }
-                            lastDeviceParameter = CurrentDeviceParameter.Clone() as DeviceParameter;
-                        }
-                        catch (Exception ex) { }
-                        finally
-                        {
-                            Thread.Sleep(1000);
-                        }
-                    }
-                }
-            }));
-            thread.IsBackground = true;
-            thread.Priority = ThreadPriority.Highest;
-            thread.Start();
+            //Thread thread = new Thread(new ThreadStart(() =>
+            //{
+            //    while (true)
+            //    {
+            //        DeviceParameter lastDeviceParameter = null;
+            //        while (true)
+            //        {
+            //            try
+            //            {
+            //                if (lastDeviceParameter != null)
+            //                {
+            //                    if (!lastDeviceParameter.InExperimenting && CurrentDeviceParameter.InExperimenting)
+            //                    {
+            //                        CurrentDeviceParameter.ExperimentTime = 0;
+            //                    }
+            //                    else if (CurrentDeviceParameter.InExperimenting)
+            //                    {
+            //                        CurrentDeviceParameter.ExperimentTime += 1;
+            //                    }
+            //                }
+            //                lastDeviceParameter = CurrentDeviceParameter.Clone() as DeviceParameter;
+            //            }
+            //            catch (Exception ex) { }
+            //            finally
+            //            {
+            //                Thread.Sleep(1000);
+            //            }
+            //        }
+            //    }
+            //}));
+            //thread.IsBackground = true;
+            //thread.Priority = ThreadPriority.Highest;
+            //thread.Start();
 
             //连接状态判断
             Thread thread1 = new Thread(new ThreadStart(() =>
@@ -357,7 +360,7 @@ namespace RD3.ViewModels
                 {
                     try
                     {
-                        AnalysisSolution.GetInstance().SaveAllSetting();
+                        //AnalysisSolution.GetInstance().SaveAllSetting();
                         AnalysisSolution.GetInstance().SavePumpMFCToOld(CurrentDeviceParameter.Name);
 
                         if (CurrentDeviceParameter == null)
@@ -456,7 +459,7 @@ namespace RD3.ViewModels
                 {
                     try
                     {
-                        AnalysisSolution.GetInstance().SaveAllSetting();
+                        //AnalysisSolution.GetInstance().SaveAllSetting();
                         AnalysisSolution.GetInstance().SavePumpMFCToOld(CurrentDeviceParameter.Name);
                     }
                     catch (Exception ex)
@@ -773,583 +776,625 @@ namespace RD3.ViewModels
             thread8.Priority = ThreadPriority.Highest;
             thread8.Start();
 
-            //审计追踪
+            #region 审计追踪
+            //Thread thread9 = new Thread(new ThreadStart(() =>
+            //{
+            //    var deviceParameter = CurrentDeviceParameter;
+            //    var lastDevice = deviceParameter.Clone() as DeviceParameter;
+
+            //    while (true)
+            //    {
+            //        try
+            //        {
+            //            if (deviceParameter.BatchID != -1)
+            //            {
+            //                lastDevice = deviceParameter.Clone() as DeviceParameter;
+            //                Thread.Sleep(1000);
+            //                continue;
+            //            }
+
+            //            var device = CurrentDeviceParameter;
+
+            //            #region 溶氧 
+            //            if (deviceParameter.DOParam.ControlStrategy != lastDevice.DOParam.ControlStrategy)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("DO:控制策略从{0}变更为", EnumUtil.GetEnumDescription(lastDevice.DOParam.ControlStrategy), EnumUtil.GetEnumDescription(deviceParameter.DOParam.ControlStrategy));
+            //                    sb.AppendLine(content);
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (deviceParameter.DOParam.SP != lastDevice.DOParam.SP)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("DO预设值从{0}变更为{1}", lastDevice.DOParam.SP, deviceParameter.DOParam.SP);
+            //                    sb.AppendLine(content);
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (!deviceParameter.DOParam.IsControling && lastDevice.DOParam.IsControling)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("DO控制模式从{0}变更为{1}", "自动", "手动");
+            //                    sb.AppendLine(content);
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (deviceParameter.DOParam.IsControling && !lastDevice.DOParam.IsControling)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("DO控制模式从{0}变更为{1}", "手动", "自动");
+            //                    sb.AppendLine(content);
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (!deviceParameter.DOParam.IsControling)
+            //            {
+            //                if (deviceParameter.AgitParam.SP != lastDevice.AgitParam.SP)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("转速预设值从{0}变更为{1}", lastDevice.AgitParam.SP, deviceParameter.AgitParam.SP);
+            //                        sb.AppendLine(content);
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (deviceParameter.AirParam.FlowSpeed != lastDevice.AirParam.FlowSpeed)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("通气预设值从{0}变更为{1}", lastDevice.AirParam.FlowSpeed, deviceParameter.AirParam.FlowSpeed);
+            //                        sb.AppendLine(content);
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (deviceParameter.O2Param.FlowSpeed != lastDevice.O2Param.FlowSpeed)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("氧气预设值从{0}变更为{1}", lastDevice.O2Param.FlowSpeed, deviceParameter.O2Param.FlowSpeed);
+            //                        sb.AppendLine(content);
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (!deviceParameter.AgitParam.IsControling && lastDevice.AgitParam.IsControling)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("转速控制模式从{0}变更为{1}", "自动", "手动");
+            //                        sb.AppendLine(content);
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (deviceParameter.AgitParam.IsControling && !lastDevice.AgitParam.IsControling)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("转速控制模式从{0}变更为{1}", "手动", "自动");
+            //                        sb.AppendLine(content);
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (!deviceParameter.AirParam.IsControling && lastDevice.AirParam.IsControling)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("通气控制模式从{0}变更为{1}", "自动", "手动");
+            //                        sb.AppendLine(content);
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (deviceParameter.AirParam.IsControling && !lastDevice.AirParam.IsControling)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("通气控制模式从{0}变更为{1}", "手动", "自动");
+            //                        sb.AppendLine(content);
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (deviceParameter.O2Param.IsControling && !lastDevice.O2Param.IsControling)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("氧气控制模式从{0}变更为{1}", "手动", "自动");
+            //                        sb.AppendLine(content);
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (!deviceParameter.O2Param.IsControling && lastDevice.O2Param.IsControling)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("氧气控制模式从{0}变更为{1}", "自动", "手动");
+            //                        sb.AppendLine(content);
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+            //            }
+            //            #endregion
+
+            //            #region PH
+
+            //            if (deviceParameter.PHParam.SP != lastDevice.PHParam.SP)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("PH预设值从{0}变更为{1}", lastDevice.PHParam.SP, deviceParameter.PHParam.SP);
+            //                    sb.AppendLine(content);
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (!deviceParameter.PHParam.IsControling && lastDevice.PHParam.IsControling)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("PH控制模式从{0}变更为{1}", "自动", "手动");
+            //                    sb.AppendLine(content);
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (deviceParameter.PHParam.IsControling && !lastDevice.PHParam.IsControling)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("PH控制模式从{0}变更为{1}", "手动", "自动");
+            //                    sb.AppendLine(content);
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (!deviceParameter.PHParam.IsControling)
+            //            {
+            //                if (deviceParameter.AcidParam.SP != lastDevice.AcidParam.SP)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                        string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("酸泵预设值从{0}变更为{1}", lastDevice.AcidParam.SP, deviceParameter.AcidParam.SP);
+            //                        sb.AppendLine(content);
+
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (deviceParameter.BaseParam.SP != lastDevice.BaseParam.SP)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                        string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("碱泵预设值从{0}变更为{1}", lastDevice.BaseParam.SP, deviceParameter.BaseParam.SP);
+            //                        sb.AppendLine(content);
+
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (!deviceParameter.AcidParam.IsControling && lastDevice.AcidParam.IsControling)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                        string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("酸泵控制模式从{0}变更为{1}", "自动", "手动");
+            //                        sb.AppendLine(content);
+
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (deviceParameter.AcidParam.IsControling && !lastDevice.AcidParam.IsControling)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                        string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("酸泵控制模式从{0}变更为{1}", "手动", "自动");
+            //                        sb.AppendLine(content);
+
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (!deviceParameter.BaseParam.IsControling && lastDevice.BaseParam.IsControling)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                        string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("碱泵控制模式从{0}变更为{1}", "手动", "自动");
+            //                        sb.AppendLine(content);
+
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+
+            //                if (deviceParameter.BaseParam.IsControling && !lastDevice.BaseParam.IsControling)
+            //                {
+            //                    Task.Run(() =>
+            //                    {
+            //                        string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                        string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                        StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                        string content = string.Format("碱泵控制模式从{0}变更为{1}", "手动", "自动");
+            //                        sb.AppendLine(content);
+
+            //                        RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                    });
+            //                }
+            //            }
+            //            #endregion
+
+            //            #region 温度
+            //            if (deviceParameter.TempParam.SP != lastDevice.TempParam.SP)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("温度预设值从{0}变更为{1}", lastDevice.TempParam.SP, deviceParameter.TempParam.SP);
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (!deviceParameter.TempParam.IsControling && lastDevice.TempParam.IsControling)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("温度控制模式从{0}变更为{1}", "打开", "关闭");
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (deviceParameter.TempParam.IsControling && !lastDevice.TempParam.IsControling)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("温度控制模式从{0}变更为{1}", "关闭", "打开");
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+            //            #endregion
+
+            //            #region 补料
+
+            //            //只有常数时候才记录预设值变更
+            //            if ((deviceParameter.FeedParam1.SP != lastDevice.FeedParam1.SP) && (deviceParameter.FeedParam1.FeedIndex == lastDevice.FeedParam1.SP && deviceParameter.FeedParam1.FeedIndex == 1))
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("补料预设值从{0}变更为{1}", lastDevice.FeedParam1.SP, deviceParameter.FeedParam1.SP);
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (!deviceParameter.FeedParam1.IsControling && lastDevice.FeedParam1.IsControling)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("补料控制模式从{0}变更为{1}", "自动", "手动");
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (deviceParameter.FeedParam1.IsControling && !lastDevice.FeedParam1.IsControling)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("补料控制模式从{0}变更为{1}", "手动", "自动");
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (deviceParameter.FeedParam1.FeedIndex != lastDevice.FeedParam1.FeedIndex)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string newName = string.Empty;
+            //                    string oldName = string.Empty;
+
+            //                    #region 杂乱代码
+            //                    if (deviceParameter.FeedParam1.FeedIndex == 0)
+            //                    {
+            //                        newName = "常量";
+            //                    }
+            //                    else if (deviceParameter.FeedParam1.FeedIndex == 1)
+            //                    {
+            //                        newName = "多项式";
+            //                    }
+            //                    else if (deviceParameter.FeedParam1.FeedIndex == 2)
+            //                    {
+            //                        newName = "指数";
+            //                    }
+            //                    else if (deviceParameter.FeedParam1.FeedIndex == 3)
+            //                    {
+            //                        newName = "时间序列";
+            //                    }
+            //                    else if (lastDevice.FeedParam1.FeedIndex == 4)
+            //                    {
+            //                        newName = "DO_stat(流速)";
+            //                    }
+            //                    else if (lastDevice.FeedParam1.FeedIndex == 5)
+            //                    {
+            //                        newName = "pH_stat(流速)";
+            //                    }
+            //                    else if (lastDevice.FeedParam1.FeedIndex == 6)
+            //                    {
+            //                        newName = "DO_stat(总量)";
+            //                    }
+            //                    else if (lastDevice.FeedParam1.FeedIndex == 7)
+            //                    {
+            //                        newName = "pH_stat(总量)";
+            //                    }
+
+            //                    if (lastDevice.FeedParam1.FeedIndex == 0)
+            //                    {
+            //                        oldName = "常量";
+            //                    }
+            //                    else if (lastDevice.FeedParam1.FeedIndex == 1)
+            //                    {
+            //                        oldName = "多项式";
+            //                    }
+            //                    else if (lastDevice.FeedParam1.FeedIndex == 2)
+            //                    {
+            //                        oldName = "指数";
+            //                    }
+            //                    else if (lastDevice.FeedParam1.FeedIndex == 3)
+            //                    {
+            //                        oldName = "时间序列";
+            //                    }
+            //                    else if (lastDevice.FeedParam1.FeedIndex == 4)
+            //                    {
+            //                        oldName = "DO_stat(流速)";
+            //                    }
+            //                    else if (lastDevice.FeedParam1.FeedIndex == 5)
+            //                    {
+            //                        oldName = "pH_stat(流速)";
+            //                    }
+            //                    else if (lastDevice.FeedParam1.FeedIndex == 6)
+            //                    {
+            //                        oldName = "DO_stat(总量)";
+            //                    }
+            //                    else if (lastDevice.FeedParam1.FeedIndex == 7)
+            //                    {
+            //                        oldName = "pH_stat(总量)";
+            //                    }
+            //                    #endregion
+
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("补料模式从{0}变更为{1}", oldName, newName);
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+            //            #endregion
+
+            //            #region 消泡
+            //            if (deviceParameter.AFParam.SP != lastDevice.AFParam.SP)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("消泡预设值从{0}变更为{1}", lastDevice.AFParam.SP, deviceParameter.AFParam.SP);
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (!deviceParameter.AFParam.IsControling && lastDevice.AFParam.IsControling)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("消泡模式从{0}变更为{1}", "打开", "关闭");
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (deviceParameter.AFParam.IsControling && !lastDevice.AFParam.IsControling)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("消泡模式从{0}变更为{1}", "关闭", "打开");
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (deviceParameter.AFParam.AutoDefoaming && !lastDevice.AFParam.AutoDefoaming)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("自动消泡模式从{0}变更为{1}", "关闭", "打开");
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (!deviceParameter.AFParam.AutoDefoaming && lastDevice.AFParam.AutoDefoaming)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("自动消泡模式从{0}变更为{1}", "打开", "关闭");
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (deviceParameter.AFParam.Cycle != lastDevice.AFParam.Cycle)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("消泡周期从{0}变更为{1}", lastDevice.AFParam.Cycle, deviceParameter.AFParam.Cycle);
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            if (deviceParameter.AFParam.DutyCycle != lastDevice.AFParam.DutyCycle)
+            //            {
+            //                Task.Run(() =>
+            //                {
+            //                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
+            //                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
+            //                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
+            //                    string content = string.Format("消泡占空比从{0}变更为{1}", lastDevice.AFParam.DutyCycle, deviceParameter.AFParam.DutyCycle);
+            //                    sb.AppendLine(content);
+
+            //                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            //                });
+            //            }
+
+            //            #endregion
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            LogHelper.Debug(string.Format("反应器{0}日志记录异常，异常信息：{1}", deviceParameter.Name, ex.Message));
+            //        }
+
+            //        lastDevice = deviceParameter.Clone() as DeviceParameter;
+            //        Thread.Sleep(1000);
+            //    }
+            //}));
+            //thread9.IsBackground = true;
+            //thread9.Priority = ThreadPriority.Highest;
+            //thread9.Start();
+            #endregion
+
+            //冷凝控制
             Thread thread9 = new Thread(new ThreadStart(() =>
             {
-                var deviceParameter = CurrentDeviceParameter;
-                var lastDevice = deviceParameter.Clone() as DeviceParameter;
-
                 while (true)
                 {
                     try
                     {
-                        if (deviceParameter.BatchID != -1)
+                        if (CurrentDeviceParameter.ReactorStatus == ReactorStatus.DisConnected)
                         {
-                            lastDevice = deviceParameter.Clone() as DeviceParameter;
-                            Thread.Sleep(1000);
                             continue;
                         }
 
-                        var device = CurrentDeviceParameter;
-
-                        #region 溶氧 
-                        if (deviceParameter.DOParam.ControlStrategy != lastDevice.DOParam.ControlStrategy)
+                        if (!CurrentDeviceParameter.CondensationParam.LastIsControling && CurrentDeviceParameter.CondensationParam.IsControling)
                         {
-                            Task.Run(() =>
+                            if (CurrentDeviceParameter.CondensationParam.ControlMode == ControlMode.TimeSeries)
                             {
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("DO:控制策略从{0}变更为", EnumUtil.GetEnumDescription(lastDevice.DOParam.ControlStrategy), EnumUtil.GetEnumDescription(deviceParameter.DOParam.ControlStrategy));
-                                sb.AppendLine(content);
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (deviceParameter.DOParam.SP != lastDevice.DOParam.SP)
-                        {
-                            Task.Run(() =>
-                            {
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("DO预设值从{0}变更为{1}", lastDevice.DOParam.SP, deviceParameter.DOParam.SP);
-                                sb.AppendLine(content);
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (!deviceParameter.DOParam.IsControling && lastDevice.DOParam.IsControling)
-                        {
-                            Task.Run(() =>
-                            {
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("DO控制模式从{0}变更为{1}", "自动", "手动");
-                                sb.AppendLine(content);
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (deviceParameter.DOParam.IsControling && !lastDevice.DOParam.IsControling)
-                        {
-                            Task.Run(() =>
-                            {
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("DO控制模式从{0}变更为{1}", "手动", "自动");
-                                sb.AppendLine(content);
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (!deviceParameter.DOParam.IsControling)
-                        {
-                            if (deviceParameter.AgitParam.SP != lastDevice.AgitParam.SP)
-                            {
-                                Task.Run(() =>
-                                {
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("转速预设值从{0}变更为{1}", lastDevice.AgitParam.SP, deviceParameter.AgitParam.SP);
-                                    sb.AppendLine(content);
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
+                                //AnalysisSolution.GetInstance().CurrentFermentor.CondensationController.StartTimeSeriesWork();
                             }
-
-                            if (deviceParameter.AirParam.FlowSpeed != lastDevice.AirParam.FlowSpeed)
+                            AnalysisSolution.GetInstance().CurrentFermentor.CondensationController.StartWork();
+                        }
+                        else if (!CurrentDeviceParameter.CondensationParam.IsControling && CurrentDeviceParameter.CondensationParam.LastIsControling)
+                        {
+                            if (CurrentDeviceParameter.CondensationParam.ControlMode == ControlMode.TimeSeries)
                             {
-                                Task.Run(() =>
-                                {
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("通气预设值从{0}变更为{1}", lastDevice.AirParam.FlowSpeed, deviceParameter.AirParam.FlowSpeed);
-                                    sb.AppendLine(content);
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
+                                //AnalysisSolution.GetInstance().CurrentFermentor.CondensationController.StopTimeSeriesWork();
                             }
-
-                            if (deviceParameter.O2Param.FlowSpeed != lastDevice.O2Param.FlowSpeed)
-                            {
-                                Task.Run(() =>
-                                {
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("氧气预设值从{0}变更为{1}", lastDevice.O2Param.FlowSpeed, deviceParameter.O2Param.FlowSpeed);
-                                    sb.AppendLine(content);
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
-
-                            if (!deviceParameter.AgitParam.IsControling && lastDevice.AgitParam.IsControling)
-                            {
-                                Task.Run(() =>
-                                {
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("转速控制模式从{0}变更为{1}", "自动", "手动");
-                                    sb.AppendLine(content);
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
-
-                            if (deviceParameter.AgitParam.IsControling && !lastDevice.AgitParam.IsControling)
-                            {
-                                Task.Run(() =>
-                                {
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("转速控制模式从{0}变更为{1}", "手动", "自动");
-                                    sb.AppendLine(content);
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
-
-                            if (!deviceParameter.AirParam.IsControling && lastDevice.AirParam.IsControling)
-                            {
-                                Task.Run(() =>
-                                {
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("通气控制模式从{0}变更为{1}", "自动", "手动");
-                                    sb.AppendLine(content);
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
-
-                            if (deviceParameter.AirParam.IsControling && !lastDevice.AirParam.IsControling)
-                            {
-                                Task.Run(() =>
-                                {
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("通气控制模式从{0}变更为{1}", "手动", "自动");
-                                    sb.AppendLine(content);
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
-
-                            if (deviceParameter.O2Param.IsControling && !lastDevice.O2Param.IsControling)
-                            {
-                                Task.Run(() =>
-                                {
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("氧气控制模式从{0}变更为{1}", "手动", "自动");
-                                    sb.AppendLine(content);
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
-
-                            if (!deviceParameter.O2Param.IsControling && lastDevice.O2Param.IsControling)
-                            {
-                                Task.Run(() =>
-                                {
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("氧气控制模式从{0}变更为{1}", "自动", "手动");
-                                    sb.AppendLine(content);
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
+                            AnalysisSolution.GetInstance().CurrentFermentor.CondensationController.StopWork();
                         }
-                        #endregion
-
-                        #region PH
-
-                        if (deviceParameter.PHParam.SP != lastDevice.PHParam.SP)
-                        {
-                            Task.Run(() =>
-                            {
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("PH预设值从{0}变更为{1}", lastDevice.PHParam.SP, deviceParameter.PHParam.SP);
-                                sb.AppendLine(content);
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (!deviceParameter.PHParam.IsControling && lastDevice.PHParam.IsControling)
-                        {
-                            Task.Run(() =>
-                            {
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("PH控制模式从{0}变更为{1}", "自动", "手动");
-                                sb.AppendLine(content);
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (deviceParameter.PHParam.IsControling && !lastDevice.PHParam.IsControling)
-                        {
-                            Task.Run(() =>
-                            {
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("PH控制模式从{0}变更为{1}", "手动", "自动");
-                                sb.AppendLine(content);
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (!deviceParameter.PHParam.IsControling)
-                        {
-                            if (deviceParameter.AcidParam.SP != lastDevice.AcidParam.SP)
-                            {
-                                Task.Run(() =>
-                                {
-                                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("酸泵预设值从{0}变更为{1}", lastDevice.AcidParam.SP, deviceParameter.AcidParam.SP);
-                                    sb.AppendLine(content);
-    
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
-
-                            if (deviceParameter.BaseParam.SP != lastDevice.BaseParam.SP)
-                            {
-                                Task.Run(() =>
-                                {
-                                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("碱泵预设值从{0}变更为{1}", lastDevice.BaseParam.SP, deviceParameter.BaseParam.SP);
-                                    sb.AppendLine(content);
-    
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
-
-                            if (!deviceParameter.AcidParam.IsControling && lastDevice.AcidParam.IsControling)
-                            {
-                                Task.Run(() =>
-                                {
-                                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("酸泵控制模式从{0}变更为{1}", "自动", "手动");
-                                    sb.AppendLine(content);
-    
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
-
-                            if (deviceParameter.AcidParam.IsControling && !lastDevice.AcidParam.IsControling)
-                            {
-                                Task.Run(() =>
-                                {
-                                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("酸泵控制模式从{0}变更为{1}", "手动", "自动");
-                                    sb.AppendLine(content);
-    
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
-
-                            if (!deviceParameter.BaseParam.IsControling && lastDevice.BaseParam.IsControling)
-                            {
-                                Task.Run(() =>
-                                {
-                                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("碱泵控制模式从{0}变更为{1}", "手动", "自动");
-                                    sb.AppendLine(content);
-    
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
-
-                            if (deviceParameter.BaseParam.IsControling && !lastDevice.BaseParam.IsControling)
-                            {
-                                Task.Run(() =>
-                                {
-                                    string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                    string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                    StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                    string content = string.Format("碱泵控制模式从{0}变更为{1}", "手动", "自动");
-                                    sb.AppendLine(content);
-    
-                                    RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                                });
-                            }
-                        }
-                        #endregion
-
-                        #region 温度
-                        if (deviceParameter.TempParam.SP != lastDevice.TempParam.SP)
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("温度预设值从{0}变更为{1}", lastDevice.TempParam.SP, deviceParameter.TempParam.SP);
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (!deviceParameter.TempParam.IsControling && lastDevice.TempParam.IsControling)
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("温度控制模式从{0}变更为{1}", "打开", "关闭");
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (deviceParameter.TempParam.IsControling && !lastDevice.TempParam.IsControling)
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("温度控制模式从{0}变更为{1}", "关闭", "打开");
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-                        #endregion
-
-                        #region 补料
-
-                        //只有常数时候才记录预设值变更
-                        if ((deviceParameter.FeedParam1.SP != lastDevice.FeedParam1.SP) && (deviceParameter.FeedParam1.FeedIndex == lastDevice.FeedParam1.SP && deviceParameter.FeedParam1.FeedIndex == 1))
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("补料预设值从{0}变更为{1}", lastDevice.FeedParam1.SP, deviceParameter.FeedParam1.SP);
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (!deviceParameter.FeedParam1.IsControling && lastDevice.FeedParam1.IsControling)
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("补料控制模式从{0}变更为{1}", "自动", "手动");
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (deviceParameter.FeedParam1.IsControling && !lastDevice.FeedParam1.IsControling)
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("补料控制模式从{0}变更为{1}", "手动", "自动");
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (deviceParameter.FeedParam1.FeedIndex != lastDevice.FeedParam1.FeedIndex)
-                        {
-                            Task.Run(() =>
-                            {
-                                string newName = string.Empty;
-                                string oldName = string.Empty;
-
-                                #region 杂乱代码
-                                if (deviceParameter.FeedParam1.FeedIndex == 0)
-                                {
-                                    newName = "常量";
-                                }
-                                else if (deviceParameter.FeedParam1.FeedIndex == 1)
-                                {
-                                    newName = "多项式";
-                                }
-                                else if (deviceParameter.FeedParam1.FeedIndex == 2)
-                                {
-                                    newName = "指数";
-                                }
-                                else if (deviceParameter.FeedParam1.FeedIndex == 3)
-                                {
-                                    newName = "时间序列";
-                                }
-                                else if (lastDevice.FeedParam1.FeedIndex == 4)
-                                {
-                                    newName = "DO_stat(流速)";
-                                }
-                                else if (lastDevice.FeedParam1.FeedIndex == 5)
-                                {
-                                    newName = "pH_stat(流速)";
-                                }
-                                else if (lastDevice.FeedParam1.FeedIndex == 6)
-                                {
-                                    newName = "DO_stat(总量)";
-                                }
-                                else if (lastDevice.FeedParam1.FeedIndex == 7)
-                                {
-                                    newName = "pH_stat(总量)";
-                                }
-
-                                if (lastDevice.FeedParam1.FeedIndex == 0)
-                                {
-                                    oldName = "常量";
-                                }
-                                else if (lastDevice.FeedParam1.FeedIndex == 1)
-                                {
-                                    oldName = "多项式";
-                                }
-                                else if (lastDevice.FeedParam1.FeedIndex == 2)
-                                {
-                                    oldName = "指数";
-                                }
-                                else if (lastDevice.FeedParam1.FeedIndex == 3)
-                                {
-                                    oldName = "时间序列";
-                                }
-                                else if (lastDevice.FeedParam1.FeedIndex == 4)
-                                {
-                                    oldName = "DO_stat(流速)";
-                                }
-                                else if (lastDevice.FeedParam1.FeedIndex == 5)
-                                {
-                                    oldName = "pH_stat(流速)";
-                                }
-                                else if (lastDevice.FeedParam1.FeedIndex == 6)
-                                {
-                                    oldName = "DO_stat(总量)";
-                                }
-                                else if (lastDevice.FeedParam1.FeedIndex == 7)
-                                {
-                                    oldName = "pH_stat(总量)";
-                                }
-                                #endregion
-
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("补料模式从{0}变更为{1}", oldName, newName);
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-                        #endregion
-
-                        #region 消泡
-                        if (deviceParameter.AFParam.SP != lastDevice.AFParam.SP)
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("消泡预设值从{0}变更为{1}", lastDevice.AFParam.SP, deviceParameter.AFParam.SP);
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (!deviceParameter.AFParam.IsControling && lastDevice.AFParam.IsControling)
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("消泡模式从{0}变更为{1}", "打开", "关闭");
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (deviceParameter.AFParam.IsControling && !lastDevice.AFParam.IsControling)
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("消泡模式从{0}变更为{1}", "关闭", "打开");
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (deviceParameter.AFParam.AutoDefoaming && !lastDevice.AFParam.AutoDefoaming)
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("自动消泡模式从{0}变更为{1}", "关闭", "打开");
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (!deviceParameter.AFParam.AutoDefoaming && lastDevice.AFParam.AutoDefoaming)
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("自动消泡模式从{0}变更为{1}", "打开", "关闭");
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (deviceParameter.AFParam.Cycle != lastDevice.AFParam.Cycle)
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("消泡周期从{0}变更为{1}", lastDevice.AFParam.Cycle, deviceParameter.AFParam.Cycle);
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        if (deviceParameter.AFParam.DutyCycle != lastDevice.AFParam.DutyCycle)
-                        {
-                            Task.Run(() =>
-                            {
-                                string dir = AppDomain.CurrentDomain.BaseDirectory + "HistoryData\\" + device.Name;
-                                string fileNme = dir + "\\" + device.BatchID + "\\Audit.txt";
-                                StringBuilder sb = new StringBuilder(string.Format("反应器{0} 批次ID{1} 时间{2} ", deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff")));
-                                string content = string.Format("消泡占空比从{0}变更为{1}", lastDevice.AFParam.DutyCycle, deviceParameter.AFParam.DutyCycle);
-                                sb.AppendLine(content);
-
-                                RD3SQLHelper.AddAuditRecord(deviceParameter?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
-                            });
-                        }
-
-                        #endregion
+                        CurrentDeviceParameter.CondensationParam.IsControling = CurrentDeviceParameter.CondensationParam.IsControling;
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) { }
+                    finally
                     {
-                        LogHelper.Debug(string.Format("反应器{0}日志记录异常，异常信息：{1}", deviceParameter.Name, ex.Message));
+                        Thread.Sleep(1000);
                     }
-
-                    lastDevice = deviceParameter.Clone() as DeviceParameter;
-                    Thread.Sleep(1000);
                 }
             }));
             thread9.IsBackground = true;
-            thread9.Priority = ThreadPriority.Highest;
+            thread9.Priority = ThreadPriority.Lowest;
             thread9.Start();
         }
     }

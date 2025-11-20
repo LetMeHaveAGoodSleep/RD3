@@ -41,7 +41,10 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border Height="50" Background="{DynamicResource PrimaryBrush}">
+        <Border Height="50">
+            <Border.Background>
+                <ImageBrush ImageSource="/Images/Index/TitleBackground.png" />
+            </Border.Background>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto" />
@@ -51,7 +54,7 @@
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
                 <Image
-                    Width="117"
+                    Width="120"
                     Height="50"
                     Margin="5,0,0,0"
                     Source="/Images/NewReactor/logo.png" />
@@ -158,7 +161,8 @@
                         BorderThickness="0"
                         Command="{Binding MinimizeCommand}"
                         FontSize="{StaticResource HeadFontSize}"
-                        Foreground="White" />
+                        Foreground="White"
+                        ToolTip="返回桌面" />
                     <Button
                         Height="40"
                         hc:IconElement.Geometry="{StaticResource GeometryQuit}"
@@ -168,8 +172,8 @@
                         Background="Transparent"
                         BorderThickness="0"
                         Command="{Binding ExitCommand}"
-                        FontSize="{StaticResource HeadFontSize}"
-                        Foreground="White" />
+                        Foreground="White"
+                        ToolTip="关闭软件" />
                 </hc:UniformSpacingPanel>
             </Grid>
         </Border>
@@ -192,206 +196,189 @@
                         <TextBlock HorizontalAlignment="Center" Text="首页" />
                     </StackPanel>
                 </TabItem.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Canvas>
-                        <StackPanel
-                            Canvas.Left="0"
-                            Canvas.Top="0"
-                            Margin="5"
-                            Orientation="Horizontal">
-                            <Button
-                                materialDesign:ButtonProgressAssist.IsIndeterminate="True"
-                                materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                                materialDesign:ButtonProgressAssist.Value="-1"
-                                Content="连接中..."
-                                Foreground="White"
-                                Style="{StaticResource MaterialDesignRaisedButton}"
-                                Visibility="{Binding Connecting, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                            <Button
-                                Height="60"
-                                Padding="15"
-                                hc:IconElement.Geometry="{StaticResource GeometryNetworkReconnect}"
-                                hc:IconElement.Height="30"
-                                hc:IconElement.Width="30"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Command="{Binding ReconnectCommand}"
-                                DockPanel.Dock="Bottom"
-                                Foreground="{DynamicResource FixedGradientBrush}">
-                                <Button.Visibility>
-                                    <MultiBinding Converter="{StaticResource AndBool2VisConverter}">
-                                        <Binding Converter="{StaticResource InverseBooleanConverter}" Path="Connected" />
-                                        <Binding Converter="{StaticResource InverseBooleanConverter}" Path="Connecting" />
-                                    </MultiBinding>
-                                </Button.Visibility>
-                            </Button>
-                        </StackPanel>
+                <Canvas>
+                    <StackPanel
+                        Canvas.Left="0"
+                        Canvas.Top="0"
+                        Margin="5"
+                        Orientation="Horizontal">
+                        <Button
+                            materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                            materialDesign:ButtonProgressAssist.Value="-1"
+                            Content="连接中..."
+                            Foreground="White"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            Visibility="{Binding Connecting, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Button
+                            Height="60"
+                            Padding="15"
+                            hc:IconElement.Geometry="{StaticResource GeometryNetworkReconnect}"
+                            hc:IconElement.Height="30"
+                            hc:IconElement.Width="30"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Command="{Binding ReconnectCommand}"
+                            DockPanel.Dock="Bottom"
+                            Foreground="{DynamicResource FixedGradientBrush}">
+                            <Button.Visibility>
+                                <MultiBinding Converter="{StaticResource AndBool2VisConverter}">
+                                    <Binding Converter="{StaticResource InverseBooleanConverter}" Path="Connected" />
+                                    <Binding Converter="{StaticResource InverseBooleanConverter}" Path="Connecting" />
+                                </MultiBinding>
+                            </Button.Visibility>
+                        </Button>
+                    </StackPanel>
+                    <Image
+                        Canvas.Left="500"
+                        Canvas.Top="40"
+                        Width="200"
+                        Height="650"
+                        Source="/Images/NewReactor/ft.png">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction Command="{Binding DeviceSettingCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Image>
+                    <!--  泵的设置  -->
+                    <hc:Divider
+                        Canvas.Left="260"
+                        Canvas.Top="133"
+                        Width="295"
+                        LineStroke="#FF7F7F7F"
+                        LineStrokeThickness="2"
+                        Orientation="Horizontal" />
+                    <local:PumpView
+                        x:Name="pump1"
+                        Canvas.Left="140"
+                        Canvas.Top="159" />
+                    <local:PumpView
+                        x:Name="pump2"
+                        Canvas.Left="140"
+                        Canvas.Top="238" />
+                    <local:PumpView
+                        x:Name="pump3"
+                        Canvas.Left="140"
+                        Canvas.Top="317" />
+                    <local:PumpView
+                        x:Name="pump4"
+                        Canvas.Left="140"
+                        Canvas.Top="396" />
+                    <local:PumpView
+                        x:Name="pump5"
+                        Canvas.Left="140"
+                        Canvas.Top="475" />
+                    <local:PumpView
+                        x:Name="pump6"
+                        Canvas.Left="140"
+                        Canvas.Top="554" />
+                    <!--  MFC  -->
+                    <hc:Divider
+                        Canvas.Left="648"
+                        Canvas.Top="305"
+                        Width="155"
+                        LineStroke="#FF7F7F7F"
+                        LineStrokeThickness="2"
+                        Orientation="Horizontal" />
+                    <local:MFCView
+                        x:Name="mfc1"
+                        Canvas.Left="815"
+                        Canvas.Top="281" />
+                    <hc:Divider
+                        Canvas.Left="740"
+                        Canvas.Top="330"
+                        Height="211"
+                        LineStroke="#FF7F7F7F"
+                        LineStrokeThickness="2"
+                        Orientation="Vertical" />
+                    <local:MFCView
+                        x:Name="mfc2"
+                        Canvas.Left="815"
+                        Canvas.Top="351" />
+                    <hc:Divider
+                        Canvas.Left="747"
+                        Canvas.Top="375"
+                        Width="55"
+                        LineStroke="#FF7F7F7F"
+                        LineStrokeThickness="2"
+                        Orientation="Horizontal" />
+                    <local:MFCView
+                        x:Name="mfc3"
+                        Canvas.Left="815"
+                        Canvas.Top="421" />
+                    <hc:Divider
+                        Canvas.Left="747"
+                        Canvas.Top="445"
+                        Width="55"
+                        LineStroke="#FF7F7F7F"
+                        LineStrokeThickness="2"
+                        Orientation="Horizontal" />
+                    <local:MFCView
+                        x:Name="mfc4"
+                        Canvas.Left="815"
+                        Canvas.Top="491" />
+                    <hc:Divider
+                        Canvas.Left="747"
+                        Canvas.Top="515"
+                        Width="55"
+                        LineStroke="#FF7F7F7F"
+                        LineStrokeThickness="2"
+                        Orientation="Horizontal" />
+                    <StackPanel
+                        Canvas.Left="527"
+                        Canvas.Top="532"
+                        Orientation="Vertical">
                         <Image
-                            Canvas.Left="500"
-                            Canvas.Top="40"
-                            Width="200"
-                            Height="650"
-                            Source="/Images/NewReactor/ft.png">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseDoubleClick">
-                                    <i:InvokeCommandAction Command="{Binding DeviceSettingCommand}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Image>
-                        <!--  泵的设置  -->
-                        <hc:Divider
-                            Canvas.Left="260"
-                            Canvas.Top="133"
-                            Width="295"
-                            LineStroke="#FF7F7F7F"
-                            LineStrokeThickness="2"
-                            Orientation="Horizontal" />
-                        <local:PumpView
-                            x:Name="pump1"
-                            Canvas.Left="140"
-                            Canvas.Top="159" />
-                        <local:PumpView
-                            x:Name="pump2"
-                            Canvas.Left="140"
-                            Canvas.Top="238" />
-                        <local:PumpView
-                            x:Name="pump3"
-                            Canvas.Left="140"
-                            Canvas.Top="317" />
-                        <local:PumpView
-                            x:Name="pump4"
-                            Canvas.Left="140"
-                            Canvas.Top="396" />
-                        <local:PumpView
-                            x:Name="pump5"
-                            Canvas.Left="140"
-                            Canvas.Top="475" />
-                        <local:PumpView
-                            x:Name="pump6"
-                            Canvas.Left="140"
-                            Canvas.Top="554" />
-                        <!--  MFC  -->
-                        <hc:Divider
-                            Canvas.Left="648"
-                            Canvas.Top="305"
-                            Width="155"
-                            LineStroke="#FF7F7F7F"
-                            LineStrokeThickness="2"
-                            Orientation="Horizontal" />
-                        <local:MFCView
-                            x:Name="mfc1"
-                            Canvas.Left="815"
-                            Canvas.Top="281" />
-                        <hc:Divider
-                            Canvas.Left="740"
-                            Canvas.Top="330"
-                            Height="211"
-                            LineStroke="#FF7F7F7F"
-                            LineStrokeThickness="2"
-                            Orientation="Vertical" />
-                        <local:MFCView
-                            x:Name="mfc2"
-                            Canvas.Left="815"
-                            Canvas.Top="351" />
-                        <hc:Divider
-                            Canvas.Left="747"
-                            Canvas.Top="375"
-                            Width="55"
-                            LineStroke="#FF7F7F7F"
-                            LineStrokeThickness="2"
-                            Orientation="Horizontal" />
-                        <local:MFCView
-                            x:Name="mfc3"
-                            Canvas.Left="815"
-                            Canvas.Top="421" />
-                        <hc:Divider
-                            Canvas.Left="747"
-                            Canvas.Top="445"
-                            Width="55"
-                            LineStroke="#FF7F7F7F"
-                            LineStrokeThickness="2"
-                            Orientation="Horizontal" />
-                        <local:MFCView
-                            x:Name="mfc4"
-                            Canvas.Left="815"
-                            Canvas.Top="491" />
-                        <hc:Divider
-                            Canvas.Left="747"
-                            Canvas.Top="515"
-                            Width="55"
-                            LineStroke="#FF7F7F7F"
-                            LineStrokeThickness="2"
-                            Orientation="Horizontal" />
-                        <StackPanel
-                            Canvas.Left="527"
-                            Canvas.Top="532"
-                            Orientation="Vertical">
-                            <Image
-                                Width="144"
-                                Source="/Images/NewReactor/罐加热（加热）.png"
-                                Visibility="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource Boolean2VisibilityConverter}}" />
-                            <Image
-                                Width="144"
-                                Source="/Images/NewReactor/罐加热（制冷）.png"
-                                Visibility="Collapsed" />
-                            <Image
-                                Width="144"
-                                Source="/Images/NewReactor/罐加热（常规）.png"
-                                Visibility="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                        </StackPanel>
+                            Width="144"
+                            Source="/Images/NewReactor/罐加热（加热）.png"
+                            Visibility="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource Boolean2VisibilityConverter}}" />
                         <Image
-                            Canvas.Left="543"
-                            Canvas.Top="458"
-                            Width="114"
-                            Source="/Images/NewReactor/水.png" />
+                            Width="144"
+                            Source="/Images/NewReactor/罐加热（制冷）.png"
+                            Visibility="Collapsed" />
                         <Image
-                            Name="mixPaddle"
-                            Canvas.Left="575"
-                            Canvas.Top="400"
-                            Width="52"
-                            Source="/Images/NewReactor/搅拌0.png" />
-                        <!--  电机  -->
-                        <hc:Divider
-                            Canvas.Left="610"
-                            Canvas.Top="47"
-                            Height="130"
-                            LineStroke="#FF7F7F7F"
-                            LineStrokeThickness="2"
-                            Orientation="Vertical" />
-                        <hc:Divider
-                            Canvas.Left="616"
-                            Canvas.Top="21"
-                            Width="215"
-                            LineStroke="#FF7F7F7F"
-                            LineStrokeThickness="2"
-                            Orientation="Horizontal" />
-                        <hc:UniformSpacingPanel
-                            Canvas.Left="842"
-                            Canvas.Top="10"
-                            Orientation="Horizontal"
-                            Spacing="5">
-                            <DockPanel LastChildFill="False">
-                                <hc:Badge
-                                    BadgeMargin="5,5"
-                                    Status="Processing"
-                                    Style="{StaticResource BadgeSuccess}"
-                                    Visibility="{Binding CurrentDeviceParameter.AgitParam.IsControling, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <Button
-                                        Height="66"
-                                        Padding="15"
-                                        hc:IconElement.Geometry="{StaticResource GeometryAgit}"
-                                        hc:IconElement.Height="36"
-                                        hc:IconElement.Width="36"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Command="{Binding AgitSettingCommand}"
-                                        DockPanel.Dock="Bottom"
-                                        Foreground="{DynamicResource FixedGradientBrush}" />
-                                </hc:Badge>
+                            Width="144"
+                            Source="/Images/NewReactor/罐加热（常规）.png"
+                            Visibility="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    </StackPanel>
+                    <Image
+                        Canvas.Left="543"
+                        Canvas.Top="458"
+                        Width="114"
+                        Source="/Images/NewReactor/水.png" />
+                    <Image
+                        Name="mixPaddle"
+                        Canvas.Left="575"
+                        Canvas.Top="400"
+                        Width="52"
+                        Source="/Images/NewReactor/搅拌0.png" />
+                    <!--  电机  -->
+                    <hc:Divider
+                        Canvas.Left="610"
+                        Canvas.Top="47"
+                        Height="130"
+                        LineStroke="#FF7F7F7F"
+                        LineStrokeThickness="2"
+                        Orientation="Vertical" />
+                    <hc:Divider
+                        Canvas.Left="616"
+                        Canvas.Top="21"
+                        Width="215"
+                        LineStroke="#FF7F7F7F"
+                        LineStrokeThickness="2"
+                        Orientation="Horizontal" />
+                    <hc:UniformSpacingPanel
+                        Canvas.Left="842"
+                        Canvas.Top="10"
+                        Orientation="Horizontal"
+                        Spacing="5">
+                        <DockPanel LastChildFill="False">
+                            <hc:Badge
+                                BadgeMargin="5,5"
+                                Status="Processing"
+                                Style="{StaticResource BadgeSuccess}"
+                                Visibility="{Binding CurrentDeviceParameter.AgitParam.IsControling, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Button
                                     Height="66"
                                     Padding="15"
@@ -402,63 +389,63 @@
                                     BorderThickness="0"
                                     Command="{Binding AgitSettingCommand}"
                                     DockPanel.Dock="Bottom"
-                                    Foreground="{DynamicResource FixedGradientBrush}"
-                                    Visibility="{Binding CurrentDeviceParameter.AgitParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                            </DockPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Width="100"
-                                    VerticalAlignment="Top"
-                                    materialDesign:HintAssist.Hint="转速(rpm)"
-                                    IsEnabled="False"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                    <TextBox.Text>
-                                        <MultiBinding StringFormat="{}{0:F0} / {1:F0}">
-                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.AgitParam.SP" />
-                                            <Binding Mode="OneWay" Path="CurrentDeviceParameter.Agit" />
-                                        </MultiBinding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </StackPanel>
-                        </hc:UniformSpacingPanel>
-                        <!--  关键参数  -->
-                        <hc:Divider
-                            Canvas.Left="639"
-                            Canvas.Top="164"
-                            Width="192"
-                            LineStroke="#FF7F7F7F"
-                            LineStrokeThickness="2"
-                            Orientation="Horizontal" />
-                        <hc:Divider
-                            Canvas.Left="746"
-                            Canvas.Top="95"
-                            Width="85"
-                            LineStroke="#FF7F7F7F"
-                            LineStrokeThickness="2"
-                            Orientation="Horizontal" />
-                        <hc:UniformSpacingPanel
-                            Canvas.Left="842"
-                            Canvas.Top="85"
-                            Orientation="Horizontal"
-                            Spacing="5">
-                            <DockPanel LastChildFill="False">
-                                <hc:Badge
-                                    BadgeMargin="5,5"
-                                    Status="Processing"
-                                    Style="{StaticResource BadgeSuccess}"
-                                    Visibility="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <Button
-                                        Height="66"
-                                        Padding="15"
-                                        hc:IconElement.Geometry="{StaticResource GeometryDO}"
-                                        hc:IconElement.Height="36"
-                                        hc:IconElement.Width="36"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Command="{Binding DOSettingCommand}"
-                                        DockPanel.Dock="Bottom"
-                                        Foreground="{DynamicResource FixedGradientBrush}" />
-                                </hc:Badge>
+                                    Foreground="{DynamicResource FixedGradientBrush}" />
+                            </hc:Badge>
+                            <Button
+                                Height="66"
+                                Padding="15"
+                                hc:IconElement.Geometry="{StaticResource GeometryAgit}"
+                                hc:IconElement.Height="36"
+                                hc:IconElement.Width="36"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding AgitSettingCommand}"
+                                DockPanel.Dock="Bottom"
+                                Foreground="{DynamicResource FixedGradientBrush}"
+                                Visibility="{Binding CurrentDeviceParameter.AgitParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        </DockPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox
+                                Width="100"
+                                VerticalAlignment="Top"
+                                materialDesign:HintAssist.Hint="转速(rpm)"
+                                IsEnabled="False"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                <TextBox.Text>
+                                    <MultiBinding StringFormat="{}{0:F0} / {1:F0}">
+                                        <Binding Mode="TwoWay" Path="CurrentDeviceParameter.AgitParam.SP" />
+                                        <Binding Mode="OneWay" Path="CurrentDeviceParameter.Agit" />
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </hc:UniformSpacingPanel>
+                    <!--  关键参数  -->
+                    <hc:Divider
+                        Canvas.Left="639"
+                        Canvas.Top="164"
+                        Width="192"
+                        LineStroke="#FF7F7F7F"
+                        LineStrokeThickness="2"
+                        Orientation="Horizontal" />
+                    <hc:Divider
+                        Canvas.Left="746"
+                        Canvas.Top="95"
+                        Width="85"
+                        LineStroke="#FF7F7F7F"
+                        LineStrokeThickness="2"
+                        Orientation="Horizontal" />
+                    <hc:UniformSpacingPanel
+                        Canvas.Left="842"
+                        Canvas.Top="85"
+                        Orientation="Horizontal"
+                        Spacing="5">
+                        <DockPanel LastChildFill="False">
+                            <hc:Badge
+                                BadgeMargin="5,5"
+                                Status="Processing"
+                                Style="{StaticResource BadgeSuccess}"
+                                Visibility="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Button
                                     Height="66"
                                     Padding="15"
@@ -469,55 +456,55 @@
                                     BorderThickness="0"
                                     Command="{Binding DOSettingCommand}"
                                     DockPanel.Dock="Bottom"
-                                    Foreground="{DynamicResource FixedGradientBrush}"
-                                    Visibility="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                            </DockPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Width="100"
-                                    VerticalAlignment="Top"
-                                    materialDesign:HintAssist.Hint="溶氧(%)"
-                                    IsEnabled="False"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                    <TextBox.Text>
-                                        <MultiBinding StringFormat="{}{0:F2} / {1:F2}">
-                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.DOParam.SP" />
-                                            <Binding Mode="OneWay" Path="CurrentDeviceParameter.DO" />
-                                        </MultiBinding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </StackPanel>
-                        </hc:UniformSpacingPanel>
-                        <hc:Divider
-                            Canvas.Left="740"
-                            Canvas.Top="120"
-                            Height="135"
-                            LineStroke="#FF7F7F7F"
-                            LineStrokeThickness="2"
-                            Orientation="Vertical" />
-                        <hc:UniformSpacingPanel
-                            Canvas.Left="842"
-                            Canvas.Top="150"
-                            Orientation="Horizontal"
-                            Spacing="5">
-                            <DockPanel LastChildFill="False">
-                                <hc:Badge
-                                    BadgeMargin="5,5"
-                                    Status="Processing"
-                                    Style="{StaticResource BadgeSuccess}"
-                                    Visibility="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <Button
-                                        Height="66"
-                                        Padding="15"
-                                        hc:IconElement.Geometry="{StaticResource GeometrypH}"
-                                        hc:IconElement.Height="36"
-                                        hc:IconElement.Width="36"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Command="{Binding pHSettingCommand}"
-                                        DockPanel.Dock="Bottom"
-                                        Foreground="{DynamicResource FixedGradientBrush}" />
-                                </hc:Badge>
+                                    Foreground="{DynamicResource FixedGradientBrush}" />
+                            </hc:Badge>
+                            <Button
+                                Height="66"
+                                Padding="15"
+                                hc:IconElement.Geometry="{StaticResource GeometryDO}"
+                                hc:IconElement.Height="36"
+                                hc:IconElement.Width="36"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding DOSettingCommand}"
+                                DockPanel.Dock="Bottom"
+                                Foreground="{DynamicResource FixedGradientBrush}"
+                                Visibility="{Binding CurrentDeviceParameter.DOParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        </DockPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox
+                                Width="100"
+                                VerticalAlignment="Top"
+                                materialDesign:HintAssist.Hint="溶氧(%)"
+                                IsEnabled="False"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                <TextBox.Text>
+                                    <MultiBinding StringFormat="{}{0:F2} / {1:F2}">
+                                        <Binding Mode="TwoWay" Path="CurrentDeviceParameter.DOParam.SP" />
+                                        <Binding Mode="OneWay" Path="CurrentDeviceParameter.DO" />
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </hc:UniformSpacingPanel>
+                    <hc:Divider
+                        Canvas.Left="740"
+                        Canvas.Top="120"
+                        Height="135"
+                        LineStroke="#FF7F7F7F"
+                        LineStrokeThickness="2"
+                        Orientation="Vertical" />
+                    <hc:UniformSpacingPanel
+                        Canvas.Left="842"
+                        Canvas.Top="150"
+                        Orientation="Horizontal"
+                        Spacing="5">
+                        <DockPanel LastChildFill="False">
+                            <hc:Badge
+                                BadgeMargin="5,5"
+                                Status="Processing"
+                                Style="{StaticResource BadgeSuccess}"
+                                Visibility="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Button
                                     Height="66"
                                     Padding="15"
@@ -528,55 +515,55 @@
                                     BorderThickness="0"
                                     Command="{Binding pHSettingCommand}"
                                     DockPanel.Dock="Bottom"
-                                    Foreground="{DynamicResource FixedGradientBrush}"
-                                    Visibility="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                            </DockPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Width="100"
-                                    VerticalAlignment="Top"
-                                    materialDesign:HintAssist.Hint="pH"
-                                    IsEnabled="False"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                    <TextBox.Text>
-                                        <MultiBinding StringFormat="{}{0:F2} / {1:F2}">
-                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.PHParam.SP" />
-                                            <Binding Mode="OneWay" Path="CurrentDeviceParameter.PH" />
-                                        </MultiBinding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </StackPanel>
-                        </hc:UniformSpacingPanel>
-                        <hc:Divider
-                            Canvas.Left="746"
-                            Canvas.Top="230"
-                            Width="85"
-                            LineStroke="#FF7F7F7F"
-                            LineStrokeThickness="2"
-                            Orientation="Horizontal" />
-                        <hc:UniformSpacingPanel
-                            Canvas.Left="842"
-                            Canvas.Top="215"
-                            Orientation="Horizontal"
-                            Spacing="5">
-                            <DockPanel LastChildFill="False">
-                                <hc:Badge
-                                    BadgeMargin="5,5"
-                                    Status="Processing"
-                                    Style="{StaticResource BadgeSuccess}"
-                                    Visibility="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                    <Button
-                                        Height="66"
-                                        Padding="15"
-                                        hc:IconElement.Geometry="{StaticResource GeometryTemp}"
-                                        hc:IconElement.Height="36"
-                                        hc:IconElement.Width="36"
-                                        Background="Transparent"
-                                        BorderThickness="0"
-                                        Command="{Binding TempSettingCommand}"
-                                        DockPanel.Dock="Bottom"
-                                        Foreground="{DynamicResource FixedGradientBrush}" />
-                                </hc:Badge>
+                                    Foreground="{DynamicResource FixedGradientBrush}" />
+                            </hc:Badge>
+                            <Button
+                                Height="66"
+                                Padding="15"
+                                hc:IconElement.Geometry="{StaticResource GeometrypH}"
+                                hc:IconElement.Height="36"
+                                hc:IconElement.Width="36"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding pHSettingCommand}"
+                                DockPanel.Dock="Bottom"
+                                Foreground="{DynamicResource FixedGradientBrush}"
+                                Visibility="{Binding CurrentDeviceParameter.PHParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        </DockPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox
+                                Width="100"
+                                VerticalAlignment="Top"
+                                materialDesign:HintAssist.Hint="pH"
+                                IsEnabled="False"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                <TextBox.Text>
+                                    <MultiBinding StringFormat="{}{0:F2} / {1:F2}">
+                                        <Binding Mode="TwoWay" Path="CurrentDeviceParameter.PHParam.SP" />
+                                        <Binding Mode="OneWay" Path="CurrentDeviceParameter.PH" />
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </hc:UniformSpacingPanel>
+                    <hc:Divider
+                        Canvas.Left="746"
+                        Canvas.Top="230"
+                        Width="85"
+                        LineStroke="#FF7F7F7F"
+                        LineStrokeThickness="2"
+                        Orientation="Horizontal" />
+                    <hc:UniformSpacingPanel
+                        Canvas.Left="842"
+                        Canvas.Top="215"
+                        Orientation="Horizontal"
+                        Spacing="5">
+                        <DockPanel LastChildFill="False">
+                            <hc:Badge
+                                BadgeMargin="5,5"
+                                Status="Processing"
+                                Style="{StaticResource BadgeSuccess}"
+                                Visibility="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Button
                                     Height="66"
                                     Padding="15"
@@ -587,35 +574,46 @@
                                     BorderThickness="0"
                                     Command="{Binding TempSettingCommand}"
                                     DockPanel.Dock="Bottom"
-                                    Foreground="{DynamicResource FixedGradientBrush}"
-                                    Visibility="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-                            </DockPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Width="100"
-                                    VerticalAlignment="Top"
-                                    materialDesign:HintAssist.Hint="温度(℃)"
-                                    IsEnabled="False"
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                                    <TextBox.Text>
-                                        <MultiBinding StringFormat="{}{0:F2} / {1:F2}">
-                                            <Binding Mode="TwoWay" Path="CurrentDeviceParameter.TempParam.SP" />
-                                            <Binding Mode="OneWay" Path="CurrentDeviceParameter.Temp" />
-                                        </MultiBinding>
-                                    </TextBox.Text>
-                                </TextBox>
-                            </StackPanel>
-                        </hc:UniformSpacingPanel>
-                        <hc:UniformSpacingPanel
-                            Canvas.Left="575"
-                            Canvas.Top="665"
-                            Orientation="Horizontal"
-                            Spacing="3">
-                            <TextBlock FontSize="{StaticResource SubHeadFontSize}" Text="{Binding CurrentDeviceParameter.JarWeight, StringFormat={}{0:F2}}" />
-                            <TextBlock FontSize="{StaticResource SubHeadFontSize}" Text="g" />
-                        </hc:UniformSpacingPanel>
-                    </Canvas>
-                </Grid>
+                                    Foreground="{DynamicResource FixedGradientBrush}" />
+                            </hc:Badge>
+                            <Button
+                                Height="66"
+                                Padding="15"
+                                hc:IconElement.Geometry="{StaticResource GeometryTemp}"
+                                hc:IconElement.Height="36"
+                                hc:IconElement.Width="36"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding TempSettingCommand}"
+                                DockPanel.Dock="Bottom"
+                                Foreground="{DynamicResource FixedGradientBrush}"
+                                Visibility="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                        </DockPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBox
+                                Width="100"
+                                VerticalAlignment="Top"
+                                materialDesign:HintAssist.Hint="温度(℃)"
+                                IsEnabled="False"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                <TextBox.Text>
+                                    <MultiBinding StringFormat="{}{0:F2} / {1:F2}">
+                                        <Binding Mode="TwoWay" Path="CurrentDeviceParameter.TempParam.SP" />
+                                        <Binding Mode="OneWay" Path="CurrentDeviceParameter.Temp" />
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </hc:UniformSpacingPanel>
+                    <hc:UniformSpacingPanel
+                        Canvas.Left="575"
+                        Canvas.Top="665"
+                        Orientation="Horizontal"
+                        Spacing="3">
+                        <TextBlock FontSize="{StaticResource SubHeadFontSize}" Text="{Binding CurrentDeviceParameter.JarWeight, StringFormat={}{0:F2}}" />
+                        <TextBlock FontSize="{StaticResource SubHeadFontSize}" Text="g" />
+                    </hc:UniformSpacingPanel>
+                </Canvas>
             </TabItem>
             <TabItem Name="tabCurve">
                 <TabItem.Header>

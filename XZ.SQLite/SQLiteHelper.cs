@@ -1185,7 +1185,7 @@ namespace XZ.SQLite
 
         public static DataTable GetPaginationData(string tableName, string condition,int startIndex, int count)
         {
-            string sql = $"WITH paginated_data AS (SELECT *,ROW_NUMBER() OVER(ORDER BY id) AS row_num FROM {tableName} {condition}) SELECT * FROM paginated_data WHERE row_num BETWEEN {startIndex} AND {startIndex + count};";
+            string sql = $"WITH paginated_data AS (SELECT *,ROW_NUMBER() OVER(ORDER BY id desc) AS row_num FROM {tableName} {condition}) SELECT * FROM paginated_data WHERE row_num BETWEEN {startIndex} AND {startIndex + count};";
             DataTable dataTable = SQLiteHelper.GetDatasToDataTable(sql);
             return dataTable;
         }

@@ -1,0 +1,435 @@
+﻿<Window
+    x:Class="RD3.Views.PadIndexView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:RD3.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:RD3.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:viewmodels="clr-namespace:RD3.ViewModels"
+    xmlns:wpf="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
+    Width="1920"
+    Height="1200"
+    d:DataContext="{d:DesignInstance Type=viewmodels:PadMainViewModel}"
+    FontSize="{StaticResource SubHeadFontSize}"
+    ResizeMode="CanMinimize"
+    ShowInTaskbar="True"
+    Topmost="False"
+    UseLayoutRounding="True"
+    WindowState="Maximized"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <ObjectDataProvider
+            x:Key="DataFromEnum"
+            MethodName="GetValues"
+            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="share:PeristalticPump" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border Height="50">
+            <Border.Background>
+                <ImageBrush ImageSource="/Images/Index/TitleBackground.png" />
+            </Border.Background>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="15" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Image
+                    Width="120"
+                    Height="50"
+                    Margin="5,0,0,0"
+                    Source="/Images/NewReactor/logo.png" />
+                <hc:UniformSpacingPanel
+                    Grid.Column="2"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="10">
+                    <Button
+                        Height="36"
+                        hc:IconElement.Geometry="{StaticResource GeometryStart}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="ButtonStartExperiment_Click"
+                        Command="{Binding StartExperimentCommand}"
+                        Content="开始实验"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White"
+                        Visibility="{Binding CurrentDeviceParameter.InExperimenting, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
+                    <Button
+                        Height="36"
+                        hc:IconElement.Geometry="{StaticResource GeometryStop}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding EndExperimentCommand}"
+                        Content="结束实验"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White"
+                        Visibility="{Binding CurrentDeviceParameter.InExperimenting, Converter={StaticResource Boolean2VisibilityConverter}}" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            Width="320"
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource HeadFontSize}"
+                            Foreground="White"
+                            Text="{Binding CurrentDeviceParameter.FormattedTime, StringFormat='批次运行时间：{0}'}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            Width="250"
+                            VerticalAlignment="Center"
+                            FontSize="{StaticResource HeadFontSize}"
+                            Foreground="White"
+                            Text="{Binding CurrentDeviceParameter.BatchID, StringFormat='批次号：{0}'}" />
+                    </StackPanel>
+                </hc:UniformSpacingPanel>
+                <hc:UniformSpacingPanel
+                    Grid.Column="4"
+                    FlowDirection="LeftToRight"
+                    Orientation="Horizontal"
+                    Spacing="5">
+                    <DockPanel LastChildFill="False">
+                        <TextBlock
+                            Name="FormattedTime"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource IconFont}"
+                            FontSize="{StaticResource LargeFontSize}"
+                            Foreground="White"
+                            Text="2025-07-23 17:14:32" />
+                    </DockPanel>
+                    <Button
+                        Name="btnDOSimulate"
+                        Height="40"
+                        hc:IconElement.Geometry="{StaticResource AskGeometry}"
+                        hc:IconElement.Height="30"
+                        hc:IconElement.Width="30"
+                        materialDesign:RippleAssist.Feedback="#000000"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding DODIYCommand}"
+                        Content="模拟DO"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White" />
+                    <Button
+                        Name="btnpHSimulate"
+                        Height="40"
+                        hc:IconElement.Geometry="{StaticResource AskGeometry}"
+                        hc:IconElement.Height="30"
+                        hc:IconElement.Width="30"
+                        materialDesign:RippleAssist.Feedback="#000000"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding pHDIYCommand}"
+                        Content="模拟pH"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White" />
+                    <Button
+                        Height="40"
+                        hc:IconElement.Geometry="{StaticResource GeometryUserCircle}"
+                        hc:IconElement.Height="30"
+                        hc:IconElement.Width="30"
+                        materialDesign:RippleAssist.Feedback="#000000"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White" />
+                    <Button
+                        Height="40"
+                        hc:IconElement.Geometry="{StaticResource GeometryArrowCollapseAll}"
+                        hc:IconElement.Height="30"
+                        hc:IconElement.Width="30"
+                        materialDesign:RippleAssist.Feedback="#DD000000"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding MinimizeCommand}"
+                        FontSize="{StaticResource HeadFontSize}"
+                        Foreground="White"
+                        ToolTip="返回桌面" />
+                    <Button
+                        Height="40"
+                        hc:IconElement.Geometry="{StaticResource GeometryQuit}"
+                        hc:IconElement.Height="30"
+                        hc:IconElement.Width="30"
+                        materialDesign:RippleAssist.Feedback="#DD000000"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding ExitCommand}"
+                        Foreground="White"
+                        ToolTip="关闭软件" />
+                </hc:UniformSpacingPanel>
+            </Grid>
+        </Border>
+        <TabControl
+            Name="tabMenu"
+            Grid.Row="1"
+            SelectedIndex="{Binding SelectedMenuIndex}"
+            SnapsToDevicePixels="True"
+            Style="{StaticResource MaterialDesignNavigationRailTabControl}"
+            TabStripPlacement="Right">
+            <TabItem Name="tabIndex">
+                <TabItem.Header>
+                    <StackPanel Width="auto" Height="auto">
+                        <materialDesign:PackIcon
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            Kind="Home" />
+                        <TextBlock HorizontalAlignment="Center" Text="首页" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Border Background="{StaticResource RegionBackgroundBrush}">
+                    <Grid Margin="10,10,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel Margin="5,0,0,30" Orientation="Horizontal">
+                            <Button
+                                materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                                materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                materialDesign:ButtonProgressAssist.Value="-1"
+                                Content="连接中..."
+                                Cursor="Hand"
+                                Foreground="White"
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                Visibility="{Binding Connecting, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <Button
+                                Height="60"
+                                Padding="15"
+                                hc:IconElement.Geometry="{StaticResource GeometryNetworkReconnect}"
+                                hc:IconElement.Height="30"
+                                hc:IconElement.Width="30"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding ReconnectCommand}"
+                                DockPanel.Dock="Bottom"
+                                Foreground="{DynamicResource CustomPrimaryBrush}">
+                                <Button.Visibility>
+                                    <MultiBinding Converter="{StaticResource AndBool2VisConverter}">
+                                        <Binding Converter="{StaticResource InverseBooleanConverter}" Path="Connected" />
+                                        <Binding Converter="{StaticResource InverseBooleanConverter}" Path="Connecting" />
+                                    </MultiBinding>
+                                </Button.Visibility>
+                            </Button>
+                        </StackPanel>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <hc:UniformSpacingPanel
+                                Margin="5,0,0,0"
+                                Orientation="Vertical"
+                                Spacing="35">
+                                <local:PumpView x:Name="pump1" />
+                                <local:PumpView x:Name="pump2" />
+                                <local:PumpView x:Name="pump3" />
+                                <local:PumpView x:Name="pump4" />
+                                <local:PumpView x:Name="pump5" />
+                                <local:PumpView x:Name="pump6" />
+                                <local:MFCView x:Name="mfc1" />
+                                <local:MFCView x:Name="mfc2" />
+                                <local:MFCView x:Name="mfc3" />
+                                <local:MFCView x:Name="mfc4" />
+                            </hc:UniformSpacingPanel>
+                            <DockPanel Grid.Column="1">
+                                <hc:UniformSpacingPanel
+                                    DockPanel.Dock="Top"
+                                    Orientation="Vertical"
+                                    Spacing="20">
+                                    <local:CondensationView x:Name="condensationView" HorizontalAlignment="Center" />
+                                    <local:EPCView x:Name="epcView" HorizontalAlignment="Center" />
+                                </hc:UniformSpacingPanel>
+                                <Canvas Width="350">
+                                    <Image
+                                        Canvas.Left="75"
+                                        Canvas.Bottom="100"
+                                        Source="/Images/Index/Fermentation.png" />
+                                    <Image
+                                        Canvas.Left="85"
+                                        Canvas.Bottom="40"
+                                        Source="/Images/Index/Weight.png" />
+                                    <Image
+                                        x:Name="imgStirring"
+                                        Canvas.Left="135"
+                                        Canvas.Bottom="140"
+                                        Source="/Images/Index/Stirring.png" />
+                                    <Border
+                                        Canvas.Left="90"
+                                        Canvas.Bottom="108"
+                                        Width="178"
+                                        Height="285"
+                                        Background="#A1DFE6"
+                                        CornerRadius="0,0,59,59"
+                                        Opacity=".5" />
+                                    <StackPanel
+                                        Canvas.Left="140"
+                                        Canvas.Bottom="52"
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            x:Name="ftWeight"
+                                            VerticalAlignment="Center"
+                                            FontSize="{StaticResource NormalFontSize}"
+                                            Text="100" />
+                                        <TextBlock
+                                            Margin="3,0,0,0"
+                                            VerticalAlignment="Center"
+                                            FontSize="{StaticResource NormalFontSize}"
+                                            Text="g" />
+                                    </StackPanel>
+                                </Canvas>
+                            </DockPanel>
+                            <hc:UniformSpacingPanel
+                                Grid.Column="2"
+                                Orientation="Vertical"
+                                Spacing="35">
+                                <local:AgitInfoView />
+                                <local:DOInfoView />
+                                <local:pHInfoView />
+                                <local:TempInfoView />
+                                <local:OURInfoView />
+                                <local:CERInfoView />
+                                <local:RQInfoView />
+                                <local:ODInfoView />
+                            </hc:UniformSpacingPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </TabItem>
+            <TabItem Name="tabCurve">
+                <TabItem.Header>
+                    <StackPanel Width="auto" Height="auto">
+                        <materialDesign:PackIcon
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            Kind="ChartBellCurveCumulative" />
+                        <TextBlock HorizontalAlignment="Center" Text="曲线" />
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Name="GridMain" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Name="rowGraph3"
+                            Height="auto"
+                            MaxHeight="60" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <WrapPanel Name="ChkGraphList3" Orientation="Horizontal" />
+                    </ScrollViewer>
+                    <wpf:WpfPlot Name="wpfPlot3" Grid.Row="2" />
+                </Grid>
+            </TabItem>
+            <TabItem Name="tabBatch">
+                <TabItem.Header>
+                    <StackPanel Width="auto" Height="auto">
+                        <materialDesign:PackIcon
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            Kind="Database" />
+                        <TextBlock HorizontalAlignment="Center" Text="数据" />
+                    </StackPanel>
+                </TabItem.Header>
+                <local:NewBatchView
+                    x:Name="batchView"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top" />
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Width="auto" Height="auto">
+                        <materialDesign:PackIcon
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            Kind="TimelineClockOutline" />
+                        <TextBlock HorizontalAlignment="Center" Text="顺控" />
+                    </StackPanel>
+                </TabItem.Header>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Width="auto" Height="auto">
+                        <materialDesign:PackIcon
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            Kind="Apps" />
+                        <TextBlock HorizontalAlignment="Center" Text="设置" />
+                    </StackPanel>
+                </TabItem.Header>
+                <local:PadConfigurationView HorizontalAlignment="Left" VerticalAlignment="Top" />
+            </TabItem>
+            <TabItem Name="tabCalibrate">
+                <TabItem.Header>
+                    <StackPanel Width="auto" Height="auto">
+                        <materialDesign:PackIcon
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            Kind="AlphaCBoxOutline" />
+                        <TextBlock HorizontalAlignment="Center" Text="标定" />
+                    </StackPanel>
+                </TabItem.Header>
+                <local:PadCalibrationView
+                    x:Name="calibrationView"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top" />
+            </TabItem>
+            <TabItem Name="tabAlarm">
+                <TabItem.Header>
+                    <StackPanel Width="auto" Height="auto">
+                        <materialDesign:PackIcon
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            Kind="Alarm" />
+                        <TextBlock HorizontalAlignment="Center" Text="报警" />
+                    </StackPanel>
+                </TabItem.Header>
+                <local:AlarmRecordView
+                    x:Name="alarmRecordView"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top" />
+            </TabItem>
+            <TabItem Name="tabAudit">
+                <TabItem.Header>
+                    <StackPanel Width="auto" Height="auto">
+                        <materialDesign:PackIcon
+                            Width="40"
+                            Height="40"
+                            HorizontalAlignment="Center"
+                            Kind="FileSign" />
+                        <TextBlock HorizontalAlignment="Center" Text="审计" />
+                    </StackPanel>
+                </TabItem.Header>
+                <local:PadAuditView
+                    x:Name="auditView"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

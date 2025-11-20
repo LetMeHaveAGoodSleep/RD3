@@ -51,30 +51,32 @@ namespace RD3.Controller
 
         private int _feedIndex = -1;
 
-        public Fermentor CurrentFermentor
+        private DeviceParameter _currentDeviceParameter;
+        public DeviceParameter CurrentDeviceParameter
         {
-            get { return AnalysisSolution.GetInstance().CurrentFermentor; }
+            get => _currentDeviceParameter;
+            private set => _currentDeviceParameter = value;
         }
 
         public PumpInfo FeedPumpInfo
         {
-            get => CurrentFermentor.Device.PumpInfoCol.FindFirst(t => t.Pump == PeristalticPump.FeedPump && t.IsEnable);
+            get => CurrentDeviceParameter.PumpInfoCol.FindFirst(t => t.Pump == PeristalticPump.FeedPump && t.IsEnable);
         }
 
         public MFCInfo MFCAir
         {
-            get => CurrentFermentor.Device.MFCInfoCol.FindFirst(t => t.Gas == GasType.Air && t.IsEnable);
+            get => CurrentDeviceParameter.MFCInfoCol.FindFirst(t => t.Gas == GasType.Air && t.IsEnable);
         }
 
         public MFCInfo MFCO2
         {
-            get => CurrentFermentor.Device.MFCInfoCol.FindFirst(t => t.Gas == GasType.O2 && t.IsEnable);
+            get => CurrentDeviceParameter.MFCInfoCol.FindFirst(t => t.Gas == GasType.O2 && t.IsEnable);
         }
 
-        public DOController()
+        public DOController(DeviceParameter deviceParameter)
         {
+            _currentDeviceParameter = deviceParameter;
         }
-
         public void StartWork()
         {
             if (_backgroundWorker != null && _backgroundWorker.IsBusy)
@@ -92,11 +94,13 @@ namespace RD3.Controller
             // 绑定事件
             _backgroundWorker.DoWork += ((s, e) =>
             {
+                CurrentDeviceParameter.AgitParam.IsAuditing = false;//受控时的数据变化不记录
+
                 _workerWorking = true;
 
-                CurrentFermentor.Device.FeedSuspend = false;
-                CurrentFermentor.Device.DOParam.InitialTemp = CurrentFermentor.Device.DOParam.SP;
-                e.Result = CurrentFermentor.Device.Name;
+                CurrentDeviceParameter.FeedSuspend = false;
+                CurrentDeviceParameter.DOParam.InitialTemp = CurrentDeviceParameter.TempParam.SP;
+                e.Result = CurrentDeviceParameter.Name;
 
                 float maxGas = 0;//用于通气量的总和
                 float initialGas = 0;
@@ -121,8 +125,8 @@ namespace RD3.Controller
                     Thread.Sleep(1000);
                 }
 
-                RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                while (realTimeParam.DO < CurrentFermentor.Device.DOParam.SP && !CurrentFermentor.Device.DOParam.IsDirect)
+                RealTimeParam realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                while (realTimeParam.DO < CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsDirect)
                 {
                     if (_backgroundWorker.CancellationPending)
                     {
@@ -139,11 +143,11 @@ namespace RD3.Controller
                         Thread.Sleep(1000);
                     }
                     Thread.Sleep(1000);
-                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                 }
 
-                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                while (realTimeParam.DO > CurrentFermentor.Device.DOParam.SP && !CurrentFermentor.Device.DOParam.IsReverse)
+                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                while (realTimeParam.DO > CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsReverse)
                 {
                     if (_backgroundWorker.CancellationPending)
                     {
@@ -160,11 +164,11 @@ namespace RD3.Controller
                         Thread.Sleep(1000);
                     }
                     Thread.Sleep(1000);
-                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                 }
 
                 //mid-ranging控制
-                if (CurrentFermentor.Device.DOParam.ControlStrategy == DOControlStrategy.Midranging)
+                if (CurrentDeviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
                 {
                     info = null;
                     lastPid = null;
@@ -173,12 +177,12 @@ namespace RD3.Controller
                     factorIndex = -1;//当前执行索引
                     lastFactorIndex = -1;//当前执行索引
 
-                    MidRangingParam param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentFermentor.Device.Name);
-                    param.AgitLowerLimit = CurrentFermentor.Device.AgitParam.LowerLimit;
-                    param.AgitUpperLimit = CurrentFermentor.Device.AgitParam.UpperLimit;
-                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                    CurrentFermentor.Device.AgitParam.SP = Math.Clamp(realTimeParam.Agit, CurrentFermentor.Device.AgitParam.LowerLimit, CurrentFermentor.Device.AgitParam.UpperLimit);
-                    CurrentFermentor.Device.AgitParam.IsControling = true;
+                    MidRangingParam param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
+                    param.AgitLowerLimit = CurrentDeviceParameter.AgitParam.LowerLimit;
+                    param.AgitUpperLimit = CurrentDeviceParameter.AgitParam.UpperLimit;
+                    realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                    CurrentDeviceParameter.AgitParam.SP = Math.Clamp(realTimeParam.Agit, CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
+                    CurrentDeviceParameter.AgitParam.IsControling = true;
 
                     ObservableCollection<DOControlFactor> collection = [.. param.FactorCol];
                     if (collection.Contains(DOControlFactor.Air))
@@ -256,13 +260,13 @@ namespace RD3.Controller
                         Thread.Sleep(1000);
                     }
 
-                    ResetDOParam(CurrentFermentor.Device);
+                    ResetDOParam(CurrentDeviceParameter);
                     while (true)
                     {
                         try
                         {
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                            while (realTimeParam.DO < CurrentFermentor.Device.DOParam.SP && !CurrentFermentor.Device.DOParam.IsDirect)
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                            while (realTimeParam.DO < CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsDirect)
                             {
                                 if (_backgroundWorker.CancellationPending)
                                 {
@@ -279,11 +283,11 @@ namespace RD3.Controller
                                     Thread.Sleep(1000);
                                 }
                                 Thread.Sleep(1000);
-                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                             }
 
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                            while (realTimeParam.DO > CurrentFermentor.Device.DOParam.SP && !CurrentFermentor.Device.DOParam.IsReverse)
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                            while (realTimeParam.DO > CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsReverse)
                             {
                                 if (_backgroundWorker.CancellationPending)
                                 {
@@ -300,7 +304,7 @@ namespace RD3.Controller
                                     Thread.Sleep(1000);
                                 }
                                 Thread.Sleep(1000);
-                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                             }
 
                             if (_backgroundWorker.CancellationPending)
@@ -322,26 +326,26 @@ namespace RD3.Controller
                             var pIDInfos = PIDInfoManager.GetInstance().PIDInfos;
                             if (pIDInfos == null)
                             {
-                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                                if (realTimeParam.DO <= CurrentFermentor.Device.DOParam.SP)
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                                if (realTimeParam.DO <= CurrentDeviceParameter.DOParam.SP)
                                 {
-                                    info = new PIDInfo() { Factor = PIDFactor.DO_Dircet, P = 5, I = 0.005f, D = 20, Threshold = 1000, maxSpeed = 1000 };
+                                    info = new PIDInfo() { Factor = PIDFactor.DO_Dircet, P = 5, I = 0.005f, D = 20, Threshold = 1000, MaxSpeed = 1000 };
                                 }
-                                else if (realTimeParam.DO >= CurrentFermentor.Device.DOParam.SP)
+                                else if (realTimeParam.DO >= CurrentDeviceParameter.DOParam.SP)
                                 {
-                                    info = new PIDInfo() { Factor = PIDFactor.DO_Reverse, P = 5, I = 0.005f, D = 20, Threshold = 1000, maxSpeed = 1000 };
+                                    info = new PIDInfo() { Factor = PIDFactor.DO_Reverse, P = 5, I = 0.005f, D = 20, Threshold = 1000, MaxSpeed = 1000 };
                                 }
                             }
                             else
                             {
-                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                                if (realTimeParam.DO <= CurrentFermentor.Device.DOParam.SP)
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                                if (realTimeParam.DO <= CurrentDeviceParameter.DOParam.SP)
                                 {
-                                    info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.deviceID == CurrentFermentor.Device.Name);
+                                    info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.DeviceId == CurrentDeviceParameter.Name);
                                 }
-                                else if (realTimeParam.DO >= CurrentFermentor.Device.DOParam.SP)
+                                else if (realTimeParam.DO >= CurrentDeviceParameter.DOParam.SP)
                                 {
-                                    info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.deviceID == CurrentFermentor.Device.Name);
+                                    info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.DeviceId == CurrentDeviceParameter.Name);
                                 }
                             }
 
@@ -355,23 +359,23 @@ namespace RD3.Controller
                             {
                                 if (info.PidName != lastPid.PidName)
                                 {
-                                    LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, CurrentFermentor.Device.Name));
-                                    baseAgit = CurrentFermentor.Device.AgitParam.SP;
+                                    LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, CurrentDeviceParameter.Name));
+                                    baseAgit = CurrentDeviceParameter.AgitParam.SP;
                                 }
-                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", CurrentFermentor.Device.Name, realTimeParam.Agit, CurrentFermentor.Device.AgitParam.SP, baseAgit));
+                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", CurrentDeviceParameter.Name, realTimeParam.Agit, CurrentDeviceParameter.AgitParam.SP, baseAgit));
 
-                                ResetDOParam(CurrentFermentor.Device);
+                                ResetDOParam(CurrentDeviceParameter);
                             }
                             lastPid = info;
 
-                            param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentFermentor.Device.Name);
+                            param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
 
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
 
-                            if (Math.Abs(realTimeParam.DO - CurrentFermentor.Device.DOParam.SP) <= info.deadArea)
+                            if (Math.Abs(realTimeParam.DO - CurrentDeviceParameter.DOParam.SP) <= info.DeadArea)
                             {
-                                baseAgit = CurrentFermentor.Device.AgitParam.SP;
-                                ResetDOParam(CurrentFermentor.Device);
+                                baseAgit = CurrentDeviceParameter.AgitParam.SP;
+                                ResetDOParam(CurrentDeviceParameter);
 
                                 int count = info.Interval <= 0 ? 1 : info.Interval;
                                 while (count > 0)
@@ -397,28 +401,28 @@ namespace RD3.Controller
                             }
 
                             _agitPIDController.SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
-                            _agitPIDController.SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
+                            _agitPIDController.SetOutputLimits(-Math.Abs(info.MaxSpeed), Math.Abs(info.MaxSpeed));
                             _agitPIDController.SetIntegralLimits(-2000, 2000);
-                            _agitPIDController.SetTarget(CurrentFermentor.Device.DOParam.SP);
+                            _agitPIDController.SetTarget(CurrentDeviceParameter.DOParam.SP);
 
-                            LogHelper.Debug(string.Format("反应器{6} Mid-Ranging DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", CurrentFermentor.Device.DOParam.SP, realTimeParam.DO, info.P, info.I, info.D, info.Interval, CurrentFermentor.Device.Name));
+                            LogHelper.Debug(string.Format("反应器{6} Mid-Ranging DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", CurrentDeviceParameter.DOParam.SP, realTimeParam.DO, info.P, info.I, info.D, info.Interval, CurrentDeviceParameter.Name));
 
                             float temp = _agitPIDController.CalculatePositional_DO((float)realTimeParam.DO);
                             int tempAgit = Convert.ToInt32(baseAgit + temp);
 
                             _agitDelta = tempAgit;
-                            if (CurrentFermentor.Device.DOFilterEnable)
+                            if (CurrentDeviceParameter.DOFilterEnable)
                             {
                                 //增加低通滤波 
-                                var lowPassDelta = Convert.ToInt32(RCFilter.LowPass(tempAgit, lastDODelta, CurrentFermentor.Device.AgitSampleCycle, CurrentFermentor.Device.AgitSampleFrequency));
+                                var lowPassDelta = Convert.ToInt32(RCFilter.LowPass(tempAgit, lastDODelta, CurrentDeviceParameter.AgitSampleCycle, CurrentDeviceParameter.AgitSampleFrequency));
                                 lastDODelta = lowPassDelta;
                                 _agitDelta = lowPassDelta;
                             }
 
-                            LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", CurrentFermentor.Device.Name, baseAgit, temp, tempAgit, _agitDelta));
+                            LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", CurrentDeviceParameter.Name, baseAgit, temp, tempAgit, _agitDelta));
 
-                            CurrentFermentor.Device.AgitParam.SP = Math.Clamp((int)_agitDelta,CurrentFermentor.Device.AgitParam.LowerLimit, CurrentFermentor.Device.AgitParam.UpperLimit);
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentFermentor.Device.Name, CurrentFermentor.Device.AgitParam.SP);
+                            CurrentDeviceParameter.AgitParam.SP = Math.Clamp((int)_agitDelta,CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.SP);
 
                             sleepCount = info.Interval <= 0 ? 1 : info.Interval;
                             while (sleepCount > 0)
@@ -441,12 +445,12 @@ namespace RD3.Controller
                                 Thread.Sleep(1000);
                             }
 
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                            if (Math.Abs(realTimeParam.DO - CurrentFermentor.Device.DOParam.SP) <= info.deadArea)
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                            if (Math.Abs(realTimeParam.DO - CurrentDeviceParameter.DOParam.SP) <= info.DeadArea)
                             {
-                                baseAgit = CurrentFermentor.Device.AgitParam.SP;
+                                baseAgit = CurrentDeviceParameter.AgitParam.SP;
 
-                                ResetDOParam(CurrentFermentor.Device);
+                                ResetDOParam(CurrentDeviceParameter);
 
                                 int count = info.Interval <= 0 ? 1 : info.Interval;
                                 while (count > 0)
@@ -471,7 +475,7 @@ namespace RD3.Controller
                                 continue;
                             }
 
-                            if (CurrentFermentor.Device.AgitParam.SP > param.AgitHigh && factorIndex == -1)
+                            if (CurrentDeviceParameter.AgitParam.SP > param.AgitHigh && factorIndex == -1)
                             {
                                 LogHelper.Debug($"到达设定转速高限:{param.AgitHigh}");
                                 lastFactorIndex = factorIndex;
@@ -499,7 +503,7 @@ namespace RD3.Controller
                                 Thread.Sleep(1000);
                             }
 
-                            param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentFermentor.Device.Name);
+                            param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
                             PIDInfo info1 = null;
                             var previousElements = collection.Take(factorIndex);
                             bool isExistOtherGas = false;//在当前气体之前是否存在气体
@@ -527,15 +531,15 @@ namespace RD3.Controller
                                         maxGas = param.AirUpperLimit;
                                     }
 
-                                    info1 = pIDInfos.FindFirst(t => t.PidName.Contains("通气") && t.deviceID == CurrentFermentor.Device.Name);
+                                    info1 = pIDInfos.FindFirst(t => t.PidName.Contains("通气") && t.DeviceId == CurrentDeviceParameter.Name);
                                     if (info1 == null)
                                     {
-                                        info1 = new PIDInfo() { P = 0.05f, I = 0.005f, D = 20, Threshold = 1000, maxSpeed = 1000 };
+                                        info1 = new PIDInfo() { P = 0.05f, I = 0.005f, D = 20, Threshold = 1000, MaxSpeed = 1000 };
                                     }
 
                                     _airPIDController.Reset();
                                     _airPIDController.SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
-                                    _airPIDController.SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
+                                    _airPIDController.SetOutputLimits(-Math.Abs(info1.MaxSpeed), Math.Abs(info1.MaxSpeed));
                                     _airPIDController.SetIntegralLimits(-2000, 2000);
                                     _airPIDController.SetTarget(_agitDelta);
                                     float tempAir = _airPIDController.CalculateIncremental(param.AgitHigh);
@@ -567,7 +571,7 @@ namespace RD3.Controller
                                         MFCO2.FlowRate_SP = MathF.Round(maxGas - airSpeed, 2);
                                     }
 
-                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 通气预设值：{1}，当前：{2}，delta：{3}", CurrentFermentor.Device.Name, airSpeed, MFCAir.FlowRate_SP, tempAir));
+                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 通气预设值：{1}，当前：{2}，delta：{3}", CurrentDeviceParameter.Name, airSpeed, MFCAir.FlowRate_SP, tempAir));
                                     sleepCount = info.Interval <= 1 ? 1 : info.Interval;
                                     while (sleepCount > 0)
                                     {
@@ -610,14 +614,14 @@ namespace RD3.Controller
                                         maxGas = param.AirUpperLimit;
                                     }
 
-                                    info1 = pIDInfos.FindFirst(t => t.PidName.Contains("氧气") && t.deviceID == CurrentFermentor.Device.Name);
+                                    info1 = pIDInfos.FindFirst(t => t.PidName.Contains("氧气") && t.DeviceId == CurrentDeviceParameter.Name);
                                     if (info1 == null)
                                     {
-                                        info1 = new PIDInfo() { P = 0.05f, I = 0.005f, D = 20, Threshold = 1000, maxSpeed = 1000 };
+                                        info1 = new PIDInfo() { P = 0.05f, I = 0.005f, D = 20, Threshold = 1000, MaxSpeed = 1000 };
                                     }
                                     _o2PIDController.Reset();
                                     _o2PIDController.SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
-                                    _o2PIDController.SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
+                                    _o2PIDController.SetOutputLimits(-Math.Abs(info1.MaxSpeed), Math.Abs(info1.MaxSpeed));
                                     _o2PIDController.SetIntegralLimits(-2000, 2000);
                                     _o2PIDController.SetTarget(_agitDelta);
                                     float tempO2 = _o2PIDController.CalculateIncremental((float)param.AgitHigh);
@@ -649,7 +653,7 @@ namespace RD3.Controller
                                         MFCAir.IsControling = true;
                                         MFCAir.FlowRate_SP = maxGas - o2Speed > 0 ? MathF.Round(maxGas - o2Speed, 2) : 0;
                                     }
-                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 氧气预设值：{1}，底值：{2}，delta：{3}", CurrentFermentor.Device.Name, o2Speed, MFCO2.FlowRate_SP, tempO2));
+                                    LogHelper.Debug(string.Format("反应器{0} Mid-Ranging 氧气预设值：{1}，底值：{2}，delta：{3}", CurrentDeviceParameter.Name, o2Speed, MFCO2.FlowRate_SP, tempO2));
                                     sleepCount = info.Interval <= 1 ? 1 : info.Interval;
                                     while (sleepCount > 0)
                                     {
@@ -673,30 +677,31 @@ namespace RD3.Controller
                                     break;
                                 case DOControlFactor.Temp:
                                     
-                                    if (!CurrentFermentor.Device.DOParam.IsControling)
+                                    if (!CurrentDeviceParameter.TempParam.IsControling)
                                     {
                                         AnalysisSolution.GetInstance().CurrentFermentor.TempController.StartWork();
                                         Thread.Sleep(1000);
                                     }
                                     if (firstInitTemp)
                                     {
-                                        CurrentFermentor.Device.DOParam.InitialTemp = CurrentFermentor.Device.DOParam.SP;
+                                        CurrentDeviceParameter.TempParam.IsAuditing = false;
+                                        CurrentDeviceParameter.DOParam.InitialTemp = CurrentDeviceParameter.TempParam.SP;
                                         firstInitTemp = false;
                                     }
 
                                     QPIDController pIDController = new QPIDController();
-                                    info1 = pIDInfos.FindFirst(t => t.PidName.Contains("降温") && t.deviceID == CurrentFermentor.Device.Name);
+                                    info1 = pIDInfos.FindFirst(t => t.PidName.Contains("降温") && t.DeviceId == CurrentDeviceParameter.Name);
                                     if (info1 == null)
                                     {
-                                        info1 = new PIDInfo() { P = 0.05f, I = 0.005f, D = 20, Threshold = 1000, maxSpeed = 1000 };
+                                        info1 = new PIDInfo() { P = 0.05f, I = 0.005f, D = 20, Threshold = 1000, MaxSpeed = 1000 };
                                     }
                                     pIDController.SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
-                                    pIDController.SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
+                                    pIDController.SetOutputLimits(-Math.Abs(info1.MaxSpeed), Math.Abs(info1.MaxSpeed));
                                     pIDController.SetIntegralLimits(-2000, 2000);
                                     pIDController.SetTarget(param.AgitHigh);
                                     float increment = pIDController.CalculateIncremental(_agitDelta);
-                                    float currentTemp = CurrentFermentor.Device.DOParam.SP + increment;
-                                    if (currentTemp <= CurrentFermentor.Device.TempDOLowerLimit)
+                                    float currentTemp = CurrentDeviceParameter.DOParam.SP + increment;
+                                    if (currentTemp <= CurrentDeviceParameter.TempDOLowerLimit)
                                     {
                                         if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
                                         {
@@ -704,7 +709,7 @@ namespace RD3.Controller
                                             factorIndex += 1;
                                         }
                                     }
-                                    else if (currentTemp >= CurrentFermentor.Device.DOParam.InitialTemp)
+                                    else if (currentTemp >= CurrentDeviceParameter.DOParam.InitialTemp)
                                     {
                                         if (factorIndex - 1 > -1)
                                         {
@@ -712,9 +717,9 @@ namespace RD3.Controller
                                             factorIndex -= 1;
                                         }
                                     }
-                                    currentTemp = currentTemp <= CurrentFermentor.Device.TempDOLowerLimit ? CurrentFermentor.Device.TempDOLowerLimit : currentTemp >= CurrentFermentor.Device.DOParam.InitialTemp ? CurrentFermentor.Device.DOParam.InitialTemp : currentTemp;
-                                    CurrentFermentor.Device.DOParam.SP = MathF.Round(currentTemp, 2);
-                                    LogHelper.Debug(string.Format("反应器{0} 起始溶氧{1} 单次delta{2} 实际溶氧{3}", CurrentFermentor.Device.Name, CurrentFermentor.Device.DOParam.InitialTemp, increment, currentTemp));
+                                    currentTemp = currentTemp <= CurrentDeviceParameter.TempDOLowerLimit ? CurrentDeviceParameter.TempDOLowerLimit : currentTemp >= CurrentDeviceParameter.DOParam.InitialTemp ? CurrentDeviceParameter.DOParam.InitialTemp : currentTemp;
+                                    CurrentDeviceParameter.DOParam.SP = MathF.Round(currentTemp, 2);
+                                    LogHelper.Debug(string.Format("反应器{0} 起始温度{1} 单次delta{2} 实际温度{3}", CurrentDeviceParameter.Name, CurrentDeviceParameter.DOParam.InitialTemp, increment, currentTemp));
                                     sleepCount = info1.Interval <= 0 ? 1 : info1.Interval;
                                     while (sleepCount > 0)
                                     {
@@ -736,7 +741,7 @@ namespace RD3.Controller
                                         Thread.Sleep(1000);
                                     }
 
-                                    if (CurrentFermentor.Device.DOParam.SP <= CurrentFermentor.Device.TempDOLowerLimit || CurrentFermentor.Device.DOParam.SP >= CurrentFermentor.Device.DOParam.InitialTemp)
+                                    if (CurrentDeviceParameter.DOParam.SP <= CurrentDeviceParameter.TempDOLowerLimit || CurrentDeviceParameter.DOParam.SP >= CurrentDeviceParameter.DOParam.InitialTemp)
                                     {
                                         while (true)
                                         {
@@ -754,8 +759,8 @@ namespace RD3.Controller
                                                 }
                                                 Thread.Sleep(1000);
                                             }
-                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                                            if (Math.Abs(realTimeParam.Temp - CurrentFermentor.Device.DOParam.SP) <= 0.2)
+                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                                            if (Math.Abs(realTimeParam.Temp - CurrentDeviceParameter.DOParam.SP) <= 0.2)
                                             {
                                                 break;
                                             }
@@ -783,26 +788,30 @@ namespace RD3.Controller
                                             factorIndex -= 1;
                                         }
                                     }
+                                    else
+                                    {
+                                        FeedPumpInfo.IsControlled = true;
+                                    }
 
                                     if (firstInitFeed)
                                     {
-                                        CurrentFermentor.Device.FeedSuspend = true;
-                                        CurrentFermentor.Device.DOParam.InitialFeed = FeedPumpInfo.FlowRate_SP;
+                                        CurrentDeviceParameter.FeedSuspend = true;
+                                        CurrentDeviceParameter.DOParam.InitialFeed = FeedPumpInfo.FlowRate_SP;
                                         firstInitFeed = false;
                                     }
                                     QPIDController controller = new QPIDController();
-                                    info1 = pIDInfos.FindFirst(t => t.PidName.Contains("补料") && t.deviceID == CurrentFermentor.Device.Name);
+                                    info1 = pIDInfos.FindFirst(t => t.PidName.Contains("补料") && t.DeviceId == CurrentDeviceParameter.Name);
                                     if (info1 == null)
                                     {
-                                        info1 = new PIDInfo() { P = 0.05f, I = 0.005f, D = 20, Threshold = 1000, maxSpeed = 1000 };
+                                        info1 = new PIDInfo() { P = 0.05f, I = 0.005f, D = 20, Threshold = 1000, MaxSpeed = 1000 };
                                     }
                                     controller.SetParameters(kp: (float)info1.P, ki: (float)info1.I, kd: (float)info1.D, integralThreshold: info1.Threshold, interval: info1.Interval);
-                                    controller.SetOutputLimits(-Math.Abs(info1.maxSpeed), Math.Abs(info1.maxSpeed));
+                                    controller.SetOutputLimits(-Math.Abs(info1.MaxSpeed), Math.Abs(info1.MaxSpeed));
                                     controller.SetIntegralLimits(-2000, 2000);
                                     controller.SetTarget(param.AgitHigh);
                                     float incrementFeed = controller.CalculateIncremental(_agitDelta);
                                     float currentFeed = FeedPumpInfo.FlowRate_SP + incrementFeed;
-                                    if (currentFeed <= CurrentFermentor.Device.FeedDOLowerLimit)
+                                    if (currentFeed <= CurrentDeviceParameter.FeedDOLowerLimit)
                                     {
                                         if (factorIndex < collection.Count - 1)//如果还有下一执行参数，则跳到下一个执行参数
                                         {
@@ -810,7 +819,7 @@ namespace RD3.Controller
                                             factorIndex += 1;
                                         }
                                     }
-                                    else if (currentFeed >= CurrentFermentor.Device.DOParam.InitialFeed)
+                                    else if (currentFeed >= CurrentDeviceParameter.DOParam.InitialFeed)
                                     {
                                         if (factorIndex - 1 > -1)
                                         {
@@ -818,7 +827,7 @@ namespace RD3.Controller
                                             factorIndex -= 1;
                                         }
                                     }
-                                    currentFeed = currentFeed <= CurrentFermentor.Device.FeedDOLowerLimit ? CurrentFermentor.Device.FeedDOLowerLimit : currentFeed >= CurrentFermentor.Device.DOParam.InitialFeed ? CurrentFermentor.Device.DOParam.InitialFeed : currentFeed;
+                                    currentFeed = currentFeed <= CurrentDeviceParameter.FeedDOLowerLimit ? CurrentDeviceParameter.FeedDOLowerLimit : currentFeed >= CurrentDeviceParameter.DOParam.InitialFeed ? CurrentDeviceParameter.DOParam.InitialFeed : currentFeed;
                                     FeedPumpInfo.FlowRate_SP = Math.Clamp(MathF.Round(currentFeed, 2), 0, Const.MaxPumpFlowRate);
                                     var controlParam = new PeristalticPumpControlParam()
                                     {
@@ -828,8 +837,8 @@ namespace RD3.Controller
                                         FlowSpeed = FeedPumpInfo.FlowRate_SP,
                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                     };
-                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentFermentor.Device.Name, controlParam);
-                                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 单次delta{2} 实际补料{3}", CurrentFermentor.Device.Name, CurrentFermentor.Device.DOParam.InitialFeed, incrementFeed, currentFeed));
+                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, controlParam);
+                                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 单次delta{2} 实际补料{3}", CurrentDeviceParameter.Name, CurrentDeviceParameter.DOParam.InitialFeed, incrementFeed, currentFeed));
                                     sleepCount = info1.Interval <= 0 ? 1 : info1.Interval;
                                     while (sleepCount > 0)
                                     {
@@ -861,13 +870,14 @@ namespace RD3.Controller
                     }
                 }
                 //周期
-                else if (CurrentFermentor.Device.DOParam.ControlStrategy == DOControlStrategy.Cycle)
+                else if (CurrentDeviceParameter.DOParam.ControlStrategy == DOControlStrategy.Cycle)
                 {
-                    CurrentFermentor.Device.AgitParam.IsControling = true;
+                    CurrentDeviceParameter.AgitParam.IsControling = true;
+                    CurrentDeviceParameter.AgitParam.IsAuditing = false;
                     while (true)
                     {
-                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                        while (realTimeParam.DO < CurrentFermentor.Device.DOParam.SP && !CurrentFermentor.Device.DOParam.IsDirect)
+                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                        while (realTimeParam.DO < CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsDirect)
                         {
                             if (_backgroundWorker.CancellationPending)
                             {
@@ -884,11 +894,11 @@ namespace RD3.Controller
                                 Thread.Sleep(1000);
                             }
                             Thread.Sleep(1000);
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                         }
 
-                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                        while (realTimeParam.DO > CurrentFermentor.Device.DOParam.SP && !CurrentFermentor.Device.DOParam.IsReverse)
+                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                        while (realTimeParam.DO > CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsReverse)
                         {
                             if (_backgroundWorker.CancellationPending)
                             {
@@ -905,7 +915,7 @@ namespace RD3.Controller
                                 Thread.Sleep(1000);
                             }
                             Thread.Sleep(1000);
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                         }
 
                         if (_backgroundWorker.CancellationPending)
@@ -925,14 +935,14 @@ namespace RD3.Controller
                             Thread.Sleep(1000);
                         }
 
-                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                        if (realTimeParam.DO < CurrentFermentor.Device.DOParam.SP)
+                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                        if (realTimeParam.DO < CurrentDeviceParameter.DOParam.SP)
                         {
-                            int temp = CurrentFermentor.Device.AgitParam.SP + CurrentFermentor.Device.DOParam.AgitCycle.DirectStep;
-                            CurrentFermentor.Device.AgitParam.SP = Math.Clamp(temp, CurrentFermentor.Device.DOParam.AgitCycle.LowerLimit, CurrentFermentor.Device.DOParam.AgitCycle.UpperLimit);
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentFermentor.Device.Name, CurrentFermentor.Device.AgitParam.SP);
+                            int temp = CurrentDeviceParameter.AgitParam.SP + CurrentDeviceParameter.DOParam.AgitCycle.DirectStep;
+                            CurrentDeviceParameter.AgitParam.SP = Math.Clamp(temp, CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit, CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.SP);
 
-                            int count = CurrentFermentor.Device.DOParam.AgitCycle.DirectInterval;
+                            int count = CurrentDeviceParameter.DOParam.AgitCycle.DirectInterval;
                             int index = 0;
                             while (index < count)
                             {
@@ -955,21 +965,21 @@ namespace RD3.Controller
                                 Thread.Sleep(1000);
                             }
                         }
-                        else if (realTimeParam.DO > CurrentFermentor.Device.DOParam.SP)
+                        else if (realTimeParam.DO > CurrentDeviceParameter.DOParam.SP)
                         {
-                            CurrentFermentor.Device.AgitParam.SP -= CurrentFermentor.Device.DOParam.AgitCycle.ReverseStep;
+                            CurrentDeviceParameter.AgitParam.SP -= CurrentDeviceParameter.DOParam.AgitCycle.ReverseStep;
 
-                            if (CurrentFermentor.Device.AgitParam.SP < CurrentFermentor.Device.DOParam.AgitCycle.LowerLimit)
+                            if (CurrentDeviceParameter.AgitParam.SP < CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit)
                             {
-                                CurrentFermentor.Device.AgitParam.SP = CurrentFermentor.Device.DOParam.AgitCycle.LowerLimit;
+                                CurrentDeviceParameter.AgitParam.SP = CurrentDeviceParameter.DOParam.AgitCycle.LowerLimit;
                             }
-                            else if (CurrentFermentor.Device.AgitParam.SP > CurrentFermentor.Device.DOParam.AgitCycle.UpperLimit)
+                            else if (CurrentDeviceParameter.AgitParam.SP > CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit)
                             {
-                                CurrentFermentor.Device.AgitParam.SP = CurrentFermentor.Device.DOParam.AgitCycle.UpperLimit;
+                                CurrentDeviceParameter.AgitParam.SP = CurrentDeviceParameter.DOParam.AgitCycle.UpperLimit;
                             }
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentFermentor.Device.Name, CurrentFermentor.Device.AgitParam.SP);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.SP);
 
-                            int count = CurrentFermentor.Device.DOParam.AgitCycle.ReverseInterval;
+                            int count = CurrentDeviceParameter.DOParam.AgitCycle.ReverseInterval;
                             int index = 0;
                             while (index < count)
                             {
@@ -996,11 +1006,11 @@ namespace RD3.Controller
 
                 }
                 //级联通气控制
-                else if (CurrentFermentor.Device.DOParam.ControlStrategy == DOControlStrategy.Step)
+                else if (CurrentDeviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step)
                 {
                     Stopwatch gasRetentionTime = new Stopwatch();
 
-                    e.Result = CurrentFermentor.Device.Name;
+                    e.Result = CurrentDeviceParameter.Name;
                     DateTime startTime = DateTime.Now;
                     _feedIndex = _tempIndex = _airIndex = _o2Index = 0;
 
@@ -1011,11 +1021,14 @@ namespace RD3.Controller
                     factorIndex = 0;//当前执行索引
                     lastFactorIndex = -1;//当前执行索引
 
-                    CurrentFermentor.Device.AgitParam.IsControling = true;
+                    CurrentDeviceParameter.AgitParam.IsControling = true;
 
-                    DOAssParam param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentFermentor.Device.Name);
-                    param.AgitLowerLimit = CurrentFermentor.Device.AgitParam.LowerLimit;
-                    param.AgitUpperLimit = CurrentFermentor.Device.AgitParam.UpperLimit;
+                    DOAssParam param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
+                    param.AgitLowerLimit = CurrentDeviceParameter.AgitParam.LowerLimit;
+                    param.AgitUpperLimit = CurrentDeviceParameter.AgitParam.UpperLimit;
+
+                    CurrentDeviceParameter.TempParam.IsAuditing = !param.TempEnable;
+                    FeedPumpInfo.IsControlled = param.FeedEnable;
 
                     ObservableCollection<DOControlFactor> collection = [.. param.FactorCol];
 
@@ -1111,14 +1124,14 @@ namespace RD3.Controller
                         Thread.Sleep(1000);
                     }
 
-                    ResetDOParam(CurrentFermentor.Device);
+                    ResetDOParam(CurrentDeviceParameter);
 
                     while (true)
                     {
                         try
                         {
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                            while (realTimeParam.DO < CurrentFermentor.Device.DOParam.SP && !CurrentFermentor.Device.DOParam.IsDirect)
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                            while (realTimeParam.DO < CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsDirect)
                             {
                                 if (_backgroundWorker.CancellationPending)
                                 {
@@ -1135,11 +1148,11 @@ namespace RD3.Controller
                                     Thread.Sleep(1000);
                                 }
                                 Thread.Sleep(1000);
-                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                             }
 
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                            while (realTimeParam.DO > CurrentFermentor.Device.DOParam.SP && !CurrentFermentor.Device.DOParam.IsReverse)
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                            while (realTimeParam.DO > CurrentDeviceParameter.DOParam.SP && !CurrentDeviceParameter.DOParam.IsReverse)
                             {
                                 if (_backgroundWorker.CancellationPending)
                                 {
@@ -1156,7 +1169,7 @@ namespace RD3.Controller
                                     Thread.Sleep(1000);
                                 }
                                 Thread.Sleep(1000);
-                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                             }
 
                             if (_backgroundWorker.CancellationPending)
@@ -1179,25 +1192,25 @@ namespace RD3.Controller
                             var pIDInfos = PIDInfoManager.GetInstance().PIDInfos;
                             if (pIDInfos == null)
                             {
-                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                                if (realTimeParam.DO <= CurrentFermentor.Device.DOParam.SP)
+                                realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                                if (realTimeParam.DO <= CurrentDeviceParameter.DOParam.SP)
                                 {
-                                    info = new PIDInfo() { Factor = PIDFactor.DO_Dircet, P = 5, I = 0.005f, D = 20, Threshold = 1000, maxSpeed = 1000 };
+                                    info = new PIDInfo() { Factor = PIDFactor.DO_Dircet, P = 5, I = 0.005f, D = 20, Threshold = 1000, MaxSpeed = 1000 };
                                 }
-                                else if (realTimeParam.DO >= CurrentFermentor.Device.DOParam.SP)
+                                else if (realTimeParam.DO >= CurrentDeviceParameter.DOParam.SP)
                                 {
-                                    info = new PIDInfo() { Factor = PIDFactor.DO_Reverse, P = 5, I = 0.005f, D = 20, Threshold = 1000, maxSpeed = 1000 };
+                                    info = new PIDInfo() { Factor = PIDFactor.DO_Reverse, P = 5, I = 0.005f, D = 20, Threshold = 1000, MaxSpeed = 1000 };
                                 }
                             }
 
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                            if (realTimeParam.DO <= CurrentFermentor.Device.DOParam.SP)
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                            if (realTimeParam.DO <= CurrentDeviceParameter.DOParam.SP)
                             {
-                                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.deviceID == CurrentFermentor.Device.Name);
+                                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_正向") && t.DeviceId == CurrentDeviceParameter.Name);
                             }
-                            else if (realTimeParam.DO >= CurrentFermentor.Device.DOParam.SP)
+                            else if (realTimeParam.DO >= CurrentDeviceParameter.DOParam.SP)
                             {
-                                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.deviceID == CurrentFermentor.Device.Name);
+                                info = pIDInfos.FindFirst(t => t.PidName.Contains("DO_反向") && t.DeviceId == CurrentDeviceParameter.Name);
                             }
 
                             if (baseAgit == -1)
@@ -1210,21 +1223,21 @@ namespace RD3.Controller
                             {
                                 if (info.PidName != lastPid.PidName)
                                 {
-                                    LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, CurrentFermentor.Device.Name));
-                                    baseAgit = CurrentFermentor.Device.AgitParam.SP;
+                                    LogHelper.Debug(string.Format("反应器{2} DO调控：由{0}切换至{1}", lastPid.PidName, info.PidName, CurrentDeviceParameter.Name));
+                                    baseAgit = CurrentDeviceParameter.AgitParam.SP;
                                 }
 
-                                ResetDOParam(CurrentFermentor.Device);
-                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", CurrentFermentor.Device.Name, realTimeParam.Agit, CurrentFermentor.Device.AgitParam.SP, baseAgit));
+                                ResetDOParam(CurrentDeviceParameter);
+                                LogHelper.Debug(string.Format("反应器{0} 当前转速{1} 预设转速{2} 转速底值设置为{3}", CurrentDeviceParameter.Name, realTimeParam.Agit, CurrentDeviceParameter.AgitParam.SP, baseAgit));
                             }
                             lastPid = info;
 
-                            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentFermentor.Device.Name);
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                            if (Math.Abs(realTimeParam.DO - CurrentFermentor.Device.DOParam.SP) <= info.deadArea)
+                            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                            if (Math.Abs(realTimeParam.DO - CurrentDeviceParameter.DOParam.SP) <= info.DeadArea)
                             {
-                                baseAgit = CurrentFermentor.Device.AgitParam.SP;
-                                ResetDOParam(CurrentFermentor.Device);
+                                baseAgit = CurrentDeviceParameter.AgitParam.SP;
+                                ResetDOParam(CurrentDeviceParameter);
 
                                 int count = info.Interval <= 0 ? 1 : info.Interval;
                                 while (count > 0)
@@ -1250,28 +1263,28 @@ namespace RD3.Controller
                             }
 
                             _agitPIDController.SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold, interval: info.Interval);
-                            _agitPIDController.SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
+                            _agitPIDController.SetOutputLimits(-Math.Abs(info.MaxSpeed), Math.Abs(info.MaxSpeed));
                             _agitPIDController.SetIntegralLimits(-2000, 2000);
-                            _agitPIDController.SetTarget(CurrentFermentor.Device.DOParam.SP);
+                            _agitPIDController.SetTarget(CurrentDeviceParameter.DOParam.SP);
 
-                            LogHelper.Debug(string.Format("反应器{6} 阶梯级联 DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", CurrentFermentor.Device.DOParam.SP, realTimeParam.DO, info.P, info.I, info.D, info.Interval, CurrentFermentor.Device.Name));
+                            LogHelper.Debug(string.Format("反应器{6} 阶梯级联 DO预设值：{0}，DO当前值：{1}，P：{2}，I：{3}，D：{4},采样时间：{5}", CurrentDeviceParameter.DOParam.SP, realTimeParam.DO, info.P, info.I, info.D, info.Interval, CurrentDeviceParameter.Name));
 
                             float temp = _agitPIDController.CalculatePositional_DO((float)realTimeParam.DO);
                             float timeOffset = Convert.ToSingle((DateTime.Now - startTime).TotalMinutes);
                             temp = 1 * temp;//系数都默认为1
                             int tempAgit = Convert.ToInt32(baseAgit + temp);
                             _agitDelta = tempAgit;
-                            if (CurrentFermentor.Device.DOFilterEnable)
+                            if (CurrentDeviceParameter.DOFilterEnable)
                             {
                                 //增加低通滤波 
-                                var lowPassDelta = Convert.ToInt32(RCFilter.LowPass(tempAgit, lastDODelta, CurrentFermentor.Device.AgitSampleCycle, CurrentFermentor.Device.AgitSampleFrequency));
+                                var lowPassDelta = Convert.ToInt32(RCFilter.LowPass(tempAgit, lastDODelta, CurrentDeviceParameter.AgitSampleCycle, CurrentDeviceParameter.AgitSampleFrequency));
                                 lastDODelta = lowPassDelta;
                                 _agitDelta = lowPassDelta;
                             }
-                            LogHelper.Debug(string.Format("反应器{0} 阶梯级联 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", CurrentFermentor.Device.Name, baseAgit, temp, tempAgit, _agitDelta));
+                            LogHelper.Debug(string.Format("反应器{0} 阶梯级联 转速底值：{1}，Delta：{2},原始值{3}，滤波值{4}", CurrentDeviceParameter.Name, baseAgit, temp, tempAgit, _agitDelta));
 
-                            CurrentFermentor.Device.AgitParam.SP = (int)Math.Clamp(_agitDelta, CurrentFermentor.Device.AgitParam.LowerLimit, CurrentFermentor.Device.AgitParam.UpperLimit);
-                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentFermentor.Device.Name, CurrentFermentor.Device.AgitParam.SP);
+                            CurrentDeviceParameter.AgitParam.SP = (int)Math.Clamp(_agitDelta, CurrentDeviceParameter.AgitParam.LowerLimit, CurrentDeviceParameter.AgitParam.UpperLimit);
+                            InstrumentSolution.GetInstance().CommandWrapper.SetAgitSpeed(CurrentDeviceParameter.Name, CurrentDeviceParameter.AgitParam.SP);
 
                             sleepCount = info.Interval <= 1 ? 1 : info.Interval;
                             while (sleepCount > 0)
@@ -1294,12 +1307,12 @@ namespace RD3.Controller
                                 Thread.Sleep(1000);
                             }
 
-                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                            if (Math.Abs(realTimeParam.DO - CurrentFermentor.Device.DOParam.SP) <= info.deadArea)
+                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                            if (Math.Abs(realTimeParam.DO - CurrentDeviceParameter.DOParam.SP) <= info.DeadArea)
                             {
-                                baseAgit = CurrentFermentor.Device.AgitParam.SP;
+                                baseAgit = CurrentDeviceParameter.AgitParam.SP;
 
-                                ResetDOParam(CurrentFermentor.Device);
+                                ResetDOParam(CurrentDeviceParameter);
 
                                 int count = info.Interval <= 0 ? 1 : info.Interval;
                                 while (count > 0)
@@ -1345,7 +1358,7 @@ namespace RD3.Controller
                                 Thread.Sleep(1000);
                             }
 
-                            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentFermentor.Device.Name);
+                            param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
                             var previousElements = collection.Take(factorIndex);
                             bool isExistOtherGas = false;//在当前气体之前是否存在气体
                             switch (collection[factorIndex])
@@ -1364,7 +1377,7 @@ namespace RD3.Controller
                                     if (param.Unit == 0)//VVM
                                     {
                                         initialGas = MathF.Round((float)(param.CascadeCol[0].AirFlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
-                                        maxGas = MathF.Round((float)(param.CascadeCol[param.CascadeCol.Count - 1].AirFlowRate * (CurrentFermentor.Device.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                        maxGas = MathF.Round((float)(param.CascadeCol[param.CascadeCol.Count - 1].AirFlowRate * (CurrentDeviceParameter.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                     }
                                     else if (param.Unit == 1)//L/min
                                     {
@@ -1526,7 +1539,7 @@ namespace RD3.Controller
                                         {
                                             airFlowSpeed = param.CascadeCol[_airIndex].AirFlowRate;
                                         }
-                                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                                         if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.05)
                                         {
                                             MFCAir.FlowRate_SP = airFlowSpeed;
@@ -1547,7 +1560,7 @@ namespace RD3.Controller
                                             {
                                                 o2FlowSpeed = param.CascadeCol[_o2Index].O2FlowRate;
                                             }
-                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                                             if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.05)
                                             {
                                                 MFCO2.FlowRate_SP = o2FlowSpeed;
@@ -1590,7 +1603,7 @@ namespace RD3.Controller
                                     if (param.Unit == 0)//VVM
                                     {
                                         initialGas = MathF.Round((float)(param.CascadeCol[0].O2FlowRate * (realTimeParam.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
-                                        maxGas = MathF.Round((float)(param.CascadeCol[param.CascadeCol.Count - 1].O2FlowRate * (CurrentFermentor.Device.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
+                                        maxGas = MathF.Round((float)(param.CascadeCol[param.CascadeCol.Count - 1].O2FlowRate * (CurrentDeviceParameter.JarWeight - InstrumentSolution.GetInstance().ReactorWeight) / 1000), 2);
                                     }
                                     else if (param.Unit == 1)//L/min
                                     {
@@ -1750,7 +1763,7 @@ namespace RD3.Controller
                                         {
                                             o2FlowSpeed = param.CascadeCol[_o2Index].O2FlowRate;
                                         }
-                                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                                        realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                                         if (Math.Abs(realTimeParam.O2FlowSpeed - o2FlowSpeed) > 0.05)
                                         {
                                             MFCO2.FlowRate_SP = o2FlowSpeed;
@@ -1771,7 +1784,7 @@ namespace RD3.Controller
                                             {
                                                 airFlowSpeed = param.CascadeCol[_airIndex].AirFlowRate;
                                             }
-                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
+                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
                                             if (Math.Abs(realTimeParam.AirFlowSpeed - airFlowSpeed) > 0.1)
                                             {
                                                 MFCAir.FlowRate_SP = airFlowSpeed;
@@ -1801,7 +1814,7 @@ namespace RD3.Controller
                                     }
                                     break;
                                 case DOControlFactor.Temp:
-                                    if (!CurrentFermentor.Device.DOParam.IsControling)
+                                    if (!CurrentDeviceParameter.DOParam.IsControling)
                                     {
                                         AnalysisSolution.GetInstance().CurrentFermentor.TempController.StartWork();
                                         Thread.Sleep(1000);
@@ -1813,14 +1826,14 @@ namespace RD3.Controller
                                         {
                                             _tempIndex -= 1;
 
-                                            CurrentFermentor.Device.DOParam.SP = param.CascadeCol[_tempIndex].Temp;
+                                            CurrentDeviceParameter.DOParam.SP = param.CascadeCol[_tempIndex].Temp;
                                         }
                                         else if (factorIndex > 0)
                                         {
                                             lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
 
-                                            CurrentFermentor.Device.DOParam.SP = CurrentFermentor.Device.DOParam.InitialTemp;
+                                            CurrentDeviceParameter.DOParam.SP = CurrentDeviceParameter.DOParam.InitialTemp;
                                         }
                                     }
                                     else if (_agitDelta >= param.AgitUpperLimit)
@@ -1829,19 +1842,19 @@ namespace RD3.Controller
                                         {
                                             _tempIndex += 1;
 
-                                            CurrentFermentor.Device.DOParam.SP = param.CascadeCol[_tempIndex].Temp;
+                                            CurrentDeviceParameter.DOParam.SP = param.CascadeCol[_tempIndex].Temp;
                                         }
                                         else if (factorIndex < collection.Count - 1)
                                         {
                                             lastFactorIndex = factorIndex;
                                             factorIndex += 1;
 
-                                            CurrentFermentor.Device.DOParam.SP = CurrentFermentor.Device.DOParam.InitialTemp;
+                                            CurrentDeviceParameter.DOParam.SP = CurrentDeviceParameter.DOParam.InitialTemp;
                                         }
                                     }
                                     else
                                     {
-                                        CurrentFermentor.Device.DOParam.SP = param.CascadeCol[_tempIndex].Temp;
+                                        CurrentDeviceParameter.DOParam.SP = param.CascadeCol[_tempIndex].Temp;
                                     }
 
                                     if (_tempIndex <= 0 || _tempIndex >= param.CascadeCol.Count - 1)
@@ -1862,8 +1875,8 @@ namespace RD3.Controller
                                                 }
                                                 Thread.Sleep(1000);
                                             }
-                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentFermentor.Device.Name);
-                                            if (Math.Abs(realTimeParam.Temp - CurrentFermentor.Device.DOParam.SP) <= 0.2)
+                                            realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(CurrentDeviceParameter.Name);
+                                            if (Math.Abs(realTimeParam.Temp - CurrentDeviceParameter.DOParam.SP) <= 0.2)
                                             {
                                                 break;
                                             }
@@ -1894,8 +1907,8 @@ namespace RD3.Controller
 
                                     if (firstInitFeed)
                                     {
-                                        CurrentFermentor.Device.FeedSuspend = true;
-                                        CurrentFermentor.Device.DOParam.InitialFeed = FeedPumpInfo.FlowRate_SP;
+                                        CurrentDeviceParameter.FeedSuspend = true;
+                                        CurrentDeviceParameter.DOParam.InitialFeed = FeedPumpInfo.FlowRate_SP;
                                         firstInitFeed = false;
                                     }
 
@@ -1906,14 +1919,14 @@ namespace RD3.Controller
                                             _feedIndex -= 1;
 
                                             float coeff = param.CascadeCol[_feedIndex].FeedFlowRate;
-                                            FeedPumpInfo.FlowRate_SP = MathF.Round(CurrentFermentor.Device.DOParam.InitialFeed * coeff / 100, 2);
+                                            FeedPumpInfo.FlowRate_SP = MathF.Round(CurrentDeviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                         }
                                         else if (factorIndex > 0)
                                         {
                                             lastFactorIndex = factorIndex;
                                             factorIndex -= 1;
 
-                                            FeedPumpInfo.FlowRate_SP = CurrentFermentor.Device.DOParam.InitialFeed;
+                                            FeedPumpInfo.FlowRate_SP = CurrentDeviceParameter.DOParam.InitialFeed;
                                         }
                                     }
                                     else if (_agitDelta >= param.AgitUpperLimit)
@@ -1923,20 +1936,20 @@ namespace RD3.Controller
                                             _feedIndex += 1;
 
                                             float coeff = param.CascadeCol[_feedIndex].FeedFlowRate;
-                                            FeedPumpInfo.FlowRate_SP = MathF.Round(CurrentFermentor.Device.DOParam.InitialFeed * coeff / 100, 2);
+                                            FeedPumpInfo.FlowRate_SP = MathF.Round(CurrentDeviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                         }
                                         else if (factorIndex < collection.Count - 1)
                                         {
                                             lastFactorIndex = factorIndex;
                                             factorIndex += 1;
 
-                                            FeedPumpInfo.FlowRate_SP = CurrentFermentor.Device.DOParam.InitialFeed;
+                                            FeedPumpInfo.FlowRate_SP = CurrentDeviceParameter.DOParam.InitialFeed;
                                         }
                                     }
                                     else
                                     {
                                         float coeff = param.CascadeCol[_feedIndex].FeedFlowRate;
-                                        FeedPumpInfo.FlowRate_SP = MathF.Round(CurrentFermentor.Device.DOParam.InitialFeed * coeff / 100, 2);
+                                        FeedPumpInfo.FlowRate_SP = MathF.Round(CurrentDeviceParameter.DOParam.InitialFeed * coeff / 100, 2);
                                     }
 
                                     FeedPumpInfo.FlowRate_SP = Math.Clamp(FeedPumpInfo.FlowRate_SP, 0, Const.MaxPumpFlowRate);
@@ -1948,8 +1961,8 @@ namespace RD3.Controller
                                         FlowSpeed = FeedPumpInfo.FlowRate_SP,
                                         FlowCapacity = Const.MaxPumpFlowCapacity
                                     };
-                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentFermentor.Device.Name, controlParam);
-                                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 实际补料{2}", CurrentFermentor.Device.Name, CurrentFermentor.Device.DOParam.InitialFeed, FeedPumpInfo.FlowRate_SP));
+                                    InstrumentSolution.GetInstance().CommandWrapper.SetPeristalticPumpControlParam(CurrentDeviceParameter.Name, controlParam);
+                                    LogHelper.Debug(string.Format("反应器{0} 起始补料{1} 实际补料{2}", CurrentDeviceParameter.Name, CurrentDeviceParameter.DOParam.InitialFeed, FeedPumpInfo.FlowRate_SP));
 
                                     sleepCount = 1;
                                     while (sleepCount > 0)
@@ -1987,62 +2000,66 @@ namespace RD3.Controller
                 try
                 {
                     var fermentor = AnalysisSolution.GetInstance().FermentorCol.FindFirst(t => t.Device.Name == e.Result?.ToString());
-                    if (CurrentFermentor.Device == null)
+                    if (CurrentDeviceParameter == null)
                     {
                         LogHelper.Debug(string.Format("溶氧控制：事件完成出错,未找到反应器{0}" + e.Result?.ToString()));
                         return;
                     }
-                    CurrentFermentor.Device.DOParam.IsControling = false;
-                    CurrentFermentor.Device.FeedSuspend = false;
+                    CurrentDeviceParameter.DOParam.IsControling = false;
+                    CurrentDeviceParameter.FeedSuspend = false;
 
                     if (MFCAir != null)
                     {
                         MFCAir.IsControlled = false;
+                        MFCAir.IsAuditing = true;
                     }
                     if (MFCO2 != null)
                     {
                         MFCO2.IsControlled = false;
+                        MFCO2.IsAuditing = true;
                     }
                     if (FeedPumpInfo != null)
                     {
                         FeedPumpInfo.IsControlled = false;
+                        FeedPumpInfo.IsAuditing = true;
                         if (FeedPumpInfo.IsControling)
                         {
-                            if (CurrentFermentor.Device.DOParam.ControlStrategy == DOControlStrategy.Midranging)
+                            if (CurrentDeviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
                             {
-                                var param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentFermentor.Device.Name);
+                                var param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
                                 if (param.FactorCol.Contains(DOControlFactor.Temp))
                                 {
-                                    FeedPumpInfo.FlowRate_SP = CurrentFermentor.Device.DOParam.InitialFeed;
+                                    FeedPumpInfo.FlowRate_SP = CurrentDeviceParameter.DOParam.InitialFeed;
                                 }
                             }
-                            else if (CurrentFermentor.Device.DOParam.ControlStrategy == DOControlStrategy.Step)
+                            else if (CurrentDeviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step)
                             {
-                                var param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentFermentor.Device.Name);
+                                var param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
                                 if (param.FactorCol.Contains(DOControlFactor.Temp))
                                 {
-                                    FeedPumpInfo.FlowRate_SP = CurrentFermentor.Device.DOParam.InitialFeed;
+                                    FeedPumpInfo.FlowRate_SP = CurrentDeviceParameter.DOParam.InitialFeed;
                                 }
                             }
                         }
                     }
 
-                    if (CurrentFermentor.Device.DOParam.IsControling)
+                    if (CurrentDeviceParameter.TempParam.IsControling)
                     {
-                        if (CurrentFermentor.Device.DOParam.ControlStrategy == DOControlStrategy.Midranging)
+                        CurrentDeviceParameter.TempParam.IsAuditing = true;
+                        if (CurrentDeviceParameter.DOParam.ControlStrategy == DOControlStrategy.Midranging)
                         {
-                            var param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentFermentor.Device.Name);
+                            var param = MidRangingParamManager.GetInstance().MidRangingParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
                             if (param.FactorCol.Contains(DOControlFactor.Temp))
                             {
-                                CurrentFermentor.Device.DOParam.SP = CurrentFermentor.Device.DOParam.InitialTemp;
+                                CurrentDeviceParameter.TempParam.SP = CurrentDeviceParameter.DOParam.InitialTemp;
                             }
                         }
-                        else if (CurrentFermentor.Device.DOParam.ControlStrategy == DOControlStrategy.Step)
+                        else if (CurrentDeviceParameter.DOParam.ControlStrategy == DOControlStrategy.Step)
                         {
-                            var param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentFermentor.Device.Name);
+                            var param = DOAssManager.GetInstance().DOAssParamCol.FindFirst(t => t.DeviceName == CurrentDeviceParameter.Name);
                             if (param.FactorCol.Contains(DOControlFactor.Temp))
                             {
-                                CurrentFermentor.Device.DOParam.SP = CurrentFermentor.Device.DOParam.InitialTemp;
+                                CurrentDeviceParameter.TempParam.SP = CurrentDeviceParameter.DOParam.InitialTemp;
                             }
                         }
                     }
@@ -2115,7 +2132,7 @@ namespace RD3.Controller
         {
             LogHelper.Debug($"执行溶氧时间序列项：[{item.StartTime}-{item.EndTime}]，操作值：{item.Value}");
             // 示例：设置SP值（根据实际业务替换）
-            CurrentFermentor.Device.DOParam.SP = (float)item.Value;
+            CurrentDeviceParameter.DOParam.SP = (float)item.Value;
             // 其他操作：如控制设备、记录日志等
         }
 
@@ -2137,19 +2154,19 @@ namespace RD3.Controller
         /// </summary>
         public void StartTimeSeriesWork()
         {
-            var timeSeries = CurrentFermentor.Device.DOParam.TimeSeries;
+            var timeSeries = CurrentDeviceParameter.DOParam.TimeSeries;
             var items = timeSeries.TimeSeriesItemCol.OrderBy(t => t.StartTime).ThenBy(t => t.EndTime).ToList();
 
             this._tsStartTime = DateTime.Now;
-            if (CurrentFermentor.Device.DOParam.TimeSeries.TimeType == TimeType.RelativeTime)
+            if (CurrentDeviceParameter.DOParam.TimeSeries.TimeType == TimeType.RelativeTime)
             {
-                if (CurrentFermentor.Device.BatchID < 1)
+                if (CurrentDeviceParameter.BatchID < 1)
                 {
                     _tsStartTime = DateTime.Now;
                 }
                 else
                 {
-                    var batch = RD3SQLHelper.QueryBatchByID(CurrentFermentor.Device.BatchID);
+                    var batch = RD3SQLHelper.QueryBatchByID(CurrentDeviceParameter.BatchID);
                     _tsStartTime = Convert.ToDateTime(batch.startDateTime);
                 }
             }
@@ -2158,7 +2175,7 @@ namespace RD3.Controller
             _tsThread = new Thread(() =>
             {
                 TimeSeriesItem lastExecutedItem = null; // 记录上一个执行的序列项（避免重复执行）
-                LogHelper.Debug($"{CurrentFermentor.Device.Name}的溶氧时间序列开始执行（{timeSeries.TimeType}模式）");
+                LogHelper.Debug($"{CurrentDeviceParameter.Name}的溶氧时间序列开始执行（{timeSeries.TimeType}模式）");
 
                 while (!_shouldStop)
                 {
@@ -2168,18 +2185,7 @@ namespace RD3.Controller
                         double currentMatchTime;
                         DateTime currentTime = DateTime.Now;
 
-                        if (timeSeries.TimeType == TimeType.RelativeTime)
-                        {
-                            // 相对时间：计算相对于基准时间的已运行分钟数
-                            currentMatchTime = (currentTime - _tsStartTime).TotalMinutes;
-                            // 转换单位（将序列项的时间转换为分钟，与currentMatchTime统一单位）
-                            currentMatchTime = ConvertToMinutes(currentMatchTime, timeSeries.Timer);
-                        }
-                        else
-                        {
-                            // 绝对时间：直接用当前时间的分钟数（或根据单位转换）
-                            currentMatchTime = ConvertToMinutes(currentTime, timeSeries.Timer);
-                        }
+                        currentMatchTime = (currentTime - _tsStartTime).TotalMinutes;
 
                         // 2. 查找当前时间匹配的序列项（在StartTime和EndTime之间）
                         var matchedItem = items.FirstOrDefault(item =>
@@ -2201,8 +2207,8 @@ namespace RD3.Controller
 
                             // 生成运行信息（包含阶段进度）
                             TimeSpan timeSpan = TimeSpan.FromSeconds(elapsedInStage * 60);
-                            CurrentFermentor.Device.DOParam.TimeSeries.RunningInfo = $"时间序列运行到{currentStage}/{items.Count}阶段，该阶段已运行：{$"{timeSpan.Days:00}天{timeSpan.Hours:00}时{timeSpan.Minutes:00}分{timeSpan.Seconds:00}秒"}";
-                            //LogHelper.Debug(CurrentFermentor.Device.DOParam.TimeSeries.RunningInfo);
+                            CurrentDeviceParameter.DOParam.TimeSeries.RunningInfo = $"时间序列运行到{currentStage}/{items.Count}阶段，该阶段已运行：{$"{timeSpan.Days:00}天{timeSpan.Hours:00}时{timeSpan.Minutes:00}分{timeSpan.Seconds:00}秒"}";
+                            //LogHelper.Debug(CurrentDeviceParameter.DOParam.TimeSeries.RunningInfo);
 
                             // 执行阶段操作（仅首次匹配时）
                             if (matchedItem != lastExecutedItem)
@@ -2215,27 +2221,27 @@ namespace RD3.Controller
                         // 4. 检查是否已超出所有序列项的结束时间（终止线程）
                         else if (IsTimeSeriesCompleted(items, currentMatchTime, timeSeries.Timer))
                         {
-                            CurrentFermentor.Device.DOParam.TimeSeries.RunningInfo = $"溶氧时间序列已全部执行完成";
-                            LogHelper.Debug($"{CurrentFermentor.Device.Name}的溶氧时间序列已全部执行完成");
+                            CurrentDeviceParameter.DOParam.TimeSeries.RunningInfo = $"溶氧时间序列已全部执行完成";
+                            LogHelper.Debug($"{CurrentDeviceParameter.Name}的溶氧时间序列已全部执行完成");
                             _shouldStop = true;
                         }
                         else
                         {
                             TimeSpan timeSpan = TimeSpan.FromSeconds(currentMatchTime * 60);
-                            CurrentFermentor.Device.DOParam.TimeSeries.RunningInfo = $"时间序列已运行：{$"{timeSpan.Days:00}天{timeSpan.Hours:00}时{timeSpan.Minutes:00}分{timeSpan.Seconds:00}秒"}";
+                            CurrentDeviceParameter.DOParam.TimeSeries.RunningInfo = $"时间序列已运行：{$"{timeSpan.Days:00}天{timeSpan.Hours:00}时{timeSpan.Minutes:00}分{timeSpan.Seconds:00}秒"}";
                         }
                     }
                     catch (Exception ex)
                     {
-                        LogHelper.Error($"{CurrentFermentor.Device.Name}的溶氧时间序列执行出错：{ex.Message}", ex);
+                        LogHelper.Error($"{CurrentDeviceParameter.Name}的溶氧时间序列执行出错：{ex.Message}", ex);
                     }
 
                     // 轮询间隔（500ms，可根据精度需求调整）
                     Thread.Sleep(500);
                 }
 
-                CurrentFermentor.Device.DOParam.IsControling = false;
-                LogHelper.Debug($"{CurrentFermentor.Device.Name}的溶氧时间序列线程已停止");
+                CurrentDeviceParameter.DOParam.IsControling = false;
+                LogHelper.Debug($"{CurrentDeviceParameter.Name}的溶氧时间序列线程已停止");
             });
             _tsThread.Priority = ThreadPriority.Lowest;
             _tsThread.IsBackground = true;
@@ -2246,7 +2252,7 @@ namespace RD3.Controller
         {
             _shouldStop = true; // 设置退出标志
             _tsThread?.Join(); // 等待线程结束
-            CurrentFermentor.Device.DOParam.TimeSeries.RunningInfo = string.Empty;
+            CurrentDeviceParameter.DOParam.TimeSeries.RunningInfo = string.Empty;
         }
     }
 }

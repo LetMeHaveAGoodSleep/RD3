@@ -4,35 +4,40 @@
     "MFCIndex": 1,
     "Gas": 1,
     "IsExist": true,
-    "IsEnable": true
+    "IsEnable": true,
+    "ModuleName": "MFC1"
   },
   {
     "DeviceID": "G01",
     "MFCIndex": 2,
     "Gas": 2,
     "IsExist": true,
-    "IsEnable": true
+    "IsEnable": true,
+    "ModuleName": "MFC2"
   },
   {
     "DeviceID": "G01",
     "MFCIndex": 3,
     "Gas": 3,
     "IsExist": true,
-    "IsEnable": true
+    "IsEnable": true,
+    "ModuleName": "MFC3"
   },
   {
     "DeviceID": "G01",
     "MFCIndex": 4,
     "Gas": 4,
     "IsExist": true,
-    "IsEnable": true
+    "IsEnable": true,
+    "ModuleName": "MFC4"
   },
   {
     "DeviceID": "G01",
-    "MFCIndex": 0,
+    "MFCIndex": 5,
     "Gas": 0,
     "IsExist": true,
-    "IsEnable": true
+    "IsEnable": true,
+    "ModuleName": "MFC5"
   }
 ]
 

@@ -1,6 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,10 +18,11 @@ namespace RD3.Shared
         }
 
         private GasType _gasType = GasType.Air;
+        [Description("MFC用途")]
         public GasType GasType
         {
             get => _gasType;
-            set { SetProperty(ref _gasType, value); }
+            set { SetPropertyWithAudit(ref _gasType, value); }
         }
 
         private float _flowSpeed;
@@ -28,8 +30,8 @@ namespace RD3.Shared
         {
             get => _flowSpeed;
             set 
-            { 
-                SetProperty(ref _flowSpeed, value);
+            {
+                SetPropertyWithAudit(ref _flowSpeed, value);
                 SP = value;
             }
         }

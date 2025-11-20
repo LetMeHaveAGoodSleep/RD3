@@ -25,17 +25,18 @@ namespace RD3.ViewModels
         public MFCController Controller
         {
             get => _controller;
-           private set { SetProperty(ref _controller, value); }
+            private set { SetProperty(ref _controller, value); }
         }
 
         private MFCInfo _mfcInfo = new();
         public MFCInfo MFCInfo
         {
             get => _mfcInfo;
-            set 
+            set
             {
                 SetProperty(ref _mfcInfo, value);
-                Controller.MFCInfo= value;
+                Controller = new();
+                Controller.MFCInfo = value;
             }
         }
 
@@ -101,7 +102,7 @@ namespace RD3.ViewModels
                 }
             }));
             thread.IsBackground = true;
-            thread.Priority = ThreadPriority.BelowNormal;
+            thread.Priority = ThreadPriority.Lowest;
             thread.Start();
 
 

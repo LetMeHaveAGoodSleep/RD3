@@ -12,171 +12,130 @@
     xmlns:rd3="clr-namespace:RD3"
     xmlns:share="clr-namespace:RD3.Shared;assembly=RD3.Shared"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:system="clr-namespace:System;assembly=netstandard"
     xmlns:vm="clr-namespace:RD3.ViewModels"
+    Width="345"
+    Height="45"
     d:DataContext="{d:DesignInstance Type=vm:PumpViewModel}"
-    d:DesignHeight="79"
-    d:DesignWidth="900"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="Transparent"
     FontSize="{StaticResource SubHeadFontSize}"
+    Foreground="Black"
+    Visibility="{Binding PumpInfo.IsEnable, Converter={StaticResource Boolean2VisibilityConverter}}"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <ObjectDataProvider
-            x:Key="DataFromEnum"
-            MethodName="GetValues"
-            ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="share:PeristalticPump" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-    </UserControl.Resources>
-    <Canvas>
-        <Grid Canvas.Top="30">
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition Height="auto" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                <TextBlock
-                    VerticalAlignment="Center"
-                    FontSize="{StaticResource NormalFontSize}"
-                    Text="{Binding PumpInfo.PumpName}" />
-            </StackPanel>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseUp">
+            <i:InvokeCommandAction Command="{Binding PumpSettingCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Border
+        x:Name="borderMain"
+        CornerRadius="24"
+        Style="{StaticResource BorderHighlight}"
+        Tag="{Binding PumpInfo.RunningStr}">
+        <StackPanel
+            Margin="8,0,8,0"
+            VerticalAlignment="Center"
+            Orientation="Horizontal">
             <Image
-                Grid.Row="1"
-                Width="90"
+                x:Name="pumpState"
+                Width="22"
+                Height="22"
+                Source="/Images/Index/PumpEnable.png" />
+            <TextBlock
+                x:Name="txtPumpName"
+                Width="45"
+                Margin="9,0,0,0"
+                VerticalAlignment="Center"
+                FontSize="{StaticResource MediumFontSize}"
+                Text="{Binding PumpInfo.PumpName}" />
+            <Border
+                Width="55"
+                Height="25"
+                Margin="5,0,0,0"
+                Background="#dee3e4"
+                CornerRadius="4">
+                <TextBlock
+                    x:Name="txtPumpFlowrate_sp"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="{StaticResource SubHeadFontSize}"
+                    Foreground="Black"
+                    Text="{Binding PumpInfo.FlowRate_SP}" />
+            </Border>
+            <TextBlock
+                x:Name="txtPumpFlowrate"
+                Width="45"
+                Margin="5,0,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="{StaticResource SubHeadFontSize}"
+                Text="{Binding PumpInfo.FlowRate}" />
+            <TextBlock
+                Margin="3,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
-                Source="/Images/NewReactor/分割线（图左2）.png" />
+                Text="mL/h" />
+            <Image
+                x:Name="imgBottle"
+                Width="12"
+                Height="20"
+                Margin="5,0,0,0"
+                Source="/Images/NewReactor/小瓶.png"
+                Visibility="{Binding PumpInfo.IsWeigh, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseUp">
+                        <i:InvokeCommandAction Command="{Binding PumpClearCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
+            <Image
+                x:Name="imgWeightBottle"
+                Width="12"
+                Height="20"
+                Margin="5,0,0,0"
+                Source="/Images/NewReactor/小瓶（称重）.png"
+                Visibility="{Binding PumpInfo.IsWeigh, Converter={StaticResource Boolean2VisibilityConverter}}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseUp">
+                        <i:InvokeCommandAction Command="{Binding PumpClearCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Image>
             <StackPanel
-                Grid.Row="2"
-                HorizontalAlignment="Left"
-                Orientation="Horizontal">
-                <TextBlock
-                    Grid.Row="2"
-                    Width="50"
-                    VerticalAlignment="Center"
-                    FontSize="{StaticResource NormalFontSize}"
-                    Text="{Binding PumpInfo.FlowRate, StringFormat={}{0:F2}}" />
-                <TextBlock
-                    VerticalAlignment="Center"
-                    FontSize="{StaticResource NormalFontSize}"
-                    Text="mL/h" />
-            </StackPanel>
-        </Grid>
-        <Image
-            Canvas.Left="120"
-            Canvas.Top="0"
-            Width="22"
-            Height="79"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Source="/Images/NewReactor/蠕动泵贯穿线.png" />
-        <Image
-            Name="PumpOpen"
-            Canvas.Left="102"
-            Canvas.Top="41"
-            Width="30"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Source="/Images/NewReactor/蠕动泵（开启）.png"
-            Visibility="{Binding PumpInfo.IsEnable, Converter={StaticResource Boolean2VisibilityConverter}}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseLeftButtonDown">
-                    <i:InvokeCommandAction Command="{Binding PumpSettingCommand}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Image>
-        <Image
-            Name="PumpClose"
-            Canvas.Left="102"
-            Canvas.Top="41"
-            Width="30"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Source="/Images/NewReactor/蠕动泵（关闭）.png"
-            Visibility="{Binding PumpInfo.IsEnable, Converter={StaticResource InverseBooleanToVisibilityConverter}}" />
-        <hc:UniformSpacingPanel
-            Canvas.Left="160"
-            Canvas.Top="20"
-            Orientation="Horizontal"
-            Spacing="20">
-            <DockPanel Height="50" LastChildFill="False">
-                <hc:UniformSpacingPanel
-                    DockPanel.Dock="Bottom"
-                    Orientation="Horizontal"
-                    Spacing="10">
-                    <Image
-                        Width="13"
+                Margin="3,0,0,0"
+                VerticalAlignment="Center"
+                Orientation="Vertical">
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock
+                        x:Name="txtPumpCapacity"
+                        Width="50"
+                        HorizontalAlignment="Right"
+                        FontSize="{StaticResource SubHeadFontSize}"
+                        Text="{Binding PumpInfo.FlowCapacity}" />
+                    <TextBlock
+                        Margin="1,0,0,0"
                         HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Source="/Images/NewReactor/小瓶.png"
-                        Visibility="{Binding PumpInfo.IsWeigh, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding PumpClearCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Image>
-                    <Image
-                        Width="15"
-                        Source="/Images/NewReactor/小瓶（称重）.png"
-                        Visibility="{Binding PumpInfo.IsWeigh, Converter={StaticResource Boolean2VisibilityConverter}}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding PumpClearCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Image>
-                    <StackPanel Orientation="Horizontal" Visibility="{Binding PumpInfo.IsWeigh, Converter={StaticResource InverseBooleanToVisibilityConverter}}">
-                        <TextBlock
-                            Margin="0,0,5,0"
-                            VerticalAlignment="Center"
-                            Text="{Binding PumpInfo.FlowCapacity, StringFormat={}{0:F2}}" />
-                        <TextBlock VerticalAlignment="Center" Text="mL" />
-                    </StackPanel>
-                    <Grid Visibility="{Binding PumpInfo.IsWeigh, Converter={StaticResource Boolean2VisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition Height="auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                            <TextBlock
-                                Width="60"
-                                VerticalAlignment="Center"
-                                FontSize="{StaticResource NormalFontSize}"
-                                Text="{Binding PumpInfo.FlowCapacity, StringFormat={}{0:F2}}" />
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                FontSize="{StaticResource NormalFontSize}"
-                                Text="mL" />
-                        </StackPanel>
-                        <Image
-                            Grid.Row="1"
-                            Width="90"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Source="/Images/NewReactor/分割线（图左2）.png" />
-                        <StackPanel
-                            Grid.Row="2"
-                            HorizontalAlignment="Left"
-                            Orientation="Horizontal">
-                            <TextBlock
-                                Grid.Row="2"
-                                Width="60"
-                                VerticalAlignment="Center"
-                                FontSize="{StaticResource NormalFontSize}"
-                                Text="{Binding PumpInfo.Weight, StringFormat={}{0:F2}}" />
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                FontSize="{StaticResource NormalFontSize}"
-                                Text="g" />
-                        </StackPanel>
-                    </Grid>
-                </hc:UniformSpacingPanel>
-            </DockPanel>
-        </hc:UniformSpacingPanel>
-    </Canvas>
+                        Text="mL" />
+                </StackPanel>
+                <Separator x:Name="pumpSeparator" Visibility="Collapsed" />
+                <!--  垂直分割线  -->
+                <StackPanel
+                    x:Name="panelWeight"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Visibility="Collapsed">
+                    <TextBlock
+                        x:Name="txtPumpWeight"
+                        Width="50"
+                        HorizontalAlignment="Center"
+                        FontSize="{StaticResource SubHeadFontSize}" />
+                    <TextBlock
+                        Margin="1,0,0,0"
+                        HorizontalAlignment="Left"
+                        Text="g" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Border>
 </UserControl>

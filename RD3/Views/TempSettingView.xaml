@@ -186,161 +186,18 @@
                         Height="40"
                         Command="{Binding OpenCommand}"
                         Content="启动控制"
-                        IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
+                        IsEnabled="{Binding BasicParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
                         Style="{StaticResource PrimaryCommonButton}" />
                     <Button
                         Width="90"
                         Height="40"
                         Command="{Binding CloseCommand}"
                         Content="停止控制"
-                        IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling}"
+                        IsEnabled="{Binding BasicParam.IsControling}"
                         Style="{StaticResource SecondaryCommonButton}" />
                 </hc:UniformSpacingPanel>
             </DockPanel>
         </Grid>
     </Grid>
-    <!--<hc:UniformSpacingPanel
-        Margin="10"
-        Orientation="Vertical"
-        Spacing="10">
-        <GroupBox Header="基础参数" Style="{StaticResource MaterialDesignGroupBox}">
-            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
-                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        materialDesign:HintAssist.Hint="设定温度(℃)"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.TempParam.SP, StringFormat={}{0:F2}}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                    <TextBox
-                        Width="100"
-                        materialDesign:HintAssist.Hint="当前温度(℃)"
-                        IsEnabled="False"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.Temp, StringFormat={}{0:F2}}" />
-                </hc:UniformSpacingPanel>
-                <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        materialDesign:HintAssist.Hint="温度下限(℃)"
-                        IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.TempParam.LowerLimit, StringFormat={}{0:F2}}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                    <control:TextBoxNoAutoKeyboard
-                        Width="100"
-                        materialDesign:HintAssist.Hint="温度上限(℃)"
-                        IsEnabled="{Binding CurrentDeviceParameter.TempParam.IsControling, Converter={StaticResource InverseBooleanConverter}}"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.TempParam.UpperLimit, StringFormat={}{0:F2}}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                </hc:UniformSpacingPanel>
-                <ToggleButton
-                    Width="210"
-                    Height="40"
-                    IsChecked="{Binding CurrentDeviceParameter.TempParam.IsControling}"
-                    Style="{StaticResource MaterialDesignSwitchLightToggleButton}" />
-            </hc:UniformSpacingPanel>
-        </GroupBox>
-        <GroupBox
-            Header="PID参数"
-            Style="{StaticResource MaterialDesignGroupBox}"
-            Visibility="{Binding CurrentDeviceParameter.PHParam.PHControlMode, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=PID, UpdateSourceTrigger=PropertyChanged}">
-            <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <control:TextBoxNoAutoKeyboard
-                        materialDesign:HintAssist.Hint="比例P"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.TempParam.PIDParam.P, StringFormat={}{0:F2}}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                    <control:TextBoxNoAutoKeyboard
-                        Grid.Column="2"
-                        materialDesign:HintAssist.Hint="积分I"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.TempParam.PIDParam.I, StringFormat={}{0:F2}}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                    <control:TextBoxNoAutoKeyboard
-                        Grid.Row="2"
-                        materialDesign:HintAssist.Hint="微分D"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.TempParam.PIDParam.D, StringFormat={}{0:F2}}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                    <control:TextBoxNoAutoKeyboard
-                        Grid.Row="2"
-                        Grid.Column="2"
-                        materialDesign:HintAssist.Hint="系数K"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.TempParam.PIDParam.K, StringFormat={}{0:F2}}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OpenNumberKeyBoardCommand}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </control:TextBoxNoAutoKeyboard>
-                </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Button
-                        Width="100"
-                        Height="35"
-                        Command="{Binding ReadPIDCommand}"
-                        Content="读取"
-                        Style="{StaticResource ButtonInfo}" />
-                    <DockPanel Grid.Column="2" LastChildFill="True">
-                        <Button
-                            Width="100"
-                            Height="35"
-                            Command="{Binding SetPIDCommand}"
-                            Content="设置"
-                            Style="{StaticResource ButtonPrimary}" />
-                    </DockPanel>
-                </Grid>
-            </hc:UniformSpacingPanel>
-        </GroupBox>
-    </hc:UniformSpacingPanel>-->
 </UserControl>
 

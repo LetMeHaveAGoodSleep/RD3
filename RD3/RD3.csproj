@@ -40,6 +40,30 @@
     <None Remove="Images\Feed\Loop.png" />
     <None Remove="Images\Feed\MultiLinear.png" />
     <None Remove="Images\FermentationTank.png" />
+    <None Remove="Images\Index\Agit.png" />
+    <None Remove="Images\Index\Bottle.png" />
+    <None Remove="Images\Index\CER.png" />
+    <None Remove="Images\Index\Condensation.png" />
+    <None Remove="Images\Index\DO.png" />
+    <None Remove="Images\Index\EPC.png" />
+    <None Remove="Images\Index\Fermentation.png" />
+    <None Remove="Images\Index\Fermentation1.png" />
+    <None Remove="Images\Index\GasDisable.png" />
+    <None Remove="Images\Index\GasEnable.png" />
+    <None Remove="Images\Index\Logo.png" />
+    <None Remove="Images\Index\OD.png" />
+    <None Remove="Images\Index\OUR.png" />
+    <None Remove="Images\Index\pH.png" />
+    <None Remove="Images\Index\PumpDisable.png" />
+    <None Remove="Images\Index\PumpEnable.png" />
+    <None Remove="Images\Index\RegionToolBackground.png" />
+    <None Remove="Images\Index\RQ.png" />
+    <None Remove="Images\Index\Stirring.png" />
+    <None Remove="Images\Index\Stirring1.png" />
+    <None Remove="Images\Index\Temp.png" />
+    <None Remove="Images\Index\TitleBackground.png" />
+    <None Remove="Images\Index\Weight.png" />
+    <None Remove="Images\Index\Weight1.png" />
     <None Remove="Images\Link.png" />
     <None Remove="Images\login.png" />
     <None Remove="Images\logo.png" />
@@ -173,7 +197,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HelixToolkit.Wpf" Version="2.27.3" />
+    <PackageReference Include="HelixToolkit.Wpf" Version="3.1.1" />
     <PackageReference Include="LayUI.Wpf.Extensions" Version="1.0.2.240505" />
     <PackageReference Include="log4net" Version="3.2.0" />
     <PackageReference Include="MathNet.Symbolics" Version="0.25.0" />
@@ -231,6 +255,30 @@
     <Resource Include="Images\Feed\Loop.png" />
     <Resource Include="Images\Feed\MultiLinear.png" />
     <Resource Include="Images\FermentationTank.png" />
+    <Resource Include="Images\Index\Agit.png" />
+    <Resource Include="Images\Index\Bottle.png" />
+    <Resource Include="Images\Index\CER.png" />
+    <Resource Include="Images\Index\Condensation.png" />
+    <Resource Include="Images\Index\DO.png" />
+    <Resource Include="Images\Index\EPC.png" />
+    <Resource Include="Images\Index\Fermentation.png" />
+    <Resource Include="Images\Index\Fermentation1.png" />
+    <Resource Include="Images\Index\GasDisable.png" />
+    <Resource Include="Images\Index\GasEnable.png" />
+    <Resource Include="Images\Index\Logo.png" />
+    <Resource Include="Images\Index\OD.png" />
+    <Resource Include="Images\Index\OUR.png" />
+    <Resource Include="Images\Index\pH.png" />
+    <Resource Include="Images\Index\PumpDisable.png" />
+    <Resource Include="Images\Index\PumpEnable.png" />
+    <Resource Include="Images\Index\RegionToolBackground.png" />
+    <Resource Include="Images\Index\RQ.png" />
+    <Resource Include="Images\Index\Stirring.png" />
+    <Resource Include="Images\Index\Stirring1.png" />
+    <Resource Include="Images\Index\Temp.png" />
+    <Resource Include="Images\Index\TitleBackground.png" />
+    <Resource Include="Images\Index\Weight.png" />
+    <Resource Include="Images\Index\Weight1.png" />
     <Resource Include="Images\Link.png" />
     <Resource Include="Images\login.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -351,6 +399,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\DOEAnalyse3DView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PadIndexView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

@@ -2,6 +2,7 @@
 using RD3.Shared;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -15,20 +16,25 @@ namespace RD3.Shared
         /// <summary>
         /// 流速设定值
         /// </summary>
+        [Description("流速预设值")]
         public float FlowRate_SP
         {
             get => _flowRate_SP;
-            set { SetProperty(ref _flowRate_SP, value); }
+            set 
+            {
+                SetPropertyWithAudit(ref _flowRate_SP, value); 
+            }
         }
 
         private float _runningTime_SP = 1;
         /// <summary>
         /// 运行时间设定值
         /// </summary>
+        [Description("运行时间预设值")]
         public float RunningTime_SP
         {
             get => _runningTime_SP;
-            set { SetProperty(ref _runningTime_SP, value); }
+            set { SetPropertyWithAudit(ref _runningTime_SP, value); }
         }
 
 
@@ -36,10 +42,11 @@ namespace RD3.Shared
         /// <summary>
         /// 总量设定值
         /// </summary>
+        [Description("总量预设值")]
         public float FlowCapacity_SP
         {
             get => _flowCapacity_SP;
-            set { SetProperty(ref _flowCapacity_SP, value); }
+            set { SetPropertyWithAudit(ref _flowCapacity_SP, value); }
         }
 
         private float _flowRate;
@@ -140,12 +147,13 @@ namespace RD3.Shared
         /// <summary>
         /// 是否恒速运行
         /// </summary>
+        [Description("是否恒速运行")]
         public bool IsConstSpeed
         {
             get => _isConstSpeed;
             set  
             {
-                SetProperty(ref _isConstSpeed, value);
+                SetPropertyWithAudit(ref _isConstSpeed, value);
             }
         }
 
@@ -157,7 +165,22 @@ namespace RD3.Shared
         public bool IsRunning
         {
             get => _isRunning;
-            private set { SetProperty(ref _isRunning, value); }
+            private set 
+            {
+                _runningStr= value ? Boolean.TrueString : Boolean.FalseString;
+                SetProperty(ref _isRunning, value); 
+            }
+        }
+
+        private string _runningStr = Boolean.FalseString;
+        /// <summary>
+        /// 通过流速来判断泵是否在转动
+        /// </summary>
+        [JsonIgnore]
+        public string RunningStr
+        {
+            get => _runningStr;
+            private set { SetProperty(ref _runningStr, value); }
         }
 
         private bool _lastIsControling = false;
@@ -173,13 +196,14 @@ namespace RD3.Shared
         /// 是否在控制泵
         /// </summary>
         [JsonIgnore]
+        [Description("是否正在控制")]
         public bool IsControling
         {
             get => _isControling;
-            set 
+            set
             {
                 LastIsControling = _isControling;
-                SetProperty(ref _isControling, value);
+                SetPropertyWithAudit(ref _isControling, value);
                 if (!value)
                 {
                     RunningTime = 0;
@@ -200,6 +224,7 @@ namespace RD3.Shared
                 SetProperty(ref _isControlled, value);
                 if (value)
                 {
+                    IsAuditing = false;
                     RunningTime_SP = Convert.ToInt32(Const.MaxPumpFlowCapacity);
                     IsControling = true;
                 }
@@ -207,33 +232,37 @@ namespace RD3.Shared
         }
 
         private bool _autoDefoaming = false;
+        [Description("是否自动消泡")]
         public bool AutoDefoaming
         {
             get { return _autoDefoaming; }
-            set { SetProperty(ref _autoDefoaming, value); }
+            set { SetPropertyWithAudit(ref _autoDefoaming, value); }
         }
 
         private int _cycle;
+        [Description("消泡周期")]
         public int Cycle
         {
             get => _cycle;
-            set { SetProperty(ref _cycle, value); }
+            set { SetPropertyWithAudit(ref _cycle, value); }
         }
 
         private float _dutyCycle;
+        [Description("消泡占空比")]
         public float DutyCycle
         {
             get => _dutyCycle;
-            set { SetProperty(ref _dutyCycle, value); }
+            set { SetPropertyWithAudit(ref _dutyCycle, value); }
         }
 
         private FeedControlMode _feedMode = FeedControlMode.ConstantSpeed;
+        [Description("补料策略")]
         public FeedControlMode FeedMode
         {
             get { return _feedMode; }
             set
             {
-                SetProperty(ref _feedMode, value);
+                SetPropertyWithAudit(ref _feedMode, value);
             }
         }
     }

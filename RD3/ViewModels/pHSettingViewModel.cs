@@ -102,7 +102,7 @@ namespace RD3.ViewModels
 
         public void OnDialogClosed()
         {
-            var acidPID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.deviceID == CurrentDeviceParameter.Name && t.Factor == PIDFactor.pH_Acid);
+            var acidPID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.DeviceId == CurrentDeviceParameter.Name && t.Factor == PIDFactor.pH_Acid);
             if (acidPID == null)
             {
                 PIDInfoManager.GetInstance().PIDInfos.Add(CurrentDeviceParameter.PHParam.AcidPID);
@@ -112,7 +112,7 @@ namespace RD3.ViewModels
                 acidPID = CurrentDeviceParameter.PHParam.AcidPID;
             }
 
-            var basePID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.deviceID == CurrentDeviceParameter.Name && t.Factor == PIDFactor.pH_Base);
+            var basePID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.DeviceId == CurrentDeviceParameter.Name && t.Factor == PIDFactor.pH_Base);
             if (basePID == null)
             {
                 PIDInfoManager.GetInstance().PIDInfos.Add(CurrentDeviceParameter.PHParam.BasePID);
@@ -130,16 +130,18 @@ namespace RD3.ViewModels
         {
             if (CurrentDeviceParameter.PHParam.AcidPID == null)
             {
-                var acidPID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.deviceID == CurrentDeviceParameter.Name && t.Factor == PIDFactor.pH_Acid);
+                var acidPID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.DeviceId == CurrentDeviceParameter.Name && t.Factor == PIDFactor.pH_Acid);
                 if (acidPID == null)
                 {
                     acidPID = new PIDInfo()
                     {
-                        deviceID = CurrentDeviceParameter.Name,
+                        DeviceId = CurrentDeviceParameter.Name,
                         Factor = PIDFactor.pH_Acid,
                         Interval = 1,
-                        maxSpeed = Const.MaxPumpFlowRate,
-                        Threshold = 100
+                        MaxSpeed = Const.MaxPumpFlowRate,
+                        Threshold = 100,
+                        CreateUser = AppSession.CurrentUser.UserName,
+                        ModuleName = "酸PID"
                     };
                 }
                 CurrentDeviceParameter.PHParam.AcidPID = acidPID;
@@ -147,16 +149,18 @@ namespace RD3.ViewModels
 
             if(CurrentDeviceParameter.PHParam.BasePID == null)
             {
-                var basePID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.deviceID == CurrentDeviceParameter.Name && t.Factor == PIDFactor.pH_Base);
+                var basePID = PIDInfoManager.GetInstance().PIDInfos.FindFirst(t => t.DeviceId == CurrentDeviceParameter.Name && t.Factor == PIDFactor.pH_Base);
                 if (basePID == null)
                 {
                     basePID = new PIDInfo()
                     {
-                        deviceID = CurrentDeviceParameter.Name,
+                        DeviceId = CurrentDeviceParameter.Name,
                         Factor = PIDFactor.pH_Base,
                         Interval = 1,
-                        maxSpeed = Const.MaxPumpFlowRate,
-                        Threshold = 100
+                        MaxSpeed = Const.MaxPumpFlowRate,
+                        Threshold = 100,
+                        CreateUser = AppSession.CurrentUser.UserName,
+                        ModuleName = "碱PID"
                     };
                 }
                 CurrentDeviceParameter.PHParam.BasePID = basePID;

@@ -446,7 +446,7 @@
                 <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                         <TextBox
-                            Width="65"
+                            Width="75"
                             HorizontalContentAlignment="Center"
                             hc:InfoElement.Title="{ex:Language Key='MFC编号'}"
                             BorderBrush="{DynamicResource PrimaryBrush}"
@@ -484,7 +484,7 @@
                     </hc:UniformSpacingPanel>
                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                         <TextBox
-                            Width="65"
+                            Width="75"
                             HorizontalContentAlignment="Center"
                             hc:InfoElement.Title="{ex:Language Key='MFC编号'}"
                             BorderBrush="{DynamicResource PrimaryBrush}"
@@ -524,7 +524,7 @@
                 <hc:UniformSpacingPanel Orientation="Vertical" Spacing="10">
                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                         <TextBox
-                            Width="65"
+                            Width="75"
                             HorizontalContentAlignment="Center"
                             hc:InfoElement.Title="{ex:Language Key='MFC编号'}"
                             BorderBrush="{DynamicResource PrimaryBrush}"
@@ -562,7 +562,7 @@
                     </hc:UniformSpacingPanel>
                     <hc:UniformSpacingPanel Orientation="Horizontal" Spacing="10">
                         <TextBox
-                            Width="65"
+                            Width="75"
                             HorizontalContentAlignment="Center"
                             hc:InfoElement.Title="{ex:Language Key='MFC编号'}"
                             BorderBrush="{DynamicResource PrimaryBrush}"

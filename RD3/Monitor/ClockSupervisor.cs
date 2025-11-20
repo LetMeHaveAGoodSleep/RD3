@@ -91,6 +91,7 @@ namespace RD3
                         if (InstrumentSolution.GetInstance().IsSimulation)//模拟模式
                         {
                             realTimeParam = InstrumentSolution.GetInstance().CommandWrapper.GetRealTime(deviceID);
+                            OUR_CER(realTimeParam);
                             if (realDatasDic[deviceID].Count > 0)
                             {
                                 var lastRealTime = realDatasDic[deviceID][realDatasDic[deviceID].Count - 1];
@@ -223,6 +224,27 @@ namespace RD3
             }
         }
 
-        //private void
+        /// <summary>
+        /// 氧利用率
+        /// 二氧化碳释放率
+        /// </summary>
+        private void OUR_CER(RealTimeParam realTimeParam)
+        {
+            double Fa_i = realTimeParam.AirFlowSpeed;
+            double V = 700 / 1000;//700暂且写死 
+            double nO2_i = realTimeParam.IntakeModuleO2Concentration;
+            double nO2_o = realTimeParam.OffgasModuleO2Concentration;
+
+            double nCO2_i = realTimeParam.IntakeModuleCO2Concentration;
+            double nCO2_o = realTimeParam.OffgasModuleCO2Concentration;
+
+            realTimeParam.OUR = (float)SoftwareSensorUtil.CalculateOUR(Fa_i, V, nO2_i, nO2_o, nCO2_o);
+
+            realTimeParam.CER = (float)SoftwareSensorUtil.CalculateCER1(Fa_i, V, nO2_i, nCO2_i, nO2_o, nCO2_o);
+            if (realTimeParam.OUR != 0)
+            {
+                realTimeParam.RQ = realTimeParam.CER / realTimeParam.OUR;
+            }
+        }
     }
 }

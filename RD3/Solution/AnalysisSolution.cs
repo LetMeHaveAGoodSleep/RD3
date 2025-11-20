@@ -126,12 +126,12 @@ namespace RD3
             return col;
         }
 
-        public void SaveAllSetting()
-        {
-            SaveReactorSetting();
-            //SavePumpSetting();
-            //SaveMFCSetting();
-        }
+        //public void SaveAllSetting()
+        //{
+        //    SaveReactorSetting();
+        //    //SavePumpSetting();
+        //    //SaveMFCSetting();
+        //}
 
         public void SaveReactorSetting(ObservableCollection<Fermentor> dataList = null)
         {

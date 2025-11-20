@@ -1,6 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,24 +17,27 @@ namespace RD3.Shared
         }
 
         private bool _autoDefoaming = false;
+        [Description("是否消泡")]
         public bool AutoDefoaming
         {
             get { return _autoDefoaming; }
-            set { SetProperty(ref _autoDefoaming, value); }
+            set { SetPropertyWithAudit(ref _autoDefoaming, value); }
         }
 
         private int _cycle;
+        [Description("消泡周期")]
         public int Cycle
         {
             get => _cycle;
-            set { SetProperty(ref _cycle, value); }
+            set { SetPropertyWithAudit(ref _cycle, value); }
         }
 
         private float _dutyCycle;
+        [Description("消泡占空比")]
         public float DutyCycle
         {
             get => _dutyCycle;
-            set { SetProperty(ref _dutyCycle, value); }
+            set { SetPropertyWithAudit(ref _dutyCycle, value); }
         }
     }
 }

@@ -772,6 +772,50 @@ namespace RD3.Shared
             set { SetProperty(ref _alarmCodes, value); }
         }
 
+        private float _our = 0f;
+        /// <summary>
+        /// 摄氧率
+        /// </summary>
+        [JsonIgnore]
+        public float OUR
+        {
+            get { return _our; }
+            set { SetProperty(ref _our, value); }
+        }
+
+        private float _cer = 0f;
+        /// <summary>
+        /// 二氧化碳释放率
+        /// </summary>
+        [JsonIgnore]
+        public float CER
+        {
+            get { return _cer; }
+            set { SetProperty(ref _cer, value); }
+        }
+
+        private float _rq = 0f;
+        /// <summary>
+        /// 呼吸商
+        /// </summary>
+        [JsonIgnore]
+        public float RQ
+        {
+            get { return _rq; }
+            set { SetProperty(ref _rq, value); }
+        }
+
+        private float _od = 0f;
+        /// <summary>
+        /// 光密度
+        /// </summary>
+        [JsonIgnore]
+        public float OD
+        {
+            get { return _od; }
+            set { SetProperty(ref _od, value); }
+        }
+
         public object Clone()
         {
             var clonedObject = ObjectCloner.DeepCopy(this);

@@ -1517,7 +1517,7 @@ namespace RD3.Shared
                 if (recvCommand.GetExtCode() == CommandExtendId.ReadResponse)
                 {
                     condensationParam.Enable = recvCommand.GetByte(ParamId_5L.RWCondensationControl_ReadWrite_Enable) == 0x01 ? true : false;
-                    condensationParam.Temp = recvCommand.GetSingle(ParamId_5L.RWCondensationControl_ReadWrite_Temp);
+                    condensationParam.SP = recvCommand.GetSingle(ParamId_5L.RWCondensationControl_ReadWrite_Temp);
                 }
             }
             catch (Exception ex)
@@ -1535,7 +1535,7 @@ namespace RD3.Shared
             try
             {
                 sendCommand.SetValue(ParamId_5L.RWCondensationControl_ReadWrite_Enable, param.Enable == true ? 0x01 : 0x00);
-                sendCommand.SetValue(ParamId_5L.RWCondensationControl_ReadWrite_Temp, param.Temp);
+                sendCommand.SetValue(ParamId_5L.RWCondensationControl_ReadWrite_Temp, param.SP);
                 RecvCommand recvCommand = Send(insID, sendCommand);
                 if (recvCommand.GetExtCode() != CommandExtendId.WriteResponse)
                 {

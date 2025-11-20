@@ -14,7 +14,7 @@
     d:DesignHeight="700"
     d:DesignWidth="1350"
     prism:ViewModelLocator.AutoWireViewModel="True"
-    Background="{StaticResource BackGroundBrush}"
+    Background="{StaticResource RegionBackgroundBrush}"
     FontSize="{StaticResource HeadFontSize}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{StaticResource SubHeadFontSize}"

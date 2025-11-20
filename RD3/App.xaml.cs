@@ -18,6 +18,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
@@ -36,7 +37,6 @@ namespace RD3
         Window secondaryWindow;
         static Mutex mutex;
         bool createdNew;
-        EnhancedSqliteBackupService backupService;
         SoftwarePlatform platform = SoftwarePlatform.Default;
 
         // 设置高性能模式（需调用Windows API）
@@ -75,7 +75,7 @@ namespace RD3
             {
                 case SoftwarePlatform.WindowsPad:
                     VarConfig.SetValue("SoftwarePlatform", SoftwarePlatform.WindowsPad);
-                    return Container.Resolve<PadMainView>();
+                    return Container.Resolve<PadIndexView>();
                 default:
                     VarConfig.SetValue("SoftwarePlatform", SoftwarePlatform.Default);
                     return Container.Resolve<NewMainView>();
@@ -150,6 +150,10 @@ namespace RD3
 
         private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
+            SQLiteHelper.Close();
+
+            AnalysisSolution.GetInstance().SaveReactorSetting();
+
             LogHelper.Fatal(e.Exception + "  " + e.Exception.StackTrace);
             e.Handled = true;
 
@@ -313,7 +317,7 @@ namespace RD3
             containerRegistry.RegisterDialog<DOControlStrategyView, DOControlStrategyViewModel>();
             containerRegistry.RegisterDialog<ProbView, ProbViewModel>();
             containerRegistry.RegisterDialog<AdaptpHView, AdaptpHViewModel>();
-            containerRegistry.RegisterForNavigation<PadMainView, PadMainViewModel>();
+            containerRegistry.RegisterForNavigation<PadIndexView, PadMainViewModel>();
             containerRegistry.RegisterDialog<PumpSettingView, PumpSettingViewModel>();
 
             containerRegistry.RegisterDialog<AgitSettingView, AgitSettingViewModel>();
@@ -328,8 +332,13 @@ namespace RD3
             containerRegistry.RegisterDialog<DOEAnalyse2DView, DOEAnalyse2DViewModel>();
             containerRegistry.RegisterDialog<ChooseDOE3DFactorView, ChooseDOE3DFactorViewModel>();
             containerRegistry.RegisterDialog<DOEAnalyse3DView, DOEAnalyse3DViewModel>();
-            containerRegistry.RegisterDialog<DOEFactorView, DOEFactorViewModel>(); 
+            containerRegistry.RegisterDialog<DOEFactorView, DOEFactorViewModel>();
             //containerRegistry.RegisterDialogWindow<DialogWindowBase>();
+
+            containerRegistry.RegisterForNavigation<CondensationView, CondensationViewModel>();
+            containerRegistry.RegisterDialog<CondensationSettingView, CondensationSettingViewModel>();
+            containerRegistry.RegisterForNavigation<EPCView, EPCViewModel>();
+            containerRegistry.RegisterDialog<EPCSettingView, EPCSettingViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
@@ -349,6 +358,8 @@ namespace RD3
             GC.Collect();
 
             SQLiteHelper.Close();
+
+            AnalysisSolution.GetInstance().SaveReactorSetting();
 
             base.OnExit(e);
         }

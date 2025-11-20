@@ -1,11 +1,11 @@
-﻿using Prism.Mvvm;
+﻿using Newtonsoft.Json;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace RD3.Shared
@@ -36,7 +36,7 @@ namespace RD3.Shared
         /// <summary>
         /// 启用审计追踪与否
         /// </summary>
-        [CloneForceFalseAttribute]
+        [JsonIgnore]
         public bool IsAuditing
         {
             get { return _isAuditing; }
@@ -67,7 +67,22 @@ namespace RD3.Shared
                 if (method.IsSpecialName && method.Name.StartsWith("set_"))
                 {
                     string propertyName = method.Name.Substring(4);
-                    return GetType().GetProperty(propertyName);
+                    PropertyInfo property = null;
+                    Type currentType = GetType();
+
+                    // 1. 逐级搜索当前类及所有基类
+                    while (currentType != null && property == null)
+                    {
+                        // 搜索当前类型中"自身声明的公共实例属性"（避免跨类同名冲突）
+                        property = currentType.GetProperty(
+                            propertyName,
+                            BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly
+                        );
+                        // 若当前类型未找到，继续搜索基类
+                        currentType = currentType.BaseType;
+                    }
+
+                    return property;
                 }
             }
             return null;
@@ -93,20 +108,30 @@ namespace RD3.Shared
             T oldValue = storage;
 
             // 调用基类的SetProperty更新值（触发PropertyChanged事件）
-            bool isChanged = SetProperty(ref storage, value, propertyName);
+            bool isChanged = SetProperty(ref storage, value, property.Name);
 
             // 若值已变更，且当前启用审计（IsAuditing为true），则记录日志
             if (isChanged && IsAuditing)
             {
-                // 处理旧值（若为枚举，获取其Description）
-                object logOldValue = oldValue is Enum oldEnum
-                    ? EnumUtil.GetEnumDescription(oldEnum)
-                    : oldValue;
+                object logOldValue = oldValue switch
+                {
+                    Enum enumValue => EnumUtil.GetEnumDescription(enumValue),
+                    bool boolValue => boolValue ? "是" : "否",
+                    DateTime dateTime => dateTime.ToString("yyyy-MM-dd HH:mm:ss"), // 日期格式化
+                    float f => f.ToString("F2"), // 浮点数保留2位小数
+                    double d => d.ToString("F2"),
+                    _ => oldValue // 其他类型默认原值
+                };
 
-                // 处理新值（若为枚举，获取其Description）
-                object logNewValue = value is Enum newEnum
-                    ? EnumUtil.GetEnumDescription(newEnum)
-                    : value;
+                object logNewValue = value switch
+                {
+                    Enum enumValue => EnumUtil.GetEnumDescription(enumValue),
+                    bool boolValue => boolValue ? "是" : "否",
+                    DateTime dateTime => dateTime.ToString("yyyy-MM-dd HH:mm:ss"), // 日期格式化
+                    float f => f.ToString("F2"), // 浮点数保留2位小数
+                    double d => d.ToString("F2"),
+                    _ => value // 其他类型默认原值
+                };
 
                 _auditLogs.Add(new AuditLog
                 {

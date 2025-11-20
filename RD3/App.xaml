@@ -158,7 +158,7 @@
                     </Trigger>
                     <MultiTrigger>
                         <MultiTrigger.Conditions>
-                            <Condition Property="Tag" Value="{x:Static system:Boolean.FalseString}" />
+                            <Condition Property="Tag" Value="False" />
                             <Condition Property="IsMouseOver" Value="True" />
                         </MultiTrigger.Conditions>
                         <Setter Property="OpacityMask" Value="{DynamicResource SelectedBursh}" />

@@ -3,22 +3,24 @@ using Prism.Mvvm;
 using RD3.Shared;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
-    public class MFCInfo : MFCSetting, ICloneable
+    public class MFCInfo : MFCSetting
     {
         private float _flowRate_SP;
         /// <summary>
-        /// 流速设定值
+        /// 流量设定值
         /// </summary>
+        [Description("流量预设值")]
         public float FlowRate_SP
         {
             get => _flowRate_SP;
-            set { SetProperty(ref _flowRate_SP, value); }
+            set { SetPropertyWithAudit(ref _flowRate_SP, value); }
         }
 
         private float _flowRate;
@@ -31,6 +33,10 @@ namespace RD3.Shared
             set
             {
                 SetProperty(ref _flowRate, value);
+                if (value > 0)
+                {
+                    _runningStr = value > 0 ? Boolean.TrueString : Boolean.FalseString;
+                }
             }
         }
 
@@ -55,13 +61,14 @@ namespace RD3.Shared
         }
 
         private bool _isControling = false;
+        [Description("是否正在控制")]
         public bool IsControling
         {
             get { return _isControling; }
             set 
             {
                 LastIsControling = _isControling;
-                SetProperty(ref _isControling, value);
+                SetPropertyWithAudit(ref _isControling, value);
             }
         }
 
@@ -78,15 +85,21 @@ namespace RD3.Shared
                 SetProperty(ref _isControlled, value);
                 if (value)
                 {
+                    IsAuditing = false;
                     IsControling = true;
                 }
             }
         }
 
-        public object Clone()
+        private string _runningStr = Boolean.FalseString;
+        /// <summary>
+        /// 通过流速来判断泵是否在转动
+        /// </summary>
+        [JsonIgnore]
+        public string RunningStr
         {
-            var clonedObject = ObjectCloner.DeepCopy(this);
-            return clonedObject;
+            get => _runningStr;
+            private set { SetProperty(ref _runningStr, value); }
         }
     }
 }

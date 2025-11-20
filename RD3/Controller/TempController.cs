@@ -26,14 +26,16 @@ namespace RD3.Controller
 
         private BackgroundWorker _backgroundWorker;
 
+        private DeviceParameter _currentDeviceParameter;
         public DeviceParameter CurrentDeviceParameter
         {
-            get { return AnalysisSolution.GetInstance().CurrentFermentor.Device; }
+            get => _currentDeviceParameter;
+            private set => _currentDeviceParameter = value;
         }
 
-        public TempController()
+        public TempController(DeviceParameter deviceParameter)
         {
-
+            _currentDeviceParameter = deviceParameter;
         }
 
         public void StartWork()
@@ -192,18 +194,7 @@ namespace RD3.Controller
                         double currentMatchTime;
                         DateTime currentTime = DateTime.Now;
 
-                        if (timeSeries.TimeType == TimeType.RelativeTime)
-                        {
-                            // 相对时间：计算相对于基准时间的已运行分钟数
-                            currentMatchTime = (currentTime - _tsStartTime).TotalMinutes;
-                            // 转换单位（将序列项的时间转换为分钟，与currentMatchTime统一单位）
-                            currentMatchTime = ConvertToMinutes(currentMatchTime, timeSeries.Timer);
-                        }
-                        else
-                        {
-                            // 绝对时间：直接用当前时间的分钟数（或根据单位转换）
-                            currentMatchTime = ConvertToMinutes(currentTime, timeSeries.Timer);
-                        }
+                        currentMatchTime = (currentTime - _tsStartTime).TotalMinutes;
 
                         // 2. 查找当前时间匹配的序列项（在StartTime和EndTime之间）
                         var matchedItem = items.FirstOrDefault(item =>

@@ -6,7 +6,8 @@
     "IsExist": true,
     "IsWeigh": true,
     "WeighIndex": 1,
-    "IsEnable": true
+    "IsEnable": true,
+    "ModuleName": "泵1"
   },
   {
     "DeviceID": "G01",
@@ -15,7 +16,8 @@
     "IsExist": true,
     "IsWeigh": true,
     "WeighIndex": 2,
-    "IsEnable": true
+    "IsEnable": true,
+    "ModuleName": "泵2"
   },
   {
     "DeviceID": "G01",
@@ -24,7 +26,8 @@
     "IsExist": true,
     "IsWeigh": false,
     "WeighIndex": 2,
-    "IsEnable": true
+    "IsEnable": true,
+    "ModuleName": "泵3"
   },
   {
     "DeviceID": "G01",
@@ -33,7 +36,8 @@
     "IsExist": true,
     "IsWeigh": false,
     "WeighIndex": 2,
-    "IsEnable": true
+    "IsEnable": true,
+    "ModuleName": "泵4"
   },
   {
     "DeviceID": "G01",
@@ -42,7 +46,8 @@
     "IsExist": true,
     "IsWeigh": true,
     "WeighIndex": 2,
-    "IsEnable": false
+    "IsEnable": false,
+    "ModuleName": "泵5"
   },
   {
     "DeviceID": "G01",
@@ -51,7 +56,8 @@
     "IsExist": true,
     "IsWeigh": true,
     "WeighIndex": 2,
-    "IsEnable": false
+    "IsEnable": false,
+    "ModuleName": "泵6"
   }
 ]
 

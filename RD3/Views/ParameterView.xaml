@@ -124,9 +124,6 @@
                         CanUserSort="False"
                         Header="属性"
                         IsReadOnly="False" />
-                    <!--<DataGridTextColumn Header="死区" Binding="{Binding deadArea}" Width="100" IsReadOnly="False" CanUserSort="False"/>
-                    <DataGridTextColumn Header="速率" Binding="{Binding maxSpeed}" Width="100" IsReadOnly="False" CanUserSort="False"/>-->
-
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

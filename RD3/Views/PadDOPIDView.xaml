@@ -45,7 +45,7 @@
                         Width="90"
                         materialDesign:HintAssist.Hint="死区"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.DOParam.DirectPID.deadArea, StringFormat={}{0:F2}}" />
+                        Text="{Binding CurrentDeviceParameter.DOParam.DirectPID.DeadArea, StringFormat={}{0:F2}}" />
                 </hc:UniformSpacingPanel>
             </GroupBox>
             <GroupBox Header="反向(-)" Style="{StaticResource GroupBoxTab.Small}">
@@ -69,7 +69,7 @@
                         Width="90"
                         materialDesign:HintAssist.Hint="死区"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding CurrentDeviceParameter.DOParam.ReversePID.deadArea, StringFormat={}{0:F2}}" />
+                        Text="{Binding CurrentDeviceParameter.DOParam.ReversePID.DeadArea, StringFormat={}{0:F2}}" />
                 </hc:UniformSpacingPanel>
             </GroupBox>
         </hc:UniformSpacingPanel>

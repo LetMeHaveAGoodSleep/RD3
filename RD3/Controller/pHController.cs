@@ -35,9 +35,11 @@ namespace RD3.Controller
         // 线程退出标志（必须用 volatile 修饰）
         private static volatile bool _shouldStop = false;
 
+        private DeviceParameter _currentDeviceParameter;
         public DeviceParameter CurrentDeviceParameter
         {
-            get { return AnalysisSolution.GetInstance().CurrentFermentor.Device; }
+            get => _currentDeviceParameter;
+            private set => _currentDeviceParameter = value;
         }
 
         public PumpInfo AcidPumpInfo
@@ -59,6 +61,11 @@ namespace RD3.Controller
         public pHController()
         {
 
+        }
+
+        public pHController(DeviceParameter deviceParameter)
+        {
+            _currentDeviceParameter = deviceParameter;
         }
 
         private void CloseAcidBase()
@@ -341,11 +348,11 @@ namespace RD3.Controller
 
                             if (realTimeParam.PH >= deviceParameter.PHParam.SP)
                             {
-                                info = pIDInfos.FindFirst(t => t.PidName.Contains("PH_酸") && t.deviceID == deviceParameter.Name);
+                                info = pIDInfos.FindFirst(t => t.PidName.Contains("PH_酸") && t.DeviceId == deviceParameter.Name);
                             }
                             else if (realTimeParam.PH <= deviceParameter.PHParam.SP)
                             {
-                                info = pIDInfos.FindFirst(t => t.PidName.Contains("PH_碱") && t.deviceID == deviceParameter.Name);
+                                info = pIDInfos.FindFirst(t => t.PidName.Contains("PH_碱") && t.DeviceId == deviceParameter.Name);
                             }
                             if (info == null)
                             {
@@ -368,12 +375,12 @@ namespace RD3.Controller
                             lastPid = info;
 
                             _pidController.SetParameters(kp: (float)info.P, ki: (float)info.I, kd: (float)info.D, integralThreshold: info.Threshold);
-                            _pidController.SetOutputLimits(-Math.Abs(info.maxSpeed), Math.Abs(info.maxSpeed));
+                            _pidController.SetOutputLimits(-Math.Abs(info.MaxSpeed), Math.Abs(info.MaxSpeed));
                             _pidController.SetIntegralLimits(-20, 20);
                             _pidController.SetTarget(deviceParameter.PHParam.SP);
 
                             LogHelper.Debug(string.Format("反应器{5},PH预设值：{0}，PH当前值：{4}，P：{1}，I：{2}，D：{3}", deviceParameter.PHParam.SP, info.P, info.I, info.D, realTimeParam.PH, deviceParameter.Name));
-                            if (realTimeParam.PH >= deviceParameter.PHParam.SP - info.deadArea && realTimeParam.PH <= deviceParameter.PHParam.SP + info.deadArea)
+                            if (Math.Abs(deviceParameter.PHParam.SP - info.DeadArea)<=info.DeadArea)
                             {
                                 CloseAcidBase();
 
@@ -731,10 +738,12 @@ namespace RD3.Controller
                     if (AcidPumpInfo != null && CurrentDeviceParameter.PHParam.AcidAssociated)
                     {
                         AcidPumpInfo.IsControlled = AcidPumpInfo.IsControling = false;
+                        AcidPumpInfo.IsAuditing = true;
                     }
                     if (BasePumpInfo != null && CurrentDeviceParameter.PHParam.BaseAssociated)
                     {
                         BasePumpInfo.IsControlled = BasePumpInfo.IsControling = false;
+                        BasePumpInfo.IsAuditing = true;
                     }
                 }
                 catch (Exception ex)
@@ -758,10 +767,12 @@ namespace RD3.Controller
             if (AcidPumpInfo != null && CurrentDeviceParameter.PHParam.AcidAssociated)
             {
                 AcidPumpInfo.IsControlled = AcidPumpInfo.IsControling = false;
+                AcidPumpInfo.IsAuditing = true;
             }
             if (BasePumpInfo != null && CurrentDeviceParameter.PHParam.BaseAssociated)
             {
                 BasePumpInfo.IsControlled = BasePumpInfo.IsControling = false;
+                BasePumpInfo.IsAuditing = true;
             }
         }
 
@@ -855,18 +866,7 @@ namespace RD3.Controller
                         double currentMatchTime;
                         DateTime currentTime = DateTime.Now;
 
-                        if (timeSeries.TimeType == TimeType.RelativeTime)
-                        {
-                            // 相对时间：计算相对于基准时间的已运行分钟数
-                            currentMatchTime = (currentTime - _tsStartTime).TotalMinutes;
-                            // 转换单位（将序列项的时间转换为分钟，与currentMatchTime统一单位）
-                            currentMatchTime = ConvertToMinutes(currentMatchTime, timeSeries.Timer);
-                        }
-                        else
-                        {
-                            // 绝对时间：直接用当前时间的分钟数（或根据单位转换）
-                            currentMatchTime = ConvertToMinutes(currentTime, timeSeries.Timer);
-                        }
+                        currentMatchTime = (currentTime - _tsStartTime).TotalMinutes;
 
                         // 2. 查找当前时间匹配的序列项（在StartTime和EndTime之间）
                         var matchedItem = items.FirstOrDefault(item =>

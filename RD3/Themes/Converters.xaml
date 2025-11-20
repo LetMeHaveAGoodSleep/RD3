@@ -26,4 +26,5 @@
     <rd3:MultiVisibilityToVisibilityConverter x:Key="OrVis2VisConverter" Logic="OR" />
     <rd3:GreaterThanConverter x:Key="GreaterThanConverter" />
     <rd3:ObjectIsNullConverter x:Key="ObjectIsNullConverter" />
+    <rd3:BoolToBoolStringConverter x:Key="BoolToBoolStringConverter" />
 </ResourceDictionary>

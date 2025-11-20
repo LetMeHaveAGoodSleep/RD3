@@ -21,9 +21,11 @@ namespace RD3.Controller
 
         private ProbingController _probingController;
 
+        private DeviceParameter _currentDeviceParameter;
         public DeviceParameter CurrentDeviceParameter
         {
-            get { return AnalysisSolution.GetInstance().CurrentFermentor.Device; }
+            get => _currentDeviceParameter;
+            private set => _currentDeviceParameter = value;
         }
 
         private PumpInfo _pumpInfo;
@@ -35,6 +37,13 @@ namespace RD3.Controller
 
         public PumpController()
         {
+            if (_currentDeviceParameter == null)
+                _currentDeviceParameter = AnalysisSolution.GetInstance().CurrentFermentor.Device;
+        }
+
+        public PumpController(DeviceParameter deviceParameter)
+        {
+            _currentDeviceParameter = deviceParameter;
         }
 
         /// <summary>
