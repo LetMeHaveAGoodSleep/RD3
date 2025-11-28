@@ -3,6 +3,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -44,6 +45,23 @@ namespace RD3.Shared
         }
 
         /// <summary>
+        /// 手动筛选唯一属性：解决模糊匹配的兜底方案
+        /// </summary>
+        private PropertyInfo GetUniqueProperty<T>(string propertyName)
+        {
+            // 获取当前类及所有基类的所有属性
+            var allProperties = GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
+            // 筛选：名称匹配 + 类型匹配（泛型T为属性类型）
+            var matchedProperties = allProperties
+                .Where(p => p.Name == propertyName && p.PropertyType == typeof(T))
+                .ToList();
+
+            // 优先级：1. 当前类自身声明的属性 2. 第一个匹配的属性
+            return matchedProperties.FirstOrDefault(p => p.DeclaringType == GetType())
+                   ?? matchedProperties.FirstOrDefault();
+        }
+
+        /// <summary>
         /// 从属性的DescriptionAttribute中获取描述文本
         /// </summary>
         private string GetDescriptionFromAttribute(PropertyInfo property)
@@ -54,41 +72,7 @@ namespace RD3.Shared
             return descriptionAttr?.Description ?? property.Name;
         }
 
-        /// <summary>
-        /// 通过堆栈跟踪获取触发变更的属性（与之前相同）
-        /// </summary>
-        private PropertyInfo GetCallingProperty()
-        {
-            var stackTrace = new System.Diagnostics.StackTrace();
-            for (int i = 0; i < stackTrace.FrameCount; i++)
-            {
-                var frame = stackTrace.GetFrame(i);
-                var method = frame.GetMethod();
-                if (method.IsSpecialName && method.Name.StartsWith("set_"))
-                {
-                    string propertyName = method.Name.Substring(4);
-                    PropertyInfo property = null;
-                    Type currentType = GetType();
-
-                    // 1. 逐级搜索当前类及所有基类
-                    while (currentType != null && property == null)
-                    {
-                        // 搜索当前类型中"自身声明的公共实例属性"（避免跨类同名冲突）
-                        property = currentType.GetProperty(
-                            propertyName,
-                            BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly
-                        );
-                        // 若当前类型未找到，继续搜索基类
-                        currentType = currentType.BaseType;
-                    }
-
-                    return property;
-                }
-            }
-            return null;
-        }
-
-        protected bool SetPropertyWithAudit<T>(ref T storage, T value)
+        protected bool SetPropertyWithAudit<T>(string propertyName,ref T storage, T value)
         {
             // 先判断值是否真的发生变化（复用BindableBase的逻辑）
             if (EqualityComparer<T>.Default.Equals(storage, value))
@@ -97,12 +81,41 @@ namespace RD3.Shared
             }
 
             // 1. 获取调用者属性信息
-            var property = GetCallingProperty();
+            PropertyInfo property = null;
+            try
+            {
+                // 核心修复：仅获取当前类【自身声明】的属性，避免继承链中的同名属性导致模糊匹配
+                // 关键：添加 BindingFlags.DeclaredOnly 标记
+                property = GetType().GetProperty(
+                    propertyName,
+                    BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly // 新增 DeclaredOnly
+                );
+
+                // 兜底：若当前类未找到，再从基类中获取（可选，根据业务需求）
+                if (property == null)
+                {
+                    property = GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
+                }
+            }
+            catch (AmbiguousMatchException ex)
+            {
+                // 捕获模糊匹配异常，手动筛选唯一属性
+                property = GetUniqueProperty<T>(propertyName);
+                Console.WriteLine($"属性{propertyName}模糊匹配，已手动筛选：{ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"获取属性{propertyName}失败：{ex.Message}");
+                return false;
+            }
             if (property == null)
-                throw new InvalidOperationException("无法获取属性信息");
+            {
+                LogHelper.Fatal($"属性{propertyName}不存在");
+                return false;
+            }
 
             // 2. 读取Description特性（核心修改：使用内置特性）
-            string propertyName = GetDescriptionFromAttribute(property);
+            string description = GetDescriptionFromAttribute(property);
 
             // 记录旧值
             T oldValue = storage;
@@ -135,7 +148,7 @@ namespace RD3.Shared
 
                 _auditLogs.Add(new AuditLog
                 {
-                    PropertyName = propertyName,
+                    PropertyName = description,
                     OldValue = logOldValue,
                     NewValue = logNewValue,
                     ModuleName = this.ModuleName // 关联所属模块

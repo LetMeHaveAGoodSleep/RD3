@@ -102,6 +102,7 @@ namespace XZ.SQLite
         /// <param name="dbAddress"></param>
         public static void CreateConnection(string dbAddress = "hisDatas/xzrd3.db")
         {
+            dbAddress = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName), dbAddress);
             // 创建SQLite连接字符串构建器，并设置数据源和版本
             var connectionStringBuilder = new SQLiteConnectionStringBuilder
             {

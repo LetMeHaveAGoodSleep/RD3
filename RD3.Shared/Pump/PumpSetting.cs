@@ -29,7 +29,7 @@ namespace RD3.Shared
             set
             {
                 PumpName = EnumUtil.GetEnumDescription(value);
-                SetPropertyWithAudit(ref _pump, value);
+                SetPropertyWithAudit(nameof(Pump), ref _pump, value);
             }
         }
 
@@ -53,7 +53,7 @@ namespace RD3.Shared
         public bool IsWeigh
         {
             get => _isWeigh;
-            set { SetPropertyWithAudit(ref _isWeigh, value); }
+            set { SetPropertyWithAudit(nameof(IsWeigh), ref _isWeigh, value); }
         }
 
         private WeightIndex _weighIndex =  WeightIndex.Unset;
@@ -61,7 +61,7 @@ namespace RD3.Shared
         public WeightIndex WeighIndex
         {
             get => _weighIndex;
-            set { SetPropertyWithAudit(ref _weighIndex, value); }
+            set { SetPropertyWithAudit(nameof(WeighIndex), ref _weighIndex, value); }
         }
 
         private bool _isEnable = false;

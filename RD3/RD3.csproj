@@ -9,6 +9,7 @@
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
     <LangVersion>preview</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Language\LanguageExtension.cs" />
@@ -205,6 +206,7 @@
     <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
     <PackageReference Include="ScottPlot.WPF" Version="5.1.57" />
     <PackageReference Include="System.Management" Version="9.0.10" />
+    <PackageReference Include="TaskScheduler" Version="2.12.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fpi.Assembly\Fpi.Assembly.csproj" />

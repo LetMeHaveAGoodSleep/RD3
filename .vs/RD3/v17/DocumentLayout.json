@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3 - \u65B0\u7248\u672C\\rd3\\config\\var.json||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\config\\var.json||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3 - \u65B0\u7248\u672C\\rd3\\util\\taskschedulerautostarthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\util\\taskschedulerautostarthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3 - \u65B0\u7248\u672C\\rd3\\views\\padindexview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\views\\padindexview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|d:\\20250415-001\\rd3 - \u65B0\u7248\u672C\\rd3\\app.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{EE540721-A12B-4EB4-BE3E-00451A276F63}|RD3\\RD3.csproj|solutionrelative:rd3\\app.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,27 +46,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Var.json",
-              "DocumentMoniker": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Config\\Var.json",
-              "RelativeDocumentMoniker": "RD3\\Config\\Var.json",
-              "ToolTip": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Config\\Var.json",
-              "RelativeToolTip": "RD3\\Config\\Var.json",
-              "ViewState": "AgIAADYAAAAAAAAAAADwv1AAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-11-20T03:19:08.16Z",
+              "DocumentIndex": 1,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\App.xaml.cs",
+              "RelativeDocumentMoniker": "RD3\\App.xaml.cs",
+              "ToolTip": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\App.xaml.cs",
+              "RelativeToolTip": "RD3\\App.xaml.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAWwEgAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T10:01:32.351Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PadIndexView.xaml",
-              "DocumentMoniker": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Views\\PadIndexView.xaml",
-              "RelativeDocumentMoniker": "RD3\\Views\\PadIndexView.xaml",
-              "ToolTip": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Views\\PadIndexView.xaml",
-              "RelativeToolTip": "RD3\\Views\\PadIndexView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-11-18T09:09:12.593Z",
+              "DocumentIndex": 0,
+              "Title": "TaskSchedulerAutoStartHelper.cs",
+              "DocumentMoniker": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Util\\TaskSchedulerAutoStartHelper.cs",
+              "RelativeDocumentMoniker": "RD3\\Util\\TaskSchedulerAutoStartHelper.cs",
+              "ToolTip": "D:\\20250415-001\\RD3 - \u65B0\u7248\u672C\\RD3\\Util\\TaskSchedulerAutoStartHelper.cs",
+              "RelativeToolTip": "RD3\\Util\\TaskSchedulerAutoStartHelper.cs",
+              "ViewState": "AgIAAHYAAAAAAAAAAADwv4sAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T10:00:01.211Z",
               "EditorCaption": ""
             }
           ]

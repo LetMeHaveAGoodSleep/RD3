@@ -17,7 +17,7 @@ namespace RD3.Shared
         public float InitialFeed
         {
             get => _initialFeed;
-            set { SetPropertyWithAudit(ref _initialFeed, value); }
+            set { SetPropertyWithAudit(nameof(InitialFeed), ref _initialFeed, value); }
         }
 
         private float _initialTemp = 0f;
@@ -25,7 +25,7 @@ namespace RD3.Shared
         public float InitialTemp
         {
             get => _initialTemp;
-            set { SetPropertyWithAudit(ref _initialTemp, value); }
+            set { SetPropertyWithAudit(nameof(InitialTemp), ref _initialTemp, value); }
         }
 
         private bool _isCycle = false;
@@ -40,7 +40,7 @@ namespace RD3.Shared
         public bool IsDirect
         {
             get { return _isDirect; }
-            set { SetPropertyWithAudit(ref _isDirect, value); }
+            set { SetPropertyWithAudit(nameof(IsDirect), ref _isDirect, value); }
         }
 
         private bool _isReverse = true;
@@ -48,7 +48,7 @@ namespace RD3.Shared
         public bool IsReverse
         {
             get { return _isReverse; }
-            set { SetPropertyWithAudit(ref _isReverse, value); }
+            set { SetPropertyWithAudit(nameof(IsReverse), ref _isReverse, value); }
         }
 
         private CycleParam _agitCycle = new() { ModuleName = "溶氧周期控制-转速参数" };
@@ -65,7 +65,7 @@ namespace RD3.Shared
             get { return _controlStrategy; }
             set
             {
-                SetPropertyWithAudit(ref _controlStrategy, value);
+                SetPropertyWithAudit(nameof(ControlStrategy), ref _controlStrategy, value);
             }
         }
 

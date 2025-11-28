@@ -20,7 +20,7 @@ namespace RD3.Shared
         public new int SP
         {
             get { return _sp; }
-            set { SetPropertyWithAudit(ref _sp, value); }
+            set { SetPropertyWithAudit(nameof(SP), ref _sp, value); }
         }
 
         private int _lowerLimit = 0;
@@ -31,7 +31,7 @@ namespace RD3.Shared
         public new int LowerLimit
         {
             get { return _lowerLimit; }
-            set { SetPropertyWithAudit(ref _lowerLimit, value); }
+            set { SetPropertyWithAudit(nameof(LowerLimit), ref _lowerLimit, value); }
         }
 
         private int _upperLimit = 100;
@@ -42,7 +42,7 @@ namespace RD3.Shared
         public new  int UpperLimit
         {
             get { return _upperLimit; }
-            set { SetPropertyWithAudit(ref _upperLimit, value); }
+            set { SetPropertyWithAudit(nameof(UpperLimit),ref _upperLimit, value); }
         }
         public AgitParam()
         {

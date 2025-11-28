@@ -24,12 +24,12 @@ namespace RD3.Shared
             {
                 float oldValue = _sp;
                 // 先更新值（便于触发验证）
-                if (SetPropertyWithAudit(ref _sp, value))
+                if (SetPropertyWithAudit(nameof(SP), ref _sp, value))
                 {
                     // 验证失败时恢复旧值
                     if (!string.IsNullOrEmpty(this[nameof(SP)]))
                     {
-                        SetPropertyWithAudit(ref _sp, oldValue);
+                        SetPropertyWithAudit(nameof(SP), ref _sp, oldValue);
                     }
                 }
             }
@@ -45,7 +45,7 @@ namespace RD3.Shared
             get { return _lowerLimit; }
             set 
             {
-                if (SetPropertyWithAudit(ref _lowerLimit, value))
+                if (SetPropertyWithAudit(nameof(LowerLimit), ref _lowerLimit, value))
                 {
                     ValidateSP(); // 上下限变动时验证SP
                 }
@@ -61,7 +61,7 @@ namespace RD3.Shared
             get { return _upperLimit; }
             set 
             {
-                if (SetPropertyWithAudit(ref _upperLimit, value))
+                if (SetPropertyWithAudit(nameof(UpperLimit), ref _upperLimit, value))
                 {
                     ValidateSP(); // 上下限变动时验证SP
                 }
@@ -73,7 +73,7 @@ namespace RD3.Shared
         public ControlMode ControlMode
         {
             get { return _controlMode; }
-            set { SetPropertyWithAudit(ref _controlMode, value); }
+            set { SetPropertyWithAudit(nameof(ControlMode), ref _controlMode, value); }
         }
 
         private TimeSeries _timeSeries = new TimeSeries();
@@ -102,7 +102,7 @@ namespace RD3.Shared
             set
             {
                 LastIsControling = _isControling;
-                SetPropertyWithAudit(ref _isControling, value);
+                SetPropertyWithAudit(nameof(IsControling), ref _isControling, value);
             }
         }
         /// <summary>

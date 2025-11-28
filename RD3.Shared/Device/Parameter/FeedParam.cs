@@ -16,7 +16,7 @@ namespace RD3.Shared
         public float Feed_Total
         {
             get { return _feed_Total; }
-            set { SetPropertyWithAudit(ref _feed_Total, value); }
+            set { SetPropertyWithAudit(nameof(Feed_Total), ref _feed_Total, value); }
         }
 
         private string _feedName = $"补料1(mL/h)";
@@ -70,7 +70,7 @@ namespace RD3.Shared
                 {
                     IsTotal = false;
                 }
-                SetPropertyWithAudit(ref _feedIndex, value);
+                SetPropertyWithAudit(nameof(FeedIndex), ref _feedIndex, value);
             }
         }
 
@@ -81,7 +81,7 @@ namespace RD3.Shared
             get { return _feedMode; }
             set
             {
-                SetPropertyWithAudit(ref _feedMode, value);
+                SetPropertyWithAudit(nameof(FeedMode), ref _feedMode, value);
             }
         }
 
@@ -90,7 +90,7 @@ namespace RD3.Shared
         public bool IsTotal
         {
             get { return _isTotal; }
-            set { SetPropertyWithAudit(ref _isTotal, value); }
+            set { SetPropertyWithAudit(nameof(IsTotal), ref _isTotal, value); }
         }
     }
 }

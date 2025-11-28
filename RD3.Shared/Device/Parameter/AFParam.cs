@@ -21,7 +21,7 @@ namespace RD3.Shared
         public bool AutoDefoaming
         {
             get { return _autoDefoaming; }
-            set { SetPropertyWithAudit(ref _autoDefoaming, value); }
+            set { SetPropertyWithAudit(nameof(AutoDefoaming), ref _autoDefoaming, value); }
         }
 
         private int _cycle;
@@ -29,7 +29,7 @@ namespace RD3.Shared
         public int Cycle
         {
             get => _cycle;
-            set { SetPropertyWithAudit(ref _cycle, value); }
+            set { SetPropertyWithAudit(nameof(Cycle), ref _cycle, value); }
         }
 
         private float _dutyCycle;
@@ -37,7 +37,7 @@ namespace RD3.Shared
         public float DutyCycle
         {
             get => _dutyCycle;
-            set { SetPropertyWithAudit(ref _dutyCycle, value); }
+            set { SetPropertyWithAudit(nameof(DutyCycle), ref _dutyCycle, value); }
         }
     }
 }

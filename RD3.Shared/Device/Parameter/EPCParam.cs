@@ -18,7 +18,7 @@ namespace RD3.Shared
             get { return _enable; }
             set
             {
-                SetPropertyWithAudit(ref _enable, value);
+                SetPropertyWithAudit(nameof(Enable), ref _enable, value);
                 _runningStr = value ? Boolean.TrueString : Boolean.FalseString;
             }
         }

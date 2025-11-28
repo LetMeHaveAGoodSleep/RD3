@@ -57,7 +57,7 @@ namespace RD3.Shared
         public float P
         {
             get => _p;
-            set => SetPropertyWithAudit(ref _p, value);
+            set => SetPropertyWithAudit(nameof(P), ref _p, value);
         }
 
         private float _i;
@@ -65,7 +65,7 @@ namespace RD3.Shared
         public float I
         {
             get => _i;
-            set => SetPropertyWithAudit(ref _i, value);
+            set => SetPropertyWithAudit(nameof(I), ref _i, value);
         }
 
         private float _d;
@@ -73,7 +73,7 @@ namespace RD3.Shared
         public float D
         {
             get => _d;
-            set => SetPropertyWithAudit(ref _d, value);
+            set => SetPropertyWithAudit(nameof(D), ref _d, value);
         }
 
         private int _interval;
@@ -81,7 +81,7 @@ namespace RD3.Shared
         public int Interval
         {
             get => _interval;
-            set => SetPropertyWithAudit(ref _interval, value);
+            set => SetPropertyWithAudit(nameof(Interval), ref _interval, value);
         }
 
         private float _threshold;
@@ -89,7 +89,7 @@ namespace RD3.Shared
         public float Threshold
         {
             get => _threshold;
-            set => SetPropertyWithAudit(ref _threshold, value);
+            set => SetPropertyWithAudit(nameof(Threshold), ref _threshold, value);
         }
 
         private float _deadArea;
@@ -97,7 +97,7 @@ namespace RD3.Shared
         public float DeadArea
         {
             get => _deadArea;
-            set => SetPropertyWithAudit(ref _deadArea, value);
+            set => SetPropertyWithAudit(nameof(DeadArea), ref _deadArea, value);
         }
 
         private float _maxSpeed;
@@ -105,28 +105,28 @@ namespace RD3.Shared
         public float MaxSpeed
         {
             get => _maxSpeed;
-            set => SetPropertyWithAudit(ref _maxSpeed, value);
+            set => SetPropertyWithAudit(nameof(MaxSpeed), ref _maxSpeed, value);
         }
 
         private string _executeType = "自动";
         public string ExecuteType
         {
             get => _executeType;
-            set => SetPropertyWithAudit(ref _executeType, value);
+            set => SetPropertyWithAudit(nameof(ExecuteType), ref _executeType, value);
         }
 
         private bool _used = false;
         public bool Used
         {
             get => _used;
-            set => SetPropertyWithAudit(ref _used, value);
+            set => SetPropertyWithAudit(nameof(Used), ref _used, value);
         }
 
         private string _pidName = "";
         public string PidName
         {
             get => _pidName;
-            set => SetPropertyWithAudit(ref _pidName, value);
+            set => SetPropertyWithAudit(nameof(PidName), ref _pidName, value);
         }
 
         private PIDFactor _factor = PIDFactor.Unknown;
@@ -140,7 +140,7 @@ namespace RD3.Shared
                 {
                     PidName = newName; // 触发PidName的审计
                 }
-                SetPropertyWithAudit(ref _factor, value); // 触发Factor的审计
+                SetPropertyWithAudit(nameof(Factor), ref _factor, value); // 触发Factor的审计
             }
         }
 
@@ -153,7 +153,7 @@ namespace RD3.Shared
         public string ConnectedWith
         {
             get => _connectedWith;
-            set => SetPropertyWithAudit(ref _connectedWith, value);
+            set => SetPropertyWithAudit(nameof(ConnectedWith),ref _connectedWith, value);
         } // 关联项
 
         public override bool Equals(object obj)

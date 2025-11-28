@@ -22,7 +22,7 @@ namespace RD3.Shared
             get => _flowRate_SP;
             set 
             {
-                SetPropertyWithAudit(ref _flowRate_SP, value); 
+                SetPropertyWithAudit(nameof(FlowRate_SP), ref _flowRate_SP, value); 
             }
         }
 
@@ -34,7 +34,7 @@ namespace RD3.Shared
         public float RunningTime_SP
         {
             get => _runningTime_SP;
-            set { SetPropertyWithAudit(ref _runningTime_SP, value); }
+            set { SetPropertyWithAudit(nameof(RunningTime_SP), ref _runningTime_SP, value); }
         }
 
 
@@ -46,7 +46,7 @@ namespace RD3.Shared
         public float FlowCapacity_SP
         {
             get => _flowCapacity_SP;
-            set { SetPropertyWithAudit(ref _flowCapacity_SP, value); }
+            set { SetPropertyWithAudit(nameof(FlowCapacity_SP), ref _flowCapacity_SP, value); }
         }
 
         private float _flowRate;
@@ -153,7 +153,7 @@ namespace RD3.Shared
             get => _isConstSpeed;
             set  
             {
-                SetPropertyWithAudit(ref _isConstSpeed, value);
+                SetPropertyWithAudit(nameof(IsConstSpeed), ref _isConstSpeed, value);
             }
         }
 
@@ -203,7 +203,7 @@ namespace RD3.Shared
             set
             {
                 LastIsControling = _isControling;
-                SetPropertyWithAudit(ref _isControling, value);
+                SetPropertyWithAudit(nameof(IsControling), ref _isControling, value);
                 if (!value)
                 {
                     RunningTime = 0;
@@ -236,7 +236,7 @@ namespace RD3.Shared
         public bool AutoDefoaming
         {
             get { return _autoDefoaming; }
-            set { SetPropertyWithAudit(ref _autoDefoaming, value); }
+            set { SetPropertyWithAudit(nameof(AutoDefoaming), ref _autoDefoaming, value); }
         }
 
         private int _cycle;
@@ -244,7 +244,7 @@ namespace RD3.Shared
         public int Cycle
         {
             get => _cycle;
-            set { SetPropertyWithAudit(ref _cycle, value); }
+            set { SetPropertyWithAudit(nameof(Cycle), ref _cycle, value); }
         }
 
         private float _dutyCycle;
@@ -252,7 +252,7 @@ namespace RD3.Shared
         public float DutyCycle
         {
             get => _dutyCycle;
-            set { SetPropertyWithAudit(ref _dutyCycle, value); }
+            set { SetPropertyWithAudit(nameof(DutyCycle), ref _dutyCycle, value); }
         }
 
         private FeedControlMode _feedMode = FeedControlMode.ConstantSpeed;
@@ -262,7 +262,7 @@ namespace RD3.Shared
             get { return _feedMode; }
             set
             {
-                SetPropertyWithAudit(ref _feedMode, value);
+                SetPropertyWithAudit(nameof(FeedMode), ref _feedMode, value);
             }
         }
     }

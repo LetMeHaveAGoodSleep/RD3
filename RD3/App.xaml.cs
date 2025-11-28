@@ -16,6 +16,8 @@ using RD3.ViewModels;
 using RD3.Views;
 using System;
 using System.Collections;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -65,6 +67,13 @@ namespace RD3
             newUIThread.SetApartmentState(ApartmentState.STA);
             newUIThread.IsBackground = true; // 可选：设置为后台线程，主线程关闭时它也会自动终止
             newUIThread.Start();
+
+            System.Threading.Tasks.Task.Run(() => 
+            {
+                bool isAutoStart = TaskSchedulerAutoStartHelper.IsAutoStartEnabled();
+                // 切换自启状态
+                bool result = TaskSchedulerAutoStartHelper.SetAutoStart(!isAutoStart);
+            });
         }
 
         protected override Window CreateShell()
@@ -84,6 +93,11 @@ namespace RD3
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            string exePath = Process.GetCurrentProcess().MainModule.FileName;
+            string exeDir = Path.GetDirectoryName(exePath);
+            // 关键：设置当前工作目录
+            Directory.SetCurrentDirectory(exeDir);
+
             DeviceManager.GetInstance();
 
             var softwarePlatform = VarConfig.GetValue("SoftwarePlatform")?.ToString();

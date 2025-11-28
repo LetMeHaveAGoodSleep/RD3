@@ -22,7 +22,7 @@ namespace RD3.Shared
         public GasType GasType
         {
             get => _gasType;
-            set { SetPropertyWithAudit(ref _gasType, value); }
+            set { SetPropertyWithAudit(nameof(GasType), ref _gasType, value); }
         }
 
         private float _flowSpeed;
@@ -31,7 +31,7 @@ namespace RD3.Shared
             get => _flowSpeed;
             set 
             {
-                SetPropertyWithAudit(ref _flowSpeed, value);
+                SetPropertyWithAudit(nameof(FlowSpeed), ref _flowSpeed, value);
                 SP = value;
             }
         }

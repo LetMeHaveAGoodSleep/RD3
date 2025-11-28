@@ -31,13 +31,20 @@ x86/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
+**/[Bb]in/
 [Bb]in/
 [Bb]in/[Dd]ebug/
 [Bb]in/[Rr]elease/
+**/[Oo]bj/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
 **/[Oo]bj/
+***/[Oo]bj/
+
+# 额外补充：忽略 VS 相关文件（确保之前的规则生效）
+.vs/
+RD3/DesignTimeBuild/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

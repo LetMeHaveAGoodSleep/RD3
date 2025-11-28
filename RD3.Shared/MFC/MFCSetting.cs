@@ -34,7 +34,7 @@ namespace RD3.Shared
             set
             {
                 GasName = EnumUtil.GetEnumDescription(value);
-                SetPropertyWithAudit(ref _gas, value);
+                SetPropertyWithAudit(nameof(Gas), ref _gas, value);
             }
         }
 
@@ -57,7 +57,7 @@ namespace RD3.Shared
         public bool IsEnable
         {
             get => _isEnable;
-            set { SetPropertyWithAudit(ref _isEnable, value); }
+            set { SetPropertyWithAudit(nameof(IsEnable),ref _isEnable, value); }
         }
     }
 }

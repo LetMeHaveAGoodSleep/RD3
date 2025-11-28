@@ -37,7 +37,7 @@ namespace RD3.Shared
             get => _timeType;
             set
             {
-                SetPropertyWithAudit(ref _timeType, value);
+                SetPropertyWithAudit(nameof(TimeType), ref _timeType, value);
             }
         }
 
@@ -48,7 +48,7 @@ namespace RD3.Shared
             get => _timer;
             set
             {
-                SetPropertyWithAudit(ref _timer, value);
+                SetPropertyWithAudit(nameof(Timer),ref _timer, value);
             }
         }
 

@@ -17,7 +17,7 @@ namespace RD3.Shared
         public PHControlMode PHControlMode
         {
             get { return _pHControlMode; }
-            set { SetPropertyWithAudit(ref _pHControlMode, value); }
+            set { SetPropertyWithAudit(nameof(PHControlMode), ref _pHControlMode, value); }
         }
 
         private bool _acidAssociated = true;
@@ -25,7 +25,7 @@ namespace RD3.Shared
         public bool AcidAssociated
         {
             get { return _acidAssociated; }
-            set { SetPropertyWithAudit(ref _acidAssociated, value); }
+            set { SetPropertyWithAudit(nameof(AcidAssociated), ref _acidAssociated, value); }
         }
 
         private bool _baseAssociated = true;
@@ -33,7 +33,7 @@ namespace RD3.Shared
         public bool BaseAssociated
         {
             get { return _baseAssociated; }
-            set { SetPropertyWithAudit(ref _baseAssociated, value); }
+            set { SetPropertyWithAudit(nameof(BaseAssociated), ref _baseAssociated, value); }
         }
 
         private PIDInfo _acidPID;

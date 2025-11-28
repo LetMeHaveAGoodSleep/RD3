@@ -18,7 +18,7 @@ namespace RD3.Shared
             get { return _isEnable; }
             set 
             {
-                SetPropertyWithAudit(ref _isEnable, value);
+                SetPropertyWithAudit(nameof(IsEnable), ref _isEnable, value);
                 if (value)
                 {
                     TecControlMode = TecControlMode.PIDControl;
@@ -35,7 +35,7 @@ namespace RD3.Shared
         public TecControlMode TecControlMode
         {
             get { return _tecControlMode; }
-            set { SetPropertyWithAudit(ref _tecControlMode, value); }
+            set { SetPropertyWithAudit(nameof(TecControlMode),ref _tecControlMode, value); }
         }
 
         private TECParam _tecParam;

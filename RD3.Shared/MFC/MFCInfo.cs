@@ -20,7 +20,7 @@ namespace RD3.Shared
         public float FlowRate_SP
         {
             get => _flowRate_SP;
-            set { SetPropertyWithAudit(ref _flowRate_SP, value); }
+            set { SetPropertyWithAudit(nameof(FlowRate_SP), ref _flowRate_SP, value); }
         }
 
         private float _flowRate;
@@ -68,7 +68,7 @@ namespace RD3.Shared
             set 
             {
                 LastIsControling = _isControling;
-                SetPropertyWithAudit(ref _isControling, value);
+                SetPropertyWithAudit(nameof(IsControling), ref _isControling, value);
             }
         }
 

@@ -77,7 +77,7 @@ namespace RD3.Views
             RefershPumpMFC();
 
             //非调试模式下，窗口置顶
-            if (!System.Diagnostics.Debugger.IsAttached)
+            if (!System.Diagnostics.Debugger.IsAttached || AppSession.CurrentUser.Type == UserType.Admin)
             {
                 this.WindowStyle = WindowStyle.None;
                 SourceInitialized += (s, e) =>
