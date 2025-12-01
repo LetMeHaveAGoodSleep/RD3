@@ -46,7 +46,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontSize="{StaticResource SubHeadFontSize}"
-                Text="{Binding CurrentDeviceParameter.OD}" />
+                Text="{Binding CurrentDeviceParameter.OD, StringFormat={}{0:F2}}" />
             <TextBlock
                 Margin="3,0,0,0"
                 HorizontalAlignment="Left"

@@ -33,6 +33,9 @@
     <Compile Update="Views\ChooseReactorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ChooseRTParamView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\DialogWindowBase.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -100,6 +103,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\PumpSettingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\RealTimeDataView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\RegisterView.xaml.cs">
@@ -218,9 +224,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\PumpMFCView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\ReactorView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MCUDebugView.xaml">

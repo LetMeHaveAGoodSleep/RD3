@@ -57,7 +57,7 @@ namespace RD3.ViewModels
                     dateTime = "(dateTime like '%00:00' or dateTime like '%05:00' or dateTime like '%10:00' or dateTime like '%15:00' or dateTime like '%20:00' or dateTime like '%25:00' or dateTime like '%30:00'  or dateTime like '%35:00' or dateTime like '%40:00' or dateTime like '%45:00' or dateTime like '%50:00' or dateTime like '%55:00')";
                 }
 
-                string sql = $"select * from {RD3SQLHelper.realTimeParamTable1} where deviceID = '{currentBatch.devieceID}' and batchID = '{currentBatch.ID}' and {dateTime} order by ID desc";
+                string sql = $"select * from {RD3SQLHelper.RTParamTable} where deviceID = '{currentBatch.devieceID}' and batchID = '{currentBatch.ID}' and {dateTime} order by ID desc";
                 DataTable dt = SQLiteHelper.GetDatasToDataTable(sql);
                 //写入数据
                 StringBuilder sb = new StringBuilder();

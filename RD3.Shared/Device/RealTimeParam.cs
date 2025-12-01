@@ -51,6 +51,7 @@ namespace RD3.Shared
 
         private float _rawDO = 0f;
         [JsonIgnore]
+        [NotDBColumnAttribute]
         public float RawDO
         {
             get { return _rawDO; }
@@ -67,6 +68,7 @@ namespace RD3.Shared
 
         private float _dOPredict = 0f;
         [JsonIgnore]
+        [NotDBColumnAttribute]
         public float DOPredict
         {
             get { return _dOPredict; }
@@ -75,6 +77,7 @@ namespace RD3.Shared
 
         private int _lastAgit = 0;
         [JsonIgnore]
+        [NotDBColumnAttribute]
         public int LastAgit
         {
             get { return _lastAgit; }
@@ -727,6 +730,7 @@ namespace RD3.Shared
 
         private bool _hasFoam = false;
         [JsonIgnore]
+        [NotDBColumnAttribute]
         public bool HasFoam
         {
             get { return _hasFoam; }
@@ -735,6 +739,7 @@ namespace RD3.Shared
 
         private bool _tempControling = false;
         [JsonIgnore]
+        [NotDBColumnAttribute]
         public bool TempControling
         {
             get { return _tempControling; }
@@ -743,6 +748,7 @@ namespace RD3.Shared
 
         private WorkStatus  _workStatus;
         [JsonIgnore]
+        [NotDBColumnAttribute]
         public WorkStatus WorkStatus
         {
             get { return _workStatus; }
@@ -751,6 +757,7 @@ namespace RD3.Shared
 
         private byte[] _alarmBytes;
         [JsonIgnore]
+        [NotDBColumnAttribute]
         public byte[] AlarmBytes
         {
             get { return _alarmBytes; }

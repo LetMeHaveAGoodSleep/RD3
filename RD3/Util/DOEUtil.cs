@@ -25,7 +25,7 @@ namespace RD3
                 strings.Add($"and {property.Name} BETWEEN {item.Value - 0.01} AND {item.Value + 0.01} ");
                 selectColList.Add(property.Name);
             }
-            string strSelect = $"select {responseColumn} from {RD3SQLHelper.realTimeParamTable1}";
+            string strSelect = $"select {responseColumn} from {RD3SQLHelper.RTParamTable}";
             string condition = string.Join(" ", strings);
             string sql = $"{strSelect} {condition} ORDER BY dateTime DESC LIMIT 1";
             return sql;

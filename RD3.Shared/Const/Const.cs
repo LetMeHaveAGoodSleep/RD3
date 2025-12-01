@@ -23,5 +23,7 @@ namespace RD3.Shared
         public static readonly int NumericalPrecision = 2;
         public static readonly float MaxPumpFlowRate = 3000;
         public static readonly float MaxPumpFlowCapacity = 999999999f;
+        public static string DataFormat = "yyyy-MM-dd";
+        public static string DateTimeFormat = "yyyy-MM-dd mm:ss";
     }
 }

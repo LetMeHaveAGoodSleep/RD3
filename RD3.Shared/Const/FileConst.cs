@@ -50,5 +50,6 @@ namespace RD3.Shared
         public static readonly string ProbingPath = ConfigDirectory + "\\Probing.json";
         public static readonly string PumpInfoPath = ConfigDirectory + "\\PumpInfo.json";
         public static readonly string MFCInfoPath = ConfigDirectory + "\\MFCInfo.json";
+        public static readonly string ReportNodesPath = AppDomain.CurrentDomain.BaseDirectory + "Data\\ReportNodes.json";
     }
 }

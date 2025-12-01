@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 using XZ.SQLite;
 
@@ -67,6 +68,15 @@ namespace RD3.ViewModels
             set { SetProperty(ref _currentDeviceParameter, value); }
         }
 
+        public DelegateCommand<MouseButtonEventArgs> RealTimeCommand => new((MouseButtonEventArgs e) =>
+        {
+            if (AppSession.CurrentUser.Type != UserType.Admin)
+            {
+                e.Handled = true;
+                return;
+            }
+            DialogHostService.ShowOnce(nameof(RealTimeDataView), callback => { });
+        });
         public DelegateCommand StartExperimentCommand => new(() =>
         {
             if (CurrentDeviceParameter.InExperimenting)
@@ -278,39 +288,39 @@ namespace RD3.ViewModels
             _graphDataSourceList.Add(data);
 
 
-            //Thread thread = new Thread(new ThreadStart(() =>
-            //{
-            //    while (true)
-            //    {
-            //        DeviceParameter lastDeviceParameter = null;
-            //        while (true)
-            //        {
-            //            try
-            //            {
-            //                if (lastDeviceParameter != null)
-            //                {
-            //                    if (!lastDeviceParameter.InExperimenting && CurrentDeviceParameter.InExperimenting)
-            //                    {
-            //                        CurrentDeviceParameter.ExperimentTime = 0;
-            //                    }
-            //                    else if (CurrentDeviceParameter.InExperimenting)
-            //                    {
-            //                        CurrentDeviceParameter.ExperimentTime += 1;
-            //                    }
-            //                }
-            //                lastDeviceParameter = CurrentDeviceParameter.Clone() as DeviceParameter;
-            //            }
-            //            catch (Exception ex) { }
-            //            finally
-            //            {
-            //                Thread.Sleep(1000);
-            //            }
-            //        }
-            //    }
-            //}));
-            //thread.IsBackground = true;
-            //thread.Priority = ThreadPriority.Highest;
-            //thread.Start();
+            Thread thread = new Thread(new ThreadStart(() =>
+            {
+                while (true)
+                {
+                    DeviceParameter lastDeviceParameter = null;
+                    while (true)
+                    {
+                        try
+                        {
+                            if (lastDeviceParameter != null)
+                            {
+                                if (!lastDeviceParameter.InExperimenting && CurrentDeviceParameter.InExperimenting)
+                                {
+                                    CurrentDeviceParameter.ExperimentTime = 0;
+                                }
+                                else if (CurrentDeviceParameter.InExperimenting)
+                                {
+                                    CurrentDeviceParameter.ExperimentTime += 1;
+                                }
+                            }
+                            lastDeviceParameter = CurrentDeviceParameter.Clone() as DeviceParameter;
+                        }
+                        catch (Exception ex) { }
+                        finally
+                        {
+                            Thread.Sleep(1000);
+                        }
+                    }
+                }
+            }));
+            thread.IsBackground = true;
+            thread.Priority = ThreadPriority.Highest;
+            thread.Start();
 
             //连接状态判断
             Thread thread1 = new Thread(new ThreadStart(() =>
@@ -657,7 +667,7 @@ namespace RD3.ViewModels
                 {
                     try
                     {
-                        PropertyInfo[] propertyInfos = typeof(RealTimeParam).GetProperties().Where(c => c.CanWrite && c.CanRead && (c.PropertyType == typeof(double) || c.PropertyType == typeof(float) || c.PropertyType == typeof(int) || c.PropertyType == typeof(string))).ToArray();
+                        PropertyInfo[] propertyInfos = typeof(RealTimeParam).GetProperties().Where(c => c.CanWrite && c.CanRead && c.GetCustomAttribute<NotDBColumnAttribute>() == null).ToArray();
 
                         int index = ClockSupervisor.realDatasDic[CurrentDeviceParameter.Name].Count - 1;
                         if (index < 0)
@@ -724,9 +734,7 @@ namespace RD3.ViewModels
                                     keyValuePairs[CurrentDeviceParameter.Name] += 1;
                                 }
                                 List<object> values = new List<object>();
-                                values.Add(CurrentDeviceParameter.Name);
                                 values.Add(CurrentDeviceParameter.BatchID.ToString());
-                                values.Add(realTime.SampleTime.ToString("yyyy-MM-dd HH:mm:ss"));
                                 foreach (var p in propertyInfos)
                                 {
                                     object o = p.GetValue(realTime);

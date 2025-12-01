@@ -12,6 +12,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace RD3
 {
@@ -30,6 +31,12 @@ namespace RD3
         //    private set;
         //} = new ObservableCollection<DeviceParameter>();
 
+        public ObservableCollection<ReportNode> ReportNodeCol
+        {
+            get;
+            private set;
+        } = new ObservableCollection<ReportNode>();
+
         public ObservableCollection<Fermentor> FermentorCol
         {
             get;
@@ -43,6 +50,9 @@ namespace RD3
         private static readonly object _lock1 = new object(); // 锁对象
         private AnalysisSolution()
         {
+            string json = File.ReadAllText(FileConst.ReportNodesPath);
+            ReportNodeCol = JsonConvert.DeserializeObject<ObservableCollection<ReportNode>>(json);
+
             LoadSetting();
 
             if (FermentorCol == null || FermentorCol.Count < 1)

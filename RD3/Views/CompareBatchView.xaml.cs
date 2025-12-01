@@ -182,8 +182,8 @@ namespace RD3.Views
             {
                 try
                 {
-                    string sql = $"WITH FirstRecord AS (SELECT dateTime AS firstDateTime FROM {RD3SQLHelper.realTimeParamTable1} WHERE deviceID = '{batch.devieceID}' AND batchID = '{batch.ID}' ORDER BY dateTime ASC LIMIT 1)" +
-            $",TimeIntervals AS (SELECT r.*, CAST((strftime('%s', r.dateTime) - strftime('%s', fr.firstDateTime)) / {timeInterval} AS INTEGER) AS minuteInterval FROM {RD3SQLHelper.realTimeParamTable1} r  CROSS JOIN FirstRecord fr  WHERE deviceID = '{batch.devieceID}' AND batchID = '{batch.ID}')" +
+                    string sql = $"WITH FirstRecord AS (SELECT dateTime AS firstDateTime FROM {RD3SQLHelper.RTParamTable} WHERE deviceID = '{batch.devieceID}' AND batchID = '{batch.ID}' ORDER BY dateTime ASC LIMIT 1)" +
+            $",TimeIntervals AS (SELECT r.*, CAST((strftime('%s', r.dateTime) - strftime('%s', fr.firstDateTime)) / {timeInterval} AS INTEGER) AS minuteInterval FROM {RD3SQLHelper.RTParamTable} r  CROSS JOIN FirstRecord fr  WHERE deviceID = '{batch.devieceID}' AND batchID = '{batch.ID}')" +
             $",SampledData AS (SELECT *,ROW_NUMBER() OVER (PARTITION BY minuteInterval ORDER BY dateTime ASC) AS rn FROM TimeIntervals) SELECT * FROM SampledData WHERE rn = 1 ORDER BY dateTime ASC;";
                     DataTable dt = SQLiteHelper.GetDatasToDataTable(sql);
                     if (dt.Rows.Count < 1) continue;

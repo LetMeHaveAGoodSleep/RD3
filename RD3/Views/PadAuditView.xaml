@@ -17,7 +17,6 @@
     Background="{StaticResource RegionBackgroundBrush}"
     FontSize="{StaticResource HeadFontSize}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
-    TextElement.FontSize="{StaticResource SubHeadFontSize}"
     TextElement.FontWeight="Regular"
     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
     TextOptions.TextFormattingMode="Ideal"

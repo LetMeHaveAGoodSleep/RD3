@@ -50,11 +50,12 @@
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Button
+            Width="80"
+            Height="30"
             HorizontalAlignment="Right"
-            hc:IconElement.Geometry="{StaticResource DeleteGeometry}"
             Click="ButtonDelete_Click"
             Content="删除数据"
-            Style="{StaticResource ButtonPrimary}" />
+            Style="{StaticResource PrimaryCommonButton}" />
         <DataGrid
             Name="dataGrid1"
             Grid.Row="2"

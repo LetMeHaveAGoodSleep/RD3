@@ -684,6 +684,73 @@ namespace XZ.SQLite
                 Console.WriteLine($"📊 当前缓存大小：{result}");
             }
         }
+
+        /// <summary>
+        /// 检查表是否存在
+        /// </summary>
+        public static bool TableExists(string tableName)
+        {
+            string sql = $"SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='{tableName}'";
+            return Convert.ToInt32(ExecuteScalar(sql)) > 0;
+        }
+
+        /// <summary>
+        /// 获取表的所有字段名
+        /// </summary>
+        public static List<string> GetTableColumns(string tableName)
+        {
+            List<string> columns = new List<string>();
+            string sql = $"PRAGMA table_info({tableName})"; // SQLite 内置命令：查询表结构
+
+            using (var reader = ExecuteQuery(sql))
+            {
+                while (reader.Read())
+                {
+                    // PRAGMA table_info 返回结果：cid(字段序号), name(字段名), type(类型), notnull(是否非空), dflt_value(默认值), pk(是否主键)
+                    string colName = reader["name"].ToString() ?? string.Empty;
+                    if (!string.IsNullOrEmpty(colName))
+                    {
+                        columns.Add(colName);
+                    }
+                }
+            }
+            return columns;
+        }
+
+        /// <summary>
+        /// 检查索引是否存在
+        /// </summary>
+        public static bool IndexExists(string tableName, string indexName)
+        {
+            string sql = $"SELECT COUNT(*) FROM sqlite_master WHERE type='index' AND name='{indexName}' AND tbl_name='{tableName}'";
+            return Convert.ToInt32(ExecuteScalar(sql)) > 0;
+        }
+
+        /// <summary>
+        /// C# 类型映射到 SQLite 字段类型
+        /// </summary>
+        public static string GetSQLiteColumnType(Type csharpType)
+        {
+            Type underlyingType = Nullable.GetUnderlyingType(csharpType) ?? csharpType;
+
+            switch (underlyingType)
+            {
+                case Type t when t == typeof(int) || t == typeof(long):
+                    return "INTEGER";
+                case Type t when t == typeof(decimal) || t == typeof(float) || t == typeof(double):
+                    return "REAL";
+                case Type t when t == typeof(bool):
+                    return "INTEGER";
+                case Type t when t == typeof(DateTime):
+                    return "TEXT";
+                case Type t when t == typeof(Guid):
+                    return "TEXT";
+                case Type t when t == typeof(byte[]):
+                    return "BLOB";
+                default:
+                    return "TEXT";
+            }
+        }
     }
 
     /// <summary>
@@ -825,24 +892,12 @@ namespace XZ.SQLite
         #endregion
 
         #region 在线数据
-        public static string realTimeParamTable = "realTimeParamTable";
+        public static string RTParamTable = "RealTimeParam";
         /// <summary>
         /// 实时数据数据表
         /// </summary>
         /// <param name="type"></param>
-        public static void CreateRealTimeParamTable()
-        {
-            SQLiteHelper.CreateTable(realTimeParamTable, hasAutoIncrementId: true,
-                                    new string[] { "deviceID", "batchID", "dateTime", "realTimeParam",  },
-                                    new Type[] { typeof(string), typeof(string), typeof(string), typeof(string)});
-
-            // 创建索引以提高查询效率
-            SQLiteHelper.CreateIndex(realTimeParamTable, "deviceID");
-            SQLiteHelper.CreateIndex(realTimeParamTable, "batchID");
-            SQLiteHelper.CreateIndex(realTimeParamTable, "dateTime");
-        }
-
-
+        /// 
         /// <summary>
         /// 方成
         /// </summary>
@@ -922,44 +977,71 @@ namespace XZ.SQLite
         /// <param name="v"></param>
         public static void AddrealTimeParamDatas(string deviceID, string batchID, string dateTime,string realTimeParam)
         {
-            int row = SQLiteHelper.Insert(realTimeParamTable,
+            int row = SQLiteHelper.Insert(RTParamTable,
                "deviceID,batchID,dateTime,realTimeParam",
                true,new object[] { deviceID, batchID, dateTime, realTimeParam });
         }
-
-        public static string realTimeParamTable1 = "realTimeParamTable1";
         private static string realTimeParamTable1Columns = "";
         /// <summary>
         /// 实时数据数据表
         /// </summary>
         /// <param name="type"></param>
-        public static void CreateRealTimeParamTable1(PropertyInfo[] propertyInfos)
+        public static void CreateRealTimeParamTable(PropertyInfo[] propertyInfos)
         {
-            string[] columns = new string[propertyInfos.Length + 3];
-            columns[0] = "deviceID";
-            columns[1] = "batchID";
-            columns[2] = "dateTime";
-            Type[] columnTypes = new Type[propertyInfos.Length + 3];
+            List<string> allColumnNames = new List<string> { "BatchID" };
+            List<Type> allColumnTypes = new List<Type> { typeof(string) };
+
+            foreach (var prop in propertyInfos)
+            {
+                allColumnNames.Add(prop.Name);
+                allColumnTypes.Add(prop.PropertyType);
+            }
+
+            // 2. 检查表是否存在
+            bool tableExists = SQLiteHelper.TableExists(RTParamTable);
+
+            if (!tableExists)
+            {
+                // 表不存在：直接创建完整表
+                SQLiteHelper.CreateTable(RTParamTable, true, allColumnNames.ToArray(), allColumnTypes.ToArray());
+            }
+            else
+            {
+                // 表已存在：获取现有字段，对比并添加缺失字段
+                List<string> existingColumns = SQLiteHelper.GetTableColumns(RTParamTable);
+                List<string> missingColumns = allColumnNames.Where(col => !existingColumns.Contains(col, StringComparer.OrdinalIgnoreCase)).ToList();
+
+                if (missingColumns.Any())
+                {
+                    // 为缺失字段生成 ALTER TABLE ADD COLUMN 语句
+                    foreach (var missingCol in missingColumns)
+                    {
+                        int colIndex = allColumnNames.IndexOf(missingCol);
+                        Type colType = allColumnTypes[colIndex];
+                        string sqliteType = SQLiteHelper.GetSQLiteColumnType(colType);
+
+                        // SQLite 新增字段默认允许为NULL（避免插入数据时冲突）
+                        string alterSql = $"ALTER TABLE {RTParamTable} ADD COLUMN [{missingCol}] {sqliteType} NULL";
+                        SQLiteHelper.ExecuteNonQuery(alterSql);
+                    }
+                }
+            }
+
+            string[] columns = new string[propertyInfos.Length + 1];
+            columns[0] = "BatchID";
+            Type[] columnTypes = new Type[propertyInfos.Length + 1];
             columnTypes[0] = typeof(string);
-            columnTypes[1] = typeof(string);
-            columnTypes[2] = typeof(string);
-            for (int i = 0;i< propertyInfos.Length;i++)
+            for (int i = 0; i < propertyInfos.Length; i++)
             {
-                columns[i + 3] = propertyInfos[i].Name;
-                columnTypes[i + 3] = propertyInfos[i].PropertyType;
+                columns[i + 1] = propertyInfos[i].Name;
+                columnTypes[i + 1] = propertyInfos[i].PropertyType;
             }
-            SQLiteHelper.CreateTable(realTimeParamTable1, true,columns, columnTypes);
+            SQLiteHelper.CreateTable(RTParamTable, true, columns, columnTypes);
 
-            foreach (var col in columns)
-            {
-                realTimeParamTable1Columns += string.Format("{0},", col);
-            }
-            realTimeParamTable1Columns = realTimeParamTable1Columns.TrimEnd(',');
-
-            // 创建索引以提高查询效率
-            SQLiteHelper.CreateIndex(realTimeParamTable1, columns[0]);
-            SQLiteHelper.CreateIndex(realTimeParamTable1, columns[1]);
-            SQLiteHelper.CreateIndex(realTimeParamTable1, columns[2]);
+            realTimeParamTable1Columns = string.Join(",", allColumnNames);
+            SQLiteHelper.CreateIndex(RTParamTable, allColumnNames[0]); // BatchID 索引
+            if (allColumnNames.Count > 1) SQLiteHelper.CreateIndex(RTParamTable, allColumnNames[1]);
+            if (allColumnNames.Count > 2) SQLiteHelper.CreateIndex(RTParamTable, allColumnNames[2]);
         }
 
         /// <summary>
@@ -968,7 +1050,7 @@ namespace XZ.SQLite
         /// <param name="v"></param>
         public static void AddrealTimeParamDatas1(object[] values)
         {
-            int row = SQLiteHelper.Insert(realTimeParamTable1, realTimeParamTable1Columns, true, values);
+            int row = SQLiteHelper.Insert(RTParamTable, realTimeParamTable1Columns, true, values);
         }
 
 
@@ -981,7 +1063,7 @@ namespace XZ.SQLite
                 // 构建参数化SQL语句
                 var parameterNames = string.Join(", ", parameters.Select(p => p.ParameterName));
 
-                string sql = $"INSERT INTO {realTimeParamTable1} ({realTimeParamTable1Columns}) VALUES ({parameterNames}) RETURNING ID;";
+                string sql = $"INSERT INTO {RTParamTable} ({realTimeParamTable1Columns}) VALUES ({parameterNames}) RETURNING ID;";
                 list1.Add(Tuple.Create(sql, parameters));
             }
             SQLiteHelper.CommitTransaction(list1);

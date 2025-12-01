@@ -76,7 +76,7 @@ namespace RD3.ViewModels
             CloseDialog();
 
             PropertyInfo[] propertyInfos = typeof(RealTimeParam).GetProperties().Where(c => c.CanWrite && c.CanRead && (c.PropertyType == typeof(double) || c.PropertyType == typeof(float) || c.PropertyType == typeof(int) || c.PropertyType == typeof(string))).ToArray();
-            RD3SQLHelper.CreateRealTimeParamTable1(propertyInfos);
+            RD3SQLHelper.CreateRealTimeParamTable(propertyInfos);
 
             EnhancedSqliteBackupService backupService = new EnhancedSqliteBackupService(@"hisDatas\xzrd3.db", AppDomain.CurrentDomain.BaseDirectory + @"\DatabaseBackups");
             backupService.Start();

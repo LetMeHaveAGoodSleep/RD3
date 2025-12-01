@@ -410,9 +410,7 @@ namespace RD3.ViewModels
                                         keyValuePairs[device.Name] += 1;
                                     }
                                     List<object> values = new List<object>();
-                                    values.Add(device.Name);
                                     values.Add(device.BatchID.ToString());
-                                    values.Add(realTime.SampleTime.ToString("yyyy-MM-dd HH:mm:ss"));
                                     foreach (var p in propertyInfos)
                                     {
                                         object o = p.GetValue(realTime);

@@ -77,7 +77,7 @@ namespace RD3.Views
             RefershPumpMFC();
 
             //非调试模式下，窗口置顶
-            if (!System.Diagnostics.Debugger.IsAttached || AppSession.CurrentUser.Type == UserType.Admin)
+            if (!System.Diagnostics.Debugger.IsAttached || AppSession.CurrentUser.Type != UserType.Admin)
             {
                 this.WindowStyle = WindowStyle.None;
                 SourceInitialized += (s, e) =>
@@ -741,6 +741,11 @@ namespace RD3.Views
             {
                 batchView.Refresh();
             }
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

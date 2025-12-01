@@ -451,6 +451,22 @@ namespace RD3.Shared
                 }
             }
 
+            double Fa_i = realTime.AirFlowSpeed;
+            double V = 700 / 1000;//700暂且写死 
+            double nO2_i = realTime.IntakeModuleO2Concentration;
+            double nO2_o = realTime.OffgasModuleO2Concentration;
+
+            double nCO2_i = realTime.IntakeModuleCO2Concentration;
+            double nCO2_o = realTime.OffgasModuleCO2Concentration;
+
+            realTime.OUR = (float)SoftwareSensorUtil.CalculateOUR(Fa_i, V, nO2_i, nO2_o, nCO2_o);
+
+            realTime.CER = (float)SoftwareSensorUtil.CalculateCER1(Fa_i, V, nO2_i, nCO2_i, nO2_o, nCO2_o);
+            if (realTime.OUR != 0)
+            {
+                realTime.RQ = realTime.CER / realTime.OUR;
+            }
+
             return realTime;
         }
 

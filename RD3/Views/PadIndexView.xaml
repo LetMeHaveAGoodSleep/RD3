@@ -260,9 +260,15 @@
                                     <local:EPCView x:Name="epcView" HorizontalAlignment="Center" />
                                 </hc:UniformSpacingPanel>
                                 <Canvas Width="350">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                                            <i:InvokeCommandAction Command="{Binding RealTimeCommand}" PassEventArgsToCommand="True" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
                                     <Image
                                         Canvas.Left="75"
                                         Canvas.Bottom="100"
+                                        MouseLeftButtonDown="Image_MouseLeftButtonDown"
                                         Source="/Images/Index/Fermentation.png" />
                                     <Image
                                         Canvas.Left="85"

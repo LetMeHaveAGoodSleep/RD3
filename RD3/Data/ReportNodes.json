@@ -1,0 +1,380 @@
+[
+    {
+        "fieldName": "ReactorName",
+        "showName": "设备名称",
+        "typeName": "System.String",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "SampleTime",
+        "showName": "采集时间",
+        "typeName": "System.DateTime",
+        "used": true,
+        "width": 160
+    },
+    {
+        "fieldName": "Temp",
+        "showName": "温度",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "PH",
+        "showName": "酸碱度",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "DO",
+        "showName": "溶氧",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Agit",
+        "showName": "转数",
+        "typeName": "System.Int32",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump1FlowRate",
+        "showName": "泵1流速",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump1Flow",
+        "showName": "泵1流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump1FlowCapacity",
+        "showName": "泵1累加流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump2FlowRate",
+        "showName": "泵2流速",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump2Flow",
+        "showName": "泵2流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump2FlowCapacity",
+        "showName": "泵2累加流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump3FlowRate",
+        "showName": "泵3流速",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump3Flow",
+        "showName": "泵3流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump3FlowCapacity",
+        "showName": "泵4累加流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump4FlowRate",
+        "showName": "泵4流速",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump4Flow",
+        "showName": "泵4流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump4FlowCapacity",
+        "showName": "泵4累加流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump5FlowRate",
+        "showName": "泵5流速",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump5Flow",
+        "showName": "泵5流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump5FlowCapacity",
+        "showName": "泵5累加流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump6FlowRate",
+        "showName": "泵6流速",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump6Flow",
+        "showName": "泵6流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "Pump6FlowCapacity",
+        "showName": "泵6累加流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "MFC1FlowRate",
+        "showName": "MFC1流速",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "MFC1FlowCapacity",
+        "showName": "MFC1累加流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "MFC2FlowRate",
+        "showName": "MFC2流速",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "MFC2FlowCapacity",
+        "showName": "MFC2累加流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "MFC3FlowRate",
+        "showName": "MFC3流速",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "MFC3FlowCapacity",
+        "showName": "MFC3累加流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "MFC4FlowRate",
+        "showName": "MFC4流速",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "MFC4FlowCapacity",
+        "showName": "MFC4累加流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "MFC5FlowRate",
+        "showName": "MFC5流速",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "MFC5FlowCapacity",
+        "showName": "MFC5累加流量",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "PHSensorTemp",
+        "showName": "pH传感器温度",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "DOSensorTemp",
+        "showName": "DO传感器温度",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "HasFoam",
+        "showName": "泡沫状态",
+        "typeName": "System.Boolean",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "CoolingModuleCoolingNTCTemp",
+        "showName": "冷凝冷面温度",
+        "typeName": "System.Single",
+        "used": false,
+        "width": 100
+    },
+    {
+        "fieldName": "IntakeModuleCO2Concentration",
+        "showName": "CO2_in",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "OffgasModuleCO2Concentration",
+        "showName": "CO2_out",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "IntakeModuleO2Concentration",
+        "showName": "O2_in",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "OffgasModuleO2Concentration",
+        "showName": "O2_out",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "IntakeModuleGasTemp",
+        "showName": "进气温度",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "OffgasModuleGasTemp",
+        "showName": "出气温度",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "IntakeModuleGasPressure",
+        "showName": "进气压力",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "OffgasModuleGasPressure",
+        "showName": "出气压力",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "IntakeModuleGasHumidity",
+        "showName": "进气湿度",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "OffgasModuleGasHumidity",
+        "showName": "出气湿度",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "OUR",
+        "showName": "OUR",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "CER",
+        "showName": "CER",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "RQ",
+        "showName": "RQ",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "JarWeight",
+        "showName": "罐体称重",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "Bottle1Weight",
+        "showName": "左瓶",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    },
+    {
+        "fieldName": "Bottle2Weight",
+        "showName": "右瓶",
+        "typeName": "System.Single",
+        "used": true,
+        "width": 100
+    }
+]

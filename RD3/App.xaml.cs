@@ -353,6 +353,8 @@ namespace RD3
             containerRegistry.RegisterDialog<CondensationSettingView, CondensationSettingViewModel>();
             containerRegistry.RegisterForNavigation<EPCView, EPCViewModel>();
             containerRegistry.RegisterDialog<EPCSettingView, EPCSettingViewModel>();
+            containerRegistry.RegisterDialog<RealTimeDataView, RealTimeDataViewModel>();
+            containerRegistry.RegisterDialog<ChooseRTParamView, ChooseRTParamViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
