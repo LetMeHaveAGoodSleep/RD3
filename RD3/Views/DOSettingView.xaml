@@ -414,6 +414,7 @@
                                                 AutoGenerateColumns="False"
                                                 CanUserAddRows="False"
                                                 CanUserSortColumns="False"
+                                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                                 ColumnWidth="SizeToHeader"
                                                 GridLinesVisibility="All"
                                                 HeadersVisibility="Column"
@@ -422,6 +423,7 @@
                                                 ItemsSource="{Binding Param.CascadeCol}"
                                                 LoadingRow="DataGrid_LoadingRow"
                                                 RowHeight="35"
+                                                RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                                                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                                                 SelectionMode="Single"
@@ -430,7 +432,6 @@
                                                 <DataGrid.Columns>
                                                     <DataGridTemplateColumn
                                                         Width="auto"
-                                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                                         Header="序号"
                                                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                                                         <DataGridTemplateColumn.CellTemplate>
@@ -441,7 +442,6 @@
                                                     </DataGridTemplateColumn>
                                                     <DataGridTemplateColumn
                                                         Width="auto"
-                                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                                         Header="空气"
                                                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                                         Visibility="{Binding Source={StaticResource proxy}, Path=Data.AirEnable, Converter={StaticResource Boolean2VisibilityConverter}}">
@@ -459,7 +459,6 @@
                                                     </DataGridTemplateColumn>
                                                     <DataGridTemplateColumn
                                                         Width="auto"
-                                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                                         Header="氧气"
                                                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                                         Visibility="{Binding Source={StaticResource proxy}, Path=Data.O2Enable, Converter={StaticResource Boolean2VisibilityConverter}}">
@@ -477,7 +476,6 @@
                                                     </DataGridTemplateColumn>
                                                     <DataGridTemplateColumn
                                                         Width="auto"
-                                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                                         Header="温度"
                                                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                                         Visibility="{Binding Source={StaticResource proxy}, Path=Data.TempEnable, Converter={StaticResource Boolean2VisibilityConverter}}">
@@ -495,7 +493,6 @@
                                                     </DataGridTemplateColumn>
                                                     <DataGridTemplateColumn
                                                         Width="auto"
-                                                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                                         Header="补料速率（%）"
                                                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                                         Visibility="{Binding Source={StaticResource proxy}, Path=Data.FeedEnable, Converter={StaticResource Boolean2VisibilityConverter}}">

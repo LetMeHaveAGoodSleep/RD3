@@ -68,6 +68,7 @@
                 AutoGenerateColumns="False"
                 CanUserAddRows="True"
                 CanUserSortColumns="False"
+                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                 ColumnWidth="SizeToHeader"
                 GridLinesVisibility="All"
                 HeadersVisibility="Column"
@@ -75,6 +76,7 @@
                 IsReadOnly="False"
                 ItemsSource="{Binding Parameters}"
                 RowHeaderWidth="100"
+                RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 SelectionMode="Single"
@@ -114,7 +116,6 @@
 
                     <DataGridTemplateColumn
                         MinWidth="100"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="操作"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         Visibility="Collapsed">

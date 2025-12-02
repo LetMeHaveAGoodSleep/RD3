@@ -64,6 +64,7 @@
             Background="{StaticResource DefaultBrush}"
             CanUserAddRows="True"
             CanUserSortColumns="False"
+            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
             ColumnHeaderHeight="35"
             ColumnWidth="SizeToHeader"
             GridLinesVisibility="All"
@@ -72,6 +73,7 @@
             IsReadOnly="False"
             ItemsSource="{Binding Probing}"
             RowHeaderWidth="100"
+            RowStyle="{StaticResource PrimaryDataGridRowStyle}"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             SelectionMode="Single"
@@ -81,49 +83,41 @@
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding DeviceID}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="设备"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding Tmax}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="脉冲时长（秒）"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding Oreac}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="反应阈值（%）"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding AllowDiff}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="偏差系数"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding Osp}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="溶氧设定值（%）"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding M}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="系数M(-)"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding k}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="系数K(+)"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding ki}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="ki"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False"
@@ -131,19 +125,16 @@
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding FMax}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="最大值（mL/h）"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding FMin}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="最小值（mL/h）"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding F}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="初始值（mL/h）"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
             </DataGrid.Columns>

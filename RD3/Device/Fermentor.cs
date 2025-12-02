@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Prism.Mvvm;
+using RD3.Common;
 using RD3.Controller;
 using RD3.Shared;
 using System;
@@ -34,8 +35,9 @@ namespace RD3
                         {
                             foreach (var item in param.AuditLogs)
                             {
+                                item.Operator = AppSession.CurrentUser.UserName;
                                 string remark = param.ModuleName + "：" + item.PropertyName + "由" + "[" + item.OldValue + "]" + "变更为" + "[" + item.NewValue + "]";
-                                RD3SQLHelper.AddAuditRecord(Device.Name, Device.BatchID.ToString(), item.ChangeTime.ToString("yyyy-MM-dd HH:mm:ss"), remark);
+                                RD3SQLHelper.AddAuditRecord(Device.Name, Device.BatchID.ToString(), item.ChangeTime.ToString("yyyy-MM-dd HH:mm:ss"), remark, item.Operator);
                                 item.IsUsed = true;
                             }
                             param.RemoveUsedLogs();

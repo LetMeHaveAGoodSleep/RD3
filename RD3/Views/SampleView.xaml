@@ -79,11 +79,13 @@
             Name="dataGrid"
             AutoGenerateColumns="False"
             Background="Transparent"
+            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
             ColumnWidth="SizeToCells"
             FontSize="{DynamicResource NormalFontSize}"
             HeadersVisibility="Column"
             ItemsSource="{Binding SampleCol}"
             RowHeaderWidth="60"
+            RowStyle="{StaticResource PrimaryDataGridRowStyle}"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto">
             <i:Interaction.Triggers>

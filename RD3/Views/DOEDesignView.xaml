@@ -256,12 +256,14 @@
                         AutoGeneratingColumn="DataGridDesign_AutoGeneratingColumn"
                         Background="{StaticResource DefaultBrush}"
                         CanUserSortColumns="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         ColumnWidth="SizeToCells"
                         HeadersVisibility="Column"
                         IsReadOnly="False"
                         ItemsSource="{Binding DesignCol}"
                         MouseDoubleClick="DataGridDesign_MouseDoubleClick"
                         RowHeaderWidth="60"
+                        RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                         SelectionMode="Single"
@@ -270,20 +272,17 @@
                             <DataGridTextColumn
                                 MinWidth="50"
                                 Binding="{Binding Name}"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                 Header="{ex:Language Key='因子'}"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                 IsReadOnly="True" />
                             <DataGridTextColumn
                                 MinWidth="60"
                                 Binding="{Binding Low}"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                 Header="{ex:Language Key='低值'}"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                             <DataGridTextColumn
                                 MinWidth="60"
                                 Binding="{Binding High}"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                 Header="{ex:Language Key='高值'}"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         </DataGrid.Columns>
@@ -304,11 +303,13 @@
                     AutoGenerateColumns="True"
                     Background="{StaticResource DefaultBrush}"
                     CanUserSortColumns="False"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     ColumnWidth="auto"
                     HeadersVisibility="Column"
                     IsReadOnly="True"
                     ItemsSource="{Binding DataSource.DefaultView}"
                     RowHeaderWidth="60"
+                    RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                     ScrollViewer.HorizontalScrollBarVisibility="Visible"
                     ScrollViewer.VerticalScrollBarVisibility="Visible"
                     SelectionMode="Single"

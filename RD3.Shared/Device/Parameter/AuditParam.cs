@@ -151,7 +151,7 @@ namespace RD3.Shared
                     PropertyName = description,
                     OldValue = logOldValue,
                     NewValue = logNewValue,
-                    ModuleName = this.ModuleName // 关联所属模块
+                    ModuleName = this.ModuleName,
                 });
             }
 
@@ -217,5 +217,10 @@ namespace RD3.Shared
         /// 标记是否已使用（被处理过）
         /// </summary>
         public bool IsUsed { get; set; } = false;
+
+        /// <summary>
+        /// 操作用户
+        /// </summary>
+        public string Operator { get; set; }
     }
 }

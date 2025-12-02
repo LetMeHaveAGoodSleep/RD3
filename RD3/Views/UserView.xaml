@@ -133,12 +133,14 @@
                     hc:DataGridAttach.ShowSelectAllButton="False"
                     AutoGenerateColumns="False"
                     Background="Transparent"
+                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     ColumnWidth="SizeToCells"
                     FontSize="{DynamicResource NormalFontSize}"
                     HeadersVisibility="Column"
                     IsReadOnly="True"
                     ItemsSource="{Binding UserCol}"
                     RowHeaderWidth="60"
+                    RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <i:Interaction.Triggers>
@@ -150,13 +152,11 @@
                         <DataGridTextColumn
                             Width="150"
                             Binding="{Binding UserName}"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Username'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                             IsReadOnly="True" />
                         <DataGridTemplateColumn
                             Width="200"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Creat time'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                             <DataGridTemplateColumn.CellTemplate>
@@ -168,18 +168,15 @@
                         <DataGridTextColumn
                             Width="120"
                             Binding="{Binding Creator}"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Creator'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTextColumn
                             Width="120"
                             Binding="{Binding Type}"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Type'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         <DataGridTemplateColumn
                             Width="200"
-                            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                             Header="{ex:Language Key='Operation'}"
                             HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                             <DataGridTemplateColumn.CellTemplate>

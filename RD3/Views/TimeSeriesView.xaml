@@ -221,6 +221,7 @@
                 AutoGenerateColumns="False"
                 CanUserDeleteRows="True"
                 CanUserSortColumns="False"
+                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                 ColumnHeaderHeight="35"
                 ColumnWidth="SizeToHeader"
                 HeadersVisibility="Column"
@@ -229,6 +230,7 @@
                 ItemsSource="{Binding BasicParam.TimeSeries.TimeSeriesItemCol}"
                 LoadingRow="DataGrid_LoadingRow"
                 RowHeight="35"
+                RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 SelectionMode="Single"
@@ -236,7 +238,6 @@
                 <DataGrid.Columns>
                     <DataGridTemplateColumn
                         Width="60"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="序号"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                         <DataGridTemplateColumn.CellTemplate>
@@ -247,7 +248,6 @@
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         Width="120"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="开始时间"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                         <DataGridTemplateColumn.CellTemplate>
@@ -264,7 +264,6 @@
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         Width="120"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="结束时间"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                         <DataGridTemplateColumn.CellTemplate>
@@ -281,7 +280,6 @@
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn
                         Width="80"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="目标值"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                         <DataGridTemplateColumn.CellTemplate>

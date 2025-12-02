@@ -240,7 +240,7 @@
                                         </DockPanel>
                                     </hc:UniformSpacingPanel>
                                     <hc:ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                        <DataGrid
+                                        <DataGrid CellStyle="{StaticResource DataGridTextCenterCellStyle}" RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                                             Name="gridAir"
                                             hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
                                             hc:DataGridAttach.ShowSelectAllButton="False"
@@ -264,7 +264,7 @@
                                             <DataGrid.Columns>
                                                 <DataGridTemplateColumn
                                                     Width="60"
-                                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                    
                                                     Header="序号"
                                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                                                     <DataGridTemplateColumn.CellTemplate>
@@ -276,7 +276,7 @@
                                                 <DataGridTextColumn
                                                     Width="120"
                                                     Binding="{Binding StepValue}"
-                                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                    
                                                     Header="通气量"
                                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                                             </DataGrid.Columns>
@@ -312,7 +312,7 @@
                                         </DockPanel>
                                     </hc:UniformSpacingPanel>
                                     <hc:ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                        <DataGrid
+                                        <DataGrid CellStyle="{StaticResource DataGridTextCenterCellStyle}" RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                                             Name="gridO2"
                                             hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
                                             hc:DataGridAttach.ShowSelectAllButton="False"
@@ -336,7 +336,7 @@
                                             <DataGrid.Columns>
                                                 <DataGridTemplateColumn
                                                     Width="60"
-                                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                    
                                                     Header="序号"
                                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                                                     <DataGridTemplateColumn.CellTemplate>
@@ -348,7 +348,7 @@
                                                 <DataGridTextColumn
                                                     Width="120"
                                                     Binding="{Binding StepValue}"
-                                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                    
                                                     Header="氧气量"
                                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                                             </DataGrid.Columns>
@@ -384,7 +384,7 @@
                                         </DockPanel>
                                     </hc:UniformSpacingPanel>
                                     <hc:ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                        <DataGrid
+                                        <DataGrid CellStyle="{StaticResource DataGridTextCenterCellStyle}" RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                                             Name="gridTemp"
                                             hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
                                             hc:DataGridAttach.ShowSelectAllButton="False"
@@ -408,7 +408,7 @@
                                             <DataGrid.Columns>
                                                 <DataGridTemplateColumn
                                                     Width="60"
-                                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                    
                                                     Header="序号"
                                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                                                     <DataGridTemplateColumn.CellTemplate>
@@ -420,7 +420,7 @@
                                                 <DataGridTextColumn
                                                     Width="120"
                                                     Binding="{Binding StepValue}"
-                                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                    
                                                     Header="温度（℃）"
                                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                                             </DataGrid.Columns>
@@ -456,7 +456,7 @@
                                         </DockPanel>
                                     </hc:UniformSpacingPanel>
                                     <hc:ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                        <DataGrid
+                                        <DataGrid CellStyle="{StaticResource DataGridTextCenterCellStyle}" RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                                             Name="gridFeed"
                                             hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
                                             hc:DataGridAttach.ShowSelectAllButton="False"
@@ -480,7 +480,7 @@
                                             <DataGrid.Columns>
                                                 <DataGridTemplateColumn
                                                     Width="60"
-                                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                    
                                                     Header="序号"
                                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                                                     <DataGridTemplateColumn.CellTemplate>
@@ -492,7 +492,7 @@
                                                 <DataGridTextColumn
                                                     Width="120"
                                                     Binding="{Binding StepValue}"
-                                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                                                    
                                                     Header="补料系数（%）"
                                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                                             </DataGrid.Columns>

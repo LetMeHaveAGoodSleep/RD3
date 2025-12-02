@@ -181,7 +181,7 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <DataGrid
+            <DataGrid CellStyle="{StaticResource DataGridTextCenterCellStyle}" RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                 Name="dataGrid"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
@@ -190,7 +190,7 @@
                 AutoGenerateColumns="True"
                 AutoGeneratingColumn="dataGrid_AutoGeneratingColumn"
                 Background="{StaticResource DefaultBrush}"
-                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+                
                 ColumnHeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                 ColumnWidth="Auto"
                 HeadersVisibility="Column"

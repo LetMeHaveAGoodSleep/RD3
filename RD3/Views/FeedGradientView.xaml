@@ -90,6 +90,7 @@
             Background="{StaticResource DefaultBrush}"
             CanUserAddRows="False"
             CanUserSortColumns="False"
+            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
             ColumnWidth="SizeToHeader"
             GridLinesVisibility="All"
             HeadersVisibility="Column"
@@ -97,6 +98,7 @@
             ItemsSource="{Binding FeedGradientInfos}"
             LayoutUpdated="DataGridMain_OnLayoutUpdated"
             RowHeaderWidth="100"
+            RowStyle="{StaticResource PrimaryDataGridRowStyle}"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             SelectedItem="{Binding SelectedFeedGradientInfo}"
@@ -109,7 +111,6 @@
                     Width="auto"
                     Binding="{Binding BeginTime}"
                     CanUserSort="True"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="开始时间(分钟)"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />
@@ -117,7 +118,6 @@
                     Width="auto"
                     Binding="{Binding EndTime}"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="结束时间(分钟)"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />
@@ -125,14 +125,12 @@
                     x:Name="colType"
                     Width="auto"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="策略类型"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False"
                     SelectedValueBinding="{Binding InfoType, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTemplateColumn
                     Width="auto"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="策略参数"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -174,7 +172,6 @@
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn
                     Width="auto"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="Stat"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -218,14 +215,12 @@
                     Width="auto"
                     Binding="{Binding TriggerInterval, UpdateSourceTrigger=LostFocus}"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="触发间隔(秒)"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding A}"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="参数1"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />
@@ -233,7 +228,6 @@
                     Width="auto"
                     Binding="{Binding B}"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="参数2"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />
@@ -241,7 +235,6 @@
                     Width="auto"
                     Binding="{Binding C}"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="参数3"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />
@@ -249,7 +242,6 @@
                     Width="auto"
                     Binding="{Binding D}"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="参数4"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />

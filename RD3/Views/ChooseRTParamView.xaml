@@ -64,6 +64,7 @@
             AutoGenerateColumns="False"
             CanUserAddRows="False"
             CanUserSortColumns="False"
+            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
             ColumnHeaderHeight="30"
             ColumnWidth="SizeToHeader"
             GridLinesVisibility="All"
@@ -73,6 +74,7 @@
             ItemsSource="{Binding ReportNodes}"
             RowHeaderWidth="100"
             RowHeight="35"
+            RowStyle="{StaticResource PrimaryDataGridRowStyle}"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             SelectionMode="Single"
@@ -84,7 +86,6 @@
                     Width="100"
                     Binding="{Binding Used}"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="是否启用"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />
@@ -92,7 +93,6 @@
                     Width="120"
                     Binding="{Binding ShowName}"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="显示名称"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />
@@ -100,7 +100,6 @@
                     x:Name="colFieldName"
                     Width="150"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="关联"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False"
@@ -109,7 +108,6 @@
                     Width="150"
                     Binding="{Binding TypeName}"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="数据类型"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />
@@ -117,7 +115,6 @@
                     Width="80"
                     Binding="{Binding Unit}"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="单位"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />
@@ -125,7 +122,6 @@
                     Width="60"
                     Binding="{Binding Width}"
                     CanUserSort="False"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="宽度"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />

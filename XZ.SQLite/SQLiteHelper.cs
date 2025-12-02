@@ -904,8 +904,8 @@ namespace XZ.SQLite
         public static void CreateAuditTable()
         {
             SQLiteHelper.CreateTable("Audit", hasAutoIncrementId: true,
-                                    new string[] { "DeviceID", "BatchID", "DateTime", "Remark", },
-                                    new Type[] { typeof(string), typeof(string), typeof(string), typeof(string) });
+                                    new string[] { "DeviceID", "BatchID", "DateTime", "Remark", "Operator" },
+                                    new Type[] { typeof(string), typeof(string), typeof(string), typeof(string), typeof(string) });
 
             // 创建索引以提高查询效率
             SQLiteHelper.CreateIndex("Audit", "DeviceID");
@@ -917,11 +917,11 @@ namespace XZ.SQLite
         /// 保存操作数据
         /// </summary>
         /// <param name="v"></param>
-        public static void AddAuditRecord(string deviceID, string batchID, string dateTime, string remark)
+        public static void AddAuditRecord(string deviceID, string batchID, string dateTime, string remark,string operatorName)
         {
             int row = SQLiteHelper.Insert("Audit",
-               "DeviceID,BatchID,DateTime,Remark",
-               true, new object[] { deviceID, batchID, dateTime, remark });
+               "DeviceID,BatchID,DateTime,Remark,Operator",
+               true, new object[] { deviceID, batchID, dateTime, remark, operatorName });
         }
 
 

@@ -55,18 +55,19 @@
             CanUserAddRows="True"
             CanUserDeleteRows="True"
             CanUserSortColumns="False"
+            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
             ColumnWidth="SizeToCells"
             FontSize="{DynamicResource NormalFontSize}"
             HeadersVisibility="Column"
             IsReadOnly="False"
             RowHeaderWidth="60"
+            RowStyle="{StaticResource PrimaryDataGridRowStyle}"
             ScrollViewer.HorizontalScrollBarVisibility="Visible"
             ScrollViewer.VerticalScrollBarVisibility="Visible">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="180"
                     Binding="{Binding createTime}"
-                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                     Header="采集时间"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />

@@ -954,7 +954,7 @@ namespace RD3.Views
                     string content = string.Format("批次结束，批次ID为{0}", batchID);
                     sb.AppendLine(content);
                     File.AppendAllText(fileNme, sb.ToString());
-                    RD3SQLHelper.AddAuditRecord(device?.Name, batchID, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+                    RD3SQLHelper.AddAuditRecord(device?.Name, batchID, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content, AppSession.CurrentUser.UserName);
                 });
 
                 updateBatchInfo(device);//更新批次信息=
@@ -1028,7 +1028,7 @@ namespace RD3.Views
                         string content = string.Format("批次开始，批次ID为{0}", device.BatchID);
                         sb.AppendLine(content);
                         File.AppendAllText(fileNme, sb.ToString());
-                        RD3SQLHelper.AddAuditRecord(device?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+                        RD3SQLHelper.AddAuditRecord(device?.Name, device?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content, AppSession.CurrentUser.UserName);
                     });
                     rD3Batch.idRemark = rD3Batch.ID.ToString();
                     device.BatchID = rD3Batch.ID;

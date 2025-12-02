@@ -117,7 +117,7 @@ namespace RD3.ViewModels
                 Task.Run(() =>
                 {
                     string content = string.Format("批次开始，批次ID为{0}", rD3Batch.ID);
-                    RD3SQLHelper.AddAuditRecord(CurrentDeviceParameter?.Name, CurrentDeviceParameter?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+                    RD3SQLHelper.AddAuditRecord(CurrentDeviceParameter?.Name, CurrentDeviceParameter?.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content,AppSession.CurrentUser.UserName);
                 });
             });
 
@@ -138,7 +138,7 @@ namespace RD3.ViewModels
 
             string content = string.Format("批次结束，批次ID为{0}", CurrentDeviceParameter.BatchID);
             RD3SQLHelper.EndBatch(CurrentDeviceParameter.BatchID, (int)RD3BatchStatue.Complete, DateTime.Now);
-            RD3SQLHelper.AddAuditRecord(CurrentDeviceParameter?.Name, CurrentDeviceParameter.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content);
+            RD3SQLHelper.AddAuditRecord(CurrentDeviceParameter?.Name, CurrentDeviceParameter.BatchID.ToString(), DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"), content, AppSession.CurrentUser.UserName);
 
             CurrentDeviceParameter.InExperimenting = false;
             CurrentDeviceParameter.BatchID = -1;

@@ -306,28 +306,45 @@
                 <Setter Property="BorderThickness" Value="0.2" />
             </Style>
             <Style
-                x:Key="DataGridTextLeftCellStyle"
+                x:Key="PrimaryDataGridRowStyle"
+                BasedOn="{StaticResource DataGridRowStyle}"
+                TargetType="DataGridRow">
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource CustomPrimaryBrush}" />
+                        <Setter Property="Foreground" Value="White" />
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource CustomPrimaryBrush}" />
+                        <Setter Property="Foreground" Value="Black" />
+                        <Setter Property="Opacity" Value="0.7" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style
+                x:Key="PrimaryDataGridCellStyle"
                 BasedOn="{StaticResource DataGridCellStyle}"
                 TargetType="DataGridCell">
-                <Setter Property="HorizontalContentAlignment" Value="Left" />
                 <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="Foreground" Value="Gray" />
-                <Setter Property="FontFamily" Value="{DynamicResource AppFontFamily}" />
-                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
-                <Setter Property="BorderBrush" Value="gray" />
-                <Setter Property="BorderThickness" Value="0.2" />
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource CustomPrimaryBrush}" />
+                        <Setter Property="Foreground" Value="White" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style
+                x:Key="DataGridTextLeftCellStyle"
+                BasedOn="{StaticResource PrimaryDataGridCellStyle}"
+                TargetType="DataGridCell">
+                <Setter Property="HorizontalContentAlignment" Value="Left" />
             </Style>
             <Style
                 x:Key="DataGridTextCenterCellStyle"
-                BasedOn="{StaticResource DataGridCellStyle}"
+                BasedOn="{StaticResource PrimaryDataGridCellStyle}"
                 TargetType="DataGridCell">
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="Foreground" Value="Gray" />
-                <Setter Property="FontFamily" Value="{DynamicResource AppFontFamily}" />
-                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
-                <Setter Property="BorderBrush" Value="gray" />
-                <Setter Property="BorderThickness" Value="0.2" />
             </Style>
             <Style x:Key="CustomBorderStyle" TargetType="Border">
                 <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />

@@ -234,15 +234,16 @@
                         AutoGenerateColumns="False"
                         Background="{x:Null}"
                         BorderBrush="{x:Null}"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         ItemsSource="{Binding ReactorCol}"
                         MouseRightButtonDown="devieceGrid_MouseRightButtonDown"
+                        RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                         SelectedIndex="{Binding SelectedIndex}"
                         SelectionChanged="DataGrid_SelectionChanged">
 
                         <DataGrid.Columns>
                             <DataGridTemplateColumn
                                 Width="60"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                 Header="曲线"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -256,7 +257,6 @@
                                 Width="80"
                                 Binding="{Binding Name}"
                                 CanUserSort="False"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                 Header="反应器"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                 IsReadOnly="True" />
@@ -264,7 +264,6 @@
                                 Width="*"
                                 Binding="{Binding Status}"
                                 CanUserSort="False"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                 Header="运行状态"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                 IsReadOnly="True" />
@@ -272,7 +271,6 @@
                                 Width="*"
                                 Binding="{Binding ConnectStatus}"
                                 CanUserSort="False"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                 Header="连接状态"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                                 IsReadOnly="True" />
@@ -286,20 +284,20 @@
                         AutoGenerateColumns="False"
                         Background="{x:Null}"
                         CanUserSortColumns="False"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         IsReadOnly="True"
                         ItemsSource="{Binding DevieceInfo}"
-                        MinRowHeight="30">
+                        MinRowHeight="30"
+                        RowStyle="{StaticResource PrimaryDataGridRowStyle}">
                         <!--  设备详情  -->
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 Width="auto"
                                 Binding="{Binding DescriptionName}"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                 Header="名称"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                             <DataGridTemplateColumn
                                 Width="*"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                 Header="R01"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -473,6 +471,7 @@
                         hc:DataGridAttach.ShowSelectAllButton="False"
                         AutoGenerateColumns="False"
                         Background="Transparent"
+                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         ColumnWidth="SizeToCells"
                         EnableColumnVirtualization="True"
                         EnableRowVirtualization="True"
@@ -481,6 +480,7 @@
                         IsReadOnly="True"
                         ItemsSource="{Binding DataList}"
                         RowHeaderWidth="60"
+                        RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
                         ScrollViewer.VerticalScrollBarVisibility="Auto"
                         SelectedItem="{Binding SelectedAudit}"
@@ -500,37 +500,34 @@
                             <DataGridTextColumn
                                 Width="100"
                                 Binding="{Binding BatchID}"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                 Header="{ex:Language Key='批次'}"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                             <DataGridTextColumn
                                 Width="100"
                                 Binding="{Binding DeviceID}"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                 Header="{ex:Language Key='反应器'}"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                             <!--<DataGridTextColumn
                                     Width="150"
                                     Binding="{Binding Module}"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+
                                     Header="{ex:Language Key='模块'}"
                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />-->
                             <!--<DataGridTextColumn
                                     Width="100"
                                     Binding="{Binding Value}"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+
                                     Header="{ex:Language Key='值'}"
                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />-->
                             <!--<DataGridTextColumn
                                     Width="80"
                                     Binding="{Binding Grade}"
-                                    CellStyle="{StaticResource DataGridTextCenterCellStyle}"
+
                                     Header="{ex:Language Key='等级'}"
                                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />-->
                             <DataGridTextColumn
                                 Width="250"
                                 Binding="{Binding Remark}"
-                                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                                 Header="{ex:Language Key='描述'}"
                                 HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                         </DataGrid.Columns>

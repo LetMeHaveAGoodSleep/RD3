@@ -94,6 +94,7 @@
                 AutoGenerateColumns="False"
                 CanUserAddRows="False"
                 CanUserSortColumns="False"
+                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                 ColumnWidth="SizeToHeader"
                 GridLinesVisibility="All"
                 HeadersVisibility="Column"
@@ -101,6 +102,7 @@
                 IsReadOnly="False"
                 ItemsSource="{Binding PidInfos}"
                 RowHeaderWidth="100"
+                RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 SelectedItem="{Binding SelectedPIDInfo}"
@@ -112,12 +114,10 @@
                         Width="80"
                         Binding="{Binding DeviceId}"
                         CanUserSort="False"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="反应器"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                     <DataGridComboBoxColumn
                         Width="120"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="作用对象"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         ItemsSource="{Binding Source={StaticResource DataFromEnum}}"
@@ -151,7 +151,6 @@
                         Width="100"
                         Binding="{Binding PidName}"
                         CanUserSort="False"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="名称"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="True" />
@@ -159,7 +158,6 @@
                         Width="100"
                         Binding="{Binding P}"
                         CanUserSort="False"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="P"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
@@ -167,7 +165,6 @@
                         Width="100"
                         Binding="{Binding I}"
                         CanUserSort="False"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="I"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
@@ -175,7 +172,6 @@
                         Width="100"
                         Binding="{Binding D}"
                         CanUserSort="False"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="D"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
@@ -183,7 +179,6 @@
                         Width="100"
                         Binding="{Binding Threshold}"
                         CanUserSort="False"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="阈值"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
@@ -191,7 +186,6 @@
                         Width="120"
                         Binding="{Binding Interval}"
                         CanUserSort="False"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="采样间隔（s）"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
@@ -199,7 +193,6 @@
                         Width="100"
                         Binding="{Binding DeadArea}"
                         CanUserSort="False"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="死区"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
@@ -207,13 +200,11 @@
                         Width="100"
                         Binding="{Binding MaxSpeed}"
                         CanUserSort="False"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="上限"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         IsReadOnly="False" />
                     <DataGridTemplateColumn
                         MinWidth="100"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="模式"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         Visibility="Collapsed">
@@ -232,7 +223,6 @@
 
                     <DataGridTemplateColumn
                         MinWidth="100"
-                        CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                         Header="操作"
                         HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                         Visibility="Collapsed">
