@@ -34,7 +34,8 @@
             <ResourceDictionary x:Key="zh_CN" Source="pack://application:,,,/Lang/Lang.zh-CN.xaml" />
             <ResourceDictionary x:Key="en_US" Source="pack://application:,,,/Lang/Lang.en-US.xaml" />
             <!--<SolidColorBrush x:Key="BackGroundBrush" Color="#F5F7FA" />-->
-            <SolidColorBrush x:Key="BackGroundBrush" Color="#EDEDED" />
+            <Color x:Key="RegionBackgroundColor">#E7EFF0</Color>
+            <SolidColorBrush x:Key="BackGroundBrush" Color="{StaticResource RegionBackgroundColor}" />
             <SolidColorBrush x:Key="PrimaryBorderBrush" Color="LightGray" />
             <SolidColorBrush x:Key="ControlFixedModeBrush" Color="#F5D462" />
             <SolidColorBrush x:Key="ControlAssociatedModeBrush" Color="#99CBFF" />
@@ -71,6 +72,7 @@
                 <!--  紫色  -->
             </LinearGradientBrush>
             <Color x:Key="Primary100">#c8e6c9</Color>
+
             <Color x:Key="Primary200">#a5d6a7</Color>
             <LinearGradientBrush x:Key="SelectedBursh" StartPoint="0,0" EndPoint="1,0">
                 <GradientStop Offset="0" Color="{StaticResource Primary100}" />
@@ -80,7 +82,7 @@
                 <GradientStop Offset="1" Color="#cccccc" />
             </LinearGradientBrush>
             <SolidColorBrush x:Key="CardBackgroundBrush" Color="#ccdede" />
-            <SolidColorBrush x:Key="RegionBackgroundBrush" Color="#E7EFF0" />
+            <SolidColorBrush x:Key="RegionBackgroundBrush" Color="{StaticResource RegionBackgroundColor}" />
             <SolidColorBrush x:Key="RegionToolBarBrush" Color="#f3f7f8" />
             <SolidColorBrush x:Key="CompanyBrush" Color="#f48b35" />
             <SolidColorBrush x:Key="CustomPrimaryBrush" Color="{StaticResource PrimaryColor}" />
@@ -278,8 +280,6 @@
                 TargetType="DataGridColumnHeader">
                 <Setter Property="HorizontalContentAlignment" Value="Left" />
                 <Setter Property="Foreground" Value="Gray" />
-                <Setter Property="FontFamily" Value="{DynamicResource AppFontFamily}" />
-                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
                 <Setter Property="BorderBrush" Value="gray" />
                 <Setter Property="BorderThickness" Value="0.2" />
             </Style>
@@ -289,8 +289,6 @@
                 TargetType="DataGridColumnHeader">
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="Foreground" Value="Gray" />
-                <Setter Property="FontFamily" Value="{DynamicResource AppFontFamily}" />
-                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}" />
                 <Setter Property="BorderBrush" Value="gray" />
                 <Setter Property="BorderThickness" Value="0.2" />
             </Style>
@@ -324,9 +322,10 @@
             </Style>
             <Style
                 x:Key="PrimaryDataGridCellStyle"
-                BasedOn="{StaticResource DataGridCellStyle}"
+                BasedOn="{StaticResource MaterialDesignDataGridCell}"
                 TargetType="DataGridCell">
                 <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="VerticalAlignment" Value="Center" />
                 <Style.Triggers>
                     <Trigger Property="IsSelected" Value="True">
                         <Setter Property="Background" Value="{DynamicResource CustomPrimaryBrush}" />

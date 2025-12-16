@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ex="clr-namespace:LayUI.Wpf.Extensions;assembly=LayUI.Wpf.Extensions"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:RD3.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -17,6 +18,7 @@
     Height="600"
     d:DataContext="{d:DesignInstance Type=viewmodels:DOEMainViewModel}"
     rd3:DraggableUserControlAttach.IsDraggable="True"
+    Background="{StaticResource RegionBackgroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
     TextElement.FontSize="{DynamicResource TextFontSize}"
     TextElement.FontWeight="Regular"
@@ -70,15 +72,6 @@
                 DockPanel.Dock="Left"
                 Orientation="Horizontal"
                 Spacing="10">
-                <Button
-                    Height="30"
-                    HorizontalAlignment="Left"
-                    hc:BorderElement.CornerRadius="{StaticResource DefaultCornerRadius}"
-                    hc:IconElement.Geometry="{StaticResource GeometryEdit}"
-                    Background="Transparent"
-                    BorderThickness="1"
-                    Command="{Binding EditFactorCommand}"
-                    Content="{ex:Language Key='编辑因子'}" />
                 <Button
                     Height="30"
                     HorizontalAlignment="Left"
@@ -181,7 +174,7 @@
                 <ColumnDefinition Width="10" />
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <DataGrid CellStyle="{StaticResource DataGridTextCenterCellStyle}" RowStyle="{StaticResource PrimaryDataGridRowStyle}"
+            <DataGrid
                 Name="dataGrid"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
@@ -189,13 +182,13 @@
                 hc:DataGridAttach.ShowSelectAllButton="False"
                 AutoGenerateColumns="True"
                 AutoGeneratingColumn="dataGrid_AutoGeneratingColumn"
-                Background="{StaticResource DefaultBrush}"
-                
+                CellStyle="{StaticResource DataGridTextCenterCellStyle}"
                 ColumnHeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                 ColumnWidth="Auto"
                 HeadersVisibility="Column"
                 ItemsSource="{Binding DataResult}"
                 RowHeaderWidth="60"
+                RowStyle="{StaticResource PrimaryDataGridRowStyle}"
                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 SelectionMode="Single"
@@ -241,20 +234,41 @@
                     BorderThickness="2"
                     CornerRadius="4">
                     <DockPanel LastChildFill="True">
-                        <TextBlock
-                            Margin="10,0,0,0"
-                            DockPanel.Dock="Top"
-                            Text="{ex:Language Key='实验因子:'}" />
+                        <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+                            <TextBlock
+                                Margin="10,0,0,0"
+                                DockPanel.Dock="Left"
+                                Text="{ex:Language Key='实验因子:'}" />
+                            <TextBlock Margin="0,0,5,0" DockPanel.Dock="Right">
+                                <Hyperlink>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding FactorSettingCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Run
+                                        Foreground="{StaticResource CustomPrimaryBrush}"
+                                        Text="因子配置"
+                                        TextDecorations="Underline" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </DockPanel>
                         <ListBox
                             Name="ListboxFactor"
                             Width="220"
-                            ItemsSource="{Binding Source={StaticResource DataFromEnum1}}"
+                            rd3:ListBoxExtensions.SelectedItems="{Binding SelectedFactors}"
+                            ItemsSource="{Binding FactorNodeCol}"
                             SelectionChanged="ListboxFactor_SelectionChanged"
                             SelectionMode="Multiple"
                             Style="{StaticResource MaterialDesignNavigationPrimaryListBox}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectedFactorCommand}" PassEventArgsToCommand="True" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                    <TextBlock Text="{Binding DisplayName}" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -270,19 +284,34 @@
                         Grid.Row="1"
                         Grid.Column="2"
                         LastChildFill="True">
-                        <TextBlock
-                            Margin="10,0,0,0"
-                            DockPanel.Dock="Top"
-                            Text="{ex:Language Key='响应因子:'}" />
+                        <DockPanel DockPanel.Dock="Top" LastChildFill="False">
+                            <TextBlock
+                                Margin="10,0,0,0"
+                                DockPanel.Dock="Left"
+                                Text="{ex:Language Key='响应因子:'}" />
+                            <TextBlock Margin="0,0,5,0" DockPanel.Dock="Right">
+                                <Hyperlink>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding FactorSettingCommand}" />
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <Run
+                                        Foreground="{StaticResource CustomPrimaryBrush}"
+                                        Text="因子配置"
+                                        TextDecorations="Underline" />
+                                </Hyperlink>
+                            </TextBlock>
+                        </DockPanel>
                         <ListBox
                             Width="220"
-                            ItemsSource="{Binding Source={StaticResource DataFromEnum2}}"
+                            ItemsSource="{Binding ResponseNodeCol}"
                             SelectedItem="{Binding SelectedResponse}"
                             SelectionMode="Single"
                             Style="{StaticResource MaterialDesignNavigationPrimaryListBox}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumToStringConverter}}" />
+                                    <TextBlock Text="{Binding DisplayName}" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>

@@ -323,10 +323,10 @@ namespace RD3.Views
                                     string lineLabel = $"{device.Name}_{node.name}";
 
                                     ScottPlot.Color color = ScottPlot.Color.FromHex("#FFFFFF");
-                                    var node1 = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.fieldName == node.fieldName);
+                                    var node1 = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.FieldName == node.fieldName);
                                     if (node1 != null)
                                     {
-                                        var array = node1.colorStr.Split(',');
+                                        var array = node1.ColorStr.Split(',');
                                         color = ScottPlot.Color.FromARGB(Color.FromArgb(byte.Parse(array[0]), byte.Parse(array[1]), byte.Parse(array[2])).ToArgb());
                                     }
                                     SignalXY signal = wpfPlot.Plot.Add.SignalXY(xVs.ToArray(), yVsDic[node.name].ToArray(), color);
@@ -334,8 +334,8 @@ namespace RD3.Views
                                     YAxisBase yAxis = wpfPlot.Plot.Axes.GetAxes().ToList().Find(c => c.Label.Text.Contains(node.name)) as YAxisBase;
                                     signal.Axes.YAxis = yAxis == null ? wpfPlot.Plot.Axes.Left : yAxis;
                                     signal.Axes.XAxis = wpfPlot.Plot.Axes.Bottom;
-                                    signal.MarkerSize = (float)node1?.pointSize;
-                                    signal.LineWidth = (float)node1?.lineWidth;
+                                    signal.MarkerSize = (float)node1?.PointSize;
+                                    signal.LineWidth = (float)node1?.LineWidth;
                                 }
                                 wpfPlot?.Refresh();
                             }
@@ -623,10 +623,10 @@ namespace RD3.Views
         {
             //string[] rgb = dv.colorStr.Split(',');
             //return Color.FromArgb(byte.Parse(rgb[0]), byte.Parse(rgb[1]), byte.Parse(rgb[2]));
-            var node = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.ename == dv.ename);
+            var node = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.DisplayName == dv.ename);
             if (node != null)
             {
-                var array = node.colorStr.Split(',');
+                var array = node.ColorStr.Split(',');
                 return Color.FromArgb(byte.Parse(array[0]), byte.Parse(array[1]), byte.Parse(array[2]));
             }
             else

@@ -25,6 +25,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
 using System.Xml.Linq;
+using XZ.DB;
 using XZ.SQLite;
 using static Microsoft.FSharp.Core.ByRefKinds;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
@@ -320,7 +321,7 @@ namespace RD3
             containerRegistry.RegisterDialog<FeedStrategyView, FeedStrategyViewModel>();
 
             containerRegistry.RegisterDialog<OutputBatchDataView, OutputBatchDataViewModel>();//add by hdb 批量录入离线数据
-            containerRegistry.RegisterDialog<DeviceNodesView, DeviceNodesViewModel>();
+            containerRegistry.RegisterDialog<ParameterNodeView, ParameterNodeViewModel>();
 
             containerRegistry.RegisterDialog<PHControlView, PHControlViewModel>();
             containerRegistry.RegisterDialog<DOTimeSeriesView, DOTimeSeriesViewModel>();

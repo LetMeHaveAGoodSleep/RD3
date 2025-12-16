@@ -1,130 +1,120 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
+    [Table(nameof(ParameterNode))]
     public class ParameterNode : BindableBase
     {
-        public ParameterNode() 
-        {
-            minValue = 0;
-            maxValue = 100;
-            lineWidth = 1;
-            pointSize = 3;
-        }
         private int _id;
+        /// <summary>
+        /// 主键（自增）
+        /// </summary>
+        [Key] // 标记为主键
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // 自增约束
         public int ID
         {
             get => _id;
-            set { SetProperty(ref _id, value); }
+            set => SetProperty(ref _id, value);
         }
 
-        private string _name;
-        public string name
+        private string _displayName = "未命名参数";
+        public string DisplayName
         {
-            get => _name;
-            set { SetProperty(ref _name, value); }
+            get => _displayName;
+            set { SetProperty(ref _displayName, value); }
         }
 
-        private string _ename;
-        public string ename
+        private string _fieldName;
+        public string FieldName
         {
-            get => _ename;
-            set { SetProperty(ref _ename, value); }
+            set { SetProperty(ref _fieldName, value); }
+            get => _fieldName;
         }
 
-        private long _maxValue;
-        public long maxValue
-        {
-            get => _maxValue;
-            set { SetProperty(ref _maxValue, value); }
-        }
-
-        private long _minValue;
-        public long minValue
+        private double _minValue = 0d;
+        public double MinValue
         {
             get => _minValue;
             set { SetProperty(ref _minValue, value); }
         }
 
+        private double _maxValue = 100d;
+        public double MaxValue
+        {
+            get => _maxValue;
+            set { SetProperty(ref _maxValue, value); }
+        }
+
         private string _unit;
-        public string unit
+        public string Unit
         {
             get => _unit;
             set { SetProperty(ref _unit, value); }
         }
 
-        private float _lineWidth;
-        public float lineWidth
+        private float _lineWidth = 1;
+        public float LineWidth
         {
             get => _lineWidth;
             set { SetProperty(ref _lineWidth, value); }
         }
 
-        private float _pointSize;
-        public float pointSize
+        private float _pointSize = 3;
+        public float PointSize
         {
             get => _pointSize;
             set { SetProperty(ref _pointSize, value); }
         }
 
-        string _colorStr = "0,0,0";
-        public string colorStr
+        private string _colorStr = "0,0,0";
+        public string ColorStr
         {
             set { SetProperty(ref _colorStr, value); }
             get => _colorStr;
         }
 
-        private string _fieldName;
-        public string fieldName
+        private string _colorHex = "#FF000000";
+        /// <summary>
+        /// 参数名称
+        /// </summary>
+        public string ColorHex
         {
-            set { SetProperty(ref _fieldName, value); }
-            get => _fieldName;
+            get => _colorHex;
+            set => SetProperty(ref _colorHex, value);
         }
-        private int _isUsed;
-        public int isUsed
+
+        private bool _isUsed = true;
+        public bool IsUsed
         {
             set { SetProperty(ref _isUsed, value); }
             get => _isUsed;
         }
 
-        private int _axisType;
-        //坐标类型 0-左侧坐标，1-左侧新加坐标，2-右侧坐标，3右侧新加坐标
-        public int axisType
+        private bool _isResponse = true;
+        public bool IsResponse
         {
-            set { SetProperty(ref _axisType, value); }
-            get => _axisType;
+            set { SetProperty(ref _isResponse, value); }
+            get => _isResponse;
         }
 
-        private string _description;
-        public string description
+        private bool _isDesign = true;
+        public bool IsDesign
         {
-            set { SetProperty(ref _description, value); }
-            get => _description;
+            set { SetProperty(ref _isDesign, value); }
+            get => _isDesign;
         }
-    }
 
-    /// <summary>
-    /// 坐标轴
-    /// </summary>
-    public class AxisType
-    {
-        //坐标类型 0-左侧坐标，1-左侧新加坐标，2-右侧坐标，3右侧新加坐标
-        public string Name { get; set; }
-        public int Value { get; set; }
-    }
-
-    /// <summary>
-    /// 是否使用
-    /// </summary>
-    public class UsedType
-    {
-
-        public string Name { get; set; }//0-使用，1-不适用
-        public int Value { get; set; }
+        public override string ToString()
+        {
+            return _displayName;
+        }
     }
 }

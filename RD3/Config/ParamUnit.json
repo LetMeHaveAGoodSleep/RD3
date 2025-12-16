@@ -1,0 +1,114 @@
+[
+  {
+    "Unit": "cells/mL",
+    "Description": "个/毫升，活细胞密度基本单位，常用于动物细胞VCD计量"
+  },
+  {
+    "Unit": "10⁶cells/mL",
+    "Description": "百万个/毫升，动物细胞VCD常用量级单位"
+  },
+  {
+    "Unit": "OD₆₀₀",
+    "Description": "无绝对单位，600nm波长光密度，微生物菌体浓度快速估算指标"
+  },
+  {
+    "Unit": "g/L",
+    "Description": "克/升，细胞干重（DCW）、菌丝体浓度、抗体/重组蛋白滴度、小分子发酵产物、碳源/有机氮源浓度的核心单位"
+  },
+  {
+    "Unit": "%",
+    "Description": "百分比，细胞堆积体积（PCV）、溶氧（DO）空气饱和度的相对单位"
+  },
+  {
+    "Unit": "h⁻¹",
+    "Description": "每小时，比生长速率（μ）单位，衡量细胞增殖快慢"
+  },
+  {
+    "Unit": "h",
+    "Description": "小时，代时（Td）单位，指细胞数量翻倍所需时间"
+  },
+  {
+    "Unit": "mg/mL",
+    "Description": "毫克/毫升，中高浓度重组蛋白/抗体的滴度单位"
+  },
+  {
+    "Unit": "μg/mL",
+    "Description": "微克/毫升，低浓度蛋白、微量代谢产物的浓度单位"
+  },
+  {
+    "Unit": "PFU/mL",
+    "Description": "空斑形成单位/毫升，病毒/疫苗感染性滴度单位"
+  },
+  {
+    "Unit": "TCID₅₀/mL",
+    "Description": "50%组织培养感染剂量/毫升，病毒滴度的常用替代单位"
+  },
+  {
+    "Unit": "U/mL",
+    "Description": "单位/毫升，抗生素效价、酶制剂活性的核心单位"
+  },
+  {
+    "Unit": "U/g",
+    "Description": "单位/克，固体酶制剂的活性单位"
+  },
+  {
+    "Unit": "mmol/L",
+    "Description": "毫摩尔/升，小分子产物、碳源/氮源/无机盐摩尔浓度、代谢副产物浓度的常用单位"
+  },
+  {
+    "Unit": "g/(g·h)",
+    "Description": "克产物/克细胞干重·小时（比生产速率qp）、克底物/克细胞干重·小时（底物比消耗速率qs）单位"
+  },
+  {
+    "Unit": "g/g",
+    "Description": "克产物/克底物，产物对底物的产率（Yp/s）单位"
+  },
+  {
+    "Unit": "mg/L",
+    "Description": "毫克/升，无机氮源（以N计）、微量无机盐、尿素等代谢副产物的浓度单位"
+  },
+  {
+    "Unit": "℃",
+    "Description": "摄氏度，发酵过程温度控制单位"
+  },
+  {
+    "Unit": "rpm",
+    "Description": "转/分钟，发酵罐搅拌转速单位"
+  },
+  {
+    "Unit": "vvm",
+    "Description": "体积/体积·分钟，通气量相对单位"
+  },
+  {
+    "Unit": "MPa",
+    "Description": "兆帕，发酵罐罐压核心单位"
+  },
+  {
+    "Unit": "bar",
+    "Description": "巴，罐压常用替代单位，1bar≈0.1MPa"
+  },
+  {
+    "Unit": "mmHg",
+    "Description": "毫米汞柱，溶二氧化碳（DCO₂）浓度单位"
+  },
+  {
+    "Unit": "kPa",
+    "Description": "千帕，溶二氧化碳的国际标准单位"
+  },
+  {
+    "Unit": "mmol/(L·h)",
+    "Description": "毫摩尔/升·小时，CO₂释放速率（CER）、氧消耗速率（OUR）的摩尔速率单位"
+  },
+  {
+    "Unit": "g/(L·h)",
+    "Description": "克/升·小时，CER/OUR的质量速率单位"
+  },
+  {
+    "Unit": "L/min",
+    "Description": "升/分钟，发酵过程中通气量、补料速率的常用体积流量单位"
+  },
+  {
+    "Unit": "mL/h",
+    "Description": "毫升/小时，微量补料、小体积发酵体系中补料或通气的体积流量单位"
+  }
+]

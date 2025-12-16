@@ -56,7 +56,7 @@
             Click="ButtonDelete_Click"
             Content="删除数据"
             Style="{StaticResource PrimaryCommonButton}" />
-        <DataGrid CellStyle="{StaticResource DataGridTextCenterCellStyle}" RowStyle="{StaticResource PrimaryDataGridRowStyle}"
+        <DataGrid
             Name="dataGrid1"
             Grid.Row="2"
             hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
@@ -64,6 +64,7 @@
             AutoGenerateColumns="False"
             Background="Transparent"
             CanUserSortColumns="False"
+            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
             ColumnWidth="SizeToCells"
             EnableColumnVirtualization="True"
             EnableRowVirtualization="True"
@@ -74,6 +75,7 @@
             MouseDoubleClick="DataGrid_MouseDoubleClick"
             MouseRightButtonDown="DataGrid_MouseRightButtonDown"
             RowHeaderWidth="60"
+            RowStyle="{StaticResource PrimaryDataGridRowStyle}"
             ScrollViewer.HorizontalScrollBarVisibility="Visible"
             ScrollViewer.VerticalScrollBarVisibility="Visible"
             SelectionMode="Extended"
@@ -84,54 +86,45 @@
                 <DataGridTextColumn
                     Width="80"
                     Binding="{Binding ID}"
-                    
                     Header="ID"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="180"
                     Binding="{Binding createTime}"
-                    
                     Header="创建时间"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="80"
                     Binding="{Binding devieceID}"
-                    
                     Header="反应器"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="120"
                     Binding="{Binding createUser}"
-                    
                     Header="创建者"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="80"
                     Binding="{Binding statue, Converter={StaticResource EnumToStringConverter}}"
-                    
                     Header="状态"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="120"
                     Binding="{Binding Strain}"
-                    
                     Header="菌种信息"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="120"
                     Binding="{Binding Tester}"
-                    
                     Header="测试人员"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="300"
                     Binding="{Binding description}"
-                    
                     Header="备注"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTemplateColumn
                     Width="100"
-                    
                     Header="操作"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                     <DataGridTemplateColumn.CellTemplate>

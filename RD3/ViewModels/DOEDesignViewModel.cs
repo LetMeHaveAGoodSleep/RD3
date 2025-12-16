@@ -36,11 +36,25 @@ namespace RD3.ViewModels
             private set { SetProperty(ref _dataSource, value); }
         }
 
-        private int _level = 2;
+        private ObservableCollection<int> _levelCol = [2, 3, 4, 5];
+        public ObservableCollection<int> LevelCol
+        {
+            get => _levelCol;
+            set { SetProperty(ref _levelCol, value); }
+        }
+
+        private int _level = 3;
         public int Level
         {
             get => _level;
             set { SetProperty(ref _level, value); }
+        }
+
+        private bool _isLevelEnabled = false;
+        public bool IsLevelEnabled
+        {
+            get => _isLevelEnabled;
+            set { SetProperty(ref _isLevelEnabled, value); }
         }
 
         private string _generators = string.Empty;
@@ -110,10 +124,35 @@ namespace RD3.ViewModels
         public DOEDesignType SelectedDesignType
         {
             get => _selectedDesignType;
-            set { SetProperty(ref _selectedDesignType, value); }
+            set 
+            { 
+                SetProperty(ref _selectedDesignType, value);
+                if (value == DOEDesignType.TwoLevelFractionalFactorial || value == DOEDesignType.Plackett_Burman ||
+                    value == DOEDesignType.Box_Behnken || value == DOEDesignType.CentralComposite)
+                {
+                    IsLevelEnabled = false;
+                }
+                else
+                {
+                    IsLevelEnabled = true;
+                }
+
+                switch (value)
+                {
+                    case DOEDesignType.TwoLevelFractionalFactorial:
+                    case DOEDesignType.Plackett_Burman:
+                        Level = 2;
+                        break;
+                    
+                    case DOEDesignType.Box_Behnken:
+                    case DOEDesignType.CentralComposite:
+                        Level = 3;
+                        break;
+                }
+            }
         }
 
-        private ObservableCollection<Factor> _selectedFactors = [];
+        private ObservableCollection<ParameterNode> _selectedFactors = [];
 
 
         private ObservableCollection<OrthogonalParam> _designCol = [];
@@ -127,15 +166,6 @@ namespace RD3.ViewModels
 
         public  DelegateCommand GenerateCommand => new(async () =>
         {
-            foreach (var item in _designCol)
-            {
-                if ((item.Low == 0 && item.High == 0) || item.High < item.Low)
-                {
-                    await DialogExtensions.Info("温馨提示", "数据填写错误!");
-                    return;
-                }
-            }
-
             GenerateDOEResult();
         });
 
@@ -149,6 +179,7 @@ namespace RD3.ViewModels
             DialogParameters keyValuePairs = new DialogParameters();
             keyValuePairs.Add("DesignResult", DataSource);
             keyValuePairs.Add(nameof(DesignCol), DesignCol);
+            keyValuePairs.Add(nameof(Level), Level);
             DialogResult dialogResult = new DialogResult(ButtonResult.OK, keyValuePairs);
             RequestClose?.Invoke(dialogResult);
         });
@@ -175,7 +206,7 @@ namespace RD3.ViewModels
         public void OnDialogOpened(IDialogParameters parameters)
         {
             DesignCol.Clear();
-            _selectedFactors = parameters.GetValue<ObservableCollection<Factor>>("Factors");
+            _selectedFactors = parameters.GetValue<ObservableCollection<ParameterNode>>(nameof(Factor));
             if (_selectedFactors == null) return;
             Columns = new string[_selectedFactors.Count + 1];
             Columns[0] = "";
@@ -184,7 +215,7 @@ namespace RD3.ViewModels
             DataSource.Columns.Add(column);
             for (int i = 0; i < _selectedFactors.Count; i++)
             {
-                Factor factor = _selectedFactors[i];
+                ParameterNode factor = _selectedFactors[i];
                 OrthogonalParam orthogonalParam = new OrthogonalParam()
                 {
                     Name = factor.ToString()

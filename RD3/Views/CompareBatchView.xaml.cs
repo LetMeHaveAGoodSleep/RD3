@@ -227,17 +227,17 @@ namespace RD3.Views
                                     fieldName = item1.fieldName;
                                 }
                                 ScottPlot.Color color = ScottPlot.Color.FromHex("#FFFFFF");
-                                var node1 = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.fieldName == fieldName);
+                                var node1 = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.FieldName == fieldName);
                                 if (node1 != null)
                                 {
-                                    var array = node1.colorStr.Split(',');
+                                    var array = node1.ColorStr.Split(',');
                                     color = ScottPlot.Color.FromARGB(System.Drawing.Color.FromArgb(byte.Parse(array[0]), byte.Parse(array[1]), byte.Parse(array[2])).ToArgb());
                                 }
                                 var signal = wpfPlot.Plot.Add.SignalXY(xValus, item.Value.ToArray(), color);
                                 signal.LegendText = $"{batch.ID}_{item.Key}";
                                 signal.IsVisible = count < 6 ? true : false;
-                                signal.MarkerSize = (float)node1?.pointSize;
-                                signal.LineWidth = (float)node1?.lineWidth;
+                                signal.MarkerSize = (float)node1?.PointSize;
+                                signal.LineWidth = (float)node1?.LineWidth;
                                 foreach (var axis in wpfPlot.Plot.Axes.GetAxes().ToList())
                                 {
                                     if (axis is YAxisBase yaxis)

@@ -216,6 +216,7 @@
     <ProjectReference Include="..\Fpi.Xml\Fpi.Xml.csproj" />
     <ProjectReference Include="..\RD3.Controls\RD3.Controls.csproj" />
     <ProjectReference Include="..\RD3.Shared\RD3.Shared.csproj" />
+    <ProjectReference Include="..\XZ.DB\XZ.DB.csproj" />
     <ProjectReference Include="..\XZ.OnnxRun\XZ.OnnxRun.csproj" />
     <ProjectReference Include="..\XZ.SQLite\XZ.SQLite.csproj" />
   </ItemGroup>
@@ -427,6 +428,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Config\MFCInfo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\ParamUnit.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Config\PumpInfo.json">

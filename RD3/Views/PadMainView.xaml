@@ -228,6 +228,7 @@
                                 </MultiBinding>
                             </Button.Visibility>
                         </Button>
+
                     </StackPanel>
                     <Image
                         Canvas.Left="500"

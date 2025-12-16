@@ -1,4 +1,5 @@
 ﻿using DryIoc;
+using log4net.Core;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 using Prism.Commands;
@@ -22,6 +23,8 @@ namespace RD3.ViewModels
 {
     public class DOEAnalyse2DViewModel : BaseViewModel, IDialogAware
     {
+        public int Level;
+
         private DataTable _dataResult;
 
         private ObservableCollection<Factor2DParam> _factor2DParams = [];
@@ -90,6 +93,7 @@ namespace RD3.ViewModels
         public void OnDialogOpened(IDialogParameters parameters)
         {
             _dataResult = parameters.GetValue<DataTable>("Result").Copy();
+            Level = parameters.GetValue<int>(nameof(Level));
             DesignCol = parameters.GetValue<ObservableCollection<OrthogonalParam>>(nameof(OrthogonalParam));
             if (_dataResult == null || _dataResult.Rows.Count == 0)
             {
@@ -98,15 +102,27 @@ namespace RD3.ViewModels
 
             for (int i = 0; i < DesignCol.Count; i++)
             {
+                var levelValues = new List<double>();
+                if (Level >= 1 && double.TryParse(DesignCol[i].Level1.ToString(), out double l1))
+                    levelValues.Add(l1);
+                if (Level >= 2 && double.TryParse(DesignCol[i].Level2.ToString(), out double l2))
+                    levelValues.Add(l2);
+                if (Level >= 3 && double.TryParse(DesignCol[i].Level3.ToString(), out double l3))
+                    levelValues.Add(l3);
+                if (Level >= 4 && double.TryParse(DesignCol[i].Level4.ToString(), out double l4))
+                    levelValues.Add(l4);
+                if (Level >= 5 && double.TryParse(DesignCol[i].Level5.ToString(), out double l5))
+                    levelValues.Add(l5);
+                double min = levelValues.Min();
+                double max = levelValues.Max();
+
                 Factor2DParam param = new Factor2DParam()
                 {
                     FactorName = DesignCol[i].Name,
-                    Minimum = DesignCol[i].Low,
-                    Maximum= DesignCol[i].High,
-                    //Low = DesignCol[i].Low,
-                    //High = DesignCol[i].High,
-                    CurrentValue = DesignCol[i].Low,
-                    Frequency = (DesignCol[i].High - DesignCol[i].Low) / 100
+                    Minimum = min,
+                    Maximum= max,
+                    CurrentValue = min,
+                    Frequency = (max - min) / 100
                 };
                 Factor2DParams.Add(param);
             }

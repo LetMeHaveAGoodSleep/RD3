@@ -49,8 +49,8 @@ namespace RD3.Shared
         public int BatchID
         {
             get { return _batchID; }
-            set 
-            { 
+            set
+            {
                 SetProperty(ref _batchID, value);
                 if (value <= 0)
                 {

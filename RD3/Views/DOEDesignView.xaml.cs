@@ -1,4 +1,5 @@
 ﻿using HelixToolkit.Wpf;
+using log4net.Core;
 using Prism.Events;
 using RD3.Common;
 using RD3.Common.Events;
@@ -35,229 +36,6 @@ namespace RD3.Views
         {
             InitializeComponent();
         }
-
-        //public ModelVisual3D CreateScientificAxes(DataTable data, double length = 10, int divider = 5)
-        //{
-        //    var group = new ModelVisual3D();
-
-        //    double step = length / divider;
-
-        //    // === 网格面 ===
-        //    group.Children.Add(CreateXYGrid(length, step, 0));        // XY 面
-        //    group.Children.Add(CreateXZGrid(length, step, 0));        // XZ 面
-        //    group.Children.Add(CreateYZGrid(length, step, 0));        // YZ 面
-
-        //    if (data.Columns.Count > 0)
-        //    {
-        //        // === X轴 ===
-        //        group.Children.Add(new LinesVisual3D
-        //        {
-        //            Color = Colors.Black,
-        //            Thickness = 1,
-        //            Points = new Point3DCollection
-        //        {
-        //            new Point3D(length,length,0),
-        //            new Point3D(0,length,0)
-        //        }
-        //        });
-        //        for (int i = 0; i <= divider; i++)
-        //        {
-        //            double x = i * step;
-        //            group.Children.Add(new LinesVisual3D
-        //            {
-        //                Color = Colors.Black,
-        //                Points = new Point3DCollection {
-        //        new Point3D(length-x,length,0),
-        //        new Point3D(length-x,length-0.1,0)
-        //    }
-        //            });
-
-        //            // === X轴标签 ===
-        //            group.Children.Add(new TextVisual3D
-        //            {
-        //                Text = x.ToString(),
-        //                Position = new Point3D(length - x, length + 0.5, 0),
-        //                Height = 0.5,
-        //                FontSize = 20,
-        //                Foreground = Brushes.Black,
-        //                Transform = new RotateTransform3D(
-        //                    new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90),
-        //                    new Point3D(length - x, length + 0.5, 0))  // 旋转中心设为文字位置
-        //            });
-        //        }
-        //        group.Children.Add(new TextVisual3D
-        //        {
-        //            Text = data.Columns[0].ColumnName,
-        //            Position = new Point3D(length / 2, length + 1, 0),
-        //            Height = 0.4,
-        //            FontSize = 28,
-        //            Foreground = Brushes.Black,
-        //            Transform = new RotateTransform3D(
-        //                    new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90),
-        //                    new Point3D(length / 2, length + 1, 0))  // 旋转中心设为文字位置
-        //        });
-        //    }
-
-        //    if (data.Columns.Count > 1)
-        //    {
-        //        // === Y轴 ===
-        //        group.Children.Add(new LinesVisual3D
-        //        {
-        //            Color = Colors.Black,
-        //            Thickness = 1,
-        //            Points = new Point3DCollection {
-        //        new Point3D(length,length,0),
-        //        new Point3D(length,0,0)
-        //    }
-        //        });
-        //        for (int i = 0; i <= divider; i++)
-        //        {
-        //            double y = i * step;
-        //            group.Children.Add(new LinesVisual3D
-        //            {
-        //                Color = Colors.Black,
-        //                Points = new Point3DCollection {
-        //            new Point3D(length,length-y,0),
-        //            new Point3D(length-0.1,length-y,0)
-        //        }
-        //            });
-        //            // === Y轴标签 (竖排) ===
-        //            var text = new TextVisual3D
-        //            {
-        //                Text = y.ToString(),
-        //                Position = new Point3D(length + 0.5, length - y, 0),
-        //                Height = 0.5,
-        //                FontSize = 20,
-        //                Foreground = Brushes.Black,
-        //                Transform = new RotateTransform3D(
-        //                    new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90),
-        //                    new Point3D(length + 0.5, length - y, 0))  // 旋转中心设为文字位置
-        //            };
-        //            group.Children.Add(text);
-        //        }
-        //        group.Children.Add(new TextVisual3D
-        //        {
-        //            Text = data.Columns[1].ColumnName,
-        //            FontSize = 28,
-        //            Position = new Point3D(length + 1.5, length / 2, 0),
-        //            Height = 0.4,
-        //            Foreground = Brushes.Black,
-        //            Transform = new RotateTransform3D(
-        //                    new AxisAngleRotation3D(new Vector3D(1, 0, 0), 90),
-        //                    new Point3D(length + 1.5, length / 2, 0))  // 旋转中心设为文字位置
-        //        });
-        //    }
-
-        //    if (data.Columns.Count > 2)
-        //    {
-        //        // === Z轴 ===
-        //        group.Children.Add(new LinesVisual3D
-        //        {
-        //            Color = Colors.Black,
-        //            Thickness = 1,
-        //            Points = new Point3DCollection {
-        //        new Point3D(length,0,0),
-        //        new Point3D(length,0,length)
-        //    }
-        //        });
-        //        for (int i = 0; i <= divider; i++)
-        //        {
-        //            double z = i * step;
-        //            group.Children.Add(new LinesVisual3D
-        //            {
-        //                Color = Colors.Black,
-        //                Points = new Point3DCollection {
-        //            new Point3D(length,0,z),
-        //            new Point3D(length-0.1,0,z)
-        //        }
-        //            });
-        //            // === Z轴标签 (竖直) ===
-        //            group.Children.Add(new TextVisual3D
-        //            {
-        //                Text = z.ToString(),
-        //                Position = new Point3D(length + 0.5, 0, z),
-        //                Height = 0.5,
-        //                FontSize = 20,
-        //                Foreground = Brushes.Black,
-        //                Transform = new RotateTransform3D(
-        //                    new AxisAngleRotation3D(new Vector3D(0, 1, 0), 0),
-        //                    new Point3D(length + 0.5, 0, z))
-        //            });
-        //        }
-        //        group.Children.Add(new TextVisual3D
-        //        {
-        //            Text = data.Columns[2].ColumnName,
-        //            Position = new Point3D(length + 1, 0, length / 2),
-        //            Height = 0.4,
-        //            FontSize = 28,
-        //            Foreground = Brushes.Black,
-        //            Transform = new RotateTransform3D(
-        //                    new AxisAngleRotation3D(new Vector3D(0, 1, 0), 90),
-        //                    new Point3D(length + 1, 0, length / 2))
-        //        });
-        //    }
-        //    return group;
-        //}
-
-        //// 红色小球
-        //public SphereVisual3D CreateSphere(Point3D position, double radius = 0.3)
-        //{
-        //    return new SphereVisual3D
-        //    {
-        //        Center = position,
-        //        Radius = radius,
-        //        Material = MaterialHelper.CreateMaterial(Colors.Red)
-        //    };
-        //}
-
-        //public ModelVisual3D CreateXYGrid(double size, double step, double z = 0, double thickness = 1)
-        //{
-        //    var grid = new LinesVisual3D
-        //    {
-        //        Thickness = thickness,
-        //        Color = Colors.LightGray,
-        //    };
-
-        //    var pts = new Point3DCollection();
-
-        //    // 竖线（平行Y）
-        //    for (double x = 0; x <= size + 1e-6; x += step)
-        //    {
-        //        pts.Add(new Point3D(x, 0, z));
-        //        pts.Add(new Point3D(x, size, z));
-        //    }
-
-        //    // 横线（平行X）
-        //    for (double y = 0; y <= size + 1e-6; y += step)
-        //    {
-        //        pts.Add(new Point3D(0, y, z));
-        //        pts.Add(new Point3D(size, y, z));
-        //    }
-
-        //    grid.Points = pts;
-
-        //    var group = new ModelVisual3D();
-        //    group.Children.Add(grid);
-        //    return group;
-        //}
-
-        //public ModelVisual3D CreateXZGrid(double size, double step, double y = 0, double thickness = 1)
-        //{
-        //    var grid = new LinesVisual3D { Thickness = thickness, Color = Colors.LightGray };
-        //    var pts = new Point3DCollection();
-        //    for (double x = 0; x <= size + 1e-6; x += step) { pts.Add(new Point3D(x, y, 0)); pts.Add(new Point3D(x, y, size)); }
-        //    for (double z = 0; z <= size + 1e-6; z += step) { pts.Add(new Point3D(0, y, z)); pts.Add(new Point3D(size, y, z)); }
-        //    grid.Points = pts; var g = new ModelVisual3D(); g.Children.Add(grid); return g;
-        //}
-
-        //public ModelVisual3D CreateYZGrid(double size, double step, double x = 0, double thickness = 1)
-        //{
-        //    var grid = new LinesVisual3D { Thickness = thickness, Color = Colors.LightGray };
-        //    var pts = new Point3DCollection();
-        //    for (double y = 0; y <= size + 1e-6; y += step) { pts.Add(new Point3D(x, y, 0)); pts.Add(new Point3D(x, y, size)); }
-        //    for (double z = 0; z <= size + 1e-6; z += step) { pts.Add(new Point3D(x, 0, z)); pts.Add(new Point3D(x, size, z)); }
-        //    grid.Points = pts; var g = new ModelVisual3D(); g.Children.Add(grid); return g;
-        //}
 
         private void DataGridDesign_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -301,61 +79,31 @@ namespace RD3.Views
                 data.Columns.RemoveAt(0); // 删除第一列
             }
             Dictionary<string, (double, double)> dictionary = new Dictionary<string, (double, double)>();
+            int level = (this.DataContext as DOEDesignViewModel).Level;
             foreach (var item in (this.DataContext as DOEDesignViewModel).DesignCol)
             {
-                dictionary.Add(item.Name, (item.Low, item.High));
+                // 收集当前 Level 范围内的所有值
+                var levelValues = new List<double>();
+
+                // 根据 Level 数值添加对应 LevelN 的值
+                if (level >= 1 && double.TryParse(item.Level1.ToString(), out double l1))
+                    levelValues.Add(l1);
+                if (level >= 2 && double.TryParse(item.Level2.ToString(), out double l2))
+                    levelValues.Add(l2);
+                if (level >= 3 && double.TryParse(item.Level3.ToString(), out double l3))
+                    levelValues.Add(l3);
+                if (level >= 4 && double.TryParse(item.Level4.ToString(), out double l4))
+                    levelValues.Add(l4);
+                if (level >= 5 && double.TryParse(item.Level5.ToString(), out double l5))
+                    levelValues.Add(l5);
+                // 计算并存储最小/最大值
+                if (levelValues.Any())
+                {
+                    dictionary.Add(item.Name, (levelValues.Min(), levelValues.Max()));
+                }
             }
             helixSphereView.Generate3DView(data, dictionary);
-            //if (_model != null)
-            //{
-            //    helixViewport3D.Children.Remove(_model);
-            //}
-            //_model = CreateScientificAxes(data);
-            //helixViewport3D.Children.Add(_model);
-            //Dictionary<string,(double,double)> dictionary= new Dictionary<string,(double,double)>();
-            //foreach (var item in (this.DataContext as DOEDesignViewModel).DesignCol)
-            //{
-            //    dictionary.Add(item.Name, (item.Low, item.High));
-            //}
-            //if (_sphereVisual3DArray != null)
-            //{
-            //    foreach (var item in _sphereVisual3DArray)
-            //    {
-            //        helixViewport3D.Children.Remove(item);
-            //    }
-            //}
-            //List<SphereVisual3D> list = [];
-            //for (int i = 0; i < data.Rows.Count; i++)
-            //{
-            //    var point = new Point3D(0, 0, 0);
-            //    if (data.Columns.Count > 0)
-            //    {
-            //        var (low, high) = dictionary[data.Columns[0].ColumnName];
-            //        point.X = Math.Abs(Normalization(low, high, Convert.ToDouble(data.Rows[i][0])) * 10 - 10);
-            //    }
-            //    if (data.Columns.Count > 1)
-            //    {
-            //        var (low, high) = dictionary[data.Columns[1].ColumnName];
-            //        point.Y = Math.Abs(Normalization(low, high, Convert.ToDouble(data.Rows[i][1])) * 10 - 10);
-            //    }
-            //    if (data.Columns.Count > 2)
-            //    {
-            //        var (low, high) = dictionary[data.Columns[2].ColumnName];
-            //        point.Z = Normalization(low, high, Convert.ToDouble(data.Rows[i][2])) * 10;
-            //    }
-            //    list.Add(CreateSphere(point));
-            //}
-            //_sphereVisual3DArray = list.ToArray();
-            //foreach (var item in _sphereVisual3DArray)
-            //{
-            //    helixViewport3D.Children.Add(item);
-            //}
         }
-
-        //private double Normalization(double min, double max, double value)
-        //{
-        //    return (value - min) / (max - min);
-        //}
     }
 }
 

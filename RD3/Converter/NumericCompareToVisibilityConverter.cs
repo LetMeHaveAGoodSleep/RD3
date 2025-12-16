@@ -15,7 +15,7 @@ namespace RD3
         {
             TypeCode typeCode = Type.GetTypeCode(value.GetType());
             TypeCode typeCode1 = Type.GetTypeCode(parameter.GetType());
-            if (typeCode >= TypeCode.SByte && typeCode <= TypeCode.Decimal && typeCode1 >= TypeCode.SByte && typeCode1 <= TypeCode.Decimal)
+            if (typeCode >= TypeCode.SByte && typeCode <= TypeCode.Decimal)
             {
                 if (decimal.Parse(value.ToString()) <= decimal.Parse(parameter.ToString()))
                 {

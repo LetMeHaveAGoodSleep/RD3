@@ -85,7 +85,7 @@
                     Style="{StaticResource ButtonPrimary}" />
             </hc:UniformSpacingPanel>
         </DockPanel>
-        <DataGrid CellStyle="{StaticResource DataGridTextCenterCellStyle}" RowStyle="{StaticResource PrimaryDataGridRowStyle}"
+        <DataGrid
             Name="dataGrid"
             Grid.Row="2"
             hc:DataGridAttach.CanUnselectAllWithBlankArea="False"
@@ -94,6 +94,7 @@
             Background="{StaticResource DefaultBrush}"
             CanUserAddRows="False"
             CanUserSortColumns="False"
+            CellStyle="{StaticResource DataGridTextCenterCellStyle}"
             ColumnWidth="SizeToHeader"
             GridLinesVisibility="All"
             HeadersVisibility="Column"
@@ -101,6 +102,7 @@
             ItemsSource="{Binding FeedStrategyInfos}"
             LayoutUpdated="DataGridMain_OnLayoutUpdated"
             RowHeaderWidth="100"
+            RowStyle="{StaticResource PrimaryDataGridRowStyle}"
             ScrollViewer.HorizontalScrollBarVisibility="Auto"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
             SelectedItem="{Binding SelectedFeedStrategy}"
@@ -112,14 +114,12 @@
                     x:Name="colType"
                     Width="auto"
                     CanUserSort="False"
-                    
                     Header="策略类型"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="True"
                     SelectedValueBinding="{Binding InfoType, UpdateSourceTrigger=PropertyChanged}" />
                 <DataGridTemplateColumn
                     Width="auto"
-                    
                     Header="策略参数"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}">
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -161,7 +161,6 @@
                 </DataGridTemplateColumn>
                 <DataGridTemplateColumn
                     Width="auto"
-                    
                     Header="Stat"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="True">
@@ -206,14 +205,12 @@
                     Width="auto"
                     Binding="{Binding TriggerInterval, UpdateSourceTrigger=LostFocus}"
                     CanUserSort="False"
-                    
                     Header="触发间隔(秒)"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}" />
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding A}"
                     CanUserSort="False"
-                    
                     Header="参数1"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />
@@ -221,7 +218,6 @@
                     Width="auto"
                     Binding="{Binding B}"
                     CanUserSort="False"
-                    
                     Header="参数2"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />
@@ -229,7 +225,6 @@
                     Width="auto"
                     Binding="{Binding C}"
                     CanUserSort="False"
-                    
                     Header="参数3"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />
@@ -237,7 +232,6 @@
                     Width="auto"
                     Binding="{Binding D}"
                     CanUserSort="False"
-                    
                     Header="参数4"
                     HeaderStyle="{StaticResource DataGridCenterColumnHeaderStyle}"
                     IsReadOnly="False" />

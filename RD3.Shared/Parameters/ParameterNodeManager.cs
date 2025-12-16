@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XZ.DB;
 
 namespace RD3.Shared
 {
@@ -36,8 +37,9 @@ namespace RD3.Shared
 
         private void LoadParameterNode()
         {
-            string jsonContent = AESEncryption.DecryptFile(FileConst.ParameterNodePath);
-            ParameterNodes = JsonConvert.DeserializeObject<ObservableCollection<ParameterNode>>(jsonContent);
+            //string jsonContent = AESEncryption.DecryptFile(FileConst.ParameterNodePath);
+            var list = SqliteManager.QueryList<ParameterNode>();
+            ParameterNodes = [..list];
         }
 
         public void Save(ObservableCollection<ParameterNode> dataList = null)
@@ -46,20 +48,14 @@ namespace RD3.Shared
             {
                 ParameterNodes = dataList;
             }
-            string json = JsonConvert.SerializeObject(dataList ?? ParameterNodes);
 
-            string originalFile = FileConst.ParameterNodePath;
-            string newFile = Path.Combine(FileConst.DataDirectory, Path.GetFileNameWithoutExtension(originalFile) + Guid.NewGuid().ToString("N") + Path.GetExtension(originalFile));
-            // 检查文件是否存在并重命名
-            if (File.Exists(originalFile))
+            foreach (ParameterNode node in ParameterNodes)
             {
-                File.WriteAllText(newFile, json);
-                File.Move(newFile, originalFile, true);
-                File.Delete(newFile);
-            }
-            else
-            {
-                File.WriteAllText(originalFile, json);
+                _ = node.ID switch
+                {
+                    < 1 => SqliteManager.Insert(node),
+                    _ => SqliteManager.Update(node)
+                };
             }
         }
     }

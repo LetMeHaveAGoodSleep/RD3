@@ -435,17 +435,17 @@ namespace RD3.Views
                                 dicColor.TryGetValue(wpfPlot3.Name, out var keyValuePairs);
                                 ScottPlot.Color color = ScottPlot.Color.FromHex("#FFFFFF");
                                 string propertyName = PameterMapperConfig.GetValue(item2.ParamerterName)?.ToString();
-                                var node1 = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.fieldName.ToUpper() == propertyName.ToUpper());
+                                var node1 = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.FieldName.ToUpper() == propertyName.ToUpper());
                                 if (node1 != null)
                                 {
-                                    var array = node1.colorStr.Split(',');
+                                    var array = node1.ColorStr.Split(',');
                                     color = ScottPlot.Color.FromARGB(System.Drawing.Color.FromArgb(byte.Parse(array[0]), byte.Parse(array[1]), byte.Parse(array[2])).ToArgb());
                                 }
                                 var signal = wpfPlot3.Plot.Add.SignalXY(item2.Xs[i].ToArray(), item2.Ys[i].ToArray(), color);
                                 signal.LegendText = legendText;
                                 signal.IsVisible = flag;
-                                signal.MarkerSize = (float)node1?.pointSize;
-                                signal.LineWidth = (float)node1?.lineWidth;
+                                signal.MarkerSize = (float)node1?.PointSize;
+                                signal.LineWidth = (float)node1?.LineWidth;
                                 if (flag)
                                 {
                                     var yAxis = wpfPlot3.Plot.Axes.GetAxes().FindFirst(t => t.Label.Text.Contains(reverseDict[item2.ParamerterName]?.ToString()));
@@ -502,17 +502,17 @@ namespace RD3.Views
                                 dicColor.TryGetValue(wpfPlot4.Name, out var keyValuePairs);
                                 ScottPlot.Color color = ScottPlot.Color.FromHex("#FFFFFF");
                                 string propertyName = PameterMapperConfig.GetValue(item2.ParamerterName)?.ToString();
-                                var node1 = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.fieldName.ToUpper() == propertyName.ToUpper());
+                                var node1 = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.FieldName.ToUpper() == propertyName.ToUpper());
                                 if (node1 != null)
                                 {
-                                    var array = node1.colorStr.Split(',');
+                                    var array = node1.ColorStr.Split(',');
                                     color = ScottPlot.Color.FromARGB(System.Drawing.Color.FromArgb(byte.Parse(array[0]), byte.Parse(array[1]), byte.Parse(array[2])).ToArgb());
                                 }
                                 var signal = wpfPlot4.Plot.Add.SignalXY(item2.Xs[i].ToArray(), item2.Ys[i].ToArray(), color);
                                 signal.LegendText = legendText;
                                 signal.IsVisible = flag;
-                                signal.MarkerSize = (float)node1?.pointSize;
-                                signal.LineWidth = (float)node1?.lineWidth;
+                                signal.MarkerSize = (float)node1?.PointSize;
+                                signal.LineWidth = (float)node1?.LineWidth;
                                 if (flag)
                                 {
                                     var yAxis = wpfPlot4.Plot.Axes.GetAxes().FindFirst(t => t.Label.Text.Contains(reverseDict[item2.ParamerterName]?.ToString()));

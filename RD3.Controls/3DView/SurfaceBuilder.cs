@@ -288,7 +288,7 @@ namespace RD3.Controls
                 {
                     Text = colName,
                     FontSize = _axesFontSize,
-                    Position = new Point3D(length + _axesDistance * 1.5, length / 2, 0),
+                    Position = new Point3D(length + _axesDistance * 2, length / 2, 0),
                     Height = 1,
                     Foreground = Brushes.Black,
                     Transform = new RotateTransform3D(

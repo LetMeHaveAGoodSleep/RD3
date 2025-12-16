@@ -1,5 +1,6 @@
 ﻿using Fpi.Communication.Commands.Config;
 using ImTools;
+using log4net.Core;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -12,6 +13,7 @@ using RD3.Extensions;
 using RD3.Shared;
 using RD3.Views;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -21,6 +23,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using XZ.SQLite;
 
 namespace RD3.ViewModels
@@ -41,8 +44,18 @@ namespace RD3.ViewModels
             set { SetProperty(ref _bindEnable, value); }
         }
 
-        private ObservableCollection<Factor> _selectedFactors = [];
-        public ObservableCollection<Factor> SelectedFactors
+        public ObservableCollection<ParameterNode> FactorNodeCol
+        {
+            get => [.. ParameterNodeManager.GetInstance().ParameterNodes.Where(t => t.IsUsed && t.IsDesign)];
+        }
+
+        public ObservableCollection<ParameterNode> ResponseNodeCol
+        {
+            get => [.. ParameterNodeManager.GetInstance().ParameterNodes.Where(t => t.IsUsed && t.IsResponse)];
+        }
+
+        private ObservableCollection<ParameterNode> _selectedFactors = [];
+        public ObservableCollection<ParameterNode> SelectedFactors
         {
             get => _selectedFactors;
             set => SetProperty(ref _selectedFactors, value);
@@ -70,8 +83,8 @@ namespace RD3.ViewModels
             set => SetProperty(ref _doeColunms, value);
         }
 
-        private DOEResponse _selectedResponse;
-        public DOEResponse SelectedResponse
+        private ParameterNode _selectedResponse;
+        public ParameterNode SelectedResponse
         {
             get => _selectedResponse;
             set
@@ -110,13 +123,45 @@ namespace RD3.ViewModels
 
         public List<Device> SelectedDevices = [];
 
+        public int Level;
+
+
         public DelegateCommand CloseCommand => new(() => RequestClose?.Invoke(new DialogResult(ButtonResult.Cancel)));
+
+        public DelegateCommand FactorSettingCommand => new(() => 
+        {
+            DialogParameters keyValuePairs = new DialogParameters() 
+            {
+                {"Flag",false }
+            };
+            DialogHostService.ShowOnce(nameof(ParameterNodeView), keyValuePairs, callback => { });
+        });
+
+        public DelegateCommand<SelectionChangedEventArgs> SelectedFactorCommand=>new DelegateCommand<SelectionChangedEventArgs>((e)=>
+        {
+            if (e.RemovedItems.Count < 1 && e.AddedItems.Count < 1) return;
+            foreach (var item in e.RemovedItems)
+            {
+                if (SelectedFactors.Contains((ParameterNode)item))
+                {
+                    SelectedFactors.Remove((ParameterNode)item);
+                }
+            }
+            foreach (var item in e.AddedItems)
+            {
+                if (!SelectedFactors.Contains((ParameterNode)item))
+                {
+                    SelectedFactors.Add((ParameterNode)item);
+                }
+            }
+            DesignEnable = SelectedFactors.Count > 0 ? true : false;
+        });
 
         public DelegateCommand DesignCommand => new(() =>
         {
             DialogParameters keyValuePairs = new DialogParameters()
             {
-                { "Factors", SelectedFactors }
+                { nameof(Factor), SelectedFactors }
             };
 
             DialogHostService.ShowOnce(nameof(DOEDesignView), keyValuePairs, callback =>
@@ -127,6 +172,7 @@ namespace RD3.ViewModels
                 }
                 DesignCol = callback.Parameters.GetValue<ObservableCollection<OrthogonalParam>>(nameof(DesignCol));
                 DataDesign = callback.Parameters.GetValue<DataTable>("DesignResult");
+                Level = callback.Parameters.GetValue<int>(nameof(Level));
 
                 var copyTable = DataDesign.Copy();
                 copyTable.Columns.Add("Response");
@@ -157,8 +203,8 @@ namespace RD3.ViewModels
                 {
                     return;
                 }
-                DOEResponse res = (DOEResponse)Enum.Parse(typeof(DOEResponse), parameterPair.Param2); // 转换
-                if (HandyControl.Controls.MessageBox.Show($"响应面已与'{EnumUtil.GetEnumDescription(res)}'绑定，是否切换至与'{EnumUtil.GetEnumDescription(SelectedResponse)}'绑定?", "温馨提示", MessageBoxButton.YesNoCancel, MessageBoxImage.Question) != MessageBoxResult.Yes)
+                //DOEResponse res = (DOEResponse)Enum.Parse(typeof(DOEResponse), parameterPair.Param2); // 转换
+                if (HandyControl.Controls.MessageBox.Show($"响应面已与'{parameterPair.Param2}'绑定，是否切换至与'{SelectedResponse.ToString()}'绑定?", "温馨提示", MessageBoxButton.YesNoCancel, MessageBoxImage.Question) != MessageBoxResult.Yes)
                 {
                     return;
                 }
@@ -216,7 +262,6 @@ namespace RD3.ViewModels
                 try
                 {
                     string fileContent = File.ReadAllText(filePath);
-                    //fileContent = AESEncryption.Decrypt(fileContent);
                     JToken mergedToken = JToken.Parse(fileContent);
                     if (mergedToken.Type == JTokenType.Array)
                     {
@@ -233,14 +278,23 @@ namespace RD3.ViewModels
                     }
                     DataResult = copyTable.Copy();
                     DoeColunms.Clear();
-                    SelectedFactors.Clear();
+                    var list = new List<ParameterNode>();
                     foreach (DOEParameterPair item in ParameterPairs)
                     {
                         if (item.IsResponse) continue;
-                        DoeColunms.Add(item.Param1);
-                        SelectedFactors.Add((Factor)Enum.Parse(typeof(Factor), item.Param2));
+                        var node = ParameterNodeManager.GetInstance().ParameterNodes.FindFirst(t => t.DisplayName == item.Param2);
+                        if (node != null)
+                        {
+                            list.Add(node);
+                            DoeColunms.Add(item.Param1);
+                        }
                     }
+                    SelectedFactors = [.. list];
                     DesignEnable = SelectedFactors.Count > 0 ? true : false;
+                    if (SelectedFactors.Count > 0)
+                    {
+                        DoeColunms.Add("Response");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -339,12 +393,6 @@ namespace RD3.ViewModels
 
         public DelegateCommand AnalyseCommand => new(() =>
         {
-            //string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Response.txt";
-            //var lines = DataResult.AsEnumerable()
-            //                    .Select(row => row.Field<object>("Response")?.ToString() ?? string.Empty);
-
-            //// 一次性写入所有行
-            //File.WriteAllLines(filePath, lines, Encoding.UTF8); // 同样建议指定编码
             DialogHostService.ShowOnce(nameof(ChooseDOEAnalyseMethodView), callback => 
             {
                 if (callback.Result != ButtonResult.OK) return;
@@ -363,21 +411,48 @@ namespace RD3.ViewModels
                         var yFactor = DesignCol.FindFirst(t => t.Name == axesParams[1]);
 
                         Factor2DParam[] factor2DParams = new Factor2DParam[2];
+                        var levelValues = new List<double>();
+                        if (Level >= 1 && double.TryParse(xFactor.Level1.ToString(), out double l1))
+                            levelValues.Add(l1);
+                        if (Level >= 2 && double.TryParse(xFactor.Level2.ToString(), out double l2))
+                            levelValues.Add(l2);
+                        if (Level >= 3 && double.TryParse(xFactor.Level3.ToString(), out double l3))
+                            levelValues.Add(l3);
+                        if (Level >= 4 && double.TryParse(xFactor.Level4.ToString(), out double l4))
+                            levelValues.Add(l4);
+                        if (Level >= 5 && double.TryParse(xFactor.Level5.ToString(), out double l5))
+                            levelValues.Add(l5);
+                        double min = levelValues.Min();
+                        double max = levelValues.Max();
                         Factor2DParam xParam = new Factor2DParam()
                         {
                             FactorName = xFactor.Name,
-                            Minimum = xFactor.Low,
-                            Maximum = xFactor.High,
-                            CurrentValue = xFactor.Low,
-                            Frequency = (xFactor.High - xFactor.Low) / 100
+                            Minimum = min,
+                            Maximum = max,
+                            CurrentValue = min,
+                            Frequency = (max - min) / 100
                         };
+
+                        levelValues.Clear();
+                        if (Level >= 1 && double.TryParse(yFactor.Level1.ToString(), out l1))
+                            levelValues.Add(l1);
+                        if (Level >= 2 && double.TryParse(yFactor.Level2.ToString(), out  l2))
+                            levelValues.Add(l2);
+                        if (Level >= 3 && double.TryParse(yFactor.Level3.ToString(), out  l3))
+                            levelValues.Add(l3);
+                        if (Level >= 4 && double.TryParse(yFactor.Level4.ToString(), out  l4))
+                            levelValues.Add(l4);
+                        if (Level >= 5 && double.TryParse(yFactor.Level5.ToString(), out  l5))
+                            levelValues.Add(l5);
+                        min = levelValues.Min();
+                        max = levelValues.Max();
                         Factor2DParam yParam = new Factor2DParam()
                         {
                             FactorName = yFactor.Name,
-                            Minimum = yFactor.Low,
-                            Maximum = yFactor.High,
-                            CurrentValue = yFactor.Low,
-                            Frequency = (yFactor.High - yFactor.Low) / 100
+                            Minimum = min,
+                            Maximum = max,
+                            CurrentValue = min,
+                            Frequency = (max - min) / 100
                         };
                         factor2DParams[0] = xParam;
                         factor2DParams[1] = yParam;
@@ -406,7 +481,8 @@ namespace RD3.ViewModels
                     DialogParameters keyValuePairs = new DialogParameters()
                     {
                         {"Result",DataResult },
-                        {nameof(OrthogonalParam),DesignCol }
+                        {nameof(OrthogonalParam),DesignCol },
+                        { nameof(Level),Level}
                     };
                     DialogHostService.ShowOnce(nameof(DOEAnalyse2DView), keyValuePairs, callback => 
                     {

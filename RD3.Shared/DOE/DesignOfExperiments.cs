@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using log4net.Core;
 using MathNet.Numerics.Distributions;
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 using RD3;
 using RD3.Shared;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace RD3.Shared
 {
@@ -27,15 +28,29 @@ namespace RD3.Shared
         /// </param>
         /// <returns>全因子设计矩阵（Matrix<double>），每行代表一个试验组合，每列对应一个因子的水平值</returns>
         /// <exception cref="ArgumentException">当输入的因子水平列表为空时抛出</exception>
-        public static Matrix<double> BuildFullFactDesign(IList<OrthogonalParam> paramCol)
+        public static Matrix<double> BuildFullFactDesign(IList<OrthogonalParam> paramCol, int level = 2)
         {
             int factorCount = paramCol.Count;
             int[] levels = new int[factorCount];
             for (int i = 0; i < factorCount; i++)
             {
-                levels[i] = 2;
+                levels[i] = level;
             }
-            List<double[]> list = paramCol.Select(item => new double[] { item.Low, item.High }).ToList();
+            // 根据level数量获取每个参数对应的水平值列表
+            List<double[]> list = paramCol.Select(item =>
+            {
+                var paramLevels = new List<double>();
+                for (int i = 1; i <= level; i++)
+                {
+                    // 通过反射获取对应Level属性的值（如Level1、Level2、Level3）
+                    var prop = item.GetType().GetProperty($"Level{i}");
+                    if (prop != null)
+                    {
+                        paramLevels.Add(Convert.ToDouble(prop.GetValue(item)));
+                    }
+                }
+                return paramLevels.ToArray();
+            }).ToList();
 
             //生成全因子设计的基础索引矩阵（元素为水平索引，如0,1,2）
             var matrix = FullFact(levels);
@@ -83,7 +98,7 @@ namespace RD3.Shared
             }
 
             //提取因子水平列表（按字典键顺序排列）
-            List<double[]> list = paramCol.Select(item => new double[] { item.Low, item.High }).ToList();
+            List<double[]> list = paramCol.Select(item => new double[] { item.Level1, item.Level2 }).ToList();
 
             // 生成部分因子设计的基础矩阵（元素为-1和1，代表高低水平编码）
             Matrix<double> matrix = FracFactDesign(genString);
@@ -116,7 +131,7 @@ namespace RD3.Shared
             if (factorCount < 3)
                 throw new ArgumentException("因子数量必须至少为3", nameof(factorCount));
 
-            List<double[]> list = paramCol.Select(item => new double[] { item.Low, (item.Low + item.High) / 2, item.High }).ToList();
+            List<double[]> list = paramCol.Select(item => new double[] { item.Level1, item.Level2, item.Level3 }).ToList();
 
             var matrix = BBDesignCorrected(factorCount, centerPoints);
             return MapToFactorLevels(matrix, list);
@@ -132,7 +147,7 @@ namespace RD3.Shared
         {
 
             int factorCount = paramCol.Count;
-            List<double[]> factorLists = paramCol.Select(item => new double[] { item.Low, item.High }).ToList();
+            List<double[]> factorLists = paramCol.Select(item => new double[] { item.Level1, item.Level2 }).ToList();
 
             // 生成 Plackett-Burman 设计矩阵（元素为 -1 和 1）
             Matrix<double> designMatrix = PBDesign(factorCount);
@@ -183,7 +198,7 @@ namespace RD3.Shared
             if (centers.Item1 < 0 || centers.Item2 < 0)
                 throw new ArgumentException("中心点数量不能为负数", nameof(centers));
 
-            List<double[]> list = paramCol.Select(item => new double[] { item.Low, (item.Low + item.High) / 2, item.High }).ToList();
+            List<double[]> list = paramCol.Select(item => new double[] { item.Level1, item.Level2, item.Level3 }).ToList();
 
             // 初始化析因矩阵(H1)和星点矩阵(H2)
             Matrix<double> H1 = null;
@@ -244,9 +259,22 @@ namespace RD3.Shared
         /// <param name="numSamples">抽样数量，若为null则默认等于因子数量</param>
         /// <param name="probDistribution">概率分布类型，支持"Normal"、"Poisson"等，null表示均匀分布</param>
         /// <returns>拉丁超立方设计矩阵，每行代表一个样本，每列对应一个因子</returns>
-        public static Matrix<double> BuildLhsDesign(IList<OrthogonalParam> paramCol, int numSamples, ProbDistribution probDistribution, Criterion criterion, int iterations = 5)
+        public static Matrix<double> BuildLhsDesign(IList<OrthogonalParam> paramCol, int numSamples, ProbDistribution probDistribution, Criterion criterion, int level = 2, int iterations = 5)
         {
-            List<double[]> list = paramCol.Select(item => new double[] { item.Low, item.High }).ToList();
+            List<double[]> list = paramCol.Select(item =>
+            {
+                var paramLevels = new List<double>();
+                for (int i = 1; i <= level; i++)
+                {
+                    // 通过反射获取对应Level属性的值（如Level1、Level2、Level3）
+                    var prop = item.GetType().GetProperty($"Level{i}");
+                    if (prop != null)
+                    {
+                        paramLevels.Add(Convert.ToDouble(prop.GetValue(item)));
+                    }
+                }
+                return paramLevels.ToArray();
+            }).ToList();
             int factorCount = paramCol.Count;
             Matrix<double> lhsMatrix = null;
             if (criterion == Criterion.None)

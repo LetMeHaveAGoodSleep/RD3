@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using XZ.DB;
 using XZ.SQLite;
 
 namespace RD3.Views
@@ -45,11 +46,35 @@ namespace RD3.Views
         {
             LoadConfig();
 
+            //方成 创建表
+            SqliteManager.Open();
+            SqliteTableCreator.CreateAllTablesByNativeAttribute(true);
+
             PropertyInfo[] propertyInfos = typeof(RealTimeParam).GetProperties().Where(c => c.CanWrite && c.CanRead && c.GetCustomAttribute<NotDBColumnAttribute>() == null).ToArray();
             RD3SQLHelper.CreateRealTimeParamTable(propertyInfos);
 
             EnhancedSqliteBackupService backupService = new EnhancedSqliteBackupService(@"hisDatas\xzrd3.db", AppDomain.CurrentDomain.BaseDirectory + @"\DatabaseBackups");
             backupService.Start();
+
+            if (SqliteManager.QueryList<ParameterNode>().Count == 0)
+            {
+                List<ParameterNode> list = [];
+                foreach (var propertyInfo in propertyInfos)
+                {
+                    ParameterNode parameterNode = new ParameterNode()
+                    {
+                        DisplayName = propertyInfo.Name,
+                        FieldName = propertyInfo.Name,
+                    };
+                    list.Add(parameterNode);
+                }
+                SqliteManager.BulkInsert(list);
+            }
+
+            if (SqliteManager.QueryList<ParamUnit>().Count == 0)
+            {
+                SqliteManager.BulkInsert(ParamUnitManager.GetInstance().Units);
+            }
 
             _countdownTimer?.Stop();
             _countdownTimer = null;

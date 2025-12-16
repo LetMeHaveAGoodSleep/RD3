@@ -27,4 +27,5 @@
     <rd3:GreaterThanConverter x:Key="GreaterThanConverter" />
     <rd3:ObjectIsNullConverter x:Key="ObjectIsNullConverter" />
     <rd3:BoolToBoolStringConverter x:Key="BoolToBoolStringConverter" />
+    <rd3:HexCodeToBrushConverter x:Key="HexCodeToBrushConverter" />
 </ResourceDictionary>

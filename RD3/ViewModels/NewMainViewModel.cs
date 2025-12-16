@@ -44,6 +44,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using Fpi.Communication.Protocols;
 using MessageBoxOptions = System.Windows.Forms.MessageBoxOptions;
 using MessageBox = System.Windows.Forms.MessageBox;
+using XZ.DB;
 
 namespace RD3.ViewModels
 {
@@ -329,10 +330,7 @@ namespace RD3.ViewModels
             var back =new BackgroundWorker();
             back.DoWork += (s, e) => 
             {
-                int count = 1;
-                List<object[]> list = [];
                 Dictionary<string, DateTime> dictionary = new Dictionary<string, DateTime>();
-                Dictionary<string, int> keyValuePairs = new Dictionary<string, int>();
                 while (true)
                 {
                     try
@@ -341,10 +339,12 @@ namespace RD3.ViewModels
                         {
                             continue;
                         }
-                        //string dt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        PropertyInfo[] propertyInfos = typeof(RealTimeParam).GetProperties().Where(c => c.CanWrite && c.CanRead && (c.PropertyType == typeof(double) || c.PropertyType == typeof(float) || c.PropertyType == typeof(int) || c.PropertyType == typeof(string))).ToArray();
                         foreach (var item in ReactorCol)
                         {
+                            if (!ClockSupervisor.realDatasDic.ContainsKey(item.Name))
+                            {
+                                continue;
+                            }
                             RD3Device device = item as RD3Device;
                             int index = ClockSupervisor.realDatasDic[device.Name].Count - 1;
                             if (index < 0) continue;
@@ -369,25 +369,8 @@ namespace RD3.ViewModels
                                     {
                                         continue;
                                     }
-                                    if (!keyValuePairs.ContainsKey(device.Name))
-                                    {
-                                        keyValuePairs[device.Name] = 1;
-                                    }
-                                    else
-                                    {
-                                        keyValuePairs[device.Name] += 1;
-                                    }
-
-                                    List<object> values = new List<object>();
-                                    values.Add(device.Name);
-                                    values.Add(device.BatchID.ToString());
-                                    values.Add(realTime.SampleTime.ToString("yyyy-MM-dd HH:mm:ss"));
-                                    foreach (var p in propertyInfos)
-                                    {
-                                        object o = p.GetValue(realTime);
-                                        values.Add(o);
-                                    }
-                                    list.Add(values.ToArray());
+                                    realTime.LastBatchID = item.BatchID;
+                                    SqliteManager.Insert(realTime);
                                 }
                             }
                             else
@@ -401,45 +384,10 @@ namespace RD3.ViewModels
                                     {
                                         continue;
                                     }
-                                    if (!keyValuePairs.ContainsKey(device.Name))
-                                    {
-                                        keyValuePairs[device.Name] = 1;
-                                    }
-                                    else
-                                    {
-                                        keyValuePairs[device.Name] += 1;
-                                    }
-                                    List<object> values = new List<object>();
-                                    values.Add(device.BatchID.ToString());
-                                    foreach (var p in propertyInfos)
-                                    {
-                                        object o = p.GetValue(realTime);
-                                        values.Add(o);
-                                    }
-                                    list.Add(values.ToArray());
+                                    realTime.LastBatchID = item.BatchID;
+                                    SqliteManager.Insert(realTime);
                                 }
                             }
-                        }
-
-                        if (keyValuePairs.Keys.Count < 1) continue;
-                        var maxValue = keyValuePairs.OrderByDescending(x => x.Value).First().Value;
-                        if (maxValue > 0 && maxValue >= 60)
-                        {
-                            RD3SQLHelper.BulkInsertRealTimeParam(list);
-
-                            for (int i = 0; i < list.Count; i++)
-                            {
-                                list[i] = null;
-                            }
-
-                            list.Clear();
-                            list = null;
-
-                            keyValuePairs.Clear();
-                            keyValuePairs = null;
-
-                            list = [];
-                            keyValuePairs = new Dictionary<string, int>();
                         }
                     }
                     catch (Exception ex)
@@ -448,7 +396,6 @@ namespace RD3.ViewModels
                     }
                     finally
                     {
-                        count += 1;
                         Thread.Sleep(1000);
                     }
                     if (DateTime.Now.Second % 15 == 0)

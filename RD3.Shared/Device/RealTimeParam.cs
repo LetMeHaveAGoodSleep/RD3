@@ -3,18 +3,33 @@ using Newtonsoft.Json;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace RD3.Shared
 {
+    [Table("RealTimeInfo")]
     public class RealTimeParam : BindableBase, ICloneable
     {
         public RealTimeParam()
         {
             AlarmBytes = [];
             SampleTime = DateTime.Now;
+        }
+
+        private int _id;
+        /// <summary>
+        /// 主键（自增）
+        /// </summary>
+        [Key] // 标记为主键
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // 自增约束
+        public int ID
+        {
+            get => _id;
+            set => SetProperty(ref _id, value);
         }
 
         private string _reactorName;
@@ -31,6 +46,21 @@ namespace RD3.Shared
         {
             get { return _sampleTime; }
             set { SetProperty(ref _sampleTime, value); }
+        }
+
+        private int _lastBatchID = -1;
+        /// <summary>
+        /// 批次号
+        /// </summary>
+        [JsonIgnore]
+        [Column("BatchID")]
+        public int LastBatchID
+        {
+            get { return _lastBatchID; }
+            set
+            {
+                SetProperty(ref _lastBatchID, value);
+            }
         }
 
         private float _temp = 0f;

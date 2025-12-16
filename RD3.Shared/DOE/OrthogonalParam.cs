@@ -18,25 +18,39 @@ namespace RD3
             set {SetProperty(ref _name,value); } 
         }
 
-        private float _low;
-        public float Low
+        private float _level1 = -1f;
+        public float Level1
         {
-            get { return _low; }
-            set { SetProperty(ref _low, value); }
+            get { return _level1; }
+            set { SetProperty(ref _level1, value); }
         }
 
-        private float _high;
-        public float High
+        private float _level2 = -1f;
+        public float Level2
         {
-            get { return _high; }
-            set { SetProperty(ref _high, value); }
+            get { return _level2; }
+            set { SetProperty(ref _level2, value); }
         }
 
-        private ObservableCollection<FactorLevel> _factorLevels = [];
-        public ObservableCollection<FactorLevel> FactorLevels
+        private float _level3 = -1f;
+        public float Level3
         {
-            get => _factorLevels;
-            set { SetProperty(ref _factorLevels, value); }
+            get { return _level3; }
+            set { SetProperty(ref _level3, value); }
+        }
+
+        private float _level4 = -1f;
+        public float Level4
+        {
+            get { return _level4; }
+            set { SetProperty(ref _level4, value); }
+        }
+
+        private float _level5 = -1f;
+        public float Level5
+        {
+            get { return _level5; }
+            set { SetProperty(ref _level5, value); }
         }
     }
 

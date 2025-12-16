@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Fpi.Communication\Fpi.Communication.csproj" />
     <ProjectReference Include="..\Fpi.Xml\Fpi.Xml.csproj" />
+    <ProjectReference Include="..\XZ.DB\XZ.DB.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,7 +11,7 @@ namespace RD3
         {
             if (value is bool boolean)
             {
-                return boolean ? Visibility.Collapsed : Visibility.Visible;
+                return boolean ? Visibility.Visible : Visibility.Collapsed;
             }
             return Visibility.Collapsed;
         }

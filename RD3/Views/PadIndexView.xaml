@@ -228,6 +228,14 @@
                                     </MultiBinding>
                                 </Button.Visibility>
                             </Button>
+                            <Button
+                                Margin="20,0,0,0"
+                                hc:IconElement.Geometry="{StaticResource GeometryDesign}"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Command="{Binding DOECommand}"
+                                Content="实验设计"
+                                Cursor="" />
                         </StackPanel>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>

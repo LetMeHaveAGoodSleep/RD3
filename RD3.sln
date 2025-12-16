@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XZ.SQLite", "XZ.SQLite\XZ.S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RD3.Controls", "RD3.Controls\RD3.Controls.csproj", "{690587BE-4CF9-4011-A268-B94EC7D83CA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XZ.DB", "XZ.DB\XZ.DB.csproj", "{D1EC18F2-D05D-ECD7-AA42-E0F94D0DA932}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{690587BE-4CF9-4011-A268-B94EC7D83CA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{690587BE-4CF9-4011-A268-B94EC7D83CA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{690587BE-4CF9-4011-A268-B94EC7D83CA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1EC18F2-D05D-ECD7-AA42-E0F94D0DA932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1EC18F2-D05D-ECD7-AA42-E0F94D0DA932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1EC18F2-D05D-ECD7-AA42-E0F94D0DA932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1EC18F2-D05D-ECD7-AA42-E0F94D0DA932}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
