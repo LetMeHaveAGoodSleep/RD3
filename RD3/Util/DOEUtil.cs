@@ -1,6 +1,7 @@
 ﻿using RD3.Shared;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
 using System.Reflection;
@@ -16,7 +17,7 @@ namespace RD3
         {
             Type type = typeof(RealTimeParam);
             List<PropertyInfo> fields = type.GetProperties().ToList().FindAll(c => c.CanRead && c.CanWrite && c.CanRead && c.PropertyType.IsValueType);
-            List<string> strings = new List<string>() { $"where deviceID='{deviceId}'" };
+            List<string> strings = new List<string>() { $"where ReactorName ='{deviceId}'" };
             List<string> selectColList = new List<string>();
             foreach (var item in conditions)
             {
@@ -25,9 +26,11 @@ namespace RD3
                 strings.Add($"and {property.Name} BETWEEN {item.Value - 0.01} AND {item.Value + 0.01} ");
                 selectColList.Add(property.Name);
             }
-            string strSelect = $"select {responseColumn} from {RD3SQLHelper.RTParamTable}";
+            var tableName = type.GetCustomAttribute<TableAttribute>()?.Name;
+            string strSelect = $"select {responseColumn} from {tableName}";
             string condition = string.Join(" ", strings);
-            string sql = $"{strSelect} {condition} ORDER BY dateTime DESC LIMIT 1";
+            var property1 = type.GetProperties().ToList().Find(t => t.PropertyType == typeof(DateTime));
+            string sql = $"{strSelect} {condition} ORDER BY {property1?.Name} DESC LIMIT 1";
             return sql;
         }
     }

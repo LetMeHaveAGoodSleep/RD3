@@ -368,27 +368,35 @@ namespace RD3.ViewModels
                       sqlList.Add(sql);
                   }
                   DataTable dataTable = SQLiteHelper.GetDatatableSync(sqlList);
-                  string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\Response.txt";
-                  var resultList = File.ReadAllLines(filePath)
-                    .Select(line => line.Trim())
-                    .Where(line => !string.IsNullOrEmpty(line))
-                    .Select(line => double.TryParse(line, out double num) ? num : 0)
-                    .Where(num => !double.IsNaN(num))
-                    .ToList();
+
+                  //测试代码
+                  //string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                  //string filePath = Path.Combine(desktopPath, "Response.txt");
+                  //List<double> resultList = new List<double>();
+                  //if (File.Exists(filePath))
+                  //{
+                  //    try
+                  //    {
+                  //        // 4. 读取文件并处理数据，包含完整的数据校验
+                  //        resultList = File.ReadAllLines(filePath)
+                  //            .Select(line => line.Trim())
+                  //            .Where(line => !string.IsNullOrEmpty(line))
+                  //            .Select(line => double.TryParse(line, out double num) ? num : 0)
+                  //            .Where(num => !double.IsNaN(num) && !double.IsInfinity(num)) // 额外增加无穷值校验
+                  //            .ToList();
+                  //    }
+                  //    catch (IOException ex)
+                  //    {
+                  //    }
+                  //    catch (Exception ex)
+                  //    {
+                  //    }
+                  //}
                   for (int i = 0; i < DataResult.Rows.Count; i++)
                   {
-                      if (i > dataTable.Rows.Count - 1)
-                      {
-                          DataResult.Rows[i]["Response"] = resultList[i];
-                      }
-                      else
-                      {
-                          DataResult.Rows[i]["Response"] = dataTable.Rows[i][resPair.Param2];
-                      }
+                      DataResult.Rows[i]["Response"] = dataTable.Rows.Count - 1 >= i ? dataTable.Rows[i][resPair.Param2] : InstrumentSolution.GetInstance().IsSimulation ? RandomNumberUtil.GetRandomDouble() : 0;
                   }
-                  //DataResult.Columns["Response"].ReadOnly = true;
               });
-
         });
 
         public DelegateCommand AnalyseCommand => new(() =>
