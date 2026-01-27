@@ -454,7 +454,7 @@ namespace RD3.Shared
                     realTimeParam.OffgasModuleGasHumidity = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_OffgasModuleGasHumidity), Const.NumericalPrecision);
                     realTimeParam.OffgasModuleGasPressure = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_OffgasModuleGasPressure), Const.NumericalPrecision);
 
-                    realTimeParam.EPCPressure = MathF.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_EPCPressure), Const.NumericalPrecision);
+                    realTimeParam.EPCPressure = (float)(Math.Round(recvCommand.GetSingle(ParamId_5L.RRealtimeParam_ReadResponse_EPCPressure), Const.NumericalPrecision)/Const.MpaToPsi);
 
                     realTimeParam.HasFoam = recvCommand.GetByte(ParamId_5L.RRealtimeParam_ReadResponse_HasFoam) == 0x01;
                     realTimeParam.TempControling = recvCommand.GetByte(ParamId_5L.RRealtimeParam_ReadResponse_TempControlStatus) == 0x01;

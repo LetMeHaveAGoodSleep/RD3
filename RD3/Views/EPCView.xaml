@@ -36,11 +36,11 @@
                 Margin="8,0,0,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                FontSize="{StaticResource NormalFontSize}"
-                Text="EPC"
+                FontSize="{StaticResource SubHeadFontSize}"
+                Text="罐压"
                 TextWrapping="WrapWithOverflow" />
             <TextBlock
-                Width="50"
+                Width="45"
                 Margin="5,0,0,0"
                 VerticalAlignment="Center"
                 FontSize="{StaticResource SubHeadFontSize}"
@@ -48,7 +48,7 @@
             <TextBlock
                 Margin="3,0,0,0"
                 VerticalAlignment="Center"
-                Text="psi" />
+                Text="MPa" />
         </StackPanel>
     </Border>
 </UserControl>

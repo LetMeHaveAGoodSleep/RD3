@@ -1,0 +1,554 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+<UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Assets\icon_48.ico</ApplicationIcon>
+    <RunAnalyzersDuringBuild>False</RunAnalyzersDuringBuild>
+    <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
+    <LangVersion>preview</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Language\LanguageExtension.cs" />
+    <Compile Remove="Util\AuditUtil.cs" />
+    <Compile Remove="Views\EditBatchView.xaml.cs" />
+    <Compile Remove="Views\EditScaleView.xaml.cs" />
+    <Compile Remove="Views\UserControl1.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Assets\AlibabaPuHuiTi-2-55-Regular.otf" />
+    <None Remove="Assets\logo.bmp" />
+    <None Remove="Assets\MiSans-Regular.otf" />
+    <None Remove="Assets\NotoSans-Regular.otf" />
+    <None Remove="Images\Advance.png" />
+    <None Remove="Images\Button\Inoculate.png" />
+    <None Remove="Images\Button\Log.png" />
+    <None Remove="Images\Button\Pause.png" />
+    <None Remove="Images\Button\Sample.png" />
+    <None Remove="Images\Button\Start.png" />
+    <None Remove="Images\Button\Stop.png" />
+    <None Remove="Images\cloud.png" />
+    <None Remove="Images\DataGrid\Delete.png" />
+    <None Remove="Images\DataGrid\Edit.png" />
+    <None Remove="Images\DOE\Fullfactorial.png" />
+    <None Remove="Images\Feed\Ass.png" />
+    <None Remove="Images\Feed\Constant.png" />
+    <None Remove="Images\Feed\Function.png" />
+    <None Remove="Images\Feed\Gradient.png" />
+    <None Remove="Images\Feed\Loop.png" />
+    <None Remove="Images\Feed\MultiLinear.png" />
+    <None Remove="Images\FermentationTank.png" />
+    <None Remove="Images\Index\Agit.png" />
+    <None Remove="Images\Index\Bottle.png" />
+    <None Remove="Images\Index\CER.png" />
+    <None Remove="Images\Index\Condensation.png" />
+    <None Remove="Images\Index\DO.png" />
+    <None Remove="Images\Index\EPC.png" />
+    <None Remove="Images\Index\Fermentation.png" />
+    <None Remove="Images\Index\Fermentation1.png" />
+    <None Remove="Images\Index\GasDisable.png" />
+    <None Remove="Images\Index\GasEnable.png" />
+    <None Remove="Images\Index\Logo.png" />
+    <None Remove="Images\Index\OD.png" />
+    <None Remove="Images\Index\OUR.png" />
+    <None Remove="Images\Index\pH.png" />
+    <None Remove="Images\Index\PumpDisable.png" />
+    <None Remove="Images\Index\PumpEnable.png" />
+    <None Remove="Images\Index\RegionToolBackground.png" />
+    <None Remove="Images\Index\RQ.png" />
+    <None Remove="Images\Index\Stirring.png" />
+    <None Remove="Images\Index\Stirring1.png" />
+    <None Remove="Images\Index\Temp.png" />
+    <None Remove="Images\Index\TitleBackground.png" />
+    <None Remove="Images\Index\Weight.png" />
+    <None Remove="Images\Index\Weight1.png" />
+    <None Remove="Images\Link.png" />
+    <None Remove="Images\login.png" />
+    <None Remove="Images\logo.png" />
+    <None Remove="Images\Main\Acid.png" />
+    <None Remove="Images\Main\Acid_ass.png" />
+    <None Remove="Images\Main\AF.png" />
+    <None Remove="Images\Main\Agit.png" />
+    <None Remove="Images\Main\Agit_ass.png" />
+    <None Remove="Images\Main\Agit_Primary.png" />
+    <None Remove="Images\Main\Air.png" />
+    <None Remove="Images\Main\Base.png" />
+    <None Remove="Images\Main\Base_ass.png" />
+    <None Remove="Images\Main\CO2.png" />
+    <None Remove="Images\Main\DO.png" />
+    <None Remove="Images\Main\DO_ass.png" />
+    <None Remove="Images\Main\Feed.png" />
+    <None Remove="Images\Main\Feed_ass.png" />
+    <None Remove="Images\Main\MLUnit.png" />
+    <None Remove="Images\Main\N2.png" />
+    <None Remove="Images\Main\O2.png" />
+    <None Remove="Images\Main\O2_Primary.png" />
+    <None Remove="Images\Main\PH.png" />
+    <None Remove="Images\Main\PH_ass.png" />
+    <None Remove="Images\Main\PH_Primary.png" />
+    <None Remove="Images\Main\Temp.png" />
+    <None Remove="Images\Main\Temp_Primary.png" />
+    <None Remove="Images\NewReactor\button1.png" />
+    <None Remove="Images\NewReactor\ft.png" />
+    <None Remove="Images\NewReactor\logo.png" />
+    <None Remove="Images\NewReactor\关闭.png" />
+    <None Remove="Images\NewReactor\分割线.png" />
+    <None Remove="Images\NewReactor\分割线（图右）.png" />
+    <None Remove="Images\NewReactor\分割线（图左2）.png" />
+    <None Remove="Images\NewReactor\分割线（图左）.png" />
+    <None Remove="Images\NewReactor\名称提示线.png" />
+    <None Remove="Images\NewReactor\小瓶.png" />
+    <None Remove="Images\NewReactor\小瓶（称重）.png" />
+    <None Remove="Images\NewReactor\尾气制冷.png" />
+    <None Remove="Images\NewReactor\总 按键按下瞬间参考.jpg" />
+    <None Remove="Images\NewReactor\总1.jpg" />
+    <None Remove="Images\NewReactor\总2.jpg" />
+    <None Remove="Images\NewReactor\按下效果（中文）.png" />
+    <None Remove="Images\NewReactor\按下效果（英文）.png" />
+    <None Remove="Images\NewReactor\按钮1.png" />
+    <None Remove="Images\NewReactor\按钮1（按下）.png" />
+    <None Remove="Images\NewReactor\提示角标.png" />
+    <None Remove="Images\NewReactor\搅拌0.png" />
+    <None Remove="Images\NewReactor\搅拌1.png" />
+    <None Remove="Images\NewReactor\搅拌2.png" />
+    <None Remove="Images\NewReactor\最小化.png" />
+    <None Remove="Images\NewReactor\水.png" />
+    <None Remove="Images\NewReactor\温度计.png" />
+    <None Remove="Images\NewReactor\眉头.jpg" />
+    <None Remove="Images\NewReactor\红.png" />
+    <None Remove="Images\NewReactor\绿.png" />
+    <None Remove="Images\NewReactor\罐加热（制冷）.png" />
+    <None Remove="Images\NewReactor\罐加热（加热）.png" />
+    <None Remove="Images\NewReactor\罐加热（常规）.png" />
+    <None Remove="Images\NewReactor\背景.jpg" />
+    <None Remove="Images\NewReactor\蓝.png" />
+    <None Remove="Images\NewReactor\蠕动泵贯穿线.png" />
+    <None Remove="Images\NewReactor\蠕动泵（关闭）.png" />
+    <None Remove="Images\NewReactor\蠕动泵（开启）.png" />
+    <None Remove="Images\NewReactor\还原.png" />
+    <None Remove="Images\NewReactor\选中（主流）.png" />
+    <None Remove="Images\NewReactor\选项框.png" />
+    <None Remove="Images\NewReactor\阀（关）.png" />
+    <None Remove="Images\NewReactor\阀（开）.png" />
+    <None Remove="Images\NewReactor\黄.png" />
+    <None Remove="Images\Projects.png" />
+    <None Remove="Images\ReactorNew\MFC不使能.png" />
+    <None Remove="Images\ReactorNew\MFC使能.png" />
+    <None Remove="Images\ReactorNew\制冷.png" />
+    <None Remove="Images\ReactorNew\加热.png" />
+    <None Remove="Images\ReactorNew\尾气冷凝不使能.png" />
+    <None Remove="Images\ReactorNew\尾气冷凝使能.png" />
+    <None Remove="Images\ReactorNew\常温.png" />
+    <None Remove="Images\ReactorNew\泵不使能.png" />
+    <None Remove="Images\ReactorNew\泵不带底.png" />
+    <None Remove="Images\ReactorNew\泵使能.png" />
+    <None Remove="Images\ReactorNew\泵带底.png" />
+    <None Remove="Images\ReactorNew\罐体.png" />
+    <None Remove="Images\Reactor\MFC不使能.png" />
+    <None Remove="Images\Reactor\MFC使能.png" />
+    <None Remove="Images\Reactor\MFC没启用.png" />
+    <None Remove="Images\Reactor\加热.png" />
+    <None Remove="Images\Reactor\尾气冷凝不使能.png" />
+    <None Remove="Images\Reactor\尾气冷凝使能.png" />
+    <None Remove="Images\Reactor\泵不使能.png" />
+    <None Remove="Images\Reactor\泵不带底.png" />
+    <None Remove="Images\Reactor\泵使能.png" />
+    <None Remove="Images\Reactor\泵带底.png" />
+    <None Remove="Images\Reactor\液面图.png" />
+    <None Remove="Images\Reactor\罐体.png" />
+    <None Remove="Images\SideMenu\Audit.png" />
+    <None Remove="Images\SideMenu\Audit_Primary.png" />
+    <None Remove="Images\SideMenu\Calibrate.png" />
+    <None Remove="Images\SideMenu\Calibrate_Primary.png" />
+    <None Remove="Images\SideMenu\Control.png" />
+    <None Remove="Images\SideMenu\Control_Primary.png" />
+    <None Remove="Images\SideMenu\Data.png" />
+    <None Remove="Images\SideMenu\Data_Primary.png" />
+    <None Remove="Images\SideMenu\Debug.png" />
+    <None Remove="Images\SideMenu\Debug_Primary.png" />
+    <None Remove="Images\SideMenu\DOE.png" />
+    <None Remove="Images\SideMenu\Main.png" />
+    <None Remove="Images\SideMenu\Main_Primary.png" />
+    <None Remove="Images\SideMenu\Project.png" />
+    <None Remove="Images\SideMenu\Project_Primary.png" />
+    <None Remove="Images\SideMenu\Setting.png" />
+    <None Remove="Images\SideMenu\Setting_Primary.png" />
+    <None Remove="Themes\iconfont.ttf" />
+    <None Remove="Views\yefkiliw.oaj~" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Remove="Lang\Lang.en-US.xaml" />
+    <Page Remove="Lang\Lang.zh-CN.xaml" />
+    <Page Remove="Views\EditBatchView.xaml" />
+    <Page Remove="Views\EditScaleView.xaml" />
+    <Page Remove="Views\UserControl1.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\icon_48.ico" />
+    <Content Include="Lang\Lang.en-US.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Content>
+    <Content Include="Lang\Lang.zh-CN.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="HelixToolkit.Wpf" Version="3.1.1" />
+    <PackageReference Include="LayUI.Wpf.Extensions" Version="1.0.2.240505" />
+    <PackageReference Include="log4net" Version="3.2.0" />
+    <PackageReference Include="MathNet.Symbolics" Version="0.25.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Prism.DryIoc" Version="8.1.97" />
+    <PackageReference Include="ScottPlot.WPF" Version="5.1.57" />
+    <PackageReference Include="System.Management" Version="9.0.10" />
+    <PackageReference Include="TaskScheduler" Version="2.12.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fpi.Assembly\Fpi.Assembly.csproj" />
+    <ProjectReference Include="..\Fpi.Communication\Fpi.Communication.csproj" />
+    <ProjectReference Include="..\Fpi.Instrument\Fpi.Instrument.csproj" />
+    <ProjectReference Include="..\Fpi.Util\Fpi.Util.csproj" />
+    <ProjectReference Include="..\Fpi.Xml\Fpi.Xml.csproj" />
+    <ProjectReference Include="..\RD3.Controls\RD3.Controls.csproj" />
+    <ProjectReference Include="..\RD3.Shared\RD3.Shared.csproj" />
+    <ProjectReference Include="..\XZ.DB\XZ.DB.csproj" />
+    <ProjectReference Include="..\XZ.OnnxRun\XZ.OnnxRun.csproj" />
+    <ProjectReference Include="..\XZ.SQLite\XZ.SQLite.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="HandyControl">
+      <HintPath>..\ImportDll\HandyControl.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors">
+      <HintPath>..\ImportDll\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf">
+      <HintPath>..\ImportDll\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\logo.bmp" />
+    <Resource Include="Fonts\AlibabaPuHuiTi-2-55-Regular.otf" />
+    <Resource Include="Fonts\MiSans-Regular.otf" />
+    <Resource Include="Fonts\NotoSans-Regular.otf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Button\Inoculate.png" />
+    <Resource Include="Images\Button\Log.png" />
+    <Resource Include="Images\Button\Pause.png" />
+    <Resource Include="Images\Button\Sample.png" />
+    <Resource Include="Images\Button\Start.png" />
+    <Resource Include="Images\Button\Stop.png" />
+    <Resource Include="Images\cloud.png" />
+    <Resource Include="Images\DataGrid\Delete.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\DataGrid\Edit.png" />
+    <Resource Include="Assets\logo.png" />
+    <Resource Include="Images\DOE\Fullfactorial.png" />
+    <Resource Include="Images\Feed\Ass.png" />
+    <Resource Include="Images\Feed\Constant.png" />
+    <Resource Include="Images\Feed\Function.png" />
+    <Resource Include="Images\Feed\Gradient.png" />
+    <Resource Include="Images\Feed\Loop.png" />
+    <Resource Include="Images\Feed\MultiLinear.png" />
+    <Resource Include="Images\FermentationTank.png" />
+    <Resource Include="Images\Index\Agit.png" />
+    <Resource Include="Images\Index\Bottle.png" />
+    <Resource Include="Images\Index\CER.png" />
+    <Resource Include="Images\Index\Condensation.png" />
+    <Resource Include="Images\Index\DO.png" />
+    <Resource Include="Images\Index\EPC.png" />
+    <Resource Include="Images\Index\Fermentation.png" />
+    <Resource Include="Images\Index\Fermentation1.png" />
+    <Resource Include="Images\Index\GasDisable.png" />
+    <Resource Include="Images\Index\GasEnable.png" />
+    <Resource Include="Images\Index\Logo.png" />
+    <Resource Include="Images\Index\OD.png" />
+    <Resource Include="Images\Index\OUR.png" />
+    <Resource Include="Images\Index\pH.png" />
+    <Resource Include="Images\Index\PumpDisable.png" />
+    <Resource Include="Images\Index\PumpEnable.png" />
+    <Resource Include="Images\Index\RegionToolBackground.png" />
+    <Resource Include="Images\Index\RQ.png" />
+    <Resource Include="Images\Index\Stirring.png" />
+    <Resource Include="Images\Index\Stirring1.png" />
+    <Resource Include="Images\Index\Temp.png" />
+    <Resource Include="Images\Index\TitleBackground.png" />
+    <Resource Include="Images\Index\Weight.png" />
+    <Resource Include="Images\Index\Weight1.png" />
+    <Resource Include="Images\Link.png" />
+    <Resource Include="Images\login.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Main\Acid.png" />
+    <Resource Include="Images\Main\Acid_ass.png" />
+    <Resource Include="Images\Main\AF.png" />
+    <Resource Include="Images\Main\Agit.png" />
+    <Resource Include="Images\Main\Agit_ass.png" />
+    <Resource Include="Images\Main\Agit_Primary.png" />
+    <Resource Include="Images\Main\Air.png" />
+    <Resource Include="Images\Main\Base.png" />
+    <Resource Include="Images\Main\Base_ass.png" />
+    <Resource Include="Images\Main\CO2.png" />
+    <Resource Include="Images\Main\DO.png" />
+    <Resource Include="Images\Main\DO_ass.png" />
+    <Resource Include="Images\Main\O2_Primary.png" />
+    <Resource Include="Images\Main\Feed.png" />
+    <Resource Include="Images\Main\Feed_ass.png" />
+    <Resource Include="Images\Main\MLUnit.png" />
+    <Resource Include="Images\Main\N2.png" />
+    <Resource Include="Images\Main\O2.png" />
+    <Resource Include="Images\Main\PH.png" />
+    <Resource Include="Images\Main\PH_Primary.png" />
+    <Resource Include="Images\Main\Temp.png" />
+    <Resource Include="Images\Main\PH_ass.png" />
+    <Resource Include="Images\Main\Temp_Primary.png" />
+    <Resource Include="Images\NewReactor\button1.png" />
+    <Resource Include="Images\NewReactor\ft.png" />
+    <Resource Include="Images\NewReactor\logo.png" />
+    <Resource Include="Images\NewReactor\关闭.png" />
+    <Resource Include="Images\NewReactor\分割线.png" />
+    <Resource Include="Images\NewReactor\分割线（图右）.png" />
+    <Resource Include="Images\NewReactor\分割线（图左2）.png" />
+    <Resource Include="Images\NewReactor\分割线（图左）.png" />
+    <Resource Include="Images\NewReactor\名称提示线.png" />
+    <Resource Include="Images\NewReactor\小瓶.png" />
+    <Resource Include="Images\NewReactor\小瓶（称重）.png" />
+    <Resource Include="Images\NewReactor\尾气制冷.png" />
+    <Resource Include="Images\NewReactor\总 按键按下瞬间参考.jpg" />
+    <Resource Include="Images\NewReactor\总1.jpg" />
+    <Resource Include="Images\NewReactor\总2.jpg" />
+    <Resource Include="Images\NewReactor\按下效果（中文）.png" />
+    <Resource Include="Images\NewReactor\按下效果（英文）.png" />
+    <Resource Include="Images\NewReactor\按钮1.png" />
+    <Resource Include="Images\NewReactor\按钮1（按下）.png" />
+    <Resource Include="Images\NewReactor\提示角标.png" />
+    <Resource Include="Images\NewReactor\搅拌0.png" />
+    <Resource Include="Images\NewReactor\搅拌1.png" />
+    <Resource Include="Images\NewReactor\搅拌2.png" />
+    <Resource Include="Images\NewReactor\最小化.png" />
+    <Resource Include="Images\NewReactor\水.png" />
+    <Resource Include="Images\NewReactor\温度计.png" />
+    <Resource Include="Images\NewReactor\眉头.jpg" />
+    <Resource Include="Images\NewReactor\红.png" />
+    <Resource Include="Images\NewReactor\绿.png" />
+    <Resource Include="Images\NewReactor\罐加热（制冷）.png" />
+    <Resource Include="Images\NewReactor\罐加热（加热）.png" />
+    <Resource Include="Images\NewReactor\罐加热（常规）.png" />
+    <Resource Include="Images\NewReactor\背景.jpg" />
+    <Resource Include="Images\NewReactor\蓝.png" />
+    <Resource Include="Images\NewReactor\蠕动泵贯穿线.png" />
+    <Resource Include="Images\NewReactor\蠕动泵（关闭）.png" />
+    <Resource Include="Images\NewReactor\蠕动泵（开启）.png" />
+    <Resource Include="Images\NewReactor\还原.png" />
+    <Resource Include="Images\NewReactor\选中（主流）.png" />
+    <Resource Include="Images\NewReactor\选项框.png" />
+    <Resource Include="Images\NewReactor\阀（关）.png" />
+    <Resource Include="Images\NewReactor\阀（开）.png" />
+    <Resource Include="Images\NewReactor\黄.png" />
+    <Resource Include="Images\ReactorNew\MFC不使能.png" />
+    <Resource Include="Images\ReactorNew\MFC没启用.png" />
+    <Resource Include="Images\ReactorNew\MFC使能.png" />
+    <Resource Include="Images\ReactorNew\制冷.png" />
+    <Resource Include="Images\ReactorNew\加热.png" />
+    <Resource Include="Images\ReactorNew\尾气冷凝不使能.png" />
+    <Resource Include="Images\ReactorNew\尾气冷凝使能.png" />
+    <Resource Include="Images\ReactorNew\常温.png" />
+    <Resource Include="Images\ReactorNew\泵不使能.png" />
+    <Resource Include="Images\ReactorNew\泵不带底.png" />
+    <Resource Include="Images\ReactorNew\泵使能.png" />
+    <Resource Include="Images\ReactorNew\泵带底.png" />
+    <Resource Include="Images\ReactorNew\液面图.png" />
+    <Resource Include="Images\ReactorNew\罐体.png" />
+    <Resource Include="Images\Reactor\MFC不使能.png" />
+    <Resource Include="Images\Reactor\MFC使能.png" />
+    <Resource Include="Images\Reactor\MFC没启用.png" />
+    <Resource Include="Images\Reactor\常温.png" />
+    <Resource Include="Images\Reactor\加热.png" />
+    <Resource Include="Images\Reactor\尾气冷凝不使能.png" />
+    <Resource Include="Images\Reactor\尾气冷凝使能.png" />
+    <Resource Include="Images\Reactor\泵不使能.png" />
+    <Resource Include="Images\Reactor\泵不带底.png" />
+    <Resource Include="Images\Reactor\泵使能.png" />
+    <Resource Include="Images\Reactor\泵带底.png" />
+    <Resource Include="Images\Reactor\液面图.png" />
+    <Resource Include="Images\Reactor\罐体.png" />
+    <Resource Include="Images\SideMenu\Audit.png" />
+    <Resource Include="Images\SideMenu\Audit_Primary.png" />
+    <Resource Include="Images\SideMenu\Calibrate.png" />
+    <Resource Include="Images\SideMenu\Calibrate_Primary.png" />
+    <Resource Include="Images\SideMenu\Control.png" />
+    <Resource Include="Images\SideMenu\Control_Primary.png" />
+    <Resource Include="Images\SideMenu\Data.png" />
+    <Resource Include="Images\SideMenu\Data_Primary.png" />
+    <Resource Include="Images\SideMenu\Debug.png" />
+    <Resource Include="Images\SideMenu\Debug_Primary.png" />
+    <Resource Include="Images\SideMenu\DOE.png" />
+    <Resource Include="Images\SideMenu\Main.png" />
+    <Resource Include="Images\SideMenu\Main_Primary.png" />
+    <Resource Include="Images\SideMenu\Project.png" />
+    <Resource Include="Images\SideMenu\Project_Primary.png" />
+    <Resource Include="Images\SideMenu\Setting.png" />
+    <Resource Include="Images\SideMenu\Setting_Primary.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\iconfont.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\DOEAnalyse3DView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PadIndexView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Alarm.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\CameraAlarm.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\CameraSetting.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\CommandManager.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\CommandManager_5L.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\MFCInfo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\ParamUnit.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\PumpInfo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\SensorAlarmCode.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\CurveColor.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\MidRangingParam.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\ParameterMapperConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\CustomGraphSetting.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\GraphUnit.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\InstrumentManager.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\LibraryManager.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Probing.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\PidInfo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\PortManager.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\ReactorSetting.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\PumpMFCSetting.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\GraphSetting.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\DOAssParam.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Defoaming.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\DORTInfo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\FeedStrategy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\feedGradientInfo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Operation.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\ParameterNode.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\phcontrol.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\ProjectTemplate.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\ReportNodes.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Sample.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Batch.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Project.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Function.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\Device.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Const.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\User.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Update="Config\Var.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\xp.onnx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Instruction\video.mp4">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Themes\WaveAnimation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\AddOffLineDatasView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\FeedGradientView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

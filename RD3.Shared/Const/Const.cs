@@ -25,5 +25,6 @@ namespace RD3.Shared
         public static readonly float MaxPumpFlowCapacity = 999999999f;
         public static string DataFormat = "yyyy-MM-dd";
         public static string DateTimeFormat = "yyyy-MM-dd mm:ss";
+        public static readonly double MpaToPsi = 145.038d;
     }
 }

@@ -20,25 +20,28 @@ namespace RD3.ViewModels
             get => AnalysisSolution.GetInstance().CurrentFermentor.Device;
         }
 
-        public DelegateCommand ReadCommand => new(() =>
+        public DelegateCommand StartCommand => new(() =>
         {
-            CurrentDeviceParameter.EPCParam.SP = InstrumentSolution.GetInstance().CommandWrapper.GetEPCPressure(CurrentDeviceParameter.Name);
-        });
-
-        public DelegateCommand SetCommand => new(() => 
-        {
-            if (HandyControl.Controls.MessageBox.Show($"是否设定EPC压力为【{CurrentDeviceParameter.EPCParam.SP}】psi？", "温馨提示", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+            if (HandyControl.Controls.MessageBox.Show($"是否设定罐压为【{CurrentDeviceParameter.EPCParam.SP}】MPa？", "温馨提示", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
             {
                 return;
             }
             InstrumentSolution.GetInstance().CommandWrapper.SetEPCPressure(CurrentDeviceParameter.Name, CurrentDeviceParameter.EPCParam.SP);
+            //CurrentDeviceParameter.EPCParam.Enable = true;
+            //CurrentDeviceParameter.EPCParam.IsControling = true;
+        });
+
+        public DelegateCommand StopCommand => new(() =>
+        {
+            CurrentDeviceParameter.EPCParam.Enable = false;
+            CurrentDeviceParameter.EPCParam.IsControling = false;
         });
 
         public EPCSettingViewModel(IContainerProvider containerProvider, IDialogHostService dialogHostService) : base(containerProvider, dialogHostService)
         {
         }
 
-        public string Title => "冷凝控制";
+        public string Title => "罐压控制";
 
         public event Action<IDialogResult> RequestClose;
 

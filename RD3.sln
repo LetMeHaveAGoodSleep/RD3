@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RD3", "RD3\RD3.csproj", "{EE540721-A12B-4EB4-BE3E-00451A276F63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PBR5000", "RD3\PBR5000.csproj", "{EE540721-A12B-4EB4-BE3E-00451A276F63}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RD3.Shared", "RD3.Shared\RD3.Shared.csproj", "{604D0DF1-E58B-4D39-B2B6-D22EAD1C4536}"
 EndProject

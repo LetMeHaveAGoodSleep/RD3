@@ -13,7 +13,7 @@
     xmlns:vm="clr-namespace:RD3.ViewModels"
     Width="800"
     Height="550"
-    d:DataContext="{d:DesignInstance Type=vm:CondensationSettingViewModel}"
+    d:DataContext="{d:DesignInstance Type=vm:EPCSettingViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     Background="{StaticResource RegionBackgroundBrush}"
     TextElement.FontFamily="{DynamicResource AppFontFamily}"
@@ -45,7 +45,7 @@
             <TextBox
                 Width="120"
                 Margin="0,0,30,0"
-                materialDesign:HintAssist.Hint="EPC压力（psi）"
+                materialDesign:HintAssist.Hint="EPC压力（MPa）"
                 materialDesign:TextFieldAssist.HasClearButton="True"
                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 Text="{Binding CurrentDeviceParameter.EPCParam.SP}">
@@ -62,16 +62,17 @@
                         Width="80"
                         Height="30"
                         Command="{Binding StartCommand}"
-                        Content="启动控制"
-                        IsEnabled="{Binding CurrentDeviceParameter.CondensationParam.Enable, Converter={StaticResource InverseBooleanConverter}}"
+                        Content="设置"
+                        IsEnabled="{Binding CurrentDeviceParameter.EPCParam.Enable, Converter={StaticResource InverseBooleanConverter}}"
                         Style="{StaticResource PrimaryCommonButton}" />
                     <Button
                         Width="80"
                         Height="30"
                         Command="{Binding StopCommand}"
                         Content="停止控制"
-                        IsEnabled="{Binding CurrentDeviceParameter.CondensationParam.Enable}"
-                        Style="{StaticResource SecondaryCommonButton}" />
+                        IsEnabled="{Binding CurrentDeviceParameter.EPCParam.Enable}"
+                        Style="{StaticResource SecondaryCommonButton}"
+                        Visibility="Collapsed" />
                 </hc:UniformSpacingPanel>
             </StackPanel>
 
